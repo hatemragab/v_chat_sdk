@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
+import 'package:vchat_test_1/chat_package/vchat_constants.dart';
 import 'app/dto/vchat_login_dto.dart';
 import 'app/dto/vchat_register_dto.dart';
 import 'app/models/vchat_room.dart';
@@ -39,14 +40,22 @@ class VChatController {
   }
 
   Future<VChatUser> login(VChatLoginDto dto) async {
-    dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
+    if (USE_FIREBASE) {
+      dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
+    } else {
+      dto.fcmToken = "you dont use firebase on flutter app ";
+    }
     final user = await _authProvider.login(dto);
     await _saveUser(user);
     return user;
   }
 
   Future<VChatUser> register(VchatRegisterDto dto) async {
-    dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
+    if (USE_FIREBASE) {
+      dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
+    } else {
+      dto.fcmToken = "you dont use firebase on flutter app ";
+    }
     final user = await _authProvider.register(dto);
     await _saveUser(user);
     return user;
