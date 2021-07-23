@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -25,58 +26,30 @@ import 'helpers/dir_helper.dart';
 class FileUtils {
   static Future newDownloadFile(
       BuildContext context, VchatMessageAttachment attachment) async {
-    final downloadFile = await DirHelper.downloadPath();
-    final file = File(downloadFile + attachment.playUrl.toString());
-    if (file.existsSync()) {
-      await OpenFile.open(file.path);
-    } else {
-      try {
-        if (!(await Permission.storage.isGranted)) {
-          CustomAlert.customAlertDialog(
-              context: context,
-              errorMessage:
-                  "App Need this permission to save downloaded files in device storage /download/${ServerConfig.appName}/",
-              dismissible: false,
-              onPress: () async {
-                Navigator.pop(context);
-                final Map<Permission, PermissionStatus> statuses = await [
-                  Permission.storage,
-                ].request();
-
-                if (statuses[Permission.storage] == PermissionStatus.granted) {
-                  final cancelToken = CancelToken();
-                  CustomAlert.customLoadingDialog(context: context);
-                  await CustomDio().download(
-                      path: ServerConfig.MESSAGES_BASE_URL +
-                          attachment.playUrl.toString(),
-                      cancelToken: cancelToken,
-                      filePath: file.path);
-                  Navigator.pop(context);
-                  CustomAlert.done(
-                      msg:
-                          "File saved on device /download/${ServerConfig.appName}");
-                  await OpenFile.open(file.path);
-                } else {
-                  Navigator.pop(context);
-                }
-              });
-        } else {
-          final cancelToken = CancelToken();
-          CustomAlert.customLoadingDialog(context: context);
-          await CustomDio().download(
-              path: ServerConfig.MESSAGES_BASE_URL +
-                  attachment.playUrl.toString(),
-              cancelToken: cancelToken,
-              filePath: file.path);
-          Navigator.pop(context);
-          CustomAlert.done(
-              msg: "File saved on device /download/${ServerConfig.appName}");
-          await OpenFile.open(file.path);
-        }
-      } catch (err) {
+    try {
+      await _requestStoragePermission(context);
+      final downloadFile = await DirHelper.downloadPath();
+      final file = File(downloadFile + attachment.playUrl.toString());
+      if (file.existsSync()) {
+        await OpenFile.open(file.path);
+      } else {
+        final cancelToken = CancelToken();
+        CustomAlert.customLoadingDialog(context: context);
+        await CustomDio().download(
+            path:
+                ServerConfig.MESSAGES_BASE_URL + attachment.playUrl.toString(),
+            cancelToken: cancelToken,
+            filePath: file.path);
         Navigator.pop(context);
-        rethrow;
+        CustomAlert.done(
+            msg: "File saved on device /download/${ServerConfig.appName}");
+        await OpenFile.open(file.path);
       }
+    } catch (err) {
+
+      CustomAlert.customAlertDialog(
+          context: context, errorMessage: err.toString());
+      rethrow;
     }
   }
 
@@ -163,5 +136,33 @@ class FileUtils {
     final responseData = await stream.stream.toBytes();
     final responseString = String.fromCharCodes(responseData);
     return jsonDecode(responseString)['data'];
+  }
+
+  static Future _requestStoragePermission(BuildContext context) async {
+    final c = Completer();
+    if (!(await Permission.storage.isGranted)) {
+      CustomAlert.customAlertDialog(
+          context: context,
+          errorMessage:
+              "App Need this permission to save downloaded files in device storage /download/${ServerConfig.appName}/",
+          dismissible: false,
+          onPress: () async {
+            Navigator.pop(context);
+            final Map<Permission, PermissionStatus> statuses = await [
+              Permission.storage,
+            ].request();
+            if (statuses[Permission.storage] == PermissionStatus.granted) {
+
+              return c.complete();
+            } else {
+              Navigator.pop(context);
+              return c.completeError(
+                  "storage permission must be accepted to download the file");
+            }
+          });
+    } else {
+      return c.complete();
+    }
+    return c.future;
   }
 }
