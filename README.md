@@ -1,26 +1,28 @@
 # vchat_package
-this package which written in pure dart help you to add chat functionality
-make sure to star and watch all activity on github to get notify about updates
-to any existing flutter mobile project with any state management and any back-end service
-NOTE this package depend on firebase on notifications only Data saved on your vps server which run node js on it
-this package provide public api such createSingleChat login register etc.
-to make it easy to integrate
-HOW this package works
-vchat connected with node js which will be uploaded to your host this will create mongodb to store the chats ont it
-all data saved one your host not firebase
+this package which written in pure dart help you to add chat functionality  
+make sure to star and watch all activity on github to get notify about updates. 
+to any existing flutter mobile project with any state management and any back-end service. 
+NOTE this package depend on firebase on notifications only Data saved on your vps server which run node js on it. 
+this package provide public api such createSingleChat login register etc.  
+to make it easy to integrate. 
+HOW this package works. 
+vchat connected with node js which will be uploaded to your host this will create mongodb to store the chats ont it. 
+all data saved one your host not firebase. 
 Full customizable you can change  any text or theme this package support dark mode this because it Embedded as files on the project to make it easy to customize
-i have create test node js server and uploaded it to test only in this test the notifications doesn't work since it need to add your firebase
-cloud key in the node js but when run your own server it will works
+i have create test node js server and uploaded it to test only in this test the notifications doesn't work since it need to add your firebase. 
+cloud key in the node js but when run your own server it will works. 
 
-flutter app requirements:
-you need to have login system on your project and support null safety
-backend requirements:
-create new vps at digital ocean or any provider
+flutter app requirements:  
+you need to have login system on your project and support null safety. 
+backend requirements:  
+create new vps at digital ocean or any provider. 
 
-HOW TO TEST with not backend serve just with  (there another example to integrate with laravel api)
-first we need to add sum configurations for android
-1 - create new flutter project project
-in android/app/src/main/AndroidManifest.xml add this permissions
+HOW TO TEST with not backend serve just with  (there another example to integrate with laravel api). 
+first we need to add sum configurations for android. 
+1 - create new flutter project project. 
+
+in android/app/src/main/AndroidManifest.xml add this permissions. 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -67,8 +69,9 @@ in android/app/src/main/AndroidManifest.xml add this permissions
         targetSdkVersion 30
         multiDexEnabled true 
         
-  -------------   android configuration finished   -----------
-  add dependency to pubspec.yaml
+  -------------   android configuration finished   -----------  
+  
+  add dependency to pubspec.yaml. 
   ```
   #V_CHAT_PACKAGES DON'T UPDATE ANY VERSION IT IS ON YOUR OWN I WILL UPDATE IT AND PUSH TO GITHUB
   http: ^0.13.3
