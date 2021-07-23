@@ -7,7 +7,7 @@ import '../api_utils/server_config.dart';
 class DirHelper {
   static Future<String> downloadPath() async {
     if (Platform.isAndroid) {
-      final String path1 =
+      final path1 =
           join('storage', "emulated", "0", "Download", ServerConfig.appName);
       final dir = await Directory(path1).create(recursive: true);
       return "${dir.path}/";
