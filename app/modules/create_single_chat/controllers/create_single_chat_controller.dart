@@ -42,7 +42,7 @@ class CreateSingleChatController extends GetxController
     try {
       //catch any Error will happen from api side you cant chat your self
       await VChatController.instance
-          .createSingleChat(context: context, peerEmail: peer.email);
+          .createSingleChat(ctx: context, peerEmail: peer.email);
     } catch (err) {
       rethrow;
     }

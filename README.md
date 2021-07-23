@@ -29,7 +29,10 @@ in android/app/src/main/AndroidManifest.xml add this permissions.
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     and in application
-    under android:label="app-name" add this android:requestLegacyExternalStorage="true"
+    under android:label="app-name" add this 
+    
+    android:requestLegacyExternalStorage="true"
+    android:usesCleartextTraffic="true"
     
     (optional recommended) and under
     <meta-data

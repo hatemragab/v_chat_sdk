@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
-import 'package:vchat_test_1/chat_package/vchat_constants.dart';
+import 'vchat_constants.dart';
 import 'app/dto/vchat_login_dto.dart';
 import 'app/dto/vchat_register_dto.dart';
 import 'app/models/vchat_room.dart';
@@ -26,7 +26,7 @@ class VChatController {
   VChatController._privateConstructor();
 
   static final VChatController _instance =
-      VChatController._privateConstructor();
+  VChatController._privateConstructor();
 
   static VChatController get instance => _instance;
 
@@ -67,13 +67,13 @@ class VChatController {
   }
 
   Future createSingleChat(
-      {required String peerEmail, required BuildContext context}) async {
+      {required String peerEmail, required BuildContext ctx}) async {
     String txt = "";
     final data = await _provider.createSingleChat(peerEmail);
     if (data == false) {
       //no rooms founded
       showDialog(
-        context: context,
+        context: ctx,
         builder: (context) {
           return AlertDialog(
             title: "Say Hello !".text,
@@ -87,10 +87,10 @@ class VChatController {
                   onPressed: () async {
                     Navigator.pop(context);
                     final data =
-                        await _provider.createNewSingleRoom(txt, peerEmail);
+                    await _provider.createNewSingleRoom(txt, peerEmail);
                     // room has been created successfully
                     await Future.delayed(Duration(seconds: 1));
-                    _navigateToRoomMessage(data, context);
+                    _navigateToRoomMessage(data, ctx);
                   },
                   child: "Create".text)
             ],
@@ -99,8 +99,7 @@ class VChatController {
       );
     } else {
       // there are room
-
-      _navigateToRoomMessage(data, context);
+      _navigateToRoomMessage(data, ctx);
     }
   }
 

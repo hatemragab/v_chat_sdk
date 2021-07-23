@@ -33,17 +33,23 @@ class FileUtils {
       if (file.existsSync()) {
         await OpenFile.open(file.path);
       } else {
-        final cancelToken = CancelToken();
-        CustomAlert.customLoadingDialog(context: context);
-        await CustomDio().download(
-            path:
-                ServerConfig.MESSAGES_BASE_URL + attachment.playUrl.toString(),
-            cancelToken: cancelToken,
-            filePath: file.path);
-        Navigator.pop(context);
-        CustomAlert.done(
-            msg: "File saved on device /download/${ServerConfig.appName}");
-        await OpenFile.open(file.path);
+        try{
+          final cancelToken = CancelToken();
+          CustomAlert.customLoadingDialog(context: context);
+          await CustomDio().download(
+              path:
+              ServerConfig.MESSAGES_BASE_URL + attachment.playUrl.toString(),
+              cancelToken: cancelToken,
+              filePath: file.path);
+          Navigator.pop(context);
+          CustomAlert.done(
+              msg: "File saved on device /download/${ServerConfig.appName}");
+          await OpenFile.open(file.path);
+        }catch(err){
+          Navigator.pop(context);
+          rethrow;
+        }
+
       }
     } catch (err) {
 
@@ -55,7 +61,7 @@ class FileUtils {
 
   static Future compressImage(File file) async {
     final ImageProperties properties =
-        await FlutterNativeImage.getImageProperties(file.path);
+    await FlutterNativeImage.getImageProperties(file.path);
     File compressedFile = file;
     if (file.lengthSync() > 150 * 1000) {
       // compress only images bigger than 150 kb
@@ -144,7 +150,7 @@ class FileUtils {
       CustomAlert.customAlertDialog(
           context: context,
           errorMessage:
-              "App Need this permission to save downloaded files in device storage /download/${ServerConfig.appName}/",
+          "App Need this permission to save downloaded files in device storage /download/${ServerConfig.appName}/",
           dismissible: false,
           onPress: () async {
             Navigator.pop(context);
