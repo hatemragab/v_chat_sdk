@@ -57,7 +57,9 @@ class CustomAlert {
                     ),
                     SizedBox(
                       child: ElevatedButton(
-                          onPressed: onPress == null ? Get.back : onPress,
+                          onPressed: onPress == null
+                              ? () => Navigator.pop(context)
+                              : onPress,
                           child: "OK".text),
                     )
                   ],
@@ -77,7 +79,8 @@ class CustomAlert {
     );
   }
 
-  static void customLoadingDialog({required BuildContext context,bool dismissible = false}) {
+  static void customLoadingDialog(
+      {required BuildContext context, bool dismissible = false}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -130,7 +133,6 @@ class CustomAlert {
     );
   }
 
-
   static void customVerticalSheet({List<Widget>? items}) {
     showModalBottomSheet(
       context: Get.context!,
@@ -155,8 +157,12 @@ class CustomAlert {
       },
     );
   }
+
   static Future<int?> customAskDialog(
-      {String? title,required BuildContext context, required String message, bool dismissible = true}) async {
+      {String? title,
+      required BuildContext context,
+      required String message,
+      bool dismissible = true}) async {
     return await showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -212,8 +218,6 @@ class CustomAlert {
       },
     );
   }
-
-
 }
 
 class CustomAskButtonSheetModel {
