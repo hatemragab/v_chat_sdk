@@ -4,6 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:vchat_test_1/chat_package/vchat_constants.dart';
 
 import '../modules/room/controllers/rooms_controller.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
@@ -15,7 +16,9 @@ class NotificationService extends GetxService {
 
   @override
   void onInit() {
-    init();
+    if (USE_FIREBASE) {
+      init();
+    }
     super.onInit();
   }
 
