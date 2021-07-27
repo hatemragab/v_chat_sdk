@@ -13,9 +13,12 @@ i have create test node js server and uploaded it to test only in this test the 
 cloud key in the node js but when run your own server it will works. 
 
 flutter app requirements:  
+
 you need to have login system on your project and support null safety. 
-backend requirements:  
-create new vps at digital ocean or any provider. 
+
+backend requirements:
+
+create new vps at digital ocean or any provider and install node js v v14.17.1 and any mongodb v above 3.6. 
 
 HOW TO TEST with not backend serve just with  (there another example to integrate with laravel api). 
 first we need to add sum configurations for android. 
@@ -110,3 +113,22 @@ in android/app/src/main/AndroidManifest.xml add this permissions.
   readmore: ^2.1.0
   google_fonts: ^2.1.0
   ```
+Use VChatRoomsView widget to view user rooms 
+Use public api 
+```
+ call this with your register system you have to register 2 times one on your system another on my vchat system
+ VChatController.instance.register(VchatRegisterDto())
+ if your system not fource the user to add image then pass image parapater null and it will add the defualt user image to it
+ this api throw exception if data is missing all required except image can be null you have tp pass null if no image and throw if email exist  should try and catch 
+
+ if you aready have account then login you need to login two times in your system and vchat system 
+ this api throw exception if your not exist on db or wrong password 
+ VChatController.instance.login(VChatLoginDto())
+
+ if you want to start chat from any where just call this api 
+ VChatController.instance.createSingleChat(VChatLoginDto()) and pass the user email which is uniqe on your system and vchat system 
+ this api throw exception if you start chat your self you should try and catch 
+ if first time to chat with this user dialog will appear and ask for first message else will open chat page 
+ 
+
+```

@@ -4,7 +4,7 @@ import '../../../utils/custom_widgets/connection_checker.dart';
 import '../controllers/rooms_controller.dart';
 import 'widgets/room_item.dart';
 
-class RoomsTabView extends GetView<RoomController> {
+class VChatRoomsView extends GetView<RoomController> {
 
 
   @override

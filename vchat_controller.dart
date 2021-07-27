@@ -47,6 +47,7 @@ class VChatController {
     }
     final user = await _authProvider.login(dto);
     await _saveUser(user);
+
     return user;
   }
 
