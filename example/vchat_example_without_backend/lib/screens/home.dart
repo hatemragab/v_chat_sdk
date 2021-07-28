@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-import 'package:vchat_test_3/vchat_package/app/modules/room/views/room_tab_appbar_view.dart';
-import 'package:vchat_test_3/vchat_package/app/modules/room/views/rooms_tab_view.dart';
-import 'package:vchat_test_3/vchat_package/vchat_controller.dart';
 import '../controllers/home_controller.dart';
 import '../models/user.dart';
+import '../vchat_package/app/modules/room/views/room_tab_appbar_view.dart';
+import '../vchat_package/app/modules/room/views/vchat_rooms_view.dart';
+import '../vchat_package/vchat_controller.dart';
 import 'user_profile.dart';
 
 class Home extends StatefulWidget {
@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _children = [homeTab(), RoomsTabView()];
+    _children = [homeTab(), VChatRoomsView()];
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
                       title: "Chats as page".text,
                       centerTitle: true,
                     ),
-                    body: RoomsTabView()),
+                    body: VChatRoomsView()),
               ));
         },
         child: Icon(Icons.mail),

@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:vchat_test_3/screens/splash_screen.dart';
-import 'package:vchat_test_3/vchat_package/vchat_controller.dart';
+import 'screens/splash_screen.dart';
+import 'vchat_package/vchat_controller.dart';
 
 import 'vchat_package/app/utils/theme/vchat_light_theme.dart';
 

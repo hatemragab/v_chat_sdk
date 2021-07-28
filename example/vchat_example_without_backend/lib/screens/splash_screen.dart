@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:vchat_test_3/vchat_package/app/utils/get_storage_keys.dart';
-
+import '../vchat_package/app/utils/get_storage_keys.dart';
 import 'home.dart';
 import 'login.dart';
 

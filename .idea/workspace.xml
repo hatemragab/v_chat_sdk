@@ -22,18 +22,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb2c326e-56fb-4ba9-9b54-6cc8b06200db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/chat_package.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="fb2c326e-56fb-4ba9-9b54-6cc8b06200db" name="Default Changelist" comment="update Readme">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/room/views/rooms_tab_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/modules/room/views/vchat_rooms_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vchat_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/vchat_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/controllers/login_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/controllers/login_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/controllers/register_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/controllers/register_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/screens/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/screens/home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/screens/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/vchat_example_without_backend/lib/screens/splash_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +38,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1viXCh3dbiDjiuijvha8QGHn5xQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -53,6 +50,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -68,6 +66,21 @@
       <option name="presentableId" value="Default" />
       <updated>1627045756358</updated>
     </task>
+    <task id="LOCAL-00001" summary="update Readme">
+      <created>1627399870576</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1627399870576</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update Readme">
+      <created>1627399930694</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1627399930694</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -80,6 +93,11 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update Readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="update Readme" />
   </component>
   <component name="WindowStateProjectService">
     <state x="573" y="131" width="786" height="282" key="Github.ShareDialog" timestamp="1627045804297">
@@ -90,5 +108,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="633" y="225" key="Github.UntrackedFilesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627045810669" />
+    <state x="598" y="281" key="MultipleFileMergeDialog" timestamp="1627399893013">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="598" y="281" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1627399893013" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1627399936461">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1627399936461" />
+    <state x="535" y="203" key="new project wizard" timestamp="1627412985503">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="535" y="203" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1627412985503" />
   </component>
 </project>

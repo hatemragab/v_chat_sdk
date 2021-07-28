@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:textless/textless.dart';
-import 'package:vchat_test_3/screens/home.dart';
-import 'package:vchat_test_3/vchat_package/app/dto/vchat_login_dto.dart';
-import 'package:vchat_test_3/vchat_package/vchat_controller.dart';
+import '../screens/home.dart';
+import '../vchat_package/app/dto/vchat_login_dto.dart';
+import '../vchat_package/vchat_controller.dart';
 import '../models/user.dart';
 import '../screens/register.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vchat_test_3/vchat_package/vchat_controller.dart';
 import '../models/user.dart';
+import '../vchat_package/vchat_controller.dart';
 
 class UserProfile extends StatefulWidget {
   final User user;
