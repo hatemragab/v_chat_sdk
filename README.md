@@ -63,7 +63,6 @@ in android/app/src/main/AndroidManifest.xml add this permissions.
      under dependencies {
      update all to  
         classpath 'com.android.tools.build:gradle:4.1.3'
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
         classpath 'com.google.gms:google-services:4.3.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         
