@@ -19,11 +19,7 @@ class RegisterController {
 
   String? imagePath;
 
-  RegisterController(this.context) {
-    emailTxtController.text = "1@gmail.com";
-    nameTxtController.text = "nammmmmme";
-    passwordTxtController.text = "passssssssssss";
-  }
+  RegisterController(this.context);
 
   void showDialog1(String data) {
     showDialog(
