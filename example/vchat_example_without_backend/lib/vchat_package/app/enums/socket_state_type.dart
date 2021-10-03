@@ -1,1 +1,0 @@
-enum SocketStateType { connected, connecting }
