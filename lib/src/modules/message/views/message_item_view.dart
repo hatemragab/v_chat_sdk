@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_type.dart';
-import '../../../models/vchat_message.dart';
+import '../../../models/v_chat_message.dart';
 import '../../../utils/custom_widgets/circle_image.dart';
 import '../controllers/message_controller.dart';
 import 'render_message_send_at_day_item.dart';
@@ -15,10 +16,10 @@ import 'widgets/message_video_item.dart';
 import 'widgets/message_voice_view.dart';
 
 class MessageItemView extends GetView<MessageController> {
-  final VchatMessage _message;
+  final VChatMessage _message;
   final int index;
 
-  const MessageItemView(this._message, this.index);
+    const MessageItemView(this._message, this.index);
 
   @override
   Widget build(BuildContext context) {
@@ -29,79 +30,72 @@ class MessageItemView extends GetView<MessageController> {
     if (_message.messageType == MessageType.info) {
       return getJoinOrLeaveMessage();
     }
-
-    return InkWell(
-      onLongPress: () {
-        controller.showMessageLongPress(
-            isSender: isSender, selectedMessage: _message, context: context);
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: getCrossAlign(isSender: isSender),
-        children: [
-          IgnorePointer(
-            ignoring: true,
-            child: RenderMessageSendAtDayItem(
-              index: index,
-              message: _message,
-              messages: controller.messagesList,
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: getCrossAlign(isSender: isSender),
+      children: [
+        IgnorePointer(
+          ignoring: true,
+          child: RenderMessageSendAtDayItem(
+            index: index,
+            message: _message,
+            messages: controller.messagesList,
           ),
-          const SizedBox(
-            height: 5,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        !isSender && controller.currentRoom!.roomType == RoomType.groupChat
+            ? InkWell(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    CircleImage.network(
+                      path: _message.senderImageThumb,
+                      width: 25,
+                      height: 25,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    _message.senderName.cap,
+                  ],
+                ),
+              )
+            : const SizedBox.shrink(),
+        const SizedBox(
+          height: 5,
+        ),
+        Container(
+          constraints: BoxConstraints(maxWidth: paddingWidth),
+          padding: _message.messageType == MessageType.text
+              ? const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5)
+              : EdgeInsets.zero,
+          decoration: BoxDecoration(
+            color: isSender
+                ? Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xff876969)
+                    : Colors.tealAccent
+                : Theme.of(context).brightness == Brightness.dark
+                    ? const Color(0xff453131)
+                    : Colors.blueGrey[100],
+            borderRadius: getContainerBorder(isSender: isSender),
+            border: Border.all(color: Colors.black12),
           ),
-          !isSender && controller.currentRoom!.roomType == RoomType.groupChat
-              ? InkWell(
-                  onTap: () {},
-                  child: Row(
-                    children: [
-                      CircleImage.network(
-                        path: _message.senderImageThumb,
-                        width: 25,
-                        height: 25,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      _message.senderName.cap,
-                    ],
-                  ),
-                )
-              : const SizedBox.shrink(),
-          const SizedBox(
-            height: 5,
-          ),
-          Container(
-            constraints: BoxConstraints(maxWidth: paddingWidth),
-            padding: _message.messageType == MessageType.text
-                ? const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5)
-                : EdgeInsets.zero,
-            decoration: BoxDecoration(
-              color: isSender
-                  ? Theme.of(context).brightness == Brightness.dark
-                      ? const Color(0xff876969)
-                      : Colors.tealAccent
-                  : Theme.of(context).brightness == Brightness.dark
-                      ? const Color(0xff453131)
-                      : Colors.blueGrey[100],
-              borderRadius: getContainerBorder(isSender: isSender),
-              border: Border.all(color: Colors.black12),
-            ),
-            child: getItemBody(isSender: isSender, context: context),
-          ),
-          const SizedBox(height: 2),
-          if (isSender)
-            Row(
-              mainAxisAlignment: getMainAxisAlign(isSender: isSender),
-              children: [
-                _message.createdAtString.toString().cap,
-                const SizedBox(width: 2),
-              ],
-            )
-          else
-            _message.createdAtString.toString().cap,
-        ],
-      ),
+          child: getItemBody(isSender: isSender, context: context),
+        ),
+        const SizedBox(height: 2),
+        if (isSender)
+          Row(
+            mainAxisAlignment: getMainAxisAlign(isSender: isSender),
+            children: [
+              _message.createdAtString.toString().cap,
+              const SizedBox(width: 2),
+            ],
+          )
+        else
+          _message.createdAtString.toString().cap,
+      ],
     );
   }
 
@@ -123,6 +117,7 @@ class MessageItemView extends GetView<MessageController> {
   }
 
   Widget getItemBody({required bool isSender,required BuildContext context}) {
+    final t = VChatAppService.to.getTrans();
     switch (_message.messageType) {
       case MessageType.text:
         return AutoDirection(
@@ -131,8 +126,8 @@ class MessageItemView extends GetView<MessageController> {
             _message.content.toString(),
             trimLines: 5,
             trimMode: TrimMode.Line,
-            trimCollapsedText: 'Show more',
-            trimExpandedText: 'Show less',
+            trimCollapsedText: t.showMore(),
+            trimExpandedText: t.showLess() ,
             moreStyle: Get.textTheme.bodyText2!.copyWith(color: Colors.red),
             style: Theme.of(context).textTheme.subtitle2,
           ),
@@ -197,7 +192,7 @@ class MessageItemView extends GetView<MessageController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               _message.content.b1.size(15).maxLine(1),
-              "Time".cap
+
             ],
           ),
         ),

@@ -1,7 +1,10 @@
-import '../../../v_chat_sdk.dart';
-
-class ArMessages implements LookupString {
-  @override
-  String test() => "اختبار";
-
-}
+// import '../../../v_chat_sdk.dart';
+//
+// class ArMessages implements LookupString {
+//   @override
+//   String test() => "اختبار";
+//
+//   @override
+//   String toDay() => "اليوم";
+//
+// }

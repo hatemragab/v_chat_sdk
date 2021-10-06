@@ -20,7 +20,9 @@ class MessageAppBarView extends GetView<MessageController>
       centerTitle: true,
       automaticallyImplyLeading: false,
       leading: InkWell(
-        onTap: () => controller.goBack(context),
+        onTap: (){
+          Navigator.pop(context);
+        },
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -53,8 +55,15 @@ class MessageAppBarView extends GetView<MessageController>
             final isOnline = _room.isOnline.value;
             final typingSt = _room.typingStatus.value;
             final isSingle = _room.roomType == RoomType.single;
+            final t = VChatAppService.to.getTrans(context);
             if (isSingle) {
               if (typingSt.status != RoomTypingType.stop) {
+                if (typingSt.status == RoomTypingType.typing) {
+                  return t.typing().cap.size(14);
+                }
+                if (typingSt.status == RoomTypingType.recording) {
+                  return t.recording().cap.size(14);
+                }
                 return "${typingSt.status.inString} ...".cap.size(14);
               }
               if (isOnline == 1) {

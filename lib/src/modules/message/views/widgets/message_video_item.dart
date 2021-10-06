@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-import '../../../../models/vchat_message.dart';
+import '../../../../models/v_chat_message.dart';
 import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/api_utils/server_config.dart';
 import '../../../../utils/custom_widgets/rounded_container.dart';
 import '../../../video_player/views/video_player_view.dart';
 
 class MessageVideoItem extends StatelessWidget {
-  final VchatMessage _message;
+  final VChatMessage _message;
   final bool isSender;
 
   final myId = VChatAppService.to.vChatUser!.id;

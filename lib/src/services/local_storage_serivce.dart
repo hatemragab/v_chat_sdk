@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/vchat_message.dart';
-import '../models/vchat_room.dart';
+import '../models/v_chat_message.dart';
+import '../models/v_chat_room.dart';
 import '../sqlite/db_provider.dart';
 import '../sqlite/tables/message_table.dart';
 import '../sqlite/tables/room_table.dart';
@@ -57,7 +57,7 @@ class LocalStorageService extends GetxService {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future setRoomMessages(String roomId, List<VchatMessage> messages) async {
+  Future setRoomMessages(String roomId, List<VChatMessage> messages) async {
     final messageToInsert = messages;
     try {
       final x = messages.sublist(0, 30);
@@ -82,7 +82,7 @@ class LocalStorageService extends GetxService {
     await batch.commit(noResult: true);
   }
 
-  Future insertMessage(String roomId, VchatMessage msg) async {
+  Future insertMessage(String roomId, VChatMessage msg) async {
     await database.insert(
       MessageTable.TABLE_NAME,
       {
@@ -94,8 +94,8 @@ class LocalStorageService extends GetxService {
     );
   }
 
-  Future<List<VchatMessage>> getRoomMessages(int roomId) async {
-    final messages = <VchatMessage>[];
+  Future<List<VChatMessage>> getRoomMessages(int roomId) async {
+    final messages = <VChatMessage>[];
     final maps = await database.query(MessageTable.TABLE_NAME,
         where: "${MessageTable.COLUMN_ROOM_ID} =?",
         whereArgs: [roomId],
@@ -104,7 +104,7 @@ class LocalStorageService extends GetxService {
 
     for (var x in maps) {
       messages.add(
-        VchatMessage.fromMap(
+        VChatMessage.fromMap(
           jsonDecode(x[MessageTable.COLUMN_DATA].toString()),
         ),
       );

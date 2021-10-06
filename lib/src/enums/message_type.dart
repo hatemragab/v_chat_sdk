@@ -23,7 +23,7 @@ extension MessageTypeEnum on MessageType {
     } else if (type == MessageType.allDeleted.inString) {
       return MessageType.allDeleted;
     } else {
-      throw (" type in MessageType is ${type.toString()}");
+      throw ("V_CHAT_SAY =>>>> type in MessageType is ${type.toString()}");
     }
   }
 }

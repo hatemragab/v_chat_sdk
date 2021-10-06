@@ -1,17 +1,19 @@
 import 'package:intl/intl.dart';
+import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 
 class UtilDates {
   static const int oneDayInMilliseconds = 86400000;
 
   static final daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
+    VChatAppService.to.getTrans().monday(),
+    VChatAppService.to.getTrans().tuesday(),
+    VChatAppService.to.getTrans().wednesday(),
+    VChatAppService.to.getTrans().thursday(),
+    VChatAppService.to.getTrans().friday(),
+    VChatAppService.to.getTrans().saturday(),
+    VChatAppService.to.getTrans().sunday(),
   ];
+
 
   static final formatHour = DateFormat("HH:mm");
   static final formatDay = DateFormat("dd/MM/yyyy");
@@ -42,7 +44,7 @@ class UtilDates {
     }
 
     if (daysSinceMessage == 1) {
-      return "Yesterday";
+      return VChatAppService.to.getTrans().yesterday();
     }
 
     return messageWeekDay(milliseconds);
@@ -63,11 +65,11 @@ class UtilDates {
     }
 
     if (daysSinceMessage == 0) {
-      return "Today";
+      return VChatAppService.to.getTrans().toDay();
     }
 
     if (daysSinceMessage == 1) {
-      return "Yesterday";
+      return  VChatAppService.to.getTrans().yesterday();
     }
 
     return messageWeekDay(milliseconds);

@@ -14,9 +14,10 @@ import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:v_chat_sdk/src/utils/vchat_constants.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-import '../models/vchat_message_attachment.dart';
+import '../models/v_chat_message_attachment.dart';
 import '../services/vchat_app_service.dart';
 import 'api_utils/dio/custom_dio.dart';
 import 'api_utils/server_config.dart';
@@ -43,7 +44,7 @@ class FileUtils {
               filePath: file.path);
           Navigator.pop(context);
           CustomAlert.done(
-              msg: "File saved on device /download/${ServerConfig.appName}");
+              msg: "File saved on device /download/$vchatAppName");
           await OpenFile.open(file.path);
         }catch(err){
           Navigator.pop(context);
@@ -150,7 +151,7 @@ class FileUtils {
       CustomAlert.customAlertDialog(
           context: context,
           errorMessage:
-          "App Need this permission to save downloaded files in device storage /download/${ServerConfig.appName}/",
+          "App Need this permission to save downloaded files in device storage /download/$vchatAppName}/",
           dismissible: false,
           onPress: () async {
             Navigator.pop(context);

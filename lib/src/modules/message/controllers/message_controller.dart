@@ -9,9 +9,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/load_more_type.dart';
 import '../../../enums/room_type.dart';
-import '../../../models/vchat_message.dart';
+import '../../../models/v_chat_message.dart';
 import '../../../services/local_storage_serivce.dart';
 import '../../../services/notification_service.dart';
 import '../../../services/vchat_app_service.dart';
@@ -32,10 +33,10 @@ class MessageController extends GetxController {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer();
   final isRecordWidgetEnable = false.obs;
   final recordTime = "00:00".obs;
-  final messagesList = <VchatMessage>[].obs;
+  final messagesList = <VChatMessage>[].obs;
   String? recordPath;
   AudioPlayer audioPlayer = AudioPlayer();
-  VchatMessage? currentVoicePlayer;
+  VChatMessage? currentVoicePlayer;
   late Socket _socket;
   final isLastMessageSeen = false.obs;
   final localStorageService = Get.find<LocalStorageService>();
@@ -101,7 +102,7 @@ class MessageController extends GetxController {
     } catch (err) {
       log(err.toString());
     } finally {
-       super.onClose();
+      super.onClose();
     }
   }
 
@@ -135,14 +136,6 @@ class MessageController extends GetxController {
     }
   }
 
-  void readRoomMessages() async {
-    await _apiProvider.readMessages(currentRoom!.id);
-  }
-
-  void getRoomMembers() async {}
-
-  void acceptRoom() async {}
-
   void cancelRecord() {
     isRecordWidgetEnable.value = false;
     _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
@@ -172,6 +165,7 @@ class MessageController extends GetxController {
             samplingRate: 64100.0,
             path: recordPath!);
       } catch (err) {
+        Helpers.vlog(err.toString());
         CustomAlert.customAlertDialog(
             context: context,
             errorMessage:
@@ -180,10 +174,6 @@ class MessageController extends GetxController {
         rethrow;
       }
     }
-  }
-
-  void goBack(BuildContext context) {
-    Navigator.pop(context);
   }
 
   void setAudioPlayerListeners() {
@@ -208,7 +198,7 @@ class MessageController extends GetxController {
     });
   }
 
-  void playVoice(VchatMessage msg) {
+  void playVoice(VChatMessage msg) {
     if (currentVoicePlayer != null && msg.id != currentVoicePlayer!.id) {
       //there are voice working
       currentVoicePlayer!.messageAttachment!.isVoicePlying.value = false;
@@ -225,14 +215,14 @@ class MessageController extends GetxController {
     );
   }
 
-  void pauseVoice(VchatMessage msg) {
+  void pauseVoice(VChatMessage msg) {
     if (audioPlayer.state == PlayerState.PLAYING) {
       msg.messageAttachment!.isVoicePlying.value = false;
       audioPlayer.pause();
     }
   }
 
-  void seekVoiceTo(VchatMessage message, double value) {
+  void seekVoiceTo(VChatMessage message, double value) {
     if (currentVoicePlayer != null && message.id != currentVoicePlayer!.id) {
       currentVoicePlayer!.messageAttachment!.isVoicePlying.value = false;
     }
@@ -244,109 +234,21 @@ class MessageController extends GetxController {
     );
   }
 
-  void showMessageLongPress(
-      {required bool isSender,
-      required final VchatMessage selectedMessage,
-      required BuildContext context}) {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return Container(
-            height: 100.0,
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            color: Colors.transparent,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    CustomAlert.done(msg: "Soon");
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.reply),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Reply")
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                    FlutterClipboard.copy(selectedMessage.content.toString());
-                    CustomAlert.done(msg: "Done");
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(
-                        Icons.copy,
-                        color: Colors.red,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Copy")
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    CustomAlert.done(msg: "Soon");
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.forward),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Forward")
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    CustomAlert.done(msg: "Soon");
-                    Navigator.pop(context);
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(Icons.delete),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Remove")
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        });
-  }
-
   void connectMessageSocket() async {
     await Future.delayed(const Duration(milliseconds: 200));
     _socket = getSocket();
     _socket.onConnect((data) async {
       _socket.on("all_messages", (data) async {
         final msgList = (jsonDecode(data)) as List;
-        final x = msgList.map((e) => VchatMessage.fromMap(e)).toList();
+        final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
         await localStorageService.setRoomMessages(
             currentRoom!.id.toString(), x);
         messagesList.assignAll(x);
       });
       _socket.on('new_message', (data) async {
         final msgMap = jsonDecode(data);
-        emitReadLastMessage();
-        final message = VchatMessage.fromMap(msgMap);
+
+        final message = VChatMessage.fromMap(msgMap);
         if (!messagesList.contains(message)) {
           messagesList.insert(0, message);
           await localStorageService.insertMessage(
@@ -380,11 +282,5 @@ class MessageController extends GetxController {
       },
       'forceNew': true
     });
-  }
-
-  void emitReadLastMessage() {
-    if (currentRoom!.roomType == RoomType.groupChat) {
-      _socket.emit("read_last_message", currentRoom!.id);
-    }
   }
 }

@@ -1,5 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/vchat_constants.dart';
 
 import 'tables/message_table.dart';
 import 'tables/room_table.dart';
@@ -20,15 +22,15 @@ class DBProvider {
 
   Future _open() async {
     final String documentsDirectory = await getDatabasesPath();
-    final String path = join(documentsDirectory, "v_chat_db.db");
+    final String path = join(documentsDirectory, "$vchatAppName.db");
 
     return await openDatabase(path, version: 1, onCreate: (db, version) async {
       await db.transaction((txn) async {
         await RoomTable.createTable(txn);
         await MessageTable.createTable(txn);
-        await txn.execute('PRAGMA cache_size = 1000000');
+        // await txn.execute('PRAGMA cache_size = 1000000');
         // await txn.execute("PRAGMA synchronous = OFF");
-        await txn.execute('PRAGMA temp_store = MEMORY');
+        // await txn.execute('PRAGMA temp_store = MEMORY');
       });
     }, onOpen: (db) async {
       // await NewRoomTable.recreateTable(db);
@@ -41,7 +43,6 @@ class DBProvider {
   Future reCreateTables() async {
     await RoomTable.recreateTable(_database!);
     await MessageTable.recreateTable(_database!);
-
-    print("all tables deleted!");
+    Helpers.vlog("all tables deleted!");
   }
 }

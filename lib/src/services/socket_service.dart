@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../enums/socket_state_type.dart';
-import '../models/vchat_room.dart';
-import '../models/vchat_room_typing.dart';
+import '../models/v_chat_room.dart';
+import '../models/v_chat_room_typing.dart';
 import '../utils/api_utils/server_config.dart';
 import '../utils/custom_widgets/custom_alert_dialog.dart';
 import 'socket_controller.dart';
@@ -94,7 +94,7 @@ class SocketService extends GetxService {
       _socketController.handleRoomTypingChanged(VChatRoomTyping.fromMap(data));
     });
 
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 100));
     _socket.emit("join");
   }
 

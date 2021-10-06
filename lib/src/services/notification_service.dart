@@ -3,6 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 import '../modules/room/controllers/rooms_controller.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 import '../utils/vchat_constants.dart';
@@ -84,6 +85,7 @@ class NotificationService extends GetxService {
     });
 
     flutterLocalNotificationsPlugin.cancelAll();
+    //show();
   }
 
   static void showNotification({required String title, required String msg}) {
@@ -91,6 +93,14 @@ class NotificationService extends GetxService {
       title: title.toString(),
       duration: const Duration(seconds: 5),
       subTitle: msg.toString(),
+    );
+  }
+
+  void show()async {
+    await Future.delayed(Duration(seconds: 10));
+    showNotification(
+      msg: VChatAppService.to.getTrans().test(),
+      title: VChatAppService.to.getTrans().toDay()
     );
   }
 }

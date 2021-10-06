@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import '../enums/room_type.dart';
 import '../enums/room_typing_type.dart';
 import 'group_chat_setting.dart';
-import 'vchat_message.dart';
-import 'vchat_room_typing.dart';
+import 'v_chat_message.dart';
+import 'v_chat_room_typing.dart';
 
 class VchatRoom {
   final int id;
@@ -20,7 +20,7 @@ class VchatRoom {
   final String thumbImage;
   final GroupChatSetting? groupSetting;
   final int? ifSinglePeerId;
-  Rx<VchatMessage> lastMessage;
+  Rx<VChatMessage> lastMessage;
   Rx<VChatRoomTyping> typingStatus = VChatRoomTyping(status: RoomTypingType.stop).obs;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -99,7 +99,7 @@ class VchatRoom {
       title: map['title'] as String,
       thumbImage: map['thumbImage'] as String,
       ifSinglePeerId: map['peerId'] as int?,
-      lastMessage: VchatMessage.fromMap(map['lastMessage']).obs,
+      lastMessage: VChatMessage.fromMap(map['lastMessage']).obs,
     );
   }
 

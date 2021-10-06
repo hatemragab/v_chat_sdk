@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../../models/vchat_room.dart';
+import '../../../models/v_chat_room.dart';
 import '../../../utils/api_utils/dio/custom_dio.dart';
 
 

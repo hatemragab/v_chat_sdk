@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../models/vchat_message.dart';
+import '../../../../models/v_chat_message.dart';
 import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/api_utils/server_config.dart';
 import '../../../image_viewer/views/image_viewer_view.dart';
 
 class MessageImageItem extends GetView {
-  final VchatMessage _message;
+  final VChatMessage _message;
   final bool isSender;
   final myId = VChatAppService.to.vChatUser!.id;
 

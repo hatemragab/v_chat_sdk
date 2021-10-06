@@ -8,19 +8,19 @@ import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 class CustomAlert {
   static void done({String? msg}) {
     BotToast.showSimpleNotification(
-      title: "success",
-      duration: Duration(seconds: 3),
-      subTitle: msg ?? "this operation done successfully",
+      title:VChatAppService.to.getTrans().success(),
+      duration: const Duration(seconds: 3),
+      subTitle: msg ?? VChatAppService.to.getTrans().thisOperationDoneSuccessfully()
     );
   }
 
   static void error({String? msg}) {
     BotToast.showSimpleNotification(
-      title: "Failed",
+      title:VChatAppService.to.getTrans().failed(),
       subTitleStyle: const TextStyle(color: Colors.white),
       backgroundColor: Colors.red,
       duration: const Duration(seconds: 5),
-      subTitle: msg ?? "this operation failed",
+      subTitle: msg ??VChatAppService.to.getTrans().thisOperationFailed()  ,
     );
   }
 
@@ -59,7 +59,7 @@ class CustomAlert {
                     SizedBox(
                       child: ElevatedButton(
                           onPressed: onPress ?? () => Navigator.pop(context),
-                          child: "OK".text),
+                          child:VChatAppService.to.getTrans().oK().text),
                     )
                   ],
                 ),
@@ -101,13 +101,13 @@ class CustomAlert {
                     const SizedBox(
                       height: 10,
                     ),
-                    "Loading please wait".text.bold,
+                    VChatAppService.to.getTrans().loadingPleaseWait() .text.bold,
                     const SizedBox(
                       height: 33,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: const LinearProgressIndicator(
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: LinearProgressIndicator(
                         backgroundColor: Colors.red,
                         minHeight: 8,
                       ),
@@ -195,11 +195,11 @@ class CustomAlert {
                         children: [
                           ElevatedButton(
                             onPressed: () => Navigator.pop(context, -1),
-                            child: "Cancel".text.size(15),
+                            child: VChatAppService.to.getTrans().cancel().text.size(15),
                           ),
                           ElevatedButton(
                             onPressed: () => Navigator.pop(context, 1),
-                            child: "OK".text.size(15),
+                            child: VChatAppService.to.getTrans().oK().text.size(15),
                           ),
                         ],
                       )

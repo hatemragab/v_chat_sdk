@@ -8,7 +8,7 @@ import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import 'package:v_chat_sdk/src/utils/translator/ar_messages.dart';
 import 'package:v_chat_sdk/src/utils/translator/en_messages.dart';
 import '../../v_chat_sdk.dart';
-import '../models/vchat_user.dart';
+import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
 import '../utils/get_storage_keys.dart';
 import '../utils/vchat_constants.dart';
@@ -18,22 +18,26 @@ class VChatAppService extends GetxService {
   late Database database;
   VChatUser? vChatUser;
   Map<String, String>? trans;
-  BuildContext? context;
+  BuildContext? roomsContext;
+  late String currentLocal;
   ThemeData? light;
   ThemeData? dark;
+  GlobalKey<NavigatorState>? navKey;
 
   ThemeData? currentTheme(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? dark : light;
   }
 
-  LookupString getTrans(BuildContext context) {
-    final currentLocal = Localizations.localeOf(context).toString();
-    if (_lookupMessagesMap[currentLocal] == null) {
+  LookupString getTrans([BuildContext? context]) {
+    context ??= navKey!.currentContext;
+    final local = Localizations.localeOf(context!).toString();
+    currentLocal = local;
+    if (_lookupMessagesMap[local] == null) {
       Helpers.vlog(
-          "failed to find the language $currentLocal in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
+          "failed to find the language $local in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
       return EnMessages();
     } else {
-      return _lookupMessagesMap[currentLocal]!;
+      return _lookupMessagesMap[local]!;
     }
   }
 

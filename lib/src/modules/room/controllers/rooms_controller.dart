@@ -3,15 +3,13 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 import '../../../enums/load_more_type.dart';
 import '../../../enums/room_type.dart';
-import '../../../models/vchat_room.dart';
-import '../../../models/vchat_room_typing.dart';
+import '../../../models/v_chat_room.dart';
+import '../../../models/v_chat_room_typing.dart';
 import '../../../services/local_storage_serivce.dart';
 import '../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../providers/room_api_provider.dart';
 
-
 class RoomController extends GetxController {
-
   final _provider = Get.find<RoomsApiProvider>();
   VchatRoom? currentRoom;
   final rooms = <VchatRoom>[].obs;
@@ -79,7 +77,7 @@ class RoomController extends GetxController {
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }
-      CustomAlert.done(msg: "Done");
+      CustomAlert.done(msg: VChatAppService.to.getTrans().userHasBeenBlockedSuccessfully());
     } catch (err) {
       CustomAlert.error(msg: err.toString());
       rethrow;

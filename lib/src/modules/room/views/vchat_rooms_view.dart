@@ -7,10 +7,11 @@ import '../controllers/rooms_controller.dart';
 import 'widgets/room_item.dart';
 
 class VChatRoomsView extends GetView<RoomController> {
-   VChatRoomsView({Key? key}) : super(key: key);
+   const VChatRoomsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VChatAppService.to.roomsContext = context;
     return Theme(
       data: Theme.of(context).brightness == Brightness.dark
           ? VChatAppService.to.dark!

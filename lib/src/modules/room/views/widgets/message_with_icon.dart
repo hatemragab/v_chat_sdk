@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import '../../../../enums/message_type.dart';
 import '../../../../enums/room_type.dart';
-import '../../../../models/vchat_room.dart';
+import '../../../../models/v_chat_room.dart';
 import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/custom_widgets/circle_image.dart';
 

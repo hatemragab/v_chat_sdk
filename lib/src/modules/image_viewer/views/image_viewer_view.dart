@@ -11,10 +11,8 @@ class ImageViewerView extends StatelessWidget {
     return SafeArea(
       child: Stack(
         children: [
-          Container(
-            child: PhotoView(
-              imageProvider: NetworkImage(url),
-            ),
+          PhotoView(
+            imageProvider: NetworkImage(url),
           ),
           Positioned(
               top: 20,

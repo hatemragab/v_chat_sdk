@@ -6,10 +6,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import 'package:v_chat_sdk/src/utils/translator/lookup_string.dart';
-import 'dto/vchat_login_dto.dart';
-import 'dto/vchat_register_dto.dart';
-import 'models/vchat_room.dart';
-import 'models/vchat_user.dart';
+import 'dto/v_chat_login_dto.dart';
+import 'dto/v_chat_register_dto.dart';
+import 'models/v_chat_room.dart';
+import 'models/v_chat_user.dart';
 import 'modules/message/bindings/message_binding.dart';
 import 'modules/message/views/message_view.dart';
 import 'modules/room/controllers/rooms_controller.dart';
@@ -44,10 +44,12 @@ class VChatController {
     required ThemeData lightTheme,
     required ThemeData darkTheme,
     required bool enableLogger,
+    required GlobalKey<NavigatorState> navKey
   }) async {
     vchatUseFirebase = isUseFirebase;
     serverIp = baseUrl;
     vchatAppName = appName;
+
 
 
     await Get.putAsync(() => VChatAppService().init(), permanent: true);
@@ -55,6 +57,8 @@ class VChatController {
 
     VChatAppService.to.dark = darkTheme;
     VChatAppService.to.light = lightTheme;
+    VChatAppService.to.navKey = navKey;
+
     if (kReleaseMode) {
       enableLog = false;
     } else {
@@ -198,15 +202,5 @@ class VChatController {
     Get.put<SocketService>(SocketService(), permanent: true);
   }
 
-  void config(
-      {required Map<String, String> trans,
-      required ThemeData lightTheme,
-      required BuildContext context,
-      required ThemeData darkTheme}) {
-    VChatAppService.to.context = context;
-    VChatAppService.to.light = lightTheme;
-    VChatAppService.to.dark = darkTheme;
-    VChatAppService.to.trans = trans;
-    print(Localizations.localeOf(context).toString());
-  }
+
 }

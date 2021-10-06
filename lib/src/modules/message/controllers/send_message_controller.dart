@@ -10,8 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_typing_type.dart';
-import '../../../models/vchat_message_attachment.dart';
-import '../../../models/vchat_room_typing.dart';
+import '../../../models/v_chat_message_attachment.dart';
+import '../../../models/v_chat_room_typing.dart';
 import '../../../services/socket_controller.dart';
 import '../../../services/socket_service.dart';
 import '../../../services/vchat_app_service.dart';
@@ -108,11 +108,11 @@ class SendMessageController extends GetxController {
     } catch (err) {}
   }
 
-  void emitPickedImage(BuildContext context, PickedFile pickedFile) async {
+  void emitPickedImage(BuildContext context, String path) async {
     try {
       _messageController.isLastMessageSeen.value = false;
       CustomAlert.customLoadingDialog(context: context);
-      final _pickedImage = File(pickedFile.path);
+      final _pickedImage = File( path);
       final compressedFile = await FileUtils.compressImage(_pickedImage);
 
       final ImageProperties properties =
@@ -128,7 +128,7 @@ class SendMessageController extends GetxController {
           "message/file",
           body: {
             "roomId": _roomController.currentRoom!.id.toString(),
-            "content": "this content image ",
+            "content": "this content image 📷",
             "type": MessageType.image.inString,
             "attachment": jsonEncode(VchatMessageAttachment(
               fileSize: fileSize,
@@ -162,7 +162,7 @@ class SendMessageController extends GetxController {
           "message/file",
           body: {
             "roomId": _roomController.currentRoom!.id.toString(),
-            "content": "this content file ",
+            "content": "this content file 📁",
             "type": MessageType.file.inString,
             "attachment": jsonEncode(VchatMessageAttachment(
               fileSize: fileSize,
@@ -195,7 +195,7 @@ class SendMessageController extends GetxController {
         "message/file",
         body: {
           "roomId": _roomController.currentRoom!.id.toString(),
-          "content": "this content video ",
+          "content": "this content video 📽",
           "type": MessageType.video.inString,
           "attachment": jsonEncode(VchatMessageAttachment(
                   fileSize: fileSize,
@@ -214,6 +214,7 @@ class SendMessageController extends GetxController {
   }
 
   void startPickFile(BuildContext ctx) async {
+    final t = VChatAppService.to.getTrans(ctx);
     showCupertinoModalPopup(
       barrierDismissible: true,
       semanticsDismissible: true,
@@ -221,32 +222,33 @@ class SendMessageController extends GetxController {
       builder: (context) {
         return CupertinoActionSheet(
           cancelButton: CupertinoActionSheetAction(
-            child: const Text('Cancel'),
+            child:   Text( VChatAppService.to.getTrans().cancel()),
             onPressed: () {
               Navigator.pop(ctx);
             },
           ),
           actions: [
             CupertinoActionSheetAction(
-              child: const Text('Photo'),
+              child:   Text(VChatAppService.to.getTrans().photo()),
               onPressed: () async {
                 Navigator.pop(ctx);
                 final picker = ImagePicker();
                 final pickedFile =
-                    await picker.getImage(source: ImageSource.gallery);
+                    await picker.pickImage(source: ImageSource.gallery);
+
                 if (pickedFile != null) {
                   if (File(pickedFile.path).lengthSync() >
                       ServerConfig.MAX_MESSAGE_FILE_SIZE) {
-                    CustomAlert.error(msg: "File is too big ");
+                    CustomAlert.error(msg: t.fileIsTooBig());
                     File(pickedFile.path).deleteSync();
                     return;
                   }
-                  emitPickedImage(ctx, pickedFile);
+                  emitPickedImage(ctx, pickedFile.path);
                 }
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('File'),
+              child:   Text(t.file()),
               onPressed: () async {
                 Navigator.pop(ctx);
                 final FilePickerResult? result =
@@ -254,7 +256,7 @@ class SendMessageController extends GetxController {
                 if (result != null) {
                   if (File(result.files.first.path!).lengthSync() >
                       ServerConfig.MAX_MESSAGE_FILE_SIZE) {
-                    CustomAlert.error(msg: "File is too big ");
+                    CustomAlert.error(msg: t.fileIsTooBig());
                     File(result.files.first.path!).deleteSync();
                     return;
                   }
@@ -263,7 +265,7 @@ class SendMessageController extends GetxController {
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('Video'),
+              child:   Text(t.video()),
               onPressed: () async {
                 Navigator.pop(ctx);
                 final FilePickerResult? result =
@@ -274,7 +276,7 @@ class SendMessageController extends GetxController {
                 if (result != null) {
                   if (File(result.files.first.path!).lengthSync() >
                       ServerConfig.MAX_MESSAGE_FILE_SIZE) {
-                    CustomAlert.error(msg: "File is too big ");
+                    CustomAlert.error(msg:t.fileIsTooBig());
                     File(result.files.first.path!).deleteSync();
                     return;
                   }
@@ -304,7 +306,7 @@ class SendMessageController extends GetxController {
           "message/file",
           body: {
             "roomId": _roomController.currentRoom!.id.toString(),
-            "content": "this content voice ",
+            "content": "this content voice 🎤",
             "type": MessageType.voice.inString,
             "attachment": jsonEncode(VchatMessageAttachment(
               fileSize: fileSize,

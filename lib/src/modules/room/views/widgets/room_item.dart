@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import '../../../../enums/room_type.dart';
 import '../../../../enums/room_typing_type.dart';
-import '../../../../models/vchat_room.dart';
+import '../../../../models/v_chat_room.dart';
 import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/custom_widgets/circle_image.dart';
 import '../../../../utils/custom_widgets/custom_alert_dialog.dart';
@@ -22,6 +22,7 @@ class RoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = VChatAppService.to.getTrans(context);
     return InkWell(
       onTap: () {
         Get.find<RoomController>().currentRoom = _room;
@@ -42,8 +43,8 @@ class RoomItem extends StatelessWidget {
           CustomSheetModel(
             value: 1,
             text: _room.isMute.value == 1
-                ? "enable notification"
-                : "mute notification",
+                ? t.enableNotification()
+                : t.muteNotification(),
             iconData: _room.isMute.value == 1
                 ? Icons.notifications
                 : Icons.notifications_off,
@@ -51,7 +52,7 @@ class RoomItem extends StatelessWidget {
           _room.roomType == RoomType.single
               ? CustomSheetModel(
                   value: 2,
-                  text: isMyBlock ? "Open chat" : "Close chat",
+                  text: isMyBlock ? t.openChat() : t.closeChat(),
                   iconData: Icons.block,
                 )
               : CustomSheetModel(
@@ -62,13 +63,13 @@ class RoomItem extends StatelessWidget {
         ]);
         if (res == 1) {
           final res = await CustomAlert.customAskDialog(
-              message: "Are you sure", context: context);
+              message: t.areYouSure(), context: context);
           if (res == 1) {
             Get.find<RoomController>().muteAction(_room);
           }
         } else if (res == 2) {
           final res = await CustomAlert.customAskDialog(
-              message: "Are you sure", context: context);
+              message: t.areYouSure(), context: context);
           if (res == 1) {
             Get.find<RoomController>().blockOrLeaveAction(_room);
           }
@@ -117,6 +118,13 @@ class RoomItem extends StatelessWidget {
                           if (tSt.status != RoomTypingType.stop) {
                             final txt = "${tSt.status.inString} ...";
                             if (_room.roomType == RoomType.single) {
+                              if (tSt.status == RoomTypingType.typing) {
+                                return t.typing().text;
+                              }
+                              if (tSt.status == RoomTypingType.recording) {
+                                return t.recording().text;
+                              }
+
                               return txt.text;
                             } else {
                               return "${tSt.name} is $txt".text;

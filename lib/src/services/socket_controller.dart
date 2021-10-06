@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
 
-import '../models/vchat_room.dart';
-import '../models/vchat_room_typing.dart';
+import '../models/v_chat_room.dart';
+import '../models/v_chat_room_typing.dart';
 import '../modules/room/controllers/rooms_controller.dart';
 import 'local_storage_serivce.dart';
 import 'socket_service.dart';

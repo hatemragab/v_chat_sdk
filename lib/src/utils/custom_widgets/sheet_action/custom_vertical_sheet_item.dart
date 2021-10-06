@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 
 import 'sheet_vertical_item.dart';
 
@@ -14,7 +15,7 @@ class CustomVerticalSheetItem {
       builder: (context) {
         return CupertinoActionSheet(
             cancelButton: CupertinoActionSheetAction(
-              child: const Text('Cancel'),
+              child:   Text(VChatAppService.to.getTrans().cancel()),
               onPressed: () {
                 Navigator.pop(context);
               },

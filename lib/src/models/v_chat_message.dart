@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import '../enums/message_type.dart';
 import '../utils/helpers/helpers.dart';
-import 'vchat_message_attachment.dart';
+import 'v_chat_message_attachment.dart';
 
 @immutable
-class VchatMessage {
+class VChatMessage {
   final int id;
   final MessageType messageType;
   final VchatMessageAttachment? messageAttachment;
@@ -20,7 +20,7 @@ class VchatMessage {
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
-  const VchatMessage({
+  const VChatMessage({
     required this.id,
     required this.messageType,
     required this.messageAttachment,
@@ -34,7 +34,7 @@ class VchatMessage {
     required this.createdAtString,
   });
 
-  VchatMessage copyWith({
+  VChatMessage copyWith({
     int? id,
     MessageType? messageType,
     VchatMessageAttachment? messageAttachment,
@@ -47,7 +47,7 @@ class VchatMessage {
     int? roomId,
     String? createdAtString,
   }) {
-    return VchatMessage(
+    return VChatMessage(
       id: id ?? this.id,
       messageType: messageType ?? this.messageType,
       messageAttachment: messageAttachment ?? this.messageAttachment,
@@ -70,7 +70,7 @@ class VchatMessage {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is VchatMessage &&
+      (other is VChatMessage &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           messageType == other.messageType &&
@@ -96,11 +96,11 @@ class VchatMessage {
       senderImageThumb.hashCode ^
       roomId.hashCode;
 
-  factory VchatMessage.fromMap(dynamic map) {
+  factory VChatMessage.fromMap(dynamic map) {
     const MessageType messageType = MessageType.text;
     final createdAtLocal = Helpers.getLocalTime(map['createdAt'] as int);
     final updatedAtLocal = Helpers.getLocalTime(map['updatedAt'] as int);
-    return VchatMessage(
+    return VChatMessage(
       id: map['_id'] as int,
       messageType: messageType.enumType(map['messageType']),
       messageAttachment: map['messageAttachment'] == null

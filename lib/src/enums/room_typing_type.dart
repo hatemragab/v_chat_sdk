@@ -14,7 +14,7 @@ extension RoomTypingTypeEnum on RoomTypingType {
     } else if (type == RoomTypingType.recording.inString) {
       return RoomTypingType.recording;
     } else {
-      throw ("type in RoomTypingType is ${type.toString()}");
+      throw ("V_CHAT_SAY =>>>> type in RoomTypingType is ${type.toString()}");
     }
   }
 }

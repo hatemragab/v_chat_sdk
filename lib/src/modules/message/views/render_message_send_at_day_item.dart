@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-import '../../../models/vchat_message.dart';
+import '../../../models/v_chat_message.dart';
 import '../../../utils/custom_widgets/rounded_container.dart';
 import '../../../utils/date_util.dart';
 
@@ -8,8 +8,8 @@ import '../../../utils/date_util.dart';
 
 class RenderMessageSendAtDayItem extends StatelessWidget {
   final int index;
-  final VchatMessage message;
-  final List<VchatMessage> messages;
+  final VChatMessage message;
+  final List<VChatMessage> messages;
 
   const RenderMessageSendAtDayItem(
       {required this.index, required this.message, required this.messages});
@@ -36,7 +36,7 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
     if (formattedLastMessageSendAt != formattedMessageSendAt) {
       return getLabelDay(message.createdAt);
     }
-    return Container();
+    return  const SizedBox.shrink();
   }
 
   Widget getLabelDay(int milliseconds) {

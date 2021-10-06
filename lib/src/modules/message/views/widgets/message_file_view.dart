@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:textless/textless.dart';
-import '../../../../models/vchat_message.dart';
+import '../../../../models/v_chat_message.dart';
 
 import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/custom_widgets/rounded_container.dart';
@@ -9,7 +9,7 @@ import '../../../../utils/file_utils.dart';
 
 
 class MessageFileView extends StatelessWidget {
-  final VchatMessage _message;
+  final VChatMessage _message;
   final bool isSender;
   final myId = VChatAppService.to.vChatUser!.id;
 

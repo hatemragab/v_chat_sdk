@@ -1,6 +1,6 @@
-import '../../dto/vchat_login_dto.dart';
-import '../../dto/vchat_register_dto.dart';
-import '../../models/vchat_user.dart';
+import '../../dto/v_chat_login_dto.dart';
+import '../../dto/v_chat_register_dto.dart';
+import '../../models/v_chat_user.dart';
 import '../../utils/api_utils/dio/custom_dio.dart';
 import '../../utils/api_utils/dio/server_default_res.dart';
 

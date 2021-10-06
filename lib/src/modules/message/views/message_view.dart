@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 
 import '../../../enums/room_type.dart';
 import '../../../utils/custom_widgets/circle_image.dart';
@@ -29,13 +30,14 @@ class _MessageViewState extends State<MessageView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = VChatAppService.to.getTrans(context);
     return Scaffold(
       appBar: MessageAppBarView(),
       body: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 1, top: 4),
         child: Column(
           children: [
-            ConnectionChecker(),
+            const ConnectionChecker(),
             const SizedBox(
               height: 6,
             ),
@@ -94,9 +96,9 @@ class _MessageViewState extends State<MessageView> {
               if (bkId != 0) {
                 if (bkId == controller.myModel!.id) {
                   // i the blocker
-                  return "chat has been closed by me".text;
+                  return t.chatHasBeenClosedByMe().text;
                 } else {
-                  return "chat has been closed".text;
+                  return t.chatHasBeenClosed().text;
                 }
               }
 

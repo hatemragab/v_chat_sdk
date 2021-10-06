@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:example/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -6,20 +7,25 @@ import 'package:v_chat_sdk/v_chat_sdk.dart';
 import 'controllers/lang_controller.dart';
 import 'generated/l10n.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await VChatController.instance.init(
-      baseUrl: "10.0.2.2:3000",
-      appName: "test_v_chat",
-      isUseFirebase: true,
-      lightTheme: vchatLightTheme,
-      darkTheme: vchatDarkTheme,
-      enableLogger: true);
+    baseUrl: "10.0.2.2:3000",
+    appName: "test_v_chat",
+    isUseFirebase: true,
+    lightTheme: vchatLightTheme,
+    darkTheme: vchatDarkTheme,
+    enableLogger: true,
+    navKey: navigatorKey
+  );
+
   // add support new language
   // v_chat will change the language one you change it
-  VChatController.instance.setLocaleMessages(
-      languageCode: "ar", countryCode: "EG", lookupMessages: Ar());
+  // VChatController.instance.setLocaleMessages(
+  //     languageCode: "ar", countryCode: "EG", lookupMessages: Ar());
 
   runApp(ChangeNotifierProvider<LangController>(
     create: (context) => LangController(),
@@ -38,6 +44,8 @@ class _MyAppState extends State<MyApp> {
     context.watch<LangController>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey:navigatorKey ,
+
       theme: context.read<LangController>().theme,
       localizationsDelegates: const [
         S.delegate,
@@ -45,6 +53,8 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
       supportedLocales: S.delegate.supportedLocales,
       locale: context.read<LangController>().locale,
       home: SplashScreen(),
@@ -52,7 +62,4 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class Ar implements LookupString {
-  @override
-  String test() => "اختبار ";
-}
+
