@@ -7,7 +7,7 @@ import '../controllers/rooms_controller.dart';
 import 'widgets/room_item.dart';
 
 class VChatRoomsView extends GetView<RoomController> {
-  const VChatRoomsView({Key? key}) : super(key: key);
+   VChatRoomsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

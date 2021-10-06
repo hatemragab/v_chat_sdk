@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
+
 import '../enums/room_type.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
-
-class VChatProvider {
+class VChatProvider   {
   Future createSingleChat(String peerEmail) async {
-  return (await CustomDio().send(
+    return (await CustomDio().send(
       reqMethod: "POST",
       path: "room/check-if-there-room",
       body: {
@@ -18,7 +19,7 @@ class VChatProvider {
   }
 
   Future createNewSingleRoom(String msg, String peerEmail) async {
-   return (await CustomDio().send(
+    return (await CustomDio().send(
       reqMethod: "POST",
       path: "room",
       body: {
@@ -28,5 +29,16 @@ class VChatProvider {
       },
     ))
         .data['data'];
+  }
+
+  Future<String> updateUserFcmToken(String token) async {
+    return (await CustomDio().send(
+      reqMethod: "patch",
+      path: "user",
+      body: {
+        "fcmToken": token,
+      },
+    ))
+        .data['data'].toString();
   }
 }

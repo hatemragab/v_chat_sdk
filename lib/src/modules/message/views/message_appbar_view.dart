@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
+import '../../../../v_chat_sdk.dart';
 import '../../../enums/room_type.dart';
 import '../../../enums/room_typing_type.dart';
 import '../../../utils/custom_widgets/circle_image.dart';
@@ -59,7 +60,7 @@ class MessageAppBarView extends GetView<MessageController>
               if (isOnline == 1) {
                 return "Online".cap.size(14);
               } else {
-                return VChatAppService.to.trans!['offline'].toString().cap.size(14);
+                return VChatAppService.to.getTrans(context).test().cap.size(14);
               }
             } else {
               if (typingSt.status != RoomTypingType.stop) {

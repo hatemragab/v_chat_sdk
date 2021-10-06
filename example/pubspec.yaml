@@ -37,6 +37,7 @@ dependencies:
   v_chat_sdk:
     path: ../
   bot_toast:
+  provider: ^5.0.0
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0

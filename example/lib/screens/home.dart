@@ -1,13 +1,14 @@
+import 'package:example/screens/setting_screen.dart';
 import 'package:example/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../controllers/home_controller.dart';
+import 'package:get_storage/get_storage.dart';
 import '../main.dart';
 import '../models/user.dart';
-import 'user_profile.dart';
-
-bool x = true;
+import 'app_rooms_screen.dart';
+import 'user_profile_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -26,27 +27,24 @@ class _HomeState extends State<Home> {
     super.initState();
 
     //here user will be online this must be init one user authenticated
-    VChatController.instance.bindChatControllers();
-
     _controller = HomeController(context);
     getUsers();
     _childrenAppBars = [
       AppBar(
-        title: InkWell(
-            onTap: () {
-              if (x) {
-                x = false;
-              } else {
-                x = true;
-              }
-              MyApp.of(context)!
-                  .setLocale(Locale.fromSubtags(languageCode: x ? "ar" : "en"));
-            },
-            child: "This data from my server not vchat".text),
+        title: "This data from my server not vchat".text,
         centerTitle: true,
       ),
-      RoomTabAppBarView()
+      AppBar(
+        title: "My great rooms".text,
+      ),
+      AppBar(
+        title: "Settings".text,
+      )
     ];
+    if (GetStorage().hasData("myModel")) {
+      // this mean my user has auth so i will bind chat controller to make him online else will throw exception
+      VChatController.instance.bindChatControllers();
+    }
   }
 
   void onTabTapped(int index) {
@@ -57,19 +55,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _children = [homeTab(), const VChatRoomsView()];
+    _children = [homeTab(),  VChatRoomsView(), const SettingScreen()];
+   // MyApp.of(context)!.randomLocale();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Scaffold(
-                  body: VChatRoomsView(),
-                ),
+                builder: (context) => const AppRoomsScreen(),
               ));
         },
-        child: Icon(Icons.mail),
+        child: const Icon(Icons.mail),
       ),
       appBar: PreferredSize(
         child: _childrenAppBars[_currentIndex],
@@ -78,9 +75,9 @@ class _HomeState extends State<Home> {
       body: _children[_currentIndex], // new
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
-        backgroundColor: Colors.white,
+
         currentIndex: _currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -89,23 +86,31 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.mail),
             label: 'Chats',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
-
     );
   }
 
   void getUsers() async {
     final users = await _controller.getUsers();
-    setState(() {
-      _usersList.addAll(users);
-    });
+    _usersList.clear();
+    _usersList.addAll(users);
+    updateTabs();
+    setState(() {});
+  }
+
+  void updateTabs() {
+    _children = [homeTab(),  VChatRoomsView(), const SettingScreen()];
   }
 
   Widget homeTab() {
     //return Center(child: Text("click on chat icon to see chats"));
     return ListView.separated(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemBuilder: (context, index) => ListTile(
               onTap: () {
                 Navigator.push(
@@ -116,14 +121,14 @@ class _HomeState extends State<Home> {
                 );
               },
               title: _usersList[index].userName.text,
-              trailing: Icon(Icons.message),
+              trailing: const Icon(Icons.message),
               leading: Image.network(
                 baseImgUrl + _usersList[index].img,
                 height: 100,
                 width: 100,
               ),
             ),
-        separatorBuilder: (context, index) => Divider(),
+        separatorBuilder: (context, index) => const Divider(),
         itemCount: _usersList.length);
   }
 }

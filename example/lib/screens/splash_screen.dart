@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import '../main.dart';
 import 'home.dart';
-import 'login.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -13,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     startNavigate();
   }
@@ -33,16 +31,19 @@ class _SplashScreenState extends State<SplashScreen> {
   void startNavigate() async {
     final myModel = GetStorage().hasData("myModel");
     //final vChatUser = GetStorage().hasData(GetStorageKeys.KV_CHAT_MY_MODEL);
-
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     if (myModel) {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Home(),
-      ));
+
+      // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Home() ,));
+
+
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => Home()),
+          (Route<dynamic> route) => false);
     } else {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      ));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          (Route<dynamic> route) => false);
     }
   }
 }

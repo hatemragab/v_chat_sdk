@@ -1,8 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/translator/lookup_string.dart';
 import 'dto/vchat_login_dto.dart';
 import 'dto/vchat_register_dto.dart';
 import 'models/vchat_room.dart';
@@ -30,19 +33,46 @@ class VChatController {
 
   static VChatController get instance => _instance;
 
-  final _provider = VChatProvider();
+  late final _vChatControllerProvider = VChatProvider();
 
   final _authProvider = AuthProvider();
 
-  Future init(
-      {required String baseUrl,
-      required String appName,
-      required bool isUseFirebase}) async {
+  Future init({
+    required String baseUrl,
+    required String appName,
+    required bool isUseFirebase,
+    required ThemeData lightTheme,
+    required ThemeData darkTheme,
+    required bool enableLogger,
+  }) async {
+    vchatUseFirebase = isUseFirebase;
     serverIp = baseUrl;
     vchatAppName = appName;
-    vchatUseFirebase = isUseFirebase;
+
+
     await Get.putAsync(() => VChatAppService().init(), permanent: true);
     await Get.putAsync(() => LocalStorageService().init(), permanent: true);
+
+    VChatAppService.to.dark = darkTheme;
+    VChatAppService.to.light = lightTheme;
+    if (kReleaseMode) {
+      enableLog = false;
+    } else {
+      enableLog = enableLogger;
+    }
+  }
+
+  void setLocaleMessages(
+      {required String languageCode,
+      required String countryCode,
+      required LookupString lookupMessages}) {
+    try {
+      VChatAppService.to.setLocaleMessages(
+          "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
+    } catch (err) {
+      Helpers.vlog("you should call function after init v chat");
+      throw "you should call function after init v chat";
+    }
   }
 
   Future<VChatUser> login(VChatLoginDto dto) async {
@@ -53,6 +83,7 @@ class VChatController {
     }
     final user = await _authProvider.login(dto);
     await _saveUser(user);
+    bindChatControllers();
     return user;
   }
 
@@ -64,6 +95,7 @@ class VChatController {
     }
     final user = await _authProvider.register(dto);
     await _saveUser(user);
+    bindChatControllers();
     return user;
   }
 
@@ -79,7 +111,7 @@ class VChatController {
     String? createBtnTxt,
   }) async {
     String txt = "";
-    final data = await _provider.createSingleChat(peerEmail);
+    final data = await _vChatControllerProvider.createSingleChat(peerEmail);
 
     if (data == false) {
       //no rooms founded
@@ -97,8 +129,8 @@ class VChatController {
               TextButton(
                   onPressed: () async {
                     Navigator.pop(context);
-                    final data =
-                        await _provider.createNewSingleRoom(txt, peerEmail);
+                    final data = await _vChatControllerProvider
+                        .createNewSingleRoom(txt, peerEmail);
                     // room has been created successfully
                     await Future.delayed(const Duration(seconds: 1));
                     _navigateToRoomMessage(data, ctx);
@@ -127,9 +159,23 @@ class VChatController {
     );
   }
 
-  Future stopAllNotifiactions() async {}
+  Future<String> stopAllNotification() async {
+    if (vchatUseFirebase) {
+      await FirebaseMessaging.instance.deleteToken();
+      return "Notifications has been stopped successfully";
+    } else {
+      throw "you have to enable firebase for this project first";
+    }
+  }
 
-  Future startAllNotifiactions() async {}
+  Future<String> startAllNotification() async {
+    if (vchatUseFirebase) {
+      final token = (await FirebaseMessaging.instance.getToken()).toString();
+      return await _vChatControllerProvider.updateUserFcmToken(token);
+    } else {
+      throw "you have to enable fire base for this project first";
+    }
+  }
 
   Future updateUserImageOrName() async {}
 
@@ -150,5 +196,17 @@ class VChatController {
     Get.put<NotificationService>(NotificationService());
     Get.put<SocketController>(SocketController(), permanent: true);
     Get.put<SocketService>(SocketService(), permanent: true);
+  }
+
+  void config(
+      {required Map<String, String> trans,
+      required ThemeData lightTheme,
+      required BuildContext context,
+      required ThemeData darkTheme}) {
+    VChatAppService.to.context = context;
+    VChatAppService.to.light = lightTheme;
+    VChatAppService.to.dark = darkTheme;
+    VChatAppService.to.trans = trans;
+    print(Localizations.localeOf(context).toString());
   }
 }

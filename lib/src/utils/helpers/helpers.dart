@@ -1,13 +1,19 @@
+import 'dart:developer';
 
 import 'package:path/path.dart';
 
 import '../../enums/message_type.dart';
+import '../vchat_constants.dart';
 
 class Helpers {
-
-
   static String baseName(String path) {
     return basename(path);
+  }
+
+  static void vlog(String err) {
+    if (enableLog) {
+      log("V_CHAT_SDK SAY =>>> $err", name: "V_CHAT_SDK");
+    }
   }
 
   static DateTime getLocalTime(int time) {

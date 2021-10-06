@@ -1,4 +1,5 @@
 import 'package:example/models/user.dart';
+import 'package:example/utils/custom_alert.dart';
 import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../screens/home.dart';
-import '../screens/register.dart';
+import '../screens/register_screen.dart';
 
 class LoginController {
   BuildContext context;
@@ -15,17 +16,6 @@ class LoginController {
 
   LoginController(this.context);
 
-  void showDialog1(String data) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: "Error".text,
-          content: data.text,
-        );
-      },
-    );
-  }
 
   void login() async {
     final email = emailTxtController.text.toString();
@@ -44,7 +34,7 @@ class LoginController {
         builder: (context) => Home(),
       ));
     } catch (err) {
-      showDialog1(err.toString());
+      CustomAlert.showError(context: context, err: err.toString());
     }
   }
 

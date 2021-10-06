@@ -1,47 +1,44 @@
-import 'package:bot_toast/bot_toast.dart';
+import 'package:example/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
-import 'dart:ui' as ui;
+import 'controllers/lang_controller.dart';
 import 'generated/l10n.dart';
-import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await VChatController.instance.init(
-    baseUrl: "10.0.2.2:3000",
-    appName: "test_v_chat",
-    isUseFirebase: true,
-  );
-  runApp(MyApp());
+      baseUrl: "10.0.2.2:3000",
+      appName: "test_v_chat",
+      isUseFirebase: true,
+      lightTheme: vchatLightTheme,
+      darkTheme: vchatDarkTheme,
+      enableLogger: true);
+  // add support new language
+  // v_chat will change the language one you change it
+  VChatController.instance.setLocaleMessages(
+      languageCode: "ar", countryCode: "EG", lookupMessages: Ar());
+
+  runApp(ChangeNotifierProvider<LangController>(
+    create: (context) => LangController(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   State<MyApp> createState() => _MyAppState();
-
-  static _MyAppState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>();
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale;
-
-  void setLocale(Locale value) {
-    setState(() {
-      _locale = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    context.watch<LangController>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      builder: BotToastInit(),
-      theme: ThemeData.light(),
-      navigatorObservers: [BotToastNavigatorObserver()],
+      theme: context.read<LangController>().theme,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -49,22 +46,13 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: _locale ?? ui.window.locale,
-      home: Builder(builder: (context) {
-        return VChatWrapper(
-          child: const SplashScreen(),
-          // translate the package
-          trans: {"test": S.of(context).test, "offline": S.of(context).offline},
-          dark: vchatDarkTheme,
-          //custom theme
-          light: vchatLightTheme.copyWith(
-            textTheme: vchatLightTheme.textTheme.copyWith(
-
-                headline6: vchatLightTheme.textTheme.headline6!
-                    .copyWith(fontSize: 17)),
-          ),
-        );
-      }),
+      locale: context.read<LangController>().locale,
+      home: SplashScreen(),
     );
   }
+}
+
+class Ar implements LookupString {
+  @override
+  String test() => "اختبار ";
 }
