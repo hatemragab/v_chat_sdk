@@ -30,6 +30,7 @@ class CustomAlert {
       Function()? onPress,
       required String errorMessage,
       bool dismissible = true}) {
+
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -49,19 +50,22 @@ class CustomAlert {
                     bottom: 5,
                     left: 10,
                     right: 10),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    errorMessage.text.alignCenter,
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      child: ElevatedButton(
-                          onPressed: onPress ?? () => Navigator.pop(context),
-                          child:VChatAppService.to.getTrans().oK().text),
-                    )
-                  ],
+                content: Theme(
+                  data: VChatAppService.to.currentTheme(context)!,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      errorMessage.text.alignCenter,
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        child: ElevatedButton(
+                            onPressed: onPress ?? () => Navigator.pop(context),
+                            child:VChatAppService.to.getTrans(context).oK().text),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -71,7 +75,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: context,
+      context: VChatAppService.to.navKey!.currentContext!,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
@@ -132,30 +136,7 @@ class CustomAlert {
     );
   }
 
-  static void customVerticalSheet({List<Widget>? items}) {
-    showModalBottomSheet(
-      context: Get.context!,
-      enableDrag: true,
-      isScrollControlled: true,
-      builder: (builder) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 10, left: 10, bottom: 15),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Center(child: Icon(Icons.drag_handle)),
-              const SizedBox(
-                height: 10,
-              ),
-              ...items!,
-            ],
-          ),
-        );
-      },
-    );
-  }
+
 
   static Future<int?> customAskDialog(
       {String? title,
@@ -222,10 +203,3 @@ class CustomAlert {
   }
 }
 
-class CustomAskButtonSheetModel {
-  final String title;
-  final int id;
-  final IconData? icon;
-
-  CustomAskButtonSheetModel({required this.title, required this.id, this.icon});
-}

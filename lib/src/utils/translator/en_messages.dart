@@ -74,7 +74,8 @@ class EnMessages implements LookupString {
   String typing() => "Typing";
 
   @override
-  String userHasBeenBlockedSuccessfully() => "User has been blocked successfully";
+  String userHasBeenBlockedSuccessfully() =>
+      "User has been blocked successfully";
 
   @override
   String video() => "Video";
@@ -102,4 +103,20 @@ class EnMessages implements LookupString {
 
   @override
   String yesterday() => "Yesterday";
+
+  @override
+  String create() => "Create";
+
+  @override
+  String notificationsHasBeenStoppedSuccessfully() =>
+      "Notifications has been stopped successfully";
+
+  @override
+  String sayHello() => "Say Hello !";
+
+  @override
+  String offline() => "Offline";
+
+  @override
+  String online() => "Online";
 }

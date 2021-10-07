@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 
 class ImageViewerView extends StatelessWidget {
   final String url;
@@ -8,6 +9,7 @@ class ImageViewerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Helpers.vlog(url);
     return SafeArea(
       child: Stack(
         children: [

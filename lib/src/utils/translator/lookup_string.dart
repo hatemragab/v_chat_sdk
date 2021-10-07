@@ -66,4 +66,14 @@ abstract class LookupString {
   String saturday();
 
   String sunday();
+
+  String sayHello();
+
+  String create();
+
+  String notificationsHasBeenStoppedSuccessfully();
+
+  String online();
+
+  String offline();
 }

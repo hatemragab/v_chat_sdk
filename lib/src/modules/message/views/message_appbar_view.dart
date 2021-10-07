@@ -67,9 +67,9 @@ class MessageAppBarView extends GetView<MessageController>
                 return "${typingSt.status.inString} ...".cap.size(14);
               }
               if (isOnline == 1) {
-                return "Online".cap.size(14);
+                return t.online().cap.size(14);
               } else {
-                return VChatAppService.to.getTrans(context).test().cap.size(14);
+                return VChatAppService.to.getTrans(context).offline().cap.size(14);
               }
             } else {
               if (typingSt.status != RoomTypingType.stop) {

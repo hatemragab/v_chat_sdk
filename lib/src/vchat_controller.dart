@@ -123,7 +123,7 @@ class VChatController {
         context: ctx,
         builder: (context) {
           return AlertDialog(
-            title: titleTxt != null ? titleTxt.text : "Say Hello !".text,
+            title: titleTxt != null ? titleTxt.text :VChatAppService.to.getTrans().sayHello().text,
             content: TextField(
               onChanged: (value) {
                 txt = value;
@@ -140,7 +140,7 @@ class VChatController {
                     _navigateToRoomMessage(data, ctx);
                   },
                   child:
-                      createBtnTxt != null ? createBtnTxt.text : "Create".text)
+                      createBtnTxt != null ? createBtnTxt.text : VChatAppService.to.getTrans().create().text)
             ],
           );
         },
@@ -166,7 +166,7 @@ class VChatController {
   Future<String> stopAllNotification() async {
     if (vchatUseFirebase) {
       await FirebaseMessaging.instance.deleteToken();
-      return "Notifications has been stopped successfully";
+      return  VChatAppService.to.getTrans().notificationsHasBeenStoppedSuccessfully();
     } else {
       throw "you have to enable firebase for this project first";
     }

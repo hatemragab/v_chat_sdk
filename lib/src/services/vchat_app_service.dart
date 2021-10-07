@@ -43,7 +43,7 @@ class VChatAppService extends GetxService {
 
   final Map<String, LookupString> _lookupMessagesMap = {
     'en': EnMessages(),
-    //  'ar_EG': ArMessages()
+    'ar_EG': ArMessages()
   };
 
   void setLocaleMessages(String locale, LookupString lookupMessages) {
