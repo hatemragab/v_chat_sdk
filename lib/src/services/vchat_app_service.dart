@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/utils/translator/ar_messages.dart';
-import 'package:v_chat_sdk/src/utils/translator/en_messages.dart';
+import 'package:v_chat_sdk/src/utils/translator/ar_language.dart';
+import 'package:v_chat_sdk/src/utils/translator/en_language.dart';
 import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
@@ -35,15 +35,15 @@ class VChatAppService extends GetxService {
     if (_lookupMessagesMap[local] == null) {
       Helpers.vlog(
           "failed to find the language $local in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
-      return EnMessages();
+      return EnLanguage();
     } else {
       return _lookupMessagesMap[local]!;
     }
   }
 
   final Map<String, LookupString> _lookupMessagesMap = {
-    'en': EnMessages(),
-    'ar_EG': ArMessages()
+    'en': EnLanguage(),
+    'ar_EG': ArLanguage()
   };
 
   void setLocaleMessages(String locale, LookupString lookupMessages) {

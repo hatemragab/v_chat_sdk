@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
 import '../../enums/message_type.dart';
@@ -14,6 +16,10 @@ class Helpers {
     if (enableLog) {
       log("V_CHAT_SDK SAY =>>> $err", name: "V_CHAT_SDK");
     }
+  }
+
+  static bool isDark(BuildContext context){
+    return Theme.of(context).brightness == Brightness.dark;
   }
 
   static DateTime getLocalTime(int time) {

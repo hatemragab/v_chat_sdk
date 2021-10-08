@@ -43,7 +43,7 @@ class SendMessageController extends GetxController {
       }
       await CustomDio().send(reqMethod: "POST", path: "message", body: {
         "type": MessageType.text.inString,
-        "roomId": _roomController.currentRoom!.id.toString(),
+        "roomId": _roomController.currentRoomId.toString(),
         "content": textController.value.text.toString()
       });
       textController.clear();
@@ -93,7 +93,7 @@ class SendMessageController extends GetxController {
       }
       if (!isEmitTyping) {
         final roomTyping = VChatRoomTyping(
-            roomId: _messageController.currentRoom!.id,
+            roomId: _messageController.currentRoomId,
             status: type == 0
                 ? RoomTypingType.stop
                 : type == 1
@@ -127,7 +127,7 @@ class SendMessageController extends GetxController {
           ],
           "message/file",
           body: {
-            "roomId": _roomController.currentRoom!.id.toString(),
+            "roomId": _roomController.currentRoomId.toString(),
             "content": "this content image 📷",
             "type": MessageType.image.inString,
             "attachment": jsonEncode(VchatMessageAttachment(
@@ -161,7 +161,7 @@ class SendMessageController extends GetxController {
           ],
           "message/file",
           body: {
-            "roomId": _roomController.currentRoom!.id.toString(),
+            "roomId": _roomController.currentRoomId.toString(),
             "content": "this content file 📁",
             "type": MessageType.file.inString,
             "attachment": jsonEncode(VchatMessageAttachment(
@@ -194,7 +194,7 @@ class SendMessageController extends GetxController {
         [videoThumb, videoFile],
         "message/file",
         body: {
-          "roomId": _roomController.currentRoom!.id.toString(),
+          "roomId": _roomController.currentRoomId.toString(),
           "content": "this content video 📽",
           "type": MessageType.video.inString,
           "attachment": jsonEncode(VchatMessageAttachment(
@@ -305,7 +305,7 @@ class SendMessageController extends GetxController {
           ],
           "message/file",
           body: {
-            "roomId": _roomController.currentRoom!.id.toString(),
+            "roomId": _roomController.currentRoomId.toString(),
             "content": "this content voice 🎤",
             "type": MessageType.voice.inString,
             "attachment": jsonEncode(VchatMessageAttachment(

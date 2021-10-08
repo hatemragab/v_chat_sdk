@@ -15,19 +15,19 @@ class LocalStorageService extends GetxService {
     return this;
   }
 
-  Future<List<VchatRoom>> getRooms() async {
+  Future<List<VChatRoom>> getRooms() async {
     final maps = await database.query(RoomTable.TABLE_NAME,
         orderBy: "${RoomTable.COLUMN_UPDATED_AT} DESC");
-    final rooms = <VchatRoom>[];
+    final rooms = <VChatRoom>[];
     for (var map in maps) {
-      final r = VchatRoom.fromMap(
+      final r = VChatRoom.fromMap(
           jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
       rooms.add(r);
     }
     return rooms;
   }
 
-  Future setRooms(List<VchatRoom> rooms) async {
+  Future setRooms(List<VChatRoom> rooms) async {
     //await database.delete(NewRoomTable.TABLE_NAME);
     final roomsToInsert = rooms;
     try {
@@ -46,7 +46,7 @@ class LocalStorageService extends GetxService {
     await batch.commit(noResult: true);
   }
 
-  Future setRoomOrUpdate(VchatRoom room) async {
+  Future setRoomOrUpdate(VChatRoom room) async {
     await database.insert(
         RoomTable.TABLE_NAME,
         {

@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:textless/textless.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: "Update".text,
+        title: S.of(context).update.text,
       ),
     );
   }

@@ -12,15 +12,16 @@ import '../controllers/message_controller.dart';
 
 class MessageAppBarView extends GetView<MessageController>
     implements PreferredSizeWidget {
+  final roomController = Get.find<RoomController>();
+
   @override
   Widget build(BuildContext context) {
-    final _room = controller.currentRoom!;
     return AppBar(
       elevation: 1,
       centerTitle: true,
       automaticallyImplyLeading: false,
       leading: InkWell(
-        onTap: (){
+        onTap: () {
           Navigator.pop(context);
         },
         child: Stack(
@@ -48,62 +49,67 @@ class MessageAppBarView extends GetView<MessageController>
           ],
         ),
       ),
-      title: Column(
-        children: [
-          controller.currentRoom!.title.text,
-          Obx(() {
-            final isOnline = _room.isOnline.value;
-            final typingSt = _room.typingStatus.value;
-            final isSingle = _room.roomType == RoomType.single;
-            final t = VChatAppService.to.getTrans(context);
-            if (isSingle) {
-              if (typingSt.status != RoomTypingType.stop) {
-                if (typingSt.status == RoomTypingType.typing) {
-                  return t.typing().cap.size(14);
-                }
-                if (typingSt.status == RoomTypingType.recording) {
-                  return t.recording().cap.size(14);
-                }
-                return "${typingSt.status.inString} ...".cap.size(14);
-              }
-              if (isOnline == 1) {
-                return t.online().cap.size(14);
-              } else {
-                return VChatAppService.to.getTrans(context).offline().cap.size(14);
-              }
-            } else {
-              if (typingSt.status != RoomTypingType.stop) {
-                return "${typingSt.name} is ${typingSt.status.inString} ..."
-                    .cap
-                    .size(14);
-              } else {
-                return const SizedBox();
-              }
-            }
-          }),
+      title: Obx(() {
+        final _room =
+            roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
 
-          // "last seen at 4 hour ago".cap
-        ],
-      ),
+        return Column(
+          children: [
+            _room.title.text,
+            Builder(
+              builder: (_) {
+                final isOnline = _room.isOnline;
+                final typingSt = _room.typingStatus;
+                final isSingle = _room.roomType == RoomType.single;
+                final t = VChatAppService.to.getTrans(context);
+                if (isSingle) {
+                  if (typingSt.status != RoomTypingType.stop) {
+                    if (typingSt.status == RoomTypingType.typing) {
+                      return t.typing().cap.size(14);
+                    }
+                    if (typingSt.status == RoomTypingType.recording) {
+                      return t.recording().cap.size(14);
+                    }
+                    return "${typingSt.status.inString} ...".cap.size(14);
+                  }
+                  if (isOnline == 1) {
+                    return t.online().cap.size(14);
+                  } else {
+                    return VChatAppService.to
+                        .getTrans(context)
+                        .offline()
+                        .cap
+                        .size(14);
+                  }
+                } else {
+                  if (typingSt.status != RoomTypingType.stop) {
+                    return "${typingSt.name} is ${typingSt.status.inString} ..."
+                        .cap
+                        .size(14);
+                  } else {
+                    return const SizedBox();
+                  }
+                }
+              },
+            ),
+          ],
+        );
+      }),
       actions: [
         Center(
           child: Obx(() {
+            final _room =
+                roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
             return Padding(
               padding: const EdgeInsets.only(right: 5),
               child: InkWell(
                 onTap: () {
-                  if (_room.roomType == RoomType.groupChat) {
-                    // Get.toNamed(Routes.GROUP_CHAT_INFO);
-                  } else {
-                    // Get.toNamed(Routes.PEER_PROFILE,
-                    //     arguments: controller.currentRoom!.ifSinglePeerId);
-                  }
+                  //todo call back when icon clicked
                 },
                 child: CircleImage.network(
-                    path: controller.currentRoom!.thumbImage,
-                    width: 45,
-                    height: 45,
-                    isOnline: controller.currentRoom!.isOnline.value == 1),
+                    path: _room.thumbImage,
+                    radius: 25,
+                    isOnline: _room.isOnline == 1),
               ),
             );
           }),

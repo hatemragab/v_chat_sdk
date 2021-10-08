@@ -39,9 +39,5 @@ class AuthProvider {
     return VChatUser.fromMap(userMap);
   }
 
-  Future<ServerDefaultResponse> upload(String filePath) async {
-    final res = await CustomDio().upload(
-        apiEndPoint: "user/file/upload", filePath: filePath, loading: true);
-    return ServerDefaultResponse.fromMap(res.data);
-  }
+
 }

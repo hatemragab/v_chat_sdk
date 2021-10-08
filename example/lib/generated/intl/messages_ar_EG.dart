@@ -21,7 +21,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "allChatNotifications":
+            MessageLookupByLibrary.simpleMessage("كل اشعارات المحادثه"),
+        "ar": MessageLookupByLibrary.simpleMessage("عربي"),
+        "changeLanguage": MessageLookupByLibrary.simpleMessage("تغيسر اللغه"),
+        "changeTheme": MessageLookupByLibrary.simpleMessage("تغير الثيم"),
+        "chats": MessageLookupByLibrary.simpleMessage("الدردشات"),
+        "chooseImage": MessageLookupByLibrary.simpleMessage("اختار صوره"),
+        "dark": MessageLookupByLibrary.simpleMessage("اسود ع دماغك"),
+        "email": MessageLookupByLibrary.simpleMessage("البريد"),
+        "en": MessageLookupByLibrary.simpleMessage("انجليزي"),
+        "error": MessageLookupByLibrary.simpleMessage("خطا"),
+        "home": MessageLookupByLibrary.simpleMessage("الرئيسيه"),
+        "light": MessageLookupByLibrary.simpleMessage("ابيض عليك"),
+        "logOut": MessageLookupByLibrary.simpleMessage("تسجيل خروج"),
+        "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
+        "message": MessageLookupByLibrary.simpleMessage("رساله"),
+        "myGreatRooms": MessageLookupByLibrary.simpleMessage("كل المحادثات"),
+        "name": MessageLookupByLibrary.simpleMessage("الاسم"),
+        "off": MessageLookupByLibrary.simpleMessage("ايقاف"),
         "offline": MessageLookupByLibrary.simpleMessage("قافل"),
-        "test": MessageLookupByLibrary.simpleMessage("تست")
+        "ok": MessageLookupByLibrary.simpleMessage("تم"),
+        "on": MessageLookupByLibrary.simpleMessage("تشغيل"),
+        "password": MessageLookupByLibrary.simpleMessage("كلمه المرور"),
+        "register": MessageLookupByLibrary.simpleMessage("تسجيل حساب"),
+        "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
+        "test": MessageLookupByLibrary.simpleMessage("تست"),
+        "thisDataFromMyServerNotVchat":
+            MessageLookupByLibrary.simpleMessage("هذه الداتا من سيرفر خارجي"),
+        "update": MessageLookupByLibrary.simpleMessage("تحديث"),
+        "updateProfile": MessageLookupByLibrary.simpleMessage("تحديث الحساب")
       };
 }

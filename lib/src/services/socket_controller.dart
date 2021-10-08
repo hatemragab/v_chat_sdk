@@ -29,12 +29,12 @@ class SocketController extends GetxController {
   }
 
 
-  void handleOnAllRoomsEvent(List<VchatRoom> list) async {
+  void handleOnAllRoomsEvent(List<VChatRoom> list) async {
     await Get.find<LocalStorageService>().setRooms(list);
     _roomController.getAllRoomsEvent(list);
   }
 
-  void handleOnUpdateOneRoomEvent(VchatRoom room) async {
+  void handleOnUpdateOneRoomEvent(VChatRoom room) async {
     await Get.find<LocalStorageService>().setRoomOrUpdate(room);
     _roomController.updateOneRoomInRamAndSort(room);
   }

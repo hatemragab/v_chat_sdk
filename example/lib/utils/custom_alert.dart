@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 
@@ -7,14 +8,14 @@ class CustomAlert {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: "Error".text,
+          title: S.of(context).error.text,
           content: err.text,
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: "Ok".text)
+                child: S.of(context).ok.text)
           ],
         );
       },

@@ -224,7 +224,7 @@ packages:
     source: hosted
     version: "3.1.2"
   flutter_keyboard_visibility:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_keyboard_visibility
       url: "https://pub.dartlang.org"

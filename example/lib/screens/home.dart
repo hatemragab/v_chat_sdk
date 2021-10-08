@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:example/screens/setting_screen.dart';
 import 'package:example/utils/config.dart';
 import 'package:flutter/material.dart';
@@ -29,22 +30,28 @@ class _HomeState extends State<Home> {
     //here user will be online this must be init one user authenticated
     _controller = HomeController(context);
     getUsers();
-    _childrenAppBars = [
-      AppBar(
-        title: "This data from my server not vchat".text,
-        centerTitle: true,
-      ),
-      AppBar(
-        title: "My great rooms".text,
-      ),
-      AppBar(
-        title: "Settings".text,
-      )
-    ];
+
     if (GetStorage().hasData("myModel")) {
       // this mean my user has auth so i will bind chat controller to make him online else will throw exception
       VChatController.instance.bindChatControllers();
     }
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    _childrenAppBars = [
+      AppBar(
+        title: S.of(context).thisDataFromMyServerNotVchat.text,
+        centerTitle: true,
+      ),
+      AppBar(
+        title: S.of(context).myGreatRooms.text,
+      ),
+      AppBar(
+        title: S.of(context).settings.text,
+      )
+    ];
   }
 
   void onTabTapped(int index) {
@@ -77,18 +84,18 @@ class _HomeState extends State<Home> {
         onTap: onTabTapped,
 
         currentIndex: _currentIndex,
-        items: const [
+        items:  [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: S.of(context).home,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
-            label: 'Chats',
+            label: S.of(context).chats,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Settings',
+            label: S.of(context).settings,
           ),
         ],
       ),

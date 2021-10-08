@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:example/controllers/lang_controller.dart';
+import 'package:example/generated/l10n.dart';
 import 'package:example/main.dart';
 import 'package:example/screens/splash_screen.dart';
 import 'package:example/screens/update_user_profile_screen.dart';
@@ -26,11 +27,11 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             ProfileItem(
-              title: "Change language",
+              title: S.of(context).changeLanguage,
               icon: Icons.language,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context, data: ["ar", "en"]);
+                    context: context, data: [S.of(context).ar, S.of(context).en]);
                 if (res == 0) {
                   Provider.of<LangController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "ar"));
@@ -42,11 +43,11 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "Change Theme",
+              title: S.of(context).changeTheme,
               icon: Icons.wb_sunny,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context, data: ["light", "dark"]);
+                    context: context, data: [S.of(context).light, S.of(context).dark]);
                 if (res == 0) {
                   Provider.of<LangController>(context, listen: false)
                       .changeTheme(false);
@@ -58,7 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "Update profile",
+              title: S.of(context).updateProfile,
               icon: Icons.edit,
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -66,11 +67,11 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "All Chat notifications",
+              title: S.of(context).allChatNotifications,
               icon: Icons.notification_important,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context, data: ["On", "Off"]);
+                    context: context, data: [S.of(context).on, S.of(context).off]);
                 if (res == 0) {
                   VChatController.instance.startAllNotification();
                 }
@@ -80,7 +81,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "Log out",
+              title: S.of(context).logOut,
               icon: Icons.logout,
               onTap: () async {
                 await VChatController.instance.logOut();

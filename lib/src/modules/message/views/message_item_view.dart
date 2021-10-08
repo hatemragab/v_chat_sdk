@@ -19,12 +19,15 @@ class MessageItemView extends GetView<MessageController> {
   final VChatMessage _message;
   final int index;
 
-    const MessageItemView(this._message, this.index);
+  const MessageItemView(this._message, this.index);
+
+
 
   @override
   Widget build(BuildContext context) {
     final isSender = controller.myModel!.id == _message.senderId;
     final paddingWidth = MediaQuery.of(context).size.width * .80;
+
 
     // handle  join && leave
     if (_message.messageType == MessageType.info) {
@@ -45,24 +48,24 @@ class MessageItemView extends GetView<MessageController> {
         const SizedBox(
           height: 5,
         ),
-        !isSender && controller.currentRoom!.roomType == RoomType.groupChat
-            ? InkWell(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    CircleImage.network(
-                      path: _message.senderImageThumb,
-                      width: 25,
-                      height: 25,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    _message.senderName.cap,
-                  ],
-                ),
-              )
-            : const SizedBox.shrink(),
+        /// user icon and name must show only in group chat !
+        // !isSender && controller.currentRoom!.roomType == RoomType.groupChat
+        //     ? InkWell(
+        //         onTap: () {},
+        //         child: Row(
+        //           children: [
+        //             CircleImage.network(
+        //               path: _message.senderImageThumb,
+        //               radius: 10,
+        //             ),
+        //             const SizedBox(
+        //               width: 5,
+        //             ),
+        //             _message.senderName.cap,
+        //           ],
+        //         ),
+        //       )
+        //     : const SizedBox.shrink(),
         const SizedBox(
           height: 5,
         ),
@@ -77,7 +80,7 @@ class MessageItemView extends GetView<MessageController> {
                     ? const Color(0xff876969)
                     : Colors.tealAccent
                 : Theme.of(context).brightness == Brightness.dark
-                    ? const Color(0xff453131)
+                    ?   Colors.black26
                     : Colors.blueGrey[100],
             borderRadius: getContainerBorder(isSender: isSender),
             border: Border.all(color: Colors.black12),
@@ -116,7 +119,7 @@ class MessageItemView extends GetView<MessageController> {
     }
   }
 
-  Widget getItemBody({required bool isSender,required BuildContext context}) {
+  Widget getItemBody({required bool isSender, required BuildContext context}) {
     final t = VChatAppService.to.getTrans();
     switch (_message.messageType) {
       case MessageType.text:
@@ -127,7 +130,7 @@ class MessageItemView extends GetView<MessageController> {
             trimLines: 5,
             trimMode: TrimMode.Line,
             trimCollapsedText: t.showMore(),
-            trimExpandedText: t.showLess() ,
+            trimExpandedText: t.showLess(),
             moreStyle: Get.textTheme.bodyText2!.copyWith(color: Colors.red),
             style: Theme.of(context).textTheme.subtitle2,
           ),
@@ -192,7 +195,6 @@ class MessageItemView extends GetView<MessageController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               _message.content.b1.size(15).maxLine(1),
-
             ],
           ),
         ),

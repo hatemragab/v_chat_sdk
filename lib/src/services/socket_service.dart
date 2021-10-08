@@ -75,12 +75,12 @@ class SocketService extends GetxService {
     _socket.on("all_rooms", (data) {
       final _rooms = jsonDecode(data) as List;
       _socketController.handleOnAllRoomsEvent(
-          _rooms.map((e) => VchatRoom.fromMap(e)).toList());
+          _rooms.map((e) => VChatRoom.fromMap(e)).toList());
     });
 
     _socket.on("update_one_room", (data) {
       final _room = jsonDecode(data);
-      _socketController.handleOnUpdateOneRoomEvent(VchatRoom.fromMap(_room));
+      _socketController.handleOnUpdateOneRoomEvent(VChatRoom.fromMap(_room));
     });
 
     _socket.on("user_online_changed", (data) {

@@ -16,7 +16,7 @@ import '../../controllers/rooms_controller.dart';
 import 'message_with_icon.dart';
 
 class RoomItem extends StatelessWidget {
-  final VchatRoom _room;
+  final VChatRoom _room;
 
   const RoomItem(this._room);
 
@@ -25,7 +25,7 @@ class RoomItem extends StatelessWidget {
     final t = VChatAppService.to.getTrans(context);
     return InkWell(
       onTap: () {
-        Get.find<RoomController>().currentRoom = _room;
+        Get.find<RoomController>().currentRoomId = _room.id;
         MessageBinding.bind();
         Navigator.push(
           context,
@@ -36,16 +36,15 @@ class RoomItem extends StatelessWidget {
         //Get.toNamed(Routes.MESSAGE);
       },
       onLongPress: () async {
-        final isMyBlock =
-            _room.blockerId.value == VChatAppService.to.vChatUser!.id;
+        final isMyBlock = _room.blockerId == VChatAppService.to.vChatUser!.id;
 
         final res = await CustomVerticalSheetItem.normal(context, [
           CustomSheetModel(
             value: 1,
-            text: _room.isMute.value == 1
+            text: _room.isMute == 1
                 ? t.enableNotification()
                 : t.muteNotification(),
-            iconData: _room.isMute.value == 1
+            iconData: _room.isMute == 1
                 ? Icons.notifications
                 : Icons.notifications_off,
           ),
@@ -75,82 +74,75 @@ class RoomItem extends StatelessWidget {
           }
         }
       },
-      child: Obx(
-        () => Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            CircleImage.network(
-                path: _room.thumbImage,
-                isOnline: _room.isOnline.value == 1,
-                isGroup: _room.roomType == RoomType.groupChat),
-            const SizedBox(
-              width: 15,
-            ),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: AutoDirection(
-                          text: _room.title,
-                          child: _room.title
-                              .toString()
-                              .h6
-                              .maxLine(1)
-                              .alignStart
-                              .overflowEllipsis,
-                        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          CircleImage.network(
+              path: _room.thumbImage,
+              isOnline: _room.isOnline == 1,
+              isGroup: _room.roomType == RoomType.groupChat),
+          const SizedBox(
+            width: 15,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: AutoDirection(
+                        text: _room.title,
+                        child: _room.title
+                            .toString()
+                            .h6
+                            .maxLine(1)
+                            .alignStart
+                            .overflowEllipsis,
                       ),
-                      _room.lastMessage.value.createdAtString.toString().s2
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () {
-                          final tSt = _room.typingStatus.value;
-                          if (tSt.status != RoomTypingType.stop) {
-                            final txt = "${tSt.status.inString} ...";
-                            if (_room.roomType == RoomType.single) {
-                              if (tSt.status == RoomTypingType.typing) {
-                                return t.typing().text;
-                              }
-                              if (tSt.status == RoomTypingType.recording) {
-                                return t.recording().text;
-                              }
-
-                              return txt.text;
-                            } else {
-                              return "${tSt.name} is $txt".text;
+                    ),
+                    _room.lastMessage.createdAtString.toString().s2
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Builder(
+                      builder: (context) {
+                        final tSt = _room.typingStatus;
+                        if (tSt.status != RoomTypingType.stop) {
+                          final txt = "${tSt.status.inString} ...";
+                          if (_room.roomType == RoomType.single) {
+                            if (tSt.status == RoomTypingType.typing) {
+                              return t.typing().text;
                             }
+                            if (tSt.status == RoomTypingType.recording) {
+                              return t.recording().text;
+                            }
+
+                            return txt.text;
                           } else {
-                            return Flexible(
-                              child: MessageWithIcon(_room),
-                            );
+                            return "${tSt.name} is $txt".text;
                           }
-                        },
-                      ),
-                      Obx(() {
-                        final x = _room.isMute.value;
-                        if (x == 1) {
-                          return const Icon(Icons.notifications_off);
                         } else {
-                          return const SizedBox.shrink();
+                          return Flexible(
+                            child: MessageWithIcon(_room),
+                          );
                         }
-                      })
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                      },
+                    ),
+                    _room.isMute == 1
+                        ? const Icon(Icons.notifications_off)
+                        : const SizedBox.shrink()
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

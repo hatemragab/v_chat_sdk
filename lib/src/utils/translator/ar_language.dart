@@ -1,6 +1,6 @@
 import '../../../v_chat_sdk.dart';
 
-class ArMessages implements LookupString {
+class ArLanguage implements LookupString {
   @override
   String test() => "اختبار";
 
@@ -117,5 +117,8 @@ class ArMessages implements LookupString {
 
   @override
   String online() => "متصل";
+
+  @override
+  String yourMessage()=>"اكتب رساله";
 
 }

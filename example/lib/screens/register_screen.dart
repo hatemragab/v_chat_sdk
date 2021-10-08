@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,31 +23,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: "login".text,
+        title: S.of(context).login.text,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             CupertinoTextField(
-              placeholder: "Email",
+              placeholder: S.of(context).email,
               controller: _controller.emailTxtController,
             ),
             SizedBox(
               height: 10,
             ),
             CupertinoTextField(
-              placeholder: "Name",
+              placeholder: S.of(context).name,
               controller: _controller.nameTxtController,
             ),
             SizedBox(
               height: 10,
             ),
             CupertinoTextField(
-              placeholder: "Password",
+              placeholder: S.of(context).password,
               controller: _controller.passwordTxtController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             InkWell(
@@ -58,11 +59,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     _controller.imagePath = img.path;
                   }
                 },
-                child: "choose image".text),
+                child: S.of(context).chooseImage.text),
             SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: _controller.register, child: "Register".text),
+            TextButton(onPressed: _controller.register, child: S.of(context).register.text),
           ],
         ),
       ),

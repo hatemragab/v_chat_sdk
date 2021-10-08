@@ -6,11 +6,11 @@ import '../../../utils/api_utils/dio/custom_dio.dart';
 class RoomsApiProvider extends DisposableInterface{
 
 
-  Future<List<VchatRoom>> loadMore(int id) async {
+  Future<List<VChatRoom>> loadMore(int id) async {
     final roomsMaps = (await CustomDio()
         .send(reqMethod: "GET", path: "room", query: {"id": id.toString()}))
         .data['data'] as List;
-    return roomsMaps.map((e) => VchatRoom.fromMap(e)).toList();
+    return roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
   }
 
   Future blockOrUnBlock(String ifSinglePeerId) async {

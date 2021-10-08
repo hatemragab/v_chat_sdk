@@ -11,8 +11,8 @@ import '../providers/room_api_provider.dart';
 
 class RoomController extends GetxController {
   final _provider = Get.find<RoomsApiProvider>();
-  VchatRoom? currentRoom;
-  final rooms = <VchatRoom>[].obs;
+  int? currentRoomId;
+  final rooms = <VChatRoom>[].obs;
   final isLoading = true.obs;
   final RxInt totalUnreadMessages = 0.obs;
   final loadingStatus = LoadMoreStatus.loaded.obs;
@@ -52,10 +52,10 @@ class RoomController extends GetxController {
   }
 
   bool isRoomOpen(int roomId) {
-    if (currentRoom == null) {
+    if (currentRoomId == null) {
       return false;
     } else {
-      if (currentRoom!.id == roomId) {
+      if (currentRoomId == roomId) {
         return true;
       } else {
         return false;
@@ -63,12 +63,8 @@ class RoomController extends GetxController {
     }
   }
 
-  void setCurrentRoom(int id) {
-    final res = rooms.firstWhere((element) => element.id == id);
-    currentRoom = res;
-  }
 
-  void blockOrLeaveAction(VchatRoom room) async {
+  void blockOrLeaveAction(VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
         await _provider.leaveGroupChat(room.id.toString());
@@ -77,14 +73,15 @@ class RoomController extends GetxController {
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }
-      CustomAlert.done(msg: VChatAppService.to.getTrans().userHasBeenBlockedSuccessfully());
+      CustomAlert.done(
+          msg: VChatAppService.to.getTrans().userHasBeenBlockedSuccessfully());
     } catch (err) {
       CustomAlert.error(msg: err.toString());
       rethrow;
     }
   }
 
-  void muteAction(final VchatRoom room) async {
+  void muteAction(final VChatRoom room) async {
     try {
       final res = await _provider.changeNotifaictions(room.id);
       CustomAlert.done(msg: res.toString());
@@ -95,18 +92,13 @@ class RoomController extends GetxController {
     }
   }
 
-  void updateOneRoomInRamAndSort(VchatRoom room) {
+  void updateOneRoomInRamAndSort(VChatRoom room) {
     final index = rooms.indexWhere((element) => element.id == room.id);
     if (index == -1) {
       rooms.insert(0, room);
     } else {
-      rooms[index].isOnline.value = room.isOnline.value;
-      rooms[index].lastMessage.value = room.lastMessage.value;
-      rooms[index].updatedAt = room.updatedAt;
-      rooms[index].lastMessageSeenBy.value = room.lastMessageSeenBy;
-      rooms[index].blockerId.value = room.blockerId.value;
-      rooms[index].typingStatus.value = room.typingStatus.value;
-      rooms[index].isMute.value = room.isMute.value;
+      rooms.removeAt(index);
+      rooms.insert(index, room);
     }
     sort();
   }
@@ -118,26 +110,30 @@ class RoomController extends GetxController {
   }
 
   void updateRoomOnlineChanged(int status, int roomId) {
-    final room = rooms.firstWhere((element) => element.id == roomId);
-    room.isOnline.value = status;
+    final index = rooms.indexWhere((element) => element.id == roomId);
+    if (index != -1) {
+      final room = rooms[index];
+      rooms.removeAt(index);
+      rooms.insert(index, room.copyWith(isOnline: status));
+    }
   }
 
   void updateRoomTypingChanged(VChatRoomTyping t) {
-    final room = rooms.firstWhere((element) => element.id == t.roomId);
-    room.typingStatus.value = t;
+    final index = rooms.indexWhere((element) => element.id == t.roomId);
+    if (index != -1) {
+      final room = rooms[index];
+      rooms.removeAt(index);
+      rooms.insert(index, room.copyWith(typingStatus: t));
+    }
   }
 
-  void getAllRoomsEvent(List<VchatRoom> list) {
+  void getAllRoomsEvent(List<VChatRoom> list) {
     if (rooms.isNotEmpty) {
-      for (var room in list) {
+      for (final room in list) {
         final index = rooms.indexWhere((element) => element.id == room.id);
         if (index != -1) {
-          rooms[index].isOnline.value = room.isOnline.value;
-          rooms[index].lastMessage = room.lastMessage;
-          rooms[index].updatedAt = room.updatedAt;
-          rooms[index].lastMessageSeenBy = room.lastMessageSeenBy;
-          rooms[index].blockerId = room.blockerId;
-          rooms[index].typingStatus.value = room.typingStatus.value;
+          rooms.removeAt(index);
+          rooms.insert(index, room);
         } else {
           rooms.insert(0, room);
         }

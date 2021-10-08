@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/modules/room/controllers/rooms_controller.dart';
 import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 
 import '../../../enums/room_type.dart';
@@ -21,6 +22,7 @@ class MessageView extends StatefulWidget {
 
 class _MessageViewState extends State<MessageView> {
   final controller = Get.find<MessageController>();
+  final roomController = Get.find<RoomController>();
 
   @override
   void dispose() {
@@ -63,7 +65,9 @@ class _MessageViewState extends State<MessageView> {
             ),
             Obx(() {
               final x = controller.isLastMessageSeen.value;
-              if (controller.currentRoom!.roomType == RoomType.single) {
+              final _room =
+              roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+              if (_room.roomType == RoomType.single) {
                 if (x) {
                   return Column(
                     children: [
@@ -73,9 +77,9 @@ class _MessageViewState extends State<MessageView> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: CircleImage.network(
-                            path: controller.currentRoom!.thumbImage,
-                            width: 20,
-                            height: 20),
+                            path: _room.thumbImage,
+                          radius: 10
+                             ),
                       ),
                       const SizedBox(
                         height: 7,
@@ -92,7 +96,9 @@ class _MessageViewState extends State<MessageView> {
               height: 2,
             ),
             Obx(() {
-              final bkId = controller.currentRoom!.blockerId.value;
+              final _room =
+              roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+              final bkId = _room.blockerId;
               if (bkId != 0) {
                 if (bkId == controller.myModel!.id) {
                   // i the blocker

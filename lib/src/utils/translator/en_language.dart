@@ -1,6 +1,6 @@
 import '../../../v_chat_sdk.dart';
 
-class EnMessages implements LookupString {
+class EnLanguage implements LookupString {
   @override
   String areYouSure() => "Are you sure";
 
@@ -119,4 +119,7 @@ class EnMessages implements LookupString {
 
   @override
   String online() => "Online";
+
+  @override
+  String yourMessage()=>"your message";
 }

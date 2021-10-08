@@ -69,6 +69,266 @@ class S {
       args: [],
     );
   }
+
+  /// `My great rooms`
+  String get myGreatRooms {
+    return Intl.message(
+      'My great rooms',
+      name: 'myGreatRooms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This data from my server not vchat`
+  String get thisDataFromMyServerNotVchat {
+    return Intl.message(
+      'This data from my server not vchat',
+      name: 'thisDataFromMyServerNotVchat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message(
+      'Home',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chats`
+  String get chats {
+    return Intl.message(
+      'Chats',
+      name: 'chats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `login`
+  String get login {
+    return Intl.message(
+      'login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose image`
+  String get chooseImage {
+    return Intl.message(
+      'choose image',
+      name: 'chooseImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change language`
+  String get changeLanguage {
+    return Intl.message(
+      'Change language',
+      name: 'changeLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Theme`
+  String get changeTheme {
+    return Intl.message(
+      'Change Theme',
+      name: 'changeTheme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update profile`
+  String get updateProfile {
+    return Intl.message(
+      'Update profile',
+      name: 'updateProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `On`
+  String get on {
+    return Intl.message(
+      'On',
+      name: 'on',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Chat notifications`
+  String get allChatNotifications {
+    return Intl.message(
+      'All Chat notifications',
+      name: 'allChatNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Off`
+  String get off {
+    return Intl.message(
+      'Off',
+      name: 'off',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update`
+  String get update {
+    return Intl.message(
+      'Update',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message`
+  String get message {
+    return Intl.message(
+      'Message',
+      name: 'message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message(
+      'Error',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ok`
+  String get ok {
+    return Intl.message(
+      'Ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log out`
+  String get logOut {
+    return Intl.message(
+      'Log out',
+      name: 'logOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `light`
+  String get light {
+    return Intl.message(
+      'light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `dark`
+  String get dark {
+    return Intl.message(
+      'dark',
+      name: 'dark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ar`
+  String get ar {
+    return Intl.message(
+      'ar',
+      name: 'ar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `en`
+  String get en {
+    return Intl.message(
+      'en',
+      name: 'en',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

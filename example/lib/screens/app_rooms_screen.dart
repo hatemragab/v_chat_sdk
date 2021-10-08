@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
@@ -14,7 +15,7 @@ class _AppRoomsScreenState extends State<AppRoomsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: "My great rooms".text,
+        title: S.of(context).myGreatRooms.text,
       ),
       body:  VChatRoomsView(),
     );

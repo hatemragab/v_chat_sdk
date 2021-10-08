@@ -26,6 +26,7 @@ class CustomDio {
   Future<Response> uploadFile(
       {required String apiEndPoint,
       required String filePath,
+      bool isPost = true,
       void Function(int received, int total)? sendProgress,
       List<Map<String, String>>? body,
       CancelToken? cancelToken}) async {
@@ -41,42 +42,17 @@ class CustomDio {
       final x = body.map((e) => MapEntry(e.keys.first, e.values.first));
       data.fields.addAll(x);
     }
-    final Response response = await dio.post(apiEndPoint,
-        data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    late Response response;
+    if (isPost) {
+      response = await dio.post(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    } else {
+      response = await dio.patch(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    }
+
     throwIfNoSuccess(response);
     return response;
-  }
-
-  Future<Response> upload(
-      {required String apiEndPoint,
-      required String filePath,
-      void Function(int received, int total)? sendProgress,
-      dynamic body,
-      bool loading = false,
-      CancelToken? cancelToken}) async {
-    try {
-      final File file = File(filePath);
-      if (file.existsSync()) {
-        final String fileName = Helpers.baseName(file.path);
-        final FormData data = FormData.fromMap({
-          "file": await MultipartFile.fromFile(
-            file.path,
-            filename: fileName,
-          ),
-        });
-        if (body != null) {
-          data.fields.addAll(body);
-        }
-        final Response response = await dio.post(apiEndPoint,
-            data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
-        throwIfNoSuccess(response);
-        return response;
-      } else {
-        throw AppHttpException("File does not exist on your phone !");
-      }
-    } catch (err) {
-      rethrow;
-    }
   }
 
   Future<Response> uploadBytes(

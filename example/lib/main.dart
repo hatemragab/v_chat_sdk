@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:example/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
@@ -16,8 +17,8 @@ void main() async {
     baseUrl: "10.0.2.2:3000",
     appName: "test_v_chat",
     isUseFirebase: true,
-    lightTheme: vchatLightTheme,
-    darkTheme: vchatDarkTheme,
+    lightTheme: vChatLightTheme,
+    darkTheme: vChatDarkTheme,
     enableLogger: true,
     navKey: navigatorKey
   );
@@ -42,22 +43,31 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     context.watch<LangController>();
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey:navigatorKey ,
-
-      theme: context.read<LangController>().theme,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      builder: BotToastInit(),
-      navigatorObservers: [BotToastNavigatorObserver()],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: context.read<LangController>().locale,
-      home: SplashScreen(),
+    KeyboardVisibilityController().onChange.listen((visible) {
+      if (!visible) {
+        final currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      }
+    });
+    return KeyboardDismissOnTap(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey:navigatorKey ,
+        theme: context.read<LangController>().theme,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        builder: BotToastInit(),
+        navigatorObservers: [BotToastNavigatorObserver()],
+        supportedLocales: S.delegate.supportedLocales,
+        locale: context.read<LangController>().locale,
+        home: SplashScreen(),
+      ),
     );
   }
 }

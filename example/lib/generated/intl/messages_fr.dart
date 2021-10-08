@@ -21,6 +21,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "offline": MessageLookupByLibrary.simpleMessage("offline fr")
+        "allChatNotifications":
+            MessageLookupByLibrary.simpleMessage("All Chat notifications"),
+        "ar": MessageLookupByLibrary.simpleMessage("ar"),
+        "changeLanguage":
+            MessageLookupByLibrary.simpleMessage("Change language"),
+        "changeTheme": MessageLookupByLibrary.simpleMessage("Change Theme"),
+        "chats": MessageLookupByLibrary.simpleMessage("Chats"),
+        "chooseImage": MessageLookupByLibrary.simpleMessage("choose image"),
+        "dark": MessageLookupByLibrary.simpleMessage("dark"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "en": MessageLookupByLibrary.simpleMessage("en"),
+        "error": MessageLookupByLibrary.simpleMessage("Error"),
+        "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "light": MessageLookupByLibrary.simpleMessage("light"),
+        "logOut": MessageLookupByLibrary.simpleMessage("Log out"),
+        "login": MessageLookupByLibrary.simpleMessage("login"),
+        "message": MessageLookupByLibrary.simpleMessage("Message"),
+        "myGreatRooms": MessageLookupByLibrary.simpleMessage("My great rooms"),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "off": MessageLookupByLibrary.simpleMessage("Off"),
+        "offline": MessageLookupByLibrary.simpleMessage("offline fr"),
+        "ok": MessageLookupByLibrary.simpleMessage("Ok"),
+        "on": MessageLookupByLibrary.simpleMessage("On"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "register": MessageLookupByLibrary.simpleMessage("Register"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "thisDataFromMyServerNotVchat": MessageLookupByLibrary.simpleMessage(
+            "This data from my server not vchat"),
+        "update": MessageLookupByLibrary.simpleMessage("Update"),
+        "updateProfile": MessageLookupByLibrary.simpleMessage("Update profile")
       };
 }

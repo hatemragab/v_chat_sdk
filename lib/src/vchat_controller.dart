@@ -37,20 +37,17 @@ class VChatController {
 
   final _authProvider = AuthProvider();
 
-  Future init({
-    required String baseUrl,
-    required String appName,
-    required bool isUseFirebase,
-    required ThemeData lightTheme,
-    required ThemeData darkTheme,
-    required bool enableLogger,
-    required GlobalKey<NavigatorState> navKey
-  }) async {
+  Future init(
+      {required String baseUrl,
+      required String appName,
+      required bool isUseFirebase,
+      required ThemeData lightTheme,
+      required ThemeData darkTheme,
+      required bool enableLogger,
+      required GlobalKey<NavigatorState> navKey}) async {
     vchatUseFirebase = isUseFirebase;
     serverIp = baseUrl;
     vchatAppName = appName;
-
-
 
     await Get.putAsync(() => VChatAppService().init(), permanent: true);
     await Get.putAsync(() => LocalStorageService().init(), permanent: true);
@@ -123,7 +120,9 @@ class VChatController {
         context: ctx,
         builder: (context) {
           return AlertDialog(
-            title: titleTxt != null ? titleTxt.text :VChatAppService.to.getTrans().sayHello().text,
+            title: titleTxt != null
+                ? titleTxt.text
+                : VChatAppService.to.getTrans().sayHello().text,
             content: TextField(
               onChanged: (value) {
                 txt = value;
@@ -139,8 +138,9 @@ class VChatController {
                     await Future.delayed(const Duration(seconds: 1));
                     _navigateToRoomMessage(data, ctx);
                   },
-                  child:
-                      createBtnTxt != null ? createBtnTxt.text : VChatAppService.to.getTrans().create().text)
+                  child: createBtnTxt != null
+                      ? createBtnTxt.text
+                      : VChatAppService.to.getTrans().create().text)
             ],
           );
         },
@@ -152,8 +152,10 @@ class VChatController {
   }
 
   void _navigateToRoomMessage(dynamic data, BuildContext context) async {
-    final room = VchatRoom.fromMap(data);
-    Get.find<RoomController>().currentRoom = room;
+    final room = VChatRoom.fromMap(data);
+    final c = Get.find<RoomController>();
+    c.updateOneRoomInRamAndSort(room);
+    c.currentRoomId = room.id;
     MessageBinding.bind();
     Navigator.push(
       context,
@@ -166,7 +168,9 @@ class VChatController {
   Future<String> stopAllNotification() async {
     if (vchatUseFirebase) {
       await FirebaseMessaging.instance.deleteToken();
-      return  VChatAppService.to.getTrans().notificationsHasBeenStoppedSuccessfully();
+      return VChatAppService.to
+          .getTrans()
+          .notificationsHasBeenStoppedSuccessfully();
     } else {
       throw "you have to enable firebase for this project first";
     }
@@ -181,12 +185,22 @@ class VChatController {
     }
   }
 
-  Future updateUserImageOrName() async {}
+  Future updateUserName({required String name}) async {
+    return await _vChatControllerProvider.updateUserName(name: name);
+  }
 
-  Future updateUserPassword() async {}
+  Future updateUserImage({required String imagePath}) async {
+    return await _vChatControllerProvider.updateUserImage(path: imagePath);
+  }
+
+  Future updateUserPassword(
+      {required String oldPassword, required String newPassword}) async {
+    return await _vChatControllerProvider.updateUserPassword(
+        oldPassword: oldPassword, newPassword: newPassword);
+  }
 
   Future logOut() async {
-    await GetStorage().erase();
+    await GetStorage().remove(GetStorageKeys.KV_CHAT_MY_MODEL);
     await DBProvider.db.reCreateTables();
     await FirebaseMessaging.instance.deleteToken();
   }
@@ -201,6 +215,4 @@ class VChatController {
     Get.put<SocketController>(SocketController(), permanent: true);
     Get.put<SocketService>(SocketService(), permanent: true);
   }
-
-
 }

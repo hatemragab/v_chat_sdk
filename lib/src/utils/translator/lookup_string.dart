@@ -76,4 +76,6 @@ abstract class LookupString {
   String online();
 
   String offline();
+
+  String yourMessage() ;
 }

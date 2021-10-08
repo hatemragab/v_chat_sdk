@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audioplayers_api.dart';
-import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,7 +10,6 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/load_more_type.dart';
-import '../../../enums/room_type.dart';
 import '../../../models/v_chat_message.dart';
 import '../../../services/local_storage_serivce.dart';
 import '../../../services/notification_service.dart';
@@ -24,7 +22,7 @@ import 'send_message_controller.dart';
 
 class MessageController extends GetxController {
   static final _roomController = Get.find<RoomController>();
-  final currentRoom = Get.find<RoomController>().currentRoom;
+  final currentRoomId = Get.find<RoomController>().currentRoomId!;
   final _apiProvider = Get.find<MessageProvider>();
   final myModel = VChatAppService.to.vChatUser;
   final scrollController = ScrollController();
@@ -35,7 +33,7 @@ class MessageController extends GetxController {
   final recordTime = "00:00".obs;
   final messagesList = <VChatMessage>[].obs;
   String? recordPath;
-  AudioPlayer audioPlayer = AudioPlayer();
+  final audioPlayer = AudioPlayer();
   VChatMessage? currentVoicePlayer;
   late Socket _socket;
   final isLastMessageSeen = false.obs;
@@ -47,9 +45,12 @@ class MessageController extends GetxController {
   void onInit() {
     super.onInit();
     getRoomMessages();
-    connectMessageSocket();
-    if (currentRoom!.lastMessageSeenBy.length == 2) {
-      if (currentRoom!.lastMessage.value.senderId == myModel!.id) {
+    _connectMessageSocket();
+    final currentRoom = Get.find<RoomController>().rooms.firstWhere((element) => element.id == currentRoomId);
+
+
+    if (currentRoom.lastMessageSeenBy.length == 2) {
+      if (currentRoom.lastMessage.senderId == myModel!.id) {
         isLastMessageSeen.value = true;
       } else {
         isLastMessageSeen.value = false;
@@ -57,8 +58,9 @@ class MessageController extends GetxController {
     } else {
       isLastMessageSeen.value = false;
     }
+
+
     scrollController.addListener(_scrollListener);
-    // getRoomMembers();
     setAudioPlayerListeners();
   }
 
@@ -81,7 +83,7 @@ class MessageController extends GetxController {
   }
 
   void getRoomMessages() async {
-    final x = await localStorageService.getRoomMessages(currentRoom!.id);
+    final x = await localStorageService.getRoomMessages(currentRoomId);
     messagesList.assignAll(x);
   }
 
@@ -90,7 +92,7 @@ class MessageController extends GetxController {
     try {
       _socket.disconnect();
       _socket.dispose();
-      _roomController.currentRoom = null;
+      _roomController.currentRoomId = null;
       scrollController.dispose();
       _stopWatchTimer.dispose();
       if (currentVoicePlayer != null) {
@@ -110,7 +112,7 @@ class MessageController extends GetxController {
     loadingStatus.value = LoadMoreStatus.loading;
     try {
       final loadedMessages = await _apiProvider.loadMoreMessages(
-        currentRoom!.id,
+        currentRoomId,
         messagesList.last.id.toString(),
       );
       messagesList.addAll(loadedMessages);
@@ -234,15 +236,15 @@ class MessageController extends GetxController {
     );
   }
 
-  void connectMessageSocket() async {
+  void _connectMessageSocket() async {
     await Future.delayed(const Duration(milliseconds: 200));
-    _socket = getSocket();
+    _socket = _getSocket();
     _socket.onConnect((data) async {
       _socket.on("all_messages", (data) async {
         final msgList = (jsonDecode(data)) as List;
         final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
         await localStorageService.setRoomMessages(
-            currentRoom!.id.toString(), x);
+            currentRoomId.toString(), x);
         messagesList.assignAll(x);
       });
       _socket.on('new_message', (data) async {
@@ -252,7 +254,7 @@ class MessageController extends GetxController {
         if (!messagesList.contains(message)) {
           messagesList.insert(0, message);
           await localStorageService.insertMessage(
-              currentRoom!.id.toString(), message);
+              currentRoomId.toString(), message);
         }
       });
       _socket.on('see_last_message', (resMap) {
@@ -267,11 +269,11 @@ class MessageController extends GetxController {
         cache.clear();
       });
       await Future.delayed(const Duration(milliseconds: 100));
-      _socket.emit("join", currentRoom!.id.toString());
+      _socket.emit("join", currentRoomId.toString());
     });
   }
 
-  Socket getSocket() {
+  Socket _getSocket() {
     return io("${ServerConfig.SOCKET_IP}/message", <String, dynamic>{
       'transports': ['websocket'],
       'pingTimeout': 5000,
