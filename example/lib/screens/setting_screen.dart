@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:get_storage/get_storage.dart';
 import 'package:example/controllers/lang_controller.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:example/main.dart';
@@ -84,7 +84,11 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).logOut,
               icon: Icons.logout,
               onTap: () async {
+
                 await VChatController.instance.logOut();
+
+                 await GetStorage().remove("myModel");
+
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => SplashScreen()),
                     (Route<dynamic> route) => false);

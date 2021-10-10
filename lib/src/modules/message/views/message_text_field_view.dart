@@ -49,8 +49,8 @@ class MessageTextFieldView extends GetView<SendMessageController> {
               child: const RoundedContainer(
                 boxShape: BoxShape.circle,
                 color: Colors.red,
-                height: 50,
-                width: 50,
+                height: 45,
+                width: 45,
                 child: Icon(
                   Icons.keyboard_voice_outlined,
                   color: Colors.white,

@@ -70,9 +70,6 @@ class NotificationService extends GetxService {
 
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
-        log('Message also contained a notification: ${message.notification!.body}');
-        // _log.fine(
-        //     'Message also contained a notification: ${message.notification!.body}');
 
         if (!_roomController
             .isRoomOpen(int.parse(message.data['roomId'].toString()))) {

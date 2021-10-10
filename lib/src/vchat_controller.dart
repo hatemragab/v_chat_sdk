@@ -49,8 +49,8 @@ class VChatController {
     serverIp = baseUrl;
     vchatAppName = appName;
 
-    await Get.putAsync(() => VChatAppService().init(), permanent: true);
-    await Get.putAsync(() => LocalStorageService().init(), permanent: true);
+    await Get.putAsync(() => VChatAppService().init());
+    await Get.putAsync(() => LocalStorageService().init());
 
     VChatAppService.to.dark = darkTheme;
     VChatAppService.to.light = lightTheme;
@@ -84,6 +84,7 @@ class VChatController {
     }
     final user = await _authProvider.login(dto);
     await _saveUser(user);
+    VChatAppService.to.setUser(user);
     bindChatControllers();
     return user;
   }
@@ -96,16 +97,17 @@ class VChatController {
     }
     final user = await _authProvider.register(dto);
     await _saveUser(user);
+    VChatAppService.to.setUser(user);
     bindChatControllers();
     return user;
   }
 
   Future _saveUser(VChatUser user) async {
-    Get.find<VChatAppService>().setUser(user);
     await GetStorage().write(GetStorageKeys.KV_CHAT_MY_MODEL, user.toMap());
+    VChatAppService.to.setUser(user);
   }
 
-  Future createSingleChat({
+  Future<dynamic> createSingleChat({
     required String peerEmail,
     required BuildContext ctx,
     String? titleTxt,
@@ -116,7 +118,7 @@ class VChatController {
 
     if (data == false) {
       //no rooms founded
-      showDialog(
+      return await showDialog(
         context: ctx,
         builder: (context) {
           return AlertDialog(
@@ -147,17 +149,18 @@ class VChatController {
       );
     } else {
       // there are room
-      _navigateToRoomMessage(data, ctx);
+      return await _navigateToRoomMessage(data, ctx);
     }
   }
 
-  void _navigateToRoomMessage(dynamic data, BuildContext context) async {
+  Future<dynamic> _navigateToRoomMessage(
+      dynamic data, BuildContext context) async {
     final room = VChatRoom.fromMap(data);
     final c = Get.find<RoomController>();
     c.updateOneRoomInRamAndSort(room);
     c.currentRoomId = room.id;
     MessageBinding.bind();
-    Navigator.push(
+    return Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => MessageView(),
@@ -203,6 +206,22 @@ class VChatController {
     await GetStorage().remove(GetStorageKeys.KV_CHAT_MY_MODEL);
     await DBProvider.db.reCreateTables();
     await FirebaseMessaging.instance.deleteToken();
+    await _vChatControllerProvider.logOut();
+    await unBindChatControllers();
+  }
+
+  Future unBindChatControllers() async {
+    //  Get.reset(clearRouteBindings: true);
+
+    Get.delete<LocalStorageService>();
+    Get.delete<RoomsApiProvider>();
+    Get.delete<RoomController>();
+    Get.delete<NotificationService>();
+    Get.delete<SocketController>();
+    Get.delete<SocketService>();
+    VChatAppService.to.vChatUser = null;
+
+    await Get.putAsync(() => LocalStorageService().init());
   }
 
   void bindChatControllers() {
@@ -212,7 +231,7 @@ class VChatController {
     Get.put<RoomsApiProvider>(RoomsApiProvider());
     Get.put<RoomController>(RoomController());
     Get.put<NotificationService>(NotificationService());
-    Get.put<SocketController>(SocketController(), permanent: true);
-    Get.put<SocketService>(SocketService(), permanent: true);
+    Get.put<SocketController>(SocketController());
+    Get.put<SocketService>(SocketService());
   }
 }

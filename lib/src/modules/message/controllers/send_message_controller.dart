@@ -313,10 +313,11 @@ class SendMessageController extends GetxController {
               fileDuration: duration,
             ).toMap())
           });
-      Navigator.pop(context);
+      Navigator.pop(VChatAppService.to.navKey!.currentContext!);
     } catch (err) {
-      Navigator.pop(context);
+      Navigator.pop(VChatAppService.to.navKey!.currentContext!);
       CustomAlert.error(msg: err.toString());
+      rethrow;
     }
   }
 

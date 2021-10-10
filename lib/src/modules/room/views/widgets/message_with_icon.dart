@@ -42,6 +42,7 @@ class MessageWithIcon extends StatelessWidget {
     if (_room.lastMessage.senderId != _myModel.id) {
       // i the receiver
       final _isMeSeen = _room.lastMessageSeenBy.contains(_myModel.id);
+
       if (_isMeSeen) {
         return _room.lastMessage.content.s1
             .maxLine(1)
@@ -49,12 +50,12 @@ class MessageWithIcon extends StatelessWidget {
             .alignStart
             .overflowEllipsis;
       } else {
-        return _room.lastMessage.content.s1
+        return _room.lastMessage.content.h6
             .maxLine(1)
-            .size(17)
+            .size(17.5)
             .alignStart
             .overflowEllipsis
-            .bold;
+            .black;
       }
     } else {
       // i the sender

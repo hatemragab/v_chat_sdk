@@ -16,7 +16,7 @@ dependencies:
   textless: ^6.6.6
   get: ^4.3.8
   get_storage: ^2.0.3
-  dio: 4.0.0
+  dio: ^4.0.0
   firebase_core: ^1.7.0
   firebase_messaging: ^10.0.8
   image_picker: ^0.8.4+2
@@ -47,6 +47,7 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   flutter_keyboard_visibility: ^5.0.3
   provider: ^5.0.0
+  path: ^1.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

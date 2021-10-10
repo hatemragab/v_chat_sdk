@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../models/v_chat_message.dart';
 import '../models/v_chat_room.dart';
 import '../sqlite/db_provider.dart';
@@ -24,6 +25,7 @@ class LocalStorageService extends GetxService {
           jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
       rooms.add(r);
     }
+
     return rooms;
   }
 

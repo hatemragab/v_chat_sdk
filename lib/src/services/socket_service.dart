@@ -12,8 +12,8 @@ import '../utils/custom_widgets/custom_alert_dialog.dart';
 import 'socket_controller.dart';
 import 'vchat_app_service.dart';
 
-class SocketService extends GetxService {
-  static SocketService to = Get.find();
+class SocketService extends GetxController {
+
   final VChatAppService _appService = VChatAppService.to;
   final SocketController _socketController = Get.find<SocketController>();
 
@@ -33,6 +33,12 @@ class SocketService extends GetxService {
       },
       'forceNew': true
     });
+  }
+
+  @override
+  void onClose() {
+    _socket.disconnect();
+    super.onClose();
   }
 
   @override

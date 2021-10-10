@@ -12,9 +12,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+/// real server ip 18.216.232.131:3000
   await VChatController.instance.init(
-    baseUrl: "10.0.2.2:3000",
+    baseUrl: "192.168.1.6:3000",
     appName: "test_v_chat",
     isUseFirebase: true,
     lightTheme: vChatLightTheme,
@@ -22,6 +22,8 @@ void main() async {
     enableLogger: true,
     navKey: navigatorKey
   );
+
+
 
   // add support new language
   // v_chat will change the language one you change it
@@ -40,6 +42,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
     context.watch<LangController>();

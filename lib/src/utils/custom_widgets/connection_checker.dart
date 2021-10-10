@@ -12,7 +12,7 @@ class ConnectionChecker extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final SocketService _socket = SocketService.to;
+    final SocketService _socket =Get.find<SocketService>();
     return Obx(() {
       if (_socket.socketState.value == SocketStateType.connecting) {
         return RoundedContainer(

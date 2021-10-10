@@ -15,7 +15,7 @@ import '../utils/vchat_constants.dart';
 
 class VChatAppService extends GetxService {
   static final VChatAppService to = Get.find();
-  late Database database;
+
   VChatUser? vChatUser;
   Map<String, String>? trans;
   BuildContext? roomsContext;
@@ -52,13 +52,15 @@ class VChatAppService extends GetxService {
 
   Future<VChatAppService> init() async {
     await GetStorage.init();
-    database = await DBProvider.db.database;
+     await DBProvider.db.database;
     if (vchatUseFirebase) {
       await Firebase.initializeApp();
     }
     final userMap = GetStorage().read(GetStorageKeys.KV_CHAT_MY_MODEL);
     if (userMap != null) {
       vChatUser = VChatUser.fromMap(userMap);
+    }else{
+      vChatUser = null;
     }
     return this;
   }

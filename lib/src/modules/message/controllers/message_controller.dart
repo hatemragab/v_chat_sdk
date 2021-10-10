@@ -46,8 +46,9 @@ class MessageController extends GetxController {
     super.onInit();
     getRoomMessages();
     _connectMessageSocket();
-    final currentRoom = Get.find<RoomController>().rooms.firstWhere((element) => element.id == currentRoomId);
-
+    final currentRoom = Get.find<RoomController>()
+        .rooms
+        .firstWhere((element) => element.id == currentRoomId);
 
     if (currentRoom.lastMessageSeenBy.length == 2) {
       if (currentRoom.lastMessage.senderId == myModel!.id) {
@@ -58,7 +59,6 @@ class MessageController extends GetxController {
     } else {
       isLastMessageSeen.value = false;
     }
-
 
     scrollController.addListener(_scrollListener);
     setAudioPlayerListeners();
@@ -200,7 +200,7 @@ class MessageController extends GetxController {
     });
   }
 
-  void playVoice(VChatMessage msg) {
+  void playVoice(VChatMessage msg) async {
     if (currentVoicePlayer != null && msg.id != currentVoicePlayer!.id) {
       //there are voice working
       currentVoicePlayer!.messageAttachment!.isVoicePlying.value = false;
@@ -210,8 +210,7 @@ class MessageController extends GetxController {
 
     msg.messageAttachment!.isVoicePlying.value = true;
     currentVoicePlayer = msg;
-
-    audioPlayer.play(
+      audioPlayer.play(
       ServerConfig.MESSAGES_BASE_URL + msg.messageAttachment!.playUrl!,
       stayAwake: true,
     );
@@ -243,8 +242,7 @@ class MessageController extends GetxController {
       _socket.on("all_messages", (data) async {
         final msgList = (jsonDecode(data)) as List;
         final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
-        await localStorageService.setRoomMessages(
-            currentRoomId.toString(), x);
+        await localStorageService.setRoomMessages(currentRoomId.toString(), x);
         messagesList.assignAll(x);
       });
       _socket.on('new_message', (data) async {

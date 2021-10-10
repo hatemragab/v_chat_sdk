@@ -11,7 +11,7 @@ class VChatProvider {
       reqMethod: "POST",
       path: "room/check-if-there-room",
       body: {
-        "peerEmails": jsonEncode([peerEmail]),
+        "peerEmails": [peerEmail],
         "roomType": RoomType.single.inString
       },
     ))
@@ -23,7 +23,7 @@ class VChatProvider {
       reqMethod: "POST",
       path: "room",
       body: {
-        "peerEmails": jsonEncode([peerEmail]),
+        "peerEmails": [peerEmail],
         "roomType": RoomType.single.inString,
         "message": msg,
       },
@@ -72,6 +72,16 @@ class VChatProvider {
       reqMethod: "patch",
       path: "user",
       body: {"name": name},
+    ))
+        .data['data']
+        .toString();
+  }
+
+  Future<String> logOut() async {
+    return (await CustomDio().send(
+      reqMethod: "patch",
+      path: "user",
+      body: {"fcmToken": "Out"},
     ))
         .data['data']
         .toString();
