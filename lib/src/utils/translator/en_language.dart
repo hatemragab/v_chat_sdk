@@ -121,5 +121,5 @@ class EnLanguage implements LookupString {
   String online() => "Online";
 
   @override
-  String yourMessage()=>"your message ";
+  String yourMessage() => "your message ";
 }

@@ -18,7 +18,7 @@ class LangController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void  changeTheme(bool isLight) {
+  void changeTheme(bool isLight) {
     if (isLight) {
       theme = ThemeData.dark();
     } else {

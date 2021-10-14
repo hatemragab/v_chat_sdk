@@ -2,11 +2,11 @@ class ServerDefaultResponse {
   dynamic data;
   bool success;
 
-  ServerDefaultResponse({required this.data,required this.success});
+  ServerDefaultResponse({required this.data, required this.success});
 
   factory ServerDefaultResponse.fromMap(Map<String, dynamic> map) {
     return ServerDefaultResponse(
-      data: map['data'] ,
+      data: map['data'],
       success: map['success'] as bool,
     );
   }

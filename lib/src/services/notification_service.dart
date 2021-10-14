@@ -69,7 +69,6 @@ class NotificationService extends GetxService {
 
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
-
         if (!_roomController
             .isRoomOpen(int.parse(message.data['roomId'].toString()))) {
           showNotification(
@@ -92,11 +91,10 @@ class NotificationService extends GetxService {
     );
   }
 
-  void show()async {
+  void show() async {
     await Future.delayed(Duration(seconds: 10));
     showNotification(
-      msg: VChatAppService.to.getTrans().test(),
-      title: VChatAppService.to.getTrans().toDay()
-    );
+        msg: VChatAppService.to.getTrans().test(),
+        title: VChatAppService.to.getTrans().toDay());
   }
 }

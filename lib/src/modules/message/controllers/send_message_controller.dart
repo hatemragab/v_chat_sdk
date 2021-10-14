@@ -112,7 +112,7 @@ class SendMessageController extends GetxController {
     try {
       _messageController.isLastMessageSeen.value = false;
       CustomAlert.customLoadingDialog(context: context);
-      final _pickedImage = File( path);
+      final _pickedImage = File(path);
       final compressedFile = await FileUtils.compressImage(_pickedImage);
 
       final ImageProperties properties =
@@ -222,14 +222,14 @@ class SendMessageController extends GetxController {
       builder: (context) {
         return CupertinoActionSheet(
           cancelButton: CupertinoActionSheetAction(
-            child:   Text( VChatAppService.to.getTrans().cancel()),
+            child: Text(VChatAppService.to.getTrans().cancel()),
             onPressed: () {
               Navigator.pop(ctx);
             },
           ),
           actions: [
             CupertinoActionSheetAction(
-              child:   Text(VChatAppService.to.getTrans().photo()),
+              child: Text(VChatAppService.to.getTrans().photo()),
               onPressed: () async {
                 Navigator.pop(ctx);
                 final picker = ImagePicker();
@@ -248,7 +248,7 @@ class SendMessageController extends GetxController {
               },
             ),
             CupertinoActionSheetAction(
-              child:   Text(t.file()),
+              child: Text(t.file()),
               onPressed: () async {
                 Navigator.pop(ctx);
                 final FilePickerResult? result =
@@ -265,7 +265,7 @@ class SendMessageController extends GetxController {
               },
             ),
             CupertinoActionSheetAction(
-              child:   Text(t.video()),
+              child: Text(t.video()),
               onPressed: () async {
                 Navigator.pop(ctx);
                 final FilePickerResult? result =
@@ -276,7 +276,7 @@ class SendMessageController extends GetxController {
                 if (result != null) {
                   if (File(result.files.first.path!).lengthSync() >
                       ServerConfig.MAX_MESSAGE_FILE_SIZE) {
-                    CustomAlert.error(msg:t.fileIsTooBig());
+                    CustomAlert.error(msg: t.fileIsTooBig());
                     File(result.files.first.path!).deleteSync();
                     return;
                   }

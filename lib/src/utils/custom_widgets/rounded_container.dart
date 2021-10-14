@@ -10,7 +10,8 @@ class RoundedContainer extends StatelessWidget {
   final Alignment alignment;
   final BoxShape boxShape;
 
-  const RoundedContainer({required this.child,
+  const RoundedContainer({
+    required this.child,
     this.height,
     this.width,
     this.padding,
@@ -25,10 +26,7 @@ class RoundedContainer extends StatelessWidget {
     return Container(
       alignment: alignment,
       decoration: BoxDecoration(
-          color: color,
-          borderRadius: borderRadius,
-          shape:boxShape
-      ),
+          color: color, borderRadius: borderRadius, shape: boxShape),
       height: height,
       width: width,
       padding: padding,

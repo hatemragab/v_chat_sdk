@@ -21,13 +21,10 @@ class MessageItemView extends GetView<MessageController> {
 
   const MessageItemView(this._message, this.index);
 
-
-
   @override
   Widget build(BuildContext context) {
     final isSender = controller.myModel!.id == _message.senderId;
     final paddingWidth = MediaQuery.of(context).size.width * .80;
-
 
     // handle  join && leave
     if (_message.messageType == MessageType.info) {
@@ -48,6 +45,7 @@ class MessageItemView extends GetView<MessageController> {
         const SizedBox(
           height: 5,
         ),
+
         /// user icon and name must show only in group chat !
         // !isSender && controller.currentRoom!.roomType == RoomType.groupChat
         //     ? InkWell(
@@ -80,7 +78,7 @@ class MessageItemView extends GetView<MessageController> {
                     ? const Color(0xff876969)
                     : Colors.tealAccent
                 : Theme.of(context).brightness == Brightness.dark
-                    ?   Colors.black26
+                    ? Colors.black26
                     : Colors.blueGrey[100],
             borderRadius: getContainerBorder(isSender: isSender),
             border: Border.all(color: Colors.black12),

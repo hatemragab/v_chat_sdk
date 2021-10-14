@@ -64,7 +64,6 @@ class RoomController extends GetxController {
     }
   }
 
-
   void blockOrLeaveAction(VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
@@ -127,6 +126,7 @@ class RoomController extends GetxController {
       rooms.insert(index, room.copyWith(typingStatus: t));
     }
   }
+
   @override
   void onClose() {
     rooms.clear();

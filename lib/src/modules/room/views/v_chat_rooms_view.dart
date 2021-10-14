@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_dark_theme.dart';
 import '../../../utils/custom_widgets/connection_checker.dart';
 import '../controllers/rooms_controller.dart';
 import 'widgets/room_item.dart';
 
+/// use this widget any where you want to show user chats
+/// if you want to navigate to it then add this [VChatRoomsView] in the body of [Scaffold]
+/// ```dart
+///    Navigator.of(context).push(
+///      MaterialPageRoute(
+///        builder: (context) => Scaffold(
+///           body: VChatRoomsView(),
+///        ),
+///      ),
+///    );
+/// ```
 class VChatRoomsView extends GetView<RoomController> {
-   const VChatRoomsView({Key? key}) : super(key: key);
+  const VChatRoomsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    VChatAppService.to.roomsContext = context;
     return Theme(
       data: Theme.of(context).brightness == Brightness.dark
           ? VChatAppService.to.dark!

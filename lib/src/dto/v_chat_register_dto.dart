@@ -1,5 +1,6 @@
 import 'dart:io';
 
+/// dto register object
 class VChatRegisterDto {
   final String name;
   final String email;

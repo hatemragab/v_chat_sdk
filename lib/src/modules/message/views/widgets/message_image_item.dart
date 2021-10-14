@@ -11,8 +11,8 @@ class MessageImageItem extends GetView {
   final bool isSender;
   final myId = VChatAppService.to.vChatUser!.id;
 
-
-  MessageImageItem(this._message, {Key? key, required this.isSender}) : super(key: key);
+  MessageImageItem(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

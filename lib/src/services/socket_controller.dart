@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-
 import '../models/v_chat_room.dart';
 import '../models/v_chat_room_typing.dart';
 import '../modules/room/controllers/rooms_controller.dart';
@@ -8,7 +7,6 @@ import 'local_storage_serivce.dart';
 import 'socket_service.dart';
 
 class SocketController extends GetxController {
-
   final _roomController = Get.find<RoomController>();
 
   late SocketService _socketService;
@@ -27,7 +25,6 @@ class SocketController extends GetxController {
   void emitTypingChange(VChatRoomTyping roomTyping) {
     _socketService.emitTypingChange(roomTyping.toMap());
   }
-
 
   void handleOnAllRoomsEvent(List<VChatRoom> list) async {
     await Get.find<LocalStorageService>().setRooms(list);

@@ -16,7 +16,7 @@ class CircleImage {
 
   static Widget network(
       {required String path,
-      int  radius =30,
+      int radius = 30,
       bool isOnline = false,
       bool isGroup = false,
       bool isSelected = false}) {

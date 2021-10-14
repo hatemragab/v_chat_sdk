@@ -16,7 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _controller = LoginController(context);
- 
   }
 
   @override
@@ -43,11 +42,14 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: _controller.login, child: S.of(context).login.text),
+            TextButton(
+                onPressed: _controller.login, child: S.of(context).login.text),
             SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: _controller.register, child: S.of(context).register.text),
+            TextButton(
+                onPressed: _controller.register,
+                child: S.of(context).register.text),
           ],
         ),
       ),

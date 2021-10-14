@@ -33,9 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //final vChatUser = GetStorage().hasData(GetStorageKeys.KV_CHAT_MY_MODEL);
     await Future.delayed(const Duration(seconds: 2));
     if (myModel) {
-
       // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Home() ,));
-
 
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Home()),

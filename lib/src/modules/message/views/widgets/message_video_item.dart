@@ -13,7 +13,8 @@ class MessageVideoItem extends StatelessWidget {
 
   final myId = VChatAppService.to.vChatUser!.id;
 
-  MessageVideoItem(this._message, {Key? key, required this.isSender}) : super(key: key);
+  MessageVideoItem(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

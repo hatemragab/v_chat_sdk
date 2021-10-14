@@ -13,7 +13,7 @@ class CustomDio {
 
   CustomDio() {
     dio = Dio();
-    dio.options.baseUrl =baseUrl ;
+    dio.options.baseUrl = baseUrl;
     dio.options.validateStatus = (_) => true;
     dio.options.headers = {'authorization': "my awesome token"};
     dio.options.sendTimeout = 10000;

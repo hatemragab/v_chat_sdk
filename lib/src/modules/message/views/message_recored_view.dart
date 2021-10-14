@@ -21,7 +21,7 @@ class MessageRecordView extends GetView<MessageController> {
           child: Obx(() => controller.recordTime.value.text),
         ),
         InkWell(
-          onTap:()=> controller.stopRecord(context),
+          onTap: () => controller.stopRecord(context),
           child: const RoundedContainer(
             boxShape: BoxShape.circle,
             color: Colors.red,

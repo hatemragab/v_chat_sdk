@@ -18,7 +18,7 @@ class VChatAppService extends GetxService {
 
   VChatUser? vChatUser;
   Map<String, String>? trans;
-  BuildContext? roomsContext;
+
   late String currentLocal;
   ThemeData? light;
   ThemeData? dark;
@@ -52,14 +52,14 @@ class VChatAppService extends GetxService {
 
   Future<VChatAppService> init() async {
     await GetStorage.init();
-     await DBProvider.db.database;
+    await DBProvider.db.database;
     if (vchatUseFirebase) {
       await Firebase.initializeApp();
     }
     final userMap = GetStorage().read(GetStorageKeys.KV_CHAT_MY_MODEL);
     if (userMap != null) {
       vChatUser = VChatUser.fromMap(userMap);
-    }else{
+    } else {
       vChatUser = null;
     }
     return this;

@@ -65,8 +65,8 @@ class _MessageViewState extends State<MessageView> {
             ),
             Obx(() {
               final x = controller.isLastMessageSeen.value;
-              final _room =
-              roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+              final _room = roomController.rooms.firstWhere(
+                  (element) => element.id == roomController.currentRoomId!);
               if (_room.roomType == RoomType.single) {
                 if (x) {
                   return Column(
@@ -77,9 +77,7 @@ class _MessageViewState extends State<MessageView> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: CircleImage.network(
-                            path: _room.thumbImage,
-                          radius: 10
-                             ),
+                            path: _room.thumbImage, radius: 10),
                       ),
                       const SizedBox(
                         height: 7,
@@ -96,8 +94,8 @@ class _MessageViewState extends State<MessageView> {
               height: 2,
             ),
             Obx(() {
-              final _room =
-              roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+              final _room = roomController.rooms.firstWhere(
+                  (element) => element.id == roomController.currentRoomId!);
               final bkId = _room.blockerId;
               if (bkId != 0) {
                 if (bkId == controller.myModel!.id) {

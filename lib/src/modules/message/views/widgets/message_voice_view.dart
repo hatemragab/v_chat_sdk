@@ -10,9 +10,10 @@ import '../../controllers/message_controller.dart';
 class MessageVoiceView extends GetView<MessageController> {
   final VChatMessage _message;
   final bool isSender;
-  final myId =VChatAppService.to.vChatUser!.id;
+  final myId = VChatAppService.to.vChatUser!.id;
 
-  MessageVoiceView(this._message, {Key? key, required this.isSender}) : super(key: key);
+  MessageVoiceView(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

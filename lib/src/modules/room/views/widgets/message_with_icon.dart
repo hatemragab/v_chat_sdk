@@ -7,8 +7,6 @@ import '../../../../models/v_chat_room.dart';
 import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/custom_widgets/circle_image.dart';
 
-
-
 class MessageWithIcon extends StatelessWidget {
   final VChatRoom _room;
   final _myModel = VChatAppService.to.vChatUser!;
@@ -32,8 +30,7 @@ class MessageWithIcon extends StatelessWidget {
         ),
         Flexible(
             child: AutoDirection(
-                text: _room.lastMessage.content,
-                child: getMessageText())),
+                text: _room.lastMessage.content, child: getMessageText())),
       ],
     );
   }
@@ -71,7 +68,7 @@ class MessageWithIcon extends StatelessWidget {
                   .alignStart
                   .overflowEllipsis,
             ),
-            CircleImage.network(path: _room.thumbImage ,radius: 10),
+            CircleImage.network(path: _room.thumbImage, radius: 10),
           ],
         );
       }

@@ -7,7 +7,8 @@ import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 import 'sheet_vertical_item.dart';
 
 class CustomVerticalSheetItem {
-  static Future<int?> normal(BuildContext context,final List<CustomSheetModel> items) async {
+  static Future<int?> normal(
+      BuildContext context, final List<CustomSheetModel> items) async {
     return await showCupertinoModalPopup<int?>(
       barrierDismissible: true,
       semanticsDismissible: true,
@@ -15,7 +16,7 @@ class CustomVerticalSheetItem {
       builder: (context) {
         return CupertinoActionSheet(
             cancelButton: CupertinoActionSheetAction(
-              child:   Text(VChatAppService.to.getTrans().cancel()),
+              child: Text(VChatAppService.to.getTrans().cancel()),
               onPressed: () {
                 Navigator.pop(context);
               },

@@ -25,8 +25,6 @@ import 'utils/get_storage_keys.dart';
 import 'utils/vchat_constants.dart';
 import 'services/vchat_provider.dart';
 
-
-
 class VChatController {
   VChatController._privateConstructor();
 
@@ -55,7 +53,6 @@ class VChatController {
       required ThemeData darkTheme,
       required bool enableLogger,
       required GlobalKey<NavigatorState> navKey}) async {
-
     vchatUseFirebase = isUseFirebase;
     serverIp = baseUrl;
     vchatAppName = appName;
@@ -87,7 +84,6 @@ class VChatController {
       throw "you should call function after init v chat";
     }
   }
-
 
   /// **throw** User not in v chat data base
   /// **throw** No internet connection
@@ -123,7 +119,6 @@ class VChatController {
     await GetStorage().write(GetStorageKeys.KV_CHAT_MY_MODEL, user.toMap());
     VChatAppService.to.setUser(user);
   }
-
 
   /// **throw** You cant start chat if you start chat your self
   /// **throw** Execution if peer Email Not in v chat Data base ! so first you must migrate all users
@@ -237,7 +232,6 @@ class VChatController {
     await _vChatControllerProvider.logOut();
     await _unBindChatControllers();
   }
-
 
   // delete all controller instances
   Future _unBindChatControllers() async {

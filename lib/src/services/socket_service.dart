@@ -13,14 +13,13 @@ import 'socket_controller.dart';
 import 'vchat_app_service.dart';
 
 class SocketService extends GetxController {
-
   final VChatAppService _appService = VChatAppService.to;
   final SocketController _socketController = Get.find<SocketController>();
 
   late Socket _socket;
   Rx<SocketStateType> socketState = SocketStateType.connecting.obs;
 
-  bool get isConnected =>_socket.connected;
+  bool get isConnected => _socket.connected;
 
   Socket getSocket() {
     return io(ServerConfig.SOCKET_IP, <String, dynamic>{

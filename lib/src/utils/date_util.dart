@@ -14,7 +14,6 @@ class UtilDates {
     VChatAppService.to.getTrans().sunday(),
   ];
 
-
   static final formatHour = DateFormat("HH:mm");
   static final formatDay = DateFormat("dd/MM/yyyy");
 
@@ -69,7 +68,7 @@ class UtilDates {
     }
 
     if (daysSinceMessage == 1) {
-      return  VChatAppService.to.getTrans().yesterday();
+      return VChatAppService.to.getTrans().yesterday();
     }
 
     return messageWeekDay(milliseconds);

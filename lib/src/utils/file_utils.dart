@@ -34,26 +34,23 @@ class FileUtils {
       if (file.existsSync()) {
         await OpenFile.open(file.path);
       } else {
-        try{
+        try {
           final cancelToken = CancelToken();
           CustomAlert.customLoadingDialog(context: context);
           await CustomDio().download(
-              path:
-              ServerConfig.MESSAGES_BASE_URL + attachment.playUrl.toString(),
+              path: ServerConfig.MESSAGES_BASE_URL +
+                  attachment.playUrl.toString(),
               cancelToken: cancelToken,
               filePath: file.path);
           Navigator.pop(context);
-          CustomAlert.done(
-              msg: "File saved on device /download/$vchatAppName");
+          CustomAlert.done(msg: "File saved on device /download/$vchatAppName");
           await OpenFile.open(file.path);
-        }catch(err){
+        } catch (err) {
           Navigator.pop(context);
           rethrow;
         }
-
       }
     } catch (err) {
-
       CustomAlert.customAlertDialog(
           context: context, errorMessage: err.toString());
       rethrow;
@@ -62,7 +59,7 @@ class FileUtils {
 
   static Future compressImage(File file) async {
     final ImageProperties properties =
-    await FlutterNativeImage.getImageProperties(file.path);
+        await FlutterNativeImage.getImageProperties(file.path);
     File compressedFile = file;
     if (file.lengthSync() > 150 * 1000) {
       // compress only images bigger than 150 kb
@@ -151,7 +148,7 @@ class FileUtils {
       CustomAlert.customAlertDialog(
           context: context,
           errorMessage:
-          "App Need this permission to save downloaded files in device storage /download/$vchatAppName}/",
+              "App Need this permission to save downloaded files in device storage /download/$vchatAppName}/",
           dismissible: false,
           onPress: () async {
             Navigator.pop(context);
@@ -159,7 +156,6 @@ class FileUtils {
               Permission.storage,
             ].request();
             if (statuses[Permission.storage] == PermissionStatus.granted) {
-
               return c.complete();
             } else {
               Navigator.pop(context);

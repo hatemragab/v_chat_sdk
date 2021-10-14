@@ -1,3 +1,4 @@
+/// implement this class to support new languages
 abstract class LookupString {
   String test();
 
@@ -77,5 +78,5 @@ abstract class LookupString {
 
   String offline();
 
-  String yourMessage() ;
+  String yourMessage();
 }

@@ -6,9 +6,6 @@ import '../../../utils/api_utils/dio/custom_dio.dart';
 import '../../../utils/api_utils/dio/server_default_res.dart';
 
 class MessageProvider extends DisposableInterface {
-
-
-
   Future<List<VChatMessage>> loadMoreMessages(
     int roomId,
     String lastMessageId,

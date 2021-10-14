@@ -210,7 +210,7 @@ class MessageController extends GetxController {
 
     msg.messageAttachment!.isVoicePlying.value = true;
     currentVoicePlayer = msg;
-      audioPlayer.play(
+    audioPlayer.play(
       ServerConfig.MESSAGES_BASE_URL + msg.messageAttachment!.playUrl!,
       stayAwake: true,
     );

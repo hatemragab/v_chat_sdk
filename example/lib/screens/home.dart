@@ -36,6 +36,7 @@ class _HomeState extends State<Home> {
       VChatController.instance.bindChatControllers();
     }
   }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -62,8 +63,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _children = [homeTab(),  VChatRoomsView(), const SettingScreen()];
-   // MyApp.of(context)!.randomLocale();
+    _children = [homeTab(), VChatRoomsView(), const SettingScreen()];
+    // MyApp.of(context)!.randomLocale();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -82,9 +83,8 @@ class _HomeState extends State<Home> {
       body: _children[_currentIndex], // new
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
-
         currentIndex: _currentIndex,
-        items:  [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: S.of(context).home,
@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
   }
 
   void updateTabs() {
-    _children = [homeTab(),  VChatRoomsView(), const SettingScreen()];
+    _children = [homeTab(), VChatRoomsView(), const SettingScreen()];
   }
 
   Widget homeTab() {

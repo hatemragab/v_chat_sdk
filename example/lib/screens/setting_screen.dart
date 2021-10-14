@@ -31,7 +31,8 @@ class _SettingScreenState extends State<SettingScreen> {
               icon: Icons.language,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context, data: [S.of(context).ar, S.of(context).en]);
+                    context: context,
+                    data: [S.of(context).ar, S.of(context).en]);
                 if (res == 0) {
                   Provider.of<LangController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "ar"));
@@ -47,7 +48,8 @@ class _SettingScreenState extends State<SettingScreen> {
               icon: Icons.wb_sunny,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context, data: [S.of(context).light, S.of(context).dark]);
+                    context: context,
+                    data: [S.of(context).light, S.of(context).dark]);
                 if (res == 0) {
                   Provider.of<LangController>(context, listen: false)
                       .changeTheme(false);
@@ -71,7 +73,8 @@ class _SettingScreenState extends State<SettingScreen> {
               icon: Icons.notification_important,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context, data: [S.of(context).on, S.of(context).off]);
+                    context: context,
+                    data: [S.of(context).on, S.of(context).off]);
                 if (res == 0) {
                   VChatController.instance.startAllNotification();
                 }
@@ -84,10 +87,9 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).logOut,
               icon: Icons.logout,
               onTap: () async {
-
                 await VChatController.instance.logOut();
 
-                 await GetStorage().remove("myModel");
+                await GetStorage().remove("myModel");
 
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => SplashScreen()),

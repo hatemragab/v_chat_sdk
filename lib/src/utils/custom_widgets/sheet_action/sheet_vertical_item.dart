@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
-class CustomSheetModel{
+class CustomSheetModel {
   final int value;
   final String text;
-  IconData?iconData;
+  IconData? iconData;
   bool isHidden;
 
-  CustomSheetModel({required this.value,required this.text, this.iconData,this.isHidden = false});
+  CustomSheetModel(
+      {required this.value,
+      required this.text,
+      this.iconData,
+      this.isHidden = false});
 }

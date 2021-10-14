@@ -16,7 +16,6 @@ class LoginController {
 
   LoginController(this.context);
 
-
   void login() async {
     final email = emailTxtController.text.toString();
     final password = passwordTxtController.text.toString();

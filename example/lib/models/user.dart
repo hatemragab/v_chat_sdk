@@ -23,10 +23,6 @@ class User {
     required this.authToken,
   });
 
-
-
-
-
   @override
   String toString() {
     return 'User{' +

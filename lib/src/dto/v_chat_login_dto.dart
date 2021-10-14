@@ -1,9 +1,10 @@
+/// dto login object
 class VChatLoginDto {
   final String email;
   final String password;
   late String? fcmToken;
 
-   VChatLoginDto({
+  VChatLoginDto({
     required this.email,
     required this.password,
     this.fcmToken,

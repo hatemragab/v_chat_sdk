@@ -4,8 +4,7 @@ import 'audio_player.dart';
 
 void main() {
   test('if audio player works', () {
-   final a = TestAudioPlayer();
-   a.urlPlay();
-
+    final a = TestAudioPlayer();
+    a.urlPlay();
   });
 }

@@ -7,13 +7,13 @@ import '../../../../services/vchat_app_service.dart';
 import '../../../../utils/custom_widgets/rounded_container.dart';
 import '../../../../utils/file_utils.dart';
 
-
 class MessageFileView extends StatelessWidget {
   final VChatMessage _message;
   final bool isSender;
   final myId = VChatAppService.to.vChatUser!.id;
 
-  MessageFileView(this._message, {Key? key, required this.isSender}) : super(key: key);
+  MessageFileView(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MessageFileView extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        FileUtils.newDownloadFile(context,att);
+        FileUtils.newDownloadFile(context, att);
       },
       child: RoundedContainer(
         height: 75,

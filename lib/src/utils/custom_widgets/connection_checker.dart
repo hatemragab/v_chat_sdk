@@ -12,15 +12,17 @@ class ConnectionChecker extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final SocketService _socket =Get.find<SocketService>();
+    final SocketService _socket = Get.find<SocketService>();
     return Obx(() {
       if (_socket.socketState.value == SocketStateType.connecting) {
         return RoundedContainer(
           color: Colors.redAccent,
           borderRadius: BorderRadius.circular(10),
           padding: const EdgeInsets.all(5),
-          child: (VChatAppService.to.getTrans().connecting() +
-          " ...").text.alignCenter.color(Colors.white),
+          child: (VChatAppService.to.getTrans().connecting() + " ...")
+              .text
+              .alignCenter
+              .color(Colors.white),
         );
       } else {
         return const SizedBox.shrink();

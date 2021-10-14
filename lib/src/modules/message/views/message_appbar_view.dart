@@ -50,8 +50,8 @@ class MessageAppBarView extends GetView<MessageController>
         ),
       ),
       title: Obx(() {
-        final _room =
-            roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+        final _room = roomController.rooms.firstWhere(
+            (element) => element.id == roomController.currentRoomId!);
 
         return Column(
           children: [
@@ -98,8 +98,8 @@ class MessageAppBarView extends GetView<MessageController>
       actions: [
         Center(
           child: Obx(() {
-            final _room =
-                roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+            final _room = roomController.rooms.firstWhere(
+                (element) => element.id == roomController.currentRoomId!);
             return Padding(
               padding: const EdgeInsets.only(right: 5),
               child: InkWell(

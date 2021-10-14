@@ -38,6 +38,4 @@ class AuthProvider {
 
     return VChatUser.fromMap(userMap);
   }
-
-
 }

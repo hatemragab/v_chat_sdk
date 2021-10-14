@@ -24,7 +24,7 @@ class VChatRoom {
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
- const VChatRoom({
+  const VChatRoom({
     required this.id,
     required this.roomType,
     required this.blockerId,
@@ -46,7 +46,6 @@ class VChatRoom {
   String toString() {
     return 'Room{id: $id, roomType: $roomType, blockerId: $blockerId, createdAt: $createdAt, updatedAt: $updatedAt, creatorId: $creatorId, isMute: $isMute, isLastMessageSeenByMe: $lastMessageSeenBy, isOnline: $isOnline, title: $title, thumbImage: $thumbImage, ifSinglePeerId: $ifSinglePeerId, lastMessage: $lastMessage}';
   }
-
 
   factory VChatRoom.fromMap(dynamic map) {
     return VChatRoom(

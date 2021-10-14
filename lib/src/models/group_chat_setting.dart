@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class GroupChatSetting{
+class GroupChatSetting {
   final RxString title;
   final RxString image;
   final RxString imageThumb;
@@ -18,9 +18,7 @@ class GroupChatSetting{
     RxString? image,
     RxString? imageThumb,
   }) {
-
-
-    return   GroupChatSetting(
+    return GroupChatSetting(
       title: title ?? this.title,
       image: image ?? this.image,
       imageThumb: imageThumb ?? this.imageThumb,
@@ -32,9 +30,8 @@ class GroupChatSetting{
     return 'GroupChatSetting{title: $title, image: $image, imageThumb: $imageThumb}';
   }
 
-
   factory GroupChatSetting.fromMap(Map<String, dynamic> map) {
-    return   GroupChatSetting(
+    return GroupChatSetting(
       title: (map['title'] as String).obs,
       image: (map['image'] as String).obs,
       imageThumb: (map['imageThumb'] as String).obs,
@@ -44,9 +41,9 @@ class GroupChatSetting{
   Map<String, dynamic> toMap() {
     // ignore: unnecessary_cast
     return {
-      'title':  title,
-      'image':  image,
-      'imageThumb':  imageThumb,
+      'title': title,
+      'image': image,
+      'imageThumb': imageThumb,
     } as Map<String, dynamic>;
   }
 

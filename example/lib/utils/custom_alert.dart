@@ -21,10 +21,11 @@ class CustomAlert {
       },
     );
   }
+
   static Future<int?> customChooseDialog(
       {required BuildContext context,
-        String? title,
-        required List<String> data}) async {
+      String? title,
+      required List<String> data}) async {
     return await showDialog(
       context: context,
       builder: (context) {
@@ -37,14 +38,14 @@ class CustomAlert {
               children: [
                 title != null ? title.text.black.size(19) : SizedBox(),
                 ...data.map((e) => InkWell(
-                  onTap: () {
-                    Navigator.pop(context, data.indexOf(e) );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: e.text,
-                  ),
-                ))
+                      onTap: () {
+                        Navigator.pop(context, data.indexOf(e));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: e.text,
+                      ),
+                    ))
               ],
             ),
           ),

@@ -4,8 +4,6 @@ import '../../../models/v_chat_message.dart';
 import '../../../utils/custom_widgets/rounded_container.dart';
 import '../../../utils/date_util.dart';
 
-
-
 class RenderMessageSendAtDayItem extends StatelessWidget {
   final int index;
   final VChatMessage message;
@@ -36,7 +34,7 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
     if (formattedLastMessageSendAt != formattedMessageSendAt) {
       return getLabelDay(message.createdAt);
     }
-    return  const SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 
   Widget getLabelDay(int milliseconds) {
@@ -47,7 +45,7 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
         RoundedContainer(
           child: day.text.color(Colors.white),
           color: Colors.blueGrey,
-          padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           borderRadius: BorderRadius.circular(20),
         ),
       ],

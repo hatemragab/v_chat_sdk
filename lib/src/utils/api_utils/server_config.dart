@@ -22,6 +22,5 @@ class ServerConfig {
 
   static String MESSAGES_BASE_URL = "${SERVER_IP}public/messages/";
 
-
   static const MAX_MESSAGE_FILE_SIZE = 50 * 1000 * 1000; // = 50 mb;
 }

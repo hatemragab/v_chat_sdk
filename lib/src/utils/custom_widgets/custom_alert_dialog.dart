@@ -8,19 +8,19 @@ import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
 class CustomAlert {
   static void done({String? msg}) {
     BotToast.showSimpleNotification(
-      title:VChatAppService.to.getTrans().success(),
-      duration: const Duration(seconds: 3),
-      subTitle: msg ?? VChatAppService.to.getTrans().thisOperationDoneSuccessfully()
-    );
+        title: VChatAppService.to.getTrans().success(),
+        duration: const Duration(seconds: 3),
+        subTitle: msg ??
+            VChatAppService.to.getTrans().thisOperationDoneSuccessfully());
   }
 
   static void error({String? msg}) {
     BotToast.showSimpleNotification(
-      title:VChatAppService.to.getTrans().failed(),
+      title: VChatAppService.to.getTrans().failed(),
       subTitleStyle: const TextStyle(color: Colors.white),
       backgroundColor: Colors.red,
       duration: const Duration(seconds: 5),
-      subTitle: msg ??VChatAppService.to.getTrans().thisOperationFailed()  ,
+      subTitle: msg ?? VChatAppService.to.getTrans().thisOperationFailed(),
     );
   }
 
@@ -30,7 +30,6 @@ class CustomAlert {
       Function()? onPress,
       required String errorMessage,
       bool dismissible = true}) {
-
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -62,7 +61,8 @@ class CustomAlert {
                       SizedBox(
                         child: ElevatedButton(
                             onPressed: onPress ?? () => Navigator.pop(context),
-                            child:VChatAppService.to.getTrans(context).oK().text),
+                            child:
+                                VChatAppService.to.getTrans(context).oK().text),
                       )
                     ],
                   ),
@@ -105,7 +105,7 @@ class CustomAlert {
                     const SizedBox(
                       height: 10,
                     ),
-                    VChatAppService.to.getTrans().loadingPleaseWait() .text.bold,
+                    VChatAppService.to.getTrans().loadingPleaseWait().text.bold,
                     const SizedBox(
                       height: 33,
                     ),
@@ -135,8 +135,6 @@ class CustomAlert {
       },
     );
   }
-
-
 
   static Future<int?> customAskDialog(
       {String? title,
@@ -176,11 +174,19 @@ class CustomAlert {
                         children: [
                           ElevatedButton(
                             onPressed: () => Navigator.pop(context, -1),
-                            child: VChatAppService.to.getTrans().cancel().text.size(15),
+                            child: VChatAppService.to
+                                .getTrans()
+                                .cancel()
+                                .text
+                                .size(15),
                           ),
                           ElevatedButton(
                             onPressed: () => Navigator.pop(context, 1),
-                            child: VChatAppService.to.getTrans().oK().text.size(15),
+                            child: VChatAppService.to
+                                .getTrans()
+                                .oK()
+                                .text
+                                .size(15),
                           ),
                         ],
                       )
@@ -202,4 +208,3 @@ class CustomAlert {
     );
   }
 }
-

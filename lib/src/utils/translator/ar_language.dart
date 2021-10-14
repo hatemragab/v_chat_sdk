@@ -8,109 +8,110 @@ class ArLanguage implements LookupString {
   String toDay() => "اليوم";
 
   @override
-  String areYouSure()=>"هل انت متاكد";
+  String areYouSure() => "هل انت متاكد";
 
   @override
-  String cancel() =>"الغاء";
+  String cancel() => "الغاء";
 
   @override
-  String chatHasBeenClosed() =>"تم انهاء المحادثه";
+  String chatHasBeenClosed() => "تم انهاء المحادثه";
 
   @override
-  String chatHasBeenClosedByMe() =>"تم انهاء المحادثه من خلالي";
+  String chatHasBeenClosedByMe() => "تم انهاء المحادثه من خلالي";
 
   @override
-  String closeChat() =>"انهاء المحادثه";
+  String closeChat() => "انهاء المحادثه";
 
   @override
-  String connecting() =>"جاري الاتصال";
+  String connecting() => "جاري الاتصال";
 
   @override
-  String create() =>"انشاء";
+  String create() => "انشاء";
 
   @override
-  String enableNotification() =>"تفعيل التنبيهات";
+  String enableNotification() => "تفعيل التنبيهات";
 
   @override
-  String failed() =>"فشل";
+  String failed() => "فشل";
 
   @override
-  String file() =>"ملف";
+  String file() => "ملف";
 
   @override
-  String fileIsTooBig() =>"هذا الملف مساحته كبيره جدا";
+  String fileIsTooBig() => "هذا الملف مساحته كبيره جدا";
 
   @override
-  String friday() =>"الجمعه";
+  String friday() => "الجمعه";
 
   @override
-  String loadingPleaseWait() =>"برجاء الانتظار";
+  String loadingPleaseWait() => "برجاء الانتظار";
 
   @override
-  String monday() =>"الاثنين";
+  String monday() => "الاثنين";
 
   @override
-  String muteNotification() =>"ايقاف التنبيهات";
+  String muteNotification() => "ايقاف التنبيهات";
 
   @override
-  String notificationsHasBeenStoppedSuccessfully() =>"تم ايثاف التنبيهات بنجاح";
+  String notificationsHasBeenStoppedSuccessfully() =>
+      "تم ايثاف التنبيهات بنجاح";
 
   @override
-  String oK() =>"تم";
+  String oK() => "تم";
 
   @override
-  String openChat() =>"افتح المحادثه";
+  String openChat() => "افتح المحادثه";
 
   @override
-  String photo() =>"صوره";
+  String photo() => "صوره";
 
   @override
-  String recording() =>"يقوم بتسجيل صوتي...";
+  String recording() => "يقوم بتسجيل صوتي...";
 
   @override
-  String saturday()  =>"السبت";
+  String saturday() => "السبت";
 
   @override
-  String sayHello()  =>"قل مرحبا";
+  String sayHello() => "قل مرحبا";
 
   @override
-  String showLess()  =>"اظهار اقل";
+  String showLess() => "اظهار اقل";
 
   @override
-  String showMore()  =>"اظهر الكل";
+  String showMore() => "اظهر الكل";
 
   @override
-  String success()  =>"نجحت";
+  String success() => "نجحت";
 
   @override
-  String sunday()  =>"الاحد";
+  String sunday() => "الاحد";
 
   @override
-  String thisOperationDoneSuccessfully()  =>"تمت العمليه بنجاح";
+  String thisOperationDoneSuccessfully() => "تمت العمليه بنجاح";
 
   @override
-  String thisOperationFailed()  =>"فشلت العمليه";
+  String thisOperationFailed() => "فشلت العمليه";
 
   @override
-  String thursday()  =>"الخميس";
+  String thursday() => "الخميس";
 
   @override
-  String tuesday()  =>"الثلاثاء";
+  String tuesday() => "الثلاثاء";
 
   @override
-  String typing()  =>"يكتب الان ...";
+  String typing() => "يكتب الان ...";
 
   @override
-  String userHasBeenBlockedSuccessfully()  =>"تم انهاء المحادثه بنجاح";
+  String userHasBeenBlockedSuccessfully() => "تم انهاء المحادثه بنجاح";
 
   @override
-  String video()  =>"فيديو";
+  String video() => "فيديو";
 
   @override
-  String wednesday()  =>"الاربعاء";
+  String wednesday() => "الاربعاء";
 
   @override
-  String yesterday()  =>"الامس";
+  String yesterday() => "الامس";
 
   @override
   String offline() => "غير متصل";
@@ -119,6 +120,5 @@ class ArLanguage implements LookupString {
   String online() => "متصل";
 
   @override
-  String yourMessage()=>"اكتب رساله";
-
+  String yourMessage() => "اكتب رساله";
 }

@@ -19,7 +19,6 @@ class RegisterController {
 
   RegisterController(this.context);
 
-
   void register() async {
     final email = emailTxtController.text.toString();
     final name = nameTxtController.text.toString();

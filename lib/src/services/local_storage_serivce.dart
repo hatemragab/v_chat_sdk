@@ -21,8 +21,8 @@ class LocalStorageService extends GetxService {
         orderBy: "${RoomTable.COLUMN_UPDATED_AT} DESC");
     final rooms = <VChatRoom>[];
     for (var map in maps) {
-      final r = VChatRoom.fromMap(
-          jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
+      final r =
+          VChatRoom.fromMap(jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
       rooms.add(r);
     }
 
@@ -39,11 +39,14 @@ class LocalStorageService extends GetxService {
 
     final batch = database.batch();
     for (var room in roomsToInsert) {
-      batch.insert(RoomTable.TABLE_NAME, {
-        RoomTable.COLUMN_ID: room.id,
-        RoomTable.COLUMN_UPDATED_AT: room.updatedAt,
-        RoomTable.COLUMN_DATA: jsonEncode(room.toLocalMap())
-      },conflictAlgorithm: ConflictAlgorithm.replace);
+      batch.insert(
+          RoomTable.TABLE_NAME,
+          {
+            RoomTable.COLUMN_ID: room.id,
+            RoomTable.COLUMN_UPDATED_AT: room.updatedAt,
+            RoomTable.COLUMN_DATA: jsonEncode(room.toLocalMap())
+          },
+          conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await batch.commit(noResult: true);
   }
