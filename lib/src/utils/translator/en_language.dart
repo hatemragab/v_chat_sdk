@@ -47,7 +47,7 @@ class EnLanguage implements LookupString {
   String photo() => "Photo";
 
   @override
-  String recording() => "Recording";
+  String recording() => "Recording ...";
 
   @override
   String showLess() => "Show less";
@@ -71,7 +71,7 @@ class EnLanguage implements LookupString {
   String toDay() => "Today";
 
   @override
-  String typing() => "Typing";
+  String typing() => "Typing ...";
 
   @override
   String userHasBeenBlockedSuccessfully() =>
@@ -121,5 +121,5 @@ class EnLanguage implements LookupString {
   String online() => "Online";
 
   @override
-  String yourMessage()=>"your message";
+  String yourMessage()=>"your message ";
 }

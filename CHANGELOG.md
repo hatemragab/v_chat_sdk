@@ -5,3 +5,11 @@
 ## 0.0.2
 
 * support multiple language and remove un necessary files
+
+## 0.0.3
+
+* fix logout
+
+## 0.0.4
+
+* update all packages

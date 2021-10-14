@@ -65,7 +65,7 @@ class ArLanguage implements LookupString {
   String photo() =>"صوره";
 
   @override
-  String recording() =>"يقوم بتسجيل صوتي";
+  String recording() =>"يقوم بتسجيل صوتي...";
 
   @override
   String saturday()  =>"السبت";
@@ -98,7 +98,7 @@ class ArLanguage implements LookupString {
   String tuesday()  =>"الثلاثاء";
 
   @override
-  String typing()  =>"يكتب الان";
+  String typing()  =>"يكتب الان ...";
 
   @override
   String userHasBeenBlockedSuccessfully()  =>"تم انهاء المحادثه بنجاح";

@@ -14,7 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 /// real server ip 18.216.232.131:3000
   await VChatController.instance.init(
-    baseUrl: "192.168.1.6:3000",
+    baseUrl: "192.168.1.4:3000",
     appName: "test_v_chat",
     isUseFirebase: true,
     lightTheme: vChatLightTheme,

@@ -35,6 +35,7 @@ final appBarTheme = AppBarTheme(
   iconTheme: const IconThemeData(color: Colors.red),
 );
 
+/// Default v chat light theme
 final vChatLightTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
     primaryColor: Colors.red,

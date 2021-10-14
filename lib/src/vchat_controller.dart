@@ -25,6 +25,8 @@ import 'utils/get_storage_keys.dart';
 import 'utils/vchat_constants.dart';
 import 'services/vchat_provider.dart';
 
+
+
 class VChatController {
   VChatController._privateConstructor();
 
@@ -33,9 +35,17 @@ class VChatController {
 
   static VChatController get instance => _instance;
 
-  late final _vChatControllerProvider = VChatProvider();
+  final _vChatControllerProvider = VChatProvider();
 
   final _authProvider = AuthProvider();
+
+  /// **baseUrl** v chat  backend base url
+  /// **appName** your app name to because we create a file in phone internal storage to save files
+  /// the folder in Documents/`appName`
+  /// **isUseFirebase** if firebase not supported in your country or you not connect the app with firebase yet
+  /// **lightTheme** define and override v_chat default Light theme
+  /// **darkTheme** define and override v_chat default Dark theme
+  /// **navKey** nav Key to get the context any where and support localization
 
   Future init(
       {required String baseUrl,
@@ -45,6 +55,7 @@ class VChatController {
       required ThemeData darkTheme,
       required bool enableLogger,
       required GlobalKey<NavigatorState> navKey}) async {
+
     vchatUseFirebase = isUseFirebase;
     serverIp = baseUrl;
     vchatAppName = appName;
@@ -63,6 +74,7 @@ class VChatController {
     }
   }
 
+  /// to add new language to v chat
   void setLocaleMessages(
       {required String languageCode,
       required String countryCode,
@@ -76,6 +88,9 @@ class VChatController {
     }
   }
 
+
+  /// **throw** User not in v chat data base
+  /// **throw** No internet connection
   Future<VChatUser> login(VChatLoginDto dto) async {
     if (vchatUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
@@ -89,6 +104,8 @@ class VChatController {
     return user;
   }
 
+  /// **throw** User already in v chat data base
+  /// **throw** No internet connection
   Future<VChatUser> register(VChatRegisterDto dto) async {
     if (vchatUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
@@ -107,6 +124,10 @@ class VChatController {
     VChatAppService.to.setUser(user);
   }
 
+
+  /// **throw** You cant start chat if you start chat your self
+  /// **throw** Execution if peer Email Not in v chat Data base ! so first you must migrate all users
+  /// **throw** No internet connection
   Future<dynamic> createSingleChat({
     required String peerEmail,
     required BuildContext ctx,
@@ -168,6 +189,7 @@ class VChatController {
     );
   }
 
+  /// **throw** No internet connection
   Future<String> stopAllNotification() async {
     if (vchatUseFirebase) {
       await FirebaseMessaging.instance.deleteToken();
@@ -179,6 +201,7 @@ class VChatController {
     }
   }
 
+  /// **throw** No internet connection
   Future<String> startAllNotification() async {
     if (vchatUseFirebase) {
       final token = (await FirebaseMessaging.instance.getToken()).toString();
@@ -188,31 +211,36 @@ class VChatController {
     }
   }
 
+  /// **throw** No internet connection
   Future updateUserName({required String name}) async {
     return await _vChatControllerProvider.updateUserName(name: name);
   }
 
+  /// **throw** File Not Found !
+  /// **throw** No internet connection
   Future updateUserImage({required String imagePath}) async {
     return await _vChatControllerProvider.updateUserImage(path: imagePath);
   }
 
+  /// **throw** No internet connection
   Future updateUserPassword(
       {required String oldPassword, required String newPassword}) async {
     return await _vChatControllerProvider.updateUserPassword(
         oldPassword: oldPassword, newPassword: newPassword);
   }
 
+  /// **throw** No internet connection
   Future logOut() async {
     await GetStorage().remove(GetStorageKeys.KV_CHAT_MY_MODEL);
     await DBProvider.db.reCreateTables();
     await FirebaseMessaging.instance.deleteToken();
     await _vChatControllerProvider.logOut();
-    await unBindChatControllers();
+    await _unBindChatControllers();
   }
 
-  Future unBindChatControllers() async {
-    //  Get.reset(clearRouteBindings: true);
 
+  // delete all controller instances
+  Future _unBindChatControllers() async {
     Get.delete<LocalStorageService>();
     Get.delete<RoomsApiProvider>();
     Get.delete<RoomController>();
@@ -224,9 +252,11 @@ class VChatController {
     await Get.putAsync(() => LocalStorageService().init());
   }
 
+  /// when you call this function the user will be online and can receive notification
+  /// first you have to login or register in v chat other wise will throw Exception
   void bindChatControllers() {
     if (VChatAppService.to.vChatUser == null) {
-      throw "You must login or register to v chat first ";
+      throw "You must login or register to v chat first delete the app and login again !";
     }
     Get.put<RoomsApiProvider>(RoomsApiProvider());
     Get.put<RoomController>(RoomController());
