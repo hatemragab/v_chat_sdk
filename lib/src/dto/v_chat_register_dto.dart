@@ -9,13 +9,12 @@ class VChatRegisterDto {
   late String? fcmToken;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
-
+String? quie;
   VChatRegisterDto({
     required this.name,
     required this.password,
     required this.email,
     required this.userImage,
-    this.fcmToken,
   });
 
   VChatRegisterDto copyWith({
@@ -23,14 +22,12 @@ class VChatRegisterDto {
     String? email,
     String? password,
     File? userImage,
-    String? fcmToken,
   }) {
     return VChatRegisterDto(
       name: name ?? this.name,
       email: email ?? this.email,
       password: password ?? this.password,
       userImage: userImage ?? this.userImage,
-      fcmToken: fcmToken ?? this.fcmToken,
     );
   }
 

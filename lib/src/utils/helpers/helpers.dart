@@ -1,5 +1,5 @@
-import 'dart:developer';
 
+import 'dart:developer' as developer;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -14,8 +14,16 @@ class Helpers {
 
   static void vlog(String err) {
     if (enableLog) {
-      log("V_CHAT_SDK SAY =>>> $err", name: "V_CHAT_SDK");
+      printWarning("⚠️ V_CHAT_SDK SAY =>>> $err");
     }
+  }
+
+  static printError(String text) {
+    print('\x1B[31m$text\x1B[0m' );
+  }
+
+  static printWarning(String text) {
+    print('\x1B[33m$text\x1B[0m' );
   }
 
   static bool isDark(BuildContext context) {

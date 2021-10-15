@@ -26,18 +26,24 @@ class MessageImageItem extends GetView {
                       _message.messageAttachment!.imageUrl.toString()),
             ));
       },
-      child: Container(
-        constraints: const BoxConstraints(maxHeight: 500),
-        height: double.parse(_message.messageAttachment!.height!),
-        width: double.parse(_message.messageAttachment!.width!),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.grey,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          bottomLeft: isSender ? const Radius.circular(10) : Radius.zero,
+          topRight:const Radius.circular(10),
+          topLeft:const Radius.circular(10),
+          bottomRight: isSender ? Radius.zero : const Radius.circular(10),
         ),
-        child: CachedNetworkImage(
-          imageUrl: ServerConfig.MESSAGES_BASE_URL +
-              _message.messageAttachment!.imageUrl.toString(),
-          fit: BoxFit.cover,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Container(
+          constraints: const BoxConstraints(maxHeight: 500),
+          height: double.parse(_message.messageAttachment!.height!),
+          width: double.parse(_message.messageAttachment!.width!),
+          color: Colors.grey,
+          child: CachedNetworkImage(
+            imageUrl: ServerConfig.MESSAGES_BASE_URL +
+                _message.messageAttachment!.imageUrl.toString(),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

@@ -8,7 +8,7 @@ import '../vchat_constants.dart';
 class DirHelper {
   static Future<String> downloadPath() async {
     if (Platform.isAndroid) {
-      final path1 = join('storage', "emulated", "0", "Download", vchatAppName);
+      final path1 = join('storage', "emulated", "0", "Documents", vchatAppName);
       final dir = await Directory(path1).create(recursive: true);
       return "${dir.path}/";
     } else {

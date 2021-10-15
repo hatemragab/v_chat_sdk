@@ -17,3 +17,7 @@
 ## 0.0.5
 
 * format the code 
+
+## 0.0.6
+
+* delete unused packages

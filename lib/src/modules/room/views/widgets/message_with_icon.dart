@@ -1,6 +1,7 @@
-import 'package:auto_direction/auto_direction.dart';
+
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
 import '../../../../enums/message_type.dart';
 import '../../../../enums/room_type.dart';
 import '../../../../models/v_chat_room.dart';

@@ -78,7 +78,7 @@ class SendMessageController extends GetxController {
     } catch (err) {
       log(err.toString());
     } finally {
-      return super.onClose();
+       super.onClose();
     }
   }
 

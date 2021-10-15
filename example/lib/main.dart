@@ -51,23 +51,21 @@ class _MyAppState extends State<MyApp> {
         }
       }
     });
-    return KeyboardDismissOnTap(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        navigatorKey: navigatorKey,
-        theme: context.read<LangController>().theme,
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        builder: BotToastInit(),
-        navigatorObservers: [BotToastNavigatorObserver()],
-        supportedLocales: S.delegate.supportedLocales,
-        locale: context.read<LangController>().locale,
-        home: SplashScreen(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
+      theme: context.read<LangController>().theme,
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
+      supportedLocales: S.delegate.supportedLocales,
+      locale: context.read<LangController>().locale,
+      home: SplashScreen(),
     );
   }
 }
