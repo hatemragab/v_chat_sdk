@@ -1,11 +1,9 @@
-
 import 'dart:developer' as developer;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import '../../enums/message_type.dart';
-import '../vchat_constants.dart';
 
 class Helpers {
   static String baseName(String path) {
@@ -13,17 +11,17 @@ class Helpers {
   }
 
   static void vlog(String err) {
-    if (enableLog) {
+    if (VChatAppService.to.enableLog) {
       printWarning("⚠️ V_CHAT_SDK SAY =>>> $err");
     }
   }
 
   static printError(String text) {
-    print('\x1B[31m$text\x1B[0m' );
+    print('\x1B[31m$text\x1B[0m');
   }
 
   static printWarning(String text) {
-    print('\x1B[33m$text\x1B[0m' );
+    print('\x1B[33m$text\x1B[0m');
   }
 
   static bool isDark(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../models/v_chat_room.dart';
 import '../models/v_chat_room_typing.dart';
 import '../modules/room/controllers/rooms_controller.dart';
-import 'local_storage_serivce.dart';
+import 'local_storage_service.dart';
 import 'socket_service.dart';
 
 class SocketController extends GetxController {

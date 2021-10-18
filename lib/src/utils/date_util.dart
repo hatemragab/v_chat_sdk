@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 
 class UtilDates {
   static const int oneDayInMilliseconds = 86400000;

@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
 import '../../../../enums/message_type.dart';
 import '../../../../enums/room_type.dart';
 import '../../../../models/v_chat_room.dart';
-import '../../../../services/vchat_app_service.dart';
+import '../../../../services/v_chat_app_service.dart';
 import '../../../../utils/custom_widgets/circle_image.dart';
 
 class MessageWithIcon extends StatelessWidget {

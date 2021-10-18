@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 
 import '../../../../models/v_chat_message.dart';
-import '../../../../services/vchat_app_service.dart';
+import '../../../../services/v_chat_app_service.dart';
 import '../../controllers/message_controller.dart';
 
 class MessageVoiceView extends GetView<MessageController> {

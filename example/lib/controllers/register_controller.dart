@@ -61,6 +61,9 @@ class RegisterController {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => Home(),
       ));
+    } on VChatSdkException catch (err) {
+      //handle vchat exception here
+      rethrow;
     } catch (err) {
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;

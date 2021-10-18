@@ -1,6 +1,6 @@
 import '../../../v_chat_sdk.dart';
 
-class ArLanguage implements LookupString {
+class ArLanguage implements VChatLookupString {
   @override
   String test() => "اختبار";
 

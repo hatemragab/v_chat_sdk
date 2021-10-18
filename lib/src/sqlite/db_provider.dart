@@ -1,8 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/utils/vchat_constants.dart';
-
 import 'tables/message_table.dart';
 import 'tables/room_table.dart';
 
@@ -22,7 +21,7 @@ class DBProvider {
 
   Future _open() async {
     final String documentsDirectory = await getDatabasesPath();
-    final String path = join(documentsDirectory, "$vchatAppName.db");
+    final String path = join(documentsDirectory, "v_chat_chat.db");
 
     return await openDatabase(path, version: 1, onCreate: (db, version) async {
       await db.transaction((txn) async {

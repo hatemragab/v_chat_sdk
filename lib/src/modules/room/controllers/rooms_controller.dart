@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/load_more_type.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../models/v_chat_room_typing.dart';
-import '../../../services/local_storage_serivce.dart';
+import '../../../services/local_storage_service.dart';
 import '../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../providers/room_api_provider.dart';
 

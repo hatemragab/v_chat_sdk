@@ -29,7 +29,7 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
         backgroundColor: Colors.black,
         body: isLoading
             ? const Center(
-                child:CircularProgressIndicator(),
+                child: CircularProgressIndicator(),
               )
             : Stack(
                 children: [

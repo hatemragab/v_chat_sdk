@@ -1,20 +1,21 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import '../../../services/vchat_app_service.dart';
+import '../../../services/v_chat_app_service.dart';
 import '../../helpers/helpers.dart';
 import '../server_config.dart';
-import 'app_http_exception.dart';
+import 'v_chat_sdk_exception.dart';
 
 class CustomDio {
-  final Dio dio = Dio();
+  final dio = Dio();
 
   CustomDio() {
-    dio.options.baseUrl = ServerConfig.SERVER_IP;
+    dio.options.baseUrl = ServerConfig.serverBaseUrl;
     dio.options.validateStatus = (_) => true;
+    final vChatController = VChatAppService.to;
     dio.options.headers = {
-      'authorization': VChatAppService.to.vChatUser != null
-          ? VChatAppService.to.vChatUser!.accessToken.toString()
+      'authorization': vChatController.vChatUser != null
+          ? vChatController.vChatUser!.accessToken.toString()
           : ""
     };
 
@@ -161,9 +162,10 @@ class CustomDio {
       if (err.type == DioErrorType.other ||
           err.type == DioErrorType.connectTimeout ||
           err.type == DioErrorType.receiveTimeout) {
-        throw AppHttpException("Check your internet connection and try again ");
+        throw VChatSdkException(
+            "Check your internet connection and try again ");
       } else {
-        throw AppHttpException(res.data.toString());
+        throw VChatSdkException(res.data.toString());
       }
     } catch (err) {
       rethrow;
@@ -175,7 +177,7 @@ class CustomDio {
   void throwIfNoSuccess(Response response) {
     if (response.statusCode! > 300) {
       final errorMsg = response.data['data'].toString();
-      throw AppHttpException(errorMsg);
+      throw VChatSdkException(errorMsg);
     }
   }
 

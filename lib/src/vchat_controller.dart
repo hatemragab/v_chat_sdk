@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/utils/translator/lookup_string.dart';
+import 'package:v_chat_sdk/src/utils/translator/v_chat_lookup_string.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
 import 'models/v_chat_room.dart';
@@ -15,14 +16,14 @@ import 'modules/message/views/message_view.dart';
 import 'modules/room/controllers/rooms_controller.dart';
 import 'modules/room/providers/room_api_provider.dart';
 import 'services/auth/auth_provider.dart';
-import 'services/local_storage_serivce.dart';
+import 'services/local_storage_service.dart';
 import 'services/notification_service.dart';
 import 'services/socket_controller.dart';
 import 'services/socket_service.dart';
-import 'services/vchat_app_service.dart';
+import 'services/v_chat_app_service.dart';
 import 'sqlite/db_provider.dart';
 import 'utils/get_storage_keys.dart';
-import 'utils/vchat_constants.dart';
+
 import 'services/vchat_provider.dart';
 
 class VChatController {
@@ -44,38 +45,41 @@ class VChatController {
   /// **lightTheme** define and override v_chat default Light theme
   /// **darkTheme** define and override v_chat default Dark theme
   /// **navKey** nav Key to get the context any where and support localization
-
-  Future init(
-      {required String baseUrl,
-      required String appName,
-      required bool isUseFirebase,
-      required ThemeData lightTheme,
-      required ThemeData darkTheme,
-      required bool enableLogger,
-      required GlobalKey<NavigatorState> navKey}) async {
-    vchatUseFirebase = isUseFirebase;
-    serverIp = baseUrl;
-    vchatAppName = appName;
-
-    await Get.putAsync(() => VChatAppService().init());
+  /// **maxMediaUploadSize** file videos images max size in byes   50 * 1000 * 1000 ~ 50mb
+  Future init({
+    required Uri baseUrl,
+    required String appName,
+    required bool isUseFirebase,
+    required ThemeData lightTheme,
+    required ThemeData darkTheme,
+    required bool enableLogger,
+    required GlobalKey<NavigatorState> navigatorKey,
+    int maxMediaUploadSize = 50 * 1000 * 1000,
+  }) async {
+    await Get.putAsync(() => VChatAppService().init(isUseFirebase));
     await Get.putAsync(() => LocalStorageService().init());
-
-    VChatAppService.to.dark = darkTheme;
-    VChatAppService.to.light = lightTheme;
-    VChatAppService.to.navKey = navKey;
-
+    final controller = VChatAppService.to;
+    controller.dark = darkTheme;
+    controller.light = lightTheme;
+    controller.navKey = navigatorKey;
+    controller.isUseFirebase = isUseFirebase;
+    controller.appName = appName;
+    controller.maxMediaSize = maxMediaUploadSize;
+    controller.baseUrl = baseUrl.toString();
+    late bool enableLog;
     if (kReleaseMode) {
       enableLog = false;
     } else {
       enableLog = enableLogger;
     }
+    controller.enableLog = enableLog;
   }
 
   /// to add new language to v chat
   void setLocaleMessages(
       {required String languageCode,
       required String countryCode,
-      required LookupString lookupMessages}) {
+      required VChatLookupString lookupMessages}) {
     try {
       VChatAppService.to.setLocaleMessages(
           "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
@@ -88,7 +92,7 @@ class VChatController {
   /// **throw** User not in v chat data base
   /// **throw** No internet connection
   Future<VChatUser> login(VChatLoginDto dto) async {
-    if (vchatUseFirebase) {
+    if (VChatAppService.to.isUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app";
@@ -103,7 +107,7 @@ class VChatController {
   /// **throw** User already in v chat data base
   /// **throw** No internet connection
   Future<VChatUser> register(VChatRegisterDto dto) async {
-    if (vchatUseFirebase) {
+    if (VChatAppService.to.isUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app ";
@@ -121,7 +125,7 @@ class VChatController {
   }
 
   /// **throw** You cant start chat if you start chat your self
-  /// **throw** Execution if peer Email Not in v chat Data base ! so first you must migrate all users
+  /// **throw** Exception if peer Email Not in v chat Data base ! so first you must migrate all users
   /// **throw** No internet connection
   Future<dynamic> createSingleChat({
     required String peerEmail,
@@ -186,7 +190,7 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> stopAllNotification() async {
-    if (vchatUseFirebase) {
+    if (VChatAppService.to.isUseFirebase) {
       await FirebaseMessaging.instance.deleteToken();
       return VChatAppService.to
           .getTrans()
@@ -197,8 +201,8 @@ class VChatController {
   }
 
   /// **throw** No internet connection
-  Future<String> startAllNotification() async {
-    if (vchatUseFirebase) {
+  Future<String> enableAllNotification() async {
+    if (VChatAppService.to.isUseFirebase) {
       final token = (await FirebaseMessaging.instance.getToken()).toString();
       return await _vChatControllerProvider.updateUserFcmToken(token);
     } else {
@@ -250,7 +254,8 @@ class VChatController {
   /// first you have to login or register in v chat other wise will throw Exception
   void bindChatControllers() {
     if (VChatAppService.to.vChatUser == null) {
-      throw "You must login or register to v chat first delete the app and login again !";
+      throw VChatSdkException(
+          "You must login or register to v chat first delete the app and login again !");
     }
     Get.put<RoomsApiProvider>(RoomsApiProvider());
     Get.put<RoomController>(RoomController());

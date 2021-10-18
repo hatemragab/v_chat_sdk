@@ -9,7 +9,7 @@ class VChatRegisterDto {
   late String? fcmToken;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
-String? quie;
+  String? quie;
   VChatRegisterDto({
     required this.name,
     required this.password,

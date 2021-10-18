@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import '../../../../models/v_chat_message.dart';
 
-import '../../../../services/vchat_app_service.dart';
+import '../../../../services/v_chat_app_service.dart';
 import '../../../../utils/custom_widgets/rounded_container.dart';
 import '../../../../utils/file_utils.dart';
 

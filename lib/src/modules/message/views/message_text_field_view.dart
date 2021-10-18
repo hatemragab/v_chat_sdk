@@ -1,8 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../utils/custom_widgets/rounded_container.dart';

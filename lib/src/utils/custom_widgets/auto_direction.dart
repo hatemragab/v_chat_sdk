@@ -8,9 +8,9 @@ class AutoDirection extends StatefulWidget {
 
   AutoDirection(
       {Key? key,
-        required this.text,
-        required this.child,
-        this.onDirectionChange})
+      required this.text,
+      required this.child,
+      this.onDirectionChange})
       : super(key: key);
 
   @override
@@ -34,7 +34,7 @@ class _AutoDirectionState extends State<AutoDirection> {
   void didUpdateWidget(AutoDirection oldWidget) {
     if (isRTL(oldWidget.text) != isRTL(widget.text)) {
       WidgetsBinding.instance!.addPostFrameCallback(
-              (_) => widget.onDirectionChange!(isRTL(widget.text)));
+          (_) => widget.onDirectionChange!(isRTL(widget.text)));
     }
     super.didUpdateWidget(oldWidget);
   }

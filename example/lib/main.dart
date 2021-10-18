@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:example/screens/splash_screen.dart';
+import 'package:example/utils/ar_eg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,21 +13,23 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+//10.0.2.2
   /// real server ip 18.216.232.131:3000
   await VChatController.instance.init(
-      baseUrl: "192.168.1.4:3000",
-      appName: "test_v_chat",
-      isUseFirebase: true,
-      lightTheme: vChatLightTheme,
-      darkTheme: vChatDarkTheme,
-      enableLogger: true,
-      navKey: navigatorKey);
+    baseUrl: Uri.parse("http://10.0.2.2:3000"),
+    appName: "test_v_chat",
+    isUseFirebase: true,
+    lightTheme: vChatLightTheme,
+    darkTheme: vChatDarkTheme,
+    enableLogger: true,
+    navigatorKey: navigatorKey,
+    maxMediaUploadSize: 50 * 1000 * 1000,
+  );
 
   // add support new language
   // v_chat will change the language one you change it
-  // VChatController.instance.setLocaleMessages(
-  //     languageCode: "ar", countryCode: "EG", lookupMessages: Ar());
+  VChatController.instance.setLocaleMessages(
+      languageCode: "ar", countryCode: "EG", lookupMessages: ArEg());
 
   runApp(ChangeNotifierProvider<LangController>(
     create: (context) => LangController(),

@@ -10,19 +10,19 @@ import '../models/v_chat_room_typing.dart';
 import '../utils/api_utils/server_config.dart';
 import '../utils/custom_widgets/custom_alert_dialog.dart';
 import 'socket_controller.dart';
-import 'vchat_app_service.dart';
+import 'v_chat_app_service.dart';
 
 class SocketService extends GetxController {
   final VChatAppService _appService = VChatAppService.to;
   final SocketController _socketController = Get.find<SocketController>();
 
   late Socket _socket;
-  Rx<SocketStateType> socketState = SocketStateType.connecting.obs;
+  final socketState = SocketStateType.connecting.obs;
 
   bool get isConnected => _socket.connected;
 
   Socket getSocket() {
-    return io(ServerConfig.SOCKET_IP, <String, dynamic>{
+    return io(ServerConfig.serverIp, <String, dynamic>{
       'transports': ['websocket'],
       'pingTimeout': 5000,
       'connectTimeout': 5000,

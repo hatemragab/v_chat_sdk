@@ -1,6 +1,6 @@
 import '../../../v_chat_sdk.dart';
 
-class EnLanguage implements LookupString {
+class EnLanguage implements VChatLookupString {
   @override
   String areYouSure() => "Are you sure";
 

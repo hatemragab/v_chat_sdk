@@ -26,8 +26,14 @@ class LoginController {
               body: {"email": email, "password": password}))
           .data['data'];
       final u = User.fromMap(d);
-      await VChatController.instance
-          .login(VChatLoginDto(email: email, password: password));
+      try {
+        await VChatController.instance
+            .login(VChatLoginDto(email: email, password: password));
+      } on VChatSdkException catch (err) {
+        //handle v chat login exception
+        rethrow;
+      }
+
       await GetStorage().write("myModel", u.toMap());
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => Home(),

@@ -76,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     context: context,
                     data: [S.of(context).on, S.of(context).off]);
                 if (res == 0) {
-                  VChatController.instance.startAllNotification();
+                  VChatController.instance.enableAllNotification();
                 }
                 if (res == 1) {
                   VChatController.instance.stopAllNotification();

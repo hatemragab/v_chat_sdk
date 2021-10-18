@@ -10,7 +10,6 @@ void main() async {
     a.urlPlay();
   });
 
-
   // //first  init chat_sdk
   // await VChatController.instance.init(
   //   baseUrl: backendBaseUrl,
@@ -47,6 +46,4 @@ void main() async {
   //
   // //delete local user rooms and stop notifications
   // await VChatController.instance.logOut();
-
-
 }

@@ -27,7 +27,7 @@ class CircleImage {
           child: CircleAvatar(
             radius: double.parse(radius.toString()),
             backgroundImage: CachedNetworkImageProvider(
-              ServerConfig.PROFILE_IMAGES_BASE_URL + path,
+              ServerConfig.profileImageBaseUrl + path,
             ),
             backgroundColor: Colors.transparent,
           ),

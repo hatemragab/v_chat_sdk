@@ -9,7 +9,6 @@ class ImageViewerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Helpers.vlog(url);
     return SafeArea(
       child: Stack(
         children: [

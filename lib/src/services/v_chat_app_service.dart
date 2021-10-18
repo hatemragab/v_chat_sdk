@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/framework.dart'
+    show BuildContext, GlobalKey;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import 'package:v_chat_sdk/src/utils/translator/ar_language.dart';
 import 'package:v_chat_sdk/src/utils/translator/en_language.dart';
@@ -11,7 +11,6 @@ import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
 import '../utils/get_storage_keys.dart';
-import '../utils/vchat_constants.dart';
 
 class VChatAppService extends GetxService {
   static final VChatAppService to = Get.find();
@@ -19,16 +18,25 @@ class VChatAppService extends GetxService {
   VChatUser? vChatUser;
   Map<String, String>? trans;
 
+  late String baseUrl;
+  late bool isUseFirebase;
+
   late String currentLocal;
   ThemeData? light;
   ThemeData? dark;
   GlobalKey<NavigatorState>? navKey;
 
+  late String appName;
+
+  late bool enableLog;
+
+  late int maxMediaSize;
+
   ThemeData? currentTheme(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? dark : light;
   }
 
-  LookupString getTrans([BuildContext? context]) {
+  VChatLookupString getTrans([BuildContext? context]) {
     context ??= navKey!.currentContext;
     final local = Localizations.localeOf(context!).toString();
     currentLocal = local;
@@ -41,19 +49,19 @@ class VChatAppService extends GetxService {
     }
   }
 
-  final Map<String, LookupString> _lookupMessagesMap = {
+  final Map<String, VChatLookupString> _lookupMessagesMap = {
     'en': EnLanguage(),
     'ar_EG': ArLanguage()
   };
 
-  void setLocaleMessages(String locale, LookupString lookupMessages) {
+  void setLocaleMessages(String locale, VChatLookupString lookupMessages) {
     _lookupMessagesMap[locale] = lookupMessages;
   }
 
-  Future<VChatAppService> init() async {
+  Future<VChatAppService> init(bool isUseFirebase) async {
     await GetStorage.init();
     await DBProvider.db.database;
-    if (vchatUseFirebase) {
+    if (isUseFirebase) {
       await Firebase.initializeApp();
     }
     final userMap = GetStorage().read(GetStorageKeys.KV_CHAT_MY_MODEL);

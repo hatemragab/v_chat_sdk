@@ -14,7 +14,7 @@ import '../../../models/v_chat_message_attachment.dart';
 import '../../../models/v_chat_room_typing.dart';
 import '../../../services/socket_controller.dart';
 import '../../../services/socket_service.dart';
-import '../../../services/vchat_app_service.dart';
+import '../../../services/v_chat_app_service.dart';
 import '../../../utils/api_utils/dio/custom_dio.dart';
 import '../../../utils/api_utils/server_config.dart';
 import '../../../utils/custom_widgets/custom_alert_dialog.dart';
@@ -78,7 +78,7 @@ class SendMessageController extends GetxController {
     } catch (err) {
       log(err.toString());
     } finally {
-       super.onClose();
+      super.onClose();
     }
   }
 
@@ -238,7 +238,7 @@ class SendMessageController extends GetxController {
 
                 if (pickedFile != null) {
                   if (File(pickedFile.path).lengthSync() >
-                      ServerConfig.MAX_MESSAGE_FILE_SIZE) {
+                      ServerConfig.maxMessageFileSize) {
                     CustomAlert.error(msg: t.fileIsTooBig());
                     File(pickedFile.path).deleteSync();
                     return;
@@ -255,7 +255,7 @@ class SendMessageController extends GetxController {
                     await FilePicker.platform.pickFiles();
                 if (result != null) {
                   if (File(result.files.first.path!).lengthSync() >
-                      ServerConfig.MAX_MESSAGE_FILE_SIZE) {
+                      ServerConfig.maxMessageFileSize) {
                     CustomAlert.error(msg: t.fileIsTooBig());
                     File(result.files.first.path!).deleteSync();
                     return;
@@ -275,7 +275,7 @@ class SendMessageController extends GetxController {
                 );
                 if (result != null) {
                   if (File(result.files.first.path!).lengthSync() >
-                      ServerConfig.MAX_MESSAGE_FILE_SIZE) {
+                      ServerConfig.maxMessageFileSize) {
                     CustomAlert.error(msg: t.fileIsTooBig());
                     File(result.files.first.path!).deleteSync();
                     return;

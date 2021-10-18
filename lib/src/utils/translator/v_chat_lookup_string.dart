@@ -1,5 +1,5 @@
 /// implement this class to support new languages
-abstract class LookupString {
+abstract class VChatLookupString {
   String test();
 
   String toDay();

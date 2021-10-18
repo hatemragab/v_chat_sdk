@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'dart:io';
@@ -15,7 +15,9 @@ class CustomDio {
     dio = Dio();
     dio.options.baseUrl = baseUrl;
     dio.options.validateStatus = (_) => true;
-    dio.options.headers = {'authorization': "my awesome token"};
+    dio.options.headers = {
+      'authorization': GetStorage().read("myModel")['authToken']
+    };
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;
     dio.options.connectTimeout = 10000;

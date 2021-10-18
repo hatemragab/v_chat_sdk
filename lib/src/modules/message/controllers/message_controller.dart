@@ -11,9 +11,9 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/load_more_type.dart';
 import '../../../models/v_chat_message.dart';
-import '../../../services/local_storage_serivce.dart';
+import '../../../services/local_storage_service.dart';
 import '../../../services/notification_service.dart';
-import '../../../services/vchat_app_service.dart';
+import '../../../services/v_chat_app_service.dart';
 import '../../../utils/api_utils/server_config.dart';
 import '../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../room/controllers/rooms_controller.dart';
@@ -211,7 +211,7 @@ class MessageController extends GetxController {
     msg.messageAttachment!.isVoicePlying.value = true;
     currentVoicePlayer = msg;
     audioPlayer.play(
-      ServerConfig.MESSAGES_BASE_URL + msg.messageAttachment!.playUrl!,
+      ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!,
       stayAwake: true,
     );
   }
@@ -272,7 +272,7 @@ class MessageController extends GetxController {
   }
 
   Socket _getSocket() {
-    return io("${ServerConfig.SOCKET_IP}/message", <String, dynamic>{
+    return io("${ServerConfig.serverIp}/message", <String, dynamic>{
       'transports': ['websocket'],
       'pingTimeout': 5000,
       'connectTimeout': 5000,

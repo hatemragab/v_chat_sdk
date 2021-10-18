@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:textless/textless.dart';
-import 'package:v_chat_sdk/src/services/vchat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 
 import 'sheet_vertical_item.dart';
 

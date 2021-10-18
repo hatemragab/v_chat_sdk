@@ -21,3 +21,7 @@
 ## 0.0.6
 
 * delete unused packages
+
+## 0.0.7
+
+* update .readme
