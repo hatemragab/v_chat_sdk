@@ -16,7 +16,7 @@ class CustomDio {
     dio.options.baseUrl = baseUrl;
     dio.options.validateStatus = (_) => true;
     dio.options.headers = {
-      'authorization': GetStorage().read("myModel")['authToken']
+      'authorization': GetStorage().read("myModel")==null?"":GetStorage().read("myModel")['authToken']
     };
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;
