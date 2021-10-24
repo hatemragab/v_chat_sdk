@@ -100,6 +100,7 @@ class VChatController {
     final user = await _authProvider.login(dto);
     await _saveUser(user);
     VChatAppService.to.setUser(user);
+    await Future.delayed(Duration.zero);
     bindChatControllers();
     return user;
   }
@@ -115,6 +116,7 @@ class VChatController {
     final user = await _authProvider.register(dto);
     await _saveUser(user);
     VChatAppService.to.setUser(user);
+    await Future.delayed(Duration.zero);
     bindChatControllers();
     return user;
   }
@@ -183,7 +185,7 @@ class VChatController {
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MessageView(),
+        builder: (context) => const MessageView(),
       ),
     );
   }

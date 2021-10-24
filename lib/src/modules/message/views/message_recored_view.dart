@@ -6,6 +6,8 @@ import '../../../utils/custom_widgets/rounded_container.dart';
 import '../controllers/message_controller.dart';
 
 class MessageRecordView extends GetView<MessageController> {
+  const MessageRecordView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(

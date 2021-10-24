@@ -18,7 +18,7 @@ import 'message_with_icon.dart';
 class RoomItem extends StatelessWidget {
   final VChatRoom _room;
 
-  const RoomItem(this._room);
+  const RoomItem(this._room, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class RoomItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MessageView(),
+            builder: (context) => const MessageView(),
           ),
         );
         //Get.toNamed(Routes.MESSAGE);

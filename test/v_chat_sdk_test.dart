@@ -1,7 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:v_chat_sdk/src/vchat_controller.dart';
-import 'package:v_chat_sdk/v_chat_sdk.dart';
-
 import 'audio_player.dart';
 
 void main() async {

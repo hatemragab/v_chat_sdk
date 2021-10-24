@@ -16,6 +16,8 @@ import 'message_recored_view.dart';
 import 'message_text_field_view.dart';
 
 class MessageView extends StatefulWidget {
+  const MessageView({Key? key}) : super(key: key);
+
   @override
   _MessageViewState createState() => _MessageViewState();
 }
@@ -108,9 +110,9 @@ class _MessageViewState extends State<MessageView> {
 
               final res = controller.isRecordWidgetEnable.value;
               if (res) {
-                return MessageRecordView();
+                return const MessageRecordView();
               } else {
-                return MessageTextFieldView();
+                return const MessageTextFieldView();
               }
             }),
             const SizedBox(

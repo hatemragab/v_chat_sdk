@@ -105,7 +105,9 @@ class SendMessageController extends GetxController {
       if (type == 1) {
         isEmitTyping = true;
       }
-    } catch (err) {}
+    } catch (err) {
+      //
+    }
   }
 
   void emitPickedImage(BuildContext context, String path) async {

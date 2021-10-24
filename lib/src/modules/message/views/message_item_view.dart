@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/read_more_text.dart';
 import '../../../enums/message_type.dart';
-import '../../../enums/room_type.dart';
 import '../../../models/v_chat_message.dart';
-import '../../../utils/custom_widgets/circle_image.dart';
 import '../controllers/message_controller.dart';
 import 'render_message_send_at_day_item.dart';
 import 'widgets/message_file_view.dart';
@@ -20,7 +17,8 @@ class MessageItemView extends GetView<MessageController> {
   final VChatMessage _message;
   final int index;
 
-  const MessageItemView(this._message, this.index);
+  const MessageItemView(this._message, this.index, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +125,7 @@ class MessageItemView extends GetView<MessageController> {
           child: ReadMoreText(
             _message.content.toString(),
             trimLines: 5,
-            trimMode: TrimMode.Line,
+            trimMode: TrimMode.line,
             trimCollapsedText: t.showMore(),
             trimExpandedText: t.showLess(),
             moreStyle: Get.textTheme.bodyText2!.copyWith(color: Colors.red),

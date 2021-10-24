@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../models/v_chat_message.dart';
 import '../models/v_chat_room.dart';
 import '../sqlite/db_provider.dart';
@@ -35,7 +34,9 @@ class LocalStorageService extends GetxService {
     try {
       final x = rooms.sublist(0, 20);
       roomsToInsert.assignAll(x);
-    } catch (err) {}
+    } catch (err) {
+      //
+    }
 
     final batch = database.batch();
     for (var room in roomsToInsert) {
@@ -67,7 +68,9 @@ class LocalStorageService extends GetxService {
     try {
       final x = messages.sublist(0, 30);
       messageToInsert.assignAll(x);
-    } catch (err) {}
+    } catch (err) {
+      //
+    }
     await database.delete(MessageTable.TABLE_NAME,
         where: "${MessageTable.COLUMN_ROOM_ID} =?",
         whereArgs: [int.parse(roomId)]);

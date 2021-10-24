@@ -6,6 +6,8 @@ import 'package:textless/textless.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -33,14 +35,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               placeholder: S.of(context).email,
               controller: _controller.emailTxtController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             CupertinoTextField(
               placeholder: S.of(context).name,
               controller: _controller.nameTxtController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             CupertinoTextField(
@@ -54,13 +56,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onTap: () async {
                   final picker = ImagePicker();
                   final img =
-                      await picker.getImage(source: ImageSource.gallery);
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     _controller.imagePath = img.path;
                   }
                 },
                 child: S.of(context).chooseImage.text),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextButton(

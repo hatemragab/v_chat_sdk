@@ -3,12 +3,11 @@ import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../models/user.dart';
-import 'package:textless/textless.dart';
 
 class UserProfile extends StatefulWidget {
   final User user;
 
-  UserProfile(this.user);
+  const UserProfile(this.user, {Key? key}) : super(key: key);
 
   @override
   _UserProfileState createState() => _UserProfileState();

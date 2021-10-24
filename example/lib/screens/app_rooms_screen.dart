@@ -17,7 +17,7 @@ class _AppRoomsScreenState extends State<AppRoomsScreen> {
       appBar: AppBar(
         title: S.of(context).myGreatRooms.text,
       ),
-      body: VChatRoomsView(),
+      body: const VChatRoomsView(),
     );
   }
 }

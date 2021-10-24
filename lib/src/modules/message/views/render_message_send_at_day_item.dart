@@ -10,7 +10,11 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
   final List<VChatMessage> messages;
 
   const RenderMessageSendAtDayItem(
-      {required this.index, required this.message, required this.messages});
+      {Key? key,
+      required this.index,
+      required this.message,
+      required this.messages})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

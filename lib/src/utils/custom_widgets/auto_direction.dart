@@ -6,7 +6,7 @@ class AutoDirection extends StatefulWidget {
   final Widget child;
   final void Function(bool isRTL)? onDirectionChange;
 
-  AutoDirection(
+  const AutoDirection(
       {Key? key,
       required this.text,
       required this.child,

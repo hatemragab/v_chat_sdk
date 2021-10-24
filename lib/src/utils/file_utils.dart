@@ -2,21 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:flutter_video_info/flutter_video_info.dart';
-
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:video_thumbnail/video_thumbnail.dart';
-
 import '../models/v_chat_message_attachment.dart';
 import '../services/v_chat_app_service.dart';
 import 'api_utils/dio/custom_dio.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import '../../../../v_chat_sdk.dart';
+
 import '../../../enums/room_type.dart';
 import '../../../enums/room_typing_type.dart';
 import '../../../utils/custom_widgets/circle_image.dart';
@@ -13,6 +13,8 @@ import '../controllers/message_controller.dart';
 class MessageAppBarView extends GetView<MessageController>
     implements PreferredSizeWidget {
   final roomController = Get.find<RoomController>();
+
+  MessageAppBarView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

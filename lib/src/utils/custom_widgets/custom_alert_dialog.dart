@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';

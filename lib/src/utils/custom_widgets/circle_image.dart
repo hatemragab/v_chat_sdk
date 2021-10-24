@@ -23,7 +23,7 @@ class CircleImage {
     return Stack(
       children: [
         Padding(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           child: CircleAvatar(
             radius: double.parse(radius.toString()),
             backgroundImage: CachedNetworkImageProvider(

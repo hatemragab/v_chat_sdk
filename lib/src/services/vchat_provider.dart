@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:get/get.dart';
-
 import '../enums/room_type.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 

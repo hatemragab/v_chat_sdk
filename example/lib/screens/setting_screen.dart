@@ -1,8 +1,7 @@
-import 'dart:developer';
 import 'package:get_storage/get_storage.dart';
 import 'package:example/controllers/lang_controller.dart';
 import 'package:example/generated/l10n.dart';
-import 'package:example/main.dart';
+
 import 'package:example/screens/splash_screen.dart';
 import 'package:example/screens/update_user_profile_screen.dart';
 import 'package:example/utils/custom_alert.dart';
@@ -65,7 +64,7 @@ class _SettingScreenState extends State<SettingScreen> {
               icon: Icons.edit,
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => UpdateUserProfileScreen()));
+                    builder: (_) => const UpdateUserProfileScreen()));
               },
             ),
             ProfileItem(
@@ -92,7 +91,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 await GetStorage().remove("myModel");
 
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => SplashScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const SplashScreen()),
                     (Route<dynamic> route) => false);
               },
             ),
@@ -120,7 +120,7 @@ class ProfileItem extends StatelessWidget {
               icon,
               size: 30,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             title.text
@@ -131,8 +131,9 @@ class ProfileItem extends StatelessWidget {
   }
 
   const ProfileItem({
+    Key? key,
     required this.icon,
     required this.title,
     required this.onTap,
-  });
+  }) : super(key: key);
 }

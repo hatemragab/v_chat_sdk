@@ -1,6 +1,5 @@
-import 'dart:developer';
 import 'package:get_storage/get_storage.dart';
-import 'package:flutter/material.dart';
+
 import 'package:path/path.dart';
 import 'dart:io';
 import 'dart:typed_data';
@@ -16,7 +15,9 @@ class CustomDio {
     dio.options.baseUrl = baseUrl;
     dio.options.validateStatus = (_) => true;
     dio.options.headers = {
-      'authorization': GetStorage().read("myModel")==null?"":GetStorage().read("myModel")['authToken']
+      'authorization': GetStorage().read("myModel") == null
+          ? ""
+          : GetStorage().read("myModel")['accessToken']
     };
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;
@@ -92,9 +93,7 @@ class CustomDio {
       if (err.type == DioErrorType.other ||
           err.type == DioErrorType.connectTimeout ||
           err.type == DioErrorType.receiveTimeout) {
-        print(err);
         rethrow;
-        throw ("you don't have intent connection or server down");
       } else {
         throw (res.data.toString());
       }
@@ -108,7 +107,7 @@ class CustomDio {
   Future<Response> uploadFiles(
       {required String apiEndPoint,
       required List<DioUploadFileModel> filesModel,
-      void sendProgress(int received, int total)?,
+      void Function(int received, int total)? sendProgress,
       List<Map<String, String>>? body,
       CancelToken? cancelToken}) async {
     final mapOfData = <String, dynamic>{};
@@ -137,7 +136,8 @@ class CustomDio {
   Future<Response> uploadFile(
       {required String apiEndPoint,
       required String filePath,
-      void sendProgress(int received, int total)?,
+      bool isPost = true,
+      void Function(int received, int total)? sendProgress,
       List<Map<String, String>>? body,
       CancelToken? cancelToken}) async {
     final File file = File(filePath);
@@ -152,8 +152,15 @@ class CustomDio {
       final x = body.map((e) => MapEntry(e.keys.first, e.values.first));
       data.fields.addAll(x);
     }
-    final Response response = await dio.post(apiEndPoint,
-        data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    late Response response;
+    if (isPost) {
+      response = await dio.post(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    } else {
+      response = await dio.patch(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    }
+
     throwIfNoSuccess(response);
     return response;
   }
@@ -162,7 +169,7 @@ class CustomDio {
       {required String apiEndPoint,
       required Uint8List bytes,
       required String bytesExtension,
-      void sendProgress(int received, int total)?,
+      void Function(int received, int total)? sendProgress,
       List<Map<String, String>>? body,
       CancelToken? cancelToken}) async {
     //if the file is image then app .png
@@ -188,7 +195,7 @@ class CustomDio {
 
   Future<Response> download(
       {required String path,
-      void sendProgress(int received, int total)?,
+      void Function(int received, int total)? sendProgress,
       required String filePath,
       CancelToken? cancelToken}) async {
     final res = await dio.download(

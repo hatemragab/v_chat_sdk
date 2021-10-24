@@ -11,6 +11,7 @@ class RoundedContainer extends StatelessWidget {
   final BoxShape boxShape;
 
   const RoundedContainer({
+    Key? key,
     required this.child,
     this.height,
     this.width,
@@ -19,7 +20,7 @@ class RoundedContainer extends StatelessWidget {
     this.alignment = Alignment.center,
     this.borderRadius,
     this.boxShape = BoxShape.rectangle,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

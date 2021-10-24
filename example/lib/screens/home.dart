@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:example/screens/setting_screen.dart';
 import 'package:example/utils/config.dart';
@@ -6,12 +7,13 @@ import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../controllers/home_controller.dart';
 import 'package:get_storage/get_storage.dart';
-import '../main.dart';
 import '../models/user.dart';
 import 'app_rooms_screen.dart';
 import 'user_profile_screen.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -63,7 +65,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    _children = [homeTab(), VChatRoomsView(), const SettingScreen()];
+    _children = [homeTab(), const VChatRoomsView(), const SettingScreen()];
     // MyApp.of(context)!.randomLocale();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -86,15 +88,15 @@ class _HomeState extends State<Home> {
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: S.of(context).home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail),
+            icon: const Icon(Icons.mail),
             label: S.of(context).chats,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             label: S.of(context).settings,
           ),
         ],
@@ -111,7 +113,7 @@ class _HomeState extends State<Home> {
   }
 
   void updateTabs() {
-    _children = [homeTab(), VChatRoomsView(), const SettingScreen()];
+    _children = [homeTab(), const VChatRoomsView(), const SettingScreen()];
   }
 
   Widget homeTab() {
@@ -127,12 +129,15 @@ class _HomeState extends State<Home> {
                   ),
                 );
               },
-              title: _usersList[index].userName.text,
+              title: _usersList[index].name.text,
               trailing: const Icon(Icons.message),
-              leading: Image.network(
-                baseImgUrl + _usersList[index].img,
-                height: 100,
-                width: 100,
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: CachedNetworkImage(
+                  imageUrl: baseImgUrl + _usersList[index].imageThumb,
+                  height: 100,
+                  width: 100,
+                ),
               ),
             ),
         separatorBuilder: (context, index) => const Divider(),

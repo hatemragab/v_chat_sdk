@@ -25,3 +25,7 @@
 ## 0.0.7
 
 * update .readme
+
+## 0.1.0
+
+* beta release 

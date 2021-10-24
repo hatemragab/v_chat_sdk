@@ -5,7 +5,6 @@ import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../screens/home.dart';
 
@@ -27,6 +26,7 @@ class RegisterController {
     dynamic myUser;
 
     try {
+      CustomAlert.customLoadingDialog(context: context);
       if (imagePath != null) {
         myUser = (await CustomDio().uploadFile(
                 apiEndPoint: "user/register",
@@ -34,7 +34,7 @@ class RegisterController {
                 body: [
               {"email": email},
               {"password": password},
-              {"userName": name},
+              {"name": name},
             ]))
             .data['data'];
       } else {
@@ -42,7 +42,7 @@ class RegisterController {
                 .send(reqMethod: "post", path: "user/register", body: {
           "email": email,
           "password": password,
-          "userName": name,
+          "name": name,
         }))
             .data['data'];
       }
@@ -57,14 +57,17 @@ class RegisterController {
           password: password,
         ),
       );
-
+      Navigator.pop(context);
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Home(),
+        builder: (context) => const Home(),
       ));
     } on VChatSdkException catch (err) {
+      Navigator.pop(context);
+      CustomAlert.showError(context: context, err: err.toString());
       //handle vchat exception here
       rethrow;
     } catch (err) {
+      Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;
     }

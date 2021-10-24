@@ -9,6 +9,8 @@ import '../../../utils/custom_widgets/rounded_container.dart';
 import '../controllers/send_message_controller.dart';
 
 class MessageTextFieldView extends GetView<SendMessageController> {
+  const MessageTextFieldView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(

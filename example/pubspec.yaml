@@ -38,7 +38,8 @@ dependencies:
     path: ../
   bot_toast:
   provider: ^5.0.0
-  flutter_keyboard_visibility: ^5.0.3
+  cached_network_image:
+
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0

@@ -16,15 +16,15 @@ dependencies:
   textless: ^6.6.6
   get: ^4.3.8
   get_storage: ^2.0.3
-  dio: ^4.0.0
-  firebase_core: ^1.7.0
-  firebase_messaging: ^10.0.8
-  image_picker: ^0.8.4+2
+  dio: ^4.0.1
+  firebase_core: ^1.8.0
+  firebase_messaging: ^10.0.9
+  image_picker: ^0.8.4+3
   sqflite: ^2.0.0+4
   path_provider: ^2.0.5
   socket_io_client: ^1.0.1
   intl: ^0.17.0
-  file_picker: ^4.1.4
+  file_picker: ^4.1.6
   flutter_native_image: ^0.0.6+1
   permission_handler: ^8.2.5
   flutter_video_info: ^1.2.0

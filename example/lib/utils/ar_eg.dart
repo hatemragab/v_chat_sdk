@@ -1,234 +1,124 @@
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 
-class ArEg extends VChatLookupString {
+class ArLanguage implements VChatLookupString {
   @override
-  String areYouSure() => "هل انت نتاكد؟";
+  String test() => "اختبار";
+
+  @override
+  String toDay() => "اليوم";
+
+  @override
+  String areYouSure() => "هل انت متاكد";
 
   @override
   String cancel() => "الغاء";
 
   @override
-  String chatHasBeenClosed() => "انتهت المحادثه !";
+  String chatHasBeenClosed() => "تم انهاء المحادثه";
 
   @override
-  String chatHasBeenClosedByMe() {
-    // TODO: implement chatHasBeenClosedByMe
-    throw UnimplementedError();
-  }
+  String chatHasBeenClosedByMe() => "تم انهاء المحادثه من خلالي";
 
   @override
-  String closeChat() {
-    // TODO: implement closeChat
-    throw UnimplementedError();
-  }
+  String closeChat() => "انهاء المحادثه";
 
   @override
-  String connecting() {
-    // TODO: implement connecting
-    throw UnimplementedError();
-  }
+  String connecting() => "جاري الاتصال";
 
   @override
-  String create() {
-    // TODO: implement create
-    throw UnimplementedError();
-  }
+  String create() => "انشاء";
 
   @override
-  String enableNotification() {
-    // TODO: implement enableNotification
-    throw UnimplementedError();
-  }
+  String enableNotification() => "تفعيل التنبيهات";
 
   @override
-  String failed() {
-    // TODO: implement failed
-    throw UnimplementedError();
-  }
+  String failed() => "فشل";
 
   @override
-  String file() {
-    // TODO: implement file
-    throw UnimplementedError();
-  }
+  String file() => "ملف";
 
   @override
-  String fileIsTooBig() {
-    // TODO: implement fileIsTooBig
-    throw UnimplementedError();
-  }
+  String fileIsTooBig() => "هذا الملف مساحته كبيره جدا";
 
   @override
-  String friday() {
-    // TODO: implement friday
-    throw UnimplementedError();
-  }
+  String friday() => "الجمعه";
 
   @override
-  String loadingPleaseWait() {
-    // TODO: implement loadingPleaseWait
-    throw UnimplementedError();
-  }
+  String loadingPleaseWait() => "برجاء الانتظار";
 
   @override
-  String monday() {
-    // TODO: implement monday
-    throw UnimplementedError();
-  }
+  String monday() => "الاثنين";
 
   @override
-  String muteNotification() {
-    // TODO: implement muteNotification
-    throw UnimplementedError();
-  }
+  String muteNotification() => "ايقاف التنبيهات";
 
   @override
-  String notificationsHasBeenStoppedSuccessfully() {
-    // TODO: implement notificationsHasBeenStoppedSuccessfully
-    throw UnimplementedError();
-  }
+  String notificationsHasBeenStoppedSuccessfully() =>
+      "تم ايثاف التنبيهات بنجاح";
 
   @override
-  String oK() {
-    // TODO: implement oK
-    throw UnimplementedError();
-  }
+  String oK() => "تم";
 
   @override
-  String offline() {
-    // TODO: implement offline
-    throw UnimplementedError();
-  }
+  String openChat() => "افتح المحادثه";
 
   @override
-  String online() {
-    // TODO: implement online
-    throw UnimplementedError();
-  }
+  String photo() => "صوره";
 
   @override
-  String openChat() {
-    // TODO: implement openChat
-    throw UnimplementedError();
-  }
+  String recording() => "يقوم بتسجيل صوتي...";
 
   @override
-  String photo() {
-    // TODO: implement photo
-    throw UnimplementedError();
-  }
+  String saturday() => "السبت";
 
   @override
-  String recording() {
-    // TODO: implement recording
-    throw UnimplementedError();
-  }
+  String sayHello() => "قل مرحبا";
 
   @override
-  String saturday() {
-    // TODO: implement saturday
-    throw UnimplementedError();
-  }
+  String showLess() => "اظهار اقل";
 
   @override
-  String sayHello() {
-    // TODO: implement sayHello
-    throw UnimplementedError();
-  }
+  String showMore() => "اظهر الكل";
 
   @override
-  String showLess() {
-    // TODO: implement showLess
-    throw UnimplementedError();
-  }
+  String success() => "نجحت";
 
   @override
-  String showMore() {
-    // TODO: implement showMore
-    throw UnimplementedError();
-  }
+  String sunday() => "الاحد";
 
   @override
-  String success() {
-    // TODO: implement success
-    throw UnimplementedError();
-  }
+  String thisOperationDoneSuccessfully() => "تمت العمليه بنجاح";
 
   @override
-  String sunday() {
-    // TODO: implement sunday
-    throw UnimplementedError();
-  }
+  String thisOperationFailed() => "فشلت العمليه";
 
   @override
-  String test() {
-    // TODO: implement test
-    throw UnimplementedError();
-  }
+  String thursday() => "الخميس";
 
   @override
-  String thisOperationDoneSuccessfully() {
-    // TODO: implement thisOperationDoneSuccessfully
-    throw UnimplementedError();
-  }
+  String tuesday() => "الثلاثاء";
 
   @override
-  String thisOperationFailed() {
-    // TODO: implement thisOperationFailed
-    throw UnimplementedError();
-  }
+  String typing() => "يكتب الان ...";
 
   @override
-  String thursday() {
-    // TODO: implement thursday
-    throw UnimplementedError();
-  }
+  String userHasBeenBlockedSuccessfully() => "تم انهاء المحادثه بنجاح";
 
   @override
-  String toDay() {
-    // TODO: implement toDay
-    throw UnimplementedError();
-  }
+  String video() => "فيديو";
 
   @override
-  String tuesday() {
-    // TODO: implement tuesday
-    throw UnimplementedError();
-  }
+  String wednesday() => "الاربعاء";
 
   @override
-  String typing() {
-    // TODO: implement typing
-    throw UnimplementedError();
-  }
+  String yesterday() => "الامس";
 
   @override
-  String userHasBeenBlockedSuccessfully() {
-    // TODO: implement userHasBeenBlockedSuccessfully
-    throw UnimplementedError();
-  }
+  String offline() => "غير متصل";
 
   @override
-  String video() {
-    // TODO: implement video
-    throw UnimplementedError();
-  }
+  String online() => "متصل";
 
   @override
-  String wednesday() {
-    // TODO: implement wednesday
-    throw UnimplementedError();
-  }
-
-  @override
-  String yesterday() {
-    // TODO: implement yesterday
-    throw UnimplementedError();
-  }
-
-  @override
-  String yourMessage() {
-    // TODO: implement yourMessage
-    throw UnimplementedError();
-  }
+  String yourMessage() => "اكتب رساله";
 }

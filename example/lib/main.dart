@@ -2,7 +2,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:example/screens/splash_screen.dart';
 import 'package:example/utils/ar_eg.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
@@ -14,9 +13,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 //10.0.2.2
-  /// real server ip 18.216.232.131:3000
+  /// real server ip 3.16.14.118:3000
   await VChatController.instance.init(
-    baseUrl: Uri.parse("http://10.0.2.2:3000"),
+    baseUrl: Uri.parse("http://3.16.14.118:3000"),
     appName: "test_v_chat",
     isUseFirebase: true,
     lightTheme: vChatLightTheme,
@@ -29,15 +28,17 @@ void main() async {
   // add support new language
   // v_chat will change the language one you change it
   VChatController.instance.setLocaleMessages(
-      languageCode: "ar", countryCode: "EG", lookupMessages: ArEg());
+      languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
 
   runApp(ChangeNotifierProvider<LangController>(
     create: (context) => LangController(),
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -46,14 +47,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     context.watch<LangController>();
-    KeyboardVisibilityController().onChange.listen((visible) {
-      if (!visible) {
-        final currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus && currentFocus.hasFocus) {
-          FocusManager.instance.primaryFocus?.unfocus();
-        }
-      }
-    });
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
@@ -68,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       navigatorObservers: [BotToastNavigatorObserver()],
       supportedLocales: S.delegate.supportedLocales,
       locale: context.read<LangController>().locale,
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

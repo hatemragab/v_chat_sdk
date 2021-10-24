@@ -3,6 +3,18 @@
 
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
+
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/37384769/138588123-8919321f-132e-4913-9e81-6c0d6a915d8f.jpeg"   width ="200" /> 
+  <img src="https://user-images.githubusercontent.com/37384769/138588161-836214c0-0d54-480a-8030-3679430656b5.jpeg"   width ="200" />
+</p>
+
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/37384769/138588227-31de6adc-fb1e-49b5-baa0-5fe554d3e841.jpeg" width ="200"  /> 
+  <img src="https://user-images.githubusercontent.com/37384769/138588252-5e7cfd5c-3955-48ca-b8d2-78352abb9d87.jpeg"   width ="200" />
+</p>
+
 **Content**
 - About V_CHAT_SDK
 - About Micro Service
@@ -225,6 +237,7 @@ then open android/app/build.gradle
 ```
 ---
 # Ios installation
+ 
 ---
 # public apis and installion
 ## 1- install
@@ -265,6 +278,10 @@ first you need to await v chat init in main.dart
   <li>
      navigatorKey => add this key also in MaterialApp 
     </li>
+      <li>
+     maxMediaUploadSize => optional to set max files in chat
+    </li>
+
 </ol>
 
 ```
@@ -407,11 +424,13 @@ when you chage app laguage vchat will automtic chage but you must put the countr
 
 ---
 # How to get Backend code
+you can get it from
+<a href="https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700">Envato</a>
 ---
 # Common questions
-1- image compress
-2- video compress
-3- migrate old users
-4- vchat auth
+
+1- image compress <br />
+3- migrate old users <br />
+4- vchat auth <br />
 ---
 

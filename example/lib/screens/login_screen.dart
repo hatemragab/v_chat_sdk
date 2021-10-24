@@ -5,6 +5,8 @@ import 'package:textless/textless.dart';
 import '../controllers/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -32,19 +34,19 @@ class _LoginScreenState extends State<LoginScreen> {
               placeholder: S.of(context).email,
               controller: _controller.emailTxtController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             CupertinoTextField(
               placeholder: S.of(context).password,
               controller: _controller.passwordTxtController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextButton(
                 onPressed: _controller.login, child: S.of(context).login.text),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextButton(

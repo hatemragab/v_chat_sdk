@@ -4,7 +4,6 @@ import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../screens/home.dart';
 import '../screens/register_screen.dart';
@@ -20,32 +19,36 @@ class LoginController {
     final email = emailTxtController.text.toString();
     final password = passwordTxtController.text.toString();
     try {
+      CustomAlert.customLoadingDialog(context: context);
       final d = (await CustomDio().send(
               reqMethod: "post",
               path: "user/login",
               body: {"email": email, "password": password}))
           .data['data'];
       final u = User.fromMap(d);
-      try {
-        await VChatController.instance
-            .login(VChatLoginDto(email: email, password: password));
-      } on VChatSdkException catch (err) {
-        //handle v chat login exception
-        rethrow;
-      }
 
       await GetStorage().write("myModel", u.toMap());
+
+      await VChatController.instance
+          .login(VChatLoginDto(email: email, password: password));
+      Navigator.pop(context);
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Home(),
+        builder: (context) => const Home(),
       ));
-    } catch (err) {
+    } on VChatSdkException catch (err) {
+      Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());
+      rethrow;
+    } catch (err) {
+      Navigator.pop(context);
+      CustomAlert.showError(context: context, err: err.toString());
+      rethrow;
     }
   }
 
   void register() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => RegisterScreen(),
+      builder: (context) => const RegisterScreen(),
     ));
   }
 }

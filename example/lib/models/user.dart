@@ -1,92 +1,83 @@
 class User {
-  final String token;
-  final String img;
-  final String bio;
-  final String role;
-  final String id;
-  final String userName;
+  final int id;
+  final String imageThumb;
   final String email;
-  final int created;
-  final String authToken;
+  final String name;
+  final String accessToken;
 
 //<editor-fold desc="Data Methods">
 
   const User({
-    required this.token,
-    required this.img,
-    required this.bio,
-    required this.role,
     required this.id,
-    required this.userName,
+    required this.imageThumb,
     required this.email,
-    required this.created,
-    required this.authToken,
+    required this.name,
+    required this.accessToken,
   });
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is User &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          imageThumb == other.imageThumb &&
+          email == other.email &&
+          name == other.name &&
+          accessToken == other.accessToken);
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      imageThumb.hashCode ^
+      email.hashCode ^
+      name.hashCode ^
+      accessToken.hashCode;
+
+  @override
   String toString() {
-    return 'User{' +
-        ' token: $token,' +
-        ' img: $img,' +
-        ' bio: $bio,' +
-        ' role: $role,' +
-        ' id: $id,' +
-        ' userName: $userName,' +
-        ' email: $email,' +
-        ' created: $created,' +
-        ' authToken: $authToken,' +
+    return 'User{'
+        ' id: $id,'
+        ' imageThumb: $imageThumb,'
+        ' email: $email,'
+        ' name: $name,'
+        ' accessToken: $accessToken,'
         '}';
   }
 
   User copyWith({
-    String? token,
-    String? img,
-    String? bio,
-    String? role,
-    String? id,
-    String? userName,
+    int? id,
+    String? imageThumb,
     String? email,
-    int? created,
-    String? authToken,
+    String? name,
+    String? accessToken,
   }) {
     return User(
-      token: token ?? this.token,
-      img: img ?? this.img,
-      bio: bio ?? this.bio,
-      role: role ?? this.role,
       id: id ?? this.id,
-      userName: userName ?? this.userName,
+      imageThumb: imageThumb ?? this.imageThumb,
       email: email ?? this.email,
-      created: created ?? this.created,
-      authToken: authToken ?? this.authToken,
+      name: name ?? this.name,
+      accessToken: accessToken ?? this.accessToken,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'token': this.token,
-      'img': this.img,
-      'bio': this.bio,
-      'role': this.role,
-      '_id': this.id,
-      'user_name': this.userName,
-      'email': this.email,
-      'created': this.created,
-      'authToken': this.authToken,
+      '_id': id,
+      'imageThumb': imageThumb,
+      'email': email,
+      'name': name,
+      'accessToken': accessToken,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      token: map['token'] as String,
-      img: map['img'] as String,
-      bio: map['bio'] as String,
-      role: map['role'] as String,
-      id: map['_id'] as String,
-      userName: map['user_name'] as String,
+      id: map['_id'] as int,
+      imageThumb: map['imageThumb'] as String,
       email: map['email'] as String,
-      created: map['created'] as int,
-      authToken: map['authToken'] ?? 'NULLLL',
+      name: map['name'] as String,
+      accessToken: map['accessToken'] ?? "",
     );
   }
 

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import '../main.dart';
+
 import 'home.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -20,9 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("splash screen"),
+        title: const Text("splash screen"),
       ),
-      body: Center(
+      body: const Center(
         child: CircularProgressIndicator.adaptive(),
       ),
     );
@@ -36,11 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Home() ,));
 
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => const Home()),
           (Route<dynamic> route) => false);
     } else {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
           (Route<dynamic> route) => false);
     }
   }
