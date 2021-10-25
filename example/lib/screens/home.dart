@@ -47,6 +47,13 @@ class _HomeState extends State<Home> {
       AppBar(
         title: S.of(context).thisDataFromMyServerNotVchat.text,
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                _controller.getUsers();
+              },
+              icon: const Icon(Icons.refresh))
+        ],
       ),
       AppBar(
         title: S.of(context).myGreatRooms.text,

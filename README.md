@@ -3,7 +3,7 @@
 
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
-
+![WhatsApp Image 2021-10-24 at 10 51 21 AM
 
 <p float="left">
   <img src="https://user-images.githubusercontent.com/37384769/138588123-8919321f-132e-4913-9e81-6c0d6a915d8f.jpeg"   width ="200" /> 
@@ -237,7 +237,9 @@ then open android/app/build.gradle
 ```
 ---
 # Ios installation
- 
+<ul>
+will be update one finsh it
+</ul>
 ---
 # public apis and installion
 ## 1- install
@@ -402,7 +404,7 @@ await VChatController.instance.logOut();
 ---
 # Support new language Or override .
 to support new language create new class and extend VChatLookupString  
-and ovrride all
+and override all
 ```
 class ArEg extends VChatLookupString {
   @override
@@ -426,6 +428,54 @@ when you chage app laguage vchat will automtic chage but you must put the countr
 # How to get Backend code
 you can get it from
 <a href="https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700">Envato</a>
+---
+# Backend Installion
+create new ubuntu server and connect it as root  <br />
+copy un zip dist and replace firebase-adminsdk.json by your file <br />
+to get this file create or open existing firebase account  <br />
+and navigate to project setting then service accounts <br />
+then generate new private key select Node.js <br />
+rename this file to firebase-adminsdk.json it should with same name and in same folder <br />
+then your project is ready now to upload ... <br />
+
+install node js on ubuntu you can do by your way we need node v 14.17.1 <br />
+login as root using ssl the run the following <br />
+```
+sudo apt update
+sudo apt install nodejs
+sudo apt install npm
+install nvm to update node js
+sudo apt install curl 
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+source ~/.profile
+nvm install 14.17.1
+make sure you install node js v 14.17.1 by run node -v
+now install mongo db and start it 
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+sudo apt-get install gnupg
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo systemctl start mongod
+```
+make sure mongo db run  <br />
+sudo systemctl status mongod <br />
+insatll pm2 to run the server  <br />
+npm i -g pm2 <br />
+upload the source file to server (recommended to use FileZilla) <br />
+after un zip the file  <br />
+open terminal here and run <br />
+1- run sudo npm i <br />
+2- node app.js <br />
+if it say server run on port 3000 and mongo db connected then all installation has been done <br />
+now we need to run pm2 exit the process by  <br />
+CTRL+C from keyboard <br />
+then pm2 start app.js  <br />
+All Done now ! <br />
+
+if any problem contact me <br />
+
 ---
 # Common questions
 
