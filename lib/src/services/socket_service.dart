@@ -110,7 +110,7 @@ class SocketService extends GetxController {
     _socket.off("user_online_changed");
   }
 
-  Future emitMessageStatusChange(String data) async {}
+
 
   void emitTypingChange(Map<String, dynamic> data) {
     _socket.emit("typing_changed", data);

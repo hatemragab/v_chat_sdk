@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -40,11 +41,12 @@ class SendMessageController extends GetxController {
       if (!_socketService.isConnected) {
         throw "not connected to server yet";
       }
-      await CustomDio().send(reqMethod: "POST", path: "message", body: {
+      unawaited(CustomDio().send(reqMethod: "POST", path: "message", body: {
         "type": MessageType.text.inString,
         "roomId": _roomController.currentRoomId.toString(),
         "content": textController.value.text.toString()
-      });
+      }));
+
       textController.clear();
     } catch (err) {
       CustomAlert.error(msg: err.toString());

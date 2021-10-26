@@ -74,16 +74,14 @@ class _MessageViewState extends State<MessageView> {
                   return Column(
                     children: [
                       const SizedBox(
-                        height: 7,
+                        height: 3,
                       ),
                       Align(
                         alignment: Alignment.centerRight,
                         child: CircleImage.network(
                             path: _room.thumbImage, radius: 10),
                       ),
-                      const SizedBox(
-                        height: 7,
-                      ),
+
                     ],
                   );
                 } else {

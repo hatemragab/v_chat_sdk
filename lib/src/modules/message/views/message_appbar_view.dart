@@ -67,26 +67,26 @@ class MessageAppBarView extends GetView<MessageController>
                 if (isSingle) {
                   if (typingSt.status != RoomTypingType.stop) {
                     if (typingSt.status == RoomTypingType.typing) {
-                      return t.typing().cap.size(14);
+                      return t.typing().s2;
                     }
                     if (typingSt.status == RoomTypingType.recording) {
-                      return t.recording().cap.size(14);
+                      return t.recording().s2.color(Colors.black);
                     }
-                    return "${typingSt.status.inString} ...".cap.size(14);
+                    return "${typingSt.status.inString} ...".s2;
                   }
                   if (isOnline == 1) {
-                    return t.online().cap.size(14);
+                    return t.online().s2.size(14);
                   } else {
                     return VChatAppService.to
                         .getTrans(context)
                         .offline()
-                        .cap
+                        .s2
                         .size(14);
                   }
                 } else {
                   if (typingSt.status != RoomTypingType.stop) {
                     return "${typingSt.name} is ${typingSt.status.inString} ..."
-                        .cap
+                        .s2
                         .size(14);
                   } else {
                     return const SizedBox();

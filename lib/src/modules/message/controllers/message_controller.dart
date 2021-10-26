@@ -267,7 +267,6 @@ class MessageController extends GetxController {
       });
       _socket.on('new_message', (data) async {
         final msgMap = jsonDecode(data);
-
         final message = VChatMessage.fromMap(msgMap);
         if (!messagesList.contains(message)) {
           messagesList.insert(0, message);

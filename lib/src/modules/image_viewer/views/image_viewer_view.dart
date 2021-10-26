@@ -8,25 +8,41 @@ class ImageViewerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isRtl = Directionality.of(context).index == 0;
     return SafeArea(
       child: Stack(
+        fit: StackFit.expand,
         children: [
           PhotoView(
             imageProvider: NetworkImage(url),
           ),
-          Positioned(
-              top: 20,
-              left: 10,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              )),
+          isRtl
+              ? Positioned(
+                  top: 20,
+                  right: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ))
+              : Positioned(
+                  top: 20,
+                  left: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  )),
         ],
       ),
     );
