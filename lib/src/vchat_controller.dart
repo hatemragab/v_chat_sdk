@@ -267,8 +267,8 @@ class VChatController {
     }
     Get.put<RoomsApiProvider>(RoomsApiProvider());
     Get.put<RoomController>(RoomController());
-    Get.put<NotificationService>(NotificationService());
     Get.put<SocketController>(SocketController());
     Get.put<SocketService>(SocketService());
+    Get.put<NotificationService>(NotificationService());
   }
 }
