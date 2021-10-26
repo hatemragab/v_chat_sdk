@@ -19,6 +19,7 @@ class LoginController {
     final email = emailTxtController.text.toString();
     final password = passwordTxtController.text.toString();
     try {
+      ///Login on your system backend
       CustomAlert.customLoadingDialog(context: context);
       final d = (await CustomDio().send(
               reqMethod: "post",
@@ -29,6 +30,7 @@ class LoginController {
 
       await GetStorage().write("myModel", u.toMap());
 
+      ///Login on v_chat_sdk system
       await VChatController.instance
           .login(VChatLoginDto(email: email, password: password));
       Navigator.pop(context);

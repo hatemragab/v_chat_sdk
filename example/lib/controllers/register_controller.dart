@@ -27,6 +27,7 @@ class RegisterController {
 
     try {
       CustomAlert.customLoadingDialog(context: context);
+      ///Register on your system backend
       if (imagePath != null) {
         myUser = (await CustomDio().uploadFile(
                 apiEndPoint: "user/register",
@@ -49,6 +50,7 @@ class RegisterController {
       final u = User.fromMap(myUser);
       await GetStorage().write("myModel", u.toMap());
 
+      ///Register on v_chat_sdk system
       await VChatController.instance.register(
         VChatRegisterDto(
           name: name,
