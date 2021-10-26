@@ -22,10 +22,12 @@
   <img src="https://user-images.githubusercontent.com/37384769/138944646-00d54e78-de93-4ea6-a288-84f675143780.png"   width ="200" />
 </p>
 
- 
+
 
 Don't forget to see the example attached to github here <a href="https://github.com/hatemragab/v_chat_sdk/tree/master/example">V_CHAT_SDK Example</a>  <br />
 
+Try the example apk <br />
+<a href="https://www.mediafire.com/file/26wjmdcodfr3ztv/app-release.apk/file"> Example APK</a>  <br />
 
 **Content**
 - About V_CHAT_SDK
