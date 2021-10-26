@@ -50,19 +50,25 @@ class MessageWithIcon extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _room.lastMessage.content.h6
-                .maxLine(1)
-                .size(16.5)
-                .alignStart
-                .overflowEllipsis
-                .black,
-            Container(
-              padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
-                color: Colors.blueGrey,
-                shape: BoxShape.circle,
+            Flexible(
+              flex: 4,
+              child: _room.lastMessage.content.h6
+                  .maxLine(1)
+                  .size(16.5)
+                  .alignStart
+                  .overflowEllipsis
+                  .black,
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: const BoxDecoration(
+                  color: Colors.blueGrey,
+                  shape: BoxShape.circle,
+                ),
+                child: "1".s2.color(Colors.white),
               ),
-              child: "1".s2.color(Colors.white),
             )
           ],
         );

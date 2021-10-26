@@ -92,26 +92,28 @@ class _MessageViewState extends State<MessageView> {
             const SizedBox(
               height: 2,
             ),
-            Obx(() {
-              final _room = roomController.rooms.firstWhere(
-                  (element) => element.id == roomController.currentRoomId!);
-              final bkId = _room.blockerId;
-              if (bkId != 0) {
-                if (bkId == controller.myModel!.id) {
-                  // i the blocker
-                  return t.chatHasBeenClosedByMe().text;
-                } else {
-                  return t.chatHasBeenClosed().text;
+            SafeArea(
+              child: Obx(() {
+                final _room = roomController.rooms.firstWhere(
+                    (element) => element.id == roomController.currentRoomId!);
+                final bkId = _room.blockerId;
+                if (bkId != 0) {
+                  if (bkId == controller.myModel!.id) {
+                    // i the blocker
+                    return t.chatHasBeenClosedByMe().text;
+                  } else {
+                    return t.chatHasBeenClosed().text;
+                  }
                 }
-              }
 
-              final res = controller.isRecordWidgetEnable.value;
-              if (res) {
-                return const MessageRecordView();
-              } else {
-                return const MessageTextFieldView();
-              }
-            }),
+                final res = controller.isRecordWidgetEnable.value;
+                if (res) {
+                  return const MessageRecordView();
+                } else {
+                  return const MessageTextFieldView();
+                }
+              }),
+            ),
             const SizedBox(
               height: 10,
             ),
