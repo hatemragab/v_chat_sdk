@@ -32,10 +32,10 @@ class _AutoDirectionState extends State<AutoDirection> {
 
   @override
   void didUpdateWidget(AutoDirection oldWidget) {
-    if (isRTL(oldWidget.text) != isRTL(widget.text)) {
-      WidgetsBinding.instance!.addPostFrameCallback(
-          (_) => widget.onDirectionChange!(isRTL(widget.text)));
-    }
+    // if (isRTL(oldWidget.text) != isRTL(widget.text)) {
+    //   WidgetsBinding.instance!.addPostFrameCallback(
+    //       (_) => widget.onDirectionChange!(isRTL(widget.text)));
+    // }
     super.didUpdateWidget(oldWidget);
   }
 
