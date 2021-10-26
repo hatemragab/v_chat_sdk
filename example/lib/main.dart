@@ -16,7 +16,8 @@ void main() async {
   /// real server ip 3.16.14.118:3000
   /// http://ec2-3-142-209-237.us-east-2.compute.amazonaws.com:3000
   await VChatController.instance.init(
-    baseUrl: Uri.parse("http://ec2-3-142-209-237.us-east-2.compute.amazonaws.com:3000"),
+    baseUrl: Uri.parse(
+        "http://ec2-3-142-209-237.us-east-2.compute.amazonaws.com:3000"),
     appName: "test_v_chat",
     isUseFirebase: true,
     lightTheme: vChatLightTheme,

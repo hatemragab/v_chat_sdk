@@ -82,7 +82,7 @@ class CustomAlert {
   }
 
   static void customLoadingDialog(
-      { BuildContext? context, bool dismissible = false}) {
+      {BuildContext? context, bool dismissible = false}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {

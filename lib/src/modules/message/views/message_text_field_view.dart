@@ -35,7 +35,6 @@ class MessageTextFieldView extends GetView<SendMessageController> {
                 maxLines: 5,
                 minLines: 1,
                 placeholder: VChatAppService.to.getTrans().yourMessage(),
-
               ),
             );
           }),

@@ -53,7 +53,7 @@ class LocalStorageService extends GetxService {
   }
 
   Future setRoomOrUpdate(VChatRoom room) async {
-    await insertMessage(room.id.toString(),room.lastMessage);
+    await insertMessage(room.id.toString(), room.lastMessage);
     await database.insert(
         RoomTable.TABLE_NAME,
         {

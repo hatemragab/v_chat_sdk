@@ -50,8 +50,8 @@ class CircleImage {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.green,
-                  border: Border.all(
-                      color: Colors.green, width: isGroup ? 0 : 0)),
+                  border:
+                      Border.all(color: Colors.green, width: isGroup ? 0 : 0)),
               child: Icon(
                 isGroup
                     ? Icons.home_sharp

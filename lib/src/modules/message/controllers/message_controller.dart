@@ -164,7 +164,7 @@ class MessageController extends GetxController {
       try {
         if (Platform.isIOS) {
           await recorder.start(
-            bitRate:75000,
+            bitRate: 75000,
             encoder: AudioEncoder.AAC_HE,
           );
         } else {
@@ -229,8 +229,9 @@ class MessageController extends GetxController {
 
     msg.messageAttachment!.isVoicePlying.value = true;
     currentVoicePlayer = msg;
-    print("Url is ${ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!}");
-   await audioPlayer.play(
+    print(
+        "Url is ${ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!}");
+    await audioPlayer.play(
       ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!,
       stayAwake: true,
     );

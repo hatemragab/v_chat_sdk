@@ -3,7 +3,7 @@
 
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
-![WhatsApp Image 2021-10-24 at 10 51 21 AM
+
 
 <p float="left">
   <img src="https://user-images.githubusercontent.com/37384769/138588123-8919321f-132e-4913-9e81-6c0d6a915d8f.jpeg"   width ="200" /> 
@@ -14,6 +14,9 @@
   <img src="https://user-images.githubusercontent.com/37384769/138588227-31de6adc-fb1e-49b5-baa0-5fe554d3e841.jpeg" width ="200"  /> 
   <img src="https://user-images.githubusercontent.com/37384769/138588252-5e7cfd5c-3955-48ca-b8d2-78352abb9d87.jpeg"   width ="200" />
 </p>
+
+Don't forget to see the example attached to github here <a href="https://github.com/hatemragab/v_chat_sdk/tree/master/example">V_CHAT_SDK Example</a>  <br />
+
 
 **Content**
 - About V_CHAT_SDK
@@ -142,11 +145,11 @@ vchat connected with your backend service **HOW!** <br />
 when you register new user in your system you should call this public api <br />
 ```dart
   await VChatController.instance.register(VChatRegisterDto(
-    name: name,
-    password: password,
-    email: email,
-    userImage: null,
-  ));
+name: name,
+password: password,
+email: email,
+userImage: null,
+));
 ```
 <ul>
   <li>i just need basic information like unique id and password and your image to identify user in rooms view</li>
@@ -167,9 +170,9 @@ same as login</li>
 in android/app/src/main/AndroidManifest.xml add this permissions.
 ```xml
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 ```
 then add in application
 ```
@@ -237,26 +240,49 @@ then open android/app/build.gradle
 ```
 ---
 # Ios installation
-<ul>
-will be update one finsh it
-</ul>
+update and uncomment Podfile min version to 10.0 =>platform :ios, '10.0' <br />
+add this permissions on the ios/Runner/Info.plist <br />
+And see the example attached to the package if you face problem <br />
+
+```
+<key>NSCameraUsageDescription</key>
+    	<string>to allow user to take photo and video for his ads and upload it to server</string>
+    	<key>NSMicrophoneUsageDescription</key>
+        	<string>to allow user to take video with voice for more info and add it to his ads and upload it to server</string>
+        	<key>NSPhotoLibraryAddUsageDescription</key>
+        	<string>vchatsdk would like to save photos from the app chat to your gallery</string>
+        	<key>NSPhotoLibraryUsageDescription</key>
+        	<string>to allow user to select photo for his ads and upload it to server</string>
+        	<key>UIBackgroundModes</key>
+        	<array>
+        		<string>fetch</string>
+        		<string>remote-notification</string>
+        	</array>
+        	<key>NSAppTransportSecurity</key>
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+```
+
+
 ---
 # public apis and installion
 ## 1- install
 first you need to await v chat init in main.dart
 ```dart
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  WidgetsFlutterBinding.ensureInitialized();
-  await VChatController.instance.init(
-    baseUrl: Uri.parse("http://10.0.2.2:3000"),
-    appName: "test_v_chat",
-    isUseFirebase: true,
-    lightTheme: vChatLightTheme,
-    darkTheme: vChatDarkTheme,
-    enableLogger: true,
-    navigatorKey: navigatorKey,
-    maxMediaUploadSize: 50 * 1000 * 1000, //~ 50 mb
-  );
+WidgetsFlutterBinding.ensureInitialized();
+await VChatController.instance.init(
+baseUrl: Uri.parse("http://10.0.2.2:3000"),
+appName: "test_v_chat",
+isUseFirebase: true,
+lightTheme: vChatLightTheme,
+darkTheme: vChatDarkTheme,
+enableLogger: true,
+navigatorKey: navigatorKey,
+maxMediaUploadSize: 50 * 1000 * 1000, //~ 50 mb
+);
 ```
 <ol>
   <li>
@@ -363,7 +389,7 @@ if there chat will open the change page direct <br />
 **peerEmail => is the unique identifier that  you pass to vchat when register**
 this function throw
 1- you cant start chat if you start chat your self <br />
-2- Exception if peer Email Not in v chat Data base ! so first you must (migrate all users only if aready in production and need to add chat) new project all will be fine <br />
+2- Exception if peer Email Not in v chat Data base ! so first you must (migrate all users only if already in production and need to add chat) new project all will be fine <br />
 3- No internet connection <br />
 
 ## 4- change user name
@@ -421,17 +447,22 @@ then in main.dart after vchat.init define the new language
 ```
   VChatController.instance.setLocaleMessages(languageCode: "ar", countryCode: "EG", lookupMessages: ArEg());
 ```
-by defauld english Us and arabic Eg supported you can override it with the same way <br />
-when you chage app laguage vchat will automtic chage but you must put the countryCode
+by default english Us and arabic Eg supported you can override it with the same way <br />
+when you change app language vchat will automatic change but you must put the countryCode
 
 ---
 # How to get Backend code
-you can get it from
-<a href="https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700">Envato</a>
+you can get it from  
+<a href="https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700">Envato</a> <br />
+iam available for freelance work on this project integration or modifications <br />
+contact me on hatemragap5@gmail.com <br />
+Skype live:.cid.607250433850e3a6
+
+
 ---
-# Backend Installion
+# Backend Installation
 create new ubuntu server and connect it as root  <br />
-copy un zip dist and replace firebase-adminsdk.json by your file <br />
+copy un zip source/v_chat_sdk_backend/dist/src and replace firebase-adminsdk.json by your file <br />
 to get this file create or open existing firebase account  <br />
 and navigate to project setting then service accounts <br />
 then generate new private key select Node.js <br />
@@ -460,8 +491,8 @@ sudo apt-get install -y mongodb-org
 sudo systemctl start mongod
 ```
 make sure mongo db run  <br />
-sudo systemctl status mongod <br />
-insatll pm2 to run the server  <br />
+sudo systemctl status mongodb <br />
+install pm2 to run the server  <br />
 npm i -g pm2 <br />
 upload the source file to server (recommended to use FileZilla) <br />
 after un zip the file  <br />
@@ -482,5 +513,6 @@ if any problem contact me <br />
 1- image compress <br />
 3- migrate old users <br />
 4- vchat auth <br />
+5- are you have found bug the open an issues on github
 ---
 

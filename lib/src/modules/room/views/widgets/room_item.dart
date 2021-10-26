@@ -125,7 +125,9 @@ class RoomItem extends StatelessWidget {
 
                             return txt.text;
                           } else {
-                            return "${tSt.name} is $txt".text.color(Colors.green);
+                            return "${tSt.name} is $txt"
+                                .text
+                                .color(Colors.green);
                           }
                         } else {
                           return Flexible(

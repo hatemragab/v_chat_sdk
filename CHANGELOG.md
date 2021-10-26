@@ -29,3 +29,7 @@
 ## 0.1.0
 
 * beta release 
+
+## 0.2.0
+
+* fix ios recording and enable notification clicks to open the chat page

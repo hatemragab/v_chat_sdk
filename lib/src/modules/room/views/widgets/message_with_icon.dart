@@ -30,13 +30,13 @@ class MessageWithIcon extends StatelessWidget {
         ),
         Flexible(
             child: AutoDirection(
-                text: _room.lastMessage.content, child: getMessageText(context))),
+                text: _room.lastMessage.content,
+                child: getMessageText(context))),
       ],
     );
   }
 
   Widget getMessageText(BuildContext context) {
-
     if (_room.lastMessage.senderId != _myModel.id) {
       // i the receiver
       final _isMeSeen = _room.lastMessageSeenBy.contains(_myModel.id);
@@ -58,11 +58,11 @@ class MessageWithIcon extends StatelessWidget {
                 .black,
             Container(
               padding: const EdgeInsets.all(5),
-              decoration:const   BoxDecoration(
-                color:   Colors.blueGrey,
+              decoration: const BoxDecoration(
+                color: Colors.blueGrey,
                 shape: BoxShape.circle,
               ),
-              child: "1".s2.color(  Colors.white),
+              child: "1".s2.color(Colors.white),
             )
           ],
         );

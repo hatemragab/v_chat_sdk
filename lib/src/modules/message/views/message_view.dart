@@ -81,7 +81,6 @@ class _MessageViewState extends State<MessageView> {
                         child: CircleImage.network(
                             path: _room.thumbImage, radius: 10),
                       ),
-
                     ],
                   );
                 } else {

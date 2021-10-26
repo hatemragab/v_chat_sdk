@@ -53,9 +53,7 @@ class _HomeState extends State<Home> {
                 final users = await _controller.getUsers();
                 _usersList.clear();
                 _usersList.addAll(users);
-                setState(() {
-
-                });
+                setState(() {});
               },
               icon: const Icon(Icons.refresh))
         ],
