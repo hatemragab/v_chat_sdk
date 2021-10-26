@@ -10,31 +10,36 @@ class MessageRecordView extends GetView<MessageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        InkWell(
-            onTap: controller.cancelRecord,
-            child: const Icon(
-              Icons.cancel,
-              size: 40,
-            )),
-        InkWell(
-          child: Obx(() => controller.recordTime.value.text),
-        ),
-        InkWell(
-          onTap: () => controller.stopRecord(context),
-          child: const RoundedContainer(
-            boxShape: BoxShape.circle,
-            color: Colors.red,
-            height: 45,
-            width: 45,
-            child: Icon(
-              Icons.send,
-              color: Colors.white,
+        const Divider(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+                onTap: controller.cancelRecord,
+                child: const Icon(
+                  Icons.cancel,
+                  size: 35,
+                )),
+            InkWell(
+              child: Obx(() => controller.recordTime.value.text),
             ),
-          ),
-        )
+            InkWell(
+              onTap: () => controller.stopRecord(context),
+              child: const RoundedContainer(
+                boxShape: BoxShape.circle,
+                color: Colors.red,
+                height: 45,
+                width: 45,
+                child: Icon(
+                  Icons.send,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
       ],
     );
   }

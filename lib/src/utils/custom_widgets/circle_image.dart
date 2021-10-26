@@ -43,15 +43,15 @@ class CircleImage {
         // useOldImageOnUrlChange: true,
         if (isOnline || isGroup || isSelected)
           Positioned(
-            bottom: 0,
-            right: 0,
+            bottom: 5,
+            right: 2,
             child: Container(
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: Colors.green,
                   border: Border.all(
-                      color: Colors.white, width: isGroup ? 0 : 1.5)),
+                      color: Colors.green, width: isGroup ? 0 : 0)),
               child: Icon(
                 isGroup
                     ? Icons.home_sharp
@@ -59,7 +59,7 @@ class CircleImage {
                         ? Icons.circle
                         : Icons.done,
                 color: isGroup ? Colors.red : Colors.green,
-                size: 20,
+                size: 18,
               ),
             ),
           )

@@ -94,11 +94,11 @@ final vChatDarkTheme = ThemeData.dark().copyWith(
       headline2:
           GoogleFonts.nunito(fontWeight: FontWeight.w900, color: Colors.red),
       headline6:
-          GoogleFonts.nunito(fontWeight: FontWeight.w700, color: Colors.white),
+          GoogleFonts.nunito(fontWeight: FontWeight.w700, color: Colors.white70),
       subtitle2: GoogleFonts.nunito(
           letterSpacing: .1,
-          color: Colors.white,
-          fontSize: 16,
+          color: Colors.white70,
+          fontSize: 15,
           fontWeight: FontWeight.normal),
       bodyText2: GoogleFonts.nunito(
           color: Colors.white,

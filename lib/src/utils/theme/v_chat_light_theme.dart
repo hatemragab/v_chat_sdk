@@ -94,7 +94,7 @@ final vChatLightTheme = ThemeData(
       subtitle2: GoogleFonts.nunito(
           letterSpacing: .1,
           color: Colors.black,
-          fontSize: 16,
+          fontSize: 15,
           fontWeight: FontWeight.normal),
       bodyText2: GoogleFonts.nunito(
           color: Colors.black,

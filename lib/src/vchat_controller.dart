@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,11 @@ class VChatController {
       enableLog = enableLogger;
     }
     controller.enableLog = enableLog;
+    // AudioPlayer audioPlayer = AudioPlayer();
+    // //https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_1MG.mp3
+    // int result = await audioPlayer.play(
+    //     "http://ec2-3-142-209-237.us-east-2.compute.amazonaws.com:3000/api/v1/public/messages/1635246286427.m4a");
+    // print("is Playing ..... ${result}");
   }
 
   /// to add new language to v chat

@@ -49,8 +49,13 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {
-                _controller.getUsers();
+              onPressed: () async {
+                final users = await _controller.getUsers();
+                _usersList.clear();
+                _usersList.addAll(users);
+                setState(() {
+
+                });
               },
               icon: const Icon(Icons.refresh))
         ],

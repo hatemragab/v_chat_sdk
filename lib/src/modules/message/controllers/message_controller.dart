@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audioplayers_api.dart';
 import 'package:flutter/material.dart';
@@ -146,26 +147,44 @@ class MessageController extends GetxController {
 
   void stopRecord(BuildContext context) async {
     isRecordWidgetEnable.value = false;
-    await recorder.stop();
+    final recorderPath = await recorder.stop();
+    recordPath = recorderPath!;
+    final uri = Uri.parse(recorderPath);
     Get.find<SendMessageController>()
-        .emitVoice(context, recordPath!, recordTime.value);
+        .emitVoice(context, uri.path, recordTime.value);
     _stopWatchTimer.onExecute.add(StopWatchExecute.reset);
     Get.find<SendMessageController>().emitTypingChange(0);
   }
 
   void startRecord(BuildContext context) async {
     if (await recorder.hasPermission()) {
-      final t = (await getTemporaryDirectory()).path;
-      recordPath = "$t/${"${DateTime.now().millisecondsSinceEpoch}.m4a"}";
-      isRecordWidgetEnable.value = true;
-      _stopWatchTimer.onExecute.add(StopWatchExecute.start);
-      Get.find<SendMessageController>().emitTypingChange(3);
+      // final t = (await getApplicationDocumentsDirectory()).path;
+      // recordPath = "$t/${"${DateTime.now().millisecondsSinceEpoch}.m4a"}";
+
       try {
-        await recorder.start(
+        if (Platform.isIOS) {
+          await recorder.start(
+            bitRate:75000,
+            encoder: AudioEncoder.AAC_HE,
+          );
+        } else {
+          await recorder.start(
             encoder: AudioEncoder.AAC_HE,
             bitRate: 18000,
             samplingRate: 64100.0,
-            path: recordPath!);
+          );
+        }
+
+        bool isRecording = await recorder.isRecording();
+        if (isRecording) {
+          isRecordWidgetEnable.value = true;
+          _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+          Get.find<SendMessageController>().emitTypingChange(3);
+        }
+        // await recorder.start(
+        //     encoder: AudioEncoder.AAC_HE,
+        //     bitRate: 18000,
+        //     samplingRate: 64100.0);
       } catch (err) {
         Helpers.vlog(err.toString());
         CustomAlert.customAlertDialog(
@@ -210,7 +229,8 @@ class MessageController extends GetxController {
 
     msg.messageAttachment!.isVoicePlying.value = true;
     currentVoicePlayer = msg;
-    audioPlayer.play(
+    print("Url is ${ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!}");
+   await audioPlayer.play(
       ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!,
       stayAwake: true,
     );

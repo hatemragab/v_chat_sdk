@@ -82,7 +82,7 @@ class CustomAlert {
   }
 
   static void customLoadingDialog(
-      {required BuildContext context, bool dismissible = false}) {
+      { BuildContext? context, bool dismissible = false}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -128,7 +128,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: context,
+      context: VChatAppService.to.navKey!.currentContext!,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
@@ -200,7 +200,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: context,
+      context: VChatAppService.to.navKey!.currentContext!,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },

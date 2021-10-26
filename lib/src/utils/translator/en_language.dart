@@ -71,7 +71,7 @@ class EnLanguage implements VChatLookupString {
   String toDay() => "Today";
 
   @override
-  String typing() => "Typing ...";
+  String typing() => "typing ...";
 
   @override
   String userHasBeenBlockedSuccessfully() =>

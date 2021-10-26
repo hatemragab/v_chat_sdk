@@ -117,15 +117,15 @@ class RoomItem extends StatelessWidget {
                           final txt = "${tSt.status.inString} ...";
                           if (_room.roomType == RoomType.single) {
                             if (tSt.status == RoomTypingType.typing) {
-                              return t.typing().text;
+                              return t.typing().text.color(Colors.green);
                             }
                             if (tSt.status == RoomTypingType.recording) {
-                              return t.recording().text;
+                              return t.recording().text.color(Colors.green);
                             }
 
                             return txt.text;
                           } else {
-                            return "${tSt.name} is $txt".text;
+                            return "${tSt.name} is $txt".text.color(Colors.green);
                           }
                         } else {
                           return Flexible(

@@ -29,7 +29,6 @@ class SendMessageController extends GetxController {
   final _socketService = Get.find<SocketService>();
   final _myModel = VChatAppService.to.vChatUser!;
   final _messageController = Get.find<MessageController>();
-
   final isRecordWidget = true.obs;
   bool isEmitTyping = false;
   final msgText = "".obs;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../../enums/message_type.dart';
 import '../../../../enums/room_type.dart';
 import '../../../../models/v_chat_room.dart';
@@ -16,9 +17,8 @@ class MessageWithIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_room.lastMessage.messageType == MessageType.info) {
-      return _room.lastMessage.content.s1
+      return _room.lastMessage.content.text
           .maxLine(1)
-          .size(17)
           .alignStart
           .overflowEllipsis;
     }
@@ -30,29 +30,42 @@ class MessageWithIcon extends StatelessWidget {
         ),
         Flexible(
             child: AutoDirection(
-                text: _room.lastMessage.content, child: getMessageText())),
+                text: _room.lastMessage.content, child: getMessageText(context))),
       ],
     );
   }
 
-  Widget getMessageText() {
+  Widget getMessageText(BuildContext context) {
+
     if (_room.lastMessage.senderId != _myModel.id) {
       // i the receiver
       final _isMeSeen = _room.lastMessageSeenBy.contains(_myModel.id);
 
       if (_isMeSeen) {
-        return _room.lastMessage.content.s1
+        return _room.lastMessage.content.text
             .maxLine(1)
-            .size(17)
             .alignStart
             .overflowEllipsis;
       } else {
-        return _room.lastMessage.content.h6
-            .maxLine(1)
-            .size(17.5)
-            .alignStart
-            .overflowEllipsis
-            .black;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _room.lastMessage.content.h6
+                .maxLine(1)
+                .size(16.5)
+                .alignStart
+                .overflowEllipsis
+                .black,
+            Container(
+              padding: const EdgeInsets.all(5),
+              decoration:const   BoxDecoration(
+                color:   Colors.blueGrey,
+                shape: BoxShape.circle,
+              ),
+              child: "1".s2.color(  Colors.white),
+            )
+          ],
+        );
       }
     } else {
       // i the sender
@@ -62,9 +75,8 @@ class MessageWithIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: _room.lastMessage.content.s1
+              child: _room.lastMessage.content.s2
                   .maxLine(1)
-                  .size(17)
                   .alignStart
                   .overflowEllipsis,
             ),
@@ -73,7 +85,7 @@ class MessageWithIcon extends StatelessWidget {
         );
       }
 
-      return _room.lastMessage.content.s1
+      return _room.lastMessage.content.s2
           .maxLine(1)
           .alignStart
           .overflowEllipsis;
