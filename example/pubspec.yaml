@@ -39,6 +39,8 @@ dependencies:
   bot_toast:
   provider: ^5.0.0
   cached_network_image:
+  get_storage:
+
 
   flutter_localizations:
     sdk: flutter

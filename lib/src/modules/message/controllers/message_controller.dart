@@ -5,7 +5,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audioplayers_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -229,8 +228,7 @@ class MessageController extends GetxController {
 
     msg.messageAttachment!.isVoicePlying.value = true;
     currentVoicePlayer = msg;
-    print(
-        "Url is ${ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!}");
+
     await audioPlayer.play(
       ServerConfig.messagesMediaBaseUrl + msg.messageAttachment!.playUrl!,
       stayAwake: true,

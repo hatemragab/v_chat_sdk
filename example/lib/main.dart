@@ -3,6 +3,7 @@ import 'package:example/screens/splash_screen.dart';
 import 'package:example/utils/ar_eg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import 'controllers/lang_controller.dart';
@@ -12,16 +13,20 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-//10.0.2.2
-  /// real server ip 3.16.14.118:3000
+  await GetStorage.init();
+
   /// http://ec2-3-142-209-237.us-east-2.compute.amazonaws.com:3000
   await VChatController.instance.init(
     baseUrl: Uri.parse(
         "http://ec2-3-142-209-237.us-east-2.compute.amazonaws.com:3000"),
     appName: "test_v_chat",
     isUseFirebase: true,
-    lightTheme: vChatLightTheme,
-    darkTheme: vChatDarkTheme,
+    lightTheme: vChatLightTheme.copyWith(
+        //your custom theme
+        ),
+    darkTheme: vChatDarkTheme.copyWith(
+        //your custom theme
+        ),
     enableLogger: true,
     navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,
@@ -59,7 +64,9 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      //don't forget to init BotToastInit
       builder: BotToastInit(),
+      //don't forget to init BotToastInit
       navigatorObservers: [BotToastNavigatorObserver()],
       supportedLocales: S.delegate.supportedLocales,
       locale: context.read<LangController>().locale,

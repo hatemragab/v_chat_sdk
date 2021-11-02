@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -23,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("splash screen"),
+        centerTitle: true,
       ),
       body: const Center(
         child: CircularProgressIndicator.adaptive(),
@@ -32,15 +35,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void startNavigate() async {
     final myModel = GetStorage().hasData("myModel");
-    //final vChatUser = GetStorage().hasData(GetStorageKeys.KV_CHAT_MY_MODEL);
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
+    log(myModel.toString());
     if (myModel) {
-      // Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Home() ,));
-
+      // there are login data saved
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const Home()),
           (Route<dynamic> route) => false);
     } else {
+      // its the first time to open the app
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginScreen()),
           (Route<dynamic> route) => false);

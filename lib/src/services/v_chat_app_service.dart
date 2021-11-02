@@ -1,7 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import 'package:v_chat_sdk/src/utils/translator/ar_language.dart';
 import 'package:v_chat_sdk/src/utils/translator/en_language.dart';
@@ -57,14 +59,17 @@ class VChatAppService extends GetxService {
   }
 
   Future<VChatAppService> init(bool isUseFirebase) async {
-    await GetStorage.init();
+    const storage = FlutterSecureStorage();
+
     await DBProvider.db.database;
     if (isUseFirebase) {
       await Firebase.initializeApp();
     }
-    final userMap = GetStorage().read(GetStorageKeys.KV_CHAT_MY_MODEL);
-    if (userMap != null) {
-      vChatUser = VChatUser.fromMap(userMap);
+
+    final String? userJson =
+        await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
+    if (userJson != null) {
+      vChatUser = VChatUser.fromMap(jsonDecode(userJson));
     } else {
       vChatUser = null;
     }

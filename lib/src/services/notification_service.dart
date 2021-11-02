@@ -7,8 +7,6 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk/src/modules/message/bindings/message_binding.dart';
 import 'package:v_chat_sdk/src/modules/message/views/message_view.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/vchat_controller.dart';
 import '../modules/room/controllers/rooms_controller.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
@@ -43,9 +41,9 @@ class NotificationService extends GetxService {
 
   void init() async {
     final messaging = FirebaseMessaging.instance;
-
     messaging.setAutoInitEnabled(true);
     await messaging.getToken();
+
     await messaging.requestPermission(
       alert: true,
       announcement: false,
@@ -55,12 +53,14 @@ class NotificationService extends GetxService {
       provisional: false,
       sound: true,
     );
+
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
+
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()

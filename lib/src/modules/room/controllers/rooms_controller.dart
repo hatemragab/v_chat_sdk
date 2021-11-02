@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import '../../../enums/load_more_type.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
@@ -72,8 +71,7 @@ class RoomController extends GetxController {
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }
-      CustomAlert.done(
-          msg: VChatAppService.to.getTrans().userHasBeenBlockedSuccessfully());
+      CustomAlert.done();
     } catch (err) {
       CustomAlert.error(msg: err.toString());
       rethrow;
@@ -82,8 +80,8 @@ class RoomController extends GetxController {
 
   void muteAction(final VChatRoom room) async {
     try {
-      final res = await _provider.changeNotifaictions(room.id);
-      CustomAlert.done(msg: res.toString());
+      await _provider.changeNotifaictions(room.id);
+      CustomAlert.done();
     } catch (err) {
       //  CustomAlert.customAlertDialog(errorMessage: err.toString());
       CustomAlert.error(msg: err.toString());

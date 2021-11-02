@@ -1,12 +1,13 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_dark_theme.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_light_theme.dart';
 import 'package:v_chat_sdk/src/utils/translator/v_chat_lookup_string.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
@@ -26,6 +27,7 @@ import 'sqlite/db_provider.dart';
 import 'utils/get_storage_keys.dart';
 
 import 'services/vchat_provider.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class VChatController {
   VChatController._privateConstructor();
@@ -51,8 +53,8 @@ class VChatController {
     required Uri baseUrl,
     required String appName,
     required bool isUseFirebase,
-    required ThemeData lightTheme,
-    required ThemeData darkTheme,
+    ThemeData? lightTheme,
+    ThemeData? darkTheme,
     required bool enableLogger,
     required GlobalKey<NavigatorState> navigatorKey,
     int maxMediaUploadSize = 50 * 1000 * 1000,
@@ -62,6 +64,13 @@ class VChatController {
     final controller = VChatAppService.to;
     controller.dark = darkTheme;
     controller.light = lightTheme;
+    if (darkTheme == null) {
+      controller.dark = vChatDarkTheme;
+    }
+    if (lightTheme == null) {
+      controller.light = vChatLightTheme;
+    }
+
     controller.navKey = navigatorKey;
     controller.isUseFirebase = isUseFirebase;
     controller.appName = appName;
@@ -128,7 +137,9 @@ class VChatController {
   }
 
   Future _saveUser(VChatUser user) async {
-    await GetStorage().write(GetStorageKeys.KV_CHAT_MY_MODEL, user.toMap());
+    const storage = FlutterSecureStorage();
+    await storage.write(
+        key: StorageKeys.KV_CHAT_MY_MODEL, value: jsonEncode(user.toMap()));
     VChatAppService.to.setUser(user);
   }
 
@@ -238,7 +249,8 @@ class VChatController {
 
   /// **throw** No internet connection
   Future logOut() async {
-    await GetStorage().remove(GetStorageKeys.KV_CHAT_MY_MODEL);
+    const storage = FlutterSecureStorage();
+    await storage.delete(key: StorageKeys.KV_CHAT_MY_MODEL);
     await DBProvider.db.reCreateTables();
     await FirebaseMessaging.instance.deleteToken();
     await _vChatControllerProvider.logOut();

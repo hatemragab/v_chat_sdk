@@ -30,50 +30,46 @@ class VChatRoomsView extends GetView<RoomController> {
         child: Builder(builder: (context) {
           return Container(
             color: Theme.of(context).scaffoldBackgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const ConnectionChecker(),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Expanded(
-                    child: Scrollbar(
-                      child: Obx(() {
-                        final rooms = controller.rooms;
-                        final isLoading = controller.isLoading.value;
-                        if (isLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          );
-                        }
-                        // _log.info(controller.rooms.toString());
-                        return ListView.separated(
-                          controller: controller.scrollController,
-                          physics: const BouncingScrollPhysics(),
-                          key: const PageStorageKey<String>('RoomsTabView'),
-                          itemBuilder: (context, index) {
-                            return SizedBox(
-                              height: 70,
-                              child: RoomItem(rooms[index]),
-                            );
-                          },
-                          itemCount: rooms.length,
-                          separatorBuilder: (context, index) => const Divider(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const ConnectionChecker(),
+                const SizedBox(
+                  height: 2,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Expanded(
+                  child: Obx(() {
+                    final rooms = controller.rooms;
+                    final isLoading = controller.isLoading.value;
+                    if (isLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    }
+                    // _log.info(controller.rooms.toString());
+                    return ListView.separated(
+                      padding: const EdgeInsets.all(8.0),
+                      controller: controller.scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      key: const PageStorageKey<String>('RoomsTabView'),
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          height: 70,
+                          child: RoomItem(rooms[index]),
                         );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
+                      },
+                      itemCount: rooms.length,
+                      separatorBuilder: (context, index) => const Divider(),
+                    );
+                  }),
+                ),
+              ],
             ),
           );
         }),
