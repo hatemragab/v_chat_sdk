@@ -75,8 +75,9 @@ class MessageAppBarView extends GetView<MessageController>
                     return "${typingSt.status.inString} ...".s2;
                   }
                   if (isOnline == 1) {
-                    return t.online().s2.size(14);
+                    return t.online().text.size(14);
                   } else {
+                    return const SizedBox.shrink();
                     return VChatAppService.to
                         .getTrans(context)
                         .offline()

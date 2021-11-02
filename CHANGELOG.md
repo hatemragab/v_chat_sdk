@@ -33,3 +33,6 @@
 ## 0.2.0
 
 * fix ios recording and enable notification clicks to open the chat page
+
+## 0.2.1
+* encrypt user access token

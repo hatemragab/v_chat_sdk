@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
-import 'controllers/lang_controller.dart';
+import 'controllers/language_controller.dart';
 import 'generated/l10n.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -37,8 +37,8 @@ void main() async {
   VChatController.instance.setLocaleMessages(
       languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
 
-  runApp(ChangeNotifierProvider<LangController>(
-    create: (context) => LangController(),
+  runApp(ChangeNotifierProvider<LanguageController>(
+    create: (context) => LanguageController(),
     child: const MyApp(),
   ));
 }
@@ -53,11 +53,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    context.watch<LangController>();
+    context.watch<LanguageController>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
-      theme: context.read<LangController>().theme,
+      theme: context.read<LanguageController>().theme,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
       //don't forget to init BotToastInit
       navigatorObservers: [BotToastNavigatorObserver()],
       supportedLocales: S.delegate.supportedLocales,
-      locale: context.read<LangController>().locale,
+      locale: context.read<LanguageController>().locale,
       home: const SplashScreen(),
     );
   }

@@ -20,7 +20,7 @@ import '../../room/controllers/rooms_controller.dart';
 import '../providers/message_provider.dart';
 import 'send_message_controller.dart';
 
-class MessageController extends GetxController {
+class MessageController extends GetxController with WidgetsBindingObserver {
   static final _roomController = Get.find<RoomController>();
   final currentRoomId = Get.find<RoomController>().currentRoomId!;
   final _apiProvider = Get.find<MessageProvider>();
@@ -42,8 +42,26 @@ class MessageController extends GetxController {
   final recorder = Record();
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _connectMessageSocket();
+        break;
+      case AppLifecycleState.inactive:
+        _socket.disconnect();
+        break;
+      case AppLifecycleState.paused:
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
+  }
+
+  @override
   void onInit() {
     super.onInit();
+    WidgetsBinding.instance!.addObserver(this);
     getRoomMessages();
     _connectMessageSocket();
     final currentRoom = Get.find<RoomController>()
@@ -90,6 +108,7 @@ class MessageController extends GetxController {
   @override
   void onClose() {
     try {
+      WidgetsBinding.instance!.removeObserver(this);
       _socket.disconnect();
       _socket.dispose();
       _roomController.currentRoomId = null;

@@ -140,7 +140,11 @@ class _HomeState extends State<Home> {
                 );
               },
               title: _usersList[index].name.text,
-              trailing: const Icon(Icons.message),
+              trailing: InkWell(
+                  onTap: () {
+                    _controller.startChat(_usersList[index].email);
+                  },
+                  child: const Icon(Icons.message)),
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: CachedNetworkImage(

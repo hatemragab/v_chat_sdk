@@ -3,20 +3,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-class LangController extends ChangeNotifier {
-  int id = 0;
+class LanguageController extends ChangeNotifier {
   Locale locale = ui.window.locale;
   ThemeData theme = ThemeData.light();
-
-  void randomLocale() {
-    ++id;
-    if (id % 2 == 0) {
-      locale = const Locale.fromSubtags(languageCode: "ar");
-    } else {
-      locale = const Locale.fromSubtags(languageCode: "en");
-    }
-    notifyListeners();
-  }
 
   void changeTheme(bool isLight) {
     if (isLight) {

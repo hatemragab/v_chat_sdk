@@ -66,7 +66,7 @@ class MessageWithIcon extends StatelessWidget {
                   color: Colors.blueGrey,
                   shape: BoxShape.circle,
                 ),
-                child: "1".s2.color(Colors.white),
+                child: "  ".s2.color(Colors.white),
               ),
             )
           ],

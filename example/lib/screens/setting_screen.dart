@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:example/controllers/lang_controller.dart';
+import 'package:example/controllers/language_controller.dart';
 import 'package:example/generated/l10n.dart';
 
 import 'package:example/screens/splash_screen.dart';
@@ -33,11 +33,11 @@ class _SettingScreenState extends State<SettingScreen> {
                     context: context,
                     data: [S.of(context).ar, S.of(context).en]);
                 if (res == 0) {
-                  Provider.of<LangController>(context, listen: false)
+                  Provider.of<LanguageController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "ar"));
                 }
                 if (res == 1) {
-                  Provider.of<LangController>(context, listen: false)
+                  Provider.of<LanguageController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "en"));
                 }
               },
@@ -50,11 +50,11 @@ class _SettingScreenState extends State<SettingScreen> {
                     context: context,
                     data: [S.of(context).light, S.of(context).dark]);
                 if (res == 0) {
-                  Provider.of<LangController>(context, listen: false)
+                  Provider.of<LanguageController>(context, listen: false)
                       .changeTheme(false);
                 }
                 if (res == 1) {
-                  Provider.of<LangController>(context, listen: false)
+                  Provider.of<LanguageController>(context, listen: false)
                       .changeTheme(true);
                 }
               },
