@@ -18,6 +18,7 @@ void main() async {
     baseUrl: Uri.parse("http://79.98.30.115"),
     appName: "test_v_chat",
     isUseFirebase: true,
+
     lightTheme: vChatLightTheme.copyWith(
         //your custom theme
         ),
