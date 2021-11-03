@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:example/screens/splash_screen.dart';
-import 'package:example/utils/ar_eg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,8 +15,7 @@ void main() async {
   await GetStorage.init();
 
   await VChatController.instance.init(
-    baseUrl: Uri.parse(
-        "http://79.98.30.115"),
+    baseUrl: Uri.parse("http://79.98.30.115"),
     appName: "test_v_chat",
     isUseFirebase: true,
     lightTheme: vChatLightTheme.copyWith(

@@ -152,7 +152,7 @@ class _HomeState extends State<Home> {
                 child: CachedNetworkImage(
                   imageUrl: baseImgUrl + _usersList[index].imageThumb,
                   height: 100,
-
+                  width: 60,
                   fit: BoxFit.cover,
                 ),
               ),

@@ -50,7 +50,6 @@ class _MessageViewState extends State<MessageView> {
                 final messagesList = controller.messagesList;
                 return Scrollbar(
                   showTrackOnHover: true,
-
                   child: ListView.separated(
                     reverse: true,
                     padding: EdgeInsets.symmetric(horizontal: 10),

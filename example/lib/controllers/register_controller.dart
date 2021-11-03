@@ -27,6 +27,7 @@ class RegisterController {
 
     try {
       CustomAlert.customLoadingDialog(context: context);
+
       ///Register on your system backend
       if (imagePath != null) {
         myUser = (await CustomDio().uploadFile(

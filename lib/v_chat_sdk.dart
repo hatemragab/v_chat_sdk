@@ -10,3 +10,5 @@ export 'package:v_chat_sdk/src/utils/theme/v_chat_dark_theme.dart'
 export 'package:v_chat_sdk/src/utils/theme/v_chat_light_theme.dart'
     show vChatLightTheme;
 export 'package:v_chat_sdk/src/utils/translator/v_chat_lookup_string.dart';
+export 'package:v_chat_sdk/src/utils/translator/ar_language.dart';
+export 'package:v_chat_sdk/src/utils/translator/en_language.dart';

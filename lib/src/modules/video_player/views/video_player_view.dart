@@ -32,7 +32,7 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
                 child: CircularProgressIndicator(),
               )
             : SafeArea(
-              child: Stack(
+                child: Stack(
                   children: [
                     Chewie(
                       controller: chewieController,
@@ -52,7 +52,7 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
                         )),
                   ],
                 ),
-            ));
+              ));
   }
 
   @override

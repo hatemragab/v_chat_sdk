@@ -38,20 +38,31 @@ class VChatAppService extends GetxService {
 
   VChatLookupString getTrans([BuildContext? context]) {
     context ??= navKey!.currentContext;
-    final local = Localizations.localeOf(context!).toString();
-    currentLocal = local;
-    if (_lookupMessagesMap[local] == null) {
+    final languageCode = Localizations.localeOf(context!).languageCode;
+    final String? countryCode = Localizations.localeOf(context).countryCode;
+
+    late String fullLocalName;
+    if (countryCode == null) {
+      fullLocalName = languageCode;
+    } else {
+      fullLocalName = "${languageCode}_$countryCode";
+    }
+
+    currentLocal = fullLocalName;
+    if (_lookupMessagesMap[currentLocal] == null) {
+      if (languageCode == "en") {
+        return EnLanguage();
+      }
       Helpers.vlog(
-          "failed to find the language $local in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
+          "failed to find the language $currentLocal in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
       return EnLanguage();
     } else {
-      return _lookupMessagesMap[local]!;
+      return _lookupMessagesMap[currentLocal]!;
     }
   }
 
   final Map<String, VChatLookupString> _lookupMessagesMap = {
-    'en': EnLanguage(),
-    'ar_EG': ArLanguage()
+    'en': EnLanguage()
   };
 
   void setLocaleMessages(String locale, VChatLookupString lookupMessages) {

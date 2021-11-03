@@ -23,6 +23,7 @@ class HomeController {
       rethrow;
     }
   }
+
   void startChat(String email) async {
     try {
       await VChatController.instance

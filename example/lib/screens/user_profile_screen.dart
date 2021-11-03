@@ -24,14 +24,21 @@ class _UserProfileState extends State<UserProfile> {
         title: "${widget.user.name} ".text,
       ),
       body: Center(
-        child: InkWell(onTap: startChat, child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.messenger,size: 40,),
-            const SizedBox(width: 10,),
-            "message".text,
-          ],
-        )),
+        child: InkWell(
+            onTap: startChat,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.messenger,
+                  size: 40,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                "message".text,
+              ],
+            )),
       ),
     );
   }
