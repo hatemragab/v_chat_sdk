@@ -31,26 +31,28 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Stack(
-                children: [
-                  Chewie(
-                    controller: chewieController,
-                  ),
-                  Positioned(
-                      top: 20,
-                      left: 10,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                          size: 33,
-                        ),
-                      )),
-                ],
-              ));
+            : SafeArea(
+              child: Stack(
+                  children: [
+                    Chewie(
+                      controller: chewieController,
+                    ),
+                    Positioned(
+                        top: 20,
+                        left: 10,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                            size: 33,
+                          ),
+                        )),
+                  ],
+                ),
+            ));
   }
 
   @override

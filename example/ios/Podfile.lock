@@ -75,6 +75,8 @@ PODS:
     - Flutter
   - flutter_native_image (0.0.1):
     - Flutter
+  - flutter_secure_storage (3.3.1):
+    - Flutter
   - flutter_video_info (1.1.0):
     - Flutter
   - FMDB (2.7.5):
@@ -149,6 +151,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_video_info (from `.symlinks/plugins/flutter_video_info/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - open_file (from `.symlinks/plugins/open_file/ios`)
@@ -193,6 +196,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_native_image:
     :path: ".symlinks/plugins/flutter_native_image/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_video_info:
     :path: ".symlinks/plugins/flutter_video_info/ios"
   image_picker:
@@ -229,6 +234,7 @@ SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_image: 9c0b7451838484458e5b0fae007b86a4c2d4bdfe
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   flutter_video_info: a932e1b0da369bba95c3a14b7f61d5f8b0d03280
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
