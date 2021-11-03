@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk/src/modules/message/bindings/message_binding.dart';
 import 'package:v_chat_sdk/src/modules/message/views/message_view.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../modules/room/controllers/rooms_controller.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
@@ -28,12 +29,13 @@ class NotificationService extends GetxService {
   }
 
   final channel = const AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      importance: Importance.max,
-      playSound: true,
-      enableVibration: true,
-      showBadge: true);
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    importance: Importance.max,
+    playSound: true,
+    enableVibration: true,
+    showBadge: true,
+  );
 
   static Future<String?> getFcmToken() async {
     return await FirebaseMessaging.instance.getToken();
@@ -65,6 +67,7 @@ class NotificationService extends GetxService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
+
     FirebaseMessaging.instance.onTokenRefresh.listen((event) async {
       await CustomDio().send(
           reqMethod: "PATCH",

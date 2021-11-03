@@ -2,6 +2,7 @@ import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
+import 'package:textless/textless.dart';
 import '../models/user.dart';
 
 class UserProfile extends StatefulWidget {
@@ -17,10 +18,22 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: Center(
-          child: InkWell(onTap: startChat, child: Text(S.of(context).message)),
-        ));
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: "${widget.user.name} ".text,
+      ),
+      body: Center(
+        child: InkWell(onTap: startChat, child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.messenger,size: 40,),
+            const SizedBox(width: 10,),
+            "message".text,
+          ],
+        )),
+      ),
+    );
   }
 
   void startChat() async {

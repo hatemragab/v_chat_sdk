@@ -47,6 +47,7 @@ class _HomeState extends State<Home> {
       AppBar(
         title: S.of(context).thisDataFromMyServerNotVchat.text,
         centerTitle: true,
+        elevation: 0,
         actions: [
           IconButton(
               onPressed: () async {
@@ -146,11 +147,13 @@ class _HomeState extends State<Home> {
                   },
                   child: const Icon(Icons.message)),
               leading: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(100),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: CachedNetworkImage(
                   imageUrl: baseImgUrl + _usersList[index].imageThumb,
                   height: 100,
-                  width: 100,
+
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

@@ -40,6 +40,7 @@ dependencies:
   provider: ^5.0.0
   cached_network_image:
   get_storage:
+  flutter_launcher_icons: ^0.9.2
 
 
   flutter_localizations:
@@ -99,5 +100,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icon.png"
+
 flutter_intl:
   enabled: true
+  assets:
+    - assets/
