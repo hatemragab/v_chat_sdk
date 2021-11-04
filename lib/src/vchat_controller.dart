@@ -249,12 +249,13 @@ class VChatController {
 
   /// **throw** No internet connection
   Future logOut() async {
-    const storage = FlutterSecureStorage();
-    await storage.delete(key: StorageKeys.KV_CHAT_MY_MODEL);
-    await DBProvider.db.reCreateTables();
     await FirebaseMessaging.instance.deleteToken();
     await _vChatControllerProvider.logOut();
     await _unBindChatControllers();
+    const storage = FlutterSecureStorage();
+    await storage.delete(key: StorageKeys.KV_CHAT_MY_MODEL);
+    await DBProvider.db.reCreateTables();
+    
   }
 
   // delete all controller instances
