@@ -13,9 +13,9 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-
+ // http://170.178.195.150/
   await VChatController.instance.init(
-    baseUrl: Uri.parse("http://79.98.30.115"),
+    baseUrl: Uri.parse("http://170.178.195.150:3000"),
     appName: "test_v_chat",
     isUseFirebase: true,
 
