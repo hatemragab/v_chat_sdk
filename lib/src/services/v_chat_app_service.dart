@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/utils/translator/ar_language.dart';
 import 'package:v_chat_sdk/src/utils/translator/en_language.dart';
 import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
@@ -38,9 +37,10 @@ class VChatAppService extends GetxService {
 
   VChatLookupString getTrans([BuildContext? context]) {
     context ??= navKey!.currentContext;
+    /// languageCode is EN or AR etc...
     final languageCode = Localizations.localeOf(context!).languageCode;
+    ///countryCode is US or EG etc...
     final String? countryCode = Localizations.localeOf(context).countryCode;
-
     late String fullLocalName;
     if (countryCode == null) {
       fullLocalName = languageCode;
@@ -76,13 +76,23 @@ class VChatAppService extends GetxService {
     if (isUseFirebase) {
       await Firebase.initializeApp();
     }
+    await GetStorage.init();
 
     final String? userJson =
         await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
     if (userJson != null) {
       vChatUser = VChatUser.fromMap(jsonDecode(userJson));
     } else {
-      vChatUser = null;
+      final getXData = GetStorage().read(StorageKeys.KV_CHAT_MY_MODEL);
+      if (getXData != null) {
+        vChatUser = VChatUser.fromMap(getXData);
+        await storage.write(
+          key: StorageKeys.KV_CHAT_MY_MODEL,
+          value: jsonEncode(getXData),
+        );
+      } else {
+        vChatUser = null;
+      }
     }
     return this;
   }

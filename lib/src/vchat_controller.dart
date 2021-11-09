@@ -93,11 +93,16 @@ class VChatController {
   /// to add new language to v chat
   void setLocaleMessages(
       {required String languageCode,
-      required String countryCode,
+      String? countryCode,
       required VChatLookupString lookupMessages}) {
     try {
-      VChatAppService.to.setLocaleMessages(
-          "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
+      if (countryCode == null) {
+        VChatAppService.to.setLocaleMessages(
+            languageCode, lookupMessages);
+      } else {
+        VChatAppService.to.setLocaleMessages(
+            "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
+      }
     } catch (err) {
       Helpers.vlog("you should call function after init v chat");
       throw "you should call function after init v chat";
@@ -255,7 +260,6 @@ class VChatController {
     const storage = FlutterSecureStorage();
     await storage.delete(key: StorageKeys.KV_CHAT_MY_MODEL);
     await DBProvider.db.reCreateTables();
-    
   }
 
   // delete all controller instances
