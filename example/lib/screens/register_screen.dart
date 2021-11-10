@@ -1,4 +1,5 @@
 import 'package:example/generated/l10n.dart';
+import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,21 +37,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
               controller: _controller.emailTxtController,
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             CupertinoTextField(
               placeholder: S.of(context).name,
               controller: _controller.nameTxtController,
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             CupertinoTextField(
               placeholder: S.of(context).password,
               controller: _controller.passwordTxtController,
             ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             InkWell(
                 onTap: () async {
@@ -59,9 +60,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     _controller.imagePath = img.path;
+                    CustomAlert.showSuccess(context: context, err: "image has been set successfully");
                   }
                 },
-                child: S.of(context).chooseImage.text),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.image,size: 40,),
+                    S.of(context).chooseImage.text,
+                  ],
+                )),
             const SizedBox(
               height: 10,
             ),

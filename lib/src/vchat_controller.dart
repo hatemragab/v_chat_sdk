@@ -97,8 +97,7 @@ class VChatController {
       required VChatLookupString lookupMessages}) {
     try {
       if (countryCode == null) {
-        VChatAppService.to.setLocaleMessages(
-            languageCode, lookupMessages);
+        VChatAppService.to.setLocaleMessages(languageCode, lookupMessages);
       } else {
         VChatAppService.to.setLocaleMessages(
             "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
@@ -254,8 +253,12 @@ class VChatController {
 
   /// **throw** No internet connection
   Future logOut() async {
-    await FirebaseMessaging.instance.deleteToken();
-    await _vChatControllerProvider.logOut();
+    try {
+      await FirebaseMessaging.instance.deleteToken();
+      await _vChatControllerProvider.logOut();
+    } catch (err) {
+      //
+    }
     await _unBindChatControllers();
     const storage = FlutterSecureStorage();
     await storage.delete(key: StorageKeys.KV_CHAT_MY_MODEL);

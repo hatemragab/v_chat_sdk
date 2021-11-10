@@ -30,6 +30,9 @@ class RegisterController {
 
       ///Register on your system backend
       if (imagePath != null) {
+        if (File(imagePath!).lengthSync() > 1024 * 1024 * 10) {
+          throw "image size must be less than 10 Mb";
+        }
         myUser = (await CustomDio().uploadFile(
                 apiEndPoint: "user/register",
                 filePath: imagePath!,

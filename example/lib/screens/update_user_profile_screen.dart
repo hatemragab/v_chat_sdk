@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
@@ -129,6 +130,9 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
       final picker = ImagePicker();
       final img = await picker.pickImage(source: ImageSource.gallery);
       if (img != null) {
+        if (File(img.path).lengthSync() > 1024 * 1024 * 10) {
+          throw "image size must be less than 10 Mb";
+        }
         (await CustomDio().uploadFile(
           filePath: img.path,
           isPost: false,

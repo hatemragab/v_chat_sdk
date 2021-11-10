@@ -245,7 +245,7 @@ then open android/app/build.gradle
      under 
       defaultConfig {
       add or update
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 31
         multiDexEnabled true 
 ```

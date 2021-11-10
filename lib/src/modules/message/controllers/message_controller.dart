@@ -188,8 +188,8 @@ class MessageController extends GetxController with WidgetsBindingObserver {
         } else {
           await recorder.start(
             encoder: AudioEncoder.AAC_HE,
-            bitRate: 18000,
-            samplingRate: 64100.0,
+            bitRate: 40000,
+            //samplingRate: 64100.0,
           );
         }
 

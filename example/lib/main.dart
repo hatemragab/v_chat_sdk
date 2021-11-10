@@ -13,12 +13,11 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
- // http://170.178.195.150/
+  // http://170.178.195.150:81/
   await VChatController.instance.init(
-    baseUrl: Uri.parse("http://170.178.195.150:3000"),
+    baseUrl: Uri.parse("http://170.178.195.150:81"),
     appName: "test_v_chat",
     isUseFirebase: true,
-
     lightTheme: vChatLightTheme.copyWith(
         //your custom theme
         ),

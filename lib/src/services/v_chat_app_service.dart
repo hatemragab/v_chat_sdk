@@ -37,8 +37,10 @@ class VChatAppService extends GetxService {
 
   VChatLookupString getTrans([BuildContext? context]) {
     context ??= navKey!.currentContext;
+
     /// languageCode is EN or AR etc...
     final languageCode = Localizations.localeOf(context!).languageCode;
+
     ///countryCode is US or EG etc...
     final String? countryCode = Localizations.localeOf(context).countryCode;
     late String fullLocalName;
