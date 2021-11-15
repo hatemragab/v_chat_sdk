@@ -78,11 +78,6 @@ class MessageAppBarView extends GetView<MessageController>
                     return t.online().text.size(14);
                   } else {
                     return const SizedBox.shrink();
-                    return VChatAppService.to
-                        .getTrans(context)
-                        .offline()
-                        .s2
-                        .size(14);
                   }
                 } else {
                   if (typingSt.status != RoomTypingType.stop) {

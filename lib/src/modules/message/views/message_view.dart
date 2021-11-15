@@ -36,7 +36,7 @@ class _MessageViewState extends State<MessageView> {
   Widget build(BuildContext context) {
     final t = VChatAppService.to.getTrans(context);
     return Scaffold(
-      appBar: MessageAppBarView(),
+      appBar:   MessageAppBarView(),
       body: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 1, top: 4),
         child: Column(
@@ -52,7 +52,7 @@ class _MessageViewState extends State<MessageView> {
                   showTrackOnHover: true,
                   child: ListView.separated(
                     reverse: true,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     controller: controller.scrollController,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) =>

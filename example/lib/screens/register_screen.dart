@@ -60,13 +60,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     _controller.imagePath = img.path;
-                    CustomAlert.showSuccess(context: context, err: "image has been set successfully");
+                    CustomAlert.showSuccess(
+                        context: context,
+                        err: "image has been set successfully");
                   }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.image,size: 40,),
+                    const Icon(
+                      Icons.image,
+                      size: 40,
+                    ),
                     S.of(context).chooseImage.text,
                   ],
                 )),

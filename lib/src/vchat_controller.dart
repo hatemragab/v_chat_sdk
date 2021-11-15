@@ -152,7 +152,7 @@ class VChatController {
   /// **throw** No internet connection
   Future<dynamic> createSingleChat({
     required String peerEmail,
-    required BuildContext ctx,
+    BuildContext? ctx,
     String? titleTxt,
     String? createBtnTxt,
   }) async {
@@ -162,7 +162,7 @@ class VChatController {
     if (data == false) {
       //no rooms founded
       return await showDialog(
-        context: ctx,
+        context: ctx ?? VChatAppService.to.navKey!.currentContext!,
         builder: (context) {
           return AlertDialog(
             title: titleTxt != null
@@ -181,7 +181,10 @@ class VChatController {
                         .createNewSingleRoom(txt, peerEmail);
                     // room has been created successfully
                     await Future.delayed(const Duration(seconds: 1));
-                    _navigateToRoomMessage(data, ctx);
+                    _navigateToRoomMessage(
+                      data,
+                      ctx ?? VChatAppService.to.navKey!.currentContext!,
+                    );
                   },
                   child: createBtnTxt != null
                       ? createBtnTxt.text
@@ -192,7 +195,7 @@ class VChatController {
       );
     } else {
       // there are room
-      return await _navigateToRoomMessage(data, ctx);
+      return await _navigateToRoomMessage(data, ctx ?? VChatAppService.to.navKey!.currentContext!,);
     }
   }
 

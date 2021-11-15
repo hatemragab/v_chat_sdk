@@ -115,6 +115,7 @@ class NotificationService extends GetxService {
         MessageBinding.bind();
         Navigator.of(VChatAppService.to.navKey!.currentContext!)
             .push(MaterialPageRoute(builder: (_) => const MessageView()));
+        BotToast.cleanAll();
       },
       duration: const Duration(seconds: 5),
       subTitle: msg.toString(),

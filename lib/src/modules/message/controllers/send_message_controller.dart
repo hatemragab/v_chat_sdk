@@ -75,7 +75,6 @@ class SendMessageController extends GetxController {
       if (isEmitTyping) {
         emitTypingChange(0);
       }
-      textController.dispose();
     } catch (err) {
       log(err.toString());
     } finally {
