@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk/src/modules/message/bindings/message_binding.dart';
 import 'package:v_chat_sdk/src/modules/message/views/message_view.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../modules/room/controllers/rooms_controller.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
@@ -44,6 +43,7 @@ class NotificationService extends GetxService {
   void init() async {
     final messaging = FirebaseMessaging.instance;
     messaging.setAutoInitEnabled(true);
+
     await messaging.getToken();
 
     await messaging.requestPermission(
@@ -56,19 +56,33 @@ class NotificationService extends GetxService {
       sound: true,
     );
 
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await messaging.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
-
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      if (message.notification != null) {
+        final roomId = int.parse(message.data['roomId'].toString());
+        try {
+          if (!_roomController.isRoomOpen(roomId)) {
+            await Future.delayed(const Duration(milliseconds: 100));
+            Get.find<RoomController>().currentRoomId = roomId;
+            MessageBinding.bind();
+            Navigator.of(VChatAppService.to.navKey!.currentContext!)
+                .push(MaterialPageRoute(builder: (_) => const MessageView()));
+          }
+        } catch (err) {
+          //
+        }
+      }
+    });
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    FirebaseMessaging.instance.onTokenRefresh.listen((event) async {
+    messaging.onTokenRefresh.listen((event) async {
       await CustomDio().send(
           reqMethod: "PATCH",
           path: "user",
@@ -86,6 +100,7 @@ class NotificationService extends GetxService {
         }
       }
     });
+
     messaging.getInitialMessage().then((RemoteMessage? message) async {
       if (message != null) {
         try {
@@ -103,7 +118,6 @@ class NotificationService extends GetxService {
       }
     });
     flutterLocalNotificationsPlugin.cancelAll();
-    //show();
   }
 
   static void showNotification(
@@ -111,10 +125,13 @@ class NotificationService extends GetxService {
     BotToast.showSimpleNotification(
       title: title.toString(),
       onTap: () {
-        Get.find<RoomController>().currentRoomId = roomId;
-        MessageBinding.bind();
-        Navigator.of(VChatAppService.to.navKey!.currentContext!)
-            .push(MaterialPageRoute(builder: (_) => const MessageView()));
+        final _roomController = Get.find<RoomController>();
+        if (!_roomController.isRoomOpen(roomId)) {
+          Get.find<RoomController>().currentRoomId = roomId;
+          MessageBinding.bind();
+          Navigator.of(VChatAppService.to.navKey!.currentContext!)
+              .push(MaterialPageRoute(builder: (_) => const MessageView()));
+        }
         BotToast.cleanAll();
       },
       duration: const Duration(seconds: 5),

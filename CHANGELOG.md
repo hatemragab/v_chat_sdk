@@ -36,3 +36,6 @@
 
 ## 0.2.1
 * encrypt user access token
+
+## 0.2.5
+* support android 12

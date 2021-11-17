@@ -195,7 +195,10 @@ class VChatController {
       );
     } else {
       // there are room
-      return await _navigateToRoomMessage(data, ctx ?? VChatAppService.to.navKey!.currentContext!,);
+      return await _navigateToRoomMessage(
+        data,
+        ctx ?? VChatAppService.to.navKey!.currentContext!,
+      );
     }
   }
 
