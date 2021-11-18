@@ -14,7 +14,7 @@ class EnLanguage implements VChatLookupString {
   String chatHasBeenClosedByMe() => "Chat has been closed by me";
 
   @override
-  String closeChat() => "Close chat";
+  String blockUser() => "Block user";
 
   @override
   String connecting() => "Connecting";
@@ -41,7 +41,7 @@ class EnLanguage implements VChatLookupString {
   String oK() => "Ok";
 
   @override
-  String openChat() => "Open chat";
+  String unBlockUser() => "Un Block User";
 
   @override
   String photo() => "Photo";

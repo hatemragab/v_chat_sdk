@@ -51,7 +51,7 @@ class RoomItem extends StatelessWidget {
           _room.roomType == RoomType.single
               ? CustomSheetModel(
                   value: 2,
-                  text: isMyBlock ? t.openChat() : t.closeChat(),
+                  text: isMyBlock ? t.unBlockUser() : t.blockUser(),
                   iconData: Icons.block,
                 )
               : CustomSheetModel(

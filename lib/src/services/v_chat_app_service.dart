@@ -39,22 +39,35 @@ class VChatAppService extends GetxService {
     context ??= navKey!.currentContext;
 
     /// languageCode is EN or AR etc...
-    final languageCode = Localizations.localeOf(context!).languageCode;
+    Locale locale = Localizations.localeOf(context!);
+
+    ///check if user us getx or flutter localization
+    if (Get.locale != null) {
+      locale = Get.locale!;
+    }
 
     ///countryCode is US or EG etc...
-    final String? countryCode = Localizations.localeOf(context).countryCode;
+    final languageCode = locale.languageCode;
+    final String? countryCode = locale.countryCode;
     late String fullLocalName;
     if (countryCode == null) {
       fullLocalName = languageCode;
     } else {
       fullLocalName = "${languageCode}_$countryCode";
     }
-
     currentLocal = fullLocalName;
+
     if (_lookupMessagesMap[currentLocal] == null) {
       if (languageCode == "en") {
         return EnLanguage();
       }
+      // for (final lang in _lookupMessagesMap.entries) {
+      //   final x = lang.key.split("_")[0];
+      //   print(currentLocal +"  " + x);
+      //   if(x == currentLocal){
+      //     return _lookupMessagesMap[lang.key]!;
+      //   }
+      // }
       Helpers.vlog(
           "failed to find the language $currentLocal in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
       return EnLanguage();

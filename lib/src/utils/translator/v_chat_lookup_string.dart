@@ -10,9 +10,9 @@ abstract class VChatLookupString {
 
   String muteNotification();
 
-  String openChat();
+  String unBlockUser();
 
-  String closeChat();
+  String blockUser();
 
   String areYouSure();
 

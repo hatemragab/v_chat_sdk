@@ -13,6 +13,7 @@ class CustomDio {
   CustomDio() {
     dio = Dio();
     dio.options.baseUrl = baseUrl;
+    dio.options.followRedirects = false;
     dio.options.validateStatus = (_) => true;
     dio.options.headers = {
       'authorization': GetStorage().read("myModel") == null

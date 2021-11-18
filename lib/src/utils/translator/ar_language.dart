@@ -20,7 +20,7 @@ class ArLanguage implements VChatLookupString {
   String chatHasBeenClosedByMe() => "تم انهاء المحادثه من خلالي";
 
   @override
-  String closeChat() => "انهاء المحادثه";
+  String blockUser() => "حظر المستخدم";
 
   @override
   String connecting() => "جاري الاتصال";
@@ -60,7 +60,7 @@ class ArLanguage implements VChatLookupString {
   String oK() => "تم";
 
   @override
-  String openChat() => "افتح المحادثه";
+  String unBlockUser() => "الغاء حظر المستخدم";
 
   @override
   String photo() => "صوره";
