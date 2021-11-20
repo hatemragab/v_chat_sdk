@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.4
+  flutter_bloc: ^8.0.0
   textless: ^6.6.6
   get: ^4.3.8
   dio: ^4.0.3
