@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.20.1"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.2.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -78,13 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
-  chewie:
+  chat_composer:
     dependency: transitive
     description:
-      name: chewie
+      name: chat_composer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.2"
+    version: "0.0.1"
   clock:
     dependency: transitive
     description:
@@ -126,7 +133,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   dbus:
     dependency: transitive
     description:
@@ -216,6 +223,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_audio_recorder2:
+    dependency: transitive
+    description:
+      name: flutter_audio_recorder2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
+  flutter_bloc:
+    dependency: transitive
+    description:
+      name: flutter_bloc
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.3.3"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -250,7 +271,7 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.1.2"
+    version: "9.1.3"
   flutter_local_notifications_linux:
     dependency: transitive
     description:
@@ -343,6 +364,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: transitive
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.0.8"
+  gesture_x_detector:
+    dependency: transitive
+    description:
+      name: gesture_x_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   get:
     dependency: transitive
     description:
@@ -364,6 +399,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  helpers:
+    dependency: transitive
+    description:
+      name: helpers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.4"
   html:
     dependency: transitive
     description:
@@ -594,7 +636,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.1"
   record:
     dependency: transitive
     description:
@@ -634,7 +676,7 @@ packages:
       name: socket_io_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   socket_io_common:
     dependency: transitive
     description:
@@ -753,7 +795,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.2.5"
+    version: "0.3.0"
   vector_math:
     dependency: transitive
     description:
@@ -789,6 +831,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.3"
+  video_viewer:
+    dependency: transitive
+    description:
+      name: video_viewer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.7"
+  volume_watcher:
+    dependency: transitive
+    description:
+      name: volume_watcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   wakelock:
     dependency: transitive
     description:

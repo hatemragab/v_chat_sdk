@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:getx_translate_example/app/modules/home/bindings/home_binding.dart';
-import 'package:getx_translate_example/app/modules/home/views/home_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
 
 part 'app_routes.dart';
 

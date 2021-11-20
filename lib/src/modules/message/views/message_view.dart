@@ -1,3 +1,4 @@
+import 'package:chat_composer/chat_composer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -107,6 +108,16 @@ class _MessageViewState extends State<MessageView> {
                 }
 
                 final res = controller.isRecordWidgetEnable.value;
+                // return ChatComposer(
+                //   maxRecordLength: const Duration(minutes: 15),
+                //   onReceiveText: (str) {
+                //     print('TEXT : ' + str!);
+                //   },
+                //   onRecordEnd: (path) {
+                //     print('AUDIO PATH : ' + path!);
+                //   },
+                //   actions: const [Icon(Icons.attach_file)],
+                // );
                 if (res) {
                   return const MessageRecordView();
                 } else {

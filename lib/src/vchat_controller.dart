@@ -8,6 +8,7 @@ import 'package:v_chat_sdk/src/utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import 'package:v_chat_sdk/src/utils/theme/v_chat_dark_theme.dart';
 import 'package:v_chat_sdk/src/utils/theme/v_chat_light_theme.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_theme.dart';
 import 'package:v_chat_sdk/src/utils/translator/v_chat_lookup_string.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
@@ -55,6 +56,7 @@ class VChatController {
     required bool isUseFirebase,
     ThemeData? lightTheme,
     ThemeData? darkTheme,
+    VChatTheme?vChatTheme,
     required bool enableLogger,
     required GlobalKey<NavigatorState> navigatorKey,
     int maxMediaUploadSize = 50 * 1000 * 1000,
@@ -63,9 +65,12 @@ class VChatController {
     await Get.putAsync(() => LocalStorageService().init());
     final controller = VChatAppService.to;
     controller.dark = darkTheme;
+    controller.vChatTheme = vChatTheme;
     controller.light = lightTheme;
     if (darkTheme == null) {
-      controller.dark = vChatDarkTheme;
+      controller.dark = vChatDarkTheme.copyWith(
+
+      );
     }
     if (lightTheme == null) {
       controller.light = vChatLightTheme;

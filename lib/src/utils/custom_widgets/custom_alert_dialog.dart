@@ -135,11 +135,12 @@ class CustomAlert {
     );
   }
 
-  static Future<int?> customAskDialog(
-      {String? title,
-      required BuildContext context,
-      required String message,
-      bool dismissible = true}) async {
+  static Future<int?> customAskDialog({
+    String? title,
+    required BuildContext context,
+    required String message,
+    bool dismissible = true,
+  }) async {
     return await showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {

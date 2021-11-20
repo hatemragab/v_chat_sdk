@@ -1,4 +1,3 @@
-import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';

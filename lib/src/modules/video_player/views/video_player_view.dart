@@ -1,7 +1,6 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-
 import 'package:video_player/video_player.dart' as vd;
+import 'package:video_viewer/video_viewer.dart';
 
 class VideoPlayerView extends StatefulWidget {
   final String url;
@@ -14,45 +13,48 @@ class VideoPlayerView extends StatefulWidget {
 
 class _VideoPlayerViewState extends State<VideoPlayerView> {
   late vd.VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    initPlayer();
+  //  initPlayer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : SafeArea(
-                child: Stack(
-                  children: [
-                    Chewie(
-                      controller: chewieController,
-                    ),
-                    Positioned(
-                        top: 20,
-                        left: 10,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                            size: 33,
-                          ),
-                        )),
-                  ],
-                ),
-              ));
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.center,
+          fit: StackFit.expand,
+          children: [
+            VideoViewer(
+              autoPlay: true,
+              source: {
+                "SubRip Text": VideoSource(
+                  video: vd.VideoPlayerController.network(widget.url),
+                )
+              },
+            ),
+            Positioned(
+                top: 20,
+                left: 10,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 33,
+                  ),
+                )),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -64,14 +66,7 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
   void initPlayer() async {
     videoPlayerController = vd.VideoPlayerController.network(widget.url);
     await videoPlayerController.initialize();
-    chewieController = ChewieController(
-      videoPlayerController: videoPlayerController,
-      autoPlay: true,
-      looping: true,
-      allowedScreenSleep: false,
-      aspectRatio: videoPlayerController.value.aspectRatio,
-      fullScreenByDefault: false,
-    );
+
     isLoading = false;
     setState(() {});
   }

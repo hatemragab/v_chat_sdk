@@ -18,7 +18,7 @@ class ConnectionChecker extends GetView {
         return RoundedContainer(
           color: Colors.redAccent,
           borderRadius: BorderRadius.circular(10),
-          padding: const EdgeInsets.all(5),
+          padding: const EdgeInsets.all(8),
           child: (VChatAppService.to.getTrans().connecting() + " ...")
               .text
               .alignCenter

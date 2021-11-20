@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk/src/modules/message/bindings/message_binding.dart';
@@ -137,5 +138,6 @@ class NotificationService extends GetxService {
       duration: const Duration(seconds: 5),
       subTitle: msg.toString(),
     );
+    HapticFeedback.mediumImpact();
   }
 }

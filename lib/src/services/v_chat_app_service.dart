@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_theme.dart';
 import 'package:v_chat_sdk/src/utils/translator/en_language.dart';
 import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
@@ -24,6 +25,7 @@ class VChatAppService extends GetxService {
   ThemeData? light;
   ThemeData? dark;
   GlobalKey<NavigatorState>? navKey;
+  VChatTheme? vChatTheme;
 
   late String appName;
 

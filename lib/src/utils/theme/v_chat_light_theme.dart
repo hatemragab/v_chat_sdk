@@ -52,16 +52,17 @@ final vChatLightTheme = ThemeData(
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        )),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        modalBackgroundColor: Colors.white,
-        modalElevation: 0),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20.0),
+        topRight: Radius.circular(20.0),
+      )),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      backgroundColor: Colors.white,
+      elevation: 0,
+      modalBackgroundColor: Colors.white,
+      modalElevation: 0,
+    ),
     cupertinoOverrideTheme: const CupertinoThemeData(
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
