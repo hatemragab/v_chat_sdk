@@ -1,7 +1,9 @@
 # V_Chat_SDK Micro service
 
 ## Check Our Full documention 
-<a href="https://hatemragab.github.io/VChatSdk-Documentation/"> VCHAT DOCS</a>  <br />
+<a href="https://hatemragab.github.io/VChatSdk-Documentation/"> VCHAT Documention</a>  <br />
+<a href="https://pub.dev/packages/v_chat_sdk"> v_chat_sdk on pub.dev</a>  <br />
+<a href="https://www.mediafire.com/file/qv3duysbs44wrk1/app-release.apk/file"> try apk</a> <br />
 
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
