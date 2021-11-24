@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+
+import '../utils/helpers/helpers.dart';
 import 'tables/message_table.dart';
 import 'tables/room_table.dart';
 

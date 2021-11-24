@@ -8,11 +8,17 @@ import '../sqlite/tables/message_table.dart';
 import '../sqlite/tables/room_table.dart';
 
 class LocalStorageService extends GetxService {
+  LocalStorageService._privateConstructor();
+
+  static final LocalStorageService _instance =
+      LocalStorageService._privateConstructor();
+
+  static LocalStorageService get to => _instance;
+
   late Database database;
 
-  Future<LocalStorageService> init() async {
+  Future<void> init() async {
     database = await DBProvider.db.database;
-    return this;
   }
 
   Future<List<VChatRoom>> getRooms() async {

@@ -8,7 +8,7 @@ class ImageViewerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isRtl = Directionality.of(context).index == 0;
+  final    isRtl = Directionality.of(context).index == 0;
     return SafeArea(
       child: Stack(
         fit: StackFit.expand,

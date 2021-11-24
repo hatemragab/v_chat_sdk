@@ -21,7 +21,7 @@ import 'helpers/dir_helper.dart';
 
 class FileUtils {
   static Future newDownloadFile(
-      BuildContext context, VchatMessageAttachment attachment) async {
+      BuildContext context, VChatMessageAttachment attachment) async {
     try {
       await _requestStoragePermission(context);
       final downloadFile = await DirHelper.downloadPath();
@@ -49,7 +49,7 @@ class FileUtils {
       }
     } catch (err) {
       CustomAlert.customAlertDialog(
-          context: context, errorMessage: err.toString());
+            errorMessage: err.toString());
       rethrow;
     }
   }
@@ -143,7 +143,7 @@ class FileUtils {
     final c = Completer();
     if (!(await Permission.storage.isGranted)) {
       CustomAlert.customAlertDialog(
-          context: context,
+
           errorMessage:
               "App Need this permission to save downloaded files in device storage /download/${VChatAppService.to.appName}}/",
           dismissible: false,

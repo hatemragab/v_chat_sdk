@@ -1,10 +1,11 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:example/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
+
+import './screens/splash_screen.dart';
 import 'controllers/language_controller.dart';
 import 'generated/l10n.dart';
 
@@ -19,12 +20,6 @@ void main() async {
     appName: "test_v_chat",
     isUseFirebase: true,
     vChatTheme: VChatTheme.light(),
-    lightTheme: vChatLightTheme.copyWith(
-        //your custom theme
-        ),
-    darkTheme: vChatDarkTheme.copyWith(
-        //your custom theme
-        ),
     enableLogger: true,
     navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,

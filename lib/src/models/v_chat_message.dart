@@ -8,7 +8,7 @@ import 'v_chat_message_attachment.dart';
 class VChatMessage {
   final int id;
   final MessageType messageType;
-  final VchatMessageAttachment? messageAttachment;
+  final VChatMessageAttachment? messageAttachment;
   final int createdAt;
   final int updatedAt;
   final String content;
@@ -37,7 +37,7 @@ class VChatMessage {
   VChatMessage copyWith({
     int? id,
     MessageType? messageType,
-    VchatMessageAttachment? messageAttachment,
+    VChatMessageAttachment? messageAttachment,
     int? createdAt,
     int? updatedAt,
     String? content,
@@ -105,7 +105,7 @@ class VChatMessage {
       messageType: messageType.enumType(map['messageType']),
       messageAttachment: map['messageAttachment'] == null
           ? null
-          : VchatMessageAttachment.fromMap(map['messageAttachment']),
+          : VChatMessageAttachment.fromMap(map['messageAttachment']),
       createdAt: createdAtLocal.millisecondsSinceEpoch,
       createdAtString: DateFormat.jm().format(createdAtLocal),
       updatedAt: updatedAtLocal.millisecondsSinceEpoch,

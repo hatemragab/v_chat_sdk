@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+
+import '../../services/v_chat_app_service.dart';
 
 class DirHelper {
+  DirHelper._();
   static Future<String> downloadPath() async {
     if (Platform.isAndroid) {
       final path1 = join(

@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_theme.dart';
-import 'package:v_chat_sdk/src/utils/translator/en_language.dart';
-import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
 import '../utils/get_storage_keys.dart';
+import '../utils/helpers/helpers.dart';
+import '../utils/theme/theme.dart';
+import '../utils/translator/en_language.dart';
+import '../utils/translator/v_chat_lookup_string.dart';
 
-class VChatAppService extends GetxService {
-  static final VChatAppService to = Get.find();
+class VChatAppService {
+  VChatAppService._privateConstructor();
+
+  static final VChatAppService _instance =
+      VChatAppService._privateConstructor();
+
+  static VChatAppService get to => _instance;
 
   VChatUser? vChatUser;
   Map<String, String>? trans;
@@ -41,7 +46,7 @@ class VChatAppService extends GetxService {
     context ??= navKey!.currentContext;
 
     /// languageCode is EN or AR etc...
-    Locale locale = Localizations.localeOf(context!);
+    var locale = Localizations.localeOf(context!);
 
     ///check if user us getx or flutter localization
     if (Get.locale != null) {
@@ -96,7 +101,7 @@ class VChatAppService extends GetxService {
     await GetStorage.init();
 
     final String? userJson =
-        await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
+    await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
     if (userJson != null) {
       vChatUser = VChatUser.fromMap(jsonDecode(userJson));
     } else {

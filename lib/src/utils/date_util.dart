@@ -1,7 +1,9 @@
 import 'package:intl/intl.dart';
-import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import '../services/v_chat_app_service.dart';
+
 
 class UtilDates {
+  UtilDates._();
   static const int oneDayInMilliseconds = 86400000;
 
   static final daysOfWeek = [

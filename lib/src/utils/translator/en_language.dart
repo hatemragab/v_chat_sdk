@@ -1,4 +1,6 @@
-import '../../../v_chat_sdk.dart';
+
+
+import 'v_chat_lookup_string.dart';
 
 class EnLanguage implements VChatLookupString {
   @override
@@ -122,4 +124,10 @@ class EnLanguage implements VChatLookupString {
 
   @override
   String yourMessage() => "your message ";
+
+  @override
+  String loadMoreFiled() =>"filed";
+
+  @override
+  String loadingMore() =>"loading";
 }

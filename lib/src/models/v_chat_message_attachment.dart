@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
 
-class VchatMessageAttachment {
+
+class VChatMessageAttachment {
   CancelToken? cancelToken;
 
   final String? imageUrl;
@@ -16,15 +16,15 @@ class VchatMessageAttachment {
   final String? linkDescription;
   final String? linkDataUrl;
 
-  final RxString progress = "0 %".obs;
-  final Rx<Duration> maxDuration = const Duration(milliseconds: 1).obs;
-
-  final Rx<Duration> currentPlayPosition = Duration.zero.obs;
-  final RxBool isVoicePlying = false.obs;
+  // final RxString progress = "0 %".obs;
+  // final Rx<Duration> maxDuration = const Duration(milliseconds: 1).obs;
+  //
+  // final Rx<Duration> currentPlayPosition = Duration.zero.obs;
+  // final RxBool isVoicePlying = false.obs;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
-  VchatMessageAttachment({
+  VChatMessageAttachment({
     this.imageUrl,
     this.cancelToken,
     this.playUrl,
@@ -39,7 +39,7 @@ class VchatMessageAttachment {
     this.linkDataUrl,
   });
 
-  VchatMessageAttachment copyWith({
+  VChatMessageAttachment copyWith({
     String? imageUrl,
     String? playUrl,
     String? fileSize,
@@ -52,7 +52,7 @@ class VchatMessageAttachment {
     String? linkDescription,
     String? linkDataUrl,
   }) {
-    return VchatMessageAttachment(
+    return VChatMessageAttachment(
       imageUrl: imageUrl ?? this.imageUrl,
       playUrl: playUrl ?? this.playUrl,
       fileSize: fileSize ?? this.fileSize,
@@ -67,13 +67,14 @@ class VchatMessageAttachment {
     );
   }
 
+
   @override
   String toString() {
-    return 'MessageAttachment{cancelToken: $cancelToken, imageUrl: $imageUrl, playUrl: $playUrl, fileSize: $fileSize, fileDuration: $fileDuration, width: $width, height: $height, lat: $lat, lang: $lang, linkTitle: $linkTitle, linkDescription: $linkDescription, linkDataUrl: $linkDataUrl, progress: $progress, maxDuration: $maxDuration, currentPlayPosition: $currentPlayPosition, isVoicePlying: $isVoicePlying}';
+    return 'VChatMessageAttachment{cancelToken: $cancelToken, imageUrl: $imageUrl, playUrl: $playUrl, fileSize: $fileSize, fileDuration: $fileDuration, width: $width, height: $height, lat: $lat, lang: $lang, linkTitle: $linkTitle, linkDescription: $linkDescription, linkDataUrl: $linkDataUrl}';
   }
 
-  factory VchatMessageAttachment.fromMap(Map<String, dynamic> map) {
-    return VchatMessageAttachment(
+  factory VChatMessageAttachment.fromMap(Map<String, dynamic> map) {
+    return VChatMessageAttachment(
       imageUrl: map['imageUrl'] as String?,
       playUrl: map['playUrl'] as String?,
       fileSize: map['fileSize'] as String?,

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../enums/socket_state_type.dart';
@@ -12,12 +12,24 @@ import '../utils/custom_widgets/custom_alert_dialog.dart';
 import 'socket_controller.dart';
 import 'v_chat_app_service.dart';
 
-class SocketService extends GetxController {
-  final VChatAppService _appService = VChatAppService.to;
-  final SocketController _socketController = Get.find<SocketController>();
+class SocketService {
+  SocketService._privateConstructor();
+
+  static final SocketService _instance = SocketService._privateConstructor();
+
+  static SocketService get to => _instance;
+
+  ValueNotifier<SocketStateType> socketStateValue =
+      ValueNotifier(SocketStateType.connecting);
+
+  void init(SocketController _socketController) {
+    this._socketController = _socketController;
+    connectSocket();
+  }
+
+  late   SocketController _socketController;
 
   late Socket _socket;
-  final socketState = SocketStateType.connecting.obs;
 
   bool get isConnected => _socket.connected;
 
@@ -28,22 +40,10 @@ class SocketService extends GetxController {
       'connectTimeout': 5000,
       'pingInterval': 5000,
       'extraHeaders': <String, String>{
-        'Authorization': _appService.vChatUser!.accessToken
+        'Authorization': VChatAppService.to.vChatUser!.accessToken
       },
       'forceNew': true
     });
-  }
-
-  @override
-  void onClose() {
-    _socket.disconnect();
-    super.onClose();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    connectSocket();
   }
 
   void emitRefreshChats() {
@@ -54,12 +54,12 @@ class SocketService extends GetxController {
     bool isErrorAlertShown = false;
     _socket = getSocket();
     _socket.onConnect((data) {
-      socketState.value = SocketStateType.connected;
+      socketStateValue.value = SocketStateType.connected;
       // _log.debug("socket connected successful");
       initSockedEvents();
     });
     _socket.onDisconnect((data) {
-      socketState.value = SocketStateType.connecting;
+      socketStateValue.value = SocketStateType.connecting;
       //  _log.debug("socket disconnected because $data");
     });
     _socket.onReconnecting((data) {
@@ -74,6 +74,10 @@ class SocketService extends GetxController {
         CustomAlert.error(msg: data.toString());
       }
     });
+  }
+  void destroy(){
+    _socket.disconnect();
+    _socket.destroy();
   }
 
   void initSockedEvents() async {

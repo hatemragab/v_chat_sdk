@@ -1,8 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+
+import '../../services/v_chat_app_service.dart';
 
 class CustomAlert {
   static void done({String? msg}) {
@@ -24,7 +25,7 @@ class CustomAlert {
   }
 
   static void customAlertDialog(
-      {required BuildContext context,
+      {
       String? title,
       Function()? onPress,
       required String errorMessage,
