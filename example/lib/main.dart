@@ -19,7 +19,6 @@ void main() async {
     baseUrl: Uri.parse("http://170.178.195.150:81"),
     appName: "test_v_chat",
     isUseFirebase: true,
-    vChatTheme: VChatTheme.light(),
     enableLogger: true,
     navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,

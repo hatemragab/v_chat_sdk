@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:vibration/vibration.dart';
 
 import '../modules/message/views/message_view.dart';
 import '../modules/rooms/cubit/room_cubit.dart';
@@ -16,9 +14,22 @@ class NotificationService {
   NotificationService._privateConstructor();
 
   static final NotificationService _instance =
-      NotificationService._privateConstructor();
+  NotificationService._privateConstructor();
 
   static NotificationService get to => _instance;
+  final androidNotificationDetails = const AndroidNotificationDetails(
+    "v_chat_channel",
+    "v_chat_channel",
+    icon: "@mipmap/ic_launcher",
+    enableVibration: true,
+    importance: Importance.max,
+    playSound: true,
+    priority: Priority.max,
+  );
+  final iosNotificationDetails = const IOSNotificationDetails(
+      presentBadge: true,
+      presentSound: true
+  );
 
   void init() async {
     if (VChatAppService.to.isUseFirebase) {
@@ -27,9 +38,8 @@ class NotificationService {
   }
 
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
 
-  // final _roomController = Get.find<RoomController>();
 
   void cancelAll() {
     flutterLocalNotificationsPlugin.cancelAll();
@@ -41,6 +51,7 @@ class NotificationService {
     importance: Importance.max,
     playSound: true,
     enableVibration: true,
+
     showBadge: true,
   );
 
@@ -69,7 +80,7 @@ class NotificationService {
       badge: true,
       sound: true,
     );
-    FirebaseMessaging.onMessageOpenedApp.listen(( message) async {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
       if (message.notification != null) {
         final roomId = int.parse(message.data['roomId'].toString());
         try {
@@ -79,9 +90,10 @@ class NotificationService {
 
             Navigator.of(VChatAppService.to.navKey!.currentContext!)
                 .push(MaterialPageRoute(
-                    builder: (_) => MessageView(
-                          roomId: roomId,
-                        )));
+                builder: (_) =>
+                    MessageView(
+                      roomId: roomId,
+                    )));
           }
         } catch (err) {
           Helpers.vlog(err.toString());
@@ -91,7 +103,7 @@ class NotificationService {
     });
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     messaging.onTokenRefresh.listen((event) async {
@@ -106,14 +118,16 @@ class NotificationService {
         if (!RoomCubit.instance
             .isRoomOpen(int.parse(message.data['roomId'].toString()))) {
           showNotification(
-              title: "${message.notification!.title}",
-              msg: message.notification!.body.toString(),
-              roomId: int.parse(message.data['roomId'].toString()));
+            title: "${message.notification!.title}",
+            msg: message.notification!.body.toString(),
+            hashCode: message.hashCode,
+            roomId:message.data['roomId'].toString()
+          );
         }
       }
     });
 
-    messaging.getInitialMessage().then(( message) async {
+    messaging.getInitialMessage().then((message) async {
       if (message != null) {
         try {
           final roomId = int.parse(message.data['roomId'].toString());
@@ -123,43 +137,64 @@ class NotificationService {
 
           Navigator.of(VChatAppService.to.navKey!.currentContext!)
               .push(MaterialPageRoute(
-                  builder: (_) => MessageView(
-                        roomId: roomId,
-                      )));
+              builder: (_) =>
+                  MessageView(
+                    roomId: roomId,
+                  )));
         } catch (err) {
           Helpers.vlog(err.toString());
           //
         }
       }
     });
+
     flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  static void showNotification(
-      {required String title, required String msg, required int roomId}) {
-    BotToast.showSimpleNotification(
-      title: title.toString(),
-      onTap: () {
-        if (!RoomCubit.instance.isRoomOpen(roomId)) {
-          RoomCubit.instance.currentRoomId = roomId;
-
-          Navigator.of(VChatAppService.to.navKey!.currentContext!)
-              .push(MaterialPageRoute(
-                  builder: (_) => MessageView(
-                        roomId: roomId,
-                      )));
-        }
-        BotToast.cleanAll();
-      },
-      duration: const Duration(seconds: 5),
-      subTitle: msg.toString(),
+  void showNotification(
+      {required String title, required String msg, required int hashCode,required String roomId}) {
+    final androidNotificationDetails =   AndroidNotificationDetails(
+      "v_chat_channel",
+      "v_chat_channel",
+      icon: "@mipmap/ic_launcher",
+      enableVibration: true,
+      importance: Importance.max,
+      playSound: true,
+      tag
+      :roomId,
+      priority: Priority.max,
     );
-    try {
-      Vibration.vibrate(
+    unawaited(
+      flutterLocalNotificationsPlugin.show(
+        hashCode,
+        title,
+        msg,
+        NotificationDetails(
+            android: androidNotificationDetails, iOS: iosNotificationDetails),
 
-      );
-    } catch (err) {
-      //
-    }
+      ),
+    );
+
+    // flutterLocalNotificationsPlugin.cancel(roomId);
+
+    // BotToast.showSimpleNotification(
+    //   title: title.toString(),
+    //   onTap: () {
+    //     if (!RoomCubit.instance.isRoomOpen(roomId)) {
+    //       RoomCubit.instance.currentRoomId = roomId;
+    //
+    //       Navigator.of(VChatAppService.to.navKey!.currentContext!)
+    //           .push(MaterialPageRoute(
+    //               builder: (_) => MessageView(
+    //                     roomId: roomId,
+    //                   )));
+    //     }
+    //     BotToast.cleanAll();
+    //   },
+    //   duration: const Duration(seconds: 5),
+    //   subTitle: msg.toString(),
+    // );
   }
+
+
 }

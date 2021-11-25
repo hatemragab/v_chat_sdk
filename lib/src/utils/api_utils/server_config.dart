@@ -1,6 +1,7 @@
 import '../../services/v_chat_app_service.dart';
 
 class ServerConfig {
+  ServerConfig._();
   /// if you found bug contact me whats app +0201012309598
   /// note !!!!!!!!!!!!!!!!!!!!
   /// 10.0.2.2 only works for emulator if u run on real device you should get your ipv4 from terminal

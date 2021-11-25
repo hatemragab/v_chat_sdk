@@ -3,21 +3,12 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:textless/textless.dart';
-import 'package:v_chat_sdk/src/utils/api_utils/dio/v_chat_sdk_exception.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_dark_theme.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_light_theme.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_theme.dart';
-import 'package:v_chat_sdk/src/utils/translator/v_chat_lookup_string.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
 import 'models/v_chat_room.dart';
 import 'models/v_chat_user.dart';
-
 import 'modules/message/views/message_view.dart';
-
 import 'modules/rooms/cubit/room_cubit.dart';
 import 'services/auth_provider.dart';
 import 'services/local_storage_service.dart';
@@ -25,12 +16,19 @@ import 'services/notification_service.dart';
 import 'services/socket_controller.dart';
 import 'services/socket_service.dart';
 import 'services/v_chat_app_service.dart';
-import 'sqlite/db_provider.dart';
-import 'utils/get_storage_keys.dart';
-
 import 'services/vchat_provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'sqlite/db_provider.dart';
+import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
+import 'utils/custom_widgets/create_single_chat_dialog.dart';
+import 'utils/storage_keys.dart';
+import 'utils/helpers/helpers.dart';
+import 'utils/theme/v_chat_dark_theme.dart';
+import 'utils/theme/v_chat_light_theme.dart';
+import 'utils/theme/v_chat_theme.dart';
+import 'utils/translator/v_chat_lookup_string.dart';
 
+///this is the controller of vchat
+///which create the chat or customize the design
 class VChatController {
   VChatController._privateConstructor();
 
@@ -110,9 +108,6 @@ class VChatController {
     }
   }
 
-
-
-
   /// **throw** No internet connection
   Future<String> stopAllNotification() async {
     if (VChatAppService.to.isUseFirebase) {
@@ -153,36 +148,6 @@ class VChatController {
         oldPassword: oldPassword, newPassword: newPassword);
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /// when you call this function the user will be online and can receive notification
   /// first you have to login or register in v chat other wise will throw Exception
   void bindChatControllers() {
@@ -220,45 +185,33 @@ class VChatController {
     String? titleTxt,
     String? createBtnTxt,
   }) async {
-    String txt = "";
     final data = await _vChatControllerProvider.createSingleChat(peerEmail);
 
     if (data == false) {
-      //no rooms founded
-      return await showDialog(
+      /// No rooms founded
+      /// create new Room
+      final res = await showDialog<String>(
         context: ctx ?? VChatAppService.to.navKey!.currentContext!,
         builder: (context) {
-          return AlertDialog(
-            title: titleTxt != null
-                ? titleTxt.text
-                : VChatAppService.to.getTrans().sayHello().text,
-            content: TextField(
-              onChanged: (value) {
-                txt = value;
-              },
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                    final data = await _vChatControllerProvider
-                        .createNewSingleRoom(txt, peerEmail);
-                    // room has been created successfully
-                    await Future.delayed(const Duration(seconds: 1));
-                    _navigateToRoomMessage(
-                      data,
-                      ctx ?? VChatAppService.to.navKey!.currentContext!,
-                    );
-                  },
-                  child: createBtnTxt != null
-                      ? createBtnTxt.text
-                      : VChatAppService.to.getTrans().create().text)
-            ],
+          return CreateSingleChatDialog(
+            createBtnTxt: createBtnTxt,
+            titleTxt: titleTxt,
           );
         },
       );
+      if (res != null && res.isNotEmpty) {
+        final data =
+            await _vChatControllerProvider.createNewSingleRoom(res, peerEmail);
+
+        /// room has been created successfully
+        await Future.delayed(const Duration(seconds: 1));
+        _navigateToRoomMessage(
+          data,
+          ctx ?? VChatAppService.to.navKey!.currentContext!,
+        );
+      }
     } else {
-      // there are room
+      /// there are room open the chat page
       return await _navigateToRoomMessage(
         data,
         ctx ?? VChatAppService.to.navKey!.currentContext!,

@@ -6,6 +6,7 @@ import '../../../services/v_chat_app_service.dart';
 import 'sheet_vertical_item.dart';
 
 class CustomVerticalSheetItem {
+  CustomVerticalSheetItem._();
   static Future<int?> normal(
       BuildContext context, final List<CustomSheetModel> items) async {
     return await showCupertinoModalPopup<int?>(

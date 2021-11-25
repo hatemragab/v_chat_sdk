@@ -6,6 +6,7 @@ import 'package:textless/textless.dart';
 import '../../services/v_chat_app_service.dart';
 
 class CustomAlert {
+  CustomAlert._();
   static void done({String? msg}) {
     BotToast.showSimpleNotification(
         title: VChatAppService.to.getTrans().success(),

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
-import '../utils/get_storage_keys.dart';
+import '../utils/storage_keys.dart';
 import '../utils/helpers/helpers.dart';
 import '../utils/theme/theme.dart';
 import '../utils/translator/en_language.dart';

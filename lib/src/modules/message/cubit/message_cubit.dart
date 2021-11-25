@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
+import 'package:v_chat_sdk/src/services/notification_service.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_typing_type.dart';
 import '../../../models/v_chat_message.dart';
@@ -43,6 +44,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       }
     });
     WidgetsBinding.instance!.addObserver(this);
+    NotificationService.to.cancelAll();
   }
 
   final textController = TextEditingController();
@@ -64,7 +66,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   ///lode more messages if top retched
   Future<bool> loadMoreMessages() async {
     try {
-      if (messages.isEmpty) {
+      if (messages.isEmpty||messages.length<19) {
         return true;
       }
       final loadedMessages = await _messageApiProvider.loadMoreMessages(
@@ -84,21 +86,21 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   ///Emit text message to server
-  void sendTextMessage(String message) async {
+  void sendTextMessage( ) async {
     try {
       if (!SocketService.to.isConnected) {
-        textController.text = message;
+
         throw "Not connected to server yet";
       }
       unawaited(CustomDio().send(reqMethod: "POST", path: "message", body: {
         "type": MessageType.text.inString,
         "roomId": roomId.toString(),
-        "content": message.toString()
+        "content":textController.text.toString()
       }));
 
       textController.clear();
     } catch (err) {
-      textController.text = message;
+      textController.text = textController.text;
       CustomAlert.error(msg: err.toString());
     }
   }

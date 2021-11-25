@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:v_chat_sdk/src/services/socket_service.dart';
 
 import '../../../../../services/v_chat_app_service.dart';
 import '../../../../../utils/api_utils/server_config.dart';
@@ -13,7 +14,7 @@ import 'attachment_picker_widget.dart';
 import 'message_filed.dart';
 
 class VChatMessageInput extends StatefulWidget {
-  final Function(String txt) onReceiveText;
+  final Function( ) onReceiveText;
   final Function(String path, String duration) onReceiveRecord;
 
   final Function(String path) onReceiveImage;
@@ -50,10 +51,13 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
       return MessageRecordView(
         onReceiveRecord: (path, duration) {
           widget.onReceiveRecord(path, duration);
-          setState(() {
-            isRecording = false;
-            isTyping = false;
-          });
+          if(SocketService.to.isConnected){
+            setState(() {
+              isRecording = false;
+              isTyping = false;
+            });
+          }
+
         },
         onCancel: () {
           setState(() {
@@ -127,8 +131,8 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
         isTyping
             ? InkWell(
                 onTap: () async {
-                  widget.onReceiveText(widget.controller.text);
-                  widget.controller.clear();
+                  widget.onReceiveText();
+
                   setState(() {
                     isTyping = false;
                   });

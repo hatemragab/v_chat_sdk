@@ -63,7 +63,7 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   Future<bool> loadMore() async {
-    if( rooms.isEmpty){
+    if( rooms.isEmpty || rooms.length<19){
       return true;
     }
    final loadedRooms = await _provider.loadMore(rooms.last.id);

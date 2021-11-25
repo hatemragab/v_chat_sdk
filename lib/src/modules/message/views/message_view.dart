@@ -170,8 +170,8 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                       messageController.emitTypingChange(0);
                       messageController.sendVoiceNote(path,duration);
                     },
-                    onReceiveText: (txt) {
-                      messageController.sendTextMessage(txt);
+                    onReceiveText: ( ) {
+                      messageController.sendTextMessage( );
 
                     },
                     onCancelRecord: () {

@@ -36,13 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  bot_toast:
-    dependency: "direct main"
-    description:
-      name: bot_toast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.1"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -756,20 +749,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  vibration:
-    dependency: "direct main"
-    description:
-      name: vibration
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.4-nullsafety.0"
-  vibration_web:
-    dependency: transitive
-    description:
-      name: vibration_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.3-nullsafety.0"
   video_player:
     dependency: "direct main"
     description:
