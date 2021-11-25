@@ -57,11 +57,6 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
     );
   }
 
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    super.dispose();
-  }
 
   void initPlayer() async {
     videoPlayerController = vd.VideoPlayerController.network(widget.url);

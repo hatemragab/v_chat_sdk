@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../enums/room_type.dart';
 import '../enums/room_typing_type.dart';
@@ -5,6 +6,7 @@ import 'group_chat_setting.dart';
 import 'v_chat_message.dart';
 import 'v_chat_room_typing.dart';
 
+@immutable
 class VChatRoom {
   final int id;
   final RoomType roomType;

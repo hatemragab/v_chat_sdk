@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import '../../enums/message_type.dart';
+import '../../services/v_chat_app_service.dart';
 
 class Helpers {
+  Helpers._();
   static String baseName(String path) {
     return basename(path);
   }

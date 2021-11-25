@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:example/models/user.dart';
-import 'package:example/utils/custom_alert.dart';
-import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
+import '../models/user.dart';
 import '../screens/home.dart';
+import '../utils/custom_alert.dart';
+import '../utils/custom_dio.dart';
 
 class RegisterController {
   BuildContext context;

@@ -1,5 +1,6 @@
-import 'package:v_chat_sdk/src/utils/theme/message_page_theme/message_page_theme.dart';
+
 import 'common/v_chat_dialog_theme.dart';
+import 'theme.dart';
 
 class VChatTheme {
   VChatDialogTheme? vChatDialogTheme;

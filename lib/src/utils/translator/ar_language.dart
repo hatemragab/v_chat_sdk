@@ -1,4 +1,6 @@
-import '../../../v_chat_sdk.dart';
+
+
+import 'v_chat_lookup_string.dart';
 
 class ArLanguage implements VChatLookupString {
   @override
@@ -121,4 +123,10 @@ class ArLanguage implements VChatLookupString {
 
   @override
   String yourMessage() => "اكتب رساله";
+
+  @override
+  String loadMoreFiled()=> "فشل";
+
+  @override
+  String loadingMore() =>"جاري التحميل";
 }

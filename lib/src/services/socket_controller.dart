@@ -1,27 +1,23 @@
 import 'dart:async';
 
-import 'package:get/get.dart';
-
 import '../models/v_chat_room.dart';
 import '../models/v_chat_room_typing.dart';
-import '../modules/room/controllers/rooms_controller.dart';
+import '../modules/rooms/cubit/room_cubit.dart';
 import 'local_storage_service.dart';
 import 'socket_service.dart';
 
-class SocketController extends GetxController {
-  final _roomController = Get.find<RoomController>();
+class SocketController {
+  // final _roomController = Get.find<RoomController>();
 
-  late SocketService _socketService;
+  late SocketService _socketService = SocketService.to;
 
-  @override
-  void onInit() {
-    super.onInit();
-    injectSocketService();
+  SocketController() {
+   // injectSocketService();
   }
 
   void injectSocketService() async {
     await Future.delayed(const Duration(milliseconds: 150));
-    _socketService = Get.find<SocketService>();
+    _socketService = SocketService.to;
   }
 
   void emitTypingChange(VChatRoomTyping roomTyping) {
@@ -29,20 +25,20 @@ class SocketController extends GetxController {
   }
 
   void handleOnAllRoomsEvent(List<VChatRoom> list) async {
-    await Get.find<LocalStorageService>().setRooms(list);
-    _roomController.getAllRoomsEvent(list);
+    unawaited(LocalStorageService.to.setRooms(list));
+    RoomCubit.instance.setSocketRooms(list);
   }
 
   void handleOnUpdateOneRoomEvent(VChatRoom room) async {
-    await Get.find<LocalStorageService>().setRoomOrUpdate(room);
-    _roomController.updateOneRoomInRamAndSort(room);
+    unawaited(LocalStorageService.to.setRoomOrUpdate(room));
+    RoomCubit.instance.updateOneRoomInRamAndSort(room);
   }
 
   void handleRoomOnlineChanged(int status, int roomId) {
-    _roomController.updateRoomOnlineChanged(status, roomId);
+    RoomCubit.instance.updateRoomOnlineChanged(status, roomId);
   }
 
   void handleRoomTypingChanged(VChatRoomTyping t) {
-    _roomController.updateRoomTypingChanged(t);
+    RoomCubit.instance.updateRoomTypingChanged(t);
   }
 }

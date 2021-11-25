@@ -15,12 +15,6 @@ void main() async {
     baseUrl: Uri.parse("http://170.178.195.150:81"),
     appName: "test_v_chat",
     isUseFirebase: false,
-    lightTheme: vChatLightTheme.copyWith(
-        //your custom theme
-        ),
-    darkTheme: vChatDarkTheme.copyWith(
-        //your custom theme
-        ),
     enableLogger: true,
     navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,

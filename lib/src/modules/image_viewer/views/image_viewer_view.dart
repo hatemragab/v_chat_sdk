@@ -8,7 +8,7 @@ class ImageViewerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isRtl = Directionality.of(context).index == 0;
+  final    isRtl = Directionality.of(context).index == 0;
     return SafeArea(
       child: Stack(
         fit: StackFit.expand,
@@ -19,7 +19,7 @@ class ImageViewerView extends StatelessWidget {
           isRtl
               ? Positioned(
                   top: 20,
-                  right: 10,
+                  right: 20,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -32,7 +32,8 @@ class ImageViewerView extends StatelessWidget {
                   ))
               : Positioned(
                   top: 20,
-                  left: 10,
+                  left: 20,
+
                   child: GestureDetector(
                     onTap: () {
                       Navigator.pop(context);

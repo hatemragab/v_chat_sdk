@@ -1,3 +1,5 @@
+
+
 /// implement this class to support new languages
 abstract class VChatLookupString {
   String test();
@@ -79,4 +81,8 @@ abstract class VChatLookupString {
   String offline();
 
   String yourMessage();
+
+  String loadingMore();
+
+  String loadMoreFiled();
 }
