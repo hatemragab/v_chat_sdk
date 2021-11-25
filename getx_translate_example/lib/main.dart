@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -32,8 +31,6 @@ void main() async {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       locale: Locale('ar'),
-      builder: BotToastInit(),
-      navigatorObservers: [BotToastNavigatorObserver()],
     ),
   );
 }

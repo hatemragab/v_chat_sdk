@@ -18,14 +18,14 @@ class CreateSingleChatDialog extends StatelessWidget {
         child: CupertinoAlertDialog(
           title: titleTxt != null
               ? titleTxt!.text
-              : VChatAppService.to.getTrans().sayHello().text,
+              : VChatAppService.instance.getTrans().sayHello().text,
           content: TextField(
             onChanged: (value) {
               txt = value;
             },
           ),
           actions: [
-            TextButton(onPressed: ()=>Navigator.pop(context), child: VChatAppService.to.getTrans().cancel().text.color(Colors.red)),
+            TextButton(onPressed: ()=>Navigator.pop(context), child: VChatAppService.instance.getTrans().cancel().text.color(Colors.red)),
             TextButton(
               onPressed: () async {
                 if (txt.isNotEmpty) {
@@ -34,7 +34,7 @@ class CreateSingleChatDialog extends StatelessWidget {
               },
               child: createBtnTxt != null
                   ? createBtnTxt!.text
-                  : VChatAppService.to.getTrans().create().text,
+                  : VChatAppService.instance.getTrans().create().text,
             ),
 
           ],
@@ -44,14 +44,14 @@ class CreateSingleChatDialog extends StatelessWidget {
     return AlertDialog(
       title: titleTxt != null
           ? titleTxt!.text
-          : VChatAppService.to.getTrans().sayHello().text,
+          : VChatAppService.instance.getTrans().sayHello().text,
       content: TextField(
         onChanged: (value) {
           txt = value;
         },
       ),
       actions: [
-        TextButton(onPressed: ()=>Navigator.pop(context), child: VChatAppService.to.getTrans().cancel().text.color(Colors.red)),
+        TextButton(onPressed: ()=>Navigator.pop(context), child: VChatAppService.instance.getTrans().cancel().text.color(Colors.red)),
         TextButton(
           onPressed: () async {
             if (txt.isNotEmpty) {
@@ -60,7 +60,7 @@ class CreateSingleChatDialog extends StatelessWidget {
           },
           child: createBtnTxt != null
               ? createBtnTxt!.text
-              : VChatAppService.to.getTrans().create().text,
+              : VChatAppService.instance.getTrans().create().text,
         ),
 
       ],

@@ -13,17 +13,17 @@ class AttachmentPickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    final t = VChatAppService.to.getTrans(ctx);
+    final t = VChatAppService.instance.getTrans(ctx);
     return CupertinoActionSheet(
       cancelButton: CupertinoActionSheetAction(
-        child: Text(VChatAppService.to.getTrans().cancel()),
+        child: Text(VChatAppService.instance.getTrans().cancel()),
         onPressed: () {
           return Navigator.pop(ctx);
         },
       ),
       actions: [
         CupertinoActionSheetAction(
-          child: Text(VChatAppService.to.getTrans().photo()),
+          child: Text(VChatAppService.instance.getTrans().photo()),
           onPressed: () async {
             final picker = ImagePicker();
             final pickedFile =

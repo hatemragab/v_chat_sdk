@@ -17,7 +17,7 @@ class MessageTextItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final t = VChatAppService.to.getTrans(context);
+    final t = VChatAppService.instance.getTrans(context);
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       decoration: BoxDecoration(

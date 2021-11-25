@@ -13,7 +13,7 @@ class CustomDio {
     dio.options.baseUrl = ServerConfig.serverBaseUrl;
     dio.options.validateStatus = (_) => true;
     dio.options.followRedirects = false;
-    final vChatController = VChatAppService.to;
+    final vChatController = VChatAppService.instance;
     dio.options.headers = {
       'authorization': vChatController.vChatUser != null
           ? vChatController.vChatUser!.accessToken.toString()

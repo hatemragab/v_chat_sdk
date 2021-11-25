@@ -12,7 +12,7 @@ class ConnectionChecker extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final SocketService _socket = SocketService.to;
+    final SocketService _socket = SocketService.instance;
     return ValueListenableBuilder<SocketStateType>(
       builder: (context, value, child) {
         if (value == SocketStateType.connecting) {
@@ -22,7 +22,7 @@ class ConnectionChecker extends GetView {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),
               padding: const EdgeInsets.all(5),
-              child: (VChatAppService.to.getTrans().connecting() + " ...")
+              child: (VChatAppService.instance.getTrans().connecting() + " ...")
                   .text
                   .alignCenter
                   .color(Colors.white),

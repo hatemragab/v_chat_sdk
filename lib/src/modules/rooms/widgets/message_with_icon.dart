@@ -10,7 +10,7 @@ import '../../../utils/custom_widgets/circle_image.dart';
 
 class MessageWithIcon extends StatelessWidget {
   final VChatRoom _room;
-  final _myModel = VChatAppService.to.vChatUser!;
+  final _myModel = VChatAppService.instance.vChatUser!;
 
   MessageWithIcon(this._room, {Key? key}) : super(key: key);
 
@@ -38,7 +38,7 @@ class MessageWithIcon extends StatelessWidget {
 
   Widget getMessageText(BuildContext context) {
     if (_room.lastMessage.senderId != _myModel.id) {
-      // i the receiver
+      /// i the receiver
       final _isMeSeen = _room.lastMessageSeenBy.contains(_myModel.id);
 
       if (_isMeSeen) {
@@ -54,10 +54,7 @@ class MessageWithIcon extends StatelessWidget {
               flex: 4,
               child: _room.lastMessage.content.h6
                   .maxLine(1)
-                  .size(16.5)
-                  .alignStart
-                  .overflowEllipsis
-                  .black,
+
             ),
             Flexible(
               flex: 1,
@@ -74,7 +71,7 @@ class MessageWithIcon extends StatelessWidget {
         );
       }
     } else {
-      // i the sender
+      /// i the sender
       final _isPeerSeen = _room.lastMessageSeenBy.length == 2;
       if (_room.roomType == RoomType.single && _isPeerSeen) {
         return Row(

@@ -1,26 +1,58 @@
-
-import 'common/v_chat_dialog_theme.dart';
-import 'theme.dart';
+import 'package:flutter/material.dart';
 
 class VChatTheme {
-  VChatDialogTheme? vChatDialogTheme;
-  VChatDialogTheme? vChatRoomsPageTheme;
-  VChatDialogTheme? vChatMessagePageTheme;
-  MessagePageTheme? messagePageTheme;
+  ///vChat Dialog Theme (loading,ask,info)
+  DialogTheme? vChatDialogTheme;
 
-  VChatTheme.light({
-    this.vChatDialogTheme,
-    this.vChatRoomsPageTheme,
-    this.vChatMessagePageTheme,
-    this.messagePageTheme,
-  }) {
-    vChatDialogTheme ??= VChatDialogTheme.light();
-  }
+  /// dialogs Button
+  ElevatedButtonThemeData? vChatButtonTheme;
 
-  VChatTheme.dark({
+  /// package primary color
+  Color? primaryColor;
+
+  /// notifications and camera icons
+  IconThemeData? iconTheme;
+
+  /// accentColor
+  Color? accentColor;
+
+  /// scaffold Background Color
+  Color? scaffoldBackgroundColor;
+
+  /// seen Message In Rooms
+  TextStyle? seenMessageInRooms;
+
+  /// message appbar
+  AppBarTheme? appBarTheme;
+
+  ///represent user name in rooms && un seen in rooms page
+  TextStyle? boldTitle;
+
+
+
+
+  ///represent small text information like video and file data in message page
+  TextStyle? cationStyle;
+
+  ///typing Or Recording In Rooms
+  TextStyle? typingOrRecordingInRooms;
+
+  /// typing Or Recording In MessageAppBar
+  TextStyle? typingOrRecordingInMessageAppBar;
+
+  VChatTheme({
     this.vChatDialogTheme,
-    this.vChatRoomsPageTheme,
-    this.vChatMessagePageTheme,
-    this.messagePageTheme,
+    this.vChatButtonTheme,
+    this.primaryColor,
+    this.iconTheme,
+    this.scaffoldBackgroundColor,
+    this.appBarTheme,
+    this.boldTitle,
+
+    this.seenMessageInRooms,
+
+    this.cationStyle,
+    this.typingOrRecordingInRooms,
+    this.typingOrRecordingInMessageAppBar,
   });
 }

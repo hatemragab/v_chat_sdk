@@ -12,24 +12,9 @@ final elevatedButtonThemeData = ElevatedButtonThemeData(
   ),
 );
 
-final outlinedButtonTheme = OutlinedButtonThemeData(
-  style: OutlinedButton.styleFrom(
-    elevation: 0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30),
-    ),
-    primary: Colors.red,
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-  ),
-);
-
-final textButtonTheme = TextButtonThemeData(
-    style: TextButton.styleFrom(
-  primary: Colors.blue,
-));
-
 final appBarTheme = AppBarTheme(
   elevation: 1,
+  centerTitle: true,
   shadowColor: Colors.white,
   titleTextStyle: GoogleFonts.nunito(
       color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800),
@@ -38,7 +23,7 @@ final appBarTheme = AppBarTheme(
 );
 
 /// Default v chat dark theme
-final vChatDarkTheme = ThemeData.dark().copyWith(
+final vChatConstDarkTheme = ThemeData.dark().copyWith(
     visualDensity: VisualDensity.adaptivePlatformDensity,
     primaryColor: Colors.black45,
     canvasColor: Colors.transparent,
@@ -64,35 +49,8 @@ final vChatDarkTheme = ThemeData.dark().copyWith(
         elevation: 0,
         modalBackgroundColor: Colors.black45,
         modalElevation: 0),
-    cupertinoOverrideTheme: const CupertinoThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black26,
-        primaryColor: Colors.red,
-        barBackgroundColor: Colors.black26,
-        textTheme: CupertinoTextThemeData(
-          textStyle: TextStyle(color: Colors.white, fontSize: 20),
-          primaryColor: Colors.red,
-          actionTextStyle: TextStyle(color: Colors.white),
-        )),
-    cardTheme: const CardTheme(elevation: 1.5, color: Colors.white),
-    errorColor: Colors.red,
-    textSelectionTheme: TextSelectionThemeData(
-        cursorColor: Colors.red,
-        selectionHandleColor: Colors.redAccent,
-        selectionColor: Colors.redAccent[100]),
     elevatedButtonTheme: elevatedButtonThemeData,
-    outlinedButtonTheme: outlinedButtonTheme,
-    textButtonTheme: textButtonTheme,
-    textTheme: GoogleFonts.nunitoTextTheme(
-            // Theme.of(Get.context!).textTheme,
-            )
-        .copyWith(
-      headline3: GoogleFonts.nunito(
-          fontWeight: FontWeight.w700, color: Colors.red, fontSize: 50),
-      headline4:
-          GoogleFonts.nunito(fontWeight: FontWeight.w700, color: Colors.red),
-      headline2:
-          GoogleFonts.nunito(fontWeight: FontWeight.w900, color: Colors.red),
+    textTheme: GoogleFonts.nunitoTextTheme().copyWith(
       headline6:
           GoogleFonts.nunito(fontWeight: FontWeight.w700, color: Colors.white),
       subtitle2: GoogleFonts.nunito(
@@ -115,11 +73,6 @@ final vChatDarkTheme = ThemeData.dark().copyWith(
       caption: GoogleFonts.nunito(
         color: Colors.white,
       ),
-      button: GoogleFonts.nunito(
-          height: 1.3,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-          color: Colors.white),
     ),
     backgroundColor: Colors.black,
     appBarTheme: appBarTheme,

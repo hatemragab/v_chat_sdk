@@ -8,7 +8,7 @@ class ServerConfig {
   /// type ipconfig then copy it like this format 192.168.1.*
 
   //192.168.1.3
-  static String serverIp = VChatAppService.to.baseUrl;
+  static late String serverIp ;
   static String serverBaseUrl = "$serverIp/api/v1/";
 
   static const useOneSingle = false;
@@ -22,5 +22,5 @@ class ServerConfig {
 
   static String messagesMediaBaseUrl = "${serverBaseUrl}public/messages/";
 
-  static int maxMessageFileSize = VChatAppService.to.maxMediaSize; // = 50 mb;
+  static  late int maxMessageFileSize ; // = 50 mb;
 }

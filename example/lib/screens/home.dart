@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               onPressed: () async {
+
                 final users = await _controller.getUsers();
                 _usersList.clear();
                 _usersList.addAll(users);

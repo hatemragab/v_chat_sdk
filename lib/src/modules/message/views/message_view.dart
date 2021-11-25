@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadmore/loadmore.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_extentions.dart';
 
 import '../../../enums/room_type.dart';
 import '../../../services/v_chat_app_service.dart';
@@ -21,10 +22,15 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MessageCubit()..getLocalMessages(roomId),
-      lazy: false,
-      child: const MessageViewScreen(),
+    return Theme(
+      data: context.isDark
+          ? VChatAppService.instance.darkTheme
+          : VChatAppService.instance.lightTheme,
+      child: BlocProvider(
+        create: (context) => MessageCubit()..getLocalMessages(roomId),
+        lazy: false,
+        child: const MessageViewScreen(),
+      ),
     );
   }
 }
@@ -38,12 +44,11 @@ class MessageViewScreen extends StatefulWidget {
 
 class _MessageViewScreenState extends State<MessageViewScreen> {
   final roomController = RoomCubit.instance;
-  final myId = VChatAppService.to.vChatUser!.id;
-
+  final myId = VChatAppService.instance.vChatUser!.id;
 
   @override
   Widget build(BuildContext context) {
-    final t = VChatAppService.to.getTrans(context);
+    final t = VChatAppService.instance.getTrans(context);
     final messageController = context.read<MessageCubit>();
 
     return Scaffold(
@@ -59,7 +64,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
             Expanded(
               child: BlocBuilder<MessageCubit, MessageState>(
                 builder: (context, state) {
-                  final v = VChatAppService.to.getTrans();
+                  final v = VChatAppService.instance.getTrans();
                   return Builder(
                     builder: (c) {
                       if (state is MessageLoaded) {
@@ -72,10 +77,10 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                                 case LoadMoreStatus.idle:
                                   return "";
                                 case LoadMoreStatus.loading:
-                                  return  v.loadingMore();
+                                  return v.loadingMore();
 
                                 case LoadMoreStatus.fail:
-                                  return  v.loadMoreFiled();
+                                  return v.loadMoreFiled();
 
                                 case LoadMoreStatus.nomore:
                                   return "";
@@ -168,11 +173,10 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                     controller: messageController.textController,
                     onReceiveRecord: (path, duration) {
                       messageController.emitTypingChange(0);
-                      messageController.sendVoiceNote(path,duration);
+                      messageController.sendVoiceNote(path, duration);
                     },
-                    onReceiveText: ( ) {
-                      messageController.sendTextMessage( );
-
+                    onReceiveText: () {
+                      messageController.sendTextMessage();
                     },
                     onCancelRecord: () {
                       messageController.emitTypingChange(0);
@@ -201,6 +205,4 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
       ),
     );
   }
-
-
 }

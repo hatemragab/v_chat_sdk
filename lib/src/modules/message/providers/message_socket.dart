@@ -11,7 +11,7 @@ import '../../../utils/api_utils/server_config.dart';
 class MessageSocket {
   late Socket _socket;
   final int currentRoomId;
-  final localStorageService = LocalStorageService.to;
+  final localStorageService = LocalStorageService.instance;
   final int myId;
   final Function(VChatMessage message) onNewMessage;
   final Function(List<VChatMessage> messages) onAllMessages;
@@ -59,7 +59,7 @@ class MessageSocket {
       'connectTimeout': 5000,
       'pingInterval': 5000,
       'extraHeaders': <String, String>{
-        'Authorization': VChatAppService.to.vChatUser!.accessToken
+        'Authorization': VChatAppService.instance.vChatUser!.accessToken
       },
       'forceNew': true
     });

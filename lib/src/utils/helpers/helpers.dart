@@ -11,7 +11,7 @@ class Helpers {
   }
 
   static void vlog(String err) {
-    if (VChatAppService.to.enableLog) {
+    if (VChatAppService.instance.enableLog) {
       printWarning("⚠️ V_CHAT_SDK SAY =>>> $err");
     }
   }

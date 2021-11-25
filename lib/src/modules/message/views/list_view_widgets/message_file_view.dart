@@ -10,7 +10,7 @@ import '../../../../utils/file_utils.dart';
 class MessageFileView extends StatelessWidget {
   final VChatMessage _message;
   final bool isSender;
-  final myId = VChatAppService.to.vChatUser!.id;
+  final myId = VChatAppService.instance.vChatUser!.id;
 
   MessageFileView(this._message, {Key? key, required this.isSender})
       : super(key: key);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme.dart';
 
-class VChatRoomsPageTheme {
+ class VChatRoomsPageTheme {
   double? avatarBorderRadiusSize;
   Widget? itemsSeparator;
   TextStyle? userName;

@@ -36,7 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.4
   v_chat_sdk:
     path: ../
-  bot_toast:
   provider: ^6.0.1
   cached_network_image:
   get_storage:

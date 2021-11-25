@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,6 +18,26 @@ void main() async {
     baseUrl: Uri.parse("http://170.178.195.150:81"),
     appName: "test_v_chat",
     isUseFirebase: true,
+
+    ///Edit Dark theme
+    vChatDarkTheme: VChatTheme(
+      vChatButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          ///button content padding
+          padding: EdgeInsets.all(8),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+
+          ///button background
+          primary: Colors.red,
+
+          ///button text color
+          onPrimary: Colors.white,
+        ),
+      ),
+        scaffoldBackgroundColor: Colors.blue
+    ),
+    vChatLightTheme: VChatTheme(),
     enableLogger: true,
     navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,
@@ -56,10 +75,6 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      //don't forget to init BotToastInit
-      builder: BotToastInit(),
-      //don't forget to init BotToastInit
-      navigatorObservers: [BotToastNavigatorObserver()],
       supportedLocales: S.delegate.supportedLocales,
       locale: context.read<LanguageController>().locale,
       home: const SplashScreen(),

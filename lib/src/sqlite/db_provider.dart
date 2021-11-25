@@ -8,7 +8,7 @@ import 'tables/room_table.dart';
 class DBProvider {
   DBProvider._();
 
-  static final DBProvider db = DBProvider._();
+  static final DBProvider instance = DBProvider._();
 
   static Database? _database;
 

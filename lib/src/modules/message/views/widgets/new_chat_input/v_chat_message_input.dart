@@ -51,7 +51,7 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
       return MessageRecordView(
         onReceiveRecord: (path, duration) {
           widget.onReceiveRecord(path, duration);
-          if(SocketService.to.isConnected){
+          if(SocketService.instance.isConnected){
             setState(() {
               isRecording = false;
               isTyping = false;
@@ -113,7 +113,7 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                 final pickedFile =
                     await picker.pickImage(source: ImageSource.camera);
                 if (pickedFile != null) {
-                  final t = VChatAppService.to.getTrans(context);
+                  final t = VChatAppService.instance.getTrans(context);
                   if (File(pickedFile.path).lengthSync() >
                       ServerConfig.maxMessageFileSize) {
                     File(pickedFile.path).deleteSync();

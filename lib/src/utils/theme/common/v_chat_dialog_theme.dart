@@ -19,7 +19,7 @@ class VChatDialogTheme {
     this.backgroundColor,
   });
 
-  VChatDialogTheme.light() {
+  VChatDialogTheme.dark() {
     titleStyle = const TextStyle(color: Colors.black, fontSize: 23);
     buttonTextStyle = const TextStyle(
         color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold);
@@ -30,7 +30,7 @@ class VChatDialogTheme {
     buttonColor = Colors.red;
   }
 
-  VChatDialogTheme.dark() {
+  VChatDialogTheme.light() {
     titleStyle = const TextStyle(color: Colors.white, fontSize: 23);
     buttonTextStyle = const TextStyle(
         color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);

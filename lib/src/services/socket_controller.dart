@@ -9,7 +9,7 @@ import 'socket_service.dart';
 class SocketController {
   // final _roomController = Get.find<RoomController>();
 
-  late SocketService _socketService = SocketService.to;
+  late SocketService _socketService = SocketService.instance;
 
   SocketController() {
    // injectSocketService();
@@ -17,7 +17,7 @@ class SocketController {
 
   void injectSocketService() async {
     await Future.delayed(const Duration(milliseconds: 150));
-    _socketService = SocketService.to;
+    _socketService = SocketService.instance;
   }
 
   void emitTypingChange(VChatRoomTyping roomTyping) {
@@ -25,12 +25,12 @@ class SocketController {
   }
 
   void handleOnAllRoomsEvent(List<VChatRoom> list) async {
-    unawaited(LocalStorageService.to.setRooms(list));
+    unawaited(LocalStorageService.instance.setRooms(list));
     RoomCubit.instance.setSocketRooms(list);
   }
 
   void handleOnUpdateOneRoomEvent(VChatRoom room) async {
-    unawaited(LocalStorageService.to.setRoomOrUpdate(room));
+    unawaited(LocalStorageService.instance.setRoomOrUpdate(room));
     RoomCubit.instance.updateOneRoomInRamAndSort(room);
   }
 

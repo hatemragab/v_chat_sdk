@@ -22,7 +22,7 @@ class RoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = VChatAppService.to.getTrans(context);
+    final t = VChatAppService.instance.getTrans(context);
     return InkWell(
       onTap: () {
         RoomCubit.instance.currentRoomId = _room.id;
@@ -37,7 +37,7 @@ class RoomItem extends StatelessWidget {
         //Get.toNamed(Routes.MESSAGE);
       },
       onLongPress: () async {
-        final isMyBlock = _room.blockerId == VChatAppService.to.vChatUser!.id;
+        final isMyBlock = _room.blockerId == VChatAppService.instance.vChatUser!.id;
 
         final res = await CustomVerticalSheetItem.normal(context, [
           CustomSheetModel(

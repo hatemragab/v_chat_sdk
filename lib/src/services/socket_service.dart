@@ -17,7 +17,7 @@ class SocketService {
 
   static final SocketService _instance = SocketService._privateConstructor();
 
-  static SocketService get to => _instance;
+  static SocketService get instance => _instance;
 
   ValueNotifier<SocketStateType> socketStateValue =
       ValueNotifier(SocketStateType.connecting);
@@ -40,7 +40,7 @@ class SocketService {
       'connectTimeout': 5000,
       'pingInterval': 5000,
       'extraHeaders': <String, String>{
-        'Authorization': VChatAppService.to.vChatUser!.accessToken
+        'Authorization': VChatAppService.instance.vChatUser!.accessToken
       },
       'forceNew': true
     });

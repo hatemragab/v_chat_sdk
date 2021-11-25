@@ -32,7 +32,7 @@ class NotificationService {
   );
 
   void init() async {
-    if (VChatAppService.to.isUseFirebase) {
+    if (VChatAppService.instance.isUseFirebase) {
       await initNotification();
     }
   }
@@ -88,7 +88,7 @@ class NotificationService {
             await Future.delayed(const Duration(milliseconds: 100));
             RoomCubit.instance.currentRoomId = roomId;
 
-            Navigator.of(VChatAppService.to.navKey!.currentContext!)
+            Navigator.of(VChatAppService.instance.navKey!.currentContext!)
                 .push(MaterialPageRoute(
                 builder: (_) =>
                     MessageView(
@@ -135,7 +135,7 @@ class NotificationService {
           await Future.delayed(const Duration(milliseconds: 2500));
           RoomCubit.instance.currentRoomId = roomId;
 
-          Navigator.of(VChatAppService.to.navKey!.currentContext!)
+          Navigator.of(VChatAppService.instance.navKey!.currentContext!)
               .push(MaterialPageRoute(
               builder: (_) =>
                   MessageView(

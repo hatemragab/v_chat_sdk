@@ -32,7 +32,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   MessageCubit() : super(MessageInitial()) {
     _messageSocket = MessageSocket(
       currentRoomId: RoomCubit.instance.currentRoomId!,
-      myId: VChatAppService.to.vChatUser!.id,
+      myId: VChatAppService.instance.vChatUser!.id,
       onNewMessage: onNewMessage,
       onAllMessages: onAllMessages,
     );
@@ -57,7 +57,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   ///get messages from sqlite
   Future<void> getLocalMessages(int roomId) async {
     this.roomId = roomId;
-    final messages = await LocalStorageService.to.getRoomMessages(roomId);
+    final messages = await LocalStorageService.instance.getRoomMessages(roomId);
     this.messages.clear();
     this.messages.addAll(messages);
     emit(MessageLoaded(messages));
@@ -88,7 +88,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   ///Emit text message to server
   void sendTextMessage( ) async {
     try {
-      if (!SocketService.to.isConnected) {
+      if (!SocketService.instance.isConnected) {
 
         throw "Not connected to server yet";
       }
@@ -126,7 +126,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       CustomAlert.customLoadingDialog();
       final voiceFile = File(path);
       final fileSize = FileUtils.getFileSize(voiceFile);
-      if (!SocketService.to.isConnected) {
+      if (!SocketService.instance.isConnected) {
         throw "Not connected to server yet";
       }
       await FileUtils.uploadFile(
@@ -143,9 +143,9 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
               fileDuration: duration,
             ).toMap())
           });
-      Navigator.pop(VChatAppService.to.navKey!.currentContext!);
+      Navigator.pop(VChatAppService.instance.navKey!.currentContext!);
     } catch (err) {
-      Navigator.pop(VChatAppService.to.navKey!.currentContext!);
+      Navigator.pop(VChatAppService.instance.navKey!.currentContext!);
       CustomAlert.error(msg: err.toString());
       rethrow;
     }
@@ -167,8 +167,8 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
                 : type == 1
                     ? RoomTypingType.typing
                     : RoomTypingType.recording,
-            name: VChatAppService.to.vChatUser!.name);
-        SocketService.to.emitTypingChange(roomTyping.toMap());
+            name: VChatAppService.instance.vChatUser!.name);
+        SocketService.instance.emitTypingChange(roomTyping.toMap());
       }
       if (type == 1) {
         isEmitTyping = true;
@@ -182,7 +182,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   void sendImage(String path) async {
     try {
       CustomAlert.customLoadingDialog();
-      if (!SocketService.to.isConnected) {
+      if (!SocketService.instance.isConnected) {
         throw "Not connected to server yet";
       }
       final _pickedImage = File(path);
@@ -206,9 +206,9 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
               width: properties.width.toString(),
             ).toMap())
           });
-      Navigator.pop(VChatAppService.to.navKey!.currentState!.context);
+      Navigator.pop(VChatAppService.instance.navKey!.currentState!.context);
     } catch (err) {
-      Navigator.pop(VChatAppService.to.navKey!.currentContext!);
+      Navigator.pop(VChatAppService.instance.navKey!.currentContext!);
       CustomAlert.error(msg: err.toString());
       rethrow;
     }
@@ -246,7 +246,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   void sendVideo(String path) async {
-    final context = VChatAppService.to.navKey!.currentContext!;
+    final context = VChatAppService.instance.navKey!.currentContext!;
     try {
       CustomAlert.customLoadingDialog(context: context);
       final videoFile = File(path);
@@ -255,7 +255,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           await FlutterNativeImage.getImageProperties(videoThumb.path);
       final d = await FileUtils.getVideoDuration(videoFile.path);
       final fileSize = FileUtils.getFileSize(videoFile);
-      if (!SocketService.to.isConnected) {
+      if (!SocketService.instance.isConnected) {
         throw "Not connected to server yet";
       }
       await FileUtils.uploadFile(
@@ -282,14 +282,14 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   void sendFile(String path) async {
-    final context = VChatAppService.to.navKey!.currentContext!;
+    final context = VChatAppService.instance.navKey!.currentContext!;
     try {
       CustomAlert.customLoadingDialog(context: context);
 
       final file = File(path);
 
       final fileSize = FileUtils.getFileSize(file);
-      if (!SocketService.to.isConnected) {
+      if (!SocketService.instance.isConnected) {
         throw "Not connected to server yet";
       }
       await FileUtils.uploadFile(

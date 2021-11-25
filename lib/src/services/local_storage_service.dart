@@ -13,12 +13,12 @@ class LocalStorageService extends GetxService {
   static final LocalStorageService _instance =
       LocalStorageService._privateConstructor();
 
-  static LocalStorageService get to => _instance;
+  static LocalStorageService get instance => _instance;
 
   late Database database;
 
   Future<void> init() async {
-    database = await DBProvider.db.database;
+    database = await DBProvider.instance.database;
   }
 
   Future<List<VChatRoom>> getRooms() async {

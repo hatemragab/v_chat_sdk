@@ -7,13 +7,13 @@ class UtilDates {
   static const int oneDayInMilliseconds = 86400000;
 
   static final daysOfWeek = [
-    VChatAppService.to.getTrans().monday(),
-    VChatAppService.to.getTrans().tuesday(),
-    VChatAppService.to.getTrans().wednesday(),
-    VChatAppService.to.getTrans().thursday(),
-    VChatAppService.to.getTrans().friday(),
-    VChatAppService.to.getTrans().saturday(),
-    VChatAppService.to.getTrans().sunday(),
+    VChatAppService.instance.getTrans().monday(),
+    VChatAppService.instance.getTrans().tuesday(),
+    VChatAppService.instance.getTrans().wednesday(),
+    VChatAppService.instance.getTrans().thursday(),
+    VChatAppService.instance.getTrans().friday(),
+    VChatAppService.instance.getTrans().saturday(),
+    VChatAppService.instance.getTrans().sunday(),
   ];
 
   static final formatHour = DateFormat("HH:mm");
@@ -45,7 +45,7 @@ class UtilDates {
     }
 
     if (daysSinceMessage == 1) {
-      return VChatAppService.to.getTrans().yesterday();
+      return VChatAppService.instance.getTrans().yesterday();
     }
 
     return messageWeekDay(milliseconds);
@@ -66,11 +66,11 @@ class UtilDates {
     }
 
     if (daysSinceMessage == 0) {
-      return VChatAppService.to.getTrans().toDay();
+      return VChatAppService.instance.getTrans().toDay();
     }
 
     if (daysSinceMessage == 1) {
-      return VChatAppService.to.getTrans().yesterday();
+      return VChatAppService.instance.getTrans().yesterday();
     }
 
     return messageWeekDay(milliseconds);

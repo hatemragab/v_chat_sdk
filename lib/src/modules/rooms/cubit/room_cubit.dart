@@ -28,7 +28,7 @@ class RoomCubit extends Cubit<RoomState> {
   int? currentRoomId;
 
   Future getRoomsFromLocal() async {
-    final rooms = await LocalStorageService.to.getRooms();
+    final rooms = await LocalStorageService.instance.getRooms();
     this.rooms.clear();
     this.rooms.addAll(rooms);
     emit(RoomLoaded(this.rooms));
@@ -92,7 +92,7 @@ class RoomCubit extends Cubit<RoomState> {
       if (room.roomType == RoomType.groupChat) {
         await _provider.leaveGroupChat(room.id.toString());
         rooms.removeWhere((element) => element.id == room.id);
-        await LocalStorageService.to.deleteRoom(room.id);
+        await LocalStorageService.instance.deleteRoom(room.id);
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }

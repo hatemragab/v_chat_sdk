@@ -27,8 +27,9 @@ class VChatRoomsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data:
-          context.isDark ? VChatAppService.to.dark! : VChatAppService.to.light!,
+      data: context.isDark
+          ? VChatAppService.instance.darkTheme
+          : VChatAppService.instance.lightTheme,
       child: Builder(builder: (context) {
         return Container(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -51,7 +52,7 @@ class VChatRoomsScreen extends StatelessWidget {
                   return "No rooms yet".text;
                 } else if (state is RoomLoaded) {
                   final rooms = state.rooms;
-                  final v = VChatAppService.to.getTrans();
+                  final v = VChatAppService.instance.getTrans();
                   return Expanded(
                     child: LoadMore(
                       onLoadMore: context.read<RoomCubit>().loadMore,

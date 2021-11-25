@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_const_dark_theme.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_light_theme.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
 import '../utils/storage_keys.dart';
@@ -18,29 +20,26 @@ class VChatAppService {
   static final VChatAppService _instance =
       VChatAppService._privateConstructor();
 
-  static VChatAppService get to => _instance;
+  static VChatAppService get instance => _instance;
 
   VChatUser? vChatUser;
   Map<String, String>? trans;
 
-  late String baseUrl;
+  ThemeData lightTheme = vChatConstLightTheme;
+  ThemeData darkTheme = vChatConstDarkTheme;
+
+
   late bool isUseFirebase;
 
   late String currentLocal;
-  ThemeData? light;
-  ThemeData? dark;
+
   GlobalKey<NavigatorState>? navKey;
-  VChatTheme? vChatTheme;
 
   late String appName;
 
   late bool enableLog;
 
-  late int maxMediaSize;
 
-  ThemeData? currentTheme(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark ? dark : light;
-  }
 
   VChatLookupString getTrans([BuildContext? context]) {
     context ??= navKey!.currentContext;
@@ -94,14 +93,14 @@ class VChatAppService {
   Future<VChatAppService> init(bool isUseFirebase) async {
     const storage = FlutterSecureStorage();
 
-    await DBProvider.db.database;
+    await DBProvider.instance.database;
     if (isUseFirebase) {
       await Firebase.initializeApp();
     }
     await GetStorage.init();
 
     final String? userJson =
-    await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
+        await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
     if (userJson != null) {
       vChatUser = VChatUser.fromMap(jsonDecode(userJson));
     } else {

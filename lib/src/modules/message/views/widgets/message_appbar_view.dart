@@ -16,20 +16,9 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 1,
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-      leading: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Stack(
-          alignment: Alignment.center,
-          children: const [
-            Icon(Icons.arrow_back_ios),
-          ],
-        ),
-      ),
+      elevation: Theme.of(context).appBarTheme.elevation,
+      centerTitle: Theme.of(context).appBarTheme.centerTitle,
+
       title: BlocBuilder<RoomCubit, RoomState>(
         bloc: RoomCubit.instance,
         builder: (context, state) {
@@ -39,7 +28,7 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
             final isOnline = _room.isOnline;
             final typingSt = _room.typingStatus;
             final isSingle = _room.roomType == RoomType.single;
-            final t = VChatAppService.to.getTrans(context);
+            final t = VChatAppService.instance.getTrans(context);
             return Column(
               children: [
                 _room.title.text,

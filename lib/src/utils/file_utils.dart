@@ -40,7 +40,7 @@ class FileUtils {
           Navigator.pop(context);
           CustomAlert.done(
               msg:
-                  "File saved on device /download/${VChatAppService.to.appName}");
+                  "File saved on device /download/${VChatAppService.instance.appName}");
           await OpenFile.open(file.path);
         } catch (err) {
           Navigator.pop(context);
@@ -128,7 +128,7 @@ class FileUtils {
     }
 
     request.headers.addAll({
-      "authorization": VChatAppService.to.vChatUser!.accessToken.toString()
+      "authorization": VChatAppService.instance.vChatUser!.accessToken.toString()
     });
     if (body != null) {
       request.fields.addAll(body);
@@ -145,7 +145,7 @@ class FileUtils {
       CustomAlert.customAlertDialog(
 
           errorMessage:
-              "App Need this permission to save downloaded files in device storage /download/${VChatAppService.to.appName}}/",
+              "App Need this permission to save downloaded files in device storage /download/${VChatAppService.instance.appName}}/",
           dismissible: false,
           onPress: () async {
             Navigator.pop(context);

@@ -19,10 +19,11 @@ import 'services/v_chat_app_service.dart';
 import 'services/vchat_provider.dart';
 import 'sqlite/db_provider.dart';
 import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
+import 'utils/api_utils/server_config.dart';
 import 'utils/custom_widgets/create_single_chat_dialog.dart';
 import 'utils/storage_keys.dart';
 import 'utils/helpers/helpers.dart';
-import 'utils/theme/v_chat_dark_theme.dart';
+import 'utils/theme/v_chat_const_dark_theme.dart';
 import 'utils/theme/v_chat_light_theme.dart';
 import 'utils/theme/v_chat_theme.dart';
 import 'utils/translator/v_chat_lookup_string.dart';
@@ -53,34 +54,23 @@ class VChatController {
     required Uri baseUrl,
     required String appName,
     required bool isUseFirebase,
-    ThemeData? lightTheme,
-    ThemeData? darkTheme,
-    VChatTheme? vChatTheme,
+    VChatTheme? vChatLightTheme,
+    VChatTheme? vChatDarkTheme,
     required bool enableLogger,
     required GlobalKey<NavigatorState> navigatorKey,
     int maxMediaUploadSize = 50 * 1000 * 1000,
   }) async {
-    await VChatAppService.to.init(isUseFirebase);
+    ///init some service
+    await VChatAppService.instance.init(isUseFirebase);
+    await LocalStorageService.instance.init();
+    final appService = VChatAppService.instance;
 
-    await LocalStorageService.to.init();
-    final appService = VChatAppService.to;
-
-    appService.dark = darkTheme;
-    appService.vChatTheme = vChatTheme;
-    appService.light = lightTheme;
-    if (darkTheme == null) {
-      appService.dark = vChatDarkTheme.copyWith();
-    }
-    if (lightTheme == null) {
-      appService.light = vChatLightTheme;
-    }
-
+    ///set some constants
     appService.navKey = navigatorKey;
     appService.isUseFirebase = isUseFirebase;
-
     appService.appName = appName;
-    appService.maxMediaSize = maxMediaUploadSize;
-    appService.baseUrl = baseUrl.toString();
+    ServerConfig.serverIp = baseUrl.toString();
+    ServerConfig.maxMessageFileSize = maxMediaUploadSize;
     late bool enableLog;
     if (kReleaseMode) {
       enableLog = false;
@@ -88,6 +78,70 @@ class VChatController {
       enableLog = enableLogger;
     }
     appService.enableLog = enableLog;
+
+    ///light theme config
+    if (vChatLightTheme != null) {
+      appService.lightTheme = appService.lightTheme.copyWith(
+        dialogTheme: vChatLightTheme.vChatDialogTheme ??
+            vChatConstLightTheme.dialogTheme,
+        elevatedButtonTheme: vChatLightTheme.vChatButtonTheme ??
+            vChatConstLightTheme.elevatedButtonTheme,
+        iconTheme: vChatLightTheme.iconTheme ?? vChatConstLightTheme.iconTheme,
+        backgroundColor: vChatLightTheme.scaffoldBackgroundColor ??
+            vChatConstLightTheme.scaffoldBackgroundColor,
+        scaffoldBackgroundColor: vChatLightTheme.scaffoldBackgroundColor ??
+            vChatConstLightTheme.scaffoldBackgroundColor,
+        primaryColor:
+            vChatLightTheme.primaryColor ?? vChatConstLightTheme.primaryColor,
+        appBarTheme:
+            vChatLightTheme.appBarTheme ?? vChatConstLightTheme.appBarTheme,
+        colorScheme: vChatLightTheme.accentColor == null
+            ? vChatConstLightTheme.colorScheme
+            : ColorScheme.fromSwatch().copyWith(
+                secondary: vChatLightTheme.accentColor,
+              ),
+        textTheme: TextTheme().copyWith(
+          caption: vChatLightTheme.cationStyle ??
+              vChatConstLightTheme.textTheme.caption,
+          headline6: vChatLightTheme.boldTitle ??
+              vChatConstLightTheme.textTheme.headline6,
+          subtitle2: vChatLightTheme.seenMessageInRooms ??
+              vChatConstLightTheme.textTheme.subtitle2,
+        ),
+      );
+    }
+
+    ///dark theme config
+    if (vChatDarkTheme != null) {
+      appService.darkTheme = appService.darkTheme.copyWith(
+        dialogTheme:
+            vChatDarkTheme.vChatDialogTheme ?? vChatConstDarkTheme.dialogTheme,
+        elevatedButtonTheme: vChatDarkTheme.vChatButtonTheme ??
+            vChatConstDarkTheme.elevatedButtonTheme,
+        iconTheme: vChatDarkTheme.iconTheme ?? vChatConstDarkTheme.iconTheme,
+        backgroundColor: vChatDarkTheme.scaffoldBackgroundColor ??
+            vChatConstDarkTheme.scaffoldBackgroundColor,
+        scaffoldBackgroundColor: vChatDarkTheme.scaffoldBackgroundColor ??
+            vChatConstDarkTheme.scaffoldBackgroundColor,
+        primaryColor:
+            vChatDarkTheme.primaryColor ?? vChatConstDarkTheme.primaryColor,
+        appBarTheme:
+            vChatDarkTheme.appBarTheme ?? vChatConstDarkTheme.appBarTheme,
+        colorScheme: vChatDarkTheme.accentColor == null
+            ? vChatConstDarkTheme.colorScheme
+            : ColorScheme.fromSwatch().copyWith(
+                secondary: vChatDarkTheme.accentColor,
+              ),
+        textTheme: TextTheme().copyWith(
+          caption: vChatDarkTheme.cationStyle ??
+              vChatConstDarkTheme.textTheme.caption,
+          headline6: vChatDarkTheme.boldTitle ??
+              vChatConstDarkTheme.textTheme.headline6,
+          subtitle2: vChatDarkTheme.seenMessageInRooms ??
+              vChatConstDarkTheme.textTheme.subtitle2,
+        ),
+      );
+    }
   }
 
   /// to add new language to v chat
@@ -97,9 +151,10 @@ class VChatController {
       required VChatLookupString lookupMessages}) {
     try {
       if (countryCode == null) {
-        VChatAppService.to.setLocaleMessages(languageCode, lookupMessages);
+        VChatAppService.instance
+            .setLocaleMessages(languageCode, lookupMessages);
       } else {
-        VChatAppService.to.setLocaleMessages(
+        VChatAppService.instance.setLocaleMessages(
             "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
       }
     } catch (err) {
@@ -110,9 +165,9 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> stopAllNotification() async {
-    if (VChatAppService.to.isUseFirebase) {
+    if (VChatAppService.instance.isUseFirebase) {
       await FirebaseMessaging.instance.deleteToken();
-      return VChatAppService.to
+      return VChatAppService.instance
           .getTrans()
           .notificationsHasBeenStoppedSuccessfully();
     } else {
@@ -122,7 +177,7 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> enableAllNotification() async {
-    if (VChatAppService.to.isUseFirebase) {
+    if (VChatAppService.instance.isUseFirebase) {
       final token = (await FirebaseMessaging.instance.getToken()).toString();
       return await _vChatControllerProvider.updateUserFcmToken(token);
     } else {
@@ -151,11 +206,11 @@ class VChatController {
   /// when you call this function the user will be online and can receive notification
   /// first you have to login or register in v chat other wise will throw Exception
   void bindChatControllers() {
-    if (VChatAppService.to.vChatUser == null) {
+    if (VChatAppService.instance.vChatUser == null) {
       throw VChatSdkException(
           "You must login or register to v chat first delete the app and login again !");
     }
-    SocketService.to.init(SocketController());
+    SocketService.instance.init(SocketController());
     NotificationService.to.init();
     unawaited(RoomCubit.instance.getRoomsFromLocal());
   }
@@ -163,14 +218,14 @@ class VChatController {
   /// **throw** User already in v chat data base
   /// **throw** No internet connection
   Future<VChatUser> register(VChatRegisterDto dto) async {
-    if (VChatAppService.to.isUseFirebase) {
+    if (VChatAppService.instance.isUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app ";
     }
     final user = await _authProvider.register(dto);
     await _saveUser(user);
-    VChatAppService.to.setUser(user);
+    VChatAppService.instance.setUser(user);
     await Future.delayed(Duration.zero);
     bindChatControllers();
     return user;
@@ -191,7 +246,7 @@ class VChatController {
       /// No rooms founded
       /// create new Room
       final res = await showDialog<String>(
-        context: ctx ?? VChatAppService.to.navKey!.currentContext!,
+        context: ctx ?? VChatAppService.instance.navKey!.currentContext!,
         builder: (context) {
           return CreateSingleChatDialog(
             createBtnTxt: createBtnTxt,
@@ -207,14 +262,14 @@ class VChatController {
         await Future.delayed(const Duration(seconds: 1));
         _navigateToRoomMessage(
           data,
-          ctx ?? VChatAppService.to.navKey!.currentContext!,
+          ctx ?? VChatAppService.instance.navKey!.currentContext!,
         );
       }
     } else {
       /// there are room open the chat page
       return await _navigateToRoomMessage(
         data,
-        ctx ?? VChatAppService.to.navKey!.currentContext!,
+        ctx ?? VChatAppService.instance.navKey!.currentContext!,
       );
     }
   }
@@ -239,14 +294,14 @@ class VChatController {
   /// **throw** User not in v chat data base
   /// **throw** No internet connection
   Future<VChatUser> login(VChatLoginDto dto) async {
-    if (VChatAppService.to.isUseFirebase) {
+    if (VChatAppService.instance.isUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app";
     }
     final user = await _authProvider.login(dto);
     await _saveUser(user);
-    VChatAppService.to.setUser(user);
+    VChatAppService.instance.setUser(user);
     await Future.delayed(Duration.zero);
     bindChatControllers();
     return user;
@@ -256,7 +311,7 @@ class VChatController {
     const storage = FlutterSecureStorage();
     await storage.write(
         key: StorageKeys.KV_CHAT_MY_MODEL, value: jsonEncode(user.toMap()));
-    VChatAppService.to.setUser(user);
+    VChatAppService.instance.setUser(user);
   }
 
   /// **throw** No internet connection
@@ -267,9 +322,9 @@ class VChatController {
     } catch (err) {
       //
     }
-    SocketService.to.destroy();
+    SocketService.instance.destroy();
     const storage = FlutterSecureStorage();
     await storage.delete(key: StorageKeys.KV_CHAT_MY_MODEL);
-    await DBProvider.db.reCreateTables();
+    await DBProvider.instance.reCreateTables();
   }
 }

@@ -1,33 +1,48 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_extentions.dart';
 import '../../services/v_chat_app_service.dart';
 
 class CustomAlert {
   CustomAlert._();
+
   static void done({String? msg}) {
-    BotToast.showSimpleNotification(
-        title: VChatAppService.to.getTrans().success(),
-        duration: const Duration(seconds: 3),
-        subTitle: msg ??
-            VChatAppService.to.getTrans().thisOperationDoneSuccessfully());
+    Fluttertoast.showToast(
+        msg: msg ?? VChatAppService.instance.getTrans().success(),
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 1,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
+    // BotToast.showSimpleNotification(
+    //     title: VChatAppService.to.getTrans().success(),
+    //     duration: const Duration(seconds: 3),
+    //     subTitle: msg ??
+    //         VChatAppService.to.getTrans().thisOperationDoneSuccessfully());
   }
 
-  static void error({String? msg}) {
-    BotToast.showSimpleNotification(
-      title: VChatAppService.to.getTrans().failed(),
-      subTitleStyle: const TextStyle(color: Colors.white),
-      backgroundColor: Colors.red,
-      duration: const Duration(seconds: 5),
-      subTitle: msg ?? VChatAppService.to.getTrans().thisOperationFailed(),
-    );
+  static void error({required String msg}) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+    // BotToast.showSimpleNotification(
+    //   title: VChatAppService.to.getTrans().failed(),
+    //   subTitleStyle: const TextStyle(color: Colors.white),
+    //   backgroundColor: Colors.red,
+    //   duration: const Duration(seconds: 5),
+    //   subTitle: msg ?? VChatAppService.to.getTrans().thisOperationFailed(),
+    // );
   }
 
   static void customAlertDialog(
-      {
-      String? title,
+      {String? title,
       Function()? onPress,
       required String errorMessage,
       bool dismissible = true}) {
@@ -51,7 +66,9 @@ class CustomAlert {
                     left: 10,
                     right: 10),
                 content: Theme(
-                  data: VChatAppService.to.currentTheme(context)!,
+                  data: context.isDark
+                      ? VChatAppService.instance.darkTheme
+                      : VChatAppService.instance.lightTheme,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -62,8 +79,10 @@ class CustomAlert {
                       SizedBox(
                         child: ElevatedButton(
                             onPressed: onPress ?? () => Navigator.pop(context),
-                            child:
-                                VChatAppService.to.getTrans(context).oK().text),
+                            child: VChatAppService.instance
+                                .getTrans(context)
+                                .oK()
+                                .text),
                       )
                     ],
                   ),
@@ -76,7 +95,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: VChatAppService.to.navKey!.currentContext!,
+      context: VChatAppService.instance.navKey!.currentContext!,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
@@ -106,7 +125,11 @@ class CustomAlert {
                     const SizedBox(
                       height: 10,
                     ),
-                    VChatAppService.to.getTrans().loadingPleaseWait().text.bold,
+                    VChatAppService.instance
+                        .getTrans()
+                        .loadingPleaseWait()
+                        .text
+                        .bold,
                     const SizedBox(
                       height: 33,
                     ),
@@ -130,7 +153,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: VChatAppService.to.navKey!.currentContext!,
+      context: VChatAppService.instance.navKey!.currentContext!,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
@@ -147,7 +170,9 @@ class CustomAlert {
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
         return Theme(
-          data: VChatAppService.to.currentTheme(context)!,
+          data: context.isDark
+              ? VChatAppService.instance.darkTheme
+              : VChatAppService.instance.lightTheme,
           child: WillPopScope(
             onWillPop: () async {
               return dismissible;
@@ -176,7 +201,7 @@ class CustomAlert {
                         children: [
                           ElevatedButton(
                             onPressed: () => Navigator.pop(context, -1),
-                            child: VChatAppService.to
+                            child: VChatAppService.instance
                                 .getTrans()
                                 .cancel()
                                 .text
@@ -184,7 +209,7 @@ class CustomAlert {
                           ),
                           ElevatedButton(
                             onPressed: () => Navigator.pop(context, 1),
-                            child: VChatAppService.to
+                            child: VChatAppService.instance
                                 .getTrans()
                                 .oK()
                                 .text
@@ -203,7 +228,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: VChatAppService.to.navKey!.currentContext!,
+      context: VChatAppService.instance.navKey!.currentContext!,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
