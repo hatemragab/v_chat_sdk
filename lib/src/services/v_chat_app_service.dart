@@ -5,22 +5,19 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/src/utils/theme/v_chat_const_dark_theme.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_light_theme.dart';
+import 'package:v_chat_sdk/src/utils/theme/v_chat_const_light_theme.dart';
+import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
 import '../utils/storage_keys.dart';
 import '../utils/helpers/helpers.dart';
-import '../utils/theme/theme.dart';
 import '../utils/translator/en_language.dart';
 import '../utils/translator/v_chat_lookup_string.dart';
 
 class VChatAppService {
   VChatAppService._privateConstructor();
 
-  static final VChatAppService _instance =
-      VChatAppService._privateConstructor();
-
-  static VChatAppService get instance => _instance;
+  static final VChatAppService instance = VChatAppService._privateConstructor();
 
   VChatUser? vChatUser;
   Map<String, String>? trans;
@@ -28,24 +25,22 @@ class VChatAppService {
   ThemeData lightTheme = vChatConstLightTheme;
   ThemeData darkTheme = vChatConstDarkTheme;
 
-
+  late VChatWidgetBuilder vcBuilder;
   late bool isUseFirebase;
 
   late String currentLocal;
 
-  GlobalKey<NavigatorState>? navKey;
+ // GlobalKey<NavigatorState>? navKey;
 
   late String appName;
 
   late bool enableLog;
 
+  VChatLookupString getTrans(BuildContext context) {
 
-
-  VChatLookupString getTrans([BuildContext? context]) {
-    context ??= navKey!.currentContext;
 
     /// languageCode is EN or AR etc...
-    var locale = Localizations.localeOf(context!);
+    var locale = Localizations.localeOf(context);
 
     ///check if user us getx or flutter localization
     if (Get.locale != null) {
@@ -118,7 +113,5 @@ class VChatAppService {
     return this;
   }
 
-  void setUser(VChatUser user) {
-    vChatUser = user;
-  }
+
 }

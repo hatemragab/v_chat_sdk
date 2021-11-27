@@ -19,7 +19,7 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (index == messages.length - 1) {
-      return getLabelDay(message.createdAt);
+      return getLabelDay(context,message.createdAt);
     }
 
     final lastMessageSendAt =
@@ -36,13 +36,13 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
     final   formattedMessageSendAt = formatter.format(messageSendAt);
 
     if (formattedLastMessageSendAt != formattedMessageSendAt) {
-      return getLabelDay(message.createdAt);
+      return getLabelDay(context,message.createdAt);
     }
     return const SizedBox.shrink();
   }
 
-  Widget getLabelDay(int milliseconds) {
-    final   day = UtilDates.getSendAtDay(milliseconds);
+  Widget getLabelDay(BuildContext context,int milliseconds) {
+    final   day = UtilDates.getSendAtDay(context,milliseconds);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

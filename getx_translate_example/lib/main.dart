@@ -10,18 +10,18 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await VChatController.instance.init(
-    baseUrl: Uri.parse("http://170.178.195.150:81"),
-    appName: "test_v_chat",
-    isUseFirebase: false,
-    enableLogger: true,
-    navigatorKey: navigatorKey,
-    maxMediaUploadSize: 50 * 1000 * 1000,
-  );
+  // await VChatController.instance.init(
+  //   baseUrl: Uri.parse("http://170.178.195.150:81"),
+  //   appName: "test_v_chat",
+  //   isUseFirebase: false,
+  //   enableLogger: true,
+  //   navigatorKey: navigatorKey,
+  //   maxMediaUploadSize: 50 * 1000 * 1000,
+  // );
   VChatController.instance
       .setLocaleMessages(languageCode: "ar", lookupMessages: ArLanguage());
-  await VChatController.instance
-      .login(VChatLoginDto(email: "testt", password: "testt"));
+  // await VChatController.instance
+  //     .login(dto: VChatLoginDto(email: "testt", password: "testt"),context: context);
   runApp(
     GetMaterialApp(
       title: "Application",

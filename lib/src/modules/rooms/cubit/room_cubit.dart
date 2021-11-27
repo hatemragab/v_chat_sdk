@@ -14,13 +14,15 @@ part 'room_state.dart';
 class RoomCubit extends Cubit<RoomState> {
   bool isLoadMoreFinished = false;
 
-  RoomCubit._privateConstructor() : super(RoomInitial());
 
-  static final RoomCubit _instance = RoomCubit._privateConstructor();
+
+  RoomCubit._privateConstructor(): super(RoomInitial());
+
+  static final RoomCubit instance = RoomCubit._privateConstructor();
 
   final _provider = RoomsApiProvider();
 
-  static RoomCubit get instance => _instance;
+
 
   final rooms = <VChatRoom>[];
 
@@ -87,7 +89,7 @@ class RoomCubit extends Cubit<RoomState> {
     }
   }
 
-  void blockOrLeaveAction(VChatRoom room) async {
+  void blockOrLeaveAction(BuildContext context,VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
         await _provider.leaveGroupChat(room.id.toString());
@@ -96,19 +98,19 @@ class RoomCubit extends Cubit<RoomState> {
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }
-      CustomAlert.done();
+      CustomAlert.done(context: context);
     } catch (err) {
       CustomAlert.error(msg: err.toString());
       rethrow;
     }
   }
 
-  void muteAction(final VChatRoom room) async {
+  void muteAction(BuildContext context,final VChatRoom room) async {
     try {
       ///socket will take car of update the ui
       await _provider.changeNotifaictions(room.id);
 
-      CustomAlert.done();
+      CustomAlert.done(context: context);
     } catch (err) {
       //  CustomAlert.customAlertDialog(errorMessage: err.toString());
       CustomAlert.error(msg: err.toString());

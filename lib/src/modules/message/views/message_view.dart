@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loadmore/loadmore.dart';
 import 'package:textless/textless.dart';
-import 'package:v_chat_sdk/src/utils/v_chat_extentions.dart';
-
 import '../../../enums/room_type.dart';
 import '../../../services/v_chat_app_service.dart';
 import '../../../utils/custom_widgets/circle_image.dart';
@@ -22,15 +20,10 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: context.isDark
-          ? VChatAppService.instance.darkTheme
-          : VChatAppService.instance.lightTheme,
-      child: BlocProvider(
-        create: (context) => MessageCubit()..getLocalMessages(roomId),
-        lazy: false,
-        child: const MessageViewScreen(),
-      ),
+    return BlocProvider(
+      create: (context) => MessageCubit()..getLocalMessages(roomId),
+      lazy: false,
+      child: const MessageViewScreen(),
     );
   }
 }
@@ -64,7 +57,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
             Expanded(
               child: BlocBuilder<MessageCubit, MessageState>(
                 builder: (context, state) {
-                  final v = VChatAppService.instance.getTrans();
+                  final v = VChatAppService.instance.getTrans(context);
                   return Builder(
                     builder: (c) {
                       if (state is MessageLoaded) {
@@ -77,7 +70,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                                 case LoadMoreStatus.idle:
                                   return "";
                                 case LoadMoreStatus.loading:
-                                  return v.loadingMore();
+                                  return '';
 
                                 case LoadMoreStatus.fail:
                                   return v.loadMoreFiled();
@@ -162,9 +155,9 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                     if (bkId != 0) {
                       if (bkId == myId) {
                         // i the blocker
-                        return t.chatHasBeenClosedByMe().text;
+                        return t.chatHasBeenClosedByMe().h6.color(Colors.red);
                       } else {
-                        return t.chatHasBeenClosed().text;
+                        return t.chatHasBeenClosed().h6.color(Colors.red);
                       }
                     }
                   }
@@ -173,7 +166,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                     controller: messageController.textController,
                     onReceiveRecord: (path, duration) {
                       messageController.emitTypingChange(0);
-                      messageController.sendVoiceNote(path, duration);
+                      messageController.sendVoiceNote(context,path, duration);
                     },
                     onReceiveText: () {
                       messageController.sendTextMessage();
@@ -185,13 +178,13 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                       messageController.emitTypingChange(3);
                     },
                     onReceiveImage: (path) {
-                      messageController.sendImage(path);
+                      messageController.sendImage(context,path);
                     },
                     onReceiveVideo: (path) {
-                      messageController.sendVideo(path);
+                      messageController.sendVideo(context,path);
                     },
                     onReceiveFile: (path) {
-                      messageController.sendFile(path);
+                      messageController.sendFile(context,path);
                     },
                   );
                 },

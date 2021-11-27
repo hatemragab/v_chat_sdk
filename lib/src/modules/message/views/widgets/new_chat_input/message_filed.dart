@@ -59,7 +59,7 @@ class _MessageFiledState extends State<MessageFiled> {
                       });
                     },
                     decoration: InputDecoration(
-                      hintText: VChatAppService.instance.getTrans().yourMessage(),
+                      hintText: VChatAppService.instance.getTrans(context).yourMessage(),
                       hintStyle: const TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                     ),

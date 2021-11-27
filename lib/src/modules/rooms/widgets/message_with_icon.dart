@@ -16,8 +16,9 @@ class MessageWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     if (_room.lastMessage.messageType == MessageType.info) {
-      return _room.lastMessage.content.text
+      return _room.lastMessage.content.b1
           .maxLine(1)
           .alignStart
           .overflowEllipsis;
@@ -29,42 +30,41 @@ class MessageWithIcon extends StatelessWidget {
           width: 5,
         ),
         Flexible(
-            child: AutoDirection(
-                text: _room.lastMessage.content,
-                child: getMessageText(context))),
+          child: AutoDirection(
+            text: _room.lastMessage.content,
+            child: getMessageText(context),
+          ),
+        ),
       ],
     );
   }
 
   Widget getMessageText(BuildContext context) {
+    /// i the receiver
     if (_room.lastMessage.senderId != _myModel.id) {
-      /// i the receiver
       final _isMeSeen = _room.lastMessageSeenBy.contains(_myModel.id);
 
+      /// I read the message
       if (_isMeSeen) {
-        return _room.lastMessage.content.text
+        return _room.lastMessage.content.b1.color(Colors.grey)
             .maxLine(1)
             .alignStart
             .overflowEllipsis;
       } else {
+        /// I not read  the message yet
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              flex: 4,
-              child: _room.lastMessage.content.h6
-                  .maxLine(1)
-
-            ),
+            Flexible(flex: 4, child: _room.lastMessage.content.b1.bold.maxLine(1)),
             Flexible(
               flex: 1,
               child: Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(2),
                 decoration: const BoxDecoration(
                   color: Colors.blueGrey,
                   shape: BoxShape.circle,
                 ),
-                child: "  ".s2.color(Colors.white),
+                child: "    ".s2.color(Colors.white),
               ),
             )
           ],
@@ -78,8 +78,9 @@ class MessageWithIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: _room.lastMessage.content.s2
+              child: _room.lastMessage.content.b1.color(Colors.grey)
                   .maxLine(1)
+
                   .alignStart
                   .overflowEllipsis,
             ),
@@ -88,7 +89,7 @@ class MessageWithIcon extends StatelessWidget {
         );
       }
 
-      return _room.lastMessage.content.s2
+      return _room.lastMessage.content.b1.color(Colors.grey)
           .maxLine(1)
           .alignStart
           .overflowEllipsis;

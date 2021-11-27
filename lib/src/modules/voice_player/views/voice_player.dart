@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 
+import 'package:v_chat_sdk/src/utils/custom_widgets/audio_wave.dart';
 import '../../../models/v_chat_message.dart';
 import '../../../utils/api_utils/server_config.dart';
 
@@ -17,9 +18,8 @@ class VoicePlayer extends StatefulWidget {
 
 class _VoicePlayerState extends State<VoicePlayer> {
   bool isLoading = true;
-  bool isPlaying = false;
+  bool isPlaying = true;
   final audioPlayer = AudioPlayer();
-
 
   @override
   void initState() {
@@ -27,6 +27,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
     super.initState();
     startPlayVoice();
   }
+
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).unfocus();
@@ -77,7 +78,37 @@ class _VoicePlayerState extends State<VoicePlayer> {
                               ),
                             ),
                 ),
-                widget.message.messageAttachment!.fileDuration!.text
+                widget.message.messageAttachment!.fileDuration!.h6,
+                const SizedBox(
+                  width: 20,
+                ),
+                AudioWave(
+                  height: 32,
+                  animation: isPlaying,
+                  spacing: 2.5,
+                  bars: [
+                    AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
+                    AudioWaveBar(height: 30, color: Colors.blue),
+                    AudioWaveBar(height: 70, color: Colors.black),
+                    AudioWaveBar(height: 40),
+                    AudioWaveBar(height: 20, color: Colors.orange),
+                    AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
+                    AudioWaveBar(height: 30, color: Colors.blue),
+                    AudioWaveBar(height: 70, color: Colors.black),
+                    AudioWaveBar(height: 40),
+                    AudioWaveBar(height: 20, color: Colors.orange),
+                    AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
+                    AudioWaveBar(height: 30, color: Colors.blue),
+                    AudioWaveBar(height: 70, color: Colors.black),
+                    AudioWaveBar(height: 40),
+                    AudioWaveBar(height: 20, color: Colors.orange),
+                    AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
+                    AudioWaveBar(height: 30, color: Colors.blue),
+                    AudioWaveBar(height: 70, color: Colors.black),
+                    AudioWaveBar(height: 40),
+                    AudioWaveBar(height: 20, color: Colors.orange),
+                  ],
+                ),
               ],
             ),
           ),
@@ -117,10 +148,10 @@ class _VoicePlayerState extends State<VoicePlayer> {
     });
   }
 
-  void pauseVoice()async {
-   await audioPlayer.pause();
-   setState(() {
-     isPlaying = false;
-   });
+  void pauseVoice() async {
+    await audioPlayer.pause();
+    setState(() {
+      isPlaying = false;
+    });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:textless/textless.dart';
 
 import '../../enums/socket_state_type.dart';
@@ -8,11 +9,10 @@ import '../../services/v_chat_app_service.dart';
 import 'rounded_container.dart';
 
 class ConnectionChecker extends GetView {
-  const ConnectionChecker({Key? key}) : super(key: key);
-
+  const  ConnectionChecker({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final SocketService _socket = SocketService.instance;
+    final SocketService _socket = GetIt.I.get<SocketService>();
     return ValueListenableBuilder<SocketStateType>(
       builder: (context, value, child) {
         if (value == SocketStateType.connecting) {
@@ -22,7 +22,7 @@ class ConnectionChecker extends GetView {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),
               padding: const EdgeInsets.all(5),
-              child: (VChatAppService.instance.getTrans().connecting() + " ...")
+              child: (VChatAppService.instance.getTrans(context).connecting() + " ...")
                   .text
                   .alignCenter
                   .color(Colors.white),

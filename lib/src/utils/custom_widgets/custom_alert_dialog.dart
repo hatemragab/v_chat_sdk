@@ -8,9 +8,9 @@ import '../../services/v_chat_app_service.dart';
 class CustomAlert {
   CustomAlert._();
 
-  static void done({String? msg}) {
+  static void done({required BuildContext context, String? msg}) {
     Fluttertoast.showToast(
-        msg: msg ?? VChatAppService.instance.getTrans().success(),
+        msg: msg ?? VChatAppService.instance.getTrans(context).success(),
         toastLength: Toast.LENGTH_LONG,
         timeInSecForIosWeb: 1,
         gravity: ToastGravity.BOTTOM,
@@ -45,6 +45,7 @@ class CustomAlert {
       {String? title,
       Function()? onPress,
       required String errorMessage,
+      required BuildContext context,
       bool dismissible = true}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
@@ -95,7 +96,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: VChatAppService.instance.navKey!.currentContext!,
+      context: context,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
@@ -103,7 +104,7 @@ class CustomAlert {
   }
 
   static void customLoadingDialog(
-      {BuildContext? context, bool dismissible = false}) {
+      {required BuildContext context, bool dismissible = false}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -126,7 +127,7 @@ class CustomAlert {
                       height: 10,
                     ),
                     VChatAppService.instance
-                        .getTrans()
+                        .getTrans(context)
                         .loadingPleaseWait()
                         .text
                         .bold,
@@ -153,7 +154,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: VChatAppService.instance.navKey!.currentContext!,
+      context: context,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },
@@ -169,56 +170,51 @@ class CustomAlert {
     return await showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
-        return Theme(
-          data: context.isDark
-              ? VChatAppService.instance.darkTheme
-              : VChatAppService.instance.lightTheme,
-          child: WillPopScope(
-            onWillPop: () async {
-              return dismissible;
-            },
-            child: Transform.scale(
-              scale: a1.value,
-              child: Opacity(
-                opacity: a1.value,
-                child: AlertDialog(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  title: title == null ? null : title.text.alignCenter,
-                  contentPadding: EdgeInsets.zero.copyWith(
-                      top: title == null ? 20 : 8,
-                      bottom: 5,
-                      left: 10,
-                      right: 10),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      message.text.alignCenter,
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () => Navigator.pop(context, -1),
-                            child: VChatAppService.instance
-                                .getTrans()
-                                .cancel()
-                                .text
-                                .size(15),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => Navigator.pop(context, 1),
-                            child: VChatAppService.instance
-                                .getTrans()
-                                .oK()
-                                .text
-                                .size(15),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+        return WillPopScope(
+          onWillPop: () async {
+            return dismissible;
+          },
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                title: title == null ? null : title.text.alignCenter,
+                contentPadding: EdgeInsets.zero.copyWith(
+                    top: title == null ? 20 : 8,
+                    bottom: 5,
+                    left: 10,
+                    right: 10),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    message.text.alignCenter,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context, -1),
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .cancel()
+                              .text
+                              .size(15),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => Navigator.pop(context, 1),
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .oK()
+                              .text
+                              .size(15),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
@@ -228,7 +224,7 @@ class CustomAlert {
       transitionDuration: const Duration(milliseconds: 250),
       barrierDismissible: true,
       barrierLabel: '',
-      context: VChatAppService.instance.navKey!.currentContext!,
+      context: context,
       pageBuilder: (context, animation, secondaryAnimation) {
         return const SizedBox.shrink();
       },

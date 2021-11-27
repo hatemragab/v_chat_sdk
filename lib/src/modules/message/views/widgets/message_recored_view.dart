@@ -56,19 +56,20 @@ class _MessageRecordViewState extends State<MessageRecordView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-                onTap: widget.onCancel,
-                child: const Icon(
-                  Icons.cancel,
-                  size: 35,
-                )),
+              onTap: widget.onCancel,
+              child: const Icon(
+                Icons.cancel,
+                size: 35,
+              ),
+            ),
             InkWell(
-              child: recordTime.text,
+              child: recordTime.h6,
             ),
             InkWell(
               onTap: stopRecord,
-              child: const RoundedContainer(
+              child: RoundedContainer(
                 boxShape: BoxShape.circle,
-                color: Colors.red,
+                color: Theme.of(context).primaryColor,
                 height: 50,
                 width: 50,
                 child: Icon(
@@ -106,6 +107,7 @@ class _MessageRecordViewState extends State<MessageRecordView> {
       } catch (err) {
         Helpers.vlog(err.toString());
         CustomAlert.customAlertDialog(
+          context: context,
             errorMessage:
                 "record not supported on emulator run on real device !");
         widget.onCancel();

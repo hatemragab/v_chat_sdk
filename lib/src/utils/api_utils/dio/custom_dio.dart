@@ -8,17 +8,18 @@ import 'v_chat_sdk_exception.dart';
 
 class CustomDio {
   final dio = Dio();
+  final vChatController = VChatAppService.instance;
 
   CustomDio() {
     dio.options.baseUrl = ServerConfig.serverBaseUrl;
     dio.options.validateStatus = (_) => true;
     dio.options.followRedirects = false;
-    final vChatController = VChatAppService.instance;
     dio.options.headers = {
       'authorization': vChatController.vChatUser != null
           ? vChatController.vChatUser!.accessToken.toString()
           : ""
     };
+  //  print(vChatController.vChatUser!.accessToken.toString());
 
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;

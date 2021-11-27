@@ -10,6 +10,17 @@ import 'generated/l10n.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+class VChatCustomWidgets extends VChatWidgetBuilder {
+  @override
+  Widget voiceSender(BuildContext context, String duration) {
+    return Container(
+      height: 40,
+      width: 40,
+      color: Theme.of(context).textTheme.bodyText2!.color,
+    );
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
@@ -18,6 +29,7 @@ void main() async {
     baseUrl: Uri.parse("http://170.178.195.150:81"),
     appName: "test_v_chat",
     isUseFirebase: true,
+    widgetsBuilder: VChatCustomWidgets(),
 
     ///Edit Dark theme
     vChatDarkTheme: VChatTheme(
@@ -35,11 +47,10 @@ void main() async {
           onPrimary: Colors.white,
         ),
       ),
-        scaffoldBackgroundColor: Colors.blue
     ),
-    vChatLightTheme: VChatTheme(),
+    vChatLightTheme: VChatTheme(primaryColor: Colors.indigo),
     enableLogger: true,
-    navigatorKey: navigatorKey,
+     //navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,
   );
 
@@ -68,7 +79,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
-      theme: context.read<LanguageController>().theme,
+      theme: ThemeData.light(),
+      darkTheme:ThemeData.dark(),
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,

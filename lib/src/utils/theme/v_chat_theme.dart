@@ -8,6 +8,7 @@ class VChatTheme {
   ElevatedButtonThemeData? vChatButtonTheme;
 
   /// package primary color
+  /// background for circle mic and circle send message button
   Color? primaryColor;
 
   /// notifications and camera icons

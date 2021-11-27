@@ -9,7 +9,9 @@ class HomeController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    VChatController.instance.bindChatControllers();
+    // VChatController.instance.bindChatControllers(
+    //
+    // );
   }
 
   void changeLang(bool value) {

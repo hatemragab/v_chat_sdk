@@ -35,7 +35,9 @@ class _HomeState extends State<Home> {
 
     if (GetStorage().hasData("myModel")) {
       // this mean my user has auth so i will bind chat controller to make him online else will throw exception
-      VChatController.instance.bindChatControllers();
+      VChatController.instance.bindChatControllers(
+        context
+      );
     }
   }
 

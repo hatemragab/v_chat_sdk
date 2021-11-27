@@ -56,12 +56,13 @@ class RegisterController {
 
       ///Register on v_chat_sdk system
       await VChatController.instance.register(
-        VChatRegisterDto(
+        dto: VChatRegisterDto(
           name: name,
           userImage: imagePath == null ? null : File(imagePath!),
           email: email,
           password: password,
         ),
+        context: context
       );
       Navigator.pop(context);
       Navigator.of(context).push(MaterialPageRoute(

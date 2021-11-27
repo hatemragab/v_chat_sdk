@@ -33,7 +33,7 @@ class LoginController {
 
       ///Login on v_chat_sdk system
       await VChatController.instance
-          .login(VChatLoginDto(email: email, password: password));
+          .login(context: context,dto: VChatLoginDto(email: email, password: password));
       Navigator.pop(context);
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const Home(),

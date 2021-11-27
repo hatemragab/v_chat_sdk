@@ -65,13 +65,13 @@ class RoomItem extends StatelessWidget {
           final res = await CustomAlert.customAskDialog(
               message: t.areYouSure(), context: context);
           if (res == 1) {
-            context.read<RoomCubit>().muteAction(_room);
+            context.read<RoomCubit>().muteAction(context,_room);
           }
         } else if (res == 2) {
           final res = await CustomAlert.customAskDialog(
               message: t.areYouSure(), context: context);
           if (res == 1) {
-            context.read<RoomCubit>().blockOrLeaveAction(_room);
+            context.read<RoomCubit>().blockOrLeaveAction(context,_room);
           }
         }
       },
@@ -108,6 +108,8 @@ class RoomItem extends StatelessWidget {
                     _room.lastMessage.createdAtString.toString().s2
                   ],
                 ),
+
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

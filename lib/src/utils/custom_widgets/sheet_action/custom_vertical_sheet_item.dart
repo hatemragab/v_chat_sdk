@@ -16,7 +16,7 @@ class CustomVerticalSheetItem {
       builder: (context) {
         return CupertinoActionSheet(
             cancelButton: CupertinoActionSheetAction(
-              child: Text(VChatAppService.instance.getTrans().cancel()),
+              child: Text(VChatAppService.instance.getTrans(context).cancel()),
               onPressed: () {
                 Navigator.pop(context);
               },

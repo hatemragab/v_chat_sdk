@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
 
@@ -14,7 +15,7 @@ import 'attachment_picker_widget.dart';
 import 'message_filed.dart';
 
 class VChatMessageInput extends StatefulWidget {
-  final Function( ) onReceiveText;
+  final Function() onReceiveText;
   final Function(String path, String duration) onReceiveRecord;
 
   final Function(String path) onReceiveImage;
@@ -43,6 +44,7 @@ class VChatMessageInput extends StatefulWidget {
 class _VChatMessageInputState extends State<VChatMessageInput> {
   bool isRecording = false;
   bool isTyping = false;
+  final getIt = GetIt.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +53,12 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
       return MessageRecordView(
         onReceiveRecord: (path, duration) {
           widget.onReceiveRecord(path, duration);
-          if(SocketService.instance.isConnected){
+          if (getIt.get<SocketService>().isConnected) {
             setState(() {
               isRecording = false;
               isTyping = false;
             });
           }
-
         },
         onCancel: () {
           setState(() {
@@ -108,7 +109,7 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                   widget.onReceiveVideo(path);
                 }
               },
-              onCameraPressed: () async{
+              onCameraPressed: () async {
                 final picker = ImagePicker();
                 final pickedFile =
                     await picker.pickImage(source: ImageSource.camera);
@@ -137,9 +138,9 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                     isTyping = false;
                   });
                 },
-                child: const RoundedContainer(
+                child: RoundedContainer(
                   boxShape: BoxShape.circle,
-                  color: Colors.red,
+                  color: Theme.of(context).primaryColor,
                   height: 50,
                   width: 50,
                   child: Icon(
@@ -161,9 +162,9 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                     isTyping = false;
                   });
                 },
-                child: const RoundedContainer(
+                child: RoundedContainer(
                   boxShape: BoxShape.circle,
-                  color: Colors.red,
+                  color: Theme.of(context).primaryColor,
                   height: 50,
                   width: 50,
                   child: Icon(

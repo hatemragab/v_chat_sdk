@@ -18,12 +18,13 @@ class MessageImageItem extends GetView {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ImageViewerView(
-                  ServerConfig.messagesMediaBaseUrl +
-                      _message.messageAttachment!.imageUrl.toString()),
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (context) => ImageViewerView(
+                ServerConfig.messagesMediaBaseUrl +
+                    _message.messageAttachment!.imageUrl.toString()),
+          ),
+        );
       },
       child: ClipRRect(
         borderRadius: BorderRadius.only(

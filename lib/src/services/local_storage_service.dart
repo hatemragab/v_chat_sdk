@@ -10,10 +10,8 @@ import '../sqlite/tables/room_table.dart';
 class LocalStorageService extends GetxService {
   LocalStorageService._privateConstructor();
 
-  static final LocalStorageService _instance =
-      LocalStorageService._privateConstructor();
-
-  static LocalStorageService get instance => _instance;
+  static final LocalStorageService instance =
+  LocalStorageService._privateConstructor();
 
   late Database database;
 

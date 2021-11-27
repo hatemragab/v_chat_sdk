@@ -78,7 +78,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   VChatController.instance.enableAllNotification();
                 }
                 if (res == 1) {
-                  VChatController.instance.stopAllNotification();
+                  VChatController.instance.stopAllNotification(context);
                 }
               },
             ),
@@ -86,6 +86,7 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).logOut,
               icon: Icons.logout,
               onTap: () async {
+
                 await VChatController.instance.logOut();
 
                 await GetStorage().remove("myModel");
