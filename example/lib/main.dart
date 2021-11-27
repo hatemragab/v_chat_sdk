@@ -11,14 +11,7 @@ import 'generated/l10n.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class VChatCustomWidgets extends VChatWidgetBuilder {
-  @override
-  Widget voiceSender(BuildContext context, String duration) {
-    return Container(
-      height: 40,
-      width: 40,
-      color: Theme.of(context).textTheme.bodyText2!.color,
-    );
-  }
+
 }
 
 void main() async {
@@ -31,24 +24,7 @@ void main() async {
     isUseFirebase: true,
     widgetsBuilder: VChatCustomWidgets(),
 
-    ///Edit Dark theme
-    vChatDarkTheme: VChatTheme(
-      vChatButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          ///button content padding
-          padding: EdgeInsets.all(8),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
 
-          ///button background
-          primary: Colors.red,
-
-          ///button text color
-          onPrimary: Colors.white,
-        ),
-      ),
-    ),
-    vChatLightTheme: VChatTheme(primaryColor: Colors.indigo),
     enableLogger: true,
      //navigatorKey: navigatorKey,
     maxMediaUploadSize: 50 * 1000 * 1000,

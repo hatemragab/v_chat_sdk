@@ -29,15 +29,16 @@ class RoomItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  MessageView(
-               roomId:  _room.id,
+            builder: (context) => MessageView(
+              roomId: _room.id,
             ),
           ),
         );
         //Get.toNamed(Routes.MESSAGE);
       },
       onLongPress: () async {
-        final isMyBlock = _room.blockerId == VChatAppService.instance.vChatUser!.id;
+        final isMyBlock =
+            _room.blockerId == VChatAppService.instance.vChatUser!.id;
 
         final res = await CustomVerticalSheetItem.normal(context, [
           CustomSheetModel(
@@ -63,15 +64,17 @@ class RoomItem extends StatelessWidget {
         ]);
         if (res == 1) {
           final res = await CustomAlert.customAskDialog(
-              message: t.areYouSure(), context: context);
+            title: t.areYouSure(),
+            context: context,
+          );
           if (res == 1) {
-            context.read<RoomCubit>().muteAction(context,_room);
+            context.read<RoomCubit>().muteAction(context, _room);
           }
         } else if (res == 2) {
           final res = await CustomAlert.customAskDialog(
-              message: t.areYouSure(), context: context);
+              title: t.areYouSure(), context: context);
           if (res == 1) {
-            context.read<RoomCubit>().blockOrLeaveAction(context,_room);
+            context.read<RoomCubit>().blockOrLeaveAction(context, _room);
           }
         }
       },
@@ -105,11 +108,9 @@ class RoomItem extends StatelessWidget {
                             .overflowEllipsis,
                       ),
                     ),
-                    _room.lastMessage.createdAtString.toString().s2
+                    _room.lastMessage.createdAtString.toString().b2
                   ],
                 ),
-
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

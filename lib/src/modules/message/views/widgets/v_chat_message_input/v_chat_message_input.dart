@@ -10,7 +10,7 @@ import '../../../../../services/v_chat_app_service.dart';
 import '../../../../../utils/api_utils/server_config.dart';
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../../utils/custom_widgets/rounded_container.dart';
-import '../message_recored_view.dart';
+import 'message_recored_view.dart';
 import 'attachment_picker_widget.dart';
 import 'message_filed.dart';
 
@@ -78,8 +78,8 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
         Expanded(
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(15)),
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: MessageFiled(
               controller: widget.controller,
               onChangeText: (txt) {

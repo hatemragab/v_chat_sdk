@@ -5,9 +5,9 @@ import 'package:record/record.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:textless/textless.dart';
 
-import '../../../../utils/custom_widgets/custom_alert_dialog.dart';
-import '../../../../utils/custom_widgets/rounded_container.dart';
-import '../../../../utils/helpers/helpers.dart';
+import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
+import '../../../../../utils/custom_widgets/rounded_container.dart';
+import '../../../../../utils/helpers/helpers.dart';
 
 class MessageRecordView extends StatefulWidget {
   final Function(String path, String duration) onReceiveRecord;

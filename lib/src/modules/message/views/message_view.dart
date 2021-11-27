@@ -11,7 +11,8 @@ import '../../rooms/cubit/room_cubit.dart';
 import '../cubit/message_cubit.dart';
 import 'list_view_widgets/message_item_view.dart';
 import 'widgets/message_appbar_view.dart';
-import 'widgets/new_chat_input/v_chat_message_input.dart';
+import 'widgets/v_chat_message_input/v_chat_message_input.dart';
+
 
 class MessageView extends StatelessWidget {
   final int roomId;
@@ -45,7 +46,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
     final messageController = context.read<MessageCubit>();
 
     return Scaffold(
-      appBar: MessageAppBarView(),
+      appBar:const MessageAppBarView(),
       body: Padding(
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 1, top: 4),
         child: Column(

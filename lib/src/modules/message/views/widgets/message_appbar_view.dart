@@ -9,16 +9,15 @@ import '../../../../utils/custom_widgets/circle_image.dart';
 import '../../../rooms/cubit/room_cubit.dart';
 
 class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
-  final roomController = RoomCubit.instance;
 
-  MessageAppBarView({Key? key}) : super(key: key);
+
+ const MessageAppBarView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final roomController = RoomCubit.instance;
     return AppBar(
-      elevation: Theme.of(context).appBarTheme.elevation,
-      centerTitle: Theme.of(context).appBarTheme.centerTitle,
-
+      centerTitle: true,
       title: BlocBuilder<RoomCubit, RoomState>(
         bloc: RoomCubit.instance,
         builder: (context, state) {
@@ -37,23 +36,23 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                     if (isSingle) {
                       if (typingSt.status != RoomTypingType.stop) {
                         if (typingSt.status == RoomTypingType.typing) {
-                          return t.typing().s2;
+                          return t.typing().b2.color(Colors.green);
                         }
                         if (typingSt.status == RoomTypingType.recording) {
-                          return t.recording().s2.color(Colors.black);
+                          return t.recording().b2.color(Colors.green);
                         }
-                        return "${typingSt.status.inString} ...".s2;
+                        return "${typingSt.status.inString} ...".b2.color(Colors.green);
                       }
                       if (isOnline == 1) {
-                        return t.online().text.size(14);
+                        return t.online().b2;
                       } else {
                         return const SizedBox.shrink();
                       }
                     } else {
                       if (typingSt.status != RoomTypingType.stop) {
                         return "${typingSt.name} is ${typingSt.status.inString} ..."
-                            .s2
-                            .size(14);
+                            .b2.color(Colors.green);
+
                       } else {
                         return const SizedBox();
                       }

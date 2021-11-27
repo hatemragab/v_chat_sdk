@@ -22,9 +22,6 @@ import 'utils/api_utils/server_config.dart';
 import 'utils/custom_widgets/create_single_chat_dialog.dart';
 import 'utils/storage_keys.dart';
 import 'utils/helpers/helpers.dart';
-import 'utils/theme/v_chat_const_dark_theme.dart';
-import 'utils/theme/v_chat_const_light_theme.dart';
-import 'utils/theme/v_chat_theme.dart';
 import 'utils/translator/v_chat_lookup_string.dart';
 import 'utils/v_chat_widgets_builder.dart';
 import 'package:get_it/get_it.dart';
@@ -57,8 +54,7 @@ class VChatController {
     required Uri baseUrl,
     required String appName,
     required bool isUseFirebase,
-    VChatTheme? vChatLightTheme,
-    VChatTheme? vChatDarkTheme,
+
     VChatWidgetBuilder widgetsBuilder = const VChatWidgetBuilder(),
     required bool enableLogger,
     // required GlobalKey<NavigatorState> navigatorKey,
@@ -84,69 +80,7 @@ class VChatController {
     appService.enableLog = enableLog;
     appService.vcBuilder = widgetsBuilder;
 
-    ///light theme config
-    if (vChatLightTheme != null) {
-      appService.lightTheme = appService.lightTheme.copyWith(
-        dialogTheme: vChatLightTheme.vChatDialogTheme ??
-            vChatConstLightTheme.dialogTheme,
-        elevatedButtonTheme: vChatLightTheme.vChatButtonTheme ??
-            vChatConstLightTheme.elevatedButtonTheme,
-        iconTheme: vChatLightTheme.iconTheme ?? vChatConstLightTheme.iconTheme,
-        backgroundColor: vChatLightTheme.scaffoldBackgroundColor ??
-            vChatConstLightTheme.scaffoldBackgroundColor,
-        scaffoldBackgroundColor: vChatLightTheme.scaffoldBackgroundColor ??
-            vChatConstLightTheme.scaffoldBackgroundColor,
-        primaryColor:
-            vChatLightTheme.primaryColor ?? vChatConstLightTheme.primaryColor,
-        appBarTheme:
-            vChatLightTheme.appBarTheme ?? vChatConstLightTheme.appBarTheme,
-        colorScheme: vChatLightTheme.accentColor == null
-            ? vChatConstLightTheme.colorScheme
-            : ColorScheme.fromSwatch().copyWith(
-                secondary: vChatLightTheme.accentColor,
-              ),
-        textTheme: TextTheme().copyWith(
-          caption: vChatLightTheme.cationStyle ??
-              vChatConstLightTheme.textTheme.caption,
-          headline6: vChatLightTheme.boldTitle ??
-              vChatConstLightTheme.textTheme.headline6,
-          subtitle2: vChatLightTheme.seenMessageInRooms ??
-              vChatConstLightTheme.textTheme.subtitle2,
-        ),
-      );
-    }
 
-    ///dark theme config
-    if (vChatDarkTheme != null) {
-      appService.darkTheme = appService.darkTheme.copyWith(
-        dialogTheme:
-            vChatDarkTheme.vChatDialogTheme ?? vChatConstDarkTheme.dialogTheme,
-        elevatedButtonTheme: vChatDarkTheme.vChatButtonTheme ??
-            vChatConstDarkTheme.elevatedButtonTheme,
-        iconTheme: vChatDarkTheme.iconTheme ?? vChatConstDarkTheme.iconTheme,
-        backgroundColor: vChatDarkTheme.scaffoldBackgroundColor ??
-            vChatConstDarkTheme.scaffoldBackgroundColor,
-        scaffoldBackgroundColor: vChatDarkTheme.scaffoldBackgroundColor ??
-            vChatConstDarkTheme.scaffoldBackgroundColor,
-        primaryColor:
-            vChatDarkTheme.primaryColor ?? vChatConstDarkTheme.primaryColor,
-        appBarTheme:
-            vChatDarkTheme.appBarTheme ?? vChatConstDarkTheme.appBarTheme,
-        colorScheme: vChatDarkTheme.accentColor == null
-            ? vChatConstDarkTheme.colorScheme
-            : ColorScheme.fromSwatch().copyWith(
-                secondary: vChatDarkTheme.accentColor,
-              ),
-        textTheme: TextTheme().copyWith(
-          caption: vChatDarkTheme.cationStyle ??
-              vChatConstDarkTheme.textTheme.caption,
-          headline6: vChatDarkTheme.boldTitle ??
-              vChatConstDarkTheme.textTheme.headline6,
-          subtitle2: vChatDarkTheme.seenMessageInRooms ??
-              vChatConstDarkTheme.textTheme.subtitle2,
-        ),
-      );
-    }
   }
 
   /// to add new language to v chat

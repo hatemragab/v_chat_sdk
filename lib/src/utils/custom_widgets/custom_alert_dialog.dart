@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:v_chat_sdk/src/utils/v_chat_extentions.dart';
 import '../../services/v_chat_app_service.dart';
 
 class CustomAlert {
@@ -66,27 +67,22 @@ class CustomAlert {
                     bottom: 5,
                     left: 10,
                     right: 10),
-                content: Theme(
-                  data: context.isDark
-                      ? VChatAppService.instance.darkTheme
-                      : VChatAppService.instance.lightTheme,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      errorMessage.text.alignCenter,
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        child: ElevatedButton(
-                            onPressed: onPress ?? () => Navigator.pop(context),
-                            child: VChatAppService.instance
-                                .getTrans(context)
-                                .oK()
-                                .text),
-                      )
-                    ],
-                  ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    errorMessage.text.alignCenter,
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      child: ElevatedButton(
+                          onPressed: onPress ?? () => Navigator.pop(context),
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .oK()
+                              .text),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -162,9 +158,8 @@ class CustomAlert {
   }
 
   static Future<int?> customAskDialog({
-    String? title,
+    required String title,
     required BuildContext context,
-    required String message,
     bool dismissible = true,
   }) async {
     return await showGeneralDialog(
@@ -178,45 +173,64 @@ class CustomAlert {
             scale: a1.value,
             child: Opacity(
               opacity: a1.value,
-              child: AlertDialog(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                title: title == null ? null : title.text.alignCenter,
-                contentPadding: EdgeInsets.zero.copyWith(
-                    top: title == null ? 20 : 8,
-                    bottom: 5,
-                    left: 10,
-                    right: 10),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    message.text.alignCenter,
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
+              child: Platform.isIOS
+                  ? CupertinoAlertDialog(
+                      title: title.text,
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
                           onPressed: () => Navigator.pop(context, -1),
                           child: VChatAppService.instance
                               .getTrans(context)
                               .cancel()
-                              .text
-                              .size(15),
+                              .text,
                         ),
-                        ElevatedButton(
+                        TextButton(
                           onPressed: () => Navigator.pop(context, 1),
                           child: VChatAppService.instance
                               .getTrans(context)
                               .oK()
-                              .text
-                              .size(15),
+                              .text,
                         ),
                       ],
                     )
-                  ],
-                ),
-              ),
+                  : AlertDialog(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      title: title.text,
+                      contentPadding: EdgeInsets.zero
+                          .copyWith(top: 8, bottom: 5, left: 10, right: 10),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, -1),
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .cancel()
+                              .text,
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 1),
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .oK()
+                              .text,
+                        ),
+                      ],
+                    ),
             ),
           ),
         );
