@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -32,12 +31,13 @@ class LoginController {
       await GetStorage().write("myModel", u.toMap());
 
       ///Login on v_chat_sdk system
-      await VChatController.instance
-          .login(context: context,dto: VChatLoginDto(email: email, password: password));
+      await VChatController.instance.login(
+          context: context,
+          dto: VChatLoginDto(email: email, password: password));
       Navigator.pop(context);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const Home(),
-      ));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Home()),
+          (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());

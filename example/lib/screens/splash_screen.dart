@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 import 'home.dart';
 import 'login_screen.dart';
@@ -18,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startNavigate();
+
   }
 
   @override

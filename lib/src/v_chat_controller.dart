@@ -191,8 +191,7 @@ class VChatController {
         },
       );
       if (res != null && res.isNotEmpty) {
-        final data =
-            await _vChatUsersApi.createNewSingleRoom(res, peerEmail);
+        final data = await _vChatUsersApi.createNewSingleRoom(res, peerEmail);
 
         /// room has been created successfully
         await Future.delayed(const Duration(seconds: 1));
@@ -242,6 +241,13 @@ class VChatController {
     await Future.delayed(Duration.zero);
     bindChatControllers(context);
     return user;
+  }
+
+  ///Force language to the package
+  ///i made this api for who use getx translate projects
+  ///you must call this api any time you open the app
+  void forceLanguage({required String languageCode, String? countryCode}) {
+    return VChatAppService.instance.changeLanguage(languageCode:languageCode,countryCode: countryCode );
   }
 
   Future _saveUser(VChatUser user) async {

@@ -65,9 +65,9 @@ class RegisterController {
         context: context
       );
       Navigator.pop(context);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const Home(),
-      ));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Home()),
+              (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());

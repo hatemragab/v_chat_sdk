@@ -8,7 +8,6 @@ import './screens/splash_screen.dart';
 import 'controllers/language_controller.dart';
 import 'generated/l10n.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class VChatCustomWidgets extends VChatWidgetBuilder {
   @override
@@ -39,6 +38,8 @@ void main() async {
   VChatController.instance.setLocaleMessages(
       languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
 
+  // VChatController.instance.forceLanguage(languageCode: "ar",countryCode:'EG');
+
   runApp(ChangeNotifierProvider<LanguageController>(
     create: (context) => LanguageController(),
     child: const MyApp(),
@@ -58,7 +59,6 @@ class _MyAppState extends State<MyApp> {
     context.watch<LanguageController>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       localizationsDelegates: const [

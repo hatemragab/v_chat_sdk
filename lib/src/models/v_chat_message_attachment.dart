@@ -16,11 +16,6 @@ class VChatMessageAttachment {
   final String? linkDescription;
   final String? linkDataUrl;
 
-  // final RxString progress = "0 %".obs;
-  // final Rx<Duration> maxDuration = const Duration(milliseconds: 1).obs;
-  //
-  // final Rx<Duration> currentPlayPosition = Duration.zero.obs;
-  // final RxBool isVoicePlying = false.obs;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 

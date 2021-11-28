@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: S.of(context).login.text,
+        title: S.of(context).register.text,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

@@ -1,4 +1,3 @@
-import '../../services/v_chat_app_service.dart';
 
 class ServerConfig {
   ServerConfig._();

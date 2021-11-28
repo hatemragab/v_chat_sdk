@@ -30,19 +30,15 @@ class VChatAppService {
 
   late String currentLocal;
 
-
   late String appName;
 
   late bool enableLog;
 
+  String? forceLanguage;
+
   VChatLookupString getTrans(BuildContext context) {
     /// languageCode is EN or AR etc...
     var locale = Localizations.localeOf(context);
-
-    ///check if user us getx or flutter localization
-    if (Get.locale != null) {
-      locale = Get.locale!;
-    }
 
     ///countryCode is US or EG etc...
     final languageCode = locale.languageCode;
@@ -55,17 +51,14 @@ class VChatAppService {
     }
     currentLocal = fullLocalName;
 
+    if (forceLanguage != null) {
+      currentLocal = forceLanguage!;
+    }
+
     if (_lookupMessagesMap[currentLocal] == null) {
       if (languageCode == "en") {
         return EnLanguage();
       }
-      // for (final lang in _lookupMessagesMap.entries) {
-      //   final x = lang.key.split("_")[0];
-      //   print(currentLocal +"  " + x);
-      //   if(x == currentLocal){
-      //     return _lookupMessagesMap[lang.key]!;
-      //   }
-      // }
       Helpers.vlog(
           "failed to find the language $currentLocal in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
       return EnLanguage();
@@ -108,5 +101,13 @@ class VChatAppService {
       }
     }
     return this;
+  }
+
+  void changeLanguage({required String languageCode, String? countryCode}) {
+    if (countryCode != null) {
+      forceLanguage = "${languageCode}_${countryCode.toUpperCase()}";
+    } else {
+      forceLanguage = languageCode;
+    }
   }
 }
