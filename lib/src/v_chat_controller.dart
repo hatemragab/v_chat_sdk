@@ -15,7 +15,7 @@ import 'services/local_storage_service.dart';
 import 'services/notification_service.dart';
 import 'services/socket_service.dart';
 import 'services/v_chat_app_service.dart';
-import 'services/vchat_provider.dart';
+import 'services/v_chat_provider.dart';
 import 'sqlite/db_provider.dart';
 import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'utils/api_utils/server_config.dart';
@@ -31,12 +31,9 @@ import 'package:get_it/get_it.dart';
 class VChatController {
   VChatController._privateConstructor();
 
-  static final VChatController _instance =
-      VChatController._privateConstructor();
+  static final VChatController instance = VChatController._privateConstructor();
 
-  static VChatController get instance => _instance;
-
-  final _vChatControllerProvider = VChatProvider();
+  final _vChatUsersApi = VChatProvider();
 
   final _authProvider = AuthProvider();
 
@@ -54,10 +51,8 @@ class VChatController {
     required Uri baseUrl,
     required String appName,
     required bool isUseFirebase,
-
     VChatWidgetBuilder widgetsBuilder = const VChatWidgetBuilder(),
     required bool enableLogger,
-    // required GlobalKey<NavigatorState> navigatorKey,
     int maxMediaUploadSize = 50 * 1000 * 1000,
   }) async {
     ///init some service
@@ -66,7 +61,6 @@ class VChatController {
     final appService = VChatAppService.instance;
 
     ///set some constants
-    // appService.navKey = navigatorKey;
     appService.isUseFirebase = isUseFirebase;
     appService.appName = appName;
     ServerConfig.serverIp = baseUrl.toString();
@@ -79,8 +73,6 @@ class VChatController {
     }
     appService.enableLog = enableLog;
     appService.vcBuilder = widgetsBuilder;
-
-
   }
 
   /// to add new language to v chat
@@ -118,7 +110,7 @@ class VChatController {
   Future<String> enableAllNotification() async {
     if (VChatAppService.instance.isUseFirebase) {
       final token = (await FirebaseMessaging.instance.getToken()).toString();
-      return await _vChatControllerProvider.updateUserFcmToken(token);
+      return await _vChatUsersApi.updateUserFcmToken(token);
     } else {
       throw "you have to enable fire base for this project first";
     }
@@ -126,19 +118,19 @@ class VChatController {
 
   /// **throw** No internet connection
   Future updateUserName({required String name}) async {
-    return await _vChatControllerProvider.updateUserName(name: name);
+    return await _vChatUsersApi.updateUserName(name: name);
   }
 
   /// **throw** File Not Found !
   /// **throw** No internet connection
   Future updateUserImage({required String imagePath}) async {
-    return await _vChatControllerProvider.updateUserImage(path: imagePath);
+    return await _vChatUsersApi.updateUserImage(path: imagePath);
   }
 
   /// **throw** No internet connection
   Future updateUserPassword(
       {required String oldPassword, required String newPassword}) async {
-    return await _vChatControllerProvider.updateUserPassword(
+    return await _vChatUsersApi.updateUserPassword(
         oldPassword: oldPassword, newPassword: newPassword);
   }
 
@@ -149,7 +141,6 @@ class VChatController {
       throw VChatSdkException(
           "You must login or register to v chat first delete the app and login again !");
     }
-    // SocketService.instance.connectSocket();
 
     if (!getIt.isRegistered<SocketService>()) {
       getIt.registerSingleton(SocketService());
@@ -181,17 +172,17 @@ class VChatController {
   /// **throw** No internet connection
   Future<dynamic> createSingleChat({
     required String peerEmail,
-    required BuildContext ctx,
+    required BuildContext context,
     String? titleTxt,
     String? createBtnTxt,
   }) async {
-    final data = await _vChatControllerProvider.createSingleChat(peerEmail);
+    final data = await _vChatUsersApi.createSingleChat(peerEmail);
 
     if (data == false) {
       /// No rooms founded
       /// create new Room
       final res = await showDialog<String>(
-        context: ctx  ,
+        context: context,
         builder: (context) {
           return CreateSingleChatDialog(
             createBtnTxt: createBtnTxt,
@@ -201,20 +192,20 @@ class VChatController {
       );
       if (res != null && res.isNotEmpty) {
         final data =
-            await _vChatControllerProvider.createNewSingleRoom(res, peerEmail);
+            await _vChatUsersApi.createNewSingleRoom(res, peerEmail);
 
         /// room has been created successfully
         await Future.delayed(const Duration(seconds: 1));
         _navigateToRoomMessage(
           data,
-          ctx,
+          context,
         );
       }
     } else {
       /// there are room open the chat page
       return await _navigateToRoomMessage(
         data,
-        ctx,
+        context,
       );
     }
   }
@@ -264,7 +255,7 @@ class VChatController {
   Future logOut() async {
     try {
       await FirebaseMessaging.instance.deleteToken();
-      await _vChatControllerProvider.logOut();
+      await _vChatUsersApi.logOut();
     } catch (err) {
       //
     }

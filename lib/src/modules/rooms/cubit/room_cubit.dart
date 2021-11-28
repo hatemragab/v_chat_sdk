@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../models/v_chat_room_typing.dart';
@@ -12,19 +13,16 @@ import '../room_api_provider.dart';
 part 'room_state.dart';
 
 class RoomCubit extends Cubit<RoomState> {
-  bool isLoadMoreFinished = false;
 
-
-
-  RoomCubit._privateConstructor(): super(RoomInitial());
+  RoomCubit._privateConstructor() : super(RoomInitial());
 
   static final RoomCubit instance = RoomCubit._privateConstructor();
 
   final _provider = RoomsApiProvider();
 
-
-
   final rooms = <VChatRoom>[];
+
+  LoadMoreStatus loadingStatus = LoadMoreStatus.loaded;
 
   final scrollController = ScrollController();
   int? currentRoomId;
@@ -35,6 +33,9 @@ class RoomCubit extends Cubit<RoomState> {
     this.rooms.addAll(rooms);
     emit(RoomLoaded(this.rooms));
   }
+
+
+
 
   void setSocketRooms(List<VChatRoom> rooms) {
     this.rooms.clear();
@@ -52,8 +53,6 @@ class RoomCubit extends Cubit<RoomState> {
     emit(RoomLoaded(rooms));
   }
 
-
-
   void updateRoomTypingChanged(VChatRoomTyping t) {
     final index = rooms.indexWhere((element) => element.id == t.roomId);
     if (index != -1) {
@@ -64,32 +63,20 @@ class RoomCubit extends Cubit<RoomState> {
     emit(RoomLoaded(rooms));
   }
 
-  Future<bool> loadMore() async {
-    if( rooms.isEmpty || rooms.length<19){
-      return true;
-    }
-   final loadedRooms = await _provider.loadMore(rooms.last.id);
+  Future<void> loadMore() async {
+    final loadedRooms = await _provider.loadMore(rooms.last.id);
+    loadingStatus = LoadMoreStatus.loaded;
     if (loadedRooms.isEmpty) {
-      isLoadMoreFinished = true;
+      loadingStatus = LoadMoreStatus.completed;
     }
     rooms.addAll(loadedRooms);
     emit(RoomLoaded(rooms));
-    return true;
+
   }
 
-  bool isRoomOpen(int roomId) {
-    if (currentRoomId == null) {
-      return false;
-    } else {
-      if (currentRoomId == roomId) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
+  bool isRoomOpen(int roomId) => currentRoomId == roomId;
 
-  void blockOrLeaveAction(BuildContext context,VChatRoom room) async {
+  void blockOrLeaveAction(BuildContext context, VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
         await _provider.leaveGroupChat(room.id.toString());
@@ -105,7 +92,7 @@ class RoomCubit extends Cubit<RoomState> {
     }
   }
 
-  void muteAction(BuildContext context,final VChatRoom room) async {
+  void muteAction(BuildContext context, final VChatRoom room) async {
     try {
       ///socket will take car of update the ui
       await _provider.changeNotifaictions(room.id);
@@ -134,5 +121,26 @@ class RoomCubit extends Cubit<RoomState> {
       return b.updatedAt.compareTo(a.updatedAt);
     });
     emit(RoomLoaded(rooms));
+  }
+
+  void setListViewListener() {
+    scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() async {
+    if (scrollController.offset >=
+            scrollController.position.maxScrollExtent / 2 &&
+        !scrollController.position.outOfRange &&
+        loadingStatus != LoadMoreStatus.loading &&
+        loadingStatus != LoadMoreStatus.completed) {
+      loadingStatus = LoadMoreStatus.loading;
+      loadMore();
+    }
+  }
+
+  @override
+  Future<void> close() async{
+    scrollController.dispose();
+    super.close();
   }
 }

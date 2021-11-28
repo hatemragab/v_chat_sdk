@@ -25,55 +25,54 @@ class _MessageFiledState extends State<MessageFiled> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 58),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const SizedBox(
-            width: 8,
-          ),
-          InkWell(
-            onTap: widget.onCameraPressed,
-            child: const Icon(Icons.camera_alt_outlined),
-          ),
-          Expanded(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 160),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: AutoDirection(
-                  text: txt,
-                  child: TextField(
-                    controller: widget.controller,
-                    textCapitalization: TextCapitalization.sentences,
-                    textInputAction: TextInputAction.newline,
-                    keyboardType: TextInputType.multiline,
-                    style: const TextStyle(color: Colors.black),
-                    autofocus: false,
-                    maxLines: null,
-                    onChanged: (s) {
-                      widget.onChangeText(s);
-                      setState(() {
-                        txt = s.toString();
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: VChatAppService.instance.getTrans(context).yourMessage(),
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                    ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        const SizedBox(
+          width: 10,
+        ),
+        InkWell(
+          onTap: widget.onCameraPressed,
+          child: const Icon(Icons.camera_alt_outlined),
+        ),
+        Expanded(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 160),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: AutoDirection(
+                text: txt,
+                child: TextField(
+                  cursorHeight: 25,
+
+                  controller: widget.controller,
+                  textCapitalization: TextCapitalization.sentences,
+                  textInputAction: TextInputAction.newline,
+                  keyboardType: TextInputType.multiline,
+                  autofocus: false,
+                  maxLines: null,
+                  onChanged: (s) {
+                    widget.onChangeText(s);
+                    setState(() {
+                      txt = s.toString();
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: VChatAppService.instance
+                        .getTrans(context)
+                        .yourMessage(),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
             ),
           ),
-          InkWell(
-              onTap: widget.onAttachmentPressed,
-              child: const Icon(Icons.attach_file)),
-          const SizedBox(width: 8)
-        ],
-      ),
+        ),
+        InkWell(
+            onTap: widget.onAttachmentPressed,
+            child: const Icon(Icons.attach_file)),
+        const SizedBox(width: 8)
+      ],
     );
   }
 }

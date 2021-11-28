@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_extention.dart';
 
 import '../../../../../services/v_chat_app_service.dart';
 import '../../../../../utils/api_utils/server_config.dart';
@@ -70,110 +71,120 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
       );
     }
 
-    return Row(
-      children: [
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: MessageFiled(
-              controller: widget.controller,
-              onChangeText: (txt) {
-                if (txt.isEmpty) {
-                  isTyping = false;
-                } else {
-                  isTyping = true;
-                }
-                setState(() {});
-              },
-              onAttachmentPressed: () async {
-                final res = await showCupertinoModalPopup(
-                  barrierDismissible: true,
-                  semanticsDismissible: true,
-                  context: context,
-                  builder: (context) {
-                    return const AttachmentPickerWidget();
-                  },
-                );
-                final type = res['type'];
-                final path = res['path'];
-                if (type == "photo") {
-                  widget.onReceiveImage(path);
-                } else if (type == "file") {
-                  widget.onReceiveFile(path);
-                } else if (type == "video") {
-                  widget.onReceiveVideo(path);
-                }
-              },
-              onCameraPressed: () async {
-                final picker = ImagePicker();
-                final pickedFile =
-                    await picker.pickImage(source: ImageSource.camera);
-                if (pickedFile != null) {
-                  final t = VChatAppService.instance.getTrans(context);
-                  if (File(pickedFile.path).lengthSync() >
-                      ServerConfig.maxMessageFileSize) {
-                    File(pickedFile.path).deleteSync();
-                    CustomAlert.error(msg: t.fileIsTooBig());
+    return SafeArea(
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: VChatAppService.instance.vcBuilder
+                    .messageInputBackgroundColor(context),
+              ),
+              child: MessageFiled(
+                controller: widget.controller,
+                onChangeText: (txt) {
+                  if (txt.isEmpty) {
+                    isTyping = false;
+                  } else {
+                    isTyping = true;
                   }
-                  widget.onReceiveImage(pickedFile.path);
-                }
-              },
+                  setState(() {});
+                },
+                onAttachmentPressed: () async {
+                  final res = await showCupertinoModalPopup(
+                    barrierDismissible: true,
+                    semanticsDismissible: true,
+                    context: context,
+                    builder: (context) {
+                      return const AttachmentPickerWidget();
+                    },
+                  );
+                  if(res!=null){
+                    final type = res['type'];
+                    final path = res['path'];
+                    if (type == "photo") {
+                      widget.onReceiveImage(path);
+                    } else if (type == "file") {
+                      widget.onReceiveFile(path);
+                    } else if (type == "video") {
+                      widget.onReceiveVideo(path);
+                    }
+                  }
+
+                },
+                onCameraPressed: () async {
+                  final picker = ImagePicker();
+                  final pickedFile =
+                      await picker.pickImage(source: ImageSource.camera);
+                  if (pickedFile != null) {
+                    final t = VChatAppService.instance.getTrans(context);
+                    if (File(pickedFile.path).lengthSync() >
+                        ServerConfig.maxMessageFileSize) {
+                      File(pickedFile.path).deleteSync();
+                      CustomAlert.error(msg: t.fileIsTooBig());
+                    }
+                    widget.onReceiveImage(pickedFile.path);
+                  }
+                },
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        isTyping
-            ? InkWell(
-                onTap: () async {
-                  widget.onReceiveText();
+          const SizedBox(
+            width: 10,
+          ),
+          isTyping
+              ? InkWell(
+                  onTap: () async {
+                    widget.onReceiveText();
 
-                  setState(() {
-                    isTyping = false;
-                  });
-                },
-                child: RoundedContainer(
-                  boxShape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor,
-                  height: 50,
-                  width: 50,
-                  child: Icon(
-                    Icons.send,
-                    color: Colors.white,
+                    setState(() {
+                      isTyping = false;
+                    });
+                  },
+                  child: RoundedContainer(
+                    boxShape: BoxShape.circle,
+                    color: VChatAppService.instance.vcBuilder.sendButtonColor(context,Theme.of(context).brightness == Brightness.dark),
+                    height: 50,
+                    width: 50,
+                    child: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : InkWell(
+                  onLongPress: () {
+                    setState(() {
+                      isRecording = true;
+                      isTyping = false;
+                    });
+                  },
+                  onTap: () {
+                    setState(() {
+                      isRecording = true;
+                      isTyping = false;
+                    });
+                  },
+                  child: RoundedContainer(
+                    boxShape: BoxShape.circle,
+                    color: VChatAppService.instance.vcBuilder.sendButtonColor(context,context.isDark),
+                    height: 50,
+                    width: 50,
+                    child: Icon(
+                      Icons.keyboard_voice_outlined,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              )
-            : InkWell(
-                onLongPress: () {
-                  setState(() {
-                    isRecording = true;
-                    isTyping = false;
-                  });
-                },
-                onTap: () {
-                  setState(() {
-                    isRecording = true;
-                    isTyping = false;
-                  });
-                },
-                child: RoundedContainer(
-                  boxShape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor,
-                  height: 50,
-                  width: 50,
-                  child: Icon(
-                    Icons.keyboard_voice_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-      ],
+          const SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
     );
   }
 }

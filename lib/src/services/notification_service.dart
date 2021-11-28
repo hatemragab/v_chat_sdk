@@ -15,7 +15,7 @@ class NotificationService {
 
   static final NotificationService instance =
       NotificationService._privateConstructor();
-    late BuildContext context;
+  late BuildContext context;
   final androidNotificationDetails = const AndroidNotificationDetails(
     "v_chat_channel",
     "v_chat_channel",
@@ -85,11 +85,10 @@ class NotificationService {
             await Future.delayed(const Duration(milliseconds: 100));
             RoomCubit.instance.currentRoomId = roomId;
 
-            Navigator.of(context)
-                .push(MaterialPageRoute(
-                    builder: (_) => MessageView(
-                          roomId: roomId,
-                        )));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => MessageView(
+                      roomId: roomId,
+                    )));
           }
         } catch (err) {
           Helpers.vlog(err.toString());
@@ -111,17 +110,19 @@ class NotificationService {
             defaultPresentSound: true,
           )),
       onSelectNotification: (payload) {
-        final roomId = int.parse(payload!);
-        if (!RoomCubit.instance.isRoomOpen(roomId)) {
-          RoomCubit.instance.currentRoomId = roomId;
+        if (payload != null) {
+          final roomId = int.parse(payload);
+          if (!RoomCubit.instance.isRoomOpen(roomId)) {
+            RoomCubit.instance.currentRoomId = roomId;
 
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => MessageView(
-                roomId: roomId,
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => MessageView(
+                  roomId: roomId,
+                ),
               ),
-            ),
-          );
+            );
+          }
         }
       },
     );
@@ -158,11 +159,10 @@ class NotificationService {
           await Future.delayed(const Duration(milliseconds: 2500));
           RoomCubit.instance.currentRoomId = roomId;
 
-          Navigator.of(context)
-              .push(MaterialPageRoute(
-                  builder: (_) => MessageView(
-                        roomId: roomId,
-                      )));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => MessageView(
+                    roomId: roomId,
+                  )));
         } catch (err) {
           Helpers.vlog(err.toString());
           //

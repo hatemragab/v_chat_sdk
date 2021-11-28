@@ -43,7 +43,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  color: Colors.white,
+
                   height: 100,
                   child: isPlaying
                       ? InkWell(
@@ -55,7 +55,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
                             child: const Icon(
                               Icons.pause,
                               color: Colors.white,
-                              size: 28,
+                              size: 32,
                             ),
                           ),
                         )
@@ -73,7 +73,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
                                 child: Icon(
                                   Icons.play_circle,
                                   color: Colors.indigo,
-                                  size: 33,
+                                  size: 40,
                                 ),
                               ),
                             ),
@@ -86,6 +86,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
                   height: 32,
                   animation: isPlaying,
                   spacing: 2.5,
+                  width: MediaQuery.of(context).size.width/2,
                   bars: [
                     AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
                     AudioWaveBar(height: 30, color: Colors.blue),
@@ -107,6 +108,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
                     AudioWaveBar(height: 70, color: Colors.black),
                     AudioWaveBar(height: 40),
                     AudioWaveBar(height: 20, color: Colors.orange),
+
                   ],
                 ),
               ],

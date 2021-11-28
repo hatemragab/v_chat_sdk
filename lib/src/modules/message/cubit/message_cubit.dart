@@ -7,6 +7,7 @@ import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
+import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import 'package:v_chat_sdk/src/services/notification_service.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_typing_type.dart';
@@ -47,14 +48,15 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     });
     WidgetsBinding.instance!.addObserver(this);
     NotificationService.instance.cancelAll();
+    setListViewListener();
   }
 
+  LoadMoreStatus loadingStatus = LoadMoreStatus.loaded;
   final textController = TextEditingController();
   bool isEmitTyping = false;
   final _messageApiProvider = MessageProvider();
   final messages = <VChatMessage>[];
   final scrollController = ScrollController();
-  bool isLoadMoreFinished = false;
 
   ///get messages from sqlite
   Future<void> getLocalMessages(int roomId) async {
@@ -66,26 +68,23 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   ///lode more messages if top retched
-  Future<bool> loadMoreMessages() async {
-    if (messages.isEmpty || messages.length < 19) {
-      isLoadMoreFinished = true;
-      emit(MessageLoaded(messages));
-      return true;
-    }
+  Future<void> loadMoreMessages() async {
     try {
+      loadingStatus = LoadMoreStatus.loading;
       final loadedMessages = await _messageApiProvider.loadMoreMessages(
         roomId,
         messages.last.id.toString(),
       );
-      messages.addAll(loadedMessages);
+      loadingStatus = LoadMoreStatus.loaded;
+
       if (loadedMessages.isEmpty) {
         ///if no more data stop the loading
-        isLoadMoreFinished = true;
+        loadingStatus = LoadMoreStatus.loaded;
       }
+      messages.addAll(loadedMessages);
       emit(MessageLoaded(messages));
-      return true;
     } catch (err) {
-      return false;
+      loadingStatus = LoadMoreStatus.completed;
     }
   }
 
@@ -110,7 +109,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
 
   /// insert new message to the list and update
   void onNewMessage(VChatMessage message) {
-    if (messages.indexWhere((element) => element.id ==message.id)==-1) {
+    if (messages.indexWhere((element) => element.id == message.id) == -1) {
       messages.insert(0, message);
       emit(MessageLoaded(messages));
     }
@@ -139,7 +138,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           "message/file",
           body: {
             "roomId": roomId.toString(),
-            "content": "this content voice 🎤",
+            "content": "This content voice 🎤",
             "type": MessageType.voice.inString,
             "attachment": jsonEncode(VChatMessageAttachment(
               fileSize: fileSize,
@@ -201,7 +200,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           "message/file",
           body: {
             "roomId": roomId.toString(),
-            "content": "this content image 📷",
+            "content": "This content image 📷",
             "type": MessageType.image.inString,
             "attachment": jsonEncode(VChatMessageAttachment(
               fileSize: fileSize,
@@ -234,17 +233,30 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     }
   }
 
+  void setListViewListener() {
+    scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    final maxScrollExtent = scrollController.position.maxScrollExtent / 2;
+    if (scrollController.offset > maxScrollExtent &&
+        loadingStatus != LoadMoreStatus.loading &&
+        loadingStatus != LoadMoreStatus.completed) {
+      loadMoreMessages();
+    }
+  }
+
   ///close message name space socket so can receive notifications
   @override
   Future<void> close() async {
     _messageSocket.dispose();
     RoomCubit.instance.currentRoomId = null;
+
     scrollController.dispose();
     WidgetsBinding.instance!.removeObserver(this);
     if (isEmitTyping) {
       emitTypingChange(0);
     }
-    // textController.removeListener(() { });
     super.close();
   }
 
@@ -266,7 +278,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
         "message/file",
         body: {
           "roomId": roomId.toString(),
-          "content": "this content video 📽",
+          "content": "This content video 📽",
           "type": MessageType.video.inString,
           "attachment": jsonEncode(VChatMessageAttachment(
                   fileSize: fileSize,
@@ -301,7 +313,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           "message/file",
           body: {
             "roomId": roomId.toString(),
-            "content": "this content file 📁",
+            "content": "This content file 📁",
             "type": MessageType.file.inString,
             "attachment": jsonEncode(VChatMessageAttachment(
               fileSize: fileSize,

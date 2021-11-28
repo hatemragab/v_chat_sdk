@@ -45,7 +45,7 @@ class _UserProfileState extends State<UserProfile> {
   void startChat() async {
     try {
       await VChatController.instance
-          .createSingleChat(ctx: context, peerEmail: widget.user.email);
+          .createSingleChat(context: context, peerEmail: widget.user.email);
     } on VChatSdkException catch (err) {
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;

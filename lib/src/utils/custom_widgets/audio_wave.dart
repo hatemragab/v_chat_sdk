@@ -72,40 +72,37 @@ class _AudioWaveState extends State<AudioWave> {
   @override
   void initState() {
     super.initState();
-    if (widget.animation) {
-      bars = [];
-
-      WidgetsBinding.instance?.addPostFrameCallback((x) {
-        Timer.periodic(widget.beatRate, (timer) {
-          int mo = countBeat % widget.bars.length;
-
-          bars = List.from(widget.bars.getRange(0, mo + 1));
-          if (mounted) setState(() {});
-          countBeat++;
-
-          if (widget.animationLoop > 0 &&
-              widget.animationLoop <= (countBeat / widget.bars.length)) {
-            timer.cancel();
-          }
-        });
-      });
-    } else {
-      bars = widget.bars;
-    }
-  }
-
-  @override
-  void didUpdateWidget(AudioWave oldWidget) {
-    super.didUpdateWidget(oldWidget);
     bars = widget.bars;
     setState(() {});
+    // if (widget.animation) {
+    //   bars = [];
+    //
+    //   WidgetsBinding.instance?.addPostFrameCallback((x) {
+    //     Timer.periodic(widget.beatRate, (timer) {
+    //       int mo = countBeat % widget.bars.length;
+    //
+    //       bars = List.from(widget.bars.getRange(0, mo + 1));
+    //       if (mounted) setState(() {});
+    //       countBeat++;
+    //
+    //       if (widget.animationLoop > 0 &&
+    //           widget.animationLoop <= (countBeat / widget.bars.length)) {
+    //         timer.cancel();
+    //       }
+    //     });
+    //   });
+    // } else {
+    //   bars = widget.bars;
+    // }
   }
-  @override
-  void dispose() {
 
-    super.dispose();
+  // @override
+  // void didUpdateWidget(AudioWave oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   bars = widget.bars;
+  //   setState(() {});
+  // }
 
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -17,6 +17,7 @@ class MessageImageItem extends GetView {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+
         Navigator.push(
           context,
           MaterialPageRoute(

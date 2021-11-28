@@ -76,14 +76,14 @@ class LocalStorageService extends GetxService {
     } catch (err) {
       //
     }
-    await database.delete(MessageTable.TABLE_NAME,
+    await database.delete(MessageTable.tableName,
         where: "${MessageTable.COLUMN_ROOM_ID} =?",
         whereArgs: [int.parse(roomId)]);
 
     final batch = database.batch();
     for (var msg in messageToInsert) {
       batch.insert(
-        MessageTable.TABLE_NAME,
+        MessageTable.tableName,
         {
           MessageTable.COLUMN_ID: msg.id,
           MessageTable.COLUMN_ROOM_ID: msg.roomId,
@@ -97,7 +97,7 @@ class LocalStorageService extends GetxService {
 
   Future insertMessage(String roomId, VChatMessage msg) async {
     await database.insert(
-      MessageTable.TABLE_NAME,
+      MessageTable.tableName,
       {
         MessageTable.COLUMN_ID: msg.id,
         MessageTable.COLUMN_ROOM_ID: msg.roomId,
@@ -109,7 +109,7 @@ class LocalStorageService extends GetxService {
 
   Future<List<VChatMessage>> getRoomMessages(int roomId) async {
     final messages = <VChatMessage>[];
-    final maps = await database.query(MessageTable.TABLE_NAME,
+    final maps = await database.query(MessageTable.tableName,
         where: "${MessageTable.COLUMN_ROOM_ID} =?",
         whereArgs: [roomId],
         limit: 30,

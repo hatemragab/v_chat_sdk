@@ -20,6 +20,7 @@ import 'custom_widgets/custom_alert_dialog.dart';
 import 'helpers/dir_helper.dart';
 
 class FileUtils {
+  FileUtils._();
   static Future newDownloadFile(
       BuildContext context, VChatMessageAttachment attachment) async {
     try {

@@ -30,15 +30,12 @@ class VChatAppService {
 
   late String currentLocal;
 
- // GlobalKey<NavigatorState>? navKey;
 
   late String appName;
 
   late bool enableLog;
 
   VChatLookupString getTrans(BuildContext context) {
-
-
     /// languageCode is EN or AR etc...
     var locale = Localizations.localeOf(context);
 
@@ -112,6 +109,4 @@ class VChatAppService {
     }
     return this;
   }
-
-
 }

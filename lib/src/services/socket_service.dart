@@ -14,12 +14,6 @@ import 'local_storage_service.dart';
 import 'v_chat_app_service.dart';
 
 class SocketService {
-  // SocketService._privateConstructor();
-  //
-  // static final SocketService _instance = SocketService._privateConstructor();
-  //
-  // static SocketService get instance => _instance;
-
   ValueNotifier<SocketStateType> socketStateValue =
       ValueNotifier(SocketStateType.connecting);
 

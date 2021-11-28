@@ -7,16 +7,5 @@ extension RoomTypingTypeEnum on RoomTypingType {
 
   RoomTypingType enumType(String type) {
     return RoomTypingType.values.firstWhere((e) => e.inString == type);
-
-  // RoomTypingType enumType(String type) {
-  //   if (type == RoomTypingType.stop.inString) {
-  //     return RoomTypingType.stop;
-  //   } else if (type == RoomTypingType.typing.inString) {
-  //     return RoomTypingType.typing;
-  //   } else if (type == RoomTypingType.recording.inString) {
-  //     return RoomTypingType.recording;
-  //   } else {
-  //     throw ("V_CHAT_SAY =>>>> type in RoomTypingType is ${type.toString()}");
-  //   }
     }
 }

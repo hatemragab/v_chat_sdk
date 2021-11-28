@@ -73,7 +73,7 @@ class EnLanguage implements VChatLookupString {
   String toDay() => "Today";
 
   @override
-  String typing() => "typing ...";
+  String typing() => "Typing ...";
 
   @override
   String userHasBeenBlockedSuccessfully() =>
@@ -123,11 +123,11 @@ class EnLanguage implements VChatLookupString {
   String online() => "Online";
 
   @override
-  String yourMessage() => "your message ";
+  String yourMessage() => "Message";
 
   @override
-  String loadMoreFiled() =>"filed";
+  String loadMoreFiled() =>"Failed";
 
   @override
-  String loadingMore() =>"loading";
+  String loadingMore() =>"Loading";
 }

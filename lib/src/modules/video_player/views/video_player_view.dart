@@ -16,13 +16,8 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
   bool isLoading = true;
 
   @override
-  void initState() {
-    super.initState();
-  //  initPlayer();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    FocusScope.of(context).unfocus();
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -56,7 +51,6 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
       ),
     );
   }
-
 
   void initPlayer() async {
     videoPlayerController = vd.VideoPlayerController.network(widget.url);

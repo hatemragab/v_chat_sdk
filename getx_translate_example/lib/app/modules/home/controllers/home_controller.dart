@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk/v_chat_sdk.dart';
+
 
 class HomeController extends GetxController {
   final isEn = true.obs;

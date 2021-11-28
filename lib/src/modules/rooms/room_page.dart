@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loadmore/loadmore.dart';
 import 'package:textless/textless.dart';
 import '../../services/v_chat_app_service.dart';
 import '../../utils/custom_widgets/connection_checker.dart';
@@ -24,6 +23,7 @@ class VChatRoomsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RoomCubit.instance.setListViewListener();
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(children: [
@@ -41,24 +41,9 @@ class VChatRoomsScreen extends StatelessWidget {
               final rooms = state.rooms;
               final v = VChatAppService.instance.getTrans(context);
               return Expanded(
-                child: LoadMore(
-                  onLoadMore: context.read<RoomCubit>().loadMore,
-                  textBuilder: (status) {
-                    switch (status) {
-                      case LoadMoreStatus.idle:
-                        return "";
-                      case LoadMoreStatus.loading:
-                        return '';
-
-                      case LoadMoreStatus.fail:
-                        return v.loadMoreFiled();
-
-                      case LoadMoreStatus.nomore:
-                        return "";
-                    }
-                  },
-                  isFinish: context.read<RoomCubit>().isLoadMoreFinished,
+                child: Scrollbar(
                   child: ListView.separated(
+                    controller: context.read<RoomCubit>().scrollController,
                     physics: const BouncingScrollPhysics(),
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 8,
@@ -66,9 +51,11 @@ class VChatRoomsScreen extends StatelessWidget {
                     key: const PageStorageKey<String>('RoomsTabView'),
                     padding: const EdgeInsets.all(8.0),
                     itemBuilder: (context, index) {
-                      return SizedBox(
-                        height: 70,
-                        child: RoomItem(rooms[index]),
+                      return Material(
+                        child: SizedBox(
+                          height: 70,
+                          child: RoomItem(rooms[index]),
+                        ),
                       );
                     },
                     itemCount: rooms.length,

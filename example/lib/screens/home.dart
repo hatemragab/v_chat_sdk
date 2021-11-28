@@ -64,6 +64,7 @@ class _HomeState extends State<Home> {
       ),
       AppBar(
         title: S.of(context).myGreatRooms.text,
+        centerTitle: true,
       ),
       AppBar(
         title: S.of(context).settings.text,
@@ -95,6 +96,7 @@ class _HomeState extends State<Home> {
       appBar: PreferredSize(
         child: _childrenAppBars[_currentIndex],
         preferredSize: const Size.fromHeight(kToolbarHeight),
+
       ),
       body: _children[_currentIndex], // new
       bottomNavigationBar: BottomNavigationBar(

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_extention.dart';
 
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../../utils/custom_widgets/rounded_container.dart';
@@ -49,38 +51,44 @@ class _MessageRecordViewState extends State<MessageRecordView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Divider(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              onTap: widget.onCancel,
-              child: const Icon(
-                Icons.cancel,
-                size: 35,
-              ),
-            ),
-            InkWell(
-              child: recordTime.h6,
-            ),
-            InkWell(
-              onTap: stopRecord,
-              child: RoundedContainer(
-                boxShape: BoxShape.circle,
-                color: Theme.of(context).primaryColor,
-                height: 50,
-                width: 50,
-                child: Icon(
-                  Icons.send,
-                  color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          const Divider(
+            height: 1,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: widget.onCancel,
+                child: const Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                  size: 35,
                 ),
               ),
-            )
-          ],
-        ),
-      ],
+              InkWell(
+                child: recordTime.h6,
+              ),
+              InkWell(
+                onTap: stopRecord,
+                child: RoundedContainer(
+                  boxShape: BoxShape.circle,
+                  color: VChatAppService.instance.vcBuilder.sendButtonColor(context,context.isDark),
+                  height: 50,
+                  width: 50,
+                  child: Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -107,7 +115,7 @@ class _MessageRecordViewState extends State<MessageRecordView> {
       } catch (err) {
         Helpers.vlog(err.toString());
         CustomAlert.customAlertDialog(
-          context: context,
+            context: context,
             errorMessage:
                 "record not supported on emulator run on real device !");
         widget.onCancel();

@@ -17,7 +17,9 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final roomController = RoomCubit.instance;
     return AppBar(
+
       centerTitle: true,
+      elevation: 1,
       title: BlocBuilder<RoomCubit, RoomState>(
         bloc: RoomCubit.instance,
         builder: (context, state) {
@@ -30,7 +32,7 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
             final t = VChatAppService.instance.getTrans(context);
             return Column(
               children: [
-                _room.title.text,
+                _room.title.text ,
                 Builder(
                   builder: (_) {
                     if (isSingle) {
