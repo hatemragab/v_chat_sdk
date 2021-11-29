@@ -1,6 +1,6 @@
 name: v_chat_sdk
 description: official sdk for vchat to impement chat system into new or exist flutter app
-version: 0.3.0
+version: 0.4.0
 homepage: https://github.com/hatemragab/v_chat_sdk
 
 environment:

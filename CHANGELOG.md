@@ -39,3 +39,6 @@
 
 ## 0.2.5
 * support android 12
+
+## 0.4.0
+*change from getx to bloc state management new design and more ...

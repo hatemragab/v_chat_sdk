@@ -15,7 +15,7 @@ class VChatWidgetBuilder {
   }
 
   Color sendButtonColor(BuildContext context, bool isDark) {
-    return Theme.of(context).primaryColor;
+    return isDark ? Colors.red : Colors.blue;
   }
 
   Widget senderTextMessageWidget(BuildContext context, String text) {
@@ -42,9 +42,9 @@ class VChatWidgetBuilder {
           trimExpandedText: "show Less",
           moreStyle: Theme.of(context)
               .textTheme
-              .bodyText2!
-              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-          style: Theme.of(context).textTheme.subtitle2,
+              .bodyText1!
+              .copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
     );
@@ -74,9 +74,9 @@ class VChatWidgetBuilder {
           trimExpandedText: "show Less",
           moreStyle: Theme.of(context)
               .textTheme
-              .bodyText2!
-              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-          style: Theme.of(context).textTheme.subtitle2,
+              .bodyText1!
+              .copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
     );
@@ -96,7 +96,7 @@ class VChatWidgetBuilder {
           ),
           Icon(
             Icons.play_circle,
-            color: isDark ? Colors.white54 : Theme.of(context).primaryColor,
+            color: isDark ? Colors.white54 : Colors.blue,
             size: 30,
           ),
           const SizedBox(
@@ -109,7 +109,7 @@ class VChatWidgetBuilder {
           AudioWave(
             height: 32,
             animation: false,
-            width: MediaQuery.of(context).size.width/2,
+            width: MediaQuery.of(context).size.width / 2,
             spacing: 3,
             bars: [
               AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
@@ -144,7 +144,7 @@ class VChatWidgetBuilder {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: isDark ? Colors.black26 :Colors.blueGrey[100],
+        color: isDark ? Colors.black26 : Colors.blueGrey[100],
       ),
       height: 40,
       child: Row(
@@ -154,7 +154,7 @@ class VChatWidgetBuilder {
           ),
           Icon(
             Icons.play_circle,
-            color:Colors.red,
+            color: Colors.red,
             size: 30,
           ),
           const SizedBox(
@@ -167,7 +167,7 @@ class VChatWidgetBuilder {
           AudioWave(
             height: 32,
             animation: false,
-            width: MediaQuery.of(context).size.width/2,
+            width: MediaQuery.of(context).size.width / 2,
             spacing: 3,
             bars: [
               AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
@@ -212,7 +212,7 @@ class VChatWidgetBuilder {
           Icon(
             Icons.insert_drive_file_outlined,
             size: 40,
-            color: isDark ? Colors.white54 : Theme.of(context).primaryColor,
+            color: isDark ? Colors.white54 : Colors.blue,
           ),
           const SizedBox(
             width: 5,
@@ -234,14 +234,14 @@ class VChatWidgetBuilder {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return RoundedContainer(
       height: 75,
-      color: isDark ? Colors.black26 : Colors.blueGrey[100] ,
+      color: isDark ? Colors.black26 : Colors.blueGrey[100],
       borderRadius: BorderRadius.circular(20),
       child: Row(
         children: [
           const SizedBox(
             width: 25,
           ),
-            Icon(
+          Icon(
             Icons.insert_drive_file_outlined,
             size: 40,
             color: isDark ? Colors.white54 : Colors.red,
@@ -253,7 +253,10 @@ class VChatWidgetBuilder {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [fileName.b2.size(13.4).maxLine(1).overflowEllipsis, fileSize.cap],
+              children: [
+                fileName.b2.size(13.4).maxLine(1).overflowEllipsis,
+                fileSize.cap
+              ],
             ),
           )
         ],
