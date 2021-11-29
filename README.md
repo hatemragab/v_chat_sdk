@@ -31,7 +31,7 @@
 Don't forget to see the example attached to github here <a href="https://github.com/hatemragab/v_chat_sdk/tree/master/example">V_CHAT_SDK Example</a>  <br />
 
 Try the example apk <br />
-<a href="https://www.mediafire.com/file/qv3duysbs44wrk1/app-release.apk/file"> Example APK</a>  <br />
+<a href="https://www.mediafire.com/file/kha61ofsagdf1v8/app-release.apk/file"> Example APK</a>  <br />
 
 
 ---
