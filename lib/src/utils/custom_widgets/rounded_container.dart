@@ -26,8 +26,7 @@ class RoundedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: alignment,
-      decoration: BoxDecoration(
-          color: color, borderRadius: borderRadius, shape: boxShape),
+      decoration: BoxDecoration(color: color, borderRadius: borderRadius, shape: boxShape),
       height: height,
       width: width,
       padding: padding,

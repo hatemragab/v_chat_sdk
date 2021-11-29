@@ -26,8 +26,7 @@ class HomeController {
 
   void startChat(String email) async {
     try {
-      await VChatController.instance
-          .createSingleChat(context: context, peerEmail: email);
+      await VChatController.instance.createSingleChat(context: context, peerEmail: email);
     } on VChatSdkException catch (err) {
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;

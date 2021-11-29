@@ -9,8 +9,7 @@ class MessageVoiceView extends StatelessWidget {
   final VChatMessage _message;
   final bool isSender;
 
-  const MessageVoiceView(this._message, {Key? key, required this.isSender})
-      : super(key: key);
+  const MessageVoiceView(this._message, {Key? key, required this.isSender}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +27,7 @@ class MessageVoiceView extends StatelessWidget {
             },
           );
         },
-        child: VChatAppService.instance.vcBuilder
-            .senderVoiceMessageWidget(context, att.fileDuration!),
+        child: VChatAppService.instance.vcBuilder.senderVoiceMessageWidget(context, att.fileDuration!),
       );
     } else {
       return InkWell(
@@ -43,8 +41,7 @@ class MessageVoiceView extends StatelessWidget {
             },
           );
         },
-        child: VChatAppService.instance.vcBuilder
-            .receiverVoiceMessageWidget(context, att.fileDuration!),
+        child: VChatAppService.instance.vcBuilder.receiverVoiceMessageWidget(context, att.fileDuration!),
       );
     }
   }

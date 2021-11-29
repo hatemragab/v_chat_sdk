@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 
 @immutable
 class VChatUser {
@@ -8,7 +7,7 @@ class VChatUser {
   final String imageThumb;
   final String email;
   final String accessToken;
-  final RxBool isSelected = false.obs;
+  final bool isSelected = false;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 

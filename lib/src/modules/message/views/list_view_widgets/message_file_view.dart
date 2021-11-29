@@ -8,8 +8,7 @@ class MessageFileView extends StatelessWidget {
   final bool isSender;
   final myId = VChatAppService.instance.vChatUser!.id;
 
-  MessageFileView(this._message, {Key? key, required this.isSender})
-      : super(key: key);
+  MessageFileView(this._message, {Key? key, required this.isSender}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +18,17 @@ class MessageFileView extends StatelessWidget {
       onTap: () {
         FileUtils.newDownloadFile(context, att);
       },
-      child:isSender?  VChatAppService.instance.vcBuilder.senderFileMessageWidget(
-        context,
-        att.linkTitle!,
-        att.fileSize!,
-      ):VChatAppService.instance.vcBuilder.receiverFileMessageWidget(
-        context,
-        att.linkTitle!,
-        att.fileSize!,
-      ),
+      child: isSender
+          ? VChatAppService.instance.vcBuilder.senderFileMessageWidget(
+              context,
+              att.linkTitle!,
+              att.fileSize!,
+            )
+          : VChatAppService.instance.vcBuilder.receiverFileMessageWidget(
+              context,
+              att.linkTitle!,
+              att.fileSize!,
+            ),
     );
   }
 }

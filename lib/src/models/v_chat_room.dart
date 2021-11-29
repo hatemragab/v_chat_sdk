@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import '../enums/room_type.dart';
 import '../enums/room_typing_type.dart';
 import 'group_chat_setting.dart';
@@ -52,21 +51,14 @@ class VChatRoom {
   factory VChatRoom.fromMap(dynamic map) {
     return VChatRoom(
         id: map['_id'] as int,
-        roomType: map['roomType'] == RoomType.single.inString
-            ? RoomType.single
-            : RoomType.groupChat,
+        roomType: map['roomType'] == RoomType.single.inString ? RoomType.single : RoomType.groupChat,
         blockerId: (map['blockerId'] as int),
         createdAt: map['createdAt'] as int,
         updatedAt: (map['updatedAt'] as int),
-        groupSetting: map['setting'] == null
-            ? null
-            : GroupChatSetting.fromMap(map['groupSetting']),
+        groupSetting: map['setting'] == null ? null : GroupChatSetting.fromMap(map['groupSetting']),
         creatorId: map['creatorId'] as int,
         isMute: (map['isMute'] as int),
-        lastMessageSeenBy: (map['lastMessageSeenBy'] as List)
-            .map((e) => e as int)
-            .toList()
-            .obs,
+        lastMessageSeenBy: (map['lastMessageSeenBy'] as List).map((e) => e as int).toList(),
         isOnline: (map['isOnline'] as int),
         title: map['title'] as String,
         thumbImage: map['thumbImage'] as String,

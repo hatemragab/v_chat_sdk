@@ -1,6 +1,5 @@
 part of 'room_cubit.dart';
 
-
 @immutable
 abstract class RoomState {}
 
@@ -11,4 +10,5 @@ class RoomLoaded extends RoomState {
 
   RoomLoaded(this.rooms);
 }
+
 class RoomEmpty extends RoomState {}

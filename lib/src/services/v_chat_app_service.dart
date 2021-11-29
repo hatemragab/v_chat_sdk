@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/src/utils/theme/v_chat_const_dark_theme.dart';
 import 'package:v_chat_sdk/src/utils/theme/v_chat_const_light_theme.dart';
 import '../../v_chat_sdk.dart';
@@ -67,9 +65,7 @@ class VChatAppService {
     }
   }
 
-  final Map<String, VChatLookupString> _lookupMessagesMap = {
-    'en': EnLanguage()
-  };
+  final Map<String, VChatLookupString> _lookupMessagesMap = {'en': EnLanguage()};
 
   void setLocaleMessages(String locale, VChatLookupString lookupMessages) {
     _lookupMessagesMap[locale] = lookupMessages;
@@ -82,23 +78,12 @@ class VChatAppService {
     if (isUseFirebase) {
       await Firebase.initializeApp();
     }
-    await GetStorage.init();
 
-    final String? userJson =
-        await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
+    final String? userJson = await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
     if (userJson != null) {
       vChatUser = VChatUser.fromMap(jsonDecode(userJson));
     } else {
-      final getXData = GetStorage().read(StorageKeys.KV_CHAT_MY_MODEL);
-      if (getXData != null) {
-        vChatUser = VChatUser.fromMap(getXData);
-        await storage.write(
-          key: StorageKeys.KV_CHAT_MY_MODEL,
-          value: jsonEncode(getXData),
-        );
-      } else {
-        vChatUser = null;
-      }
+      vChatUser = null;
     }
     return this;
   }

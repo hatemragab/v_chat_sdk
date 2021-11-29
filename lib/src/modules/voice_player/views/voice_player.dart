@@ -43,15 +43,13 @@ class _VoicePlayerState extends State<VoicePlayer> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-
                   height: 100,
                   child: isPlaying
                       ? InkWell(
                           onTap: pauseVoice,
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: const BoxDecoration(
-                                color: Colors.indigo, shape: BoxShape.circle),
+                            decoration: const BoxDecoration(color: Colors.indigo, shape: BoxShape.circle),
                             child: const Icon(
                               Icons.pause,
                               color: Colors.white,
@@ -86,7 +84,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
                   height: 32,
                   animation: isPlaying,
                   spacing: 2.5,
-                  width: MediaQuery.of(context).size.width/2,
+                  width: MediaQuery.of(context).size.width / 2,
                   bars: [
                     AudioWaveBar(height: 10, color: Colors.lightBlueAccent),
                     AudioWaveBar(height: 30, color: Colors.blue),
@@ -108,7 +106,6 @@ class _VoicePlayerState extends State<VoicePlayer> {
                     AudioWaveBar(height: 70, color: Colors.black),
                     AudioWaveBar(height: 40),
                     AudioWaveBar(height: 20, color: Colors.orange),
-
                   ],
                 ),
               ],
@@ -131,8 +128,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
 
   void startPlayVoice() async {
     await audioPlayer.play(
-      ServerConfig.messagesMediaBaseUrl +
-          widget.message.messageAttachment!.playUrl!,
+      ServerConfig.messagesMediaBaseUrl + widget.message.messageAttachment!.playUrl!,
       stayAwake: true,
     );
     audioPlayer.onDurationChanged.listen((event) {

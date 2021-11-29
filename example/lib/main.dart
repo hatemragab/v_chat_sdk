@@ -8,7 +8,6 @@ import './screens/splash_screen.dart';
 import 'controllers/language_controller.dart';
 import 'generated/l10n.dart';
 
-
 class VChatCustomWidgets extends VChatWidgetBuilder {
   @override
   Color sendButtonColor(BuildContext context, bool isDark) {
@@ -35,8 +34,7 @@ void main() async {
 
   // add support new language
   // v_chat will change the language one you change it
-  VChatController.instance.setLocaleMessages(
-      languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
+  VChatController.instance.setLocaleMessages(languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
 
   // VChatController.instance.forceLanguage(languageCode: "ar",countryCode:'EG');
 

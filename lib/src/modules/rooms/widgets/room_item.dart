@@ -37,18 +37,13 @@ class RoomItem extends StatelessWidget {
         //Get.toNamed(Routes.MESSAGE);
       },
       onLongPress: () async {
-        final isMyBlock =
-            _room.blockerId == VChatAppService.instance.vChatUser!.id;
+        final isMyBlock = _room.blockerId == VChatAppService.instance.vChatUser!.id;
 
         final res = await CustomVerticalSheetItem.normal(context, [
           CustomSheetModel(
             value: 1,
-            text: _room.isMute == 1
-                ? t.enableNotification()
-                : t.muteNotification(),
-            iconData: _room.isMute == 1
-                ? Icons.notifications
-                : Icons.notifications_off,
+            text: _room.isMute == 1 ? t.enableNotification() : t.muteNotification(),
+            iconData: _room.isMute == 1 ? Icons.notifications : Icons.notifications_off,
           ),
           _room.roomType == RoomType.single
               ? CustomSheetModel(
@@ -71,8 +66,7 @@ class RoomItem extends StatelessWidget {
             context.read<RoomCubit>().muteAction(context, _room);
           }
         } else if (res == 2) {
-          final res = await CustomAlert.customAskDialog(
-              title: t.areYouSure(), context: context);
+          final res = await CustomAlert.customAskDialog(title: t.areYouSure(), context: context);
           if (res == 1) {
             context.read<RoomCubit>().blockOrLeaveAction(context, _room);
           }
@@ -82,9 +76,7 @@ class RoomItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CircleImage.network(
-              path: _room.thumbImage,
-              isOnline: _room.isOnline == 1,
-              isGroup: _room.roomType == RoomType.groupChat),
+              path: _room.thumbImage, isOnline: _room.isOnline == 1, isGroup: _room.roomType == RoomType.groupChat),
           const SizedBox(
             width: 15,
           ),
@@ -100,12 +92,7 @@ class RoomItem extends StatelessWidget {
                     Flexible(
                       child: AutoDirection(
                         text: _room.title,
-                        child: _room.title
-                            .toString()
-                            .h6
-                            .maxLine(1)
-                            .alignStart
-                            .overflowEllipsis,
+                        child: _room.title.toString().h6.maxLine(1).alignStart.overflowEllipsis,
                       ),
                     ),
                     _room.lastMessage.createdAtString.toString().b2
@@ -129,9 +116,7 @@ class RoomItem extends StatelessWidget {
 
                             return txt.text;
                           } else {
-                            return "${tSt.name} is $txt"
-                                .text
-                                .color(Colors.green);
+                            return "${tSt.name} is $txt".text.color(Colors.green);
                           }
                         } else {
                           return Flexible(
@@ -140,9 +125,7 @@ class RoomItem extends StatelessWidget {
                         }
                       },
                     ),
-                    _room.isMute == 1
-                        ? const Icon(Icons.notifications_off)
-                        : const SizedBox.shrink()
+                    _room.isMute == 1 ? const Icon(Icons.notifications_off) : const SizedBox.shrink()
                   ],
                 ),
               ],

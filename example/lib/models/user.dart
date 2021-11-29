@@ -27,12 +27,7 @@ class User {
           accessToken == other.accessToken);
 
   @override
-  int get hashCode =>
-      id.hashCode ^
-      imageThumb.hashCode ^
-      email.hashCode ^
-      name.hashCode ^
-      accessToken.hashCode;
+  int get hashCode => id.hashCode ^ imageThumb.hashCode ^ email.hashCode ^ name.hashCode ^ accessToken.hashCode;
 
   @override
   String toString() {

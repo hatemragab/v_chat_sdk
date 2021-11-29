@@ -10,65 +10,58 @@ class CreateSingleChatDialog extends StatelessWidget {
   final String? createBtnTxt;
 
   String txt = "";
-
+  CreateSingleChatDialog({
+    this.titleTxt,
+    this.createBtnTxt,
+  });
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return Material(
         child: CupertinoAlertDialog(
-          title: titleTxt != null
-              ? titleTxt!.text
-              : VChatAppService.instance.getTrans(context).sayHello().text,
+          title: titleTxt != null ? titleTxt!.text : VChatAppService.instance.getTrans(context).sayHello().text,
           content: TextField(
             onChanged: (value) {
               txt = value;
             },
           ),
           actions: [
-            TextButton(onPressed: ()=>Navigator.pop(context), child: VChatAppService.instance.getTrans(context).cancel().text.color(Colors.red)),
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: VChatAppService.instance.getTrans(context).cancel().text.color(Colors.red)),
             TextButton(
               onPressed: () async {
                 if (txt.isNotEmpty) {
                   Navigator.pop(context, txt);
                 }
               },
-              child: createBtnTxt != null
-                  ? createBtnTxt!.text
-                  : VChatAppService.instance.getTrans(context).create().text,
+              child:
+                  createBtnTxt != null ? createBtnTxt!.text : VChatAppService.instance.getTrans(context).create().text,
             ),
-
           ],
         ),
       );
     } else {}
     return AlertDialog(
-      title: titleTxt != null
-          ? titleTxt!.text
-          : VChatAppService.instance.getTrans(context).sayHello().text,
+      title: titleTxt != null ? titleTxt!.text : VChatAppService.instance.getTrans(context).sayHello().text,
       content: TextField(
         onChanged: (value) {
           txt = value;
         },
       ),
       actions: [
-        TextButton(onPressed: ()=>Navigator.pop(context), child: VChatAppService.instance.getTrans(context).cancel().text.color(Colors.red)),
+        TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: VChatAppService.instance.getTrans(context).cancel().text.color(Colors.red)),
         TextButton(
           onPressed: () async {
             if (txt.isNotEmpty) {
               Navigator.pop(context, txt);
             }
           },
-          child: createBtnTxt != null
-              ? createBtnTxt!.text
-              : VChatAppService.instance.getTrans(context).create().text,
+          child: createBtnTxt != null ? createBtnTxt!.text : VChatAppService.instance.getTrans(context).create().text,
         ),
-
       ],
     );
   }
-
-  CreateSingleChatDialog({
-    this.titleTxt,
-    this.createBtnTxt,
-  });
 }

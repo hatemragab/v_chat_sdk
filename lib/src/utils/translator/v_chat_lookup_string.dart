@@ -1,5 +1,3 @@
-
-
 /// implement this class to support new languages
 abstract class VChatLookupString {
   String test();

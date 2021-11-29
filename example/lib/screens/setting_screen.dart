@@ -29,9 +29,8 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).changeLanguage,
               icon: Icons.language,
               onTap: () async {
-                final res = await CustomAlert.customChooseDialog(
-                    context: context,
-                    data: [S.of(context).ar, S.of(context).en]);
+                final res =
+                    await CustomAlert.customChooseDialog(context: context, data: [S.of(context).ar, S.of(context).en]);
                 if (res == 0) {
                   Provider.of<LanguageController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "ar"));
@@ -47,15 +46,12 @@ class _SettingScreenState extends State<SettingScreen> {
               icon: Icons.wb_sunny,
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
-                    context: context,
-                    data: [S.of(context).light, S.of(context).dark]);
+                    context: context, data: [S.of(context).light, S.of(context).dark]);
                 if (res == 0) {
-                  Provider.of<LanguageController>(context, listen: false)
-                      .changeTheme(false);
+                  Provider.of<LanguageController>(context, listen: false).changeTheme(false);
                 }
                 if (res == 1) {
-                  Provider.of<LanguageController>(context, listen: false)
-                      .changeTheme(true);
+                  Provider.of<LanguageController>(context, listen: false).changeTheme(true);
                 }
               },
             ),
@@ -63,17 +59,15 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).updateProfile,
               icon: Icons.edit,
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => const UpdateUserProfileScreen()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const UpdateUserProfileScreen()));
               },
             ),
             ProfileItem(
               title: S.of(context).allChatNotifications,
               icon: Icons.notification_important,
               onTap: () async {
-                final res = await CustomAlert.customChooseDialog(
-                    context: context,
-                    data: [S.of(context).on, S.of(context).off]);
+                final res =
+                    await CustomAlert.customChooseDialog(context: context, data: [S.of(context).on, S.of(context).off]);
                 if (res == 0) {
                   VChatController.instance.enableAllNotification();
                 }
@@ -86,15 +80,12 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).logOut,
               icon: Icons.logout,
               onTap: () async {
-
                 await VChatController.instance.logOut();
 
                 await GetStorage().remove("myModel");
 
                 Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const SplashScreen()),
-                    (Route<dynamic> route) => false);
+                    MaterialPageRoute(builder: (context) => const SplashScreen()), (Route<dynamic> route) => false);
               },
             ),
           ],

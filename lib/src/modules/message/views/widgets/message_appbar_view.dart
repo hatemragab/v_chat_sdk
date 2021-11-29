@@ -9,22 +9,18 @@ import '../../../../utils/custom_widgets/circle_image.dart';
 import '../../../rooms/cubit/room_cubit.dart';
 
 class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
-
-
- const MessageAppBarView({Key? key}) : super(key: key);
+  const MessageAppBarView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final roomController = RoomCubit.instance;
     return AppBar(
-
       centerTitle: true,
       elevation: 1,
       title: BlocBuilder<RoomCubit, RoomState>(
         bloc: RoomCubit.instance,
         builder: (context, state) {
-          final _room = roomController.rooms.firstWhere(
-              (element) => element.id == roomController.currentRoomId!);
+          final _room = roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
           if (state is RoomLoaded) {
             final isOnline = _room.isOnline;
             final typingSt = _room.typingStatus;
@@ -32,7 +28,7 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
             final t = VChatAppService.instance.getTrans(context);
             return Column(
               children: [
-                _room.title.text ,
+                _room.title.text,
                 Builder(
                   builder: (_) {
                     if (isSingle) {
@@ -52,9 +48,7 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                       }
                     } else {
                       if (typingSt.status != RoomTypingType.stop) {
-                        return "${typingSt.name} is ${typingSt.status.inString} ..."
-                            .b2.color(Colors.green);
-
+                        return "${typingSt.name} is ${typingSt.status.inString} ...".b2.color(Colors.green);
                       } else {
                         return const SizedBox();
                       }
@@ -72,18 +66,14 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
           child: BlocBuilder<RoomCubit, RoomState>(
             bloc: RoomCubit.instance,
             builder: (context, state) {
-              final _room = roomController.rooms.firstWhere(
-                  (element) => element.id == roomController.currentRoomId!);
+              final _room = roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
               return Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: InkWell(
                   onTap: () {
                     //todo call back when icon clicked
                   },
-                  child: CircleImage.network(
-                      path: _room.thumbImage,
-                      radius: 25,
-                      isOnline: _room.isOnline == 1),
+                  child: CircleImage.network(path: _room.thumbImage, radius: 25, isOnline: _room.isOnline == 1),
                 ),
               );
             },

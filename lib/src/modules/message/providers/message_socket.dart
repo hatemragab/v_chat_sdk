@@ -32,15 +32,13 @@ class MessageSocket {
       _socket.on("all_messages", (data) async {
         final msgList = (jsonDecode(data)) as List;
         final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
-        unawaited(
-            localStorageService.setRoomMessages(currentRoomId.toString(), x));
+        unawaited(localStorageService.setRoomMessages(currentRoomId.toString(), x));
         onAllMessages(x);
       });
       _socket.on('new_message', (data) async {
         final msgMap = jsonDecode(data);
         final message = VChatMessage.fromMap(msgMap);
-        unawaited(localStorageService.insertMessage(
-            currentRoomId.toString(), message));
+        unawaited(localStorageService.insertMessage(currentRoomId.toString(), message));
         onNewMessage(message);
       });
       _socket.onReconnecting((data) {
@@ -58,9 +56,7 @@ class MessageSocket {
       'pingTimeout': 5000,
       'connectTimeout': 5000,
       'pingInterval': 5000,
-      'extraHeaders': <String, String>{
-        'Authorization': VChatAppService.instance.vChatUser!.accessToken
-      },
+      'extraHeaders': <String, String>{'Authorization': VChatAppService.instance.vChatUser!.accessToken},
       'forceNew': true
     });
   }

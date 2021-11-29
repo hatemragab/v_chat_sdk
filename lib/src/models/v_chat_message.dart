@@ -103,9 +103,8 @@ class VChatMessage {
     return VChatMessage(
       id: map['_id'] as int,
       messageType: messageType.enumType(map['messageType']),
-      messageAttachment: map['messageAttachment'] == null
-          ? null
-          : VChatMessageAttachment.fromMap(map['messageAttachment']),
+      messageAttachment:
+          map['messageAttachment'] == null ? null : VChatMessageAttachment.fromMap(map['messageAttachment']),
       createdAt: createdAtLocal.millisecondsSinceEpoch,
       createdAtString: DateFormat.jm().format(createdAtLocal),
       updatedAt: updatedAtLocal.millisecondsSinceEpoch,
@@ -121,8 +120,7 @@ class VChatMessage {
     // ignore: unnecessary_cast
     return {
       'messageType': messageType.inString,
-      'messageAttachment':
-          messageAttachment == null ? null : messageAttachment!.toMap(),
+      'messageAttachment': messageAttachment == null ? null : messageAttachment!.toMap(),
       'content': content,
       'roomId': roomId,
     } as Map<String, dynamic>;
@@ -133,8 +131,7 @@ class VChatMessage {
     return {
       '_id': id,
       'messageType': messageType.inString,
-      'messageAttachment':
-          messageAttachment == null ? null : messageAttachment!.toMap(),
+      'messageAttachment': messageAttachment == null ? null : messageAttachment!.toMap(),
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'content': content,

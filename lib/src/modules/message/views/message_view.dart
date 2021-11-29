@@ -54,7 +54,6 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
           Expanded(
             child: BlocBuilder<MessageCubit, MessageState>(
               builder: (context, state) {
-                final v = VChatAppService.instance.getTrans(context);
                 return Builder(
                   builder: (c) {
                     if (state is MessageLoaded) {
@@ -87,8 +86,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
           BlocBuilder<RoomCubit, RoomState>(
             bloc: RoomCubit.instance,
             builder: (context, state) {
-              final _room = roomController.rooms.firstWhere(
-                  (element) => element.id == messageController.roomId);
+              final _room = roomController.rooms.firstWhere((element) => element.id == messageController.roomId);
 
               if (state is RoomLoaded) {
                 if (_room.roomType == RoomType.single) {
@@ -103,8 +101,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                         ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: CircleImage.network(
-                              path: _room.thumbImage, radius: 10),
+                          child: CircleImage.network(path: _room.thumbImage, radius: 10),
                         ),
                       ],
                     );
@@ -122,8 +119,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
             child: BlocBuilder<RoomCubit, RoomState>(
               bloc: RoomCubit.instance,
               builder: (context, state) {
-                final _room = roomController.rooms.firstWhere(
-                    (element) => element.id == messageController.roomId);
+                final _room = roomController.rooms.firstWhere((element) => element.id == messageController.roomId);
 
                 if (state is RoomLoaded) {
                   final bkId = _room.blockerId;

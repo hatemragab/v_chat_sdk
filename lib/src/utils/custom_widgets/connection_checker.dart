@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:textless/textless.dart';
 
@@ -8,8 +7,8 @@ import '../../services/socket_service.dart';
 import '../../services/v_chat_app_service.dart';
 import 'rounded_container.dart';
 
-class ConnectionChecker extends GetView {
-  const  ConnectionChecker({Key? key}) : super(key: key);
+class ConnectionChecker extends StatelessWidget {
+  const ConnectionChecker({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final SocketService _socket = GetIt.I.get<SocketService>();
@@ -17,7 +16,7 @@ class ConnectionChecker extends GetView {
       builder: (context, value, child) {
         if (value == SocketStateType.connecting) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5 ),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: RoundedContainer(
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),

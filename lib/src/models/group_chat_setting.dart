@@ -1,9 +1,7 @@
-import 'package:get/get.dart';
-
 class GroupChatSetting {
-  final RxString title;
-  final RxString image;
-  final RxString imageThumb;
+  final String title;
+  final String image;
+  final String imageThumb;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
@@ -14,9 +12,9 @@ class GroupChatSetting {
   });
 
   GroupChatSetting copyWith({
-    RxString? title,
-    RxString? image,
-    RxString? imageThumb,
+    String? title,
+    String? image,
+    String? imageThumb,
   }) {
     return GroupChatSetting(
       title: title ?? this.title,
@@ -32,9 +30,9 @@ class GroupChatSetting {
 
   factory GroupChatSetting.fromMap(Map<String, dynamic> map) {
     return GroupChatSetting(
-      title: (map['title'] as String).obs,
-      image: (map['image'] as String).obs,
-      imageThumb: (map['imageThumb'] as String).obs,
+      title: (map['title'] as String),
+      image: (map['image'] as String),
+      imageThumb: (map['imageThumb'] as String),
     );
   }
 

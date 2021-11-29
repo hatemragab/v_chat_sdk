@@ -40,10 +40,7 @@ class VChatWidgetBuilder {
           trimMode: TrimMode.line,
           trimCollapsedText: "show More",
           trimExpandedText: "show Less",
-          moreStyle: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(fontWeight: FontWeight.bold),
+          moreStyle: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold),
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -72,10 +69,7 @@ class VChatWidgetBuilder {
           trimMode: TrimMode.line,
           trimCollapsedText: "show More",
           trimExpandedText: "show Less",
-          moreStyle: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(fontWeight: FontWeight.bold),
+          moreStyle: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold),
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -86,8 +80,7 @@ class VChatWidgetBuilder {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: isDark ? const Color(0xff876969) : Colors.tealAccent),
+          borderRadius: BorderRadius.circular(20), color: isDark ? const Color(0xff876969) : Colors.tealAccent),
       height: 40,
       child: Row(
         children: [
@@ -197,8 +190,7 @@ class VChatWidgetBuilder {
     );
   }
 
-  Widget senderFileMessageWidget(
-      BuildContext context, String fileName, String fileSize) {
+  Widget senderFileMessageWidget(BuildContext context, String fileName, String fileSize) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return RoundedContainer(
       height: 75,
@@ -229,8 +221,7 @@ class VChatWidgetBuilder {
     );
   }
 
-  Widget receiverFileMessageWidget(
-      BuildContext context, String fileName, String fileSize) {
+  Widget receiverFileMessageWidget(BuildContext context, String fileName, String fileSize) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return RoundedContainer(
       height: 75,
@@ -253,10 +244,7 @@ class VChatWidgetBuilder {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                fileName.b2.size(13.4).maxLine(1).overflowEllipsis,
-                fileSize.cap
-              ],
+              children: [fileName.b2.size(13.4).maxLine(1).overflowEllipsis, fileSize.cap],
             ),
           )
         ],

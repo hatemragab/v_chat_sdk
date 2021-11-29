@@ -1,5 +1,3 @@
-
-
 import 'v_chat_lookup_string.dart';
 
 class ArLanguage implements VChatLookupString {
@@ -55,8 +53,7 @@ class ArLanguage implements VChatLookupString {
   String muteNotification() => "ايقاف التنبيهات";
 
   @override
-  String notificationsHasBeenStoppedSuccessfully() =>
-      "تم ايثاف التنبيهات بنجاح";
+  String notificationsHasBeenStoppedSuccessfully() => "تم ايثاف التنبيهات بنجاح";
 
   @override
   String oK() => "تم";
@@ -125,8 +122,8 @@ class ArLanguage implements VChatLookupString {
   String yourMessage() => "اكتب رساله";
 
   @override
-  String loadMoreFiled()=> "فشل";
+  String loadMoreFiled() => "فشل";
 
   @override
-  String loadingMore() =>"جاري التحميل";
+  String loadingMore() => "جاري التحميل";
 }

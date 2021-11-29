@@ -13,8 +13,7 @@ class UpdateUserProfileScreen extends StatefulWidget {
   const UpdateUserProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _UpdateUserProfileScreenState createState() =>
-      _UpdateUserProfileScreenState();
+  _UpdateUserProfileScreenState createState() => _UpdateUserProfileScreenState();
 }
 
 class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
@@ -67,8 +66,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                  onPressed: changePassword, child: "update password".text),
+              ElevatedButton(onPressed: changePassword, child: "update password".text),
             ],
           ),
         ),
@@ -81,13 +79,10 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
       if (nameC.text.isEmpty) {
         throw "Enter the name";
       }
-      await CustomDio()
-          .send(reqMethod: "patch", path: "user", body: {"name": nameC.text});
-      await VChatController.instance
-          .updateUserName(name: nameC.text.toString());
+      await CustomDio().send(reqMethod: "patch", path: "user", body: {"name": nameC.text});
+      await VChatController.instance.updateUserName(name: nameC.text.toString());
       nameC.clear();
-      CustomAlert.showSuccess(
-          context: context, err: "your name has been updated !");
+      CustomAlert.showSuccess(context: context, err: "your name has been updated !");
     } on VChatSdkException catch (err) {
       //handle Errors
       log(err.data.toString());
@@ -105,15 +100,11 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
       if (newPassC.text.isEmpty) {
         throw "Enter the new password";
       }
-      await CustomDio().send(
-          reqMethod: "patch",
-          path: "user",
-          body: {"oldPassword": oldPassC.text, "newPassword": newPassC.text});
+      await CustomDio()
+          .send(reqMethod: "patch", path: "user", body: {"oldPassword": oldPassC.text, "newPassword": newPassC.text});
 
-      await VChatController.instance.updateUserPassword(
-          newPassword: newPassC.text, oldPassword: oldPassC.text);
-      CustomAlert.showSuccess(
-          context: context, err: "your password has been updated !");
+      await VChatController.instance.updateUserPassword(newPassword: newPassC.text, oldPassword: oldPassC.text);
+      CustomAlert.showSuccess(context: context, err: "your password has been updated !");
       oldPassC.clear();
       newPassC.clear();
     } on VChatSdkException catch (err) {
@@ -141,8 +132,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
             .data['data']
             .toString();
         await VChatController.instance.updateUserImage(imagePath: img.path);
-        CustomAlert.showSuccess(
-            context: context, err: "your image has been updated !");
+        CustomAlert.showSuccess(context: context, err: "your image has been updated !");
       }
     } on VChatSdkException catch (err) {
       log(err.data.toString());

@@ -1,29 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../models/v_chat_message.dart';
 
 import '../../../../utils/api_utils/server_config.dart';
 import '../../../image_viewer/views/image_viewer_view.dart';
 
-class MessageImageItem extends GetView {
+class MessageImageItem extends StatelessWidget {
   final VChatMessage _message;
   final bool isSender;
 
-  const MessageImageItem(this._message, {Key? key, required this.isSender})
-      : super(key: key);
+  const MessageImageItem(this._message, {Key? key, required this.isSender}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ImageViewerView(
-                ServerConfig.messagesMediaBaseUrl +
-                    _message.messageAttachment!.imageUrl.toString()),
+            builder: (context) =>
+                ImageViewerView(ServerConfig.messagesMediaBaseUrl + _message.messageAttachment!.imageUrl.toString()),
           ),
         );
       },
@@ -41,8 +37,7 @@ class MessageImageItem extends GetView {
           width: double.parse(_message.messageAttachment!.width!),
           color: Colors.grey,
           child: CachedNetworkImage(
-            imageUrl: ServerConfig.messagesMediaBaseUrl +
-                _message.messageAttachment!.imageUrl.toString(),
+            imageUrl: ServerConfig.messagesMediaBaseUrl + _message.messageAttachment!.imageUrl.toString(),
             fit: BoxFit.cover,
           ),
         ),

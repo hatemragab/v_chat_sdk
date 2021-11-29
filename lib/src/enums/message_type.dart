@@ -6,5 +6,5 @@ extension MessageTypeEnum on MessageType {
   String get inString => describeEnum(this);
   MessageType enumType(String type) {
     return MessageType.values.firstWhere((e) => e.inString == type);
-   }
+  }
 }

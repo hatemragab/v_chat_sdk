@@ -35,9 +35,7 @@ class _HomeState extends State<Home> {
 
     if (GetStorage().hasData("myModel")) {
       // this mean my user has auth so i will bind chat controller to make him online else will throw exception
-      VChatController.instance.bindChatControllers(
-        context
-      );
+      VChatController.instance.bindChatControllers(context);
     }
   }
 
@@ -53,7 +51,6 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               onPressed: () async {
-
                 final users = await _controller.getUsers();
                 _usersList.clear();
                 _usersList.addAll(users);
@@ -96,7 +93,6 @@ class _HomeState extends State<Home> {
       appBar: PreferredSize(
         child: _childrenAppBars[_currentIndex],
         preferredSize: const Size.fromHeight(kToolbarHeight),
-
       ),
       body: _children[_currentIndex], // new
       bottomNavigationBar: BottomNavigationBar(

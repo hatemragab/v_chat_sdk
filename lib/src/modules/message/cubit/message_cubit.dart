@@ -190,8 +190,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       final _pickedImage = File(path);
       final compressedFile = await FileUtils.compressImage(_pickedImage);
 
-      final properties =
-          await FlutterNativeImage.getImageProperties(compressedFile.path);
+      final properties = await FlutterNativeImage.getImageProperties(compressedFile.path);
       final fileSize = FileUtils.getFileSize(compressedFile);
       await FileUtils.uploadFile(
           [
@@ -266,8 +265,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       CustomAlert.customLoadingDialog(context: context);
       final videoFile = File(path);
       final videoThumb = await FileUtils.getVideoThumb(videoFile);
-      final properties =
-          await FlutterNativeImage.getImageProperties(videoThumb.path);
+      final properties = await FlutterNativeImage.getImageProperties(videoThumb.path);
       final d = await FileUtils.getVideoDuration(videoFile.path);
       final fileSize = FileUtils.getFileSize(videoFile);
       if (!getIt.get<SocketService>().isConnected) {

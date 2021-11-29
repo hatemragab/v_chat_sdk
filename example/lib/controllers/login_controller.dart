@@ -21,23 +21,18 @@ class LoginController {
     try {
       ///Login on your system backend
       CustomAlert.customLoadingDialog(context: context);
-      final d = (await CustomDio().send(
-              reqMethod: "post",
-              path: "user/login",
-              body: {"email": email, "password": password}))
-          .data['data'];
+      final d =
+          (await CustomDio().send(reqMethod: "post", path: "user/login", body: {"email": email, "password": password}))
+              .data['data'];
       final u = User.fromMap(d);
 
       await GetStorage().write("myModel", u.toMap());
 
       ///Login on v_chat_sdk system
-      await VChatController.instance.login(
-          context: context,
-          dto: VChatLoginDto(email: email, password: password));
+      await VChatController.instance.login(context: context, dto: VChatLoginDto(email: email, password: password));
       Navigator.pop(context);
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const Home()),
-          (Route<dynamic> route) => false);
+      Navigator.of(context)
+          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Home()), (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());

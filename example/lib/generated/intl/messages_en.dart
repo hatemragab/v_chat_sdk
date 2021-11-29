@@ -22,11 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "allChatNotifications":
-            MessageLookupByLibrary.simpleMessage("All Chat notifications"),
+        "allChatNotifications": MessageLookupByLibrary.simpleMessage("All Chat notifications"),
         "ar": MessageLookupByLibrary.simpleMessage("ar"),
-        "changeLanguage":
-            MessageLookupByLibrary.simpleMessage("Change language"),
+        "changeLanguage": MessageLookupByLibrary.simpleMessage("Change language"),
         "changeTheme": MessageLookupByLibrary.simpleMessage("Change Theme"),
         "chats": MessageLookupByLibrary.simpleMessage("Chats"),
         "chooseImage": MessageLookupByLibrary.simpleMessage("choose image"),
@@ -49,8 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "test": MessageLookupByLibrary.simpleMessage("test"),
-        "thisDataFromMyServerNotVchat": MessageLookupByLibrary.simpleMessage(
-            "This data from my server not vchat"),
+        "thisDataFromMyServerNotVchat": MessageLookupByLibrary.simpleMessage("This data from my server not vchat"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateProfile": MessageLookupByLibrary.simpleMessage("Update profile")
       };

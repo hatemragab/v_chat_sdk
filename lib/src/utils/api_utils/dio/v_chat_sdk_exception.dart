@@ -6,6 +6,6 @@ class VChatSdkException implements Exception {
 
   @override
   String toString() {
-    return  data;
+    return data;
   }
 }

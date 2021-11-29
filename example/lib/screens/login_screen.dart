@@ -44,14 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 10,
             ),
-            TextButton(
-                onPressed: _controller.login, child: S.of(context).login.text),
+            TextButton(onPressed: _controller.login, child: S.of(context).login.text),
             const SizedBox(
               height: 10,
             ),
-            TextButton(
-                onPressed: _controller.register,
-                child: S.of(context).register.text),
+            TextButton(onPressed: _controller.register, child: S.of(context).register.text),
           ],
         ),
       ),

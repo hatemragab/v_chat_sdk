@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/v_chat_message.dart';
 import '../models/v_chat_room.dart';
@@ -7,11 +6,10 @@ import '../sqlite/db_provider.dart';
 import '../sqlite/tables/message_table.dart';
 import '../sqlite/tables/room_table.dart';
 
-class LocalStorageService extends GetxService {
+class LocalStorageService {
   LocalStorageService._privateConstructor();
 
-  static final LocalStorageService instance =
-  LocalStorageService._privateConstructor();
+  static final LocalStorageService instance = LocalStorageService._privateConstructor();
 
   late Database database;
 
@@ -20,12 +18,10 @@ class LocalStorageService extends GetxService {
   }
 
   Future<List<VChatRoom>> getRooms() async {
-    final maps = await database.query(RoomTable.TABLE_NAME,
-        orderBy: "${RoomTable.COLUMN_UPDATED_AT} DESC");
+    final maps = await database.query(RoomTable.TABLE_NAME, orderBy: "${RoomTable.COLUMN_UPDATED_AT} DESC");
     final rooms = <VChatRoom>[];
     for (var map in maps) {
-      final r =
-          VChatRoom.fromMap(jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
+      final r = VChatRoom.fromMap(jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
       rooms.add(r);
     }
 
@@ -37,7 +33,8 @@ class LocalStorageService extends GetxService {
     final roomsToInsert = rooms;
     try {
       final x = rooms.sublist(0, 20);
-      roomsToInsert.assignAll(x);
+      roomsToInsert.clear();
+      roomsToInsert.addAll(x);
     } catch (err) {
       //
     }
@@ -72,13 +69,13 @@ class LocalStorageService extends GetxService {
     final messageToInsert = messages;
     try {
       final x = messages.sublist(0, 30);
-      messageToInsert.assignAll(x);
+      messageToInsert.clear();
+      messageToInsert.addAll(x);
     } catch (err) {
       //
     }
-    await database.delete(MessageTable.tableName,
-        where: "${MessageTable.COLUMN_ROOM_ID} =?",
-        whereArgs: [int.parse(roomId)]);
+    await database
+        .delete(MessageTable.tableName, where: "${MessageTable.COLUMN_ROOM_ID} =?", whereArgs: [int.parse(roomId)]);
 
     final batch = database.batch();
     for (var msg in messageToInsert) {
@@ -127,7 +124,6 @@ class LocalStorageService extends GetxService {
   }
 
   Future deleteRoom(int id) async {
-    await database.delete(RoomTable.TABLE_NAME,
-        where: "${RoomTable.COLUMN_ID}=?", whereArgs: [id]);
+    await database.delete(RoomTable.TABLE_NAME, where: "${RoomTable.COLUMN_ID}=?", whereArgs: [id]);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-
 class VChatMessageAttachment {
   CancelToken? cancelToken;
 
@@ -15,7 +14,6 @@ class VChatMessageAttachment {
   final String? linkTitle;
   final String? linkDescription;
   final String? linkDataUrl;
-
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
@@ -61,7 +59,6 @@ class VChatMessageAttachment {
       linkDataUrl: linkDataUrl ?? this.linkDataUrl,
     );
   }
-
 
   @override
   String toString() {

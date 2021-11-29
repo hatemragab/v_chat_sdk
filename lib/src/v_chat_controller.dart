@@ -77,16 +77,12 @@ class VChatController {
 
   /// to add new language to v chat
   void setLocaleMessages(
-      {required String languageCode,
-      String? countryCode,
-      required VChatLookupString lookupMessages}) {
+      {required String languageCode, String? countryCode, required VChatLookupString lookupMessages}) {
     try {
       if (countryCode == null) {
-        VChatAppService.instance
-            .setLocaleMessages(languageCode, lookupMessages);
+        VChatAppService.instance.setLocaleMessages(languageCode, lookupMessages);
       } else {
-        VChatAppService.instance.setLocaleMessages(
-            "${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
+        VChatAppService.instance.setLocaleMessages("${languageCode}_${countryCode.toUpperCase()}", lookupMessages);
       }
     } catch (err) {
       Helpers.vlog("you should call function after init v chat");
@@ -98,9 +94,7 @@ class VChatController {
   Future<String> stopAllNotification(BuildContext context) async {
     if (VChatAppService.instance.isUseFirebase) {
       await FirebaseMessaging.instance.deleteToken();
-      return VChatAppService.instance
-          .getTrans(context)
-          .notificationsHasBeenStoppedSuccessfully();
+      return VChatAppService.instance.getTrans(context).notificationsHasBeenStoppedSuccessfully();
     } else {
       throw "you have to enable firebase for this project first";
     }
@@ -128,18 +122,15 @@ class VChatController {
   }
 
   /// **throw** No internet connection
-  Future updateUserPassword(
-      {required String oldPassword, required String newPassword}) async {
-    return await _vChatUsersApi.updateUserPassword(
-        oldPassword: oldPassword, newPassword: newPassword);
+  Future updateUserPassword({required String oldPassword, required String newPassword}) async {
+    return await _vChatUsersApi.updateUserPassword(oldPassword: oldPassword, newPassword: newPassword);
   }
 
   /// when you call this function the user will be online and can receive notification
   /// first you have to login or register in v chat other wise will throw Exception
   void bindChatControllers(BuildContext context) {
     if (VChatAppService.instance.vChatUser == null) {
-      throw VChatSdkException(
-          "You must login or register to v chat first delete the app and login again !");
+      throw VChatSdkException("You must login or register to v chat first delete the app and login again !");
     }
 
     if (!getIt.isRegistered<SocketService>()) {
@@ -152,8 +143,7 @@ class VChatController {
 
   /// **throw** User already in v chat data base
   /// **throw** No internet connection
-  Future<VChatUser> register(
-      {required BuildContext context, required VChatRegisterDto dto}) async {
+  Future<VChatUser> register({required BuildContext context, required VChatRegisterDto dto}) async {
     if (VChatAppService.instance.isUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
@@ -209,8 +199,7 @@ class VChatController {
     }
   }
 
-  Future<dynamic> _navigateToRoomMessage(
-      dynamic data, BuildContext context) async {
+  Future<dynamic> _navigateToRoomMessage(dynamic data, BuildContext context) async {
     final room = VChatRoom.fromMap(data);
 
     RoomCubit.instance.currentRoomId = room.id;
@@ -228,8 +217,7 @@ class VChatController {
 
   /// **throw** User not in v chat data base
   /// **throw** No internet connection
-  Future<VChatUser> login(
-      {required BuildContext context, required VChatLoginDto dto}) async {
+  Future<VChatUser> login({required BuildContext context, required VChatLoginDto dto}) async {
     if (VChatAppService.instance.isUseFirebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
@@ -247,13 +235,12 @@ class VChatController {
   ///i made this api for who use getx translate projects
   ///you must call this api any time you open the app
   void forceLanguage({required String languageCode, String? countryCode}) {
-    return VChatAppService.instance.changeLanguage(languageCode:languageCode,countryCode: countryCode );
+    return VChatAppService.instance.changeLanguage(languageCode: languageCode, countryCode: countryCode);
   }
 
   Future _saveUser(VChatUser user) async {
     const storage = FlutterSecureStorage();
-    await storage.write(
-        key: StorageKeys.KV_CHAT_MY_MODEL, value: jsonEncode(user.toMap()));
+    await storage.write(key: StorageKeys.KV_CHAT_MY_MODEL, value: jsonEncode(user.toMap()));
     VChatAppService.instance.vChatUser = user;
   }
 

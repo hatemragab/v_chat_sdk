@@ -1,5 +1,3 @@
-
-
 import '../dto/v_chat_login_dto.dart';
 import '../dto/v_chat_register_dto.dart';
 import '../models/v_chat_user.dart';
@@ -7,9 +5,7 @@ import '../utils/api_utils/dio/custom_dio.dart';
 
 class AuthProvider {
   Future<VChatUser> login(VChatLoginDto dto) async {
-    final data = (await CustomDio()
-            .send(reqMethod: "POST", path: "user/login", body: dto.toMap()))
-        .data['data'];
+    final data = (await CustomDio().send(reqMethod: "POST", path: "user/login", body: dto.toMap())).data['data'];
     return VChatUser.fromMap(data);
   }
 

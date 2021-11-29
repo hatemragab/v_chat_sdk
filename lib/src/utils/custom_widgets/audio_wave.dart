@@ -1,15 +1,7 @@
-
-
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class AudioWaveBar {
-  AudioWaveBar({
-    required this.height,
-    this.color = Colors.red,
-    this.radius = 50.0
-  });
+  AudioWaveBar({required this.height, this.color = Colors.red, this.radius = 50.0});
 
   /// [height] is the height of the bar based. It is percentage rate of widget height.
   ///
@@ -103,7 +95,6 @@ class _AudioWaveState extends State<AudioWave> {
   //   setState(() {});
   // }
 
-
   @override
   Widget build(BuildContext context) {
     double width = (widget.width - (widget.spacing * widget.bars.length)) / widget.bars.length;
@@ -117,8 +108,8 @@ class _AudioWaveState extends State<AudioWave> {
             crossAxisAlignment: widget.alignment == 'top'
                 ? WrapCrossAlignment.start
                 : widget.alignment == 'bottom'
-                ? WrapCrossAlignment.end
-                : WrapCrossAlignment.center,
+                    ? WrapCrossAlignment.end
+                    : WrapCrossAlignment.center,
             spacing: widget.spacing,
             children: [
               if (bars != null)

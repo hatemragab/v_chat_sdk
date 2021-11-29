@@ -1,5 +1,3 @@
-
-
 import 'v_chat_lookup_string.dart';
 
 class EnLanguage implements VChatLookupString {
@@ -76,8 +74,7 @@ class EnLanguage implements VChatLookupString {
   String typing() => "Typing ...";
 
   @override
-  String userHasBeenBlockedSuccessfully() =>
-      "User has been blocked successfully";
+  String userHasBeenBlockedSuccessfully() => "User has been blocked successfully";
 
   @override
   String video() => "Video";
@@ -110,8 +107,7 @@ class EnLanguage implements VChatLookupString {
   String create() => "Create";
 
   @override
-  String notificationsHasBeenStoppedSuccessfully() =>
-      "Notifications has been stopped successfully";
+  String notificationsHasBeenStoppedSuccessfully() => "Notifications has been stopped successfully";
 
   @override
   String sayHello() => "Say Hello !";
@@ -126,8 +122,8 @@ class EnLanguage implements VChatLookupString {
   String yourMessage() => "Message";
 
   @override
-  String loadMoreFiled() =>"Failed";
+  String loadMoreFiled() => "Failed";
 
   @override
-  String loadingMore() =>"Loading";
+  String loadingMore() => "Loading";
 }

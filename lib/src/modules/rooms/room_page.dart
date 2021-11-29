@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
-import '../../services/v_chat_app_service.dart';
 import '../../utils/custom_widgets/connection_checker.dart';
 import 'cubit/room_cubit.dart';
 import 'widgets/room_item.dart';
@@ -39,7 +38,6 @@ class VChatRoomsScreen extends StatelessWidget {
               return "No rooms yet".text;
             } else if (state is RoomLoaded) {
               final rooms = state.rooms;
-              final v = VChatAppService.instance.getTrans(context);
               return Expanded(
                 child: Scrollbar(
                   child: ListView.separated(

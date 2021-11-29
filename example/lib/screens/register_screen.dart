@@ -56,13 +56,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             InkWell(
                 onTap: () async {
                   final picker = ImagePicker();
-                  final img =
-                      await picker.pickImage(source: ImageSource.gallery);
+                  final img = await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     _controller.imagePath = img.path;
-                    CustomAlert.showSuccess(
-                        context: context,
-                        err: "image has been set successfully");
+                    CustomAlert.showSuccess(context: context, err: "image has been set successfully");
                   }
                 },
                 child: Row(
@@ -78,9 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 10,
             ),
-            TextButton(
-                onPressed: _controller.register,
-                child: S.of(context).register.text),
+            TextButton(onPressed: _controller.register, child: S.of(context).register.text),
           ],
         ),
       ),

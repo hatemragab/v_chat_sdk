@@ -26,18 +26,15 @@ class AttachmentPickerWidget extends StatelessWidget {
           child: Text(VChatAppService.instance.getTrans(ctx).photo()),
           onPressed: () async {
             final picker = ImagePicker();
-            final pickedFile =
-                await picker.pickImage(source: ImageSource.gallery);
+            final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
             if (pickedFile != null) {
-              if (File(pickedFile.path).lengthSync() >
-                  ServerConfig.maxMessageFileSize) {
+              if (File(pickedFile.path).lengthSync() > ServerConfig.maxMessageFileSize) {
                 File(pickedFile.path).deleteSync();
                 CustomAlert.error(msg: t.fileIsTooBig());
                 Navigator.pop(ctx);
               }
-              return Navigator.pop(
-                  ctx, {"type": "photo", "path": pickedFile.path});
+              return Navigator.pop(ctx, {"type": "photo", "path": pickedFile.path});
             }
             Navigator.pop(ctx);
           },
@@ -45,17 +42,14 @@ class AttachmentPickerWidget extends StatelessWidget {
         CupertinoActionSheetAction(
           child: Text(t.file()),
           onPressed: () async {
-            final FilePickerResult? result =
-                await FilePicker.platform.pickFiles();
+            final FilePickerResult? result = await FilePicker.platform.pickFiles();
             if (result != null) {
-              if (File(result.files.first.path!).lengthSync() >
-                  ServerConfig.maxMessageFileSize) {
+              if (File(result.files.first.path!).lengthSync() > ServerConfig.maxMessageFileSize) {
                 File(result.files.first.path!).deleteSync();
                 CustomAlert.error(msg: t.fileIsTooBig());
                 return Navigator.pop(ctx);
               }
-              return Navigator.pop(
-                  ctx, {"type": "file", "path": result.files.first.path});
+              return Navigator.pop(ctx, {"type": "file", "path": result.files.first.path});
             }
             return Navigator.pop(ctx);
           },
@@ -63,20 +57,17 @@ class AttachmentPickerWidget extends StatelessWidget {
         CupertinoActionSheetAction(
           child: Text(t.video()),
           onPressed: () async {
-            final FilePickerResult? result =
-                await FilePicker.platform.pickFiles(
+            final FilePickerResult? result = await FilePicker.platform.pickFiles(
               type: FileType.custom,
               allowedExtensions: ['mp4', 'mkv', 'avi', 'm4p', 'flv'],
             );
             if (result != null) {
-              if (File(result.files.first.path!).lengthSync() >
-                  ServerConfig.maxMessageFileSize) {
+              if (File(result.files.first.path!).lengthSync() > ServerConfig.maxMessageFileSize) {
                 File(result.files.first.path!).deleteSync();
                 CustomAlert.error(msg: t.fileIsTooBig());
                 return Navigator.pop(ctx);
               }
-              return Navigator.pop(
-                  ctx, {"type": "video", "path": result.files.first.path});
+              return Navigator.pop(ctx, {"type": "video", "path": result.files.first.path});
             }
             return Navigator.pop(ctx);
           },

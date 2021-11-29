@@ -17,12 +17,7 @@ class MessageItemView extends StatelessWidget {
   final int index;
   final int myId;
 
-  const MessageItemView(
-      {required this.myId,
-      required this.message,
-      required this.index,
-      Key? key})
-      : super(key: key);
+  const MessageItemView({required this.myId, required this.message, required this.index, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +42,7 @@ class MessageItemView extends StatelessWidget {
         ),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxPaddingWidth),
-          child:
-              getItemBody(isSender: isSender, context: context, isDark: isDark),
+          child: getItemBody(isSender: isSender, context: context, isDark: isDark),
         ),
         const SizedBox(height: 2),
         if (isSender)

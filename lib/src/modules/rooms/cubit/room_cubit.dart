@@ -13,7 +13,6 @@ import '../room_api_provider.dart';
 part 'room_state.dart';
 
 class RoomCubit extends Cubit<RoomState> {
-
   RoomCubit._privateConstructor() : super(RoomInitial());
 
   static final RoomCubit instance = RoomCubit._privateConstructor();
@@ -33,9 +32,6 @@ class RoomCubit extends Cubit<RoomState> {
     this.rooms.addAll(rooms);
     emit(RoomLoaded(this.rooms));
   }
-
-
-
 
   void setSocketRooms(List<VChatRoom> rooms) {
     this.rooms.clear();
@@ -71,7 +67,6 @@ class RoomCubit extends Cubit<RoomState> {
     }
     rooms.addAll(loadedRooms);
     emit(RoomLoaded(rooms));
-
   }
 
   bool isRoomOpen(int roomId) => currentRoomId == roomId;
@@ -128,8 +123,7 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   void _scrollListener() async {
-    if (scrollController.offset >=
-            scrollController.position.maxScrollExtent / 2 &&
+    if (scrollController.offset >= scrollController.position.maxScrollExtent / 2 &&
         !scrollController.position.outOfRange &&
         loadingStatus != LoadMoreStatus.loading &&
         loadingStatus != LoadMoreStatus.completed) {
@@ -139,7 +133,7 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   @override
-  Future<void> close() async{
+  Future<void> close() async {
     scrollController.dispose();
     super.close();
   }

@@ -39,8 +39,7 @@ class VChatProvider {
         .toString();
   }
 
-  Future<String> updateUserPassword(
-      {required String oldPassword, required String newPassword}) async {
+  Future<String> updateUserPassword({required String oldPassword, required String newPassword}) async {
     return (await CustomDio().send(
       reqMethod: "patch",
       path: "user",

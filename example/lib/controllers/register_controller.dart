@@ -33,18 +33,14 @@ class RegisterController {
         if (File(imagePath!).lengthSync() > 1024 * 1024 * 10) {
           throw "image size must be less than 10 Mb";
         }
-        myUser = (await CustomDio().uploadFile(
-                apiEndPoint: "user/register",
-                filePath: imagePath!,
-                body: [
-              {"email": email},
-              {"password": password},
-              {"name": name},
-            ]))
+        myUser = (await CustomDio().uploadFile(apiEndPoint: "user/register", filePath: imagePath!, body: [
+          {"email": email},
+          {"password": password},
+          {"name": name},
+        ]))
             .data['data'];
       } else {
-        myUser = (await CustomDio()
-                .send(reqMethod: "post", path: "user/register", body: {
+        myUser = (await CustomDio().send(reqMethod: "post", path: "user/register", body: {
           "email": email,
           "password": password,
           "name": name,
@@ -56,18 +52,16 @@ class RegisterController {
 
       ///Register on v_chat_sdk system
       await VChatController.instance.register(
-        dto: VChatRegisterDto(
-          name: name,
-          userImage: imagePath == null ? null : File(imagePath!),
-          email: email,
-          password: password,
-        ),
-        context: context
-      );
+          dto: VChatRegisterDto(
+            name: name,
+            userImage: imagePath == null ? null : File(imagePath!),
+            email: email,
+            password: password,
+          ),
+          context: context);
       Navigator.pop(context);
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const Home()),
-              (Route<dynamic> route) => false);
+      Navigator.of(context)
+          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Home()), (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());

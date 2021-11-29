@@ -21,7 +21,7 @@ dependencies:
   path_provider: ^2.0.7
   socket_io_client: ^1.0.2
   intl: ^0.17.0
-  file_picker: ^4.2.4
+  file_picker: ^4.2.5
   flutter_native_image: ^0.0.6+1
   permission_handler: ^8.3.0
   flutter_video_info: ^1.2.0
@@ -39,9 +39,9 @@ dependencies:
   google_fonts: ^2.1.0
   path: ^1.8.0
   flutter_secure_storage: ^5.0.2
-  get_storage: ^2.0.3
   fluttertoast: ^8.0.8
   get_it: ^7.2.0
+
 
 dev_dependencies:
   flutter_test:

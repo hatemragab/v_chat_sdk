@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 import 'home.dart';
 import 'login_screen.dart';
@@ -19,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     startNavigate();
-
   }
 
   @override
@@ -41,14 +38,12 @@ class _SplashScreenState extends State<SplashScreen> {
     log(myModel.toString());
     if (myModel) {
       // there are login data saved
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const Home()),
-          (Route<dynamic> route) => false);
+      Navigator.of(context)
+          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Home()), (Route<dynamic> route) => false);
     } else {
       // its the first time to open the app
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-          (Route<dynamic> route) => false);
+          MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false);
     }
   }
 }

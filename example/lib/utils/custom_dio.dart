@@ -16,9 +16,7 @@ class CustomDio {
     dio.options.followRedirects = false;
     dio.options.validateStatus = (_) => true;
     dio.options.headers = {
-      'authorization': GetStorage().read("myModel") == null
-          ? ""
-          : GetStorage().read("myModel")['accessToken']
+      'authorization': GetStorage().read("myModel") == null ? "" : GetStorage().read("myModel")['accessToken']
     };
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;
@@ -128,8 +126,8 @@ class CustomDio {
       final x = body.map((e) => MapEntry(e.keys.first, e.values.first));
       formData.fields.addAll(x);
     }
-    final Response response = await dio.post(apiEndPoint,
-        data: formData, onSendProgress: sendProgress, cancelToken: cancelToken);
+    final Response response =
+        await dio.post(apiEndPoint, data: formData, onSendProgress: sendProgress, cancelToken: cancelToken);
     throwIfNoSuccess(response);
     return response;
   }
@@ -155,11 +153,9 @@ class CustomDio {
     }
     late Response response;
     if (isPost) {
-      response = await dio.post(apiEndPoint,
-          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      response = await dio.post(apiEndPoint, data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
     } else {
-      response = await dio.patch(apiEndPoint,
-          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      response = await dio.patch(apiEndPoint, data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
     }
 
     throwIfNoSuccess(response);
@@ -181,8 +177,8 @@ class CustomDio {
       final x = body.map((e) => MapEntry(e.keys.first, e.values.first));
       data.fields.addAll(x);
     }
-    final Response response = await dio.post(apiEndPoint,
-        data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+    final Response response =
+        await dio.post(apiEndPoint, data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
     throwIfNoSuccess(response);
     return response;
   }
@@ -213,6 +209,5 @@ class DioUploadFileModel {
   final String filePath;
   final String fileFiledName;
 
-  const DioUploadFileModel(
-      {required this.filePath, required this.fileFiledName});
+  const DioUploadFileModel({required this.filePath, required this.fileFiledName});
 }
