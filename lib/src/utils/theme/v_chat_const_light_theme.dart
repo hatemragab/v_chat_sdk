@@ -16,7 +16,8 @@ final elevatedButtonThemeData = ElevatedButtonThemeData(
 final appBarTheme = AppBarTheme(
   elevation: 1,
   centerTitle: true,
-  titleTextStyle: GoogleFonts.nunito(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w800),
+  titleTextStyle: GoogleFonts.nunito(
+      color: Colors.black, fontSize: 17, fontWeight: FontWeight.w800),
   backgroundColor: Colors.white,
   iconTheme: const IconThemeData(color: Colors.red),
 );
@@ -67,7 +68,8 @@ final vChatConstLightTheme = ThemeData(
     caption: GoogleFonts.nunito(
       color: Colors.black,
     ),
-    bodyText1: GoogleFonts.nunito(color: Colors.black, fontSize: 19, letterSpacing: .5),
+    bodyText1: GoogleFonts.nunito(
+        color: Colors.black, fontSize: 19, letterSpacing: .5),
     subtitle1: GoogleFonts.nunito(
       color: Colors.black,
       fontSize: 22,

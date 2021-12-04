@@ -14,7 +14,8 @@ import 'local_storage_service.dart';
 import 'v_chat_app_service.dart';
 
 class SocketService {
-  ValueNotifier<SocketStateType> socketStateValue = ValueNotifier(SocketStateType.connecting);
+  ValueNotifier<SocketStateType> socketStateValue =
+      ValueNotifier(SocketStateType.connecting);
 
   SocketService() {
     connectSocket();
@@ -30,7 +31,9 @@ class SocketService {
       'pingTimeout': 5000,
       'connectTimeout': 5000,
       'pingInterval': 5000,
-      'extraHeaders': <String, String>{'Authorization': VChatAppService.instance.vChatUser!.accessToken},
+      'extraHeaders': <String, String>{
+        'Authorization': VChatAppService.instance.vChatUser!.accessToken
+      },
       'forceNew': true
     });
   }
@@ -57,7 +60,8 @@ class SocketService {
     });
 
     _socket!.onError((data) {
-      if (data.toString() == "{message: auth must be provided ! $data}" && !isErrorAlertShown) {
+      if (data.toString() == "{message: auth must be provided ! $data}" &&
+          !isErrorAlertShown) {
         isErrorAlertShown = true;
         CustomAlert.error(msg: data.toString());
       }

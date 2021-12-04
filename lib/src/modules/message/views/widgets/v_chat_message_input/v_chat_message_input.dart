@@ -81,7 +81,8 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
-                color: VChatAppService.instance.vcBuilder.messageInputBackgroundColor(context),
+                color: VChatAppService.instance.vcBuilder
+                    .messageInputBackgroundColor(context),
               ),
               child: MessageFiled(
                 controller: widget.controller,
@@ -116,10 +117,12 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                 },
                 onCameraPressed: () async {
                   final picker = ImagePicker();
-                  final pickedFile = await picker.pickImage(source: ImageSource.camera);
+                  final pickedFile =
+                      await picker.pickImage(source: ImageSource.camera);
                   if (pickedFile != null) {
                     final t = VChatAppService.instance.getTrans(context);
-                    if (File(pickedFile.path).lengthSync() > ServerConfig.maxMessageFileSize) {
+                    if (File(pickedFile.path).lengthSync() >
+                        ServerConfig.maxMessageFileSize) {
                       File(pickedFile.path).deleteSync();
                       CustomAlert.error(msg: t.fileIsTooBig());
                     }
@@ -143,8 +146,9 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                   },
                   child: RoundedContainer(
                     boxShape: BoxShape.circle,
-                    color: VChatAppService.instance.vcBuilder
-                        .sendButtonColor(context, Theme.of(context).brightness == Brightness.dark),
+                    color: VChatAppService.instance.vcBuilder.sendButtonColor(
+                        context,
+                        Theme.of(context).brightness == Brightness.dark),
                     height: 50,
                     width: 50,
                     child: Icon(
@@ -168,7 +172,8 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                   },
                   child: RoundedContainer(
                     boxShape: BoxShape.circle,
-                    color: VChatAppService.instance.vcBuilder.sendButtonColor(context, context.isDark),
+                    color: VChatAppService.instance.vcBuilder
+                        .sendButtonColor(context, context.isDark),
                     height: 50,
                     width: 50,
                     child: Icon(

@@ -13,7 +13,7 @@ import 'widgets/message_appbar_view.dart';
 import 'widgets/v_chat_message_input/v_chat_message_input.dart';
 
 class MessageView extends StatelessWidget {
-  final int roomId;
+  final String roomId;
 
   const MessageView({Key? key, required this.roomId}) : super(key: key);
 
@@ -86,7 +86,8 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
           BlocBuilder<RoomCubit, RoomState>(
             bloc: RoomCubit.instance,
             builder: (context, state) {
-              final _room = roomController.rooms.firstWhere((element) => element.id == messageController.roomId);
+              final _room = roomController.rooms.firstWhere(
+                  (element) => element.id == messageController.roomId);
 
               if (state is RoomLoaded) {
                 if (_room.roomType == RoomType.single) {
@@ -101,7 +102,8 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                         ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: CircleImage.network(path: _room.thumbImage, radius: 10),
+                          child: CircleImage.network(
+                              path: _room.thumbImage, radius: 10),
                         ),
                       ],
                     );
@@ -119,11 +121,12 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
             child: BlocBuilder<RoomCubit, RoomState>(
               bloc: RoomCubit.instance,
               builder: (context, state) {
-                final _room = roomController.rooms.firstWhere((element) => element.id == messageController.roomId);
+                final _room = roomController.rooms.firstWhere(
+                    (element) => element.id == messageController.roomId);
 
                 if (state is RoomLoaded) {
                   final bkId = _room.blockerId;
-                  if (bkId != 0) {
+                  if (bkId != null) {
                     if (bkId == myId) {
                       // i the blocker
                       return t.chatHasBeenClosedByMe().h6.color(Colors.red);

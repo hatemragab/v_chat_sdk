@@ -83,4 +83,6 @@ abstract class VChatLookupString {
   String loadingMore();
 
   String loadMoreFiled();
+
+  String isTranslate();
 }

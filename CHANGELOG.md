@@ -16,7 +16,7 @@
 
 ## 0.0.5
 
-* format the code 
+* format the code
 
 ## 0.0.6
 
@@ -28,17 +28,24 @@
 
 ## 0.1.0
 
-* beta release 
+* beta release
 
 ## 0.2.0
 
 * fix ios recording and enable notification clicks to open the chat page
 
 ## 0.2.1
+
 * encrypt user access token
 
 ## 0.2.5
+
 * support android 12
 
 ## 0.4.0
-*change from getx to bloc state management new design and more ...
+
+* change from getx to bloc state management new design and more ...
+
+## 0.5.0
+
+* hug update on backend service v 1.0.1 must use with vchat v 0.5.0

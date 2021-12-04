@@ -57,7 +57,9 @@ class _MessageFiledState extends State<MessageFiled> {
                     });
                   },
                   decoration: InputDecoration(
-                    hintText: VChatAppService.instance.getTrans(context).yourMessage(),
+                    hintText: VChatAppService.instance
+                        .getTrans(context)
+                        .yourMessage(),
                     border: InputBorder.none,
                   ),
                 ),
@@ -65,7 +67,9 @@ class _MessageFiledState extends State<MessageFiled> {
             ),
           ),
         ),
-        InkWell(onTap: widget.onAttachmentPressed, child: const Icon(Icons.attach_file)),
+        InkWell(
+            onTap: widget.onAttachmentPressed,
+            child: const Icon(Icons.attach_file)),
         const SizedBox(width: 8)
       ],
     );

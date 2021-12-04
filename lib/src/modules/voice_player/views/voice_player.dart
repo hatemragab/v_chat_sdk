@@ -49,7 +49,8 @@ class _VoicePlayerState extends State<VoicePlayer> {
                           onTap: pauseVoice,
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: const BoxDecoration(color: Colors.indigo, shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                                color: Colors.indigo, shape: BoxShape.circle),
                             child: const Icon(
                               Icons.pause,
                               color: Colors.white,
@@ -128,7 +129,8 @@ class _VoicePlayerState extends State<VoicePlayer> {
 
   void startPlayVoice() async {
     await audioPlayer.play(
-      ServerConfig.messagesMediaBaseUrl + widget.message.messageAttachment!.playUrl!,
+      ServerConfig.messagesMediaBaseUrl +
+          widget.message.messageAttachment!.playUrl!,
       stayAwake: true,
     );
     audioPlayer.onDurationChanged.listen((event) {

@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 
 class VChatMessageAttachment {
   CancelToken? cancelToken;
-
   final String? imageUrl;
   final String? playUrl;
   final String? fileSize;

@@ -15,9 +15,11 @@ class MessageTextItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isSender) {
-      return VChatAppService.instance.vcBuilder.senderTextMessageWidget(context, message.content);
+      return VChatAppService.instance.vcBuilder
+          .senderTextMessageWidget(context, message.content);
     } else {
-      return VChatAppService.instance.vcBuilder.receiverTextMessageWidget(context, message.content);
+      return VChatAppService.instance.vcBuilder
+          .receiverTextMessageWidget(context, message.content);
     }
   }
 }

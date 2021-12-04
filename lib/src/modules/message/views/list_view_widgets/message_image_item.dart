@@ -9,7 +9,8 @@ class MessageImageItem extends StatelessWidget {
   final VChatMessage _message;
   final bool isSender;
 
-  const MessageImageItem(this._message, {Key? key, required this.isSender}) : super(key: key);
+  const MessageImageItem(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +19,9 @@ class MessageImageItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ImageViewerView(ServerConfig.messagesMediaBaseUrl + _message.messageAttachment!.imageUrl.toString()),
+            builder: (context) => ImageViewerView(
+                ServerConfig.messagesMediaBaseUrl +
+                    _message.messageAttachment!.imageUrl.toString()),
           ),
         );
       },
@@ -37,7 +39,8 @@ class MessageImageItem extends StatelessWidget {
           width: double.parse(_message.messageAttachment!.width!),
           color: Colors.grey,
           child: CachedNetworkImage(
-            imageUrl: ServerConfig.messagesMediaBaseUrl + _message.messageAttachment!.imageUrl.toString(),
+            imageUrl: ServerConfig.messagesMediaBaseUrl +
+                _message.messageAttachment!.imageUrl.toString(),
             fit: BoxFit.cover,
           ),
         ),

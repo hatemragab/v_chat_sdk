@@ -105,6 +105,6 @@ flutter_icons:
   image_path: "assets/icon.png"
 
 flutter_intl:
-  enabled: false
+  enabled: true
   assets:
     - assets/

@@ -2,11 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
-import '../models/user.dart';
 import '../screens/home.dart';
 import '../screens/register_screen.dart';
 import '../utils/custom_alert.dart';
-import '../utils/custom_dio.dart';
 
 class LoginController {
   BuildContext context;
@@ -17,22 +15,26 @@ class LoginController {
 
   void login() async {
     final email = emailTxtController.text.toString();
-    final password = passwordTxtController.text.toString();
+    //final password = passwordTxtController.text.toString();
     try {
-      ///Login on your system backend
       CustomAlert.customLoadingDialog(context: context);
-      final d =
-          (await CustomDio().send(reqMethod: "post", path: "user/login", body: {"email": email, "password": password}))
-              .data['data'];
-      final u = User.fromMap(d);
 
-      await GetStorage().write("myModel", u.toMap());
+      ///Login on your system backend
+      // final d = (await CustomDio().send(
+      //         reqMethod: "post",
+      //         path: "user/login",
+      //         body: {"email": email, "password": password}))
+      //     .data['data'];
+      // final u = User.fromMap(d);
 
       ///Login on v_chat_sdk system
-      await VChatController.instance.login(context: context, dto: VChatLoginDto(email: email, password: password));
+      final u =
+          await VChatController.instance.login(context: context, email: email);
+      await GetStorage().write("myModel", u.toMap());
       Navigator.pop(context);
-      Navigator.of(context)
-          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Home()), (Route<dynamic> route) => false);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Home()),
+          (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());

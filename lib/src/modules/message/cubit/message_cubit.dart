@@ -28,7 +28,7 @@ part 'message_state.dart';
 
 class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   late MessageSocket _messageSocket;
-  late int roomId;
+  late String roomId;
   final getIt = GetIt.instance;
 
   ///init message socket to stop receive notifications from this user
@@ -59,7 +59,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   final scrollController = ScrollController();
 
   ///get messages from sqlite
-  Future<void> getLocalMessages(int roomId) async {
+  Future<void> getLocalMessages(String roomId) async {
     this.roomId = roomId;
     final messages = await LocalStorageService.instance.getRoomMessages(roomId);
     this.messages.clear();
@@ -73,13 +73,12 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       loadingStatus = LoadMoreStatus.loading;
       final loadedMessages = await _messageApiProvider.loadMoreMessages(
         roomId,
-        messages.last.id.toString(),
+        messages.last.id,
       );
       loadingStatus = LoadMoreStatus.loaded;
-
       if (loadedMessages.isEmpty) {
         ///if no more data stop the loading
-        loadingStatus = LoadMoreStatus.loaded;
+        loadingStatus = LoadMoreStatus.completed;
       }
       messages.addAll(loadedMessages);
       emit(MessageLoaded(messages));
@@ -135,7 +134,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           [
             voiceFile,
           ],
-          "message/file",
+          "message",
           body: {
             "roomId": roomId.toString(),
             "content": "This content voice 🎤",
@@ -190,13 +189,14 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       final _pickedImage = File(path);
       final compressedFile = await FileUtils.compressImage(_pickedImage);
 
-      final properties = await FlutterNativeImage.getImageProperties(compressedFile.path);
+      final properties =
+          await FlutterNativeImage.getImageProperties(compressedFile.path);
       final fileSize = FileUtils.getFileSize(compressedFile);
       await FileUtils.uploadFile(
           [
             compressedFile,
           ],
-          "message/file",
+          "message",
           body: {
             "roomId": roomId.toString(),
             "content": "This content image 📷",
@@ -265,7 +265,8 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       CustomAlert.customLoadingDialog(context: context);
       final videoFile = File(path);
       final videoThumb = await FileUtils.getVideoThumb(videoFile);
-      final properties = await FlutterNativeImage.getImageProperties(videoThumb.path);
+      final properties =
+          await FlutterNativeImage.getImageProperties(videoThumb.path);
       final d = await FileUtils.getVideoDuration(videoFile.path);
       final fileSize = FileUtils.getFileSize(videoFile);
       if (!getIt.get<SocketService>().isConnected) {
@@ -273,7 +274,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       }
       await FileUtils.uploadFile(
         [videoThumb, videoFile],
-        "message/file",
+        "message",
         body: {
           "roomId": roomId.toString(),
           "content": "This content video 📽",
@@ -308,7 +309,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           [
             file,
           ],
-          "message/file",
+          "message",
           body: {
             "roomId": roomId.toString(),
             "content": "This content file 📁",

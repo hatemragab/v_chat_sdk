@@ -25,30 +25,39 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: S.of(context).login.text,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            CupertinoTextField(
-              placeholder: S.of(context).email,
+            TextField(
+              decoration: InputDecoration(
+                hintText: S.of(context).email,
+              ),
               controller: _controller.emailTxtController,
             ),
             const SizedBox(
               height: 10,
             ),
-            CupertinoTextField(
-              placeholder: S.of(context).password,
+            TextField(
+              decoration: InputDecoration(
+                hintText: S.of(context).password,
+              ),
               controller: _controller.passwordTxtController,
             ),
             const SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: _controller.login, child: S.of(context).login.text),
+            ElevatedButton(
+                onPressed: _controller.login, child: S.of(context).login.text),
             const SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: _controller.register, child: S.of(context).register.text),
+            TextButton(
+                onPressed: _controller.register,
+                child: S.of(context).register.text),
           ],
         ),
       ),

@@ -2,14 +2,11 @@ import '../enums/room_type.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
 class VChatProvider {
-  Future createSingleChat(String peerEmail) async {
+  Future checkIfThereRoom(String peerEmail) async {
     return (await CustomDio().send(
       reqMethod: "POST",
       path: "room/check-if-there-room",
-      body: {
-        "peerEmails": [peerEmail],
-        "roomType": RoomType.single.inString
-      },
+      body: {"peerEmail": peerEmail},
     ))
         .data['data'];
   }
@@ -39,7 +36,8 @@ class VChatProvider {
         .toString();
   }
 
-  Future<String> updateUserPassword({required String oldPassword, required String newPassword}) async {
+  Future<String> updateUserPassword(
+      {required String oldPassword, required String newPassword}) async {
     return (await CustomDio().send(
       reqMethod: "patch",
       path: "user",
@@ -79,6 +77,15 @@ class VChatProvider {
       body: {"fcmToken": "Out"},
     ))
         .data['data']
+        .toString();
+  }
+
+  Future<String> getUserEmail(String id) async {
+    return (await CustomDio().send(
+      reqMethod: "get",
+      path: "user/$id",
+    ))
+        .data['data']['email']
         .toString();
   }
 }

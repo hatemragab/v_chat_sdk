@@ -13,7 +13,8 @@ import 'v_chat_app_service.dart';
 class NotificationService {
   NotificationService._privateConstructor();
 
-  static final NotificationService instance = NotificationService._privateConstructor();
+  static final NotificationService instance =
+      NotificationService._privateConstructor();
   late BuildContext context;
   final androidNotificationDetails = const AndroidNotificationDetails(
     "v_chat_channel",
@@ -24,7 +25,8 @@ class NotificationService {
     playSound: true,
     priority: Priority.max,
   );
-  final iosNotificationDetails = const IOSNotificationDetails(presentBadge: true, presentSound: true);
+  final iosNotificationDetails =
+      const IOSNotificationDetails(presentBadge: true, presentSound: true);
 
   void init(BuildContext context) async {
     this.context = context;
@@ -33,7 +35,8 @@ class NotificationService {
     }
   }
 
-  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   void cancelAll() {
     flutterLocalNotificationsPlugin.cancelAll();
@@ -76,7 +79,7 @@ class NotificationService {
     );
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
       if (message.notification != null) {
-        final roomId = int.parse(message.data['roomId'].toString());
+        final roomId = message.data['roomId'].toString();
         try {
           if (!RoomCubit.instance.isRoomOpen(roomId)) {
             await Future.delayed(const Duration(milliseconds: 100));
@@ -95,7 +98,8 @@ class NotificationService {
     });
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     await flutterLocalNotificationsPlugin.initialize(
@@ -107,7 +111,7 @@ class NotificationService {
           )),
       onSelectNotification: (payload) {
         if (payload != null) {
-          final roomId = int.parse(payload);
+          final roomId = payload;
           if (!RoomCubit.instance.isRoomOpen(roomId)) {
             RoomCubit.instance.currentRoomId = roomId;
 
@@ -125,7 +129,10 @@ class NotificationService {
 
     messaging.onTokenRefresh.listen((event) async {
       try {
-        await CustomDio().send(reqMethod: "PATCH", path: "user", body: {"fcmToken": event.toString()});
+        await CustomDio().send(
+            reqMethod: "PATCH",
+            path: "user",
+            body: {"fcmToken": event.toString()});
       } catch (err) {
         //
       }
@@ -133,7 +140,7 @@ class NotificationService {
 
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
-        if (!RoomCubit.instance.isRoomOpen(int.parse(message.data['roomId'].toString()))) {
+        if (!RoomCubit.instance.isRoomOpen(message.data['roomId'].toString())) {
           showNotification(
               title: "${message.notification!.title}",
               msg: message.notification!.body.toString(),
@@ -146,7 +153,7 @@ class NotificationService {
     messaging.getInitialMessage().then((message) async {
       if (message != null) {
         try {
-          final roomId = int.parse(message.data['roomId'].toString());
+          final roomId = message.data['roomId'].toString();
 
           await Future.delayed(const Duration(milliseconds: 2500));
           RoomCubit.instance.currentRoomId = roomId;
@@ -165,10 +172,18 @@ class NotificationService {
     flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  void showNotification({required String title, required String msg, required int hashCode, required String roomId}) {
+  void showNotification(
+      {required String title,
+      required String msg,
+      required int hashCode,
+      required String roomId}) {
     unawaited(
       flutterLocalNotificationsPlugin.show(
-          hashCode, title, msg, NotificationDetails(android: androidNotificationDetails, iOS: iosNotificationDetails),
+          hashCode,
+          title,
+          msg,
+          NotificationDetails(
+              android: androidNotificationDetails, iOS: iosNotificationDetails),
           payload: roomId),
     );
 

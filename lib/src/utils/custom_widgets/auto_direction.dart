@@ -6,7 +6,12 @@ class AutoDirection extends StatefulWidget {
   final Widget child;
   final void Function(bool isRTL)? onDirectionChange;
 
-  const AutoDirection({Key? key, required this.text, required this.child, this.onDirectionChange}) : super(key: key);
+  const AutoDirection(
+      {Key? key,
+      required this.text,
+      required this.child,
+      this.onDirectionChange})
+      : super(key: key);
 
   @override
   _AutoDirectionState createState() => _AutoDirectionState();
@@ -20,7 +25,9 @@ class _AutoDirectionState extends State<AutoDirection> {
   Widget build(BuildContext context) {
     text = widget.text;
     childWidget = widget.child;
-    return Directionality(textDirection: isRTL(text) ? TextDirection.rtl : TextDirection.ltr, child: childWidget);
+    return Directionality(
+        textDirection: isRTL(text) ? TextDirection.rtl : TextDirection.ltr,
+        child: childWidget);
   }
 
   @override

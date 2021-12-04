@@ -17,7 +17,10 @@ class MessageWithIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (_room.lastMessage.messageType == MessageType.info) {
-      return _room.lastMessage.content.b1.maxLine(1).alignStart.overflowEllipsis;
+      return _room.lastMessage.content.b1
+          .maxLine(1)
+          .alignStart
+          .overflowEllipsis;
     }
 
     return Row(
@@ -42,13 +45,18 @@ class MessageWithIcon extends StatelessWidget {
 
       /// I read the message
       if (_isMeSeen) {
-        return _room.lastMessage.content.b1.color(Colors.grey).maxLine(1).alignStart.overflowEllipsis;
+        return _room.lastMessage.content.b1
+            .color(Colors.grey)
+            .maxLine(1)
+            .alignStart
+            .overflowEllipsis;
       } else {
         /// I not read  the message yet
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(flex: 4, child: _room.lastMessage.content.b1.bold.maxLine(1)),
+            Flexible(
+                flex: 4, child: _room.lastMessage.content.b1.bold.maxLine(1)),
             Flexible(
               flex: 1,
               child: Container(
@@ -71,14 +79,22 @@ class MessageWithIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: _room.lastMessage.content.b1.color(Colors.grey).maxLine(1).alignStart.overflowEllipsis,
+              child: _room.lastMessage.content.b1
+                  .color(Colors.grey)
+                  .maxLine(1)
+                  .alignStart
+                  .overflowEllipsis,
             ),
             CircleImage.network(path: _room.thumbImage, radius: 10),
           ],
         );
       }
 
-      return _room.lastMessage.content.b1.color(Colors.grey).maxLine(1).alignStart.overflowEllipsis;
+      return _room.lastMessage.content.b1
+          .color(Colors.grey)
+          .maxLine(1)
+          .alignStart
+          .overflowEllipsis;
     }
   }
 }

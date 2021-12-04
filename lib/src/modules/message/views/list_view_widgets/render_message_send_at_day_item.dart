@@ -9,7 +9,11 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
   final VChatMessage message;
   final List<VChatMessage> messages;
 
-  const RenderMessageSendAtDayItem({Key? key, required this.index, required this.message, required this.messages})
+  const RenderMessageSendAtDayItem(
+      {Key? key,
+      required this.index,
+      required this.message,
+      required this.messages})
       : super(key: key);
 
   @override
@@ -18,9 +22,11 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
       return getLabelDay(context, message.createdAt);
     }
 
-    final lastMessageSendAt = DateTime.fromMillisecondsSinceEpoch(messages[index + 1].createdAt);
+    final lastMessageSendAt =
+        DateTime.fromMillisecondsSinceEpoch(messages[index + 1].createdAt);
 
-    final messageSendAt = DateTime.fromMillisecondsSinceEpoch(message.createdAt);
+    final messageSendAt =
+        DateTime.fromMillisecondsSinceEpoch(message.createdAt);
 
     final formatter = UtilDates.formatDay;
 

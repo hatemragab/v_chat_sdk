@@ -16,15 +16,17 @@ class RoomCubit extends Cubit<RoomState> {
   RoomCubit._privateConstructor() : super(RoomInitial());
 
   static final RoomCubit instance = RoomCubit._privateConstructor();
+  Function(String? uniqueId)? onMessageAvatarPressed;
 
   final _provider = RoomsApiProvider();
 
   final rooms = <VChatRoom>[];
+  int loadMorePage = 1;
 
   LoadMoreStatus loadingStatus = LoadMoreStatus.loaded;
 
   final scrollController = ScrollController();
-  int? currentRoomId;
+  String? currentRoomId;
 
   Future getRoomsFromLocal() async {
     final rooms = await LocalStorageService.instance.getRooms();
@@ -39,7 +41,7 @@ class RoomCubit extends Cubit<RoomState> {
     emit(RoomLoaded(this.rooms));
   }
 
-  void updateRoomOnlineChanged(int status, int roomId) {
+  void updateRoomOnlineChanged(int status, String roomId) {
     final index = rooms.indexWhere((element) => element.id == roomId);
     if (index != -1) {
       final room = rooms[index];
@@ -60,16 +62,17 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   Future<void> loadMore() async {
-    final loadedRooms = await _provider.loadMore(rooms.last.id);
+    final loadedRooms = await _provider.loadMore(loadMorePage);
     loadingStatus = LoadMoreStatus.loaded;
     if (loadedRooms.isEmpty) {
       loadingStatus = LoadMoreStatus.completed;
     }
+    ++loadMorePage;
     rooms.addAll(loadedRooms);
     emit(RoomLoaded(rooms));
   }
 
-  bool isRoomOpen(int roomId) => currentRoomId == roomId;
+  bool isRoomOpen(String roomId) => currentRoomId == roomId;
 
   void blockOrLeaveAction(BuildContext context, VChatRoom room) async {
     try {
@@ -123,7 +126,8 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   void _scrollListener() async {
-    if (scrollController.offset >= scrollController.position.maxScrollExtent / 2 &&
+    if (scrollController.offset >=
+            scrollController.position.maxScrollExtent / 2 &&
         !scrollController.position.outOfRange &&
         loadingStatus != LoadMoreStatus.loading &&
         loadingStatus != LoadMoreStatus.completed) {

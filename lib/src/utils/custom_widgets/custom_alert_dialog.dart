@@ -43,7 +43,10 @@ class CustomAlert {
   }
 
   static void customAlertDialog(
-      {Function()? onPress, required String errorMessage, required BuildContext context, bool dismissible = true}) {
+      {Function()? onPress,
+      required String errorMessage,
+      required BuildContext context,
+      bool dismissible = true}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -57,7 +60,8 @@ class CustomAlert {
               opacity: a1.value,
               child: AlertDialog(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                contentPadding: EdgeInsets.zero.copyWith(top: 20, bottom: 5, left: 10, right: 10),
+                contentPadding: EdgeInsets.zero
+                    .copyWith(top: 20, bottom: 5, left: 10, right: 10),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -68,7 +72,10 @@ class CustomAlert {
                     SizedBox(
                       child: ElevatedButton(
                           onPressed: onPress ?? () => Navigator.pop(context),
-                          child: VChatAppService.instance.getTrans(context).oK().text),
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .oK()
+                              .text),
                     )
                   ],
                 ),
@@ -87,7 +94,8 @@ class CustomAlert {
     );
   }
 
-  static void customLoadingDialog({required BuildContext context, bool dismissible = false}) {
+  static void customLoadingDialog(
+      {required BuildContext context, bool dismissible = false}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -101,14 +109,19 @@ class CustomAlert {
               opacity: a1.value,
               child: AlertDialog(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                contentPadding: const EdgeInsets.only(top: 8, bottom: 5, left: 10, right: 10),
+                contentPadding: const EdgeInsets.only(
+                    top: 8, bottom: 5, left: 10, right: 10),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
                       height: 10,
                     ),
-                    VChatAppService.instance.getTrans(context).loadingPleaseWait().text.bold,
+                    VChatAppService.instance
+                        .getTrans(context)
+                        .loadingPleaseWait()
+                        .text
+                        .bold,
                     const SizedBox(
                       height: 33,
                     ),
@@ -169,18 +182,25 @@ class CustomAlert {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context, -1),
-                          child: VChatAppService.instance.getTrans(context).cancel().text,
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .cancel()
+                              .text,
                         ),
                         TextButton(
                           onPressed: () => Navigator.pop(context, 1),
-                          child: VChatAppService.instance.getTrans(context).oK().text,
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .oK()
+                              .text,
                         ),
                       ],
                     )
                   : AlertDialog(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       title: title.text,
-                      contentPadding: EdgeInsets.zero.copyWith(top: 8, bottom: 5, left: 10, right: 10),
+                      contentPadding: EdgeInsets.zero
+                          .copyWith(top: 8, bottom: 5, left: 10, right: 10),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -192,11 +212,17 @@ class CustomAlert {
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context, -1),
-                          child: VChatAppService.instance.getTrans(context).cancel().text,
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .cancel()
+                              .text,
                         ),
                         TextButton(
                           onPressed: () => Navigator.pop(context, 1),
-                          child: VChatAppService.instance.getTrans(context).oK().text,
+                          child: VChatAppService.instance
+                              .getTrans(context)
+                              .oK()
+                              .text,
                         ),
                       ],
                     ),

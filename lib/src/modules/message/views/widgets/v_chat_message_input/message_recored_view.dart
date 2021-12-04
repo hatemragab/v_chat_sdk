@@ -15,7 +15,9 @@ class MessageRecordView extends StatefulWidget {
   final Function(String path, String duration) onReceiveRecord;
   final Function() onCancel;
 
-  const MessageRecordView({Key? key, required this.onReceiveRecord, required this.onCancel}) : super(key: key);
+  const MessageRecordView(
+      {Key? key, required this.onReceiveRecord, required this.onCancel})
+      : super(key: key);
 
   @override
   State<MessageRecordView> createState() => _MessageRecordViewState();
@@ -74,7 +76,8 @@ class _MessageRecordViewState extends State<MessageRecordView> {
                 onTap: stopRecord,
                 child: RoundedContainer(
                   boxShape: BoxShape.circle,
-                  color: VChatAppService.instance.vcBuilder.sendButtonColor(context, context.isDark),
+                  color: VChatAppService.instance.vcBuilder
+                      .sendButtonColor(context, context.isDark),
                   height: 50,
                   width: 50,
                   child: Icon(
@@ -113,7 +116,9 @@ class _MessageRecordViewState extends State<MessageRecordView> {
       } catch (err) {
         Helpers.vlog(err.toString());
         CustomAlert.customAlertDialog(
-            context: context, errorMessage: "record not supported on emulator run on real device !");
+            context: context,
+            errorMessage:
+                "record not supported on emulator run on real device !");
         widget.onCancel();
         rethrow;
       }

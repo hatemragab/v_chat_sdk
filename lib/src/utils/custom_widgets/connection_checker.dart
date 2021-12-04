@@ -11,6 +11,9 @@ class ConnectionChecker extends StatelessWidget {
   const ConnectionChecker({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    if (!GetIt.I.isRegistered<SocketService>()) {
+      return SizedBox();
+    }
     final SocketService _socket = GetIt.I.get<SocketService>();
     return ValueListenableBuilder<SocketStateType>(
       builder: (context, value, child) {
@@ -21,7 +24,8 @@ class ConnectionChecker extends StatelessWidget {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),
               padding: const EdgeInsets.all(5),
-              child: (VChatAppService.instance.getTrans(context).connecting() + " ...")
+              child: (VChatAppService.instance.getTrans(context).connecting() +
+                      " ...")
                   .text
                   .alignCenter
                   .color(Colors.white),

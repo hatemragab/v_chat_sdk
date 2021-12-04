@@ -7,7 +7,8 @@ import 'sheet_vertical_item.dart';
 
 class CustomVerticalSheetItem {
   CustomVerticalSheetItem._();
-  static Future<int?> normal(BuildContext context, final List<CustomSheetModel> items) async {
+  static Future<int?> normal(
+      BuildContext context, final List<CustomSheetModel> items) async {
     return await showCupertinoModalPopup<int?>(
       barrierDismissible: true,
       semanticsDismissible: true,
@@ -25,11 +26,14 @@ class CustomVerticalSheetItem {
                 if (!e.isHidden) {
                   return CupertinoActionSheetAction(
                     child: Row(
-                      mainAxisAlignment: e.iconData != null ? MainAxisAlignment.start : MainAxisAlignment.center,
+                      mainAxisAlignment: e.iconData != null
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.center,
                       children: [
                         e.iconData != null
                             ? Padding(
-                                padding: const EdgeInsets.only(right: 15, left: 5),
+                                padding:
+                                    const EdgeInsets.only(right: 15, left: 5),
                                 child: Icon(e.iconData!),
                               )
                             : const SizedBox.shrink(),

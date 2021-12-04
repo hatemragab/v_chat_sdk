@@ -6,16 +6,16 @@ import 'v_chat_message_attachment.dart';
 
 @immutable
 class VChatMessage {
-  final int id;
+  final String id;
   final MessageType messageType;
   final VChatMessageAttachment? messageAttachment;
   final int createdAt;
   final int updatedAt;
   final String content;
-  final int senderId;
+  final String senderId;
   final String senderName;
   final String senderImageThumb;
-  final int roomId;
+  final String roomId;
   final String createdAtString;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
@@ -35,16 +35,16 @@ class VChatMessage {
   });
 
   VChatMessage copyWith({
-    int? id,
+    String? id,
     MessageType? messageType,
     VChatMessageAttachment? messageAttachment,
     int? createdAt,
     int? updatedAt,
     String? content,
-    int? senderId,
+    String? senderId,
     String? senderName,
     String? senderImageThumb,
-    int? roomId,
+    String? roomId,
     String? createdAtString,
   }) {
     return VChatMessage(
@@ -101,18 +101,19 @@ class VChatMessage {
     final createdAtLocal = Helpers.getLocalTime(map['createdAt'] as int);
     final updatedAtLocal = Helpers.getLocalTime(map['updatedAt'] as int);
     return VChatMessage(
-      id: map['_id'] as int,
+      id: map['_id'] as String,
       messageType: messageType.enumType(map['messageType']),
-      messageAttachment:
-          map['messageAttachment'] == null ? null : VChatMessageAttachment.fromMap(map['messageAttachment']),
+      messageAttachment: map['messageAttachment'] == null
+          ? null
+          : VChatMessageAttachment.fromMap(map['messageAttachment']),
       createdAt: createdAtLocal.millisecondsSinceEpoch,
       createdAtString: DateFormat.jm().format(createdAtLocal),
       updatedAt: updatedAtLocal.millisecondsSinceEpoch,
       content: map['content'] as String,
-      senderId: map['senderId'] as int,
+      senderId: map['senderId'] as String,
       senderName: map['senderName'] as String,
       senderImageThumb: map['senderImageThumb'] as String,
-      roomId: map['roomId'] as int,
+      roomId: map['roomId'] as String,
     );
   }
 
@@ -120,7 +121,8 @@ class VChatMessage {
     // ignore: unnecessary_cast
     return {
       'messageType': messageType.inString,
-      'messageAttachment': messageAttachment == null ? null : messageAttachment!.toMap(),
+      'messageAttachment':
+          messageAttachment == null ? null : messageAttachment!.toMap(),
       'content': content,
       'roomId': roomId,
     } as Map<String, dynamic>;
@@ -131,7 +133,8 @@ class VChatMessage {
     return {
       '_id': id,
       'messageType': messageType.inString,
-      'messageAttachment': messageAttachment == null ? null : messageAttachment!.toMap(),
+      'messageAttachment':
+          messageAttachment == null ? null : messageAttachment!.toMap(),
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'content': content,

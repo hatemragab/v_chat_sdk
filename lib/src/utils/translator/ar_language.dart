@@ -53,7 +53,8 @@ class ArLanguage implements VChatLookupString {
   String muteNotification() => "ايقاف التنبيهات";
 
   @override
-  String notificationsHasBeenStoppedSuccessfully() => "تم ايثاف التنبيهات بنجاح";
+  String notificationsHasBeenStoppedSuccessfully() =>
+      "تم ايثاف التنبيهات بنجاح";
 
   @override
   String oK() => "تم";
@@ -126,4 +127,7 @@ class ArLanguage implements VChatLookupString {
 
   @override
   String loadingMore() => "جاري التحميل";
+
+  @override
+  String isTranslate() => "";
 }

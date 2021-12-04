@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 @immutable
 class VChatUser {
-  final int id;
+  final String id;
   final String name;
   final String imageThumb;
   final String email;
@@ -26,7 +26,7 @@ class VChatUser {
 
   factory VChatUser.fromMap(Map<String, dynamic> map) {
     return VChatUser(
-      id: map['_id'] as int,
+      id: map['_id'] as String,
       name: map['name'] as String,
       imageThumb: map['imageThumb'] as String,
       email: map['email'] as String,
@@ -36,7 +36,7 @@ class VChatUser {
 
   factory VChatUser.fromMapAllUsersPage(Map<String, dynamic> map) {
     return VChatUser(
-      id: map['_id'] as int,
+      id: map['_id'] as String,
       name: map['name'] as String,
       imageThumb: map['imageThumb'] as String,
       email: map['email'] as String,

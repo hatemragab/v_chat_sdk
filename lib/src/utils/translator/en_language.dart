@@ -74,7 +74,8 @@ class EnLanguage implements VChatLookupString {
   String typing() => "Typing ...";
 
   @override
-  String userHasBeenBlockedSuccessfully() => "User has been blocked successfully";
+  String userHasBeenBlockedSuccessfully() =>
+      "User has been blocked successfully";
 
   @override
   String video() => "Video";
@@ -107,7 +108,8 @@ class EnLanguage implements VChatLookupString {
   String create() => "Create";
 
   @override
-  String notificationsHasBeenStoppedSuccessfully() => "Notifications has been stopped successfully";
+  String notificationsHasBeenStoppedSuccessfully() =>
+      "Notifications has been stopped successfully";
 
   @override
   String sayHello() => "Say Hello !";
@@ -126,4 +128,7 @@ class EnLanguage implements VChatLookupString {
 
   @override
   String loadingMore() => "Loading";
+
+  @override
+  String isTranslate() => "is";
 }

@@ -9,7 +9,8 @@ class DirHelper {
   DirHelper._();
   static Future<String> downloadPath() async {
     if (Platform.isAndroid) {
-      final path1 = join('storage', "emulated", "0", "Documents", VChatAppService.instance.appName);
+      final path1 = join('storage', "emulated", "0", "Documents",
+          VChatAppService.instance.appName);
       final dir = await Directory(path1).create(recursive: true);
       return "${dir.path}/";
     } else {

@@ -12,10 +12,8 @@ class HomeController {
 
   Future<List<User>> getUsers() async {
     try {
-      final res = (await CustomDio().send(
-        reqMethod: "get",
-        path: "user/all",
-      ))
+      final res = (await CustomDio()
+              .send(reqMethod: "get", path: "user", query: {"lastId": "first"}))
           .data['data'] as List;
       return res.map((e) => User.fromMap(e)).toList();
     } catch (err) {
@@ -26,7 +24,8 @@ class HomeController {
 
   void startChat(String email) async {
     try {
-      await VChatController.instance.createSingleChat(context: context, peerEmail: email);
+      await VChatController.instance
+          .createSingleChat(context: context, peerEmail: email);
     } on VChatSdkException catch (err) {
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;

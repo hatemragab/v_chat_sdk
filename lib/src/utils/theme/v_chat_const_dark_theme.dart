@@ -16,7 +16,8 @@ final appBarTheme = AppBarTheme(
   elevation: 1,
   centerTitle: true,
   shadowColor: Colors.white,
-  titleTextStyle: GoogleFonts.nunito(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800),
+  titleTextStyle: GoogleFonts.nunito(
+      color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800),
   backgroundColor: Colors.black54,
   iconTheme: const IconThemeData(color: Colors.white),
 );
@@ -50,18 +51,30 @@ final vChatConstDarkTheme = ThemeData.dark().copyWith(
         modalElevation: 0),
     elevatedButtonTheme: elevatedButtonThemeData,
     textTheme: GoogleFonts.nunitoTextTheme().copyWith(
-      headline6: GoogleFonts.nunito(fontWeight: FontWeight.w700, color: Colors.white),
-      subtitle2:
-          GoogleFonts.nunito(letterSpacing: .1, color: Colors.white70, fontSize: 15, fontWeight: FontWeight.normal),
-      bodyText2:
-          GoogleFonts.nunito(color: Colors.white, fontSize: 19, fontWeight: FontWeight.normal, letterSpacing: .15),
-      bodyText1: GoogleFonts.nunito(color: Colors.white, fontSize: 19, letterSpacing: .5),
-      subtitle1:
-          GoogleFonts.nunito(color: Colors.white, fontSize: 18, fontWeight: FontWeight.normal, letterSpacing: .15),
+      headline6:
+          GoogleFonts.nunito(fontWeight: FontWeight.w700, color: Colors.white),
+      subtitle2: GoogleFonts.nunito(
+          letterSpacing: .1,
+          color: Colors.white70,
+          fontSize: 15,
+          fontWeight: FontWeight.normal),
+      bodyText2: GoogleFonts.nunito(
+          color: Colors.white,
+          fontSize: 19,
+          fontWeight: FontWeight.normal,
+          letterSpacing: .15),
+      bodyText1: GoogleFonts.nunito(
+          color: Colors.white, fontSize: 19, letterSpacing: .5),
+      subtitle1: GoogleFonts.nunito(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.normal,
+          letterSpacing: .15),
       caption: GoogleFonts.nunito(
         color: Colors.white,
       ),
     ),
     backgroundColor: Colors.black,
     appBarTheme: appBarTheme,
-    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.redAccent));
+    colorScheme:
+        ColorScheme.fromSwatch().copyWith(secondary: Colors.redAccent));

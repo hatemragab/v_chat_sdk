@@ -9,7 +9,8 @@ import '../sqlite/tables/room_table.dart';
 class LocalStorageService {
   LocalStorageService._privateConstructor();
 
-  static final LocalStorageService instance = LocalStorageService._privateConstructor();
+  static final LocalStorageService instance =
+      LocalStorageService._privateConstructor();
 
   late Database database;
 
@@ -18,10 +19,12 @@ class LocalStorageService {
   }
 
   Future<List<VChatRoom>> getRooms() async {
-    final maps = await database.query(RoomTable.TABLE_NAME, orderBy: "${RoomTable.COLUMN_UPDATED_AT} DESC");
+    final maps = await database.query(RoomTable.tableName,
+        orderBy: "${RoomTable.columnUpdatedAt} DESC");
     final rooms = <VChatRoom>[];
     for (var map in maps) {
-      final r = VChatRoom.fromMap(jsonDecode(map[RoomTable.COLUMN_DATA].toString()));
+      final r =
+          VChatRoom.fromMap(jsonDecode(map[RoomTable.columnData].toString()));
       rooms.add(r);
     }
 
@@ -42,11 +45,11 @@ class LocalStorageService {
     final batch = database.batch();
     for (var room in roomsToInsert) {
       batch.insert(
-          RoomTable.TABLE_NAME,
+          RoomTable.tableName,
           {
-            RoomTable.COLUMN_ID: room.id,
-            RoomTable.COLUMN_UPDATED_AT: room.updatedAt,
-            RoomTable.COLUMN_DATA: jsonEncode(room.toLocalMap())
+            RoomTable.columnId: room.id,
+            RoomTable.columnUpdatedAt: room.updatedAt,
+            RoomTable.columnData: jsonEncode(room.toLocalMap())
           },
           conflictAlgorithm: ConflictAlgorithm.replace);
     }
@@ -56,11 +59,11 @@ class LocalStorageService {
   Future setRoomOrUpdate(VChatRoom room) async {
     await insertMessage(room.id.toString(), room.lastMessage);
     await database.insert(
-        RoomTable.TABLE_NAME,
+        RoomTable.tableName,
         {
-          RoomTable.COLUMN_ID: room.id,
-          RoomTable.COLUMN_UPDATED_AT: room.updatedAt,
-          RoomTable.COLUMN_DATA: jsonEncode(room.toLocalMap())
+          RoomTable.columnId: room.id,
+          RoomTable.columnUpdatedAt: room.updatedAt,
+          RoomTable.columnData: jsonEncode(room.toLocalMap())
         },
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
@@ -74,17 +77,17 @@ class LocalStorageService {
     } catch (err) {
       //
     }
-    await database
-        .delete(MessageTable.tableName, where: "${MessageTable.COLUMN_ROOM_ID} =?", whereArgs: [int.parse(roomId)]);
+    await database.delete(MessageTable.tableName,
+        where: "${MessageTable.columnRoomId} =?", whereArgs: [roomId]);
 
     final batch = database.batch();
     for (var msg in messageToInsert) {
       batch.insert(
         MessageTable.tableName,
         {
-          MessageTable.COLUMN_ID: msg.id,
-          MessageTable.COLUMN_ROOM_ID: msg.roomId,
-          MessageTable.COLUMN_DATA: jsonEncode(msg.toLocalMap())
+          MessageTable.columnId: msg.id,
+          MessageTable.columnRoomId: msg.roomId,
+          MessageTable.columnData: jsonEncode(msg.toLocalMap())
         },
         conflictAlgorithm: ConflictAlgorithm.ignore,
       );
@@ -96,26 +99,26 @@ class LocalStorageService {
     await database.insert(
       MessageTable.tableName,
       {
-        MessageTable.COLUMN_ID: msg.id,
-        MessageTable.COLUMN_ROOM_ID: msg.roomId,
-        MessageTable.COLUMN_DATA: jsonEncode(msg.toLocalMap())
+        MessageTable.columnId: msg.id,
+        MessageTable.columnRoomId: msg.roomId,
+        MessageTable.columnData: jsonEncode(msg.toLocalMap())
       },
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
 
-  Future<List<VChatMessage>> getRoomMessages(int roomId) async {
+  Future<List<VChatMessage>> getRoomMessages(String roomId) async {
     final messages = <VChatMessage>[];
     final maps = await database.query(MessageTable.tableName,
-        where: "${MessageTable.COLUMN_ROOM_ID} =?",
+        where: "${MessageTable.columnRoomId} =?",
         whereArgs: [roomId],
         limit: 30,
-        orderBy: "${MessageTable.COLUMN_ID} DESC");
+        orderBy: "${MessageTable.columnId} DESC");
 
     for (var x in maps) {
       messages.add(
         VChatMessage.fromMap(
-          jsonDecode(x[MessageTable.COLUMN_DATA].toString()),
+          jsonDecode(x[MessageTable.columnData].toString()),
         ),
       );
     }
@@ -123,7 +126,8 @@ class LocalStorageService {
     return messages;
   }
 
-  Future deleteRoom(int id) async {
-    await database.delete(RoomTable.TABLE_NAME, where: "${RoomTable.COLUMN_ID}=?", whereArgs: [id]);
+  Future deleteRoom(String id) async {
+    await database.delete(RoomTable.tableName,
+        where: "${RoomTable.columnId}=?", whereArgs: [id]);
   }
 }

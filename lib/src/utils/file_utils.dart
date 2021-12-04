@@ -21,7 +21,8 @@ import 'helpers/dir_helper.dart';
 
 class FileUtils {
   FileUtils._();
-  static Future newDownloadFile(BuildContext context, VChatMessageAttachment attachment) async {
+  static Future newDownloadFile(
+      BuildContext context, VChatMessageAttachment attachment) async {
     try {
       await _requestStoragePermission(context);
       final downloadFile = await DirHelper.downloadPath();
@@ -33,11 +34,15 @@ class FileUtils {
           final cancelToken = CancelToken();
           CustomAlert.customLoadingDialog(context: context);
           await CustomDio().download(
-              path: ServerConfig.messagesMediaBaseUrl + attachment.playUrl.toString(),
+              path: ServerConfig.messagesMediaBaseUrl +
+                  attachment.playUrl.toString(),
               cancelToken: cancelToken,
               filePath: file.path);
           Navigator.pop(context);
-          CustomAlert.done(context: context, msg: "File saved on device /download/${VChatAppService.instance.appName}");
+          CustomAlert.done(
+              context: context,
+              msg:
+                  "File saved on device /download/${VChatAppService.instance.appName}");
           await OpenFile.open(file.path);
         } catch (err) {
           Navigator.pop(context);
@@ -45,18 +50,22 @@ class FileUtils {
         }
       }
     } catch (err) {
-      CustomAlert.customAlertDialog(errorMessage: err.toString(), context: context);
+      CustomAlert.customAlertDialog(
+          errorMessage: err.toString(), context: context);
       rethrow;
     }
   }
 
   static Future compressImage(File file) async {
-    final ImageProperties properties = await FlutterNativeImage.getImageProperties(file.path);
+    final ImageProperties properties =
+        await FlutterNativeImage.getImageProperties(file.path);
     File compressedFile = file;
     if (file.lengthSync() > 150 * 1000) {
       // compress only images bigger than 150 kb
       compressedFile = await FlutterNativeImage.compressImage(file.path,
-          quality: 100, targetWidth: 700, targetHeight: (properties.height! * 700 / properties.width!).round());
+          quality: 100,
+          targetWidth: 700,
+          targetHeight: (properties.height! * 700 / properties.width!).round());
     }
 
     //  final compressFile = await _copyTheCompressImage(compressedFile);
@@ -89,7 +98,8 @@ class FileUtils {
       timeMs: 1,
     );
     final t = (await getTemporaryDirectory()).path;
-    final String fileName = "IMG_THUMB_${DateTime.now().microsecondsSinceEpoch}.png";
+    final String fileName =
+        "IMG_THUMB_${DateTime.now().microsecondsSinceEpoch}.png";
     final newFile = File("$t$fileName");
     return await newFile.writeAsBytes(uint8list!);
   }
@@ -101,7 +111,8 @@ class FileUtils {
     return _printDuration(Duration(milliseconds: info!.duration!.round()));
   }
 
-  static Future<dynamic> uploadFile(List<File> files, String endPoint, {Map<String, String>? body}) async {
+  static Future<dynamic> uploadFile(List<File> files, String endPoint,
+      {Map<String, String>? body}) async {
     final request = http.MultipartRequest(
       'POST',
       Uri.parse('${ServerConfig.serverBaseUrl}$endPoint'),
@@ -118,7 +129,10 @@ class FileUtils {
       );
     }
 
-    request.headers.addAll({"authorization": VChatAppService.instance.vChatUser!.accessToken.toString()});
+    request.headers.addAll({
+      "authorization":
+          "Bearer ${VChatAppService.instance.vChatUser!.accessToken.toString()}"
+    });
     if (body != null) {
       request.fields.addAll(body);
     }
@@ -145,7 +159,8 @@ class FileUtils {
               return c.complete();
             } else {
               Navigator.pop(context);
-              return c.completeError("storage permission must be accepted to download the file");
+              return c.completeError(
+                  "storage permission must be accepted to download the file");
             }
           });
     } else {

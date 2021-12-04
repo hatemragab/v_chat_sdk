@@ -27,27 +27,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: S.of(context).register.text,
+        elevation: 0,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            CupertinoTextField(
-              placeholder: S.of(context).email,
+            TextField(
+              decoration: InputDecoration(
+                hintText: S.of(context).email,
+              ),
               controller: _controller.emailTxtController,
             ),
             const SizedBox(
               height: 20,
             ),
-            CupertinoTextField(
-              placeholder: S.of(context).name,
+            TextField(
+              decoration: InputDecoration(
+                hintText: S.of(context).name,
+              ),
               controller: _controller.nameTxtController,
             ),
             const SizedBox(
               height: 20,
             ),
-            CupertinoTextField(
-              placeholder: S.of(context).password,
+            TextField(
+              decoration: InputDecoration(
+                hintText: S.of(context).password,
+              ),
               controller: _controller.passwordTxtController,
             ),
             const SizedBox(
@@ -56,10 +64,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             InkWell(
                 onTap: () async {
                   final picker = ImagePicker();
-                  final img = await picker.pickImage(source: ImageSource.gallery);
+                  final img =
+                      await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     _controller.imagePath = img.path;
-                    CustomAlert.showSuccess(context: context, err: "image has been set successfully");
+                    CustomAlert.showSuccess(
+                        context: context,
+                        err: "image has been set successfully");
                   }
                 },
                 child: Row(
@@ -75,7 +86,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 10,
             ),
-            TextButton(onPressed: _controller.register, child: S.of(context).register.text),
+            ElevatedButton(
+                onPressed: _controller.register,
+                child: S.of(context).register.text),
           ],
         ),
       ),

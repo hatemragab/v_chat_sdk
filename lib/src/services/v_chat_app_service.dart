@@ -34,6 +34,8 @@ class VChatAppService {
 
   String? forceLanguage;
 
+  late String passwordHashKey;
+
   VChatLookupString getTrans(BuildContext context) {
     /// languageCode is EN or AR etc...
     var locale = Localizations.localeOf(context);
@@ -65,7 +67,9 @@ class VChatAppService {
     }
   }
 
-  final Map<String, VChatLookupString> _lookupMessagesMap = {'en': EnLanguage()};
+  final Map<String, VChatLookupString> _lookupMessagesMap = {
+    'en': EnLanguage()
+  };
 
   void setLocaleMessages(String locale, VChatLookupString lookupMessages) {
     _lookupMessagesMap[locale] = lookupMessages;
@@ -79,7 +83,7 @@ class VChatAppService {
       await Firebase.initializeApp();
     }
 
-    final String? userJson = await storage.read(key: StorageKeys.KV_CHAT_MY_MODEL);
+    final String? userJson = await storage.read(key: StorageKeys.kvChatMyModel);
     if (userJson != null) {
       vChatUser = VChatUser.fromMap(jsonDecode(userJson));
     } else {

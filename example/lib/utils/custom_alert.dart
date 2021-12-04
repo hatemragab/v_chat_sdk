@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 
 class CustomAlert {
-  static void customLoadingDialog({bool dismissible = false, required BuildContext context}) {
+  static void customLoadingDialog(
+      {bool dismissible = false, required BuildContext context}) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -18,7 +19,8 @@ class CustomAlert {
               child: AlertDialog(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 elevation: 0,
-                contentPadding: const EdgeInsets.only(top: 8, bottom: 5, left: 10, right: 10),
+                contentPadding: const EdgeInsets.only(
+                    top: 8, bottom: 5, left: 10, right: 10),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -69,7 +71,8 @@ class CustomAlert {
     );
   }
 
-  static void showSuccess({required BuildContext context, required String err}) {
+  static void showSuccess(
+      {required BuildContext context, required String err}) {
     showDialog(
       context: context,
       builder: (context) {
@@ -89,7 +92,9 @@ class CustomAlert {
   }
 
   static Future<int?> customChooseDialog(
-      {required BuildContext context, String? title, required List<String> data}) async {
+      {required BuildContext context,
+      String? title,
+      required List<String> data}) async {
     return await showDialog(
       context: context,
       builder: (context) {

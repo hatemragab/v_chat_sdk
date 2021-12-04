@@ -6,12 +6,18 @@ import 'cubit/room_cubit.dart';
 import 'widgets/room_item.dart';
 
 class VChatRoomsView extends StatelessWidget {
-  const VChatRoomsView({Key? key}) : super(key: key);
+  /// return the unique id of user witch you send to v chat while register if single chat
+  /// if group chat will return uniqueId = null
+  final Function(String? uniqueId)? onMessageAvatarPressed;
+
+  const VChatRoomsView({Key? key, this.onMessageAvatarPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: RoomCubit.instance,
+      value: RoomCubit.instance
+        ..onMessageAvatarPressed = onMessageAvatarPressed,
       child: const VChatRoomsScreen(),
     );
   }

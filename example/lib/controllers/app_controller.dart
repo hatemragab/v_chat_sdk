@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-class LanguageController extends ChangeNotifier {
+class AppController extends ChangeNotifier {
   Locale locale = ui.window.locale;
   ThemeData theme = ThemeData.light();
 

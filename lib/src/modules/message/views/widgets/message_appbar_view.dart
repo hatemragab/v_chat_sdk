@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
-
+import 'package:v_chat_sdk/src/services/v_chat_provider.dart';
 import '../../../../enums/room_type.dart';
 import '../../../../enums/room_typing_type.dart';
 import '../../../../services/v_chat_app_service.dart';
@@ -20,7 +20,8 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
       title: BlocBuilder<RoomCubit, RoomState>(
         bloc: RoomCubit.instance,
         builder: (context, state) {
-          final _room = roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+          final _room = roomController.rooms.firstWhere(
+              (element) => element.id == roomController.currentRoomId!);
           if (state is RoomLoaded) {
             final isOnline = _room.isOnline;
             final typingSt = _room.typingStatus;
@@ -39,7 +40,9 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                         if (typingSt.status == RoomTypingType.recording) {
                           return t.recording().b2.color(Colors.green);
                         }
-                        return "${typingSt.status.inString} ...".b2.color(Colors.green);
+                        return "${typingSt.status.inString} ..."
+                            .b2
+                            .color(Colors.green);
                       }
                       if (isOnline == 1) {
                         return t.online().b2;
@@ -48,7 +51,9 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                       }
                     } else {
                       if (typingSt.status != RoomTypingType.stop) {
-                        return "${typingSt.name} is ${typingSt.status.inString} ...".b2.color(Colors.green);
+                        return "${typingSt.name} ${t.isTranslate()} ${typingSt.status.inString} ..."
+                            .b2
+                            .color(Colors.green);
                       } else {
                         return const SizedBox();
                       }
@@ -66,14 +71,28 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
           child: BlocBuilder<RoomCubit, RoomState>(
             bloc: RoomCubit.instance,
             builder: (context, state) {
-              final _room = roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId!);
+              final _room = roomController.rooms.firstWhere(
+                  (element) => element.id == roomController.currentRoomId!);
               return Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: InkWell(
-                  onTap: () {
-                    //todo call back when icon clicked
+                  onTap: () async {
+                    if (roomController.onMessageAvatarPressed != null) {
+                      final _room = roomController.rooms.firstWhere((element) =>
+                          element.id == roomController.currentRoomId!);
+                      if (_room.roomType == RoomType.single) {
+                        final email = await VChatProvider()
+                            .getUserEmail(_room.ifSinglePeerId!);
+                        roomController.onMessageAvatarPressed!(email);
+                      } else {
+                        roomController.onMessageAvatarPressed!(null);
+                      }
+                    }
                   },
-                  child: CircleImage.network(path: _room.thumbImage, radius: 25, isOnline: _room.isOnline == 1),
+                  child: CircleImage.network(
+                      path: _room.thumbImage,
+                      radius: 25,
+                      isOnline: _room.isOnline == 1),
                 ),
               );
             },

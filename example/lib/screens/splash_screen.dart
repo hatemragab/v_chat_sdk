@@ -38,12 +38,14 @@ class _SplashScreenState extends State<SplashScreen> {
     log(myModel.toString());
     if (myModel) {
       // there are login data saved
-      Navigator.of(context)
-          .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const Home()), (Route<dynamic> route) => false);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const Home()),
+          (Route<dynamic> route) => false);
     } else {
       // its the first time to open the app
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false);
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+          (Route<dynamic> route) => false);
     }
   }
 }

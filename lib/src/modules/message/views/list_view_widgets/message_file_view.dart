@@ -8,7 +8,8 @@ class MessageFileView extends StatelessWidget {
   final bool isSender;
   final myId = VChatAppService.instance.vChatUser!.id;
 
-  MessageFileView(this._message, {Key? key, required this.isSender}) : super(key: key);
+  MessageFileView(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

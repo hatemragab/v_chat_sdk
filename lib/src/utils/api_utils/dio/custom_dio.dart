@@ -7,21 +7,34 @@ import '../server_config.dart';
 import 'v_chat_sdk_exception.dart';
 
 class CustomDio {
-  final dio = Dio();
   final vChatController = VChatAppService.instance;
+  late Dio dio;
 
   CustomDio() {
+    dio = Dio();
     dio.options.baseUrl = ServerConfig.serverBaseUrl;
     dio.options.validateStatus = (_) => true;
-    dio.options.followRedirects = false;
+    //dio.options.followRedirects = false;
     dio.options.headers = {
-      'authorization': vChatController.vChatUser != null ? vChatController.vChatUser!.accessToken.toString() : ""
+      'authorization': vChatController.vChatUser != null
+          ? "Bearer ${vChatController.vChatUser!.accessToken.toString()}"
+          : "Bearer xxx"
     };
     //  print(vChatController.vChatUser!.accessToken.toString());
 
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;
     dio.options.connectTimeout = 10000;
+    // if (!kReleaseMode) {
+    //   dio.interceptors.add(PrettyDioLogger(
+    //     requestHeader: true,
+    //     requestBody: true,
+    //     responseBody: true,
+    //     error: true,
+    //
+    //     maxWidth: 100,
+    //   ));
+    // }
   }
 
   Future<Response> uploadFile(
@@ -45,9 +58,11 @@ class CustomDio {
     }
     late Response response;
     if (isPost) {
-      response = await dio.post(apiEndPoint, data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      response = await dio.post(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
     } else {
-      response = await dio.patch(apiEndPoint, data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      response = await dio.patch(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
     }
 
     throwIfNoSuccess(response);
@@ -68,8 +83,8 @@ class CustomDio {
       if (body != null) {
         data.fields.addAll(body);
       }
-      final Response response =
-          await dio.post(apiEndPoint, data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      final Response response = await dio.post(apiEndPoint,
+          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
       throwIfNoSuccess(response);
       return response;
     } catch (err) {
@@ -160,14 +175,15 @@ class CustomDio {
       if (err.type == DioErrorType.other ||
           err.type == DioErrorType.connectTimeout ||
           err.type == DioErrorType.receiveTimeout) {
-        throw VChatSdkException("Check your internet connection and try again ");
+        throw VChatSdkException(
+            "Check your internet connection and try again ");
       } else {
         throw VChatSdkException(res.data.toString());
       }
     } catch (err) {
       rethrow;
     } finally {
-      dio.close();
+      //  dio.close();
     }
   }
 

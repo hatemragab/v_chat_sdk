@@ -7,19 +7,19 @@ import 'v_chat_room_typing.dart';
 
 @immutable
 class VChatRoom {
-  final int id;
+  final String id;
   final RoomType roomType;
-  final int blockerId;
+  final String? blockerId;
   final int createdAt;
   final int updatedAt;
-  final int creatorId;
+  final String creatorId;
   final int isMute;
-  final List<int> lastMessageSeenBy;
+  final List<String> lastMessageSeenBy;
   final int isOnline;
   final String title;
   final String thumbImage;
   final GroupChatSetting? groupSetting;
-  final int? ifSinglePeerId;
+  final String? ifSinglePeerId;
   final VChatMessage lastMessage;
   final VChatRoomTyping typingStatus;
 
@@ -50,19 +50,24 @@ class VChatRoom {
 
   factory VChatRoom.fromMap(dynamic map) {
     return VChatRoom(
-        id: map['_id'] as int,
-        roomType: map['roomType'] == RoomType.single.inString ? RoomType.single : RoomType.groupChat,
-        blockerId: (map['blockerId'] as int),
+        id: map['_id'] as String,
+        roomType: map['roomType'] == RoomType.single.inString
+            ? RoomType.single
+            : RoomType.groupChat,
+        blockerId: map['blockerId'] as String?,
         createdAt: map['createdAt'] as int,
         updatedAt: (map['updatedAt'] as int),
-        groupSetting: map['setting'] == null ? null : GroupChatSetting.fromMap(map['groupSetting']),
-        creatorId: map['creatorId'] as int,
+        groupSetting: map['setting'] == null
+            ? null
+            : GroupChatSetting.fromMap(map['groupSetting']),
+        creatorId: map['creatorId'] as String,
         isMute: (map['isMute'] as int),
-        lastMessageSeenBy: (map['lastMessageSeenBy'] as List).map((e) => e as int).toList(),
+        lastMessageSeenBy:
+            (map['lastMessageSeenBy'] as List).map((e) => e as String).toList(),
         isOnline: (map['isOnline'] as int),
         title: map['title'] as String,
         thumbImage: map['thumbImage'] as String,
-        ifSinglePeerId: map['peerId'] as int?,
+        ifSinglePeerId: map['peerId'] as String?,
         lastMessage: VChatMessage.fromMap(map['lastMessage']),
         typingStatus: VChatRoomTyping(status: RoomTypingType.stop));
   }
@@ -88,19 +93,19 @@ class VChatRoom {
   }
 
   VChatRoom copyWith({
-    int? id,
+    String? id,
     RoomType? roomType,
-    int? blockerId,
+    String? blockerId,
     int? createdAt,
     int? updatedAt,
-    int? creatorId,
+    String? creatorId,
     int? isMute,
-    List<int>? lastMessageSeenBy,
+    List<String>? lastMessageSeenBy,
     int? isOnline,
     String? title,
     String? thumbImage,
     GroupChatSetting? groupSetting,
-    int? ifSinglePeerId,
+    String? ifSinglePeerId,
     VChatMessage? lastMessage,
     VChatRoomTyping? typingStatus,
   }) {

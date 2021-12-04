@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 import './screens/splash_screen.dart';
-import 'controllers/language_controller.dart';
+import 'controllers/app_controller.dart';
 import 'generated/l10n.dart';
 
 class VChatCustomWidgets extends VChatWidgetBuilder {
@@ -21,25 +21,27 @@ class VChatCustomWidgets extends VChatWidgetBuilder {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await GetStorage.init();
   // http://170.178.195.150:81/
   await VChatController.instance.init(
-    baseUrl: Uri.parse("http://170.178.195.150:81"),
-    appName: "test_v_chat",
-    isUseFirebase: true,
-    widgetsBuilder: VChatCustomWidgets(),
-    enableLogger: true,
-    maxMediaUploadSize: 50 * 1000 * 1000,
-  );
+      baseUrl: Uri.parse("http://170.178.195.150:81"),
+      appName: "test_v_chat",
+      isUseFirebase: true,
+      widgetsBuilder: VChatCustomWidgets(),
+      enableLogger: true,
+      maxMediaUploadSize: 50 * 1000 * 1000,
+      passwordHashKey: "passwordHashKey");
 
   // add support new language
   // v_chat will change the language one you change it
-  VChatController.instance.setLocaleMessages(languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
+  VChatController.instance.setLocaleMessages(
+      languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
 
   // VChatController.instance.forceLanguage(languageCode: "ar",countryCode:'EG');
 
-  runApp(ChangeNotifierProvider<LanguageController>(
-    create: (context) => LanguageController(),
+  runApp(ChangeNotifierProvider<AppController>(
+    create: (context) => AppController(),
     child: const MyApp(),
   ));
 }
@@ -54,10 +56,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    context.watch<LanguageController>();
+    context.watch<AppController>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
+      theme: context.read<AppController>().theme,
       darkTheme: ThemeData.dark(),
       localizationsDelegates: const [
         S.delegate,
@@ -66,7 +68,7 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: context.read<LanguageController>().locale,
+      locale: context.read<AppController>().locale,
       home: const SplashScreen(),
     );
   }

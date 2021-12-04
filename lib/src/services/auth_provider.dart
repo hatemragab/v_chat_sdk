@@ -5,13 +5,14 @@ import '../utils/api_utils/dio/custom_dio.dart';
 
 class AuthProvider {
   Future<VChatUser> login(VChatLoginDto dto) async {
-    final data = (await CustomDio().send(reqMethod: "POST", path: "user/login", body: dto.toMap())).data['data'];
+    final data = (await CustomDio()
+            .send(reqMethod: "POST", path: "user/login", body: dto.toMap()))
+        .data['data'];
     return VChatUser.fromMap(data);
   }
 
   Future<VChatUser> register(VChatRegisterDto dto) async {
     dynamic userMap;
-
     if (dto.userImage != null) {
       userMap = (await CustomDio().uploadFile(
         filePath: dto.userImage!.path,

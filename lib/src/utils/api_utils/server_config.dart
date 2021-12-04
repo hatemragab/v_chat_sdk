@@ -13,7 +13,8 @@ class ServerConfig {
   static const useOneSingle = false;
 
   //http://localhost:3000/api/v1/public/images/messages/image_picker6911144535190976387.jpg
-  static String messageImages = 'http://$serverIp/api/v1/public/images/messages/';
+  static String messageImages =
+      'http://$serverIp/api/v1/public/images/messages/';
 
   static String profileImageBaseUrl = "${serverBaseUrl}public/profile/";
 

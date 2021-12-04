@@ -2,7 +2,7 @@ import 'dart:convert';
 import '../enums/room_type.dart';
 
 class CreateSingleRoomDto {
-  final List<int> usersIdsJson;
+  final List<String> usersIdsJson;
   final String message;
   final RoomType roomType;
 

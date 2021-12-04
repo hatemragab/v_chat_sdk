@@ -10,7 +10,8 @@ class MessageVideoItem extends StatelessWidget {
   final VChatMessage _message;
   final bool isSender;
 
-  MessageVideoItem(this._message, {Key? key, required this.isSender}) : super(key: key);
+  MessageVideoItem(this._message, {Key? key, required this.isSender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,8 @@ class MessageVideoItem extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => VideoPlayerView(ServerConfig.messagesMediaBaseUrl + att.playUrl.toString()),
+              builder: (context) => VideoPlayerView(
+                  ServerConfig.messagesMediaBaseUrl + att.playUrl.toString()),
             ));
       },
       child: Container(
@@ -38,7 +40,8 @@ class MessageVideoItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: CachedNetworkImage(
-                  imageUrl: ServerConfig.messagesMediaBaseUrl + att.imageUrl.toString(),
+                  imageUrl: ServerConfig.messagesMediaBaseUrl +
+                      att.imageUrl.toString(),
                   fit: BoxFit.cover,
                 ),
               ),

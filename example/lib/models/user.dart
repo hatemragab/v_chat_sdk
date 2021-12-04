@@ -1,5 +1,5 @@
 class User {
-  final int id;
+  final String id;
   final String imageThumb;
   final String email;
   final String name;
@@ -27,7 +27,12 @@ class User {
           accessToken == other.accessToken);
 
   @override
-  int get hashCode => id.hashCode ^ imageThumb.hashCode ^ email.hashCode ^ name.hashCode ^ accessToken.hashCode;
+  int get hashCode =>
+      id.hashCode ^
+      imageThumb.hashCode ^
+      email.hashCode ^
+      name.hashCode ^
+      accessToken.hashCode;
 
   @override
   String toString() {
@@ -41,7 +46,7 @@ class User {
   }
 
   User copyWith({
-    int? id,
+    String? id,
     String? imageThumb,
     String? email,
     String? name,
@@ -68,7 +73,7 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['_id'] as int,
+      id: map['_id'] as String,
       imageThumb: map['imageThumb'] as String,
       email: map['email'] as String,
       name: map['name'] as String,
