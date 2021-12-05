@@ -78,23 +78,28 @@ class NotificationService {
       sound: true,
     );
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      if (message.notification != null) {
-        final roomId = message.data['roomId'].toString();
-        try {
-          if (!RoomCubit.instance.isRoomOpen(roomId)) {
-            await Future.delayed(const Duration(milliseconds: 100));
-            RoomCubit.instance.currentRoomId = roomId;
+      try{
+        if (message.notification != null) {
+          final roomId = message.data['roomId'].toString();
+          try {
+            if (!RoomCubit.instance.isRoomOpen(roomId)) {
+              await Future.delayed(const Duration(milliseconds: 100));
+              RoomCubit.instance.currentRoomId = roomId;
 
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => MessageView(
-                      roomId: roomId,
-                    )));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => MessageView(
+                    roomId: roomId,
+                  )));
+            }
+          } catch (err) {
+            Helpers.vlog(err.toString());
+            //
           }
-        } catch (err) {
-          Helpers.vlog(err.toString());
-          //
         }
+      }catch(err){
+        //
       }
+
     });
 
     await flutterLocalNotificationsPlugin

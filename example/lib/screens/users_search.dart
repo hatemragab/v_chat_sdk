@@ -49,6 +49,9 @@ class _UsersSearchState extends State<UsersSearch> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
+              decoration: InputDecoration(
+                hintText: "User name"
+              ),
               keyboardType: TextInputType.text,
               autofocus: true,
               onSubmitted: (value) {

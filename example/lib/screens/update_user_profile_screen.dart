@@ -98,39 +98,6 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
     }
   }
 
-  void changePassword() async {
-    try {
-      if (oldPassC.text.isEmpty) {
-        throw "Enter the old password";
-      }
-      if (newPassC.text.isEmpty) {
-        throw "Enter the new password";
-      }
-
-      ///update to your service first
-      ///
-      ///
-      ///then update on v chat
-      await CustomDio().send(
-          reqMethod: "patch",
-          path: "user",
-          body: {"oldPassword": oldPassC.text, "newPassword": newPassC.text});
-
-      await VChatController.instance.updateUserPassword(
-          newPassword: newPassC.text, oldPassword: oldPassC.text);
-      CustomAlert.showSuccess(
-          context: context, err: "your password has been updated !");
-      oldPassC.clear();
-      newPassC.clear();
-    } on VChatSdkException catch (err) {
-      //handle Errors
-      log(err.data.toString());
-      rethrow;
-    } catch (err) {
-      CustomAlert.showError(context: context, err: err.toString());
-    }
-  }
-
   void updateImage() async {
     try {
       final picker = ImagePicker();
@@ -140,6 +107,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
         if (File(img.path).lengthSync() > 1024 * 1024 * 20) {
           throw "image size must be less than 20 Mb";
         }
+        CustomAlert.customLoadingDialog(context: context);
 
         ///update to your service first
         // (await CustomDio().uploadFile(
@@ -151,14 +119,18 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
         //     .toString();
         ///then update on v chat
         await VChatController.instance.updateUserImage(imagePath: img.path);
+        Navigator.pop(context);
         CustomAlert.showSuccess(
             context: context, err: "your image has been updated !");
       }
     } on VChatSdkException catch (err) {
+      Navigator.pop(context);
+      CustomAlert.showError(context: context, err: err.toString());
       log(err.data.toString());
       rethrow;
       //handle Errors
     } catch (err) {
+      Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());
     }
   }
