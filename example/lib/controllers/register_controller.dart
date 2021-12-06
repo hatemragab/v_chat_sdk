@@ -36,9 +36,10 @@ class RegisterController {
       ///then Register on v_chat_sdk system
       final u = await VChatController.instance.register(
         dto: VChatRegisterDto(
-            name: name,
-            userImage: imagePath == null ? null : File(imagePath!),
-            email: email),
+          name: name,
+          userImage: imagePath == null ? null : File(imagePath!),
+          email: email,
+        ),
         context: context,
       );
       await GetStorage().write("myModel", u.toMap());

@@ -164,39 +164,37 @@ class CustomAlert {
           onWillPop: () async {
             return dismissible;
           },
-          child: Transform.scale(
-            scale: a1.value,
-            child: Opacity(
-              opacity: a1.value,
-              child: Platform.isIOS
-                  ? CupertinoAlertDialog(
-                      title: title.text,
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+          child: Platform.isIOS
+              ? CupertinoAlertDialog(
+                  title: title.text,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(
+                        height: 10,
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, -1),
-                          child: VChatAppService.instance
-                              .getTrans(context)
-                              .cancel()
-                              .text,
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 1),
-                          child: VChatAppService.instance
-                              .getTrans(context)
-                              .oK()
-                              .text,
-                        ),
-                      ],
-                    )
-                  : AlertDialog(
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, -1),
+                      child: VChatAppService.instance
+                          .getTrans(context)
+                          .cancel()
+                          .text,
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 1),
+                      child:
+                          VChatAppService.instance.getTrans(context).oK().text,
+                    ),
+                  ],
+                )
+              : Transform.scale(
+                  scale: a1.value,
+                  child: Opacity(
+                    opacity: a1.value,
+                    child: AlertDialog(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       title: title.text,
                       contentPadding: EdgeInsets.zero
@@ -226,8 +224,8 @@ class CustomAlert {
                         ),
                       ],
                     ),
-            ),
-          ),
+                  ),
+                ),
         );
       },
       transitionDuration: const Duration(milliseconds: 250),

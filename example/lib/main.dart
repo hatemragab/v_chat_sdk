@@ -25,13 +25,15 @@ void main() async {
   await GetStorage.init();
   // http://170.178.195.150:81/
   await VChatController.instance.init(
-      baseUrl: Uri.parse("http://170.178.195.150:81"),
-      appName: "test_v_chat",
-      isUseFirebase: true,
-      widgetsBuilder: VChatCustomWidgets(),
-      enableLogger: true,
-      maxMediaUploadSize: 50 * 1000 * 1000,
-      passwordHashKey: "passwordHashKey");
+    baseUrl: Uri.parse("http://170.178.195.150:81"),
+    appName: "test_v_chat",
+    isUseFirebase: true,
+    widgetsBuilder: VChatCustomWidgets(),
+    enableLogger: true,
+    maxMediaUploadSize: 50 * 1000 * 1000,
+    passwordHashKey: "passwordHashKey",
+
+  );
 
   // add support new language
   // v_chat will change the language one you change it
