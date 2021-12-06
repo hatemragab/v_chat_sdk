@@ -157,6 +157,42 @@ class CustomAlert {
     required BuildContext context,
     bool dismissible = true,
   }) async {
+    if (Platform.isIOS) {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return WillPopScope(
+              onWillPop: () async {
+                return dismissible;
+              },
+              child: CupertinoAlertDialog(
+                title: title.text,
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, -1),
+                    child: VChatAppService.instance
+                        .getTrans(context)
+                        .cancel()
+                        .text,
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 1),
+                    child: VChatAppService.instance.getTrans(context).oK().text,
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
     return await showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -164,68 +200,39 @@ class CustomAlert {
           onWillPop: () async {
             return dismissible;
           },
-          child: Platform.isIOS
-              ? CupertinoAlertDialog(
-                  title: title.text,
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, -1),
-                      child: VChatAppService.instance
-                          .getTrans(context)
-                          .cancel()
-                          .text,
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 1),
-                      child:
-                          VChatAppService.instance.getTrans(context).oK().text,
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                title: title.text,
+                contentPadding: EdgeInsets.zero
+                    .copyWith(top: 8, bottom: 5, left: 10, right: 10),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(
+                      height: 10,
                     ),
                   ],
-                )
-              : Transform.scale(
-                  scale: a1.value,
-                  child: Opacity(
-                    opacity: a1.value,
-                    child: AlertDialog(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      title: title.text,
-                      contentPadding: EdgeInsets.zero
-                          .copyWith(top: 8, bottom: 5, left: 10, right: 10),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, -1),
-                          child: VChatAppService.instance
-                              .getTrans(context)
-                              .cancel()
-                              .text,
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 1),
-                          child: VChatAppService.instance
-                              .getTrans(context)
-                              .oK()
-                              .text,
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, -1),
+                    child: VChatAppService.instance
+                        .getTrans(context)
+                        .cancel()
+                        .text,
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 1),
+                    child: VChatAppService.instance.getTrans(context).oK().text,
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
       transitionDuration: const Duration(milliseconds: 250),

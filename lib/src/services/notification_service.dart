@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class NotificationService {
       sound: true,
     );
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      try{
+      try {
         if (message.notification != null) {
           final roomId = message.data['roomId'].toString();
           try {
@@ -88,18 +89,17 @@ class NotificationService {
 
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => MessageView(
-                    roomId: roomId,
-                  )));
+                        roomId: roomId,
+                      )));
             }
           } catch (err) {
             Helpers.vlog(err.toString());
             //
           }
         }
-      }catch(err){
+      } catch (err) {
         //
       }
-
     });
 
     await flutterLocalNotificationsPlugin
@@ -182,6 +182,10 @@ class NotificationService {
       required String msg,
       required int hashCode,
       required String roomId}) {
+    if (Platform.isIOS) {
+      return;
+    }
+
     unawaited(
       flutterLocalNotificationsPlugin.show(
           hashCode,
@@ -191,25 +195,5 @@ class NotificationService {
               android: androidNotificationDetails, iOS: iosNotificationDetails),
           payload: roomId),
     );
-
-    // flutterLocalNotificationsPlugin.cancel(roomId);
-
-    // BotToast.showSimpleNotification(
-    //   title: title.toString(),
-    //   onTap: () {
-    //     if (!RoomCubit.instance.isRoomOpen(roomId)) {
-    //       RoomCubit.instance.currentRoomId = roomId;
-    //
-    //       Navigator.of(VChatAppService.to.navKey!.currentContext!)
-    //           .push(MaterialPageRoute(
-    //               builder: (_) => MessageView(
-    //                     roomId: roomId,
-    //                   )));
-    //     }
-    //     BotToast.cleanAll();
-    //   },
-    //   duration: const Duration(seconds: 5),
-    //   subTitle: msg.toString(),
-    // );
   }
 }

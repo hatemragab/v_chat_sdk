@@ -18,6 +18,7 @@ class CreateSingleChatDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return Material(
+        color: Colors.transparent,
         child: CupertinoAlertDialog(
           title: titleTxt != null
               ? titleTxt!.text
