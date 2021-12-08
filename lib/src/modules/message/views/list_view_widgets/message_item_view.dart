@@ -37,6 +37,20 @@ class MessageItemView extends StatelessWidget {
     final maxPaddingWidth = MediaQuery.of(context).size.width * .80;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    if(MessageType.create == message.messageType){
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            VChatAppService.instance.vcBuilder
+                .infoMessage(message.content, context),
+            SizedBox(height: 5,),
+            message.createdAtString.toString().cap,
+          ],
+        ),
+      );
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: getCrossAlign(isSender: isSender),
@@ -126,9 +140,6 @@ class MessageItemView extends StatelessWidget {
       case MessageType.allDeleted:
         return message.content.text;
 
-      case MessageType.info:
-        return VChatAppService.instance.vcBuilder
-            .infoMessage(message.content, context);
 
       default:
         return message.content.text;

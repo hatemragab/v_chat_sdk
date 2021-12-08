@@ -50,12 +50,13 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                         return const SizedBox.shrink();
                       }
                     } else {
+
                       if (typingSt.status != RoomTypingType.stop) {
                         return "${typingSt.name} ${t.isTranslate()} ${typingSt.status.inString} ..."
                             .b2
                             .color(Colors.green);
                       } else {
-                        return const SizedBox();
+                        return "${_room.groupSetting!.groupMembers.toString()} - 300".b2.height(1.6);
                       }
                     }
                   },
