@@ -49,18 +49,20 @@ class CircleImage {
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.green,
+                  color:isGroup?Colors.grey : Colors.green,
                   border:
                       Border.all(color: Colors.green, width: isGroup ? 0 : 0)),
-              child: Icon(
-                isGroup
-                    ? Icons.home_sharp
-                    : isOnline
-                        ? Icons.circle
-                        : Icons.done,
-                color: isGroup ? Colors.red : Colors.green,
-                size: 18,
-              ),
+              child: isGroup
+                  ? Icon(
+                      Icons.group,
+
+                      size: 18,
+                    )
+                  : Icon(
+                      Icons.circle,
+                      color: Colors.green,
+                      size: 18,
+                    ),
             ),
           )
         else

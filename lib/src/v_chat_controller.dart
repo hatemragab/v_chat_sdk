@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dto/create_group_room_dto.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
 import 'models/v_chat_room.dart';
@@ -20,6 +22,7 @@ import 'sqlite/db_provider.dart';
 import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'utils/api_utils/server_config.dart';
 import 'utils/custom_widgets/create_single_chat_dialog.dart';
+import 'utils/custom_widgets/custom_alert_dialog.dart';
 import 'utils/storage_keys.dart';
 import 'utils/helpers/helpers.dart';
 import 'utils/translator/v_chat_lookup_string.dart';
@@ -130,13 +133,6 @@ class VChatController {
     return await _vChatUsersApi.updateUserImage(path: imagePath);
   }
 
-  /// **throw** No internet connection
-  Future updateUserPassword(
-      {required String oldPassword, required String newPassword}) async {
-    return await _vChatUsersApi.updateUserPassword(
-        oldPassword: oldPassword, newPassword: newPassword);
-  }
-
   /// when you call this function the user will be online and can receive notification
   /// first you have to login or register in v chat other wise will throw Exception
   void bindChatControllers(
@@ -160,7 +156,7 @@ class VChatController {
     }
 
     NotificationService.instance.init(context);
-    unawaited(RoomCubit.instance.getRoomsFromLocal());
+    RoomCubit.instance ;
   }
 
   /// **throw** User already in v chat data base
@@ -171,6 +167,12 @@ class VChatController {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app ";
+    }
+    if (Platform.isAndroid) {
+      dto.platform = "Android";
+    }
+    if (Platform.isIOS) {
+      dto.platform = "ios";
     }
     dto.password = getHashedPassword(dto.email);
     final user = await _authProvider.register(dto);
@@ -250,6 +252,12 @@ class VChatController {
     } else {
       dto.fcmToken = "you don't use firebase on flutter app";
     }
+    if (Platform.isAndroid) {
+      dto.platform = "Android";
+    }
+    if (Platform.isIOS) {
+      dto.platform = "Ios";
+    }
 
     dto.password = getHashedPassword(dto.email);
     final user = await _authProvider.login(dto);
@@ -299,5 +307,31 @@ class VChatController {
     VChatAppService.instance.vChatUser = null;
     await DBProvider.instance.reCreateTables();
     NotificationService.instance.cancelAll();
+  }
+
+  /// throw exception if path one user only or path one user he is the app login
+  /// **throw** No internet connection
+  Future<void> createGroupChat(
+      {required BuildContext context,
+      required CreateGroupRoomDto createGroupRoomDto}) async {
+    final data = await _vChatUsersApi.createNewGroupRoom(
+      dto: createGroupRoomDto,
+    );
+
+    RoomCubit.instance.updateOneRoomInRamAndSort(VChatRoom.fromMap(data));
+    CustomAlert.done(
+      context: context,
+      msg: VChatAppService.instance
+          .getTrans(context)
+          .groupChatHasBeenCreatedSuccessful(),
+    );
+
+
+    /// room has been created successfully
+    //await Future.delayed(const Duration(seconds: 2));
+    // _navigateToRoomMessage(
+    //   data,
+    //   context,
+    // );
   }
 }

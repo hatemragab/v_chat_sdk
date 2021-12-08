@@ -7,12 +7,14 @@ class VChatRegisterDto {
   late String password;
   final File? userImage;
   late String? fcmToken;
+  late String platform;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
   VChatRegisterDto({
     required this.name,
     required this.email,
     required this.userImage,
+
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class VChatRegisterDto {
       'email': email,
       'password': password,
       'fcmToken': fcmToken,
+      'platform': platform,
     } as Map<String, dynamic>;
   }
 

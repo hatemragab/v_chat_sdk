@@ -24,8 +24,9 @@ void main() async {
 
   await GetStorage.init();
   // http://170.178.195.150:81/
+  //10.0.2.2:3000
   await VChatController.instance.init(
-    baseUrl: Uri.parse("http://170.178.195.150:81"),
+    baseUrl: Uri.parse("http://10.0.2.2:3000"),
     appName: "test_v_chat",
     isUseFirebase: true,
     widgetsBuilder: VChatCustomWidgets(),

@@ -97,6 +97,7 @@ class RoomItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    ///chat title
                     Flexible(
                       child: AutoDirection(
                         text: _room.title,
@@ -111,6 +112,7 @@ class RoomItem extends StatelessWidget {
                     _room.lastMessage.createdAtString.toString().b2
                   ],
                 ),
+                ///chat message
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -126,7 +128,6 @@ class RoomItem extends StatelessWidget {
                             if (tSt.status == RoomTypingType.recording) {
                               return t.recording().text.color(Colors.green);
                             }
-
                             return txt.text;
                           } else {
                             return "${tSt.name} is $txt"

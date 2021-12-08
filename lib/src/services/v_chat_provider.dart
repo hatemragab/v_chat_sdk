@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:v_chat_sdk/src/utils/file_utils.dart';
+
+import '../../v_chat_sdk.dart';
 import '../enums/room_type.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
@@ -14,12 +20,28 @@ class VChatProvider {
   Future createNewSingleRoom(String msg, String peerEmail) async {
     return (await CustomDio().send(
       reqMethod: "POST",
-      path: "room",
+      path: "room/single",
       body: {
-        "peerEmails": [peerEmail],
-        "roomType": RoomType.single.inString,
+        "peerEmail": peerEmail,
         "message": msg,
       },
+    ))
+        .data['data'];
+  }
+
+  Future createNewGroupRoom({required CreateGroupRoomDto dto}) async {
+    return (await CustomDio().uploadFile(
+      apiEndPoint: "room/group",
+      isPost: true,
+      filePath: dto.groupImage.path,
+      body: [
+        {
+          "peerEmails": jsonEncode(dto.usersEmails),
+        },
+        {
+          "title": dto.groupTitle,
+        }
+      ],
     ))
         .data['data'];
   }
@@ -36,24 +58,21 @@ class VChatProvider {
         .toString();
   }
 
-  Future<String> updateUserPassword(
-      {required String oldPassword, required String newPassword}) async {
-    return (await CustomDio().send(
-      reqMethod: "patch",
-      path: "user",
-      body: {
-        "oldPassword": oldPassword,
-        "newPassword": newPassword,
-      },
-    ))
-        .data['data']
-        .toString();
-  }
 
   Future<String> updateUserImage({required String path}) async {
+    late String platform;
+    if (Platform.isAndroid) {
+      platform = "Android";
+    }
+    if (Platform.isIOS) {
+      platform = "ios";
+    }
     return (await CustomDio().uploadFile(
       filePath: path,
       isPost: false,
+      body: [
+        {"platform": platform}
+      ],
       apiEndPoint: "user",
     ))
         .data['data']
@@ -61,10 +80,17 @@ class VChatProvider {
   }
 
   Future<String> updateUserName({required String name}) async {
+    late String platform;
+    if (Platform.isAndroid) {
+      platform = "Android";
+    }
+    if (Platform.isIOS) {
+      platform = "ios";
+    }
     return (await CustomDio().send(
       reqMethod: "patch",
       path: "user",
-      body: {"name": name},
+      body: {"name": name, "platform": platform},
     ))
         .data['data']
         .toString();

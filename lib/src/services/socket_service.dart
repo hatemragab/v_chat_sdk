@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 
 import '../enums/socket_state_type.dart';
 import '../models/v_chat_room.dart';
@@ -77,15 +78,16 @@ class SocketService {
   }
 
   void initSockedEvents() async {
-    _socket!.on("all_rooms", (data) {
-      final _roomsMaps = jsonDecode(data) as List;
-      final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
-      RoomCubit.instance.setSocketRooms(_rooms);
-      unawaited(LocalStorageService.instance.setRooms(_rooms));
-    });
+    // _socket!.on("all_rooms", (data) {
+    //   final _roomsMaps = jsonDecode(data) as List;
+    //   final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
+    //   RoomCubit.instance.setSocketRooms(_rooms);
+    //   unawaited(LocalStorageService.instance.setRooms(_rooms));
+    // });
 
-    _socket!.on("update_one_room", (data) {
-      final _room = jsonDecode(data);
+    _socket!.on("update_one_room", (_room) {
+   //   print(data.toString());
+     // final _room = jsonDecode(data);
       final room = VChatRoom.fromMap(_room);
       unawaited(LocalStorageService.instance.setRoomOrUpdate(room));
       RoomCubit.instance.updateOneRoomInRamAndSort(room);
@@ -102,8 +104,12 @@ class SocketService {
       RoomCubit.instance.updateRoomTypingChanged(VChatRoomTyping.fromMap(data));
     });
 
-    await Future.delayed(const Duration(milliseconds: 100));
-    _socket!.emit("join");
+    _socket!.emitWithAck("join", "join", ack: (data) {
+      final _roomsMaps = data['data'] as List;
+      final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
+      RoomCubit.instance.setSocketRooms(_rooms);
+      unawaited(LocalStorageService.instance.setRooms(_rooms));
+    });
   }
 
   void offAllListeners() {

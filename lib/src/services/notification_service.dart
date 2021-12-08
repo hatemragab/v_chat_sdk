@@ -73,11 +73,11 @@ class NotificationService {
       sound: true,
     );
 
-    await messaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    // await messaging.setForegroundNotificationPresentationOptions(
+    //   alert: true,
+    //   badge: true,
+    //   sound: true,
+    // );
     FirebaseMessaging.onMessageOpenedApp.listen((message) async {
       try {
         if (message.notification != null) {
@@ -182,9 +182,9 @@ class NotificationService {
       required String msg,
       required int hashCode,
       required String roomId}) {
-    if (Platform.isIOS) {
-      return;
-    }
+    // if (Platform.isIOS) {
+    //   return;
+    // }
 
     unawaited(
       flutterLocalNotificationsPlugin.show(

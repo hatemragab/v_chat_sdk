@@ -263,4 +263,17 @@ class VChatWidgetBuilder {
       ),
     );
   }
+
+  Widget infoMessage(String message, BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+
+      child: message.text.color(isDark? Colors.white: Colors.red),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.black : Colors.grey[300],
+        borderRadius: BorderRadius.circular(10)
+      ),
+      padding: EdgeInsets.all(5),
+    );
+  }
 }

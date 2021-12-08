@@ -10,7 +10,6 @@ class VChatMessage {
   final MessageType messageType;
   final VChatMessageAttachment? messageAttachment;
   final int createdAt;
-  final int updatedAt;
   final String content;
   final String senderId;
   final String senderName;
@@ -25,7 +24,6 @@ class VChatMessage {
     required this.messageType,
     required this.messageAttachment,
     required this.createdAt,
-    required this.updatedAt,
     required this.content,
     required this.senderId,
     required this.senderName,
@@ -39,7 +37,6 @@ class VChatMessage {
     MessageType? messageType,
     VChatMessageAttachment? messageAttachment,
     int? createdAt,
-    int? updatedAt,
     String? content,
     String? senderId,
     String? senderName,
@@ -52,7 +49,6 @@ class VChatMessage {
       messageType: messageType ?? this.messageType,
       messageAttachment: messageAttachment ?? this.messageAttachment,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
       content: content ?? this.content,
       senderId: senderId ?? this.senderId,
       senderName: senderName ?? this.senderName,
@@ -64,7 +60,7 @@ class VChatMessage {
 
   @override
   String toString() {
-    return 'Message{id: $id, messageType: $messageType, messageAttachment: $messageAttachment, createdAt: $createdAt, updatedAt: $updatedAt, content: $content, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, roomId: $roomId}';
+    return 'Message{id: $id, messageType: $messageType, messageAttachment: $messageAttachment, createdAt: $createdAt, content: $content, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, roomId: $roomId}';
   }
 
   @override
@@ -76,7 +72,6 @@ class VChatMessage {
           messageType == other.messageType &&
           messageAttachment == other.messageAttachment &&
           createdAt == other.createdAt &&
-          updatedAt == other.updatedAt &&
           content == other.content &&
           senderId == other.senderId &&
           senderName == other.senderName &&
@@ -89,7 +84,6 @@ class VChatMessage {
       messageType.hashCode ^
       messageAttachment.hashCode ^
       createdAt.hashCode ^
-      updatedAt.hashCode ^
       content.hashCode ^
       senderId.hashCode ^
       senderName.hashCode ^
@@ -99,7 +93,6 @@ class VChatMessage {
   factory VChatMessage.fromMap(dynamic map) {
     const MessageType messageType = MessageType.text;
     final createdAtLocal = Helpers.getLocalTime(map['createdAt'] as int);
-    final updatedAtLocal = Helpers.getLocalTime(map['updatedAt'] as int);
     return VChatMessage(
       id: map['_id'] as String,
       messageType: messageType.enumType(map['messageType']),
@@ -108,7 +101,6 @@ class VChatMessage {
           : VChatMessageAttachment.fromMap(map['messageAttachment']),
       createdAt: createdAtLocal.millisecondsSinceEpoch,
       createdAtString: DateFormat.jm().format(createdAtLocal),
-      updatedAt: updatedAtLocal.millisecondsSinceEpoch,
       content: map['content'] as String,
       senderId: map['senderId'] as String,
       senderName: map['senderName'] as String,
@@ -136,7 +128,6 @@ class VChatMessage {
       'messageAttachment':
           messageAttachment == null ? null : messageAttachment!.toMap(),
       'createdAt': createdAt,
-      'updatedAt': updatedAt,
       'content': content,
       'senderId': senderId,
       'senderName': senderName,

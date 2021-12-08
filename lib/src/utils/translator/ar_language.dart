@@ -130,4 +130,7 @@ class ArLanguage implements VChatLookupString {
 
   @override
   String isTranslate() => "";
+
+  @override
+  String groupChatHasBeenCreatedSuccessful()=>"تم انشاء الجروب بنجاح";
 }

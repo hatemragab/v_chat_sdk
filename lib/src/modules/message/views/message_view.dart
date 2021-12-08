@@ -42,6 +42,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
   Widget build(BuildContext context) {
     final t = VChatAppService.instance.getTrans(context);
     final messageController = context.read<MessageCubit>();
+    final currentRoom = roomController.rooms.firstWhere((element) => element.id == roomController.currentRoomId);
 
     return Scaffold(
       appBar: const MessageAppBarView(),
@@ -67,6 +68,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                           physics: const BouncingScrollPhysics(),
                           itemBuilder: (context, index) => MessageItemView(
                             index: index,
+                            chatRoom:currentRoom ,
                             message: messagesList[index],
                             myId: myId,
                           ),

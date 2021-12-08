@@ -16,12 +16,7 @@ class MessageWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (_room.lastMessage.messageType == MessageType.info) {
-      return _room.lastMessage.content.b1
-          .maxLine(1)
-          .alignStart
-          .overflowEllipsis;
-    }
+
 
     return Row(
       children: [

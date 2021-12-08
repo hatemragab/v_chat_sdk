@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../models/v_chat_room_typing.dart';
@@ -13,7 +14,9 @@ import '../room_api_provider.dart';
 part 'room_state.dart';
 
 class RoomCubit extends Cubit<RoomState> {
-  RoomCubit._privateConstructor() : super(RoomInitial());
+  RoomCubit._privateConstructor() : super(RoomInitial()) {
+    getRoomsFromLocal();
+  }
 
   static final RoomCubit instance = RoomCubit._privateConstructor();
   Function(String? uniqueId)? onMessageAvatarPressed;
@@ -77,9 +80,10 @@ class RoomCubit extends Cubit<RoomState> {
   void blockOrLeaveAction(BuildContext context, VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
-        await _provider.leaveGroupChat(room.id.toString());
-        rooms.removeWhere((element) => element.id == room.id);
-        await LocalStorageService.instance.deleteRoom(room.id);
+        CustomAlert.error(msg: "Coming Soon");
+        // await _provider.leaveGroupChat(room.id.toString());
+        // rooms.removeWhere((element) => element.id == room.id);
+        // await LocalStorageService.instance.deleteRoom(room.id);
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }
@@ -140,5 +144,9 @@ class RoomCubit extends Cubit<RoomState> {
   Future<void> close() async {
     scrollController.dispose();
     super.close();
+  }
+
+  VChatRoom getRoomById(String roomId) {
+    return rooms.firstWhere((element) => element.id == roomId);
   }
 }
