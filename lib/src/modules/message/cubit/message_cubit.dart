@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
+import 'package:v_chat_sdk/src/enums/room_type.dart';
 import 'package:v_chat_sdk/src/services/notification_service.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_typing_type.dart';
@@ -29,6 +30,7 @@ part 'message_state.dart';
 class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   late MessageSocket _messageSocket;
   late String roomId;
+  late bool isSingle;
   final getIt = GetIt.instance;
 
   ///init message socket to stop receive notifications from this user
@@ -57,10 +59,14 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   final _messageApiProvider = MessageProvider();
   final messages = <VChatMessage>[];
   final scrollController = ScrollController();
+  late String urlPath;
 
   ///get messages from sqlite
   Future<void> getLocalMessages(String roomId) async {
     this.roomId = roomId;
+    isSingle =
+        RoomCubit.instance.getRoomById(roomId).roomType == RoomType.single;
+    urlPath = isSingle ? "message/single" : "message/group";
     final messages = await LocalStorageService.instance.getRoomMessages(roomId);
     this.messages.clear();
     this.messages.addAll(messages);
@@ -93,7 +99,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       if (!getIt.get<SocketService>().isConnected) {
         throw "Not connected to server yet";
       }
-      unawaited(CustomDio().send(reqMethod: "POST", path: "message", body: {
+      unawaited(CustomDio().send(reqMethod: "POST", path: urlPath, body: {
         "type": MessageType.text.inString,
         "roomId": roomId.toString(),
         "content": textController.text.toString()
@@ -134,7 +140,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           [
             voiceFile,
           ],
-          "message",
+          urlPath,
           body: {
             "roomId": roomId.toString(),
             "content": "This content voice 🎤",
@@ -196,16 +202,18 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           [
             compressedFile,
           ],
-          "message",
+          urlPath,
           body: {
             "roomId": roomId.toString(),
             "content": "This content image 📷",
             "type": MessageType.image.inString,
-            "attachment": jsonEncode(VChatMessageAttachment(
-              fileSize: fileSize,
-              height: properties.height.toString(),
-              width: properties.width.toString(),
-            ).toMap())
+            "attachment": jsonEncode(
+              VChatMessageAttachment(
+                fileSize: fileSize,
+                height: properties.height.toString(),
+                width: properties.width.toString(),
+              ).toMap(),
+            )
           });
       Navigator.pop(context);
     } catch (err) {
@@ -274,17 +282,19 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       }
       await FileUtils.uploadFile(
         [videoThumb, videoFile],
-        "message",
+        urlPath,
         body: {
           "roomId": roomId.toString(),
           "content": "This content video 📽",
           "type": MessageType.video.inString,
-          "attachment": jsonEncode(VChatMessageAttachment(
-                  fileSize: fileSize,
-                  height: properties.height.toString(),
-                  width: properties.width.toString(),
-                  fileDuration: d)
-              .toMap())
+          "attachment": jsonEncode(
+            VChatMessageAttachment(
+                    fileSize: fileSize,
+                    height: properties.height.toString(),
+                    width: properties.width.toString(),
+                    fileDuration: d)
+                .toMap(),
+          )
         },
       );
       Navigator.pop(context);
@@ -309,15 +319,17 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           [
             file,
           ],
-          "message",
+          urlPath,
           body: {
             "roomId": roomId.toString(),
             "content": "This content file 📁",
             "type": MessageType.file.inString,
-            "attachment": jsonEncode(VChatMessageAttachment(
-              fileSize: fileSize,
-              linkTitle: basename(file.path),
-            ).toMap())
+            "attachment": jsonEncode(
+              VChatMessageAttachment(
+                fileSize: fileSize,
+                linkTitle: basename(file.path),
+              ).toMap(),
+            )
           });
       Navigator.pop(context);
       file.deleteSync();

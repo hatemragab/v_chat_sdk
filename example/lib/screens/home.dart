@@ -1,4 +1,5 @@
 import 'package:example/generated/l10n.dart';
+import 'package:example/screens/choose_group_members/choose_group_members_screen.dart';
 import 'package:example/screens/setting_screen.dart';
 import 'package:example/screens/user_item.dart';
 import 'package:example/screens/users_search.dart';
@@ -125,7 +126,6 @@ class _HomeState extends State<Home> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     _childrenAppBars = [
       AppBar(
@@ -149,7 +149,17 @@ class _HomeState extends State<Home> {
                 _usersList.addAll(users);
                 setState(() {});
               },
-              icon: const Icon(Icons.refresh))
+              icon: const Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChooseGroupMembersPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.group))
         ],
       ),
       AppBar(

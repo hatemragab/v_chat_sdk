@@ -4,6 +4,7 @@ class User {
   final String email;
   final String name;
   final String accessToken;
+  final bool isSelected;
 
 //<editor-fold desc="Data Methods">
 
@@ -13,26 +14,8 @@ class User {
     required this.email,
     required this.name,
     required this.accessToken,
+    required this.isSelected,
   });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is User &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          imageThumb == other.imageThumb &&
-          email == other.email &&
-          name == other.name &&
-          accessToken == other.accessToken);
-
-  @override
-  int get hashCode =>
-      id.hashCode ^
-      imageThumb.hashCode ^
-      email.hashCode ^
-      name.hashCode ^
-      accessToken.hashCode;
 
   @override
   String toString() {
@@ -42,6 +25,7 @@ class User {
         ' email: $email,'
         ' name: $name,'
         ' accessToken: $accessToken,'
+        ' isSelect: $isSelected,'
         '}';
   }
 
@@ -51,12 +35,14 @@ class User {
     String? email,
     String? name,
     String? accessToken,
+    bool? isSelected,
   }) {
     return User(
       id: id ?? this.id,
       imageThumb: imageThumb ?? this.imageThumb,
       email: email ?? this.email,
       name: name ?? this.name,
+      isSelected: isSelected ?? this.isSelected,
       accessToken: accessToken ?? this.accessToken,
     );
   }
@@ -67,6 +53,7 @@ class User {
       'imageThumb': imageThumb,
       'email': email,
       'name': name,
+      'isSelected': isSelected,
       'accessToken': accessToken,
     };
   }
@@ -77,6 +64,7 @@ class User {
       imageThumb: map['imageThumb'] as String,
       email: map['email'] as String,
       name: map['name'] as String,
+      isSelected: false,
       accessToken: map['accessToken'] ?? "",
     );
   }

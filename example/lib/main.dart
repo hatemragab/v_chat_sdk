@@ -24,6 +24,7 @@ void main() async {
 
   await GetStorage.init();
   // http://170.178.195.150:81/
+  //10.0.2.2:3000
   await VChatController.instance.init(
     baseUrl: Uri.parse("http://170.178.195.150:81"),
     appName: "test_v_chat",
@@ -32,7 +33,6 @@ void main() async {
     enableLogger: true,
     maxMediaUploadSize: 50 * 1000 * 1000,
     passwordHashKey: "passwordHashKey",
-
   );
 
   // add support new language

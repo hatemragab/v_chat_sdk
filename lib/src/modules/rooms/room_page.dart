@@ -7,7 +7,7 @@ import 'widgets/room_item.dart';
 
 class VChatRoomsView extends StatelessWidget {
   /// return the unique id of user witch you send to v chat while register if single chat
-  /// if group chat will return uniqueId = null
+  /// if choose_group_members chat will return uniqueId = null
   final Function(String? uniqueId)? onMessageAvatarPressed;
 
   const VChatRoomsView({Key? key, this.onMessageAvatarPressed})

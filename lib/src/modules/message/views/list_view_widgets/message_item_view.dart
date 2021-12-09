@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/enums/room_type.dart';
+import 'package:v_chat_sdk/src/models/v_chat_room.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/circle_image.dart';
 
 import '../../../../enums/message_type.dart';
 import '../../../../models/v_chat_message.dart';
@@ -16,11 +20,13 @@ class MessageItemView extends StatelessWidget {
   final VChatMessage message;
   final int index;
   final String myId;
+  final VChatRoom chatRoom;
 
   const MessageItemView(
       {required this.myId,
       required this.message,
       required this.index,
+      required this.chatRoom,
       Key? key})
       : super(key: key);
 
@@ -29,6 +35,22 @@ class MessageItemView extends StatelessWidget {
     final isSender = myId == message.senderId;
     final maxPaddingWidth = MediaQuery.of(context).size.width * .80;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    if (MessageType.create == message.messageType) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            VChatAppService.instance.vcBuilder
+                .infoMessage(message.content, context),
+            SizedBox(
+              height: 5,
+            ),
+            message.createdAtString.toString().cap,
+          ],
+        ),
+      );
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -42,8 +64,27 @@ class MessageItemView extends StatelessWidget {
             messages: context.read<MessageCubit>().messages,
           ),
         ),
+        chatRoom.roomType == RoomType.groupChat
+            ? !isSender
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          message.senderName.text,
+                        ],
+                      ),
+                      CircleImage.network(
+                          path: message.senderImageThumb, radius: 10)
+                    ],
+                  )
+                : const SizedBox.shrink()
+            : const SizedBox.shrink(),
         const SizedBox(
-          height: 10,
+          height: 5,
         ),
         ConstrainedBox(
           constraints: BoxConstraints(maxWidth: maxPaddingWidth),
@@ -96,16 +137,14 @@ class MessageItemView extends StatelessWidget {
         );
 
       case MessageType.reply:
-        // TODO: Handle this case.
-        break;
+        return message.content.text;
 
       case MessageType.allDeleted:
-        // TODO: Handle this case.
-        break;
+        return message.content.text;
+
       default:
-        throw ("getItemBody Not Supported");
+        return message.content.text;
     }
-    return const SizedBox.shrink();
   }
 
   MainAxisAlignment getMainAxisAlign({required bool isSender}) {
