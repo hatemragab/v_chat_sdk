@@ -131,4 +131,8 @@ class EnLanguage implements VChatLookupString {
 
   @override
   String isTranslate() => "is";
+
+  @override
+  String groupChatHasBeenCreatedSuccessful() =>
+      "Group chat has been created successful";
 }

@@ -85,4 +85,6 @@ abstract class VChatLookupString {
   String loadMoreFiled();
 
   String isTranslate();
+
+  String groupChatHasBeenCreatedSuccessful();
 }

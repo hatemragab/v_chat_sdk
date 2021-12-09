@@ -3,6 +3,7 @@ class VChatLoginDto {
   final String email;
   late String password;
   late String? fcmToken;
+  late String platform;
 
   VChatLoginDto({
     required this.email,
@@ -15,6 +16,7 @@ class VChatLoginDto {
       'email': email,
       'password': password,
       'fcmToken': fcmToken,
+      'platform': platform,
     } as Map<String, dynamic>;
   }
 }

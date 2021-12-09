@@ -10,7 +10,6 @@ class VChatRoom {
   final String id;
   final RoomType roomType;
   final String? blockerId;
-  final int createdAt;
   final int updatedAt;
   final String creatorId;
   final int isMute;
@@ -30,7 +29,6 @@ class VChatRoom {
     required this.roomType,
     required this.blockerId,
     required this.groupSetting,
-    required this.createdAt,
     required this.updatedAt,
     required this.creatorId,
     required this.isMute,
@@ -45,7 +43,7 @@ class VChatRoom {
 
   @override
   String toString() {
-    return 'Room{id: $id, roomType: $roomType, blockerId: $blockerId, createdAt: $createdAt, updatedAt: $updatedAt, creatorId: $creatorId, isMute: $isMute, isLastMessageSeenByMe: $lastMessageSeenBy, isOnline: $isOnline, title: $title, thumbImage: $thumbImage, ifSinglePeerId: $ifSinglePeerId, lastMessage: $lastMessage}';
+    return 'Room{id: $id, roomType: $roomType, blockerId: $blockerId, updatedAt: $updatedAt, creatorId: $creatorId, isMute: $isMute, isLastMessageSeenByMe: $lastMessageSeenBy, isOnline: $isOnline, title: $title, thumbImage: $thumbImage, ifSinglePeerId: $ifSinglePeerId, lastMessage: $lastMessage}';
   }
 
   factory VChatRoom.fromMap(dynamic map) {
@@ -55,9 +53,8 @@ class VChatRoom {
             ? RoomType.single
             : RoomType.groupChat,
         blockerId: map['blockerId'] as String?,
-        createdAt: map['createdAt'] as int,
         updatedAt: (map['updatedAt'] as int),
-        groupSetting: map['setting'] == null
+        groupSetting: map['groupSetting'] == null
             ? null
             : GroupChatSetting.fromMap(map['groupSetting']),
         creatorId: map['creatorId'] as String,
@@ -78,7 +75,6 @@ class VChatRoom {
       '_id': id,
       'roomType': roomType.inString,
       'blockerId': blockerId,
-      'createdAt': createdAt,
       'groupSetting': groupSetting == null ? null : groupSetting!.toMap(),
       'updatedAt': updatedAt,
       'creatorId': creatorId,
@@ -96,7 +92,6 @@ class VChatRoom {
     String? id,
     RoomType? roomType,
     String? blockerId,
-    int? createdAt,
     int? updatedAt,
     String? creatorId,
     int? isMute,
@@ -113,7 +108,6 @@ class VChatRoom {
       id: id ?? this.id,
       roomType: roomType ?? this.roomType,
       blockerId: blockerId ?? this.blockerId,
-      createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       creatorId: creatorId ?? this.creatorId,
       isMute: isMute ?? this.isMute,
@@ -136,7 +130,6 @@ class VChatRoom {
           id == other.id &&
           roomType == other.roomType &&
           blockerId == other.blockerId &&
-          createdAt == other.createdAt &&
           updatedAt == other.updatedAt &&
           creatorId == other.creatorId &&
           isMute == other.isMute &&
@@ -154,7 +147,6 @@ class VChatRoom {
       id.hashCode ^
       roomType.hashCode ^
       blockerId.hashCode ^
-      createdAt.hashCode ^
       updatedAt.hashCode ^
       creatorId.hashCode ^
       isMute.hashCode ^

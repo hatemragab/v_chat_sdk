@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
-import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:textless/textless.dart';
 import 'package:flutter/material.dart';
