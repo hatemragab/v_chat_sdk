@@ -8,21 +8,18 @@ class GroupChatSetting {
 
   const GroupChatSetting({
     required this.title,
-
     required this.imageThumb,
     required this.groupMembers,
   });
 
   GroupChatSetting copyWith({
     String? title,
-
     String? imageThumb,
     int? groupMembers,
   }) {
     return GroupChatSetting(
       title: title ?? this.title,
       groupMembers: groupMembers ?? this.groupMembers,
-
       imageThumb: imageThumb ?? this.imageThumb,
     );
   }
@@ -35,7 +32,6 @@ class GroupChatSetting {
   factory GroupChatSetting.fromMap(Map<String, dynamic> map) {
     return GroupChatSetting(
       title: (map['name'] as String),
-
       groupMembers: (map['groupMembers'] as int),
       imageThumb: (map['imageThumb'] as String),
     );

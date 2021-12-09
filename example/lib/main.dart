@@ -33,7 +33,6 @@ void main() async {
     enableLogger: true,
     maxMediaUploadSize: 50 * 1000 * 1000,
     passwordHashKey: "passwordHashKey",
-
   );
 
   // add support new language

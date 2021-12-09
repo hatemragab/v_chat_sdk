@@ -26,7 +26,6 @@ class MessageSocket {
   }
 
   void connectMessageSocket() async {
-
     await Future.delayed(const Duration(milliseconds: 200));
     _socket = _getSocket();
     _socket.onConnect((data) async {

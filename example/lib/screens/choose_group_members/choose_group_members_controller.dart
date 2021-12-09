@@ -6,7 +6,6 @@ import 'package:example/utils/load_more_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:provider/provider.dart';
 
 class ChooseGroupMembersController extends ChangeNotifier {
   late BuildContext context;

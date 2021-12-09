@@ -8,7 +8,6 @@ class VChatLoginDto {
   VChatLoginDto({
     required this.email,
     this.fcmToken,
-
   });
 
   Map<String, dynamic> toMap() {

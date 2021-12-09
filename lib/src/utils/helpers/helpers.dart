@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import '../../enums/message_type.dart';
 import '../../services/v_chat_app_service.dart';
 
 class Helpers {
@@ -34,6 +33,4 @@ class Helpers {
 
   // ignore: type_annotate_public_apis
   static get getCreatedAtUtc => DateTime.now().toUtc().millisecondsSinceEpoch;
-
-
 }

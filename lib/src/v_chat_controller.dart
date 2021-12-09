@@ -156,7 +156,7 @@ class VChatController {
     }
 
     NotificationService.instance.init(context);
-    RoomCubit.instance ;
+    RoomCubit.instance;
   }
 
   /// **throw** User already in v chat data base
@@ -325,7 +325,6 @@ class VChatController {
           .getTrans(context)
           .groupChatHasBeenCreatedSuccessful(),
     );
-
 
     /// room has been created successfully
     //await Future.delayed(const Duration(seconds: 2));

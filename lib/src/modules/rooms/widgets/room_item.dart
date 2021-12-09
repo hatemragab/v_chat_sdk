@@ -112,6 +112,7 @@ class RoomItem extends StatelessWidget {
                     _room.lastMessage.createdAtString.toString().b2
                   ],
                 ),
+
                 ///chat message
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

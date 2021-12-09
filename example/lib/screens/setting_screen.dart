@@ -8,6 +8,7 @@ import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:textless/textless.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -79,6 +80,35 @@ class _SettingScreenState extends State<SettingScreen> {
                 }
                 if (res == 1) {
                   VChatController.instance.stopAllNotification(context);
+                }
+              },
+            ),
+            ProfileItem(
+              title: "Our Full Documentation",
+              icon: Icons.attachment,
+              onTap: () async {
+                if (!await launch(
+                    "https://hatemragab.github.io/VChatSdk-Documentation")) {
+                  throw 'Could not launch  ';
+                }
+              },
+            ),
+            ProfileItem(
+              title: "Buy the backend code",
+              icon: Icons.attachment,
+              onTap: () async {
+                if (!await launch(
+                    "https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700")) {
+                  throw 'Could not launch  ';
+                }
+              },
+            ),
+            ProfileItem(
+              title: "ios testflight and public flutter ui",
+              icon: Icons.attachment,
+              onTap: () async {
+                if (!await launch("https://github.com/hatemragab/v_chat_sdk")) {
+                  throw 'Could not launch  ';
                 }
               },
             ),

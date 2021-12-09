@@ -2,8 +2,6 @@ import 'package:example/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:textless/textless.dart';
-
-import '../user_item.dart';
 import 'choose_group_members_controller.dart';
 
 class ChooseGroupMembersPage extends StatelessWidget {

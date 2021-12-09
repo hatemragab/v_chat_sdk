@@ -49,3 +49,7 @@
 ## 0.5.0
 
 * hug update on backend service v 1.0.1 must use with vchat v 0.5.0
+
+## 0.6.0 
+
+* start implement group chat v1 still need more improvements 

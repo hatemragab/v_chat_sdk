@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-
-import '../../../enums/message_type.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../services/v_chat_app_service.dart';
@@ -16,8 +14,6 @@ class MessageWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Row(
       children: [
         const SizedBox(

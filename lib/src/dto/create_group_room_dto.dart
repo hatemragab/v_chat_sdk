@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-
-import '../enums/room_type.dart';
 
 class CreateGroupRoomDto {
   final List<String> usersEmails;
@@ -31,10 +28,10 @@ class CreateGroupRoomDto {
 
   @override
   String toString() {
-    return 'CreateGroupRoomDto{' +
-        ' usersEmails: $usersEmails,' +
-        ' groupTitle: $groupTitle,' +
-        ' groupImage: $groupImage,' +
+    return 'CreateGroupRoomDto{'
+        ' usersEmails: $usersEmails,'
+        ' groupTitle: $groupTitle,'
+        ' groupImage: $groupImage,'
         '}';
   }
 
@@ -52,9 +49,9 @@ class CreateGroupRoomDto {
 
   Map<String, dynamic> toMap() {
     return {
-      'usersEmails': this.usersEmails,
-      'groupTitle': this.groupTitle,
-      'groupImage': this.groupImage,
+      'usersEmails': usersEmails,
+      'groupTitle': groupTitle,
+      'groupImage': groupImage,
     };
   }
 

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:example/models/user.dart';
 import 'package:example/utils/custom_alert.dart';
-import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

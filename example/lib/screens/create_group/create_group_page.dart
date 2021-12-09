@@ -40,7 +40,7 @@ class CreateGroupScreen extends StatelessWidget {
             children: [
               "Set Group Image".h6.alignCenter,
               InkWell(
-                  onTap:controller.pickGroupImage,
+                  onTap: controller.pickGroupImage,
                   child: Icon(
                     Icons.image,
                     size: 100,

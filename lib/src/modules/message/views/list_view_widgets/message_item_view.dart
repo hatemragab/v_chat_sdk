@@ -4,7 +4,6 @@ import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
 import 'package:v_chat_sdk/src/models/v_chat_room.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import 'package:v_chat_sdk/src/utils/api_utils/server_config.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/circle_image.dart';
 
 import '../../../../enums/message_type.dart';
@@ -37,14 +36,16 @@ class MessageItemView extends StatelessWidget {
     final maxPaddingWidth = MediaQuery.of(context).size.width * .80;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    if(MessageType.create == message.messageType){
+    if (MessageType.create == message.messageType) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             VChatAppService.instance.vcBuilder
                 .infoMessage(message.content, context),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             message.createdAtString.toString().cap,
           ],
         ),
@@ -66,9 +67,9 @@ class MessageItemView extends StatelessWidget {
         chatRoom.roomType == RoomType.groupChat
             ? !isSender
                 ? Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
                         children: [
                           const SizedBox(
                             height: 8,
@@ -76,9 +77,10 @@ class MessageItemView extends StatelessWidget {
                           message.senderName.text,
                         ],
                       ),
-                    CircleImage.network(path:  message.senderImageThumb,radius: 10)
-                  ],
-                )
+                      CircleImage.network(
+                          path: message.senderImageThumb, radius: 10)
+                    ],
+                  )
                 : const SizedBox.shrink()
             : const SizedBox.shrink(),
         const SizedBox(
@@ -139,7 +141,6 @@ class MessageItemView extends StatelessWidget {
 
       case MessageType.allDeleted:
         return message.content.text;
-
 
       default:
         return message.content.text;

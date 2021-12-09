@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:v_chat_sdk/src/utils/file_utils.dart';
-
 import '../../v_chat_sdk.dart';
-import '../enums/room_type.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
 
 class VChatProvider {
@@ -57,7 +54,6 @@ class VChatProvider {
         .data['data']
         .toString();
   }
-
 
   Future<String> updateUserImage({required String path}) async {
     late String platform;

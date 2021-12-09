@@ -13,7 +13,6 @@ import '../controllers/home_controller.dart';
 import '../models/user.dart';
 import 'app_rooms_screen.dart';
 
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 

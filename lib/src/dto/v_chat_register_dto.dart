@@ -14,7 +14,6 @@ class VChatRegisterDto {
     required this.name,
     required this.email,
     required this.userImage,
-
   });
 
   Map<String, dynamic> toMap() {
