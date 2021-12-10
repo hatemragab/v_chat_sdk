@@ -13,17 +13,20 @@
 <p float="left">
   <img src="https://user-images.githubusercontent.com/37384769/138588123-8919321f-132e-4913-9e81-6c0d6a915d8f.jpeg"   width ="200" /> 
   <img src="https://user-images.githubusercontent.com/37384769/138588161-836214c0-0d54-480a-8030-3679430656b5.jpeg"   width ="200" />
-</p>
-
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/37384769/138588227-31de6adc-fb1e-49b5-baa0-5fe554d3e841.jpeg" width ="200"  /> 
+   <img src="https://user-images.githubusercontent.com/37384769/138588227-31de6adc-fb1e-49b5-baa0-5fe554d3e841.jpeg" width ="200"  /> 
   <img src="https://user-images.githubusercontent.com/37384769/138588252-5e7cfd5c-3955-48ca-b8d2-78352abb9d87.jpeg"   width ="200" />
 </p>
 
+ 
+
 ### IOS <br />
 <p float="left">
-  <img src="https://user-images.githubusercontent.com/37384769/138944580-462a8a1a-7227-4e23-ba93-7d467617222b.png"   width ="200" /> 
-  <img src="https://user-images.githubusercontent.com/37384769/138944646-00d54e78-de93-4ea6-a288-84f675143780.png"   width ="200" />
+  <img src="https://user-images.githubusercontent.com/37384769/145550341-b155ce1b-ab0d-4cbe-b82f-cddf89e37638.PNG"   width ="200" /> 
+  <img src="https://user-images.githubusercontent.com/37384769/145550352-e3185015-073e-4980-b3a3-37c669ca444e.PNG"   width ="200" />
+  
+   
+  <img src="https://user-images.githubusercontent.com/37384769/145550367-52eda5d9-9d8f-4bc8-89a7-4373e1ab2d7f.PNG"   width ="200" /> 
+  <img src="https://user-images.githubusercontent.com/37384769/145550323-73d75d9a-dabf-4301-be56-072c2603f359.PNG"   width ="200" /> 
 </p>
 
 
@@ -105,6 +108,11 @@ Try the example APK <br />
     <td>👍</td>
     <td>👍</td>
  </tr>
+    <tr>
+    <td>Group Chat v1 added</td>
+    <td>👍</td>
+    <td>👍</td>
+  </tr>
 </table>
 
 
