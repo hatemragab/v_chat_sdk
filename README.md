@@ -3,7 +3,17 @@
 ## Check Our Full documention 
 <a href="https://hatemragab.github.io/VChatSdk-Documentation/"> VCHAT Documention</a>  <br />
 <a href="https://pub.dev/packages/v_chat_sdk"> v_chat_sdk on pub.dev</a>  <br />
-<a href="https://drive.google.com/file/d/1BpEY2wrzzPqbgT-la0-xHc6VbwFVJ5rz/view?usp=sharing"> Try APK</a> <br />
+
+
+## Android Test
+
+<a href="https://drive.google.com/file/d/1BpEY2wrzzPqbgT-la0-xHc6VbwFVJ5rz/view?usp=sharing"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
+
+## IOS Test Flight
+
+<a href="https://testflight.apple.com/join/Bb2LLcKx"> <img src="https://user-images.githubusercontent.com/37384769/145644883-e914dd94-c797-4944-bb6d-fb4ec629c016.png" width ="300" /> </a> <br />
+
+
 
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
@@ -33,8 +43,6 @@
 
 Don't forget to see the example attached to github here <a href="https://github.com/hatemragab/v_chat_sdk/tree/master/example">V_CHAT_SDK Example</a>  <br />
 
-Try the example APK <br />
-<a href="https://drive.google.com/file/d/1BpEY2wrzzPqbgT-la0-xHc6VbwFVJ5rz/view?usp=sharing"> Example APK</a>  <br />
 
 
 ---
