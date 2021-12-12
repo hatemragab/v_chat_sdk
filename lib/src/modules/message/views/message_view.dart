@@ -97,7 +97,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                   if (_room.lastMessage.senderId != myId) {
                     return const SizedBox.shrink();
                   }
-                  if (_room.lastMessageSeenBy.length == 2) {
+                  if (_room.ifPeerReadMyLastMessage == 1) {
                     return Column(
                       children: [
                         const SizedBox(

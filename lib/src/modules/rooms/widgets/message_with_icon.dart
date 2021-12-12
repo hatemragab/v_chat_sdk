@@ -32,10 +32,10 @@ class MessageWithIcon extends StatelessWidget {
   Widget getMessageText(BuildContext context) {
     /// i the receiver
     if (_room.lastMessage.senderId != _myModel.id) {
-      final _isMeSeen = _room.lastMessageSeenBy.contains(_myModel.id);
+      final _unReadCount = _room.unReadCount;
 
       /// I read the message
-      if (_isMeSeen) {
+      if (_unReadCount == 0) {
         return _room.lastMessage.content.b1
             .color(Colors.grey)
             .maxLine(1)
@@ -51,12 +51,12 @@ class MessageWithIcon extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Container(
-                padding: const EdgeInsets.all(2),
+                padding: const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
                   color: Colors.blueGrey,
                   shape: BoxShape.circle,
                 ),
-                child: "    ".s2.color(Colors.white),
+                child: _unReadCount.toString().s2.color(Colors.white),
               ),
             )
           ],
@@ -64,7 +64,7 @@ class MessageWithIcon extends StatelessWidget {
       }
     } else {
       /// i the sender
-      final _isPeerSeen = _room.lastMessageSeenBy.length == 2;
+      final _isPeerSeen = _room.ifPeerReadMyLastMessage == 1;
       if (_room.roomType == RoomType.single && _isPeerSeen) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

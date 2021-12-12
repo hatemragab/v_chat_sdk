@@ -183,7 +183,7 @@ class CustomDio {
     } catch (err) {
       rethrow;
     } finally {
-      //  dio.close();
+       dio.close();
     }
   }
 

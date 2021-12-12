@@ -55,7 +55,7 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                             .b2
                             .color(Colors.green);
                       } else {
-                        return "${_room.groupSetting!.groupMembers.toString()} - 300"
+                        return "${_room.roomMembersCount.toString()} - 300"
                             .b2
                             .height(1.6);
                       }
