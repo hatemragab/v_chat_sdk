@@ -79,10 +79,7 @@ class RoomCubit extends Cubit<RoomState> {
   void blockOrLeaveAction(BuildContext context, VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
-        CustomAlert.error(msg: "Coming Soon");
-        // await _provider.leaveGroupChat(room.id.toString());
-        // rooms.removeWhere((element) => element.id == room.id);
-        // await LocalStorageService.instance.deleteRoom(room.id);
+        await _provider.leaveGroupChat(room.id.toString());
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }

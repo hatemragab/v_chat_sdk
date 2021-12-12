@@ -128,13 +128,19 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                     (element) => element.id == messageController.roomId);
 
                 if (state is RoomLoaded) {
-                  final bkId = _room.blockerId;
-                  if (bkId != null) {
-                    if (bkId == myId) {
-                      // i the blocker
-                      return t.chatHasBeenClosedByMe().h6.color(Colors.red);
-                    } else {
-                      return t.chatHasBeenClosed().h6.color(Colors.red);
+                  if (_room.roomType == RoomType.single) {
+                    final bkId = _room.blockerId;
+                    if (bkId != null) {
+                      if (bkId == myId) {
+                        // i the blocker
+                        return t.chatHasBeenClosedByMe().h6.color(Colors.red);
+                      } else {
+                        return t.chatHasBeenClosed().h6.color(Colors.red);
+                      }
+                    }
+                  } else {
+                    if (_room.groupSetting!.isLeft == 1) {
+                      return t.youNotExistInThisRoom().h6.color(Colors.red);
                     }
                   }
                 }

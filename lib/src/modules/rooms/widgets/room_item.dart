@@ -40,7 +40,7 @@ class RoomItem extends StatelessWidget {
         final isMyBlock =
             _room.blockerId == VChatAppService.instance.vChatUser!.id;
 
-        final res = await CustomVerticalSheetItem.normal(context, [
+        final data = [
           CustomSheetModel(
             value: 1,
             text: _room.isMute == 1
@@ -50,18 +50,24 @@ class RoomItem extends StatelessWidget {
                 ? Icons.notifications
                 : Icons.notifications_off,
           ),
-          _room.roomType == RoomType.single
-              ? CustomSheetModel(
-                  value: 2,
-                  text: isMyBlock ? t.unBlockUser() : t.blockUser(),
-                  iconData: Icons.block,
-                )
-              : CustomSheetModel(
-                  value: 2,
-                  text: "leave",
-                  iconData: Icons.exit_to_app,
-                ),
-        ]);
+        ];
+        if (_room.roomType == RoomType.single) {
+          data.add(CustomSheetModel(
+            value: 2,
+            text: isMyBlock ? t.unBlockUser() : t.blockUser(),
+            iconData: Icons.block,
+          ));
+        } else {
+          if (_room.groupSetting!.isLeft != 1) {
+            data.add(CustomSheetModel(
+              value: 2,
+              text: "leave",
+              iconData: Icons.exit_to_app,
+            ));
+          }
+        }
+        final res = await CustomVerticalSheetItem.normal(context, data);
+
         if (res == 1) {
           final res = await CustomAlert.customAskDialog(
             title: t.areYouSure(),
