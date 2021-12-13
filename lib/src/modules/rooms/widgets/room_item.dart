@@ -58,13 +58,11 @@ class RoomItem extends StatelessWidget {
             iconData: Icons.block,
           ));
         } else {
-          if (_room.groupSetting!.isLeft != 1) {
-            data.add(CustomSheetModel(
-              value: 2,
-              text: "leave",
-              iconData: Icons.exit_to_app,
-            ));
-          }
+          data.add(CustomSheetModel(
+            value: 2,
+            text: "leave",
+            iconData: Icons.exit_to_app,
+          ));
         }
         final res = await CustomVerticalSheetItem.normal(context, data);
 

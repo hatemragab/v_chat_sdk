@@ -83,9 +83,8 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                       final _room = roomController.rooms.firstWhere((element) =>
                           element.id == roomController.currentRoomId!);
                       if (_room.roomType == RoomType.single) {
-                        final email = await VChatProvider()
-                            .getUserEmail(_room.ifSinglePeerId!);
-                        roomController.onMessageAvatarPressed!(email);
+                        roomController
+                            .onMessageAvatarPressed!(_room.ifSinglePeerEmail);
                       } else {
                         roomController.onMessageAvatarPressed!(null);
                       }

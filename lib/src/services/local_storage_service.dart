@@ -34,6 +34,10 @@ class LocalStorageService {
   Future setRooms(List<VChatRoom> rooms) async {
     //await database.delete(NewRoomTable.TABLE_NAME);
     final roomsToInsert = rooms;
+    if (rooms.isEmpty) {
+      await database.delete(RoomTable.tableName);
+      return;
+    }
     try {
       final x = rooms.sublist(0, 20);
       roomsToInsert.clear();

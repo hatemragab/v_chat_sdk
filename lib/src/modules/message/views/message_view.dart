@@ -138,10 +138,6 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                         return t.chatHasBeenClosed().h6.color(Colors.red);
                       }
                     }
-                  } else {
-                    if (_room.groupSetting!.isLeft == 1) {
-                      return t.youNotExistInThisRoom().h6.color(Colors.red);
-                    }
                   }
                 }
 
