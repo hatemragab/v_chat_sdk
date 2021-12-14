@@ -40,7 +40,7 @@ class RoomItem extends StatelessWidget {
         final isMyBlock =
             _room.blockerId == VChatAppService.instance.vChatUser!.id;
 
-        final res = await CustomVerticalSheetItem.normal(context, [
+        final data = [
           CustomSheetModel(
             value: 1,
             text: _room.isMute == 1
@@ -50,18 +50,25 @@ class RoomItem extends StatelessWidget {
                 ? Icons.notifications
                 : Icons.notifications_off,
           ),
-          _room.roomType == RoomType.single
-              ? CustomSheetModel(
-                  value: 2,
-                  text: isMyBlock ? t.unBlockUser() : t.blockUser(),
-                  iconData: Icons.block,
-                )
-              : CustomSheetModel(
-                  value: 2,
-                  text: "leave",
-                  iconData: Icons.exit_to_app,
-                ),
-        ]);
+        ];
+        bool isSingle = _room.roomType == RoomType.single;
+        if (isSingle) {
+          data.add(CustomSheetModel(
+            value: 2,
+            text: isMyBlock ? t.unBlockUser() : t.blockUser(),
+            iconData: Icons.block,
+          ));
+        } else {
+          data.add(CustomSheetModel(
+            value: 2,
+
+            /// todo support language
+            text: "leave",
+            iconData: Icons.exit_to_app,
+          ));
+        }
+        final res = await CustomVerticalSheetItem.normal(context, data);
+
         if (res == 1) {
           final res = await CustomAlert.customAskDialog(
             title: t.areYouSure(),
@@ -71,8 +78,12 @@ class RoomItem extends StatelessWidget {
             context.read<RoomCubit>().muteAction(context, _room);
           }
         } else if (res == 2) {
+          /// todo support language
           final res = await CustomAlert.customAskDialog(
-              title: t.areYouSure(), context: context);
+              title: isSingle
+                  ? t.areYouSure()
+                  : "Are you sure to leave and delete all conversion data ?",
+              context: context);
           if (res == 1) {
             context.read<RoomCubit>().blockOrLeaveAction(context, _room);
           }

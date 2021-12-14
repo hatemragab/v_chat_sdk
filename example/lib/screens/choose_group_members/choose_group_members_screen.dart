@@ -5,13 +5,16 @@ import 'package:textless/textless.dart';
 import 'choose_group_members_controller.dart';
 
 class ChooseGroupMembersPage extends StatelessWidget {
-  const ChooseGroupMembersPage({Key? key}) : super(key: key);
+  bool isFromGroupInfo;
+
+  ChooseGroupMembersPage({Key? key, this.isFromGroupInfo = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) =>
-          ChooseGroupMembersController(context: context),
+      create: (BuildContext context) => ChooseGroupMembersController(
+          context: context, isFromGroupInfo: isFromGroupInfo),
       builder: (context, child) => ChooseGroupMembersScreen(),
     );
   }

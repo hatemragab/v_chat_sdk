@@ -9,12 +9,14 @@ enum MessageType {
   reply,
   allDeleted,
   location,
+  forward,
   create,
   join,
   leave,
   upgrade,
   downgrade,
-  forward
+  info,
+  kick
 }
 
 extension MessageTypeEnum on MessageType {

@@ -97,7 +97,7 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                   if (_room.lastMessage.senderId != myId) {
                     return const SizedBox.shrink();
                   }
-                  if (_room.lastMessageSeenBy.length == 2) {
+                  if (_room.ifPeerReadMyLastMessage == 1) {
                     return Column(
                       children: [
                         const SizedBox(
@@ -128,13 +128,15 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                     (element) => element.id == messageController.roomId);
 
                 if (state is RoomLoaded) {
-                  final bkId = _room.blockerId;
-                  if (bkId != null) {
-                    if (bkId == myId) {
-                      // i the blocker
-                      return t.chatHasBeenClosedByMe().h6.color(Colors.red);
-                    } else {
-                      return t.chatHasBeenClosed().h6.color(Colors.red);
+                  if (_room.roomType == RoomType.single) {
+                    final bkId = _room.blockerId;
+                    if (bkId != null) {
+                      if (bkId == myId) {
+                        // i the blocker
+                        return t.chatHasBeenClosedByMe().h6.color(Colors.red);
+                      } else {
+                        return t.chatHasBeenClosed().h6.color(Colors.red);
+                      }
                     }
                   }
                 }

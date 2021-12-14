@@ -19,8 +19,9 @@ class RoomsApiProvider {
 
   Future leaveGroupChat(String id) async {
     await CustomDio().send(
-      reqMethod: "DELETE",
-      path: "room/leave/$id",
+      reqMethod: "post",
+      path: "room/leave-group-chat",
+      body: {"groupId": id},
     );
   }
 

@@ -14,9 +14,11 @@ class ChooseGroupMembersController extends ChangeNotifier {
 
   final scrollController = ScrollController();
   final myModel = GetStorage().read("myModel");
+  final bool isFromGroupInfo;
 
   ChooseGroupMembersController({
     required this.context,
+    required this.isFromGroupInfo,
   }) {
     getUsers();
     scrollController.addListener(_scrollListener);
@@ -88,6 +90,9 @@ class ChooseGroupMembersController extends ChangeNotifier {
           seletedUsers.add(u);
         }
       }
+      if (isFromGroupInfo) {
+        return Navigator.pop(context, seletedUsers);
+      }
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => CreateGroupPage(
           users: seletedUsers,
@@ -103,7 +108,7 @@ class ChooseGroupMembersController extends ChangeNotifier {
     for (final u in users) {
       if (u.isSelected) {
         if (u.id == myModel['_id']) {
-          throw "un select your self from the list";
+          throw "Remove your self from the list your name is ${myModel['name']}";
         }
         isThereSelection = true;
       }

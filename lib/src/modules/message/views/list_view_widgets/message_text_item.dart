@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../models/v_chat_message.dart';
 import '../../../../services/v_chat_app_service.dart';
 
@@ -15,11 +17,25 @@ class MessageTextItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isSender) {
-      return VChatAppService.instance.vcBuilder
-          .senderTextMessageWidget(context, message.content);
+      return InkWell(
+        onLongPress: () {
+          Clipboard.setData(ClipboardData(text: message.content));
+          CustomAlert.done(
+              context: context, msg: "Message copied to Clipboard");
+        },
+        child: VChatAppService.instance.vcBuilder
+            .senderTextMessageWidget(context, message.content),
+      );
     } else {
-      return VChatAppService.instance.vcBuilder
-          .receiverTextMessageWidget(context, message.content);
+      return InkWell(
+        onLongPress: () {
+          Clipboard.setData(ClipboardData(text: message.content));
+          CustomAlert.done(
+              context: context, msg: "Message copied to Clipboard");
+        },
+        child: VChatAppService.instance.vcBuilder
+            .receiverTextMessageWidget(context, message.content),
+      );
     }
   }
 }
