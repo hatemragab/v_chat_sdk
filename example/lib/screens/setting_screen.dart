@@ -11,6 +11,8 @@ import 'package:textless/textless.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 
+import 'about.dart';
+
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -85,7 +87,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             ProfileItem(
               title: "Our Full Documentation",
-              icon: Icons.attachment,
+              icon: Icons.document_scanner_outlined,
               onTap: () async {
                 if (!await launch(
                     "https://hatemragab.github.io/VChatSdk-Documentation")) {
@@ -95,7 +97,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             ProfileItem(
               title: "Buy the backend code",
-              icon: Icons.attachment,
+              icon: Icons.document_scanner_outlined,
               onTap: () async {
                 if (!await launch(
                     "https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700")) {
@@ -105,11 +107,27 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             ProfileItem(
               title: "ios testflight and public flutter ui",
-              icon: Icons.attachment,
+              icon: Icons.document_scanner_outlined,
               onTap: () async {
                 if (!await launch("https://github.com/hatemragab/v_chat_sdk")) {
                   throw 'Could not launch  ';
                 }
+              },
+            ),
+            ProfileItem(
+              title: "Contact Us And Report issues or new features",
+              icon: Icons.chat,
+              onTap: () async {
+                await VChatController.instance.createSingleChat(
+                    peerEmail: "hatemragap5@gmail.com", context: context);
+              },
+            ),
+            ProfileItem(
+              title: "About",
+              icon: Icons.info,
+              onTap: () async {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const About()));
               },
             ),
             ProfileItem(

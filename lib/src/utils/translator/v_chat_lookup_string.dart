@@ -88,5 +88,5 @@ abstract class VChatLookupString {
 
   String groupChatHasBeenCreatedSuccessful();
 
-  String youNotExistInThisRoom() ;
+  String youNotExistInThisRoom();
 }

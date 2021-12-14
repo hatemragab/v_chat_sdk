@@ -19,7 +19,7 @@ class CircleImage {
       int radius = 30,
       bool isOnline = false,
       bool isGroup = false,
-      bool isSelected = false}) {
+      bool withSetting = false}) {
     return Stack(
       children: [
         Padding(
@@ -41,7 +41,25 @@ class CircleImage {
         // const CircularProgressIndicator.adaptive(),
         // alignment: Alignment.center,
         // useOldImageOnUrlChange: true,
-        if (isOnline || isGroup || isSelected)
+        if (withSetting)
+          Positioned(
+            bottom: 5,
+            right: 2,
+            child: Container(
+              padding: EdgeInsets.zero,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isGroup ? Colors.grey : Colors.green,
+                  border:
+                      Border.all(color: Colors.green, width: isGroup ? 0 : 0)),
+              child: Icon(
+                Icons.settings,
+                color: Colors.white,
+                size: 18,
+              ),
+            ),
+          )
+        else if (isOnline || isGroup)
           Positioned(
             bottom: 5,
             right: 2,

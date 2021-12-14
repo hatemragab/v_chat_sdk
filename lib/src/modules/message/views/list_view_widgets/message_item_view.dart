@@ -36,13 +36,28 @@ class MessageItemView extends StatelessWidget {
     final maxPaddingWidth = MediaQuery.of(context).size.width * .80;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    if (MessageType.create == message.messageType) {
+    if (isLightMessageType(message.messageType)) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             VChatAppService.instance.vcBuilder
-                .infoMessage(message.content, context),
+                .infoLightMessage(message.content, context),
+            SizedBox(
+              height: 5,
+            ),
+            message.createdAtString.toString().cap,
+          ],
+        ),
+      );
+    }
+    if (isDarkMessageType(message.messageType)) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            VChatAppService.instance.vcBuilder
+                .infoDarkMessage(message.content, context),
             SizedBox(
               height: 5,
             ),
@@ -161,5 +176,18 @@ class MessageItemView extends StatelessWidget {
     } else {
       return CrossAxisAlignment.start;
     }
+  }
+
+  bool isLightMessageType(MessageType t) {
+    return t == MessageType.join ||
+        t == MessageType.create ||
+        t == MessageType.upgrade ||
+        t == MessageType.info;
+  }
+
+  bool isDarkMessageType(MessageType t) {
+    return t == MessageType.leave ||
+        t == MessageType.downgrade ||
+        t == MessageType.kick;
   }
 }

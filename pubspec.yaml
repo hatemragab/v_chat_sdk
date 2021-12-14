@@ -1,6 +1,6 @@
 name: v_chat_sdk
 description: official sdk for vchat to impement chat system into new or exist flutter app
-version: 0.6.0
+version: 0.9.0
 homepage: https://github.com/hatemragab/v_chat_sdk
 
 environment:
@@ -15,11 +15,11 @@ dependencies:
   bloc: ^8.0.1
   textless: ^6.6.6
   dio: ^4.0.4
-  firebase_core: ^1.10.2
+  firebase_core: ^1.10.5
   firebase_messaging: ^11.2.3
   image_picker: ^0.8.4+4
   sqflite: ^2.0.1
-  path_provider: ^2.0.7
+  path_provider: ^2.0.8
   socket_io_client: ^1.0.2
   intl: ^0.17.0
   file_picker: ^4.2.7

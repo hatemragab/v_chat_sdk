@@ -51,7 +51,8 @@ class RoomItem extends StatelessWidget {
                 : Icons.notifications_off,
           ),
         ];
-        if (_room.roomType == RoomType.single) {
+        bool isSingle = _room.roomType == RoomType.single;
+        if (isSingle) {
           data.add(CustomSheetModel(
             value: 2,
             text: isMyBlock ? t.unBlockUser() : t.blockUser(),
@@ -60,6 +61,8 @@ class RoomItem extends StatelessWidget {
         } else {
           data.add(CustomSheetModel(
             value: 2,
+
+            /// todo support language
             text: "leave",
             iconData: Icons.exit_to_app,
           ));
@@ -75,8 +78,12 @@ class RoomItem extends StatelessWidget {
             context.read<RoomCubit>().muteAction(context, _room);
           }
         } else if (res == 2) {
+          /// todo support language
           final res = await CustomAlert.customAskDialog(
-              title: t.areYouSure(), context: context);
+              title: isSingle
+                  ? t.areYouSure()
+                  : "Are you sure to leave and delete all conversion data ?",
+              context: context);
           if (res == 1) {
             context.read<RoomCubit>().blockOrLeaveAction(context, _room);
           }

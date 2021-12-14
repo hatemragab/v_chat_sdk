@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
+import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../models/v_chat_room_typing.dart';
@@ -20,7 +21,8 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   static final RoomCubit instance = RoomCubit._privateConstructor();
-  Function(String? uniqueId)? onMessageAvatarPressed;
+  Function(bool isGroupChat, String uniqueId,
+      VChatGroupChatInfo? vChatGroupChatInfo)? onMessageAvatarPressed;
 
   final _provider = RoomsApiProvider();
 

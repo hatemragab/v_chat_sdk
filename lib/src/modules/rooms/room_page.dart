@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/models/v_chat_group_chat_info.dart';
 import '../../utils/custom_widgets/connection_checker.dart';
 import 'cubit/room_cubit.dart';
 import 'widgets/room_item.dart';
 
 class VChatRoomsView extends StatelessWidget {
   /// return the unique id of user witch you send to v chat while register if single chat
-  /// if choose_group_members chat will return uniqueId = null
-  final Function(String? uniqueId)? onMessageAvatarPressed;
+  /// if isGroupChat then group data will be vChatGroupChatInfo and group id will be in uniqueId
+  final void Function(bool isGroupChat, String uniqueId,
+      VChatGroupChatInfo? vChatGroupChatInfo)? onMessageAvatarPressed;
 
   const VChatRoomsView({Key? key, this.onMessageAvatarPressed})
       : super(key: key);

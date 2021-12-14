@@ -76,7 +76,7 @@ class SocketService {
 
   void initSockedEvents() async {
     _socket!.on("all_rooms", (data) {
-      final _roomsMaps =data as List;
+      final _roomsMaps = data as List;
       final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
       RoomCubit.instance.setSocketRooms(_rooms);
       unawaited(LocalStorageService.instance.setRooms(_rooms));
@@ -119,5 +119,4 @@ class SocketService {
   void emitTypingChange(Map<String, dynamic> data) {
     _socket!.emit("typing_changed", data);
   }
-
 }

@@ -37,11 +37,13 @@ class MessageImageItem extends StatelessWidget {
           constraints: const BoxConstraints(maxHeight: 500),
           height: double.parse(_message.messageAttachment!.height!),
           width: double.parse(_message.messageAttachment!.width!),
-          color: Colors.grey,
+          color: Colors.grey[300],
           child: CachedNetworkImage(
             imageUrl: ServerConfig.messagesMediaBaseUrl +
                 _message.messageAttachment!.imageUrl.toString(),
             fit: BoxFit.cover,
+            progressIndicatorBuilder: (context, url, progress) =>
+                Center(child: CircularProgressIndicator.adaptive()),
           ),
         ),
       ),

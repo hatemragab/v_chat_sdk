@@ -16,7 +16,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="v_chat_sdk_example"
+        android:label="v chat"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
         <activity

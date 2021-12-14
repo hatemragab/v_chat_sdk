@@ -29,6 +29,7 @@ class VChatAppService {
   late String currentLocal;
 
   late String appName;
+  late int maxGroupChatUsers;
 
   late bool enableLog;
 

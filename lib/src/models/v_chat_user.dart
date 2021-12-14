@@ -7,11 +7,10 @@ class VChatUser {
   final String imageThumb;
   final String email;
   final String accessToken;
-  final bool isSelected = false;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
-  VChatUser({
+  const VChatUser({
     required this.id,
     required this.name,
     required this.imageThumb,
@@ -21,7 +20,7 @@ class VChatUser {
 
   @override
   String toString() {
-    return 'User{id: $id, name: $name, imageThumb: $imageThumb, email: $email, accessToken: $accessToken, isSelected: $isSelected}';
+    return 'User{id: $id, name: $name, imageThumb: $imageThumb, email: $email, accessToken: $accessToken }';
   }
 
   factory VChatUser.fromMap(Map<String, dynamic> map) {

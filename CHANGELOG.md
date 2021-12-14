@@ -53,3 +53,11 @@
 ## 0.6.0 
 
 * start implement group chat v1 still need more improvements 
+
+## 0.9.0
+* unread message count for group chat and single chat
+* leave group chat 
+* group chat page which can update group name and upgrade users to admin if i the group creator and update group image 
+* kick users from group 
+* admin downgrade and upgrade system if iam admin
+* admins can add users only

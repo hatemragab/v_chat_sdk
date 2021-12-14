@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../enums/room_type.dart';
 import '../enums/room_typing_type.dart';
-import 'group_chat_setting.dart';
+import 'v_chat_group_chat_info.dart';
 import 'v_chat_message.dart';
 import 'v_chat_room_typing.dart';
 
@@ -19,7 +19,7 @@ class VChatRoom {
   final String thumbImage;
   final String? ifSinglePeerId;
   final String? ifSinglePeerEmail;
-  final GroupChatSetting? groupSetting;
+  final VChatGroupChatInfo? groupSetting;
   final VChatMessage lastMessage;
   final VChatRoomTyping typingStatus;
   final int roomMembersCount;
@@ -37,7 +37,6 @@ class VChatRoom {
     required this.creatorId,
     required this.isMute,
     required this.ifPeerReadMyLastMessage,
-
     required this.isOnline,
     required this.title,
     required this.thumbImage,
@@ -49,12 +48,10 @@ class VChatRoom {
     required this.unReadCount,
   });
 
-
   @override
   String toString() {
     return 'VChatRoom{id: $id, roomType: $roomType, blockerId: $blockerId, updatedAt: $updatedAt, creatorId: $creatorId, isMute: $isMute, isOnline: $isOnline, title: $title, thumbImage: $thumbImage, ifSinglePeerId: $ifSinglePeerId, ifSinglePeerEmail: $ifSinglePeerEmail, groupSetting: $groupSetting, lastMessage: $lastMessage, typingStatus: $typingStatus, roomMembersCount: $roomMembersCount, unReadCount: $unReadCount}';
   }
-
 
   @override
   bool operator ==(Object other) =>
@@ -107,7 +104,7 @@ class VChatRoom {
       updatedAt: (map['updatedAt'] as int),
       groupSetting: map['groupSetting'] == null
           ? null
-          : GroupChatSetting.fromMap(map['groupSetting']),
+          : VChatGroupChatInfo.fromMap(map['groupSetting']),
       creatorId: map['creatorId'] as String,
       ifPeerReadMyLastMessage: map['ifPeerReadMyLastMessage'] as int,
       isMute: (map['isMute'] as int),
@@ -130,7 +127,8 @@ class VChatRoom {
       'roomType': roomType.inString,
       'blockerId': blockerId,
       'updatedAt': updatedAt,
-      'groupSetting': groupSetting == null ? null : groupSetting!.toMap(),
+      'groupSetting':
+          roomType == RoomType.groupChat ? groupSetting!.toMap() : null,
       'creatorId': creatorId,
       'isMute': isMute,
       'isOnline': 0,
@@ -139,12 +137,11 @@ class VChatRoom {
       'thumbImage': thumbImage,
       'peerId': ifSinglePeerId,
       'lastMessage': lastMessage.toLocalMap(),
-      'unReadCount':unReadCount,
-      'roomMembersCount':roomMembersCount,
-      'peerEmail':ifSinglePeerEmail,
+      'unReadCount': unReadCount,
+      'roomMembersCount': roomMembersCount,
+      'peerEmail': ifSinglePeerEmail,
     } as Map<String, dynamic>;
   }
-
 
   VChatRoom copyWith({
     String? id,
@@ -159,7 +156,7 @@ class VChatRoom {
     String? thumbImage,
     String? ifSinglePeerId,
     String? ifSinglePeerEmail,
-    GroupChatSetting? groupSetting,
+    VChatGroupChatInfo? groupSetting,
     VChatMessage? lastMessage,
     VChatRoomTyping? typingStatus,
     int? roomMembersCount,
@@ -171,7 +168,8 @@ class VChatRoom {
       blockerId: blockerId ?? this.blockerId,
       updatedAt: updatedAt ?? this.updatedAt,
       creatorId: creatorId ?? this.creatorId,
-      ifPeerReadMyLastMessage: ifPeerReadMyLastMessage ?? this.ifPeerReadMyLastMessage,
+      ifPeerReadMyLastMessage:
+          ifPeerReadMyLastMessage ?? this.ifPeerReadMyLastMessage,
       isMute: isMute ?? this.isMute,
       isOnline: isOnline ?? this.isOnline,
       title: title ?? this.title,

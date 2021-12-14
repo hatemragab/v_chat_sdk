@@ -135,5 +135,5 @@ class ArLanguage implements VChatLookupString {
   String groupChatHasBeenCreatedSuccessful() => "تم انشاء الجروب بنجاح";
 
   @override
-  String youNotExistInThisRoom()  =>"انت لست منضما للمجموعه";
+  String youNotExistInThisRoom() => "انت لست منضما للمجموعه";
 }

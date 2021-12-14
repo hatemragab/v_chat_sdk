@@ -38,13 +38,13 @@ class LocalStorageService {
       await database.delete(RoomTable.tableName);
       return;
     }
-    try {
-      final x = rooms.sublist(0, 20);
-      roomsToInsert.clear();
-      roomsToInsert.addAll(x);
-    } catch (err) {
-      //
-    }
+    // try {
+    //   final x = rooms.sublist(0, 20);
+    //   roomsToInsert.clear();
+    //   roomsToInsert.addAll(x);
+    // } catch (err) {
+    //   //
+    // }
 
     final batch = database.batch();
     for (var room in roomsToInsert) {

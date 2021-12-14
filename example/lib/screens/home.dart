@@ -12,6 +12,7 @@ import '../utils/load_more_type.dart';
 import '../controllers/home_controller.dart';
 import '../models/user.dart';
 import 'app_rooms_screen.dart';
+import 'group_chat_info/group_chat_info.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -52,8 +53,20 @@ class _HomeState extends State<Home> {
     _children = [
       usersTab(),
       VChatRoomsView(
-        onMessageAvatarPressed: (uniqueId) {
-          print("xxxxxxxxxxxxxxxxxxxxxxxxxxx $uniqueId");
+        onMessageAvatarPressed: (isGroupChat, uniqueId, vChatGroupChatInfo) {
+          if (isGroupChat) {
+            print("isGroupChat id is $uniqueId");
+            print("isGroupChat Info  is $vChatGroupChatInfo");
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => GroupChatInfo(
+                          groupId: uniqueId,
+                          groupChatInfo: vChatGroupChatInfo!,
+                        )));
+          } else {
+            print("user Email  is $uniqueId");
+          }
         },
       ),
       const SettingScreen()
@@ -65,10 +78,10 @@ class _HomeState extends State<Home> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AppRoomsScreen(),
+                builder: (context) => ChooseGroupMembersPage(),
               ));
         },
-        child: const Icon(Icons.mail),
+        child: const Icon(Icons.add),
       ),
       appBar: PreferredSize(
         child: _childrenAppBars[_currentIndex],
@@ -190,8 +203,20 @@ class _HomeState extends State<Home> {
     _children = [
       usersTab(),
       VChatRoomsView(
-        onMessageAvatarPressed: (uniqueId) {
-          print("xxxxxxxxxxxxxxxxxxxxxxxxxxx $uniqueId");
+        onMessageAvatarPressed: (isGroupChat, uniqueId, vChatGroupChatInfo) {
+          if (isGroupChat) {
+            print("isGroupChat id is $uniqueId");
+            print("isGroupChat Info  is $vChatGroupChatInfo");
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => GroupChatInfo(
+                          groupId: uniqueId,
+                          groupChatInfo: vChatGroupChatInfo!,
+                        )));
+          } else {
+            print("user Email  is $uniqueId");
+          }
         },
       ),
       const SettingScreen()

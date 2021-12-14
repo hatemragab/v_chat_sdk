@@ -188,12 +188,15 @@ class NotificationService {
 
     unawaited(
       flutterLocalNotificationsPlugin.show(
-          hashCode,
-          title,
-          msg,
-          NotificationDetails(
-              android: androidNotificationDetails, iOS: iosNotificationDetails),
-          payload: roomId),
+        hashCode,
+        title,
+        msg,
+        NotificationDetails(
+          android: androidNotificationDetails,
+          iOS: iosNotificationDetails,
+        ),
+        payload: roomId,
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:v_chat_sdk/src/models/models.dart';
 import 'dto/create_group_room_dto.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
@@ -59,6 +60,7 @@ class VChatController {
     required bool enableLogger,
     required String passwordHashKey,
     int maxMediaUploadSize = 50 * 1000 * 1000,
+    int maxGroupChatUsers = 300,
   }) async {
     ///init some service
     await VChatAppService.instance.init(isUseFirebase);
@@ -68,6 +70,7 @@ class VChatController {
     ///set some constants
     appService.isUseFirebase = isUseFirebase;
     appService.appName = appName;
+    appService.maxGroupChatUsers = maxGroupChatUsers;
     ServerConfig.serverIp = baseUrl.toString();
     ServerConfig.maxMessageFileSize = maxMediaUploadSize;
     late bool enableLog;
@@ -147,7 +150,7 @@ class VChatController {
       try {
         await login(context: context, email: email);
       } catch (err) {
-        throw "Your Not found in vchat database please make sure you mirage the old users passwordhashKey must be the same on flutter and backend .env $err";
+        throw "Your Not found in vchat database please make sure you mirage the old users passwordHash Key must be the same on flutter and backend .env $err";
       }
       return;
     }
@@ -332,5 +335,60 @@ class VChatController {
     //   data,
     //   context,
     // );
+  }
+
+  /// throw exception if group not exist or current user not in group
+  /// **throw** No internet connection
+  Future<List<VChatGroupUser>> getGroupMembers(
+      {required String groupId, required int paginationIndex}) async {
+    final members = await _vChatUsersApi.getRoomMembers(
+        groupId: groupId, paginationIndex: paginationIndex);
+    return members;
+  }
+
+  /// throw exception if group not exist or current user not in group and current user not admin
+  /// **throw** No internet connection
+  Future<void> updateGroupChatTitle(
+      {required String groupId, required String title}) async {
+    await _vChatUsersApi.updateGroupTitle(groupId: groupId, title: title);
+  }
+
+  /// throw exception if group not exist or current user not in group and current user not admin
+  /// **throw** No internet connection
+  Future<String> updateGroupChatImage(
+      {required String groupId, required String path}) async {
+    return await _vChatUsersApi.updateGroupImage(groupId: groupId, path: path);
+  }
+
+  /// throw exception if current user not admin or if kick the group creator of kick your self be aware !
+  /// **throw** No internet connection
+  Future kickUserFromGroup(
+      {required String groupId, required String kickedId}) async {
+    return await _vChatUsersApi.kickUserFromGroup(
+        groupId: groupId, kickedId: kickedId);
+  }
+
+  /// throw exception if current user not admin or if downgrade the group creator
+  /// **throw** No internet connection
+  Future downGradeUserFromGroup(
+      {required String groupId, required String userId}) async {
+    return await _vChatUsersApi.downGradeUserFromGroup(
+        groupId: groupId, userId: userId);
+  }
+
+  /// throw exception if current user not admin
+  /// **throw** No internet connection
+  Future upgradeUserFromGroup(
+      {required String groupId, required String userId}) async {
+    return await _vChatUsersApi.upgradeUserFromGroup(
+        groupId: groupId, userId: userId);
+  }
+
+  /// throw exception if current user not admin
+  /// **throw** No internet connection
+  Future addMembersToGroupChat(
+      {required String groupId, required List<String> usersEmails}) async {
+    return await _vChatUsersApi.addMembersToGroupChat(
+        groupId: groupId, usersEmails: usersEmails);
   }
 }

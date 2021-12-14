@@ -137,5 +137,5 @@ class EnLanguage implements VChatLookupString {
       "Group chat has been created successful";
 
   @override
-  String youNotExistInThisRoom() =>"You Not Exist In This Room";
+  String youNotExistInThisRoom() => "You Not Exist In This Room";
 }
