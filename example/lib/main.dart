@@ -7,7 +7,7 @@ import './screens/splash_screen.dart';
 import 'controllers/app_controller.dart';
 import 'generated/l10n.dart';
 
-const isUseRealServer = false;
+const isUseRealServer = true;
 
 class VChatCustomWidgets extends VChatWidgetBuilder {
   @override
