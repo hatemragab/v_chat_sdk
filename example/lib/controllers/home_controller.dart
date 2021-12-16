@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
@@ -24,8 +25,15 @@ class HomeController {
 
   void startChat(String email) async {
     try {
-      await VChatController.instance
-          .createSingleChat(context: context, peerEmail: email);
+      final res =
+          await CustomAlert.chatAlert(context: context, peerEmail: email);
+      if (res != null) {
+        await VChatController.instance
+            .createSingleChat(peerEmail: email, message: res);
+        CustomAlert.done(
+          msg: S.of(context).success,
+        );
+      }
     } on VChatSdkException catch (err) {
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;

@@ -5,8 +5,6 @@ import 'package:record/record.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import 'package:v_chat_sdk/src/utils/v_chat_extention.dart';
-
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../../utils/custom_widgets/rounded_container.dart';
 import '../../../../../utils/helpers/helpers.dart';
@@ -15,9 +13,11 @@ class MessageRecordView extends StatefulWidget {
   final Function(String path, String duration) onReceiveRecord;
   final Function() onCancel;
 
-  const MessageRecordView(
-      {Key? key, required this.onReceiveRecord, required this.onCancel})
-      : super(key: key);
+  const MessageRecordView({
+    Key? key,
+    required this.onReceiveRecord,
+    required this.onCancel,
+  }) : super(key: key);
 
   @override
   State<MessageRecordView> createState() => _MessageRecordViewState();
@@ -76,11 +76,13 @@ class _MessageRecordViewState extends State<MessageRecordView> {
                 onTap: stopRecord,
                 child: RoundedContainer(
                   boxShape: BoxShape.circle,
-                  color: VChatAppService.instance.vcBuilder
-                      .sendButtonColor(context, context.isDark),
+                  color: VChatAppService.instance.vcBuilder.sendButtonColor(
+                    context,
+                    isDark: Theme.of(context).brightness == Brightness.dark,
+                  ),
                   height: 50,
                   width: 50,
-                  child: Icon(
+                  child: const Icon(
                     Icons.send,
                     color: Colors.white,
                   ),
@@ -93,7 +95,7 @@ class _MessageRecordViewState extends State<MessageRecordView> {
     );
   }
 
-  void startRecord() async {
+  Future<void> startRecord() async {
     if (await recorder.hasPermission()) {
       try {
         if (Platform.isIOS) {
@@ -109,23 +111,23 @@ class _MessageRecordViewState extends State<MessageRecordView> {
           );
         }
 
-        bool isRecording = await recorder.isRecording();
+        final bool isRecording = await recorder.isRecording();
         if (isRecording) {
           _stopWatchTimer.onExecute.add(StopWatchExecute.start);
         }
       } catch (err) {
         Helpers.vlog(err.toString());
         CustomAlert.customAlertDialog(
-            context: context,
-            errorMessage:
-                "record not supported on emulator run on real device !");
+          context: context,
+          errorMessage: "record not supported on emulator run on real device !",
+        );
         widget.onCancel();
         rethrow;
       }
     }
   }
 
-  void stopRecord() async {
+  Future<void> stopRecord() async {
     final recorderPath = await recorder.stop();
     final uri = Uri.parse(recorderPath!);
     _stopWatchTimer.onExecute.add(StopWatchExecute.reset);

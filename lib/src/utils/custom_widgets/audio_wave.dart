@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AudioWaveBar {
-  AudioWaveBar(
-      {required this.height, this.color = Colors.red, this.radius = 50.0});
+  AudioWaveBar({
+    required this.height,
+    this.color = Colors.red,
+    this.radius = 50.0,
+  });
 
   /// [height] is the height of the bar based. It is percentage rate of widget height.
   ///
@@ -19,7 +22,7 @@ class AudioWaveBar {
 }
 
 class AudioWave extends StatefulWidget {
-  AudioWave({
+  const AudioWave({
     this.height = 100,
     this.width = 200,
     this.spacing = 5,
@@ -29,6 +32,7 @@ class AudioWave extends StatefulWidget {
     this.beatRate = const Duration(milliseconds: 200),
     required this.bars,
   });
+
   final List<AudioWaveBar> bars;
 
   /// [height] is the height of the widget.
@@ -98,10 +102,11 @@ class _AudioWaveState extends State<AudioWave> {
 
   @override
   Widget build(BuildContext context) {
-    double width = (widget.width - (widget.spacing * widget.bars.length)) /
-        widget.bars.length;
+    final double width =
+        (widget.width - (widget.spacing * widget.bars.length)) /
+            widget.bars.length;
 
-    return Container(
+    return SizedBox(
       height: widget.height,
       width: widget.width,
       child: Row(

@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:example/generated/l10n.dart';
 import 'package:example/models/user.dart';
 import 'package:example/utils/custom_alert.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
@@ -27,7 +27,7 @@ class CreateGroupController extends ChangeNotifier {
         throw "Enter title";
       }
       if (imagePath == null) {
-        throw "Choose group image";
+        throw S.of(context).chooseGroupImage;
       }
       await VChatController.instance.createGroupChat(
         context: context,
@@ -55,12 +55,12 @@ class CreateGroupController extends ChangeNotifier {
     if (img != null) {
       if (File(img.path).lengthSync() > 1024 * 1024 * 20) {
         CustomAlert.showError(
-            context: context, err: "image size must be less than 20 Mb");
+            context: context, err: S.of(context).imageSizeMustBeLessThan20Mb);
         throw "image size must be less than 20 Mb";
       }
       imagePath = img.path;
-      CustomAlert.showSuccess(
-          context: context, err: "image has been selected ");
+      CustomAlert.done(msg: S.of(context).imageHasBeenSelected);
     }
+    notifyListeners();
   }
 }

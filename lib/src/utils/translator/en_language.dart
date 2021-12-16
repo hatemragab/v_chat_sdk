@@ -138,4 +138,54 @@ class EnLanguage implements VChatLookupString {
 
   @override
   String youNotExistInThisRoom() => "You Not Exist In This Room";
+
+  @override
+  String createTheGroup() => "created The Group";
+
+  @override
+  String addedBy() => "added by";
+
+  @override
+  String downgradeToMemberBy() => "downgrade To Member By";
+
+  @override
+  String joinedTheGroupChat() => "joined Group Chat";
+
+  @override
+  String kickedBY() => "kicked BY";
+
+  @override
+  String leftGroupChat() => "left Group Chat";
+
+  @override
+  String upgradedToAdminBy() => "upgraded To Admin By";
+
+  @override
+  String thisContentIsFile() => "This Content Is File 📁";
+
+  @override
+  String thisContentIsImage() => "This Content Is Image 📷";
+
+  @override
+  String thisContentIsVideo() => "This Content Is Video 📷";
+
+  @override
+  String thisContentIsVoice() => "This Content Is Voice 🎤";
+
+  @override
+  String areYouSureToLeaveAndDeleteAllConversionData() =>
+      "Are You Sure To Leave And Delete All Conversion Data";
+
+  @override
+  String leave() => "Leave";
+
+  @override
+  String messageCopiedToClipboard() => "message Copied To Clipboard";
+
+  @override
+  String notConnectedToServerYet() => "not Connected To Server Yet";
+
+  @override
+  String youShouldAcceptMicrophoneToUseVoiceMessage() =>
+      "you Should Accept Microphone To Use Voice Message";
 }

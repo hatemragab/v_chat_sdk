@@ -27,8 +27,8 @@ class VChatGroupChatInfo {
 
   factory VChatGroupChatInfo.fromMap(Map<String, dynamic> map) {
     return VChatGroupChatInfo(
-      title: (map['name'] as String),
-      totalGroupMembers: (map['roomMembersCount'] as int),
+      title: map['name'] as String,
+      totalGroupMembers: map['roomMembersCount'] as int,
       role: map['role'] == VChatUserGroupRole.admin.inString
           ? VChatUserGroupRole.admin
           : VChatUserGroupRole.member,

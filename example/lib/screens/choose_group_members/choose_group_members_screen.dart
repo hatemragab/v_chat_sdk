@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:example/generated/l10n.dart';
 import 'package:example/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +7,7 @@ import 'package:textless/textless.dart';
 import 'choose_group_members_controller.dart';
 
 class ChooseGroupMembersPage extends StatelessWidget {
-  bool isFromGroupInfo;
+  final bool isFromGroupInfo;
 
   ChooseGroupMembersPage({Key? key, this.isFromGroupInfo = false})
       : super(key: key);
@@ -31,10 +33,10 @@ class ChooseGroupMembersScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         onPressed: controller.next,
-        child: Icon(Icons.arrow_right),
+        child: Icon(Icons.arrow_forward),
       ),
       appBar: AppBar(
-        title: "choose members".text,
+        title: S.of(context).chooseMembers.text,
         centerTitle: true,
         elevation: 0,
       ),
@@ -43,10 +45,19 @@ class ChooseGroupMembersScreen extends StatelessWidget {
           controller: controller.scrollController,
           padding: const EdgeInsets.all(10),
           itemBuilder: (context, index) => ListTile(
-              title: usersList[index].name.text,
-              onTap: () => controller.setSelectedUser(usersList[index]),
-              leading: Image.network(baseImgUrl + usersList[index].imageThumb),
-              selected: usersList[index].isSelected),
+            title: usersList[index].name.text,
+            onTap: () => controller.setSelectedUser(usersList[index]),
+            leading: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: CachedNetworkImage(
+                  imageUrl: baseImgUrl + usersList[index].imageThumb,
+                  height: 100,
+                  width: 60,
+                  fit: BoxFit.cover,
+                )),
+            selected: usersList[index].isSelected,
+          ),
           separatorBuilder: (context, index) => const Divider(),
           itemCount: usersList.length,
         ),

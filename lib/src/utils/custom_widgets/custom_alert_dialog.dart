@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:textless/textless.dart';
+
 import '../../services/v_chat_app_service.dart';
 
 class CustomAlert {
@@ -11,13 +12,13 @@ class CustomAlert {
 
   static void done({required BuildContext context, String? msg}) {
     Fluttertoast.showToast(
-        msg: msg ?? VChatAppService.instance.getTrans(context).success(),
-        toastLength: Toast.LENGTH_LONG,
-        timeInSecForIosWeb: 1,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0);
+      msg: msg ?? VChatAppService.instance.getTrans(context).success(),
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
     // BotToast.showSimpleNotification(
     //     title: VChatAppService.to.getTrans().success(),
     //     duration: const Duration(seconds: 3),
@@ -27,12 +28,13 @@ class CustomAlert {
 
   static void error({required String msg}) {
     Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+      msg: msg,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.TOP,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
     // BotToast.showSimpleNotification(
     //   title: VChatAppService.to.getTrans().failed(),
     //   subTitleStyle: const TextStyle(color: Colors.white),
@@ -42,11 +44,12 @@ class CustomAlert {
     // );
   }
 
-  static void customAlertDialog(
-      {Function()? onPress,
-      required String errorMessage,
-      required BuildContext context,
-      bool dismissible = true}) {
+  static void customAlertDialog({
+    Function()? onPress,
+    required String errorMessage,
+    required BuildContext context,
+    bool dismissible = true,
+  }) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -71,11 +74,12 @@ class CustomAlert {
                     ),
                     SizedBox(
                       child: ElevatedButton(
-                          onPressed: onPress ?? () => Navigator.pop(context),
-                          child: VChatAppService.instance
-                              .getTrans(context)
-                              .oK()
-                              .text),
+                        onPressed: onPress ?? () => Navigator.pop(context),
+                        child: VChatAppService.instance
+                            .getTrans(context)
+                            .oK()
+                            .text,
+                      ),
                     )
                   ],
                 ),
@@ -94,8 +98,10 @@ class CustomAlert {
     );
   }
 
-  static void customLoadingDialog(
-      {required BuildContext context, bool dismissible = false}) {
+  static void customLoadingDialog({
+    required BuildContext context,
+    bool dismissible = false,
+  }) {
     showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
@@ -110,7 +116,11 @@ class CustomAlert {
               child: AlertDialog(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 contentPadding: const EdgeInsets.only(
-                    top: 8, bottom: 5, left: 10, right: 10),
+                  top: 8,
+                  bottom: 5,
+                  left: 10,
+                  right: 10,
+                ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -159,41 +169,40 @@ class CustomAlert {
   }) async {
     if (Platform.isIOS) {
       return showDialog(
-          context: context,
-          builder: (context) {
-            return WillPopScope(
-              onWillPop: () async {
-                return dismissible;
-              },
-              child: CupertinoAlertDialog(
-                title: title.text,
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, -1),
-                    child: VChatAppService.instance
-                        .getTrans(context)
-                        .cancel()
-                        .text,
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 1),
-                    child: VChatAppService.instance.getTrans(context).oK().text,
+        context: context,
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () async {
+              return dismissible;
+            },
+            child: CupertinoAlertDialog(
+              title: title.text,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-            );
-          });
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, -1),
+                  child:
+                      VChatAppService.instance.getTrans(context).cancel().text,
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 1),
+                  child: VChatAppService.instance.getTrans(context).oK().text,
+                ),
+              ],
+            ),
+          );
+        },
+      );
     }
 
-    return await showGeneralDialog(
+    return showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
         return WillPopScope(
@@ -211,8 +220,8 @@ class CustomAlert {
                     .copyWith(top: 8, bottom: 5, left: 10, right: 10),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(
+                  children: const [
+                    SizedBox(
                       height: 10,
                     ),
                   ],

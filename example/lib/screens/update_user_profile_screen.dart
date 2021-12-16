@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:textless/textless.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
@@ -32,7 +31,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              "update image ".text,
+              S.of(context).updateImage.text,
               InkWell(
                 onTap: () {
                   updateImage();
@@ -47,12 +46,13 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
               ),
               TextField(
                 controller: nameC,
-                decoration: InputDecoration(hintText: "new name"),
+                decoration: InputDecoration(hintText: S.of(context).newName),
               ),
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(onPressed: updateName, child: "update name".text),
+              ElevatedButton(
+                  onPressed: updateName, child: S.of(context).updateName.text),
 
               // CupertinoTextField(
               //   placeholder: "old Pass ",
@@ -79,7 +79,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
   void updateName() async {
     try {
       if (nameC.text.isEmpty) {
-        throw "Enter the name";
+        throw S.of(context).enterTheName;
       }
       // await CustomDio()
       //     .send(reqMethod: "patch", path: "user", body: {"name": nameC.text});
@@ -87,7 +87,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
           .updateUserName(name: nameC.text.toString());
       nameC.clear();
       CustomAlert.showSuccess(
-          context: context, err: "your name has been updated !");
+          context: context, err: S.of(context).yourNameHasBeenUpdated);
     } on VChatSdkException catch (err) {
       //handle Errors
       log(err.data.toString());
@@ -104,7 +104,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
 
       if (img != null) {
         if (File(img.path).lengthSync() > 1024 * 1024 * 20) {
-          throw "image size must be less than 20 Mb";
+          throw S.of(context).imageSizeMustBeLessThan20Mb;
         }
         CustomAlert.customLoadingDialog(context: context);
 
@@ -120,7 +120,7 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
         await VChatController.instance.updateUserImage(imagePath: img.path);
         Navigator.pop(context);
         CustomAlert.showSuccess(
-            context: context, err: "your image has been updated !");
+            context: context, err: S.of(context).yourImageHasBeenUpdated);
       }
     } on VChatSdkException catch (err) {
       Navigator.pop(context);

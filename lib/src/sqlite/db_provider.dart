@@ -19,24 +19,29 @@ class DBProvider {
     return _database!;
   }
 
-  Future _open() async {
+  Future<Database> _open() async {
     final String documentsDirectory = await getDatabasesPath();
     final String path = join(documentsDirectory, "v_chat_chat.db");
 
-    return await openDatabase(path, version: 1, onCreate: (db, version) async {
-      await db.transaction((txn) async {
-        await RoomTable.createTable(txn);
-        await MessageTable.createTable(txn);
-        // await txn.execute('PRAGMA cache_size = 1000000');
-        // await txn.execute("PRAGMA synchronous = OFF");
-        // await txn.execute('PRAGMA temp_store = MEMORY');
-      });
-    }, onOpen: (db) async {
-      // await NewRoomTable.recreateTable(db);
-      // await NewMessageTable.recreateTable(db);
-      //
-      // log("--------------all tables deleted!--------------");
-    });
+    return openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.transaction((txn) async {
+          await RoomTable.createTable(txn);
+          await MessageTable.createTable(txn);
+          // await txn.execute('PRAGMA cache_size = 1000000');
+          // await txn.execute("PRAGMA synchronous = OFF");
+          // await txn.execute('PRAGMA temp_store = MEMORY');
+        });
+      },
+      onOpen: (db) async {
+        // await NewRoomTable.recreateTable(db);
+        // await NewMessageTable.recreateTable(db);
+        //
+        // log("--------------all tables deleted!--------------");
+      },
+    );
   }
 
   Future reCreateTables() async {

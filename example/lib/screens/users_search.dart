@@ -1,4 +1,5 @@
 import 'package:example/controllers/home_controller.dart';
+import 'package:example/generated/l10n.dart';
 import 'package:example/models/user.dart';
 import 'package:example/utils/custom_dio.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class _UsersSearchState extends State<UsersSearch> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              decoration: InputDecoration(hintText: "User name"),
+              decoration: InputDecoration(hintText: S.of(context).userName),
               keyboardType: TextInputType.text,
               autofocus: true,
               onSubmitted: (value) {

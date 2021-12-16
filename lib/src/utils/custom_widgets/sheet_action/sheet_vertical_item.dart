@@ -6,9 +6,10 @@ class CustomSheetModel {
   IconData? iconData;
   bool isHidden;
 
-  CustomSheetModel(
-      {required this.value,
-      required this.text,
-      this.iconData,
-      this.isHidden = false});
+  CustomSheetModel({
+    required this.value,
+    required this.text,
+    this.iconData,
+    this.isHidden = false,
+  });
 }

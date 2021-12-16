@@ -19,10 +19,12 @@ class LocalStorageService {
   }
 
   Future<List<VChatRoom>> getRooms() async {
-    final maps = await database.query(RoomTable.tableName,
-        orderBy: "${RoomTable.columnUpdatedAt} DESC");
+    final maps = await database.query(
+      RoomTable.tableName,
+      orderBy: "${RoomTable.columnUpdatedAt} DESC",
+    );
     final rooms = <VChatRoom>[];
-    for (var map in maps) {
+    for (final map in maps) {
       final r =
           VChatRoom.fromMap(jsonDecode(map[RoomTable.columnData].toString()));
       rooms.add(r);
@@ -47,29 +49,31 @@ class LocalStorageService {
     // }
 
     final batch = database.batch();
-    for (var room in roomsToInsert) {
+    for (final room in roomsToInsert) {
       batch.insert(
-          RoomTable.tableName,
-          {
-            RoomTable.columnId: room.id,
-            RoomTable.columnUpdatedAt: room.updatedAt,
-            RoomTable.columnData: jsonEncode(room.toLocalMap())
-          },
-          conflictAlgorithm: ConflictAlgorithm.replace);
-    }
-    await batch.commit(noResult: true);
-  }
-
-  Future setRoomOrUpdate(VChatRoom room) async {
-    await insertMessage(room.id.toString(), room.lastMessage);
-    await database.insert(
         RoomTable.tableName,
         {
           RoomTable.columnId: room.id,
           RoomTable.columnUpdatedAt: room.updatedAt,
           RoomTable.columnData: jsonEncode(room.toLocalMap())
         },
-        conflictAlgorithm: ConflictAlgorithm.replace);
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    }
+    await batch.commit(noResult: true);
+  }
+
+  Future setRoomOrUpdate(VChatRoom room) async {
+    await insertMessage(room.id, room.lastMessage);
+    await database.insert(
+      RoomTable.tableName,
+      {
+        RoomTable.columnId: room.id,
+        RoomTable.columnUpdatedAt: room.updatedAt,
+        RoomTable.columnData: jsonEncode(room.toLocalMap())
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future setRoomMessages(String roomId, List<VChatMessage> messages) async {
@@ -81,11 +85,14 @@ class LocalStorageService {
     } catch (err) {
       //
     }
-    await database.delete(MessageTable.tableName,
-        where: "${MessageTable.columnRoomId} =?", whereArgs: [roomId]);
+    await database.delete(
+      MessageTable.tableName,
+      where: "${MessageTable.columnRoomId} =?",
+      whereArgs: [roomId],
+    );
 
     final batch = database.batch();
-    for (var msg in messageToInsert) {
+    for (final msg in messageToInsert) {
       batch.insert(
         MessageTable.tableName,
         {
@@ -113,13 +120,15 @@ class LocalStorageService {
 
   Future<List<VChatMessage>> getRoomMessages(String roomId) async {
     final messages = <VChatMessage>[];
-    final maps = await database.query(MessageTable.tableName,
-        where: "${MessageTable.columnRoomId} =?",
-        whereArgs: [roomId],
-        limit: 30,
-        orderBy: "${MessageTable.columnId} DESC");
+    final maps = await database.query(
+      MessageTable.tableName,
+      where: "${MessageTable.columnRoomId} =?",
+      whereArgs: [roomId],
+      limit: 30,
+      orderBy: "${MessageTable.columnId} DESC",
+    );
 
-    for (var x in maps) {
+    for (final x in maps) {
       messages.add(
         VChatMessage.fromMap(
           jsonDecode(x[MessageTable.columnData].toString()),
@@ -131,7 +140,10 @@ class LocalStorageService {
   }
 
   Future deleteRoom(String id) async {
-    await database.delete(RoomTable.tableName,
-        where: "${RoomTable.columnId}=?", whereArgs: [id]);
+    await database.delete(
+      RoomTable.tableName,
+      where: "${RoomTable.columnId}=?",
+      whereArgs: [id],
+    );
   }
 }

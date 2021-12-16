@@ -25,22 +25,21 @@ class MessageSocket {
     connectMessageSocket();
   }
 
-  void connectMessageSocket() async {
-    await Future.delayed(const Duration(milliseconds: 200));
+  void connectMessageSocket() {
     _socket = _getSocket();
     _socket.onConnect((data) async {
       _socket.on("all_messages", (data) async {
-        final msgList = (jsonDecode(data)) as List;
+        final msgList = jsonDecode(data as String) as List;
         final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
         unawaited(
-            localStorageService.setRoomMessages(currentRoomId.toString(), x));
+          localStorageService.setRoomMessages(currentRoomId, x),
+        );
         onAllMessages(x);
       });
       _socket.on('new_message', (data) async {
-        final msgMap = jsonDecode(data);
+        final msgMap = jsonDecode(data as String);
         final message = VChatMessage.fromMap(msgMap);
-        unawaited(localStorageService.insertMessage(
-            currentRoomId.toString(), message));
+        unawaited(localStorageService.insertMessage(currentRoomId, message));
         onNewMessage(message);
       });
       _socket.onReconnecting((data) {
@@ -48,7 +47,7 @@ class MessageSocket {
         cache.clear();
       });
       await Future.delayed(const Duration(milliseconds: 100));
-      _socket.emit("join", currentRoomId.toString());
+      _socket.emit("join", currentRoomId);
     });
   }
 

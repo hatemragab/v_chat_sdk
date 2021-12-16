@@ -30,7 +30,8 @@ class SocketService {
       'connectTimeout': 5000,
       'pingInterval': 5000,
       'extraHeaders': <String, String>{
-        'Authorization': VChatAppService.instance.vChatUser!.accessToken
+        'Authorization': VChatAppService.instance.vChatUser!.accessToken,
+        "accept-language": VChatAppService.instance.currentLocal
       },
       'forceNew': true
     });
@@ -67,14 +68,13 @@ class SocketService {
   }
 
   void destroy() {
-    print("Start destroy Chat socket ");
     offAllListeners();
     _socket!.disconnect();
     _socket = null;
     //_socket.destroy();
   }
 
-  void initSockedEvents() async {
+  Future<void> initSockedEvents() async {
     _socket!.on("all_rooms", (data) {
       final _roomsMaps = data as List;
       final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
@@ -91,22 +91,28 @@ class SocketService {
     });
 
     _socket!.on("user_online_changed", (data) {
-      final res = jsonDecode(data);
-      final status = res['status'];
-      final roomId = res['roomId'];
+      final res = jsonDecode(data as String);
+      final status = res['status'] as int;
+      final roomId = res['roomId'] as String;
       RoomCubit.instance.updateRoomOnlineChanged(status, roomId);
     });
 
     _socket!.on("user_typing_changed", (data) {
-      RoomCubit.instance.updateRoomTypingChanged(VChatRoomTyping.fromMap(data));
+      RoomCubit.instance.updateRoomTypingChanged(
+        VChatRoomTyping.fromMap(data as Map<String, dynamic>),
+      );
     });
 
-    _socket!.emitWithAck("join", "join", ack: (data) {
-      final _roomsMaps = data['data'] as List;
-      final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
-      RoomCubit.instance.setSocketRooms(_rooms);
-      unawaited(LocalStorageService.instance.setRooms(_rooms));
-    });
+    _socket!.emitWithAck(
+      "join",
+      "join",
+      ack: (data) {
+        final _roomsMaps = data['data'] as List;
+        final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
+        RoomCubit.instance.setSocketRooms(_rooms);
+        unawaited(LocalStorageService.instance.setRooms(_rooms));
+      },
+    );
   }
 
   void offAllListeners() {

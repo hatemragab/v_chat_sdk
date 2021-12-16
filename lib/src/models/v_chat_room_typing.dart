@@ -33,9 +33,10 @@ class VChatRoomTyping {
   factory VChatRoomTyping.fromMap(Map<String, dynamic> map) {
     const t = RoomTypingType.stop;
     return VChatRoomTyping(
-        status: t.enumType(map['status']),
-        name: map['name'] as String?,
-        roomId: map['roomId']);
+      status: t.enumType(map['status'] as String),
+      name: map['name'] as String?,
+      roomId: map['roomId'] as String,
+    );
   }
 
   Map<String, dynamic> toMap() {

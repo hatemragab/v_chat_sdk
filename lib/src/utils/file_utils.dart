@@ -21,8 +21,11 @@ import 'helpers/dir_helper.dart';
 
 class FileUtils {
   FileUtils._();
+
   static Future newDownloadFile(
-      BuildContext context, VChatMessageAttachment attachment) async {
+    BuildContext context,
+    VChatMessageAttachment attachment,
+  ) async {
     try {
       await _requestStoragePermission(context);
       final downloadFile = await DirHelper.downloadPath();
@@ -34,15 +37,17 @@ class FileUtils {
           final cancelToken = CancelToken();
           CustomAlert.customLoadingDialog(context: context);
           await CustomDio().download(
-              path: ServerConfig.messagesMediaBaseUrl +
-                  attachment.playUrl.toString(),
-              cancelToken: cancelToken,
-              filePath: file.path);
+            path: ServerConfig.messagesMediaBaseUrl +
+                attachment.playUrl.toString(),
+            cancelToken: cancelToken,
+            filePath: file.path,
+          );
           Navigator.pop(context);
           CustomAlert.done(
-              context: context,
-              msg:
-                  "File saved on device /download/${VChatAppService.instance.appName}");
+            context: context,
+            msg:
+                "File saved on device /download/${VChatAppService.instance.appName}",
+          );
           await OpenFile.open(file.path);
         } catch (err) {
           Navigator.pop(context);
@@ -51,21 +56,25 @@ class FileUtils {
       }
     } catch (err) {
       CustomAlert.customAlertDialog(
-          errorMessage: err.toString(), context: context);
+        errorMessage: err.toString(),
+        context: context,
+      );
       rethrow;
     }
   }
 
-  static Future compressImage(File file) async {
+  static Future<File> compressImage(File file) async {
     final ImageProperties properties =
         await FlutterNativeImage.getImageProperties(file.path);
     File compressedFile = file;
     if (file.lengthSync() > 150 * 1000) {
       // compress only images bigger than 150 kb
-      compressedFile = await FlutterNativeImage.compressImage(file.path,
-          quality: 100,
-          targetWidth: 700,
-          targetHeight: (properties.height! * 700 / properties.width!).round());
+      compressedFile = await FlutterNativeImage.compressImage(
+        file.path,
+        quality: 100,
+        targetWidth: 700,
+        targetHeight: (properties.height! * 700 / properties.width!).round(),
+      );
     }
 
     //  final compressFile = await _copyTheCompressImage(compressedFile);
@@ -91,7 +100,6 @@ class FileUtils {
   static Future<File> getVideoThumb(File file) async {
     final uint8list = await VideoThumbnail.thumbnailData(
       video: file.path,
-      imageFormat: ImageFormat.PNG,
       quality: 50,
       maxHeight: 600,
       maxWidth: 800,
@@ -101,7 +109,7 @@ class FileUtils {
     final String fileName =
         "IMG_THUMB_${DateTime.now().microsecondsSinceEpoch}.png";
     final newFile = File("$t$fileName");
-    return await newFile.writeAsBytes(uint8list!);
+    return newFile.writeAsBytes(uint8list!);
   }
 
   static Future<String> getVideoDuration(String path) async {
@@ -111,8 +119,11 @@ class FileUtils {
     return _printDuration(Duration(milliseconds: info!.duration!.round()));
   }
 
-  static Future<dynamic> uploadFile(List<File> files, String endPoint,
-      {Map<String, String>? body}) async {
+  static Future<dynamic> uploadFile(
+    List<File> files,
+    String endPoint, {
+    Map<String, String>? body,
+  }) async {
     final request = http.MultipartRequest(
       'POST',
       Uri.parse('${ServerConfig.serverBaseUrl}$endPoint'),
@@ -131,7 +142,8 @@ class FileUtils {
 
     request.headers.addAll({
       "authorization":
-          "Bearer ${VChatAppService.instance.vChatUser!.accessToken.toString()}"
+          "Bearer ${VChatAppService.instance.vChatUser!.accessToken}",
+      "Accept-Language": VChatAppService.instance.currentLocal
     });
     if (body != null) {
       request.fields.addAll(body);
@@ -146,23 +158,25 @@ class FileUtils {
     final c = Completer();
     if (!(await Permission.storage.isGranted)) {
       CustomAlert.customAlertDialog(
-          context: context,
-          errorMessage:
-              "App Need this permission to save downloaded files in device storage /download/${VChatAppService.instance.appName}}/",
-          dismissible: false,
-          onPress: () async {
+        context: context,
+        errorMessage:
+            "App Need this permission to save downloaded files in device storage /download/${VChatAppService.instance.appName}}/",
+        dismissible: false,
+        onPress: () async {
+          Navigator.pop(context);
+          final Map<Permission, PermissionStatus> statuses = await [
+            Permission.storage,
+          ].request();
+          if (statuses[Permission.storage] == PermissionStatus.granted) {
+            return c.complete();
+          } else {
             Navigator.pop(context);
-            final Map<Permission, PermissionStatus> statuses = await [
-              Permission.storage,
-            ].request();
-            if (statuses[Permission.storage] == PermissionStatus.granted) {
-              return c.complete();
-            } else {
-              Navigator.pop(context);
-              return c.completeError(
-                  "storage permission must be accepted to download the file");
-            }
-          });
+            return c.completeError(
+              "storage permission must be accepted to download the file",
+            );
+          }
+        },
+      );
     } else {
       return c.complete();
     }

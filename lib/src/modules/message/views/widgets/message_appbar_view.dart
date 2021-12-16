@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
-import 'package:v_chat_sdk/src/services/v_chat_provider.dart';
 import '../../../../enums/room_type.dart';
 import '../../../../enums/room_typing_type.dart';
 import '../../../../services/v_chat_app_service.dart';
@@ -22,7 +21,8 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
         builder: (context, state) {
           try {
             final _room = roomController.rooms.firstWhere(
-                (element) => element.id == roomController.currentRoomId!);
+              (element) => element.id == roomController.currentRoomId!,
+            );
             if (state is RoomLoaded) {
               final isOnline = _room.isOnline;
               final typingSt = _room.typingStatus;
@@ -69,8 +69,8 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
             return _room.title.text;
           } catch (er) {
             Navigator.pop(context);
+            rethrow;
           }
-          return SizedBox();
         },
       ),
       actions: [
@@ -79,22 +79,28 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
             bloc: RoomCubit.instance,
             builder: (context, state) {
               final _room = roomController.rooms.firstWhere(
-                  (element) => element.id == roomController.currentRoomId!);
+                (element) => element.id == roomController.currentRoomId!,
+              );
               return Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: InkWell(
                   onTap: () async {
                     if (roomController.onMessageAvatarPressed != null) {
-                      final _room = roomController.rooms.firstWhere((element) =>
-                          element.id == roomController.currentRoomId!);
+                      final _room = roomController.rooms.firstWhere(
+                        (element) =>
+                            element.id == roomController.currentRoomId!,
+                      );
                       if (_room.roomType == RoomType.single) {
                         roomController.onMessageAvatarPressed!(
-                            false, _room.ifSinglePeerEmail!, null);
+                          false,
+                          _room.ifSinglePeerEmail!,
+                          null,
+                        );
                       } else {
                         roomController.onMessageAvatarPressed!(
                           true,
                           _room.id,
-                          _room.groupSetting!,
+                          _room.groupSetting,
                         );
                       }
                     }
@@ -102,7 +108,7 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
                   child: CircleImage.network(
                     path: _room.thumbImage,
                     radius: 25,
-                    withSetting: true,
+                    withSetting: _room.roomType == RoomType.groupChat,
                     isOnline: _room.isOnline == 1,
                   ),
                 ),

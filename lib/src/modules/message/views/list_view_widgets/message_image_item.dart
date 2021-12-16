@@ -20,8 +20,9 @@ class MessageImageItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ImageViewerView(
-                ServerConfig.messagesMediaBaseUrl +
-                    _message.messageAttachment!.imageUrl.toString()),
+              ServerConfig.messagesMediaBaseUrl +
+                  _message.messageAttachment!.imageUrl.toString(),
+            ),
           ),
         );
       },
@@ -43,7 +44,7 @@ class MessageImageItem extends StatelessWidget {
                 _message.messageAttachment!.imageUrl.toString(),
             fit: BoxFit.cover,
             progressIndicatorBuilder: (context, url, progress) =>
-                Center(child: CircularProgressIndicator.adaptive()),
+                const Center(child: CircularProgressIndicator.adaptive()),
           ),
         ),
       ),

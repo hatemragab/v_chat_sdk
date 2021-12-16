@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("splash screen"),
+        title: Text(S.of(context).splashScreen),
         centerTitle: true,
       ),
       body: const Center(

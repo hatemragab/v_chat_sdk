@@ -37,13 +37,7 @@ class VChatGroupUser {
 
   @override
   String toString() {
-    return 'VChatGroupUser{' +
-        ' id: $id,' +
-        ' email: $email,' +
-        ' mame: $mame,' +
-        ' image: $image,' +
-        ' vChatUserGroupRole: $vChatUserGroupRole,' +
-        '}';
+    return 'VChatGroupUser{ id: $id, email: $email, mame: $mame, image: $image, vChatUserGroupRole: $vChatUserGroupRole,}';
   }
 
   VChatGroupUser copyWith({

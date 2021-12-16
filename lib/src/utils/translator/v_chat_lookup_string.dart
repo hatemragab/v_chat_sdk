@@ -89,4 +89,36 @@ abstract class VChatLookupString {
   String groupChatHasBeenCreatedSuccessful();
 
   String youNotExistInThisRoom();
+
+  String createTheGroup();
+
+  String joinedTheGroupChat();
+
+  String leftGroupChat();
+
+  String addedBy();
+
+  String upgradedToAdminBy();
+
+  String downgradeToMemberBy();
+
+  String kickedBY();
+
+  String thisContentIsImage();
+
+  String thisContentIsFile();
+
+  String thisContentIsVoice();
+
+  String thisContentIsVideo();
+
+  String areYouSureToLeaveAndDeleteAllConversionData();
+
+  String leave();
+
+  String notConnectedToServerYet();
+
+  String messageCopiedToClipboard();
+
+  String youShouldAcceptMicrophoneToUseVoiceMessage();
 }

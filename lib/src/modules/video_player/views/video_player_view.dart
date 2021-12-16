@@ -34,25 +34,26 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
               },
             ),
             Positioned(
-                top: 20,
-                left: 10,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 33,
-                  ),
-                )),
+              top: 20,
+              left: 10,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                  size: 33,
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  void initPlayer() async {
+  Future<void> initPlayer() async {
     videoPlayerController = vd.VideoPlayerController.network(widget.url);
     await videoPlayerController.initialize();
 

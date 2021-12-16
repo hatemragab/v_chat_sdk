@@ -14,12 +14,13 @@ class CircleImage {
     );
   }
 
-  static Widget network(
-      {required String path,
-      int radius = 30,
-      bool isOnline = false,
-      bool isGroup = false,
-      bool withSetting = false}) {
+  static Widget network({
+    required String path,
+    int radius = 30,
+    bool isOnline = false,
+    bool isGroup = false,
+    bool withSetting = false,
+  }) {
     return Stack(
       children: [
         Padding(
@@ -48,11 +49,11 @@ class CircleImage {
             child: Container(
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isGroup ? Colors.grey : Colors.green,
-                  border:
-                      Border.all(color: Colors.green, width: isGroup ? 0 : 0)),
-              child: Icon(
+                shape: BoxShape.circle,
+                color: isGroup ? Colors.grey : Colors.green,
+                border: Border.all(color: Colors.green, width: isGroup ? 0 : 0),
+              ),
+              child: const Icon(
                 Icons.settings,
                 color: Colors.white,
                 size: 18,
@@ -66,16 +67,19 @@ class CircleImage {
             child: Container(
               padding: EdgeInsets.zero,
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isGroup ? Colors.grey : Colors.green,
-                  border:
-                      Border.all(color: Colors.green, width: isGroup ? 0 : 0)),
+                shape: BoxShape.circle,
+                color: isGroup ? Colors.grey : Colors.green,
+                border: Border.all(
+                  color: Colors.green,
+                  width: isGroup ? 0 : 0,
+                ),
+              ),
               child: isGroup
-                  ? Icon(
+                  ? const Icon(
                       Icons.group,
                       size: 18,
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.circle,
                       color: Colors.green,
                       size: 18,

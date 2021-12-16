@@ -101,18 +101,21 @@ class VChatRoom {
           ? RoomType.single
           : RoomType.groupChat,
       blockerId: map['blockerId'] as String?,
-      updatedAt: (map['updatedAt'] as int),
+      updatedAt: map['updatedAt'] as int,
       groupSetting: map['groupSetting'] == null
           ? null
-          : VChatGroupChatInfo.fromMap(map['groupSetting']),
+          : VChatGroupChatInfo.fromMap(
+              map['groupSetting'] as Map<String, dynamic>,
+            ),
       creatorId: map['creatorId'] as String,
       ifPeerReadMyLastMessage: map['ifPeerReadMyLastMessage'] as int,
-      isMute: (map['isMute'] as int),
-      isOnline: (map['isOnline'] as int),
+      isMute: map['isMute'] as int,
+      isOnline: map['isOnline'] as int,
       title: map['title'] as String,
       thumbImage: map['thumbImage'] as String,
       ifSinglePeerId: map['peerId'] as String?,
-      lastMessage: VChatMessage.fromMap(map['lastMessage']),
+      lastMessage:
+          VChatMessage.fromMap(map['lastMessage'] as Map<String, dynamic>),
       unReadCount: map['unReadCount'] as int,
       roomMembersCount: map['roomMembersCount'] as int,
       typingStatus: VChatRoomTyping(status: RoomTypingType.stop),

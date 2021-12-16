@@ -7,12 +7,12 @@ class AuthProvider {
   Future<VChatUser> login(VChatLoginDto dto) async {
     final data = (await CustomDio()
             .send(reqMethod: "POST", path: "user/login", body: dto.toMap()))
-        .data['data'];
+        .data['data'] as Map<String, dynamic>;
     return VChatUser.fromMap(data);
   }
 
   Future<VChatUser> register(VChatRegisterDto dto) async {
-    dynamic userMap;
+    late Map<String, dynamic> userMap;
     if (dto.userImage != null) {
       userMap = (await CustomDio().uploadFile(
         filePath: dto.userImage!.path,
@@ -24,14 +24,14 @@ class AuthProvider {
           {"fcmToken": dto.fcmToken.toString()}
         ],
       ))
-          .data['data'];
+          .data['data'] as Map<String, dynamic>;
     } else {
       userMap = (await CustomDio().send(
         reqMethod: "POST",
         path: "user/register",
         body: dto.toMap(),
       ))
-          .data['data'];
+          .data['data'] as Map<String, dynamic>;
     }
 
     return VChatUser.fromMap(userMap);

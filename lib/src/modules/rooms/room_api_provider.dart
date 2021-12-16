@@ -27,9 +27,10 @@ class RoomsApiProvider {
 
   Future changeNotifaictions(String roomId) async {
     return (await CustomDio().send(
-            reqMethod: "POST",
-            path: "room/chat-notification",
-            body: {"roomId": roomId.toString()}))
+      reqMethod: "POST",
+      path: "room/chat-notification",
+      body: {"roomId": roomId},
+    ))
         .data['data'];
   }
 }

@@ -86,7 +86,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "Our Full Documentation",
+              title: S.of(context).ourFullDocumentation,
               icon: Icons.document_scanner_outlined,
               onTap: () async {
                 if (!await launch(
@@ -96,7 +96,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "Buy the backend code",
+              title: S.of(context).buyTheBackendCode,
               icon: Icons.document_scanner_outlined,
               onTap: () async {
                 if (!await launch(
@@ -106,7 +106,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "ios testflight and public flutter ui",
+              title: S.of(context).iosTestflightAndPublicFlutterUi,
               icon: Icons.document_scanner_outlined,
               onTap: () async {
                 if (!await launch("https://github.com/hatemragab/v_chat_sdk")) {
@@ -115,15 +115,28 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
             ProfileItem(
-              title: "Contact Us And Report issues or new features",
+              title: S.of(context).contactUsAndReportIssuesOrNewFeatures,
               icon: Icons.chat,
               onTap: () async {
-                await VChatController.instance.createSingleChat(
-                    peerEmail: "hatemragap5@gmail.com", context: context);
+                try {
+                  final res = await CustomAlert.chatAlert(
+                      context: context, peerEmail: "hatemragap5@gmail.com");
+                  if (res != null) {
+                    await VChatController.instance.createSingleChat(
+                        peerEmail: "hatemragap5@gmail.com", message: res);
+                    CustomAlert.showSuccess(
+                      context: context,
+                      err: S.of(context).success,
+                    );
+                  }
+                } on VChatSdkException catch (err) {
+                  CustomAlert.showError(context: context, err: err.toString());
+                  rethrow;
+                }
               },
             ),
             ProfileItem(
-              title: "About",
+              title: S.of(context).about,
               icon: Icons.info,
               onTap: () async {
                 Navigator.of(context).push(

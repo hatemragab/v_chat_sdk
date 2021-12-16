@@ -8,13 +8,13 @@ class MessageFiled extends StatefulWidget {
   final Function() onCameraPressed;
   final Function() onAttachmentPressed;
 
-  const MessageFiled(
-      {Key? key,
-      required this.controller,
-      required this.onChangeText,
-      required this.onCameraPressed,
-      required this.onAttachmentPressed})
-      : super(key: key);
+  const MessageFiled({
+    Key? key,
+    required this.controller,
+    required this.onChangeText,
+    required this.onCameraPressed,
+    required this.onAttachmentPressed,
+  }) : super(key: key);
 
   @override
   State<MessageFiled> createState() => _MessageFiledState();
@@ -26,7 +26,6 @@ class _MessageFiledState extends State<MessageFiled> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         const SizedBox(
           width: 10,
@@ -48,12 +47,11 @@ class _MessageFiledState extends State<MessageFiled> {
                   textCapitalization: TextCapitalization.sentences,
                   textInputAction: TextInputAction.newline,
                   keyboardType: TextInputType.multiline,
-                  autofocus: false,
                   maxLines: null,
                   onChanged: (s) {
                     widget.onChangeText(s);
                     setState(() {
-                      txt = s.toString();
+                      txt = s;
                     });
                   },
                   decoration: InputDecoration(
@@ -68,8 +66,9 @@ class _MessageFiledState extends State<MessageFiled> {
           ),
         ),
         InkWell(
-            onTap: widget.onAttachmentPressed,
-            child: const Icon(Icons.attach_file)),
+          onTap: widget.onAttachmentPressed,
+          child: const Icon(Icons.attach_file),
+        ),
         const SizedBox(width: 8)
       ],
     );

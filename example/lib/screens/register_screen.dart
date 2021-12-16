@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textless/textless.dart';
@@ -68,18 +69,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       await picker.pickImage(source: ImageSource.gallery);
                   if (img != null) {
                     _controller.imagePath = img.path;
-                    CustomAlert.showSuccess(
-                        context: context,
-                        err: "image has been set successfully");
+                    CustomAlert.done(msg: S.of(context).imageHasBeenSelected);
+                    setState(() {});
                   }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.image,
-                      size: 40,
-                    ),
+                    _controller.imagePath != null
+                        ? Image.file(
+                            File(_controller.imagePath!),
+                            height: 100,
+                            width: 100,
+                          )
+                        : const Icon(
+                            Icons.image,
+                            size: 40,
+                          ),
                     S.of(context).chooseImage.text,
                   ],
                 )),

@@ -16,7 +16,8 @@ enum MessageType {
   upgrade,
   downgrade,
   info,
-  kick
+  kick,
+  add,
 }
 
 extension MessageTypeEnum on MessageType {

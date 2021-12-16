@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get_it/get_it.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
@@ -34,7 +33,8 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   final getIt = GetIt.instance;
 
   ///init message socket to stop receive notifications from this user
-  MessageCubit() : super(MessageInitial()) {
+  MessageCubit({required this.roomId}) : super(MessageInitial()) {
+    getLocalMessages();
     _messageSocket = MessageSocket(
       currentRoomId: RoomCubit.instance.currentRoomId!,
       myId: VChatAppService.instance.vChatUser!.id,
@@ -51,6 +51,11 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     WidgetsBinding.instance!.addObserver(this);
     NotificationService.instance.cancelAll();
     setListViewListener();
+    isSingle =
+        RoomCubit.instance.getRoomById(roomId).roomType == RoomType.single;
+    urlPath = isSingle ? "message/single" : "message/group";
+
+    // Helpers.vlog("MessageCubit init called room Id $roomId ${DateTime.now()}");
   }
 
   LoadMoreStatus loadingStatus = LoadMoreStatus.loaded;
@@ -62,11 +67,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   late String urlPath;
 
   ///get messages from sqlite
-  Future<void> getLocalMessages(String roomId) async {
-    this.roomId = roomId;
-    isSingle =
-        RoomCubit.instance.getRoomById(roomId).roomType == RoomType.single;
-    urlPath = isSingle ? "message/single" : "message/group";
+  Future<void> getLocalMessages() async {
     final messages = await LocalStorageService.instance.getRoomMessages(roomId);
     this.messages.clear();
     this.messages.addAll(messages);
@@ -94,16 +95,22 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   ///Emit text message to server
-  void sendTextMessage() async {
+  Future sendTextMessage() async {
     try {
       if (!getIt.get<SocketService>().isConnected) {
         throw "Not connected to server yet";
       }
-      unawaited(CustomDio().send(reqMethod: "POST", path: urlPath, body: {
-        "type": MessageType.text.inString,
-        "roomId": roomId.toString(),
-        "content": textController.text.toString()
-      }));
+      unawaited(
+        CustomDio().send(
+          reqMethod: "POST",
+          path: urlPath,
+          body: {
+            "type": MessageType.text.inString,
+            "roomId": roomId,
+            "content": textController.text
+          },
+        ),
+      );
 
       textController.clear();
     } catch (err) {
@@ -122,34 +129,47 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
 
   /// update all messages from server side last 20 message only
   void onAllMessages(List<VChatMessage> messages) {
-    this.messages.clear();
-    this.messages.addAll(messages);
+    for (final m in messages) {
+      if (this.messages.indexWhere((element) => element.id == m.id) == -1) {
+        this.messages.add(m);
+      }
+    }
     emit(MessageLoaded(messages));
   }
 
   ///Emit voice note
-  void sendVoiceNote(BuildContext context, String path, String duration) async {
+  Future sendVoiceNote(
+    BuildContext context,
+    String path,
+    String duration,
+  ) async {
     try {
       CustomAlert.customLoadingDialog(context: context);
       final voiceFile = File(path);
       final fileSize = FileUtils.getFileSize(voiceFile);
       if (!getIt.get<SocketService>().isConnected) {
-        throw "Not connected to server yet";
+        throw VChatAppService.instance
+            .getTrans(context)
+            .notConnectedToServerYet();
       }
       await FileUtils.uploadFile(
-          [
-            voiceFile,
-          ],
-          urlPath,
-          body: {
-            "roomId": roomId.toString(),
-            "content": "This content voice 🎤",
-            "type": MessageType.voice.inString,
-            "attachment": jsonEncode(VChatMessageAttachment(
+        [
+          voiceFile,
+        ],
+        urlPath,
+        body: {
+          "roomId": roomId,
+          "content": "This content voice 🎤",
+          "type": MessageType.voice.inString,
+          "attachment": jsonEncode(
+            VChatMessageAttachment(
               fileSize: fileSize,
               fileDuration: duration,
-            ).toMap())
-          });
+            ).toMap(),
+          )
+        },
+      );
+
       Navigator.pop(context);
     } catch (err) {
       Navigator.pop(context);
@@ -168,13 +188,14 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       }
       if (!isEmitTyping) {
         final roomTyping = VChatRoomTyping(
-            roomId: roomId,
-            status: type == 0
-                ? RoomTypingType.stop
-                : type == 1
-                    ? RoomTypingType.typing
-                    : RoomTypingType.recording,
-            name: VChatAppService.instance.vChatUser!.name);
+          roomId: roomId,
+          status: type == 0
+              ? RoomTypingType.stop
+              : type == 1
+                  ? RoomTypingType.typing
+                  : RoomTypingType.recording,
+          name: VChatAppService.instance.vChatUser!.name,
+        );
         getIt.get<SocketService>().emitTypingChange(roomTyping.toMap());
       }
       if (type == 1) {
@@ -186,7 +207,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   ///Emit picked image after compress
-  void sendImage(BuildContext context, String path) async {
+  Future<void> sendImage(BuildContext context, String path) async {
     try {
       CustomAlert.customLoadingDialog(context: context);
       if (!getIt.get<SocketService>().isConnected) {
@@ -199,22 +220,23 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           await FlutterNativeImage.getImageProperties(compressedFile.path);
       final fileSize = FileUtils.getFileSize(compressedFile);
       await FileUtils.uploadFile(
-          [
-            compressedFile,
-          ],
-          urlPath,
-          body: {
-            "roomId": roomId.toString(),
-            "content": "This content image 📷",
-            "type": MessageType.image.inString,
-            "attachment": jsonEncode(
-              VChatMessageAttachment(
-                fileSize: fileSize,
-                height: properties.height.toString(),
-                width: properties.width.toString(),
-              ).toMap(),
-            )
-          });
+        [
+          compressedFile,
+        ],
+        urlPath,
+        body: {
+          "roomId": roomId,
+          "content": "This content image 📷",
+          "type": MessageType.image.inString,
+          "attachment": jsonEncode(
+            VChatMessageAttachment(
+              fileSize: fileSize,
+              height: properties.height.toString(),
+              width: properties.width.toString(),
+            ).toMap(),
+          )
+        },
+      );
       Navigator.pop(context);
     } catch (err) {
       Navigator.pop(context);
@@ -224,7 +246,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
@@ -258,16 +280,16 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   Future<void> close() async {
     _messageSocket.dispose();
     RoomCubit.instance.currentRoomId = null;
-
     scrollController.dispose();
     WidgetsBinding.instance!.removeObserver(this);
     if (isEmitTyping) {
       emitTypingChange(0);
     }
+    // Helpers.vlog("close for   cubit called room Id $roomId ${DateTime.now()}");
     super.close();
   }
 
-  void sendVideo(BuildContext context, String path) async {
+  Future<void> sendVideo(BuildContext context, String path) async {
     // final context = VChatAppService.instance.navKey!.currentContext!;
     try {
       CustomAlert.customLoadingDialog(context: context);
@@ -278,22 +300,24 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       final d = await FileUtils.getVideoDuration(videoFile.path);
       final fileSize = FileUtils.getFileSize(videoFile);
       if (!getIt.get<SocketService>().isConnected) {
-        throw "Not connected to server yet";
+        throw VChatAppService.instance
+            .getTrans(context)
+            .notConnectedToServerYet();
       }
       await FileUtils.uploadFile(
         [videoThumb, videoFile],
         urlPath,
         body: {
-          "roomId": roomId.toString(),
+          "roomId": roomId,
           "content": "This content video 📽",
           "type": MessageType.video.inString,
           "attachment": jsonEncode(
             VChatMessageAttachment(
-                    fileSize: fileSize,
-                    height: properties.height.toString(),
-                    width: properties.width.toString(),
-                    fileDuration: d)
-                .toMap(),
+              fileSize: fileSize,
+              height: properties.height.toString(),
+              width: properties.width.toString(),
+              fileDuration: d,
+            ).toMap(),
           )
         },
       );
@@ -305,7 +329,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     }
   }
 
-  void sendFile(BuildContext context, String path) async {
+  Future<void> sendFile(BuildContext context, String path) async {
     try {
       CustomAlert.customLoadingDialog(context: context);
 
@@ -313,24 +337,27 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
 
       final fileSize = FileUtils.getFileSize(file);
       if (!getIt.get<SocketService>().isConnected) {
-        throw "Not connected to server yet";
+        throw VChatAppService.instance
+            .getTrans(context)
+            .notConnectedToServerYet();
       }
       await FileUtils.uploadFile(
-          [
-            file,
-          ],
-          urlPath,
-          body: {
-            "roomId": roomId.toString(),
-            "content": "This content file 📁",
-            "type": MessageType.file.inString,
-            "attachment": jsonEncode(
-              VChatMessageAttachment(
-                fileSize: fileSize,
-                linkTitle: basename(file.path),
-              ).toMap(),
-            )
-          });
+        [
+          file,
+        ],
+        urlPath,
+        body: {
+          "roomId": roomId,
+          "content": "This content file 📁",
+          "type": MessageType.file.inString,
+          "attachment": jsonEncode(
+            VChatMessageAttachment(
+              fileSize: fileSize,
+              linkTitle: basename(file.path),
+            ).toMap(),
+          )
+        },
+      );
       Navigator.pop(context);
       file.deleteSync();
     } catch (err) {

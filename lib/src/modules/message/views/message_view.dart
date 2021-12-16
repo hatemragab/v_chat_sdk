@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
@@ -20,7 +19,7 @@ class MessageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MessageCubit()..getLocalMessages(roomId),
+      create: (context) => MessageCubit(roomId: roomId),
       lazy: false,
       child: const MessageViewScreen(),
     );
@@ -90,7 +89,8 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
             bloc: RoomCubit.instance,
             builder: (context, state) {
               final _room = roomController.rooms.firstWhere(
-                  (element) => element.id == messageController.roomId);
+                (element) => element.id == messageController.roomId,
+              );
 
               if (state is RoomLoaded) {
                 if (_room.roomType == RoomType.single) {
@@ -106,7 +106,9 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: CircleImage.network(
-                              path: _room.thumbImage, radius: 10),
+                            path: _room.thumbImage,
+                            radius: 10,
+                          ),
                         ),
                       ],
                     );
@@ -125,7 +127,8 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
               bloc: RoomCubit.instance,
               builder: (context, state) {
                 final _room = roomController.rooms.firstWhere(
-                    (element) => element.id == messageController.roomId);
+                  (element) => element.id == messageController.roomId,
+                );
 
                 if (state is RoomLoaded) {
                   if (_room.roomType == RoomType.single) {

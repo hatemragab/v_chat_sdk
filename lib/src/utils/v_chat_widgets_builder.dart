@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'custom_widgets/audio_wave.dart';
@@ -14,7 +13,7 @@ class VChatWidgetBuilder {
     return isDark ? Colors.black : Colors.grey[300]!;
   }
 
-  Color sendButtonColor(BuildContext context, bool isDark) {
+  Color sendButtonColor(BuildContext context, {required bool isDark}) {
     return isDark ? Colors.red : Colors.blue;
   }
 
@@ -25,7 +24,7 @@ class VChatWidgetBuilder {
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xff876969) : Colors.tealAccent,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(17),
           bottomLeft: Radius.circular(17),
           topRight: Radius.circular(17),
@@ -35,7 +34,7 @@ class VChatWidgetBuilder {
       child: AutoDirection(
         text: text,
         child: ReadMoreText(
-          text.toString(),
+          text,
           trimLines: 5,
           trimMode: TrimMode.line,
           trimCollapsedText: "show More",
@@ -57,7 +56,7 @@ class VChatWidgetBuilder {
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       decoration: BoxDecoration(
         color: isDark ? Colors.black26 : Colors.blueGrey[100],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(17),
           bottomRight: Radius.circular(17),
           topLeft: Radius.circular(17),
@@ -67,7 +66,7 @@ class VChatWidgetBuilder {
       child: AutoDirection(
         text: text,
         child: ReadMoreText(
-          text.toString(),
+          text,
           trimLines: 5,
           trimMode: TrimMode.line,
           trimCollapsedText: "show More",
@@ -86,8 +85,9 @@ class VChatWidgetBuilder {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: isDark ? const Color(0xff876969) : Colors.tealAccent),
+        borderRadius: BorderRadius.circular(20),
+        color: isDark ? const Color(0xff876969) : Colors.tealAccent,
+      ),
       height: 40,
       child: Row(
         children: [
@@ -152,7 +152,7 @@ class VChatWidgetBuilder {
           const SizedBox(
             width: 10,
           ),
-          Icon(
+          const Icon(
             Icons.play_circle,
             color: Colors.red,
             size: 30,
@@ -198,7 +198,10 @@ class VChatWidgetBuilder {
   }
 
   Widget senderFileMessageWidget(
-      BuildContext context, String fileName, String fileSize) {
+    BuildContext context,
+    String fileName,
+    String fileSize,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return RoundedContainer(
       height: 75,
@@ -230,7 +233,10 @@ class VChatWidgetBuilder {
   }
 
   Widget receiverFileMessageWidget(
-      BuildContext context, String fileName, String fileSize) {
+    BuildContext context,
+    String fileName,
+    String fileSize,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return RoundedContainer(
       height: 75,
@@ -267,23 +273,30 @@ class VChatWidgetBuilder {
   Widget infoLightMessage(String message, BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      child: message.text.color(isDark ? Colors.white : Colors.red),
       decoration: BoxDecoration(
-          color: isDark ? Colors.black : Colors.grey[300],
-          borderRadius: BorderRadius.circular(10)),
-      padding: EdgeInsets.all(5),
+        color: isDark ? Colors.black : Colors.grey[300],
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.all(5),
+      child: AutoDirection(
+        text: message,
+        child: message.text.color(
+          isDark ? Colors.white : Colors.red,
+        ),
+      ),
     );
   }
 
   Widget infoDarkMessage(String message, BuildContext context) {
     //final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
-      child: message.text.color(Colors.white),
       decoration: BoxDecoration(
         color: Colors.red,
         borderRadius: BorderRadius.circular(10),
       ),
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
+      child:
+          AutoDirection(text: message, child: message.text.color(Colors.white)),
     );
   }
 }

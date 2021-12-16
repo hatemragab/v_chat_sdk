@@ -4,16 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
-import 'package:v_chat_sdk/src/utils/v_chat_extention.dart';
 
 import '../../../../../services/v_chat_app_service.dart';
 import '../../../../../utils/api_utils/server_config.dart';
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../../utils/custom_widgets/rounded_container.dart';
-import 'message_recored_view.dart';
 import 'attachment_picker_widget.dart';
 import 'message_filed.dart';
+import 'message_recored_view.dart';
 
 class VChatMessageInput extends StatefulWidget {
   final Function() onReceiveText;
@@ -104,8 +104,8 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                     },
                   );
                   if (res != null) {
-                    final type = res['type'];
-                    final path = res['path'];
+                    final type = res['type'] as String;
+                    final path = res['path'] as String;
                     if (type == "photo") {
                       widget.onReceiveImage(path);
                     } else if (type == "file") {
@@ -135,53 +135,65 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
           const SizedBox(
             width: 10,
           ),
-          isTyping
-              ? InkWell(
-                  onTap: () async {
-                    widget.onReceiveText();
+          if (isTyping)
+            InkWell(
+              onTap: () async {
+                widget.onReceiveText();
 
-                    setState(() {
-                      isTyping = false;
-                    });
-                  },
-                  child: RoundedContainer(
-                    boxShape: BoxShape.circle,
-                    color: VChatAppService.instance.vcBuilder.sendButtonColor(
-                        context,
-                        Theme.of(context).brightness == Brightness.dark),
-                    height: 50,
-                    width: 50,
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              : InkWell(
-                  onLongPress: () {
-                    setState(() {
-                      isRecording = true;
-                      isTyping = false;
-                    });
-                  },
-                  onTap: () {
-                    setState(() {
-                      isRecording = true;
-                      isTyping = false;
-                    });
-                  },
-                  child: RoundedContainer(
-                    boxShape: BoxShape.circle,
-                    color: VChatAppService.instance.vcBuilder
-                        .sendButtonColor(context, context.isDark),
-                    height: 50,
-                    width: 50,
-                    child: Icon(
-                      Icons.keyboard_voice_outlined,
-                      color: Colors.white,
-                    ),
-                  ),
+                setState(() {
+                  isTyping = false;
+                });
+              },
+              child: RoundedContainer(
+                boxShape: BoxShape.circle,
+                color: VChatAppService.instance.vcBuilder.sendButtonColor(
+                  context,
+                  isDark: Theme.of(context).brightness == Brightness.dark,
                 ),
+                height: 50,
+                width: 50,
+                child: const Icon(
+                  Icons.send,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          else
+            InkWell(
+              onLongPress: () {
+                setState(() {
+                  isRecording = true;
+                  isTyping = false;
+                });
+              },
+              onTap: () async {
+                if (await Permission.microphone.request().isGranted) {
+                  setState(() {
+                    isRecording = true;
+                    isTyping = false;
+                  });
+                } else {
+                  CustomAlert.error(
+                    msg: VChatAppService.instance
+                        .getTrans(context)
+                        .youShouldAcceptMicrophoneToUseVoiceMessage(),
+                  );
+                }
+              },
+              child: RoundedContainer(
+                boxShape: BoxShape.circle,
+                color: VChatAppService.instance.vcBuilder.sendButtonColor(
+                  context,
+                  isDark: Theme.of(context).brightness == Brightness.dark,
+                ),
+                height: 50,
+                width: 50,
+                child: const Icon(
+                  Icons.keyboard_voice_outlined,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           const SizedBox(
             width: 10,
           ),

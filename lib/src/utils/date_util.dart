@@ -56,8 +56,8 @@ class UtilDates {
 
   static String getSendAtDay(BuildContext context, int milliseconds) {
     int? daysSinceMessage;
-    //dont fix this
-    int? todayMidnight = getTodayMidnight();
+
+    final int todayMidnight = getTodayMidnight();
     for (var i = 0; i < 7; i++) {
       if (milliseconds >= todayMidnight - (oneDayInMilliseconds * i)) {
         daysSinceMessage = i;

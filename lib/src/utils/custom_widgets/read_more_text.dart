@@ -24,7 +24,7 @@ class ReadMoreText extends StatefulWidget {
     this.semanticsLabel,
     this.moreStyle,
     this.lessStyle,
-    this.delimiter = _kEllipsis + ' ',
+    this.delimiter = '$_kEllipsis ',
     this.delimiterStyle,
     this.callback,
   }) : super(key: key);
@@ -104,13 +104,13 @@ class ReadMoreTextState extends State<ReadMoreText> {
         effectiveTextStyle?.copyWith(color: colorClickableText);
     final _defaultDelimiterStyle = widget.delimiterStyle ?? effectiveTextStyle;
 
-    TextSpan link = TextSpan(
+    final TextSpan link = TextSpan(
       text: _readMore ? widget.trimCollapsedText : widget.trimExpandedText,
       style: _readMore ? _defaultMoreStyle : _defaultLessStyle,
       recognizer: TapGestureRecognizer()..onTap = _onTapLink,
     );
 
-    TextSpan _delimiter = TextSpan(
+    final TextSpan _delimiter = TextSpan(
       text: _readMore
           ? widget.trimCollapsedText.isNotEmpty
               ? widget.delimiter
@@ -132,7 +132,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
         );
 
         // Layout and measure link
-        TextPainter textPainter = TextPainter(
+        final TextPainter textPainter = TextPainter(
           text: link,
           textAlign: textAlign,
           textDirection: textDirection,
@@ -141,12 +141,12 @@ class ReadMoreTextState extends State<ReadMoreText> {
           ellipsis: overflow == TextOverflow.ellipsis ? widget.delimiter : null,
           locale: locale,
         );
-        textPainter.layout(minWidth: 0, maxWidth: maxWidth);
+        textPainter.layout(maxWidth: maxWidth);
         final linkSize = textPainter.size;
 
         // Layout and measure delimiter
         textPainter.text = _delimiter;
-        textPainter.layout(minWidth: 0, maxWidth: maxWidth);
+        textPainter.layout(maxWidth: maxWidth);
         final delimiterSize = textPainter.size;
 
         // Layout and measure text
@@ -160,15 +160,17 @@ class ReadMoreTextState extends State<ReadMoreText> {
 
         if (linkSize.width < maxWidth) {
           final readMoreSize = linkSize.width + delimiterSize.width;
-          final pos = textPainter.getPositionForOffset(Offset(
-            textDirection == TextDirection.rtl
-                ? readMoreSize
-                : textSize.width - readMoreSize,
-            textSize.height,
-          ));
+          final pos = textPainter.getPositionForOffset(
+            Offset(
+              textDirection == TextDirection.rtl
+                  ? readMoreSize
+                  : textSize.width - readMoreSize,
+              textSize.height,
+            ),
+          );
           endIndex = textPainter.getOffsetBefore(pos.offset) ?? 0;
         } else {
-          var pos = textPainter.getPositionForOffset(
+          final pos = textPainter.getPositionForOffset(
             textSize.bottomLeft(Offset.zero),
           );
           endIndex = pos.offset;
@@ -212,15 +214,14 @@ class ReadMoreTextState extends State<ReadMoreText> {
             break;
           default:
             throw Exception(
-                'TrimMode type: ${widget.trimMode} is not supported');
+              'TrimMode type: ${widget.trimMode} is not supported',
+            );
         }
 
         return RichText(
           textAlign: textAlign,
           textDirection: textDirection,
-          softWrap: true,
-          //softWrap,
-          overflow: TextOverflow.clip,
+
           //overflow,
           textScaleFactor: textScaleFactor,
           text: textSpan,

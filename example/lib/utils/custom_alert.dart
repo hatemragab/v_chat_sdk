@@ -1,5 +1,6 @@
 import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:textless/textless.dart';
 
 class CustomAlert {
@@ -27,7 +28,7 @@ class CustomAlert {
                     const SizedBox(
                       height: 10,
                     ),
-                    "Loading ...".text.bold.color(Colors.black),
+                    S.of(context).loading.text.bold.color(Colors.black),
                     const SizedBox(
                       height: 33,
                     ),
@@ -77,7 +78,7 @@ class CustomAlert {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: "success".text,
+          title: S.of(context).success.text,
           content: err.text,
           actions: [
             TextButton(
@@ -120,6 +121,40 @@ class CustomAlert {
           ),
         );
       },
+    );
+  }
+
+  static void done({required String msg}) {
+    Fluttertoast.showToast(msg: msg);
+  }
+
+  static Future chatAlert(
+      {required BuildContext context, required String peerEmail}) async {
+    String? txt;
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: "your message".text,
+        content: TextField(
+          onChanged: (value) {
+            txt = value;
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: "Cancel".text,
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context, txt);
+            },
+            child: "Send".text,
+          ),
+        ],
+      ),
     );
   }
 }

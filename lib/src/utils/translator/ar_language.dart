@@ -136,4 +136,54 @@ class ArLanguage implements VChatLookupString {
 
   @override
   String youNotExistInThisRoom() => "انت لست منضما للمجموعه";
+
+  @override
+  String createTheGroup() => "انشاء المحادثه";
+
+  @override
+  String addedBy() => "تمت الاضافه بواسطه";
+
+  @override
+  String downgradeToMemberBy() => "تم التخفيض بواسطه";
+
+  @override
+  String joinedTheGroupChat() => "انضم للمحادثه";
+
+  @override
+  String kickedBY() => "طرد بواسطه";
+
+  @override
+  String leftGroupChat() => "غادر المحادثه";
+
+  @override
+  String upgradedToAdminBy() => "تم الترقيه بواسطه";
+
+  @override
+  String thisContentIsFile() => "هذا المحتوي ملف 📁";
+
+  @override
+  String thisContentIsImage() => "هذا المحتوي صوره 📷";
+
+  @override
+  String thisContentIsVideo() => "هذا المحتوي مقطع فيديو 📷";
+
+  @override
+  String thisContentIsVoice() => "هذا المحتوي تسجيل صوت 🎤";
+
+  @override
+  String areYouSureToLeaveAndDeleteAllConversionData() =>
+      "هل انت متاكد من الخروج وحذف كل الرسائل بداخل هذه المحادثه ؟";
+
+  @override
+  String leave() => "مغادره";
+
+  @override
+  String messageCopiedToClipboard() => "تم نسخ الرساله";
+
+  @override
+  String notConnectedToServerYet() => "لا يوجد اتصال بالانترنت";
+
+  @override
+  String youShouldAcceptMicrophoneToUseVoiceMessage() =>
+      "يجب ان توافق علي استخدام الميكروفون";
 }

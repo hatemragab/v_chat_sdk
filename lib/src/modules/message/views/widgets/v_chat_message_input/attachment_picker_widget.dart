@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../services/v_chat_app_service.dart';
 import '../../../../../utils/api_utils/server_config.dart';
@@ -37,7 +36,9 @@ class AttachmentPickerWidget extends StatelessWidget {
                 Navigator.pop(ctx);
               }
               return Navigator.pop(
-                  ctx, {"type": "photo", "path": pickedFile.path});
+                ctx,
+                {"type": "photo", "path": pickedFile.path},
+              );
             }
             Navigator.pop(ctx);
           },
@@ -55,7 +56,9 @@ class AttachmentPickerWidget extends StatelessWidget {
                 return Navigator.pop(ctx);
               }
               return Navigator.pop(
-                  ctx, {"type": "file", "path": result.files.first.path});
+                ctx,
+                {"type": "file", "path": result.files.first.path},
+              );
             }
             return Navigator.pop(ctx);
           },
@@ -76,7 +79,9 @@ class AttachmentPickerWidget extends StatelessWidget {
                 return Navigator.pop(ctx);
               }
               return Navigator.pop(
-                  ctx, {"type": "video", "path": result.files.first.path});
+                ctx,
+                {"type": "video", "path": result.files.first.path},
+              );
             }
             return Navigator.pop(ctx);
           },

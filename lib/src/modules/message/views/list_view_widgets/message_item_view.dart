@@ -5,7 +5,7 @@ import 'package:v_chat_sdk/src/enums/room_type.dart';
 import 'package:v_chat_sdk/src/models/v_chat_room.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/circle_image.dart';
-
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../../enums/message_type.dart';
 import '../../../../models/v_chat_message.dart';
 import '../../cubit/message_cubit.dart';
@@ -22,13 +22,13 @@ class MessageItemView extends StatelessWidget {
   final String myId;
   final VChatRoom chatRoom;
 
-  const MessageItemView(
-      {required this.myId,
-      required this.message,
-      required this.index,
-      required this.chatRoom,
-      Key? key})
-      : super(key: key);
+  const MessageItemView({
+    required this.myId,
+    required this.message,
+    required this.index,
+    required this.chatRoom,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +41,17 @@ class MessageItemView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            VChatAppService.instance.vcBuilder
-                .infoLightMessage(message.content, context),
-            SizedBox(
+            VChatAppService.instance.vcBuilder.infoLightMessage(
+              Helpers.getMessageBody(
+                message,
+                VChatAppService.instance.getTrans(context),
+              ),
+              context,
+            ),
+            const SizedBox(
               height: 5,
             ),
-            message.createdAtString.toString().cap,
+            message.createdAtString.cap,
           ],
         ),
       );
@@ -56,12 +61,17 @@ class MessageItemView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            VChatAppService.instance.vcBuilder
-                .infoDarkMessage(message.content, context),
-            SizedBox(
+            VChatAppService.instance.vcBuilder.infoLightMessage(
+              Helpers.getMessageBody(
+                message,
+                VChatAppService.instance.getTrans(context),
+              ),
+              context,
+            ),
+            const SizedBox(
               height: 5,
             ),
-            message.createdAtString.toString().cap,
+            message.createdAtString.cap,
           ],
         ),
       );
@@ -72,32 +82,34 @@ class MessageItemView extends StatelessWidget {
       crossAxisAlignment: getCrossAlign(isSender: isSender),
       children: [
         IgnorePointer(
-          ignoring: true,
           child: RenderMessageSendAtDayItem(
             index: index,
             message: message,
             messages: context.read<MessageCubit>().messages,
           ),
         ),
-        chatRoom.roomType == RoomType.groupChat
-            ? !isSender
-                ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          message.senderName.text,
-                        ],
-                      ),
-                      CircleImage.network(
-                          path: message.senderImageThumb, radius: 10)
-                    ],
-                  )
-                : const SizedBox.shrink()
-            : const SizedBox.shrink(),
+        if (chatRoom.roomType == RoomType.groupChat)
+          !isSender
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        message.senderName.text,
+                      ],
+                    ),
+                    CircleImage.network(
+                      path: message.senderImageThumb,
+                      radius: 10,
+                    )
+                  ],
+                )
+              : const SizedBox.shrink()
+        else
+          const SizedBox.shrink(),
         const SizedBox(
           height: 5,
         ),
@@ -111,12 +123,12 @@ class MessageItemView extends StatelessWidget {
           Row(
             mainAxisAlignment: getMainAxisAlign(isSender: isSender),
             children: [
-              message.createdAtString.toString().cap,
+              message.createdAtString.cap,
               const SizedBox(width: 2),
             ],
           )
         else
-          message.createdAtString.toString().cap,
+          message.createdAtString.cap,
       ],
     );
   }
@@ -182,6 +194,7 @@ class MessageItemView extends StatelessWidget {
     return t == MessageType.join ||
         t == MessageType.create ||
         t == MessageType.upgrade ||
+        t == MessageType.add ||
         t == MessageType.info;
   }
 

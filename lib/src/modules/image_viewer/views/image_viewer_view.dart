@@ -17,33 +17,36 @@ class ImageViewerView extends StatelessWidget {
           PhotoView(
             imageProvider: NetworkImage(url),
           ),
-          isRtl
-              ? Positioned(
-                  top: 20,
-                  right: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ))
-              : Positioned(
-                  top: 20,
-                  left: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  )),
+          if (isRtl)
+            Positioned(
+              top: 20,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            )
+          else
+            Positioned(
+              top: 20,
+              left: 20,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ),
         ],
       ),
     );

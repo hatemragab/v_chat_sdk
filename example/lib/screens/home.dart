@@ -11,7 +11,6 @@ import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../utils/load_more_type.dart';
 import '../controllers/home_controller.dart';
 import '../models/user.dart';
-import 'app_rooms_screen.dart';
 import 'group_chat_info/group_chat_info.dart';
 
 class Home extends StatefulWidget {
@@ -56,7 +55,6 @@ class _HomeState extends State<Home> {
         onMessageAvatarPressed: (isGroupChat, uniqueId, vChatGroupChatInfo) {
           if (isGroupChat) {
             print("isGroupChat id is $uniqueId");
-            print("isGroupChat Info  is $vChatGroupChatInfo");
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -142,7 +140,7 @@ class _HomeState extends State<Home> {
     super.didChangeDependencies();
     _childrenAppBars = [
       AppBar(
-        title: "v chat users".text,
+        title: S.of(context).vChatUsers.text,
         centerTitle: true,
         elevation: 0,
         actions: [
@@ -206,7 +204,7 @@ class _HomeState extends State<Home> {
         onMessageAvatarPressed: (isGroupChat, uniqueId, vChatGroupChatInfo) {
           if (isGroupChat) {
             print("isGroupChat id is $uniqueId");
-            print("isGroupChat Info  is $vChatGroupChatInfo");
+
             Navigator.push(
                 context,
                 MaterialPageRoute(

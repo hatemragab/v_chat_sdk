@@ -21,7 +21,11 @@ class MessageTextItem extends StatelessWidget {
         onLongPress: () {
           Clipboard.setData(ClipboardData(text: message.content));
           CustomAlert.done(
-              context: context, msg: "Message copied to Clipboard");
+            context: context,
+            msg: VChatAppService.instance
+                .getTrans(context)
+                .messageCopiedToClipboard(),
+          );
         },
         child: VChatAppService.instance.vcBuilder
             .senderTextMessageWidget(context, message.content),
@@ -31,7 +35,11 @@ class MessageTextItem extends StatelessWidget {
         onLongPress: () {
           Clipboard.setData(ClipboardData(text: message.content));
           CustomAlert.done(
-              context: context, msg: "Message copied to Clipboard");
+            context: context,
+            msg: VChatAppService.instance
+                .getTrans(context)
+                .messageCopiedToClipboard(),
+          );
         },
         child: VChatAppService.instance.vcBuilder
             .receiverTextMessageWidget(context, message.content),

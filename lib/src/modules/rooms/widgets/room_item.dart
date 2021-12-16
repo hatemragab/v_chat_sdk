@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
-
 import '../../../enums/room_type.dart';
 import '../../../enums/room_typing_type.dart';
 import '../../../models/v_chat_room.dart';
@@ -51,21 +50,25 @@ class RoomItem extends StatelessWidget {
                 : Icons.notifications_off,
           ),
         ];
-        bool isSingle = _room.roomType == RoomType.single;
+        final bool isSingle = _room.roomType == RoomType.single;
         if (isSingle) {
-          data.add(CustomSheetModel(
-            value: 2,
-            text: isMyBlock ? t.unBlockUser() : t.blockUser(),
-            iconData: Icons.block,
-          ));
+          data.add(
+            CustomSheetModel(
+              value: 2,
+              text: isMyBlock ? t.unBlockUser() : t.blockUser(),
+              iconData: Icons.block,
+            ),
+          );
         } else {
-          data.add(CustomSheetModel(
-            value: 2,
+          data.add(
+            CustomSheetModel(
+              value: 2,
 
-            /// todo support language
-            text: "leave",
-            iconData: Icons.exit_to_app,
-          ));
+              /// todo support language
+              text: t.leave(),
+              iconData: Icons.exit_to_app,
+            ),
+          );
         }
         final res = await CustomVerticalSheetItem.normal(context, data);
 
@@ -80,10 +83,11 @@ class RoomItem extends StatelessWidget {
         } else if (res == 2) {
           /// todo support language
           final res = await CustomAlert.customAskDialog(
-              title: isSingle
-                  ? t.areYouSure()
-                  : "Are you sure to leave and delete all conversion data ?",
-              context: context);
+            title: isSingle
+                ? t.areYouSure()
+                : t.areYouSureToLeaveAndDeleteAllConversionData(),
+            context: context,
+          );
           if (res == 1) {
             context.read<RoomCubit>().blockOrLeaveAction(context, _room);
           }
@@ -93,9 +97,10 @@ class RoomItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CircleImage.network(
-              path: _room.thumbImage,
-              isOnline: _room.isOnline == 1,
-              isGroup: _room.roomType == RoomType.groupChat),
+            path: _room.thumbImage,
+            isOnline: _room.isOnline == 1,
+            isGroup: _room.roomType == RoomType.groupChat,
+          ),
           const SizedBox(
             width: 15,
           ),
@@ -112,15 +117,13 @@ class RoomItem extends StatelessWidget {
                     Flexible(
                       child: AutoDirection(
                         text: _room.title,
-                        child: _room.title
-                            .toString()
-                            .h6
+                        child: _room.title.h6
                             .maxLine(1)
                             .alignStart
                             .overflowEllipsis,
                       ),
                     ),
-                    _room.lastMessage.createdAtString.toString().b2
+                    _room.lastMessage.createdAtString.b2
                   ],
                 ),
 
@@ -153,9 +156,10 @@ class RoomItem extends StatelessWidget {
                         }
                       },
                     ),
-                    _room.isMute == 1
-                        ? const Icon(Icons.notifications_off)
-                        : const SizedBox.shrink()
+                    if (_room.isMute == 1)
+                      const Icon(Icons.notifications_off)
+                    else
+                      const SizedBox.shrink()
                   ],
                 ),
               ],

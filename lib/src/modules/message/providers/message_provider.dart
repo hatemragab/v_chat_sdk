@@ -7,9 +7,10 @@ class MessageProvider {
     String lastId,
   ) async {
     final messages = (await CustomDio().send(
-            reqMethod: "GET",
-            path: "message",
-            query: {"lastId": lastId, "roomId": roomId.toString()}))
+      reqMethod: "GET",
+      path: "message",
+      query: {"lastId": lastId, "roomId": roomId},
+    ))
         .data['data'] as List;
     return messages.map((e) => VChatMessage.fromMap(e)).toList();
   }

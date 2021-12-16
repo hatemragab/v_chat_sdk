@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:example/generated/l10n.dart';
 import 'package:example/models/user.dart';
 import 'package:example/screens/create_group/create_group_controller.dart';
 import 'package:flutter/material.dart';
@@ -40,16 +43,23 @@ class CreateGroupScreen extends StatelessWidget {
             children: [
               "Set Group Image".h6.alignCenter,
               InkWell(
-                  onTap: controller.pickGroupImage,
-                  child: Icon(
-                    Icons.image,
-                    size: 100,
-                  )),
+                onTap: controller.pickGroupImage,
+                child: controller.imagePath != null
+                    ? Image.file(
+                        File(controller.imagePath!),
+                        height: 100,
+                        width: 100,
+                      )
+                    : Icon(
+                        Icons.image,
+                        size: 100,
+                      ),
+              ),
               SizedBox(
                 height: 10,
               ),
               TextField(
-                decoration: InputDecoration(hintText: "Group Name"),
+                decoration: InputDecoration(hintText: S.of(context).groupName),
                 controller: controller.textEditingController,
               ),
               SizedBox(
@@ -59,7 +69,7 @@ class CreateGroupScreen extends StatelessWidget {
                 onPressed: () {
                   controller.createGroup();
                 },
-                child: "Create Group !".text,
+                child: S.of(context).createGroup.text,
               )
             ],
           ),

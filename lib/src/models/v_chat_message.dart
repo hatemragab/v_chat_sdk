@@ -95,10 +95,12 @@ class VChatMessage {
     final createdAtLocal = Helpers.getLocalTime(map['createdAt'] as int);
     return VChatMessage(
       id: map['_id'] as String,
-      messageType: messageType.enumType(map['messageType']),
+      messageType: messageType.enumType(map['messageType'] as String),
       messageAttachment: map['messageAttachment'] == null
           ? null
-          : VChatMessageAttachment.fromMap(map['messageAttachment']),
+          : VChatMessageAttachment.fromMap(
+              map['messageAttachment'] as Map<String, dynamic>,
+            ),
       createdAt: createdAtLocal.millisecondsSinceEpoch,
       createdAtString: DateFormat.jm().format(createdAtLocal),
       content: map['content'] as String,
@@ -110,18 +112,15 @@ class VChatMessage {
   }
 
   Map<String, dynamic> toMap() {
-    // ignore: unnecessary_cast
     return {
       'messageType': messageType.inString,
-      'messageAttachment':
-          messageAttachment == null ? null : messageAttachment!.toMap(),
+      'messageAttachment': messageAttachment?.toMap(),
       'content': content,
       'roomId': roomId,
-    } as Map<String, dynamic>;
+    };
   }
 
   Map<String, dynamic> toLocalMap() {
-    // ignore: unnecessary_cast
     return {
       '_id': id,
       'messageType': messageType.inString,
@@ -134,7 +133,7 @@ class VChatMessage {
       'senderImageThumb': senderImageThumb,
       'roomId': roomId,
       'createdAtString': createdAtString,
-    } as Map<String, dynamic>;
+    };
   }
 
 //</editor-fold>

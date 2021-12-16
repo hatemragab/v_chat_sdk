@@ -42,7 +42,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
+                SizedBox(
                   height: 100,
                   child: isPlaying
                       ? InkWell(
@@ -50,7 +50,9 @@ class _VoicePlayerState extends State<VoicePlayer> {
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 10),
                             decoration: const BoxDecoration(
-                                color: Colors.indigo, shape: BoxShape.circle),
+                              color: Colors.indigo,
+                              shape: BoxShape.circle,
+                            ),
                             child: const Icon(
                               Icons.pause,
                               color: Colors.white,
@@ -127,7 +129,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
     audioPlayer.dispose();
   }
 
-  void startPlayVoice() async {
+  Future<void> startPlayVoice() async {
     await audioPlayer.play(
       ServerConfig.messagesMediaBaseUrl +
           widget.message.messageAttachment!.playUrl!,
@@ -148,7 +150,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
     });
   }
 
-  void pauseVoice() async {
+  Future<void> pauseVoice() async {
     await audioPlayer.pause();
     setState(() {
       isPlaying = false;

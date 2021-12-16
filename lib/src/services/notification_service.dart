@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,19 +16,21 @@ class NotificationService {
   static final NotificationService instance =
       NotificationService._privateConstructor();
   late BuildContext context;
+
   final androidNotificationDetails = const AndroidNotificationDetails(
     "v_chat_channel",
     "v_chat_channel",
     icon: "@mipmap/ic_launcher",
-    enableVibration: true,
     importance: Importance.max,
-    playSound: true,
     priority: Priority.max,
   );
-  final iosNotificationDetails =
-      const IOSNotificationDetails(presentBadge: true, presentSound: true);
+  final iosNotificationDetails = const IOSNotificationDetails(
+    presentBadge: true,
+    presentSound: true,
+    badgeNumber: 1,
+  );
 
-  void init(BuildContext context) async {
+  Future init(BuildContext context) async {
     this.context = context;
     if (VChatAppService.instance.isUseFirebase) {
       await initNotification();
@@ -47,30 +48,18 @@ class NotificationService {
     'high_importance_channel', // id
     'High Importance Notifications', // title
     importance: Importance.max,
-    playSound: true,
-    enableVibration: true,
-
-    showBadge: true,
   );
 
   static Future<String?> getFcmToken() async {
-    return await FirebaseMessaging.instance.getToken();
+    return FirebaseMessaging.instance.getToken();
   }
 
   Future initNotification() async {
     final messaging = FirebaseMessaging.instance;
     messaging.setAutoInitEnabled(true);
-
     await messaging.getToken();
-
     await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
       criticalAlert: true,
-      provisional: false,
-      sound: true,
     );
 
     // await messaging.setForegroundNotificationPresentationOptions(
@@ -78,29 +67,29 @@ class NotificationService {
     //   badge: true,
     //   sound: true,
     // );
-    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
-      try {
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) async {
         if (message.notification != null) {
-          final roomId = message.data['roomId'].toString();
-          try {
+          if (message.data['roomId'] != null) {
+            final roomId = message.data['roomId'].toString();
             if (!RoomCubit.instance.isRoomOpen(roomId)) {
-              await Future.delayed(const Duration(milliseconds: 100));
-              RoomCubit.instance.currentRoomId = roomId;
+              await RoomCubit.instance.getRoomsFromLocal();
 
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => MessageView(
-                        roomId: roomId,
-                      )));
+              if (RoomCubit.instance.isRoomExit(roomId)) {
+                RoomCubit.instance.currentRoomId = roomId;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => MessageView(
+                      roomId: roomId,
+                    ),
+                  ),
+                );
+              }
             }
-          } catch (err) {
-            Helpers.vlog(err.toString());
-            //
           }
         }
-      } catch (err) {
-        //
-      }
-    });
+      },
+    );
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
@@ -108,18 +97,20 @@ class NotificationService {
         ?.createNotificationChannel(channel);
 
     await flutterLocalNotificationsPlugin.initialize(
-      InitializationSettings(
-          android: AndroidInitializationSettings("@mipmap/ic_launcher"),
-          iOS: IOSInitializationSettings(
-            requestSoundPermission: true,
-            defaultPresentSound: true,
-          )),
-      onSelectNotification: (payload) {
+      const InitializationSettings(
+        android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+        iOS: IOSInitializationSettings(),
+      ),
+      onSelectNotification: (payload) async {
         if (payload != null) {
           final roomId = payload;
-          if (!RoomCubit.instance.isRoomOpen(roomId)) {
+          if (RoomCubit.instance.isRoomExit(roomId)) {
+            if (RoomCubit.instance.currentRoomId != null) {
+              /// there is open room now
+              Navigator.pop(context);
+              await Future.delayed(const Duration(milliseconds: 800));
+            }
             RoomCubit.instance.currentRoomId = roomId;
-
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => MessageView(
@@ -135,9 +126,10 @@ class NotificationService {
     messaging.onTokenRefresh.listen((event) async {
       try {
         await CustomDio().send(
-            reqMethod: "PATCH",
-            path: "user",
-            body: {"fcmToken": event.toString()});
+          reqMethod: "PATCH",
+          path: "user",
+          body: {"fcmToken": event},
+        );
       } catch (err) {
         //
       }
@@ -147,10 +139,11 @@ class NotificationService {
       if (message.notification != null) {
         if (!RoomCubit.instance.isRoomOpen(message.data['roomId'].toString())) {
           showNotification(
-              title: "${message.notification!.title}",
-              msg: message.notification!.body.toString(),
-              hashCode: message.hashCode,
-              roomId: message.data['roomId'].toString());
+            title: "${message.notification!.title}",
+            msg: message.notification!.body.toString(),
+            hashCode: message.hashCode,
+            roomId: message.data['roomId'].toString(),
+          );
         }
       }
     });
@@ -163,10 +156,13 @@ class NotificationService {
           await Future.delayed(const Duration(milliseconds: 2500));
           RoomCubit.instance.currentRoomId = roomId;
 
-          Navigator.of(context).push(MaterialPageRoute(
+          Navigator.of(context).push(
+            MaterialPageRoute(
               builder: (_) => MessageView(
-                    roomId: roomId,
-                  )));
+                roomId: roomId,
+              ),
+            ),
+          );
         } catch (err) {
           Helpers.vlog(err.toString());
           //
@@ -177,11 +173,12 @@ class NotificationService {
     flutterLocalNotificationsPlugin.cancelAll();
   }
 
-  void showNotification(
-      {required String title,
-      required String msg,
-      required int hashCode,
-      required String roomId}) {
+  void showNotification({
+    required String title,
+    required String msg,
+    required int hashCode,
+    required String roomId,
+  }) {
     // if (Platform.isIOS) {
     //   return;
     // }

@@ -9,12 +9,12 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
   final VChatMessage message;
   final List<VChatMessage> messages;
 
-  const RenderMessageSendAtDayItem(
-      {Key? key,
-      required this.index,
-      required this.message,
-      required this.messages})
-      : super(key: key);
+  const RenderMessageSendAtDayItem({
+    Key? key,
+    required this.index,
+    required this.message,
+    required this.messages,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +46,10 @@ class RenderMessageSendAtDayItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoundedContainer(
-          child: day.text.color(Colors.white),
           color: Colors.blueGrey,
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           borderRadius: BorderRadius.circular(20),
+          child: day.text.color(Colors.white),
         ),
       ],
     );

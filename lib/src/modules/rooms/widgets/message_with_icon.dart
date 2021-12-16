@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../services/v_chat_app_service.dart';
@@ -14,6 +15,11 @@ class MessageWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String messageContent = Helpers.getMessageBody(
+      _room.lastMessage,
+      VChatAppService.instance.getTrans(context),
+    );
+
     return Row(
       children: [
         const SizedBox(
@@ -21,22 +27,22 @@ class MessageWithIcon extends StatelessWidget {
         ),
         Flexible(
           child: AutoDirection(
-            text: _room.lastMessage.content,
-            child: getMessageText(context),
+            text: messageContent,
+            child: getMessageText(context, messageContent),
           ),
         ),
       ],
     );
   }
 
-  Widget getMessageText(BuildContext context) {
+  Widget getMessageText(BuildContext context, String messageContent) {
     /// i the receiver
     if (_room.lastMessage.senderId != _myModel.id) {
       final _unReadCount = _room.unReadCount;
 
       /// I read the message
       if (_unReadCount == 0) {
-        return _room.lastMessage.content.b1
+        return messageContent.b1
             .color(Colors.grey)
             .maxLine(1)
             .alignStart
@@ -47,9 +53,10 @@ class MessageWithIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-                flex: 4, child: _room.lastMessage.content.b1.bold.maxLine(1)),
+              flex: 4,
+              child: messageContent.b1.bold.maxLine(1),
+            ),
             Flexible(
-              flex: 1,
               child: Container(
                 padding: const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
@@ -70,7 +77,7 @@ class MessageWithIcon extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
-              child: _room.lastMessage.content.b1
+              child: messageContent.b1
                   .color(Colors.grey)
                   .maxLine(1)
                   .alignStart
@@ -81,7 +88,7 @@ class MessageWithIcon extends StatelessWidget {
         );
       }
 
-      return _room.lastMessage.content.b1
+      return messageContent.b1
           .color(Colors.grey)
           .maxLine(1)
           .alignStart

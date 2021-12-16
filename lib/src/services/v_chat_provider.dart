@@ -31,7 +31,6 @@ class VChatProvider {
   Future createNewGroupRoom({required CreateGroupRoomDto dto}) async {
     return (await CustomDio().uploadFile(
       apiEndPoint: "room/group",
-      isPost: true,
       filePath: dto.groupImage.path,
       body: [
         {
@@ -113,78 +112,103 @@ class VChatProvider {
         .toString();
   }
 
-  Future<List<VChatGroupUser>> getRoomMembers(
-      {required String groupId, required int paginationIndex}) async {
+  Future<List<VChatGroupUser>> getRoomMembers({
+    required String groupId,
+    required int paginationIndex,
+  }) async {
     final members = (await CustomDio().send(
-            reqMethod: "get",
-            path: "room/group-members",
-            query: {"lastIndex": paginationIndex, "roomId": groupId}))
+      reqMethod: "get",
+      path: "room/group-members",
+      query: {"lastIndex": paginationIndex, "roomId": groupId},
+    ))
         .data['data'] as List;
 
-    return members.map((e) => VChatGroupUser.fromMap(e)).toList();
+    return members
+        .map((e) => VChatGroupUser.fromMap(e as Map<String, dynamic>))
+        .toList();
   }
 
-  Future updateGroupTitle(
-      {required String groupId, required String title}) async {
-    final res = await CustomDio().send(
+  Future updateGroupTitle({
+    required String groupId,
+    required String title,
+  }) async {
+    await CustomDio().send(
       reqMethod: "post",
       path: "room/update-group-info",
       body: {"roomId": groupId, "groupName": title},
     );
   }
 
-  Future<String> updateGroupImage(
-      {required String groupId, required String path}) async {
+  Future<String> updateGroupImage({
+    required String groupId,
+    required String path,
+  }) async {
     final file = File(path);
     if (!file.existsSync()) {
       throw VChatSdkException(
-          "image file not exist in your device path is $path");
+        "image file not exist in your device path is $path",
+      );
     }
     return ServerConfig.profileImageBaseUrl +
         (await CustomDio().uploadFile(
-                apiEndPoint: "room/update-group-info",
-                filePath: path,
-                isPost: true,
-                body: [
-              {"roomId": groupId}
-            ]))
-            .data['data']['imageThumb'];
+          apiEndPoint: "room/update-group-info",
+          filePath: path,
+          body: [
+            {"roomId": groupId}
+          ],
+        ))
+            .data['data']['imageThumb']
+            .toString();
   }
 
-  Future kickUserFromGroup(
-      {required String groupId, required String kickedId}) async {
+  Future kickUserFromGroup({
+    required String groupId,
+    required String kickedId,
+  }) async {
     return (await CustomDio().send(
-            reqMethod: "post",
-            path: "room/kick-member",
-            body: {"roomId": groupId, "peerId": kickedId}))
+      reqMethod: "post",
+      path: "room/kick-member",
+      body: {"roomId": groupId, "peerId": kickedId},
+    ))
         .data;
   }
 
-  Future downGradeUserFromGroup(
-      {required String groupId, required String userId}) async {
+  Future downGradeUserFromGroup({
+    required String groupId,
+    required String userId,
+  }) async {
     return (await CustomDio().send(
-            reqMethod: "post",
-            path: "room/update-member-state",
-            body: {"roomId": groupId, "peerId": userId, "state": "member"}))
+      reqMethod: "post",
+      path: "room/update-member-state",
+      body: {"roomId": groupId, "peerId": userId, "state": "member"},
+    ))
         .data;
   }
 
-  Future upgradeUserFromGroup(
-      {required String groupId, required String userId}) async {
+  Future upgradeUserFromGroup({
+    required String groupId,
+    required String userId,
+  }) async {
     return (await CustomDio().send(
-            reqMethod: "post",
-            path: "room/update-member-state",
-            body: {"roomId": groupId, "peerId": userId, "state": "admin"}))
+      reqMethod: "post",
+      path: "room/update-member-state",
+      body: {"roomId": groupId, "peerId": userId, "state": "admin"},
+    ))
         .data;
   }
 
-  Future addMembersToGroupChat(
-      {required String groupId, required List<String> usersEmails}) async {
-    return (await CustomDio()
-            .send(reqMethod: "post", path: "room/add-member", body: {
-      "roomId": groupId,
-      "peersId": usersEmails,
-    }))
+  Future addMembersToGroupChat({
+    required String groupId,
+    required List<String> usersEmails,
+  }) async {
+    return (await CustomDio().send(
+      reqMethod: "post",
+      path: "room/add-member",
+      body: {
+        "roomId": groupId,
+        "peersId": usersEmails,
+      },
+    ))
         .data;
   }
 }

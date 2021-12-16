@@ -1,9 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:meta/meta.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
-import 'package:v_chat_sdk/src/services/socket_service.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
@@ -21,8 +18,11 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   static final RoomCubit instance = RoomCubit._privateConstructor();
-  Function(bool isGroupChat, String uniqueId,
-      VChatGroupChatInfo? vChatGroupChatInfo)? onMessageAvatarPressed;
+  Function(
+    bool isGroupChat,
+    String uniqueId,
+    VChatGroupChatInfo? vChatGroupChatInfo,
+  )? onMessageAvatarPressed;
 
   final _provider = RoomsApiProvider();
 
@@ -40,6 +40,9 @@ class RoomCubit extends Cubit<RoomState> {
     this.rooms.addAll(rooms);
     emit(RoomLoaded(this.rooms));
   }
+
+  bool isRoomExit(String id) =>
+      rooms.indexWhere((element) => element.id == id) != -1;
 
   void setSocketRooms(List<VChatRoom> rooms) {
     this.rooms.clear();
@@ -80,10 +83,10 @@ class RoomCubit extends Cubit<RoomState> {
 
   bool isRoomOpen(String roomId) => currentRoomId == roomId;
 
-  void blockOrLeaveAction(BuildContext context, VChatRoom room) async {
+  Future<void> blockOrLeaveAction(BuildContext context, VChatRoom room) async {
     try {
       if (room.roomType == RoomType.groupChat) {
-        await _provider.leaveGroupChat(room.id.toString());
+        await _provider.leaveGroupChat(room.id);
       } else {
         await _provider.blockOrUnBlock(room.ifSinglePeerId.toString());
       }
@@ -94,7 +97,7 @@ class RoomCubit extends Cubit<RoomState> {
     }
   }
 
-  void muteAction(BuildContext context, final VChatRoom room) async {
+  Future<void> muteAction(BuildContext context, final VChatRoom room) async {
     try {
       ///socket will take car of update the ui
       await _provider.changeNotifaictions(room.id);
@@ -129,7 +132,7 @@ class RoomCubit extends Cubit<RoomState> {
     scrollController.addListener(_scrollListener);
   }
 
-  void _scrollListener() async {
+  Future<void> _scrollListener() async {
     if (scrollController.offset >=
             scrollController.position.maxScrollExtent / 2 &&
         !scrollController.position.outOfRange &&

@@ -1,9 +1,9 @@
+import 'package:example/generated/l10n.dart';
 import 'package:example/models/user.dart';
 import 'package:example/screens/create_group/create_group_page.dart';
 import 'package:example/utils/custom_alert.dart';
 import 'package:example/utils/custom_dio.dart';
 import 'package:example/utils/load_more_type.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -108,13 +108,13 @@ class ChooseGroupMembersController extends ChangeNotifier {
     for (final u in users) {
       if (u.isSelected) {
         if (u.id == myModel['_id']) {
-          throw "Remove your self from the list your name is ${myModel['name']}";
+          throw "${S.of(context).removeYourSelfFromTheListYourNameIs} ${myModel['name']}";
         }
         isThereSelection = true;
       }
     }
     if (isThereSelection == false) {
-      throw "select at lest one user ";
+      throw S.of(context).selectAtLestOneUser;
     }
   }
 }

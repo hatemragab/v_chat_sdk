@@ -1,16 +1,14 @@
 import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_const_dark_theme.dart';
-import 'package:v_chat_sdk/src/utils/theme/v_chat_const_light_theme.dart';
+
 import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
 import '../sqlite/db_provider.dart';
-import '../utils/storage_keys.dart';
 import '../utils/helpers/helpers.dart';
-import '../utils/translator/en_language.dart';
-import '../utils/translator/v_chat_lookup_string.dart';
+import '../utils/storage_keys.dart';
 
 class VChatAppService {
   VChatAppService._privateConstructor();
@@ -20,13 +18,10 @@ class VChatAppService {
   VChatUser? vChatUser;
   Map<String, String>? trans;
 
-  ThemeData lightTheme = vChatConstLightTheme;
-  ThemeData darkTheme = vChatConstDarkTheme;
-
   late VChatWidgetBuilder vcBuilder;
   late bool isUseFirebase;
 
-  late String currentLocal;
+  String currentLocal = "en";
 
   late String appName;
   late int maxGroupChatUsers;
@@ -39,7 +34,7 @@ class VChatAppService {
 
   VChatLookupString getTrans(BuildContext context) {
     /// languageCode is EN or AR etc...
-    var locale = Localizations.localeOf(context);
+    final locale = Localizations.localeOf(context);
 
     ///countryCode is US or EG etc...
     final languageCode = locale.languageCode;
@@ -61,7 +56,8 @@ class VChatAppService {
         return EnLanguage();
       }
       Helpers.vlog(
-          "failed to find the language $currentLocal in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english");
+        "failed to find the language $currentLocal in v_chat_sdk please add it by use  VChatController.instance.setLocaleMessages() now will use english",
+      );
       return EnLanguage();
     } else {
       return _lookupMessagesMap[currentLocal]!;
@@ -76,7 +72,7 @@ class VChatAppService {
     _lookupMessagesMap[locale] = lookupMessages;
   }
 
-  Future<VChatAppService> init(bool isUseFirebase) async {
+  Future<VChatAppService> init({required bool isUseFirebase}) async {
     const storage = FlutterSecureStorage();
 
     await DBProvider.instance.database;
@@ -86,7 +82,8 @@ class VChatAppService {
 
     final String? userJson = await storage.read(key: StorageKeys.kvChatMyModel);
     if (userJson != null) {
-      vChatUser = VChatUser.fromMap(jsonDecode(userJson));
+      vChatUser =
+          VChatUser.fromMap(jsonDecode(userJson) as Map<String, dynamic>);
     } else {
       vChatUser = null;
     }

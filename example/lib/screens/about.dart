@@ -1,3 +1,4 @@
+import 'package:example/generated/l10n.dart';
 import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +16,7 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: "About".text,
+        title: S.of(context).about.text,
         centerTitle: true,
         elevation: 0,
       ),
@@ -28,7 +29,7 @@ class _AboutState extends State<About> {
             SizedBox(
               height: 10,
             ),
-            "Code private and Group Chat with v chat its very easy !".text,
+            S.of(context).codePrivateAndGroupChatWithVChatItsVery.text,
             SizedBox(
               height: 6,
             ),
@@ -42,20 +43,19 @@ class _AboutState extends State<About> {
             SizedBox(
               height: 6,
             ),
-            "Are you have question ?".text.black,
+            S.of(context).areYouHaveQuestion.text.black,
             SizedBox(
               height: 6,
             ),
             Row(
               children: [
-                "Contact me on whatsapp ".text,
+                S.of(context).contactMeOnWhatsapp.text,
                 InkWell(
                     onTap: () async {
                       await Clipboard.setData(
                           ClipboardData(text: "+201012309598"));
                       CustomAlert.showSuccess(
-                          context: context,
-                          err: "copied to your ClipboardData");
+                          context: context, err: "copiedToYourClipboard data");
                     },
                     child: "+201012309598".text.color(Colors.blue))
               ],

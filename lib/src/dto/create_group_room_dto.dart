@@ -28,11 +28,7 @@ class CreateGroupRoomDto {
 
   @override
   String toString() {
-    return 'CreateGroupRoomDto{'
-        ' usersEmails: $usersEmails,'
-        ' groupTitle: $groupTitle,'
-        ' groupImage: $groupImage,'
-        '}';
+    return 'CreateGroupRoomDto{usersEmails: $usersEmails, groupTitle: $groupTitle, groupImage: $groupImage}';
   }
 
   CreateGroupRoomDto copyWith({

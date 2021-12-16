@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:example/generated/l10n.dart';
 import 'package:example/models/user.dart';
 import 'package:example/screens/choose_group_members/choose_group_members_screen.dart';
-import 'package:example/screens/user_item.dart';
 import 'package:example/utils/custom_alert.dart';
 import 'package:example/utils/load_more_type.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +69,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                   Navigator.pop(context);
                   CustomAlert.showSuccess(
                     context: context,
-                    err: "Users has been added successfully",
+                    err: S.of(context).usersHasBeenAddedSuccessfully,
                   );
                 } catch (err) {
                   Navigator.pop(context);
@@ -87,7 +87,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
             SizedBox(
               height: 4,
             ),
-            "${groupChatInfo.totalGroupMembers} Members"
+            "${groupChatInfo.totalGroupMembers} ${S.of(context).members}"
                 .toString()
                 .cap
                 .light
@@ -248,7 +248,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: "Title".text,
+          title: S.of(context).title.text,
           content: TextField(
             onChanged: (value) {
               txt = value;
@@ -269,12 +269,12 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                         context: context, err: err.toString());
                   }
                 },
-                child: "Update".text),
+                child: S.of(context).update.text),
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: "cancel".text),
+                child: S.of(context).cancel.text),
           ],
         );
       },
@@ -290,7 +290,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
 
       if (img != null) {
         if (File(img.path).lengthSync() > 1024 * 1024 * 20) {
-          throw "Image size must be less than 20 Mb";
+          throw S.of(context).imageSizeMustBeLessThan20Mb;
         }
       }
       final newImage = await VChatController.instance

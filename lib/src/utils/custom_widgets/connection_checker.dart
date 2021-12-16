@@ -12,7 +12,7 @@ class ConnectionChecker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!GetIt.I.isRegistered<SocketService>()) {
-      return SizedBox();
+      return const SizedBox();
     }
     final SocketService _socket = GetIt.I.get<SocketService>();
     return ValueListenableBuilder<SocketStateType>(
@@ -24,11 +24,11 @@ class ConnectionChecker extends StatelessWidget {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),
               padding: const EdgeInsets.all(5),
-              child: (VChatAppService.instance.getTrans(context).connecting() +
-                      " ...")
-                  .text
-                  .alignCenter
-                  .color(Colors.white),
+              child:
+                  "${VChatAppService.instance.getTrans(context).connecting()} ..."
+                      .text
+                      .alignCenter
+                      .color(Colors.white),
             ),
           );
         } else {

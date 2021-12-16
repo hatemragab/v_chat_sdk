@@ -1,5 +1,4 @@
 import 'package:example/generated/l10n.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import '../controllers/login_controller.dart';

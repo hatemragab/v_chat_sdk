@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import '../../../services/v_chat_app_service.dart';
 import '../../helpers/helpers.dart';
@@ -17,8 +16,9 @@ class CustomDio {
     dio.options.followRedirects = false;
     dio.options.headers = {
       'authorization': vChatController.vChatUser != null
-          ? "Bearer ${vChatController.vChatUser!.accessToken.toString()}"
-          : "Bearer xxx"
+          ? "Bearer ${vChatController.vChatUser!.accessToken}"
+          : "Bearer xxx",
+      "Accept-Language": vChatController.currentLocal
     };
     //  print(vChatController.vChatUser!.accessToken.toString());
 
@@ -37,13 +37,14 @@ class CustomDio {
     // }
   }
 
-  Future<Response> uploadFile(
-      {required String apiEndPoint,
-      required String filePath,
-      bool isPost = true,
-      void Function(int received, int total)? sendProgress,
-      List<Map<String, String>>? body,
-      CancelToken? cancelToken}) async {
+  Future<Response> uploadFile({
+    required String apiEndPoint,
+    required String filePath,
+    bool isPost = true,
+    void Function(int received, int total)? sendProgress,
+    List<Map<String, String>>? body,
+    CancelToken? cancelToken,
+  }) async {
     final File file = File(filePath);
     final String fileName = Helpers.baseName(file.path);
     final FormData data = FormData.fromMap({
@@ -58,49 +59,35 @@ class CustomDio {
     }
     late Response response;
     if (isPost) {
-      response = await dio.post(apiEndPoint,
-          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      response = await dio.post(
+        apiEndPoint,
+        data: data,
+        onSendProgress: sendProgress,
+        cancelToken: cancelToken,
+      );
     } else {
-      response = await dio.patch(apiEndPoint,
-          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
+      response = await dio.patch(
+        apiEndPoint,
+        data: data,
+        onSendProgress: sendProgress,
+        cancelToken: cancelToken,
+      );
     }
 
     throwIfNoSuccess(response);
     return response;
   }
 
-  Future<Response> uploadBytes(
-      {required String apiEndPoint,
-      required Uint8List bytes,
-      void Function(int received, int total)? sendProgress,
-      dynamic body,
-      bool loading = false,
-      CancelToken? cancelToken}) async {
-    try {
-      final FormData data = FormData.fromMap({
-        "file": MultipartFile.fromBytes(bytes, filename: "xxx.png"),
-      });
-      if (body != null) {
-        data.fields.addAll(body);
-      }
-      final Response response = await dio.post(apiEndPoint,
-          data: data, onSendProgress: sendProgress, cancelToken: cancelToken);
-      throwIfNoSuccess(response);
-      return response;
-    } catch (err) {
-      rethrow;
-    }
-  }
-
-  Future<Response> send(
-      {required String reqMethod,
-      required String path,
-      Function(int count, int total)? onSendProgress,
-      Function(int count, int total)? onReceiveProgress,
-      CancelToken? cancelToken,
-      Map<String, dynamic> body = const <String, dynamic>{},
-      Map<String, dynamic> query = const <String, dynamic>{},
-      String? saveDirPath}) async {
+  Future<Response> send({
+    required String reqMethod,
+    required String path,
+    Function(int count, int total)? onSendProgress,
+    Function(int count, int total)? onReceiveProgress,
+    CancelToken? cancelToken,
+    Map<String, dynamic> body = const <String, dynamic>{},
+    Map<String, dynamic> query = const <String, dynamic>{},
+    String? saveDirPath,
+  }) async {
     late Response res;
 
     final _body = {}..addAll(body);
@@ -165,7 +152,7 @@ class CustomDio {
 
           break;
         default:
-          throw ("reqMethod Not available !");
+          throw "reqMethod Not available !";
       }
 
       throwIfNoSuccess(res);
@@ -176,7 +163,8 @@ class CustomDio {
           err.type == DioErrorType.connectTimeout ||
           err.type == DioErrorType.receiveTimeout) {
         throw VChatSdkException(
-            "Check your internet connection and try again ");
+          "Check your internet connection and try again ",
+        );
       } else {
         throw VChatSdkException(res.data.toString());
       }
@@ -194,11 +182,12 @@ class CustomDio {
     }
   }
 
-  Future<Response> download(
-      {required String path,
-      void Function(int received, int total)? sendProgress,
-      required String filePath,
-      CancelToken? cancelToken}) async {
+  Future<Response> download({
+    required String path,
+    void Function(int received, int total)? sendProgress,
+    required String filePath,
+    CancelToken? cancelToken,
+  }) async {
     final res = await dio.download(
       path,
       filePath,
