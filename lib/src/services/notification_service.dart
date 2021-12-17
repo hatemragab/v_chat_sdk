@@ -26,8 +26,7 @@ class NotificationService {
   );
   final iosNotificationDetails = const IOSNotificationDetails(
     presentBadge: true,
-    presentSound: true,
-    badgeNumber: 1,
+    presentSound: true
   );
 
   Future init(BuildContext context) async {
