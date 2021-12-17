@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:example/generated/l10n.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -27,8 +28,23 @@ class _SplashScreenState extends State<SplashScreen> {
         title: Text(S.of(context).splashScreen),
         centerTitle: true,
       ),
-      body: const Center(
-        child: CircularProgressIndicator.adaptive(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/icon.png",
+              height: 150,
+              width: 150,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CupertinoActivityIndicator(),
+          ],
+        ),
       ),
     );
   }
@@ -38,12 +54,12 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 1));
     log(myModel.toString());
     if (myModel) {
-      // there are login data saved
+      /// there are login data saved
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const Home()),
           (Route<dynamic> route) => false);
     } else {
-      // its the first time to open the app
+      /// its the first time to open the app
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginScreen()),
           (Route<dynamic> route) => false);

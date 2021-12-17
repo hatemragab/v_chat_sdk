@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 import '../utils/helpers/helpers.dart';
 import 'tables/message_table.dart';
@@ -25,7 +26,7 @@ class DBProvider {
 
     return openDatabase(
       path,
-      version: 1,
+      version: VChatConfig.databaseVersion,
       onCreate: (db, version) async {
         await db.transaction((txn) async {
           await RoomTable.createTable(txn);

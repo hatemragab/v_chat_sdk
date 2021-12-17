@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
+
 import '../enums/socket_state_type.dart';
 import '../models/v_chat_room.dart';
 import '../models/v_chat_room_typing.dart';
-import '../utils/api_utils/server_config.dart';
 import '../utils/custom_widgets/custom_alert_dialog.dart';
+import '../utils/v_chat_config.dart';
 import 'local_storage_service.dart';
 import 'v_chat_app_service.dart';
 
@@ -24,7 +26,7 @@ class SocketService {
   bool get isConnected => _socket!.connected;
 
   Socket getSocket() {
-    return io(ServerConfig.serverIp, <String, dynamic>{
+    return io(VChatConfig.serverIp, <String, dynamic>{
       'transports': ['websocket'],
       'pingTimeout': 5000,
       'connectTimeout': 5000,

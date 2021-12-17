@@ -1,5 +1,5 @@
 import 'package:v_chat_sdk/src/enums/v_chat_user_group_role.dart';
-import 'package:v_chat_sdk/src/utils/api_utils/server_config.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class VChatGroupUser {
   final String id;
@@ -71,7 +71,7 @@ class VChatGroupUser {
       id: map['_id'] as String,
       email: map['email'] as String,
       mame: map['name'] as String,
-      image: ServerConfig.profileImageBaseUrl + (map['imageThumb'] as String),
+      image: VChatConfig.profileImageBaseUrl + (map['imageThumb'] as String),
       vChatUserGroupRole: map['role'] == VChatUserGroupRole.admin.inString
           ? VChatUserGroupRole.admin
           : VChatUserGroupRole.member,

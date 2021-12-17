@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../api_utils/server_config.dart';
+import '../v_chat_config.dart';
 
 class CircleImage {
   CircleImage._();
@@ -28,7 +28,7 @@ class CircleImage {
           child: CircleAvatar(
             radius: double.parse(radius.toString()),
             backgroundImage: CachedNetworkImageProvider(
-              ServerConfig.profileImageBaseUrl + path,
+              VChatConfig.profileImageBaseUrl + path,
             ),
             backgroundColor: Colors.transparent,
           ),

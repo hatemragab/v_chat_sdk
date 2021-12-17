@@ -329,6 +329,328 @@ class S {
       args: [],
     );
   }
+
+  /// `Remove your self from the list your name is`
+  String get removeYourSelfFromTheListYourNameIs {
+    return Intl.message(
+      'Remove your self from the list your name is',
+      name: 'removeYourSelfFromTheListYourNameIs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select at lest one user`
+  String get selectAtLestOneUser {
+    return Intl.message(
+      'select at lest one user',
+      name: 'selectAtLestOneUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose members`
+  String get chooseMembers {
+    return Intl.message(
+      'choose members',
+      name: 'chooseMembers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose group image`
+  String get chooseGroupImage {
+    return Intl.message(
+      'Choose group image',
+      name: 'chooseGroupImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `image size must be less than 20 Mb`
+  String get imageSizeMustBeLessThan20Mb {
+    return Intl.message(
+      'image size must be less than 20 Mb',
+      name: 'imageSizeMustBeLessThan20Mb',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `image has been selected`
+  String get imageHasBeenSelected {
+    return Intl.message(
+      'image has been selected',
+      name: 'imageHasBeenSelected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group Name`
+  String get groupName {
+    return Intl.message(
+      'Group Name',
+      name: 'groupName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Group !`
+  String get createGroup {
+    return Intl.message(
+      'Create Group !',
+      name: 'createGroup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users has been added successfully`
+  String get usersHasBeenAddedSuccessfully {
+    return Intl.message(
+      'Users has been added successfully',
+      name: 'usersHasBeenAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Members`
+  String get members {
+    return Intl.message(
+      'Members',
+      name: 'members',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get title {
+    return Intl.message(
+      'Title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cancel`
+  String get cancel {
+    return Intl.message(
+      'cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About`
+  String get about {
+    return Intl.message(
+      'About',
+      name: 'about',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'copiedToYourClipboard data' key
+
+  /// `Contact me on whatsapp`
+  String get contactMeOnWhatsapp {
+    return Intl.message(
+      'Contact me on whatsapp',
+      name: 'contactMeOnWhatsapp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you have question ?`
+  String get areYouHaveQuestion {
+    return Intl.message(
+      'Are you have question ?',
+      name: 'areYouHaveQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code private and Group Chat with v chat its very easy !`
+  String get codePrivateAndGroupChatWithVChatItsVery {
+    return Intl.message(
+      'Code private and Group Chat with v chat its very easy !',
+      name: 'codePrivateAndGroupChatWithVChatItsVery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `v chat users`
+  String get vChatUsers {
+    return Intl.message(
+      'v chat users',
+      name: 'vChatUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `image has been set successfully`
+  String get imageHasBeenSetSuccessfully {
+    return Intl.message(
+      'image has been set successfully',
+      name: 'imageHasBeenSetSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Our Full Documentation`
+  String get ourFullDocumentation {
+    return Intl.message(
+      'Our Full Documentation',
+      name: 'ourFullDocumentation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buy the backend code`
+  String get buyTheBackendCode {
+    return Intl.message(
+      'Buy the backend code',
+      name: 'buyTheBackendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ios testflight and public flutter ui`
+  String get iosTestflightAndPublicFlutterUi {
+    return Intl.message(
+      'ios testflight and public flutter ui',
+      name: 'iosTestflightAndPublicFlutterUi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Us And Report issues or new features`
+  String get contactUsAndReportIssuesOrNewFeatures {
+    return Intl.message(
+      'Contact Us And Report issues or new features',
+      name: 'contactUsAndReportIssuesOrNewFeatures',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `splash screen`
+  String get splashScreen {
+    return Intl.message(
+      'splash screen',
+      name: 'splashScreen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update image`
+  String get updateImage {
+    return Intl.message(
+      'update image',
+      name: 'updateImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `new name`
+  String get newName {
+    return Intl.message(
+      'new name',
+      name: 'newName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update name`
+  String get updateName {
+    return Intl.message(
+      'update name',
+      name: 'updateName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the name`
+  String get enterTheName {
+    return Intl.message(
+      'Enter the name',
+      name: 'enterTheName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your name has been updated !`
+  String get yourNameHasBeenUpdated {
+    return Intl.message(
+      'your name has been updated !',
+      name: 'yourNameHasBeenUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your image has been updated !`
+  String get yourImageHasBeenUpdated {
+    return Intl.message(
+      'your image has been updated !',
+      name: 'yourImageHasBeenUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User name`
+  String get userName {
+    return Intl.message(
+      'User name',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading ...`
+  String get loading {
+    return Intl.message(
+      'Loading ...',
+      name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `success`
+  String get success {
+    return Intl.message(
+      'success',
+      name: 'success',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

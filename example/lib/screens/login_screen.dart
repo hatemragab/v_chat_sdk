@@ -29,35 +29,47 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: S.of(context).email,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset(
+                "assets/icon.png",
+                height: 150,
+                width: 150,
+                fit: BoxFit.cover,
               ),
-              controller: _controller.emailTxtController,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: S.of(context).password,
+              SizedBox(
+                height: 10,
               ),
-              controller: _controller.passwordTxtController,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: _controller.login, child: S.of(context).login.text),
-            const SizedBox(
-              height: 10,
-            ),
-            TextButton(
-                onPressed: _controller.register,
-                child: S.of(context).register.text),
-          ],
+              TextField(
+                decoration: InputDecoration(
+                  hintText: S.of(context).email,
+                ),
+                controller: _controller.emailTxtController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: S.of(context).password,
+                ),
+                controller: _controller.passwordTxtController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                  onPressed: _controller.login,
+                  child: S.of(context).login.text),
+              const SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                  onPressed: _controller.register,
+                  child: S.of(context).register.text),
+            ],
+          ),
         ),
       ),
     );

@@ -186,4 +186,15 @@ class ArLanguage implements VChatLookupString {
   @override
   String youShouldAcceptMicrophoneToUseVoiceMessage() =>
       "يجب ان توافق علي استخدام الميكروفون";
+
+  @override
+  String appNeedThisPermissionToSaveDownloadedFilesInDeviceStorage() =>
+      "يجب الموافقه علي اذن تحميل الملفات";
+
+  @override
+  String fileSavedOnDevice() => "تم حفظ الملف علي الذاكره التخزينيه الداخليه";
+
+  @override
+  String storagePermissionMustBeAcceptedToDownloadTheFile() =>
+      "يجب ان توافق علي اذن تحميل الملفات";
 }

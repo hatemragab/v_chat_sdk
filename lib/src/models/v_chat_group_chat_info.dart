@@ -1,5 +1,6 @@
+import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/enums.dart';
-import 'package:v_chat_sdk/src/utils/api_utils/server_config.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class VChatGroupChatInfo {
   final String title;
@@ -34,7 +35,7 @@ class VChatGroupChatInfo {
           : VChatUserGroupRole.member,
       isGroupCreator: map['isGroupCreator'] as bool,
       imageThumb:
-          ServerConfig.profileImageBaseUrl + (map['imageThumb'] as String),
+          VChatConfig.profileImageBaseUrl + (map['imageThumb'] as String),
     );
   }
 
@@ -43,7 +44,7 @@ class VChatGroupChatInfo {
     return {
       'name': title,
       'roomMembersCount': totalGroupMembers,
-      'imageThumb': imageThumb,
+      'imageThumb': basename(imageThumb),
       'isGroupCreator': isGroupCreator,
       'role': role.inString,
     } as Map<String, dynamic>;

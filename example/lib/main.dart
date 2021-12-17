@@ -5,30 +5,21 @@ import 'package:provider/provider.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import './screens/splash_screen.dart';
 import 'controllers/app_controller.dart';
+import 'controllers/home_controller.dart';
 import 'generated/l10n.dart';
+import 'utils/v_chat_custom_widgets.dart';
 
 const isUseRealServer = true;
 
-class VChatCustomWidgets extends VChatWidgetBuilder {
-  @override
-  Color sendButtonColor(BuildContext context, {required bool isDark}) {
-    if (isDark) {
-      return Colors.red;
-    } else {
-      return Colors.blue;
-    }
-  }
-}
+const serverIp =
+    isUseRealServer ? "http://170.178.195.150:81" : "http://10.0.2.2:3000";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await GetStorage.init();
-  // /
-  //10.0.2.2:3000
+
   await VChatController.instance.init(
-    baseUrl: Uri.parse(
-        isUseRealServer ? "http://170.178.195.150:81" : "http://10.0.2.2:3000"),
+    baseUrl: Uri.parse(serverIp),
     appName: "test_v_chat",
     isUseFirebase: true,
     widgetsBuilder: VChatCustomWidgets(),
@@ -38,20 +29,30 @@ void main() async {
     maxGroupChatUsers: 500,
   );
 
-  // add support new language
-  // v_chat will change the language one you change it
-  VChatController.instance.setLocaleMessages(
-      languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
+  /// add support new language
+  /// v_chat will change the language one you change it
+  VChatController.instance.setLocaleMessages(vChatAddLanguageModel: [
+    VChatAddLanguageModel(
+      languageCode: "ar",
+      countryCode: "EG",
+      lookupMessages: ArLanguage(),
+    ),
+  ]);
 
-  VChatController.instance.setLocaleMessages(
-      languageCode: "ar", countryCode: "EG", lookupMessages: ArLanguage());
-
-  // VChatController.instance.forceLanguage(languageCode: "ar",countryCode:'EG');
-
-  runApp(ChangeNotifierProvider<AppController>(
-    create: (context) => AppController(),
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AppController>(
+          create: (context) => AppController(),
+        ),
+        ChangeNotifierProvider<HomeController>(
+          create: (context) => HomeController(),
+          lazy: true,
+        ),
+      ],
+      builder: (context, child) => MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {

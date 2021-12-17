@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../models/v_chat_message.dart';
 
-import '../../../../utils/api_utils/server_config.dart';
+import '../../../../utils/v_chat_config.dart';
 import '../../../image_viewer/views/image_viewer_view.dart';
 
 class MessageImageItem extends StatelessWidget {
@@ -20,7 +20,7 @@ class MessageImageItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ImageViewerView(
-              ServerConfig.messagesMediaBaseUrl +
+              VChatConfig.messagesMediaBaseUrl +
                   _message.messageAttachment!.imageUrl.toString(),
             ),
           ),
@@ -40,7 +40,7 @@ class MessageImageItem extends StatelessWidget {
           width: double.parse(_message.messageAttachment!.width!),
           color: Colors.grey[300],
           child: CachedNetworkImage(
-            imageUrl: ServerConfig.messagesMediaBaseUrl +
+            imageUrl: VChatConfig.messagesMediaBaseUrl +
                 _message.messageAttachment!.imageUrl.toString(),
             fit: BoxFit.cover,
             progressIndicatorBuilder: (context, url, progress) =>

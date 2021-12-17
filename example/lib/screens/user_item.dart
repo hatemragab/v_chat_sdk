@@ -5,14 +5,13 @@ import 'package:textless/textless.dart';
 import '../controllers/home_controller.dart';
 import '../models/user.dart';
 import 'user_profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class UserItem extends StatelessWidget {
   final User user;
-  final HomeController controller;
 
   const UserItem({
     required this.user,
-    required this.controller,
   });
 
   @override
@@ -28,10 +27,10 @@ class UserItem extends StatelessWidget {
       },
       title: user.name.text,
       trailing: InkWell(
-          onTap: () {
-            controller.startChat(user.email);
-          },
-          child: const Icon(Icons.message)),
+        onTap: () =>
+            context.read<HomeController>().startChat(user.email, context),
+        child: const Icon(Icons.message),
+      ),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         clipBehavior: Clip.antiAliasWithSaveLayer,

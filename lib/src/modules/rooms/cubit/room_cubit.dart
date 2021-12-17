@@ -34,6 +34,8 @@ class RoomCubit extends Cubit<RoomState> {
   final scrollController = ScrollController();
   String? currentRoomId;
 
+  void getInstance() {}
+
   Future getRoomsFromLocal() async {
     final rooms = await LocalStorageService.instance.getRooms();
     this.rooms.clear();

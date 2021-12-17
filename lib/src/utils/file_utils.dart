@@ -15,7 +15,7 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import '../models/v_chat_message_attachment.dart';
 import '../services/v_chat_app_service.dart';
 import 'api_utils/dio/custom_dio.dart';
-import 'api_utils/server_config.dart';
+import 'v_chat_config.dart';
 import 'custom_widgets/custom_alert_dialog.dart';
 import 'helpers/dir_helper.dart';
 
@@ -37,7 +37,7 @@ class FileUtils {
           final cancelToken = CancelToken();
           CustomAlert.customLoadingDialog(context: context);
           await CustomDio().download(
-            path: ServerConfig.messagesMediaBaseUrl +
+            path: VChatConfig.messagesMediaBaseUrl +
                 attachment.playUrl.toString(),
             cancelToken: cancelToken,
             filePath: file.path,
@@ -46,7 +46,7 @@ class FileUtils {
           CustomAlert.done(
             context: context,
             msg:
-                "File saved on device /download/${VChatAppService.instance.appName}",
+                "${VChatAppService.instance.getTrans(context).fileSavedOnDevice()} /download/${VChatAppService.instance.appName}",
           );
           await OpenFile.open(file.path);
         } catch (err) {
@@ -126,7 +126,7 @@ class FileUtils {
   }) async {
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse('${ServerConfig.serverBaseUrl}$endPoint'),
+      Uri.parse('${VChatConfig.serverBaseUrl}$endPoint'),
     );
 
     for (final file in files) {
@@ -160,7 +160,7 @@ class FileUtils {
       CustomAlert.customAlertDialog(
         context: context,
         errorMessage:
-            "App Need this permission to save downloaded files in device storage /download/${VChatAppService.instance.appName}}/",
+            "${VChatAppService.instance.getTrans(context).appNeedThisPermissionToSaveDownloadedFilesInDeviceStorage()} /download/${VChatAppService.instance.appName}}/",
         dismissible: false,
         onPress: () async {
           Navigator.pop(context);
@@ -172,7 +172,7 @@ class FileUtils {
           } else {
             Navigator.pop(context);
             return c.completeError(
-              "storage permission must be accepted to download the file",
+              "${VChatAppService.instance.getTrans(context).storagePermissionMustBeAcceptedToDownloadTheFile()} ",
             );
           }
         },

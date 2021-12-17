@@ -33,69 +33,80 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: S.of(context).email,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset(
+                "assets/icon.png",
+                height: 150,
+                width: 150,
+                fit: BoxFit.cover,
               ),
-              controller: _controller.emailTxtController,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: S.of(context).name,
+              SizedBox(
+                height: 10,
               ),
-              controller: _controller.nameTxtController,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: S.of(context).password,
+              TextField(
+                decoration: InputDecoration(
+                  hintText: S.of(context).email,
+                ),
+                controller: _controller.emailTxtController,
               ),
-              controller: _controller.passwordTxtController,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            InkWell(
-                onTap: () async {
-                  final picker = ImagePicker();
-                  final img =
-                      await picker.pickImage(source: ImageSource.gallery);
-                  if (img != null) {
-                    _controller.imagePath = img.path;
-                    CustomAlert.done(msg: S.of(context).imageHasBeenSelected);
-                    setState(() {});
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _controller.imagePath != null
-                        ? Image.file(
-                            File(_controller.imagePath!),
-                            height: 100,
-                            width: 100,
-                          )
-                        : const Icon(
-                            Icons.image,
-                            size: 40,
-                          ),
-                    S.of(context).chooseImage.text,
-                  ],
-                )),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: _controller.register,
-                child: S.of(context).register.text),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: S.of(context).name,
+                ),
+                controller: _controller.nameTxtController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: S.of(context).password,
+                ),
+                controller: _controller.passwordTxtController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                  onTap: () async {
+                    final picker = ImagePicker();
+                    final img =
+                        await picker.pickImage(source: ImageSource.gallery);
+                    if (img != null) {
+                      _controller.imagePath = img.path;
+                      CustomAlert.done(msg: S.of(context).imageHasBeenSelected);
+                      setState(() {});
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _controller.imagePath != null
+                          ? Image.file(
+                              File(_controller.imagePath!),
+                              height: 100,
+                              width: 100,
+                            )
+                          : const Icon(
+                              Icons.image,
+                              size: 40,
+                            ),
+                      S.of(context).chooseImage.text,
+                    ],
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
+                  onPressed: _controller.register,
+                  child: S.of(context).register.text),
+            ],
+          ),
         ),
       ),
     );

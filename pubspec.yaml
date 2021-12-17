@@ -1,6 +1,6 @@
 name: v_chat_sdk
 description: official sdk for vchat to impement chat system into new or exist flutter app
-version: 0.9.1
+version: 1.0.0
 homepage: https://github.com/hatemragab/v_chat_sdk
 
 environment:
@@ -23,9 +23,9 @@ dependencies:
   # http request
   dio: ^4.0.4
   #init firebase
-  firebase_core: ^1.10.5
+  firebase_core: ^1.10.6
   # for integrate notification with firebase
-  firebase_messaging: ^11.2.3
+  firebase_messaging: ^11.2.4
   image_picker: ^0.8.4+4
   # store chat offline
   sqflite: ^2.0.1
@@ -36,7 +36,7 @@ dependencies:
   # date format
   intl: ^0.17.0
   # get files
-  file_picker: ^4.2.7
+  file_picker: ^4.2.8
   # crop image and reduce its quality
   flutter_native_image: ^0.0.6+1
   # ask for files permissions
@@ -101,3 +101,6 @@ flutter:
 #
 # An image asset can refer to one or more resolution-specific "variants", see
 # https://flutter.dev/assets-and-images/#resolution-aware.
+false_secrets:
+  - /example/android/app/google-services.json
+  - /example/ios/Runner/GoogleService-Info.plist

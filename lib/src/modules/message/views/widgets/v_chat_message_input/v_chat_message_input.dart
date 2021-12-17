@@ -8,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
 
 import '../../../../../services/v_chat_app_service.dart';
-import '../../../../../utils/api_utils/server_config.dart';
+import '../../../../../utils/v_chat_config.dart';
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../../utils/custom_widgets/rounded_container.dart';
 import 'attachment_picker_widget.dart';
@@ -122,7 +122,7 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                   if (pickedFile != null) {
                     final t = VChatAppService.instance.getTrans(context);
                     if (File(pickedFile.path).lengthSync() >
-                        ServerConfig.maxMessageFileSize) {
+                        VChatConfig.maxMessageFileSize) {
                       File(pickedFile.path).deleteSync();
                       CustomAlert.error(msg: t.fileIsTooBig());
                     }

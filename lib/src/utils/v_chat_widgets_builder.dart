@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'custom_widgets/audio_wave.dart';
 import 'custom_widgets/auto_direction.dart';
 import 'custom_widgets/read_more_text.dart';
@@ -37,8 +38,10 @@ class VChatWidgetBuilder {
           text,
           trimLines: 5,
           trimMode: TrimMode.line,
-          trimCollapsedText: "show More",
-          trimExpandedText: "show Less",
+          trimCollapsedText:
+              VChatAppService.instance.getTrans(context).showMore(),
+          trimExpandedText:
+              VChatAppService.instance.getTrans(context).showLess(),
           moreStyle: Theme.of(context)
               .textTheme
               .bodyText1!
@@ -69,8 +72,10 @@ class VChatWidgetBuilder {
           text,
           trimLines: 5,
           trimMode: TrimMode.line,
-          trimCollapsedText: "show More",
-          trimExpandedText: "show Less",
+          trimCollapsedText:
+              VChatAppService.instance.getTrans(context).showMore(),
+          trimExpandedText:
+              VChatAppService.instance.getTrans(context).showLess(),
           moreStyle: Theme.of(context)
               .textTheme
               .bodyText1!

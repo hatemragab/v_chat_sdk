@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:v_chat_sdk/src/utils/api_utils/server_config.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 import '../../v_chat_sdk.dart';
 import '../utils/api_utils/dio/custom_dio.dart';
@@ -149,7 +149,7 @@ class VChatProvider {
         "image file not exist in your device path is $path",
       );
     }
-    return ServerConfig.profileImageBaseUrl +
+    return VChatConfig.profileImageBaseUrl +
         (await CustomDio().uploadFile(
           apiEndPoint: "room/update-group-info",
           filePath: path,
@@ -210,5 +210,15 @@ class VChatProvider {
       },
     ))
         .data;
+  }
+
+  Future updateUserLanguage(String lng) async {
+    return CustomDio().send(
+      reqMethod: "patch",
+      path: "user",
+      body: {
+        "appLanguage": lng,
+      },
+    );
   }
 }

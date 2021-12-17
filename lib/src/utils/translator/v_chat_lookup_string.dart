@@ -121,4 +121,10 @@ abstract class VChatLookupString {
   String messageCopiedToClipboard();
 
   String youShouldAcceptMicrophoneToUseVoiceMessage();
+
+  String fileSavedOnDevice();
+
+  String appNeedThisPermissionToSaveDownloadedFilesInDeviceStorage();
+
+  String storagePermissionMustBeAcceptedToDownloadTheFile();
 }

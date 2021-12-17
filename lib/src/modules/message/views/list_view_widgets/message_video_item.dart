@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import '../../../../models/v_chat_message.dart';
-import '../../../../utils/api_utils/server_config.dart';
+import '../../../../utils/v_chat_config.dart';
 import '../../../../utils/custom_widgets/rounded_container.dart';
 import '../../../video_player/views/video_player_view.dart';
 
@@ -23,7 +23,7 @@ class MessageVideoItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => VideoPlayerView(
-              ServerConfig.messagesMediaBaseUrl + att.playUrl.toString(),
+              VChatConfig.messagesMediaBaseUrl + att.playUrl.toString(),
             ),
           ),
         );
@@ -43,7 +43,7 @@ class MessageVideoItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: CachedNetworkImage(
                 imageUrl:
-                    ServerConfig.messagesMediaBaseUrl + att.imageUrl.toString(),
+                    VChatConfig.messagesMediaBaseUrl + att.imageUrl.toString(),
                 fit: BoxFit.cover,
               ),
             ),

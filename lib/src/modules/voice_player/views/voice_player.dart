@@ -5,7 +5,7 @@ import 'package:textless/textless.dart';
 
 import 'package:v_chat_sdk/src/utils/custom_widgets/audio_wave.dart';
 import '../../../models/v_chat_message.dart';
-import '../../../utils/api_utils/server_config.dart';
+import '../../../utils/v_chat_config.dart';
 
 class VoicePlayer extends StatefulWidget {
   final VChatMessage message;
@@ -131,7 +131,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
 
   Future<void> startPlayVoice() async {
     await audioPlayer.play(
-      ServerConfig.messagesMediaBaseUrl +
+      VChatConfig.messagesMediaBaseUrl +
           widget.message.messageAttachment!.playUrl!,
       stayAwake: true,
     );

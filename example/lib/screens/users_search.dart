@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import '../utils/load_more_type.dart';
 import 'user_item.dart';
+import 'package:provider/provider.dart';
 
 class UsersSearch extends StatefulWidget {
   const UsersSearch({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _UsersSearchState extends State<UsersSearch> {
     // TODO: implement initState
     super.initState();
     scrollController.addListener(_scrollListener);
-    _controller = HomeController(context);
+    _controller = context.read<HomeController>();
   }
 
   @override
@@ -76,7 +77,6 @@ class _UsersSearchState extends State<UsersSearch> {
                   separatorBuilder: (context, index) => Divider(),
                   itemBuilder: (context, index) => UserItem(
                     user: users[index],
-                    controller: _controller,
                   ),
                 ),
               ),

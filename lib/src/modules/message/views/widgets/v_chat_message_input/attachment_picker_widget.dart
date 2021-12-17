@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../services/v_chat_app_service.dart';
-import '../../../../../utils/api_utils/server_config.dart';
+import '../../../../../utils/v_chat_config.dart';
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 
 class AttachmentPickerWidget extends StatelessWidget {
@@ -30,7 +30,7 @@ class AttachmentPickerWidget extends StatelessWidget {
 
             if (pickedFile != null) {
               if (File(pickedFile.path).lengthSync() >
-                  ServerConfig.maxMessageFileSize) {
+                  VChatConfig.maxMessageFileSize) {
                 File(pickedFile.path).deleteSync();
                 CustomAlert.error(msg: t.fileIsTooBig());
                 Navigator.pop(ctx);
@@ -50,7 +50,7 @@ class AttachmentPickerWidget extends StatelessWidget {
                 await FilePicker.platform.pickFiles();
             if (result != null) {
               if (File(result.files.first.path!).lengthSync() >
-                  ServerConfig.maxMessageFileSize) {
+                  VChatConfig.maxMessageFileSize) {
                 File(result.files.first.path!).deleteSync();
                 CustomAlert.error(msg: t.fileIsTooBig());
                 return Navigator.pop(ctx);
@@ -73,7 +73,7 @@ class AttachmentPickerWidget extends StatelessWidget {
             );
             if (result != null) {
               if (File(result.files.first.path!).lengthSync() >
-                  ServerConfig.maxMessageFileSize) {
+                  VChatConfig.maxMessageFileSize) {
                 File(result.files.first.path!).deleteSync();
                 CustomAlert.error(msg: t.fileIsTooBig());
                 return Navigator.pop(ctx);

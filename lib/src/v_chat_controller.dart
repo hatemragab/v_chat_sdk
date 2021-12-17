@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:v_chat_sdk/src/models/models.dart';
+
 import 'dto/create_group_room_dto.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
@@ -21,13 +22,13 @@ import 'services/notification_service.dart';
 import 'services/socket_service.dart';
 import 'services/v_chat_app_service.dart';
 import 'services/v_chat_provider.dart';
+import 'services/v_chat_shared_preferences.dart';
 import 'sqlite/db_provider.dart';
 import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
-import 'utils/api_utils/server_config.dart';
 import 'utils/custom_widgets/custom_alert_dialog.dart';
 import 'utils/helpers/helpers.dart';
 import 'utils/storage_keys.dart';
-import 'utils/translator/v_chat_lookup_string.dart';
+import 'utils/v_chat_config.dart';
 import 'utils/v_chat_widgets_builder.dart';
 
 ///this is the controller of vchat
@@ -70,8 +71,8 @@ class VChatController {
     appService.isUseFirebase = isUseFirebase;
     appService.appName = appName;
     appService.maxGroupChatUsers = maxGroupChatUsers;
-    ServerConfig.serverIp = baseUrl.toString();
-    ServerConfig.maxMessageFileSize = maxMediaUploadSize;
+    VChatConfig.serverIp = baseUrl.toString();
+    VChatConfig.maxMessageFileSize = maxMediaUploadSize;
     late bool enableLog;
     if (kReleaseMode) {
       enableLog = false;
@@ -81,27 +82,28 @@ class VChatController {
     appService.enableLog = enableLog;
     appService.passwordHashKey = passwordHashKey;
     appService.vcBuilder = widgetsBuilder;
+    unawaited(_checkVersion());
   }
 
   /// to add new language to v chat
   void setLocaleMessages({
-    required String languageCode,
-    String? countryCode,
-    required VChatLookupString lookupMessages,
+    required List<VChatAddLanguageModel> vChatAddLanguageModel,
   }) {
-    try {
-      if (countryCode == null) {
-        VChatAppService.instance
-            .setLocaleMessages(languageCode, lookupMessages);
-      } else {
-        VChatAppService.instance.setLocaleMessages(
-          "${languageCode}_${countryCode.toUpperCase()}",
-          lookupMessages,
-        );
+    for (final item in vChatAddLanguageModel) {
+      try {
+        if (item.countryCode == null) {
+          VChatAppService.instance
+              .setLocaleMessages(item.languageCode, item.lookupMessages);
+        } else {
+          VChatAppService.instance.setLocaleMessages(
+            "${item.languageCode}_${item.countryCode!.toUpperCase()}",
+            item.lookupMessages,
+          );
+        }
+      } catch (err) {
+        Helpers.vlog("you should call function after init v chat");
+        throw "you should call function after init v chat";
       }
-    } catch (err) {
-      Helpers.vlog("you should call function after init v chat");
-      throw "you should call function after init v chat";
     }
   }
 
@@ -163,8 +165,7 @@ class VChatController {
     }
 
     NotificationService.instance.init(context);
-    final x = RoomCubit.instance;
-    x.getRoomsFromLocal();
+    RoomCubit.instance.getInstance();
   }
 
   /// **throw** User already in v chat data base
@@ -379,5 +380,24 @@ class VChatController {
       groupId: groupId,
       usersEmails: usersEmails,
     );
+  }
+
+  /// **throw** No internet connection
+  Future changeLanguage(String lng) async {
+    await _vChatUsersApi.updateUserLanguage(lng);
+  }
+
+  Future<void> _checkVersion() async {
+    await SharedPrefsInstance.init();
+    final preferences = SharedPrefsInstance.instance;
+    final v = preferences.getBool(StorageKeys.kvChatFirstTimeOpen);
+    if (v != null && v) {
+      /// Not first time to open the app
+
+    } else {
+      /// first time to open the app
+      await preferences.setBool(StorageKeys.kvChatFirstTimeOpen, true);
+      await SharedPrefsInstance.setDefaultVersionValues();
+    }
   }
 }

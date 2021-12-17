@@ -6,7 +6,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import '../../../models/v_chat_message.dart';
 import '../../../services/local_storage_service.dart';
 import '../../../services/v_chat_app_service.dart';
-import '../../../utils/api_utils/server_config.dart';
+import '../../../utils/v_chat_config.dart';
 
 class MessageSocket {
   late Socket _socket;
@@ -52,7 +52,7 @@ class MessageSocket {
   }
 
   Socket _getSocket() {
-    return io("${ServerConfig.serverIp}/message", <String, dynamic>{
+    return io("${VChatConfig.serverIp}/message", <String, dynamic>{
       'transports': ['websocket'],
       'pingTimeout': 5000,
       'connectTimeout': 5000,

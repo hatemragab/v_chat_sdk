@@ -188,4 +188,15 @@ class EnLanguage implements VChatLookupString {
   @override
   String youShouldAcceptMicrophoneToUseVoiceMessage() =>
       "you Should Accept Microphone To Use Voice Message";
+
+  @override
+  String appNeedThisPermissionToSaveDownloadedFilesInDeviceStorage() =>
+      "app Need This Permission To Save Downloaded Files In Device Storage";
+
+  @override
+  String fileSavedOnDevice() => "file Saved On Device";
+
+  @override
+  String storagePermissionMustBeAcceptedToDownloadTheFile() =>
+      "storage Permission Must Be Accepted To Download The File";
 }

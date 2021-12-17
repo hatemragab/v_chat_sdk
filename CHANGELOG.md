@@ -61,3 +61,9 @@
 * kick users from group 
 * admin downgrade and upgrade system if iam admin
 * admins can add users only
+
+## 0.9.1
+* full localization support
+
+## 1.0.0
+* first stable version

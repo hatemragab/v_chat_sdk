@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import '../../../services/v_chat_app_service.dart';
 import '../../helpers/helpers.dart';
-import '../server_config.dart';
+import '../../v_chat_config.dart';
 import 'v_chat_sdk_exception.dart';
 
 class CustomDio {
@@ -11,7 +11,7 @@ class CustomDio {
 
   CustomDio() {
     dio = Dio();
-    dio.options.baseUrl = ServerConfig.serverBaseUrl;
+    dio.options.baseUrl = VChatConfig.serverBaseUrl;
     dio.options.validateStatus = (_) => true;
     dio.options.followRedirects = false;
     dio.options.headers = {
@@ -25,6 +25,7 @@ class CustomDio {
     dio.options.sendTimeout = 10000;
     dio.options.receiveTimeout = 10000;
     dio.options.connectTimeout = 10000;
+    //print("Send request ${DateTime.now()}");
     // if (!kReleaseMode) {
     //   dio.interceptors.add(PrettyDioLogger(
     //     requestHeader: true,

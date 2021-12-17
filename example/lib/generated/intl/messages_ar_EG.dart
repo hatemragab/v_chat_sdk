@@ -22,35 +22,86 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "about": MessageLookupByLibrary.simpleMessage("عن"),
         "allChatNotifications":
             MessageLookupByLibrary.simpleMessage("كل اشعارات المحادثه"),
         "ar": MessageLookupByLibrary.simpleMessage("عربي"),
+        "areYouHaveQuestion":
+            MessageLookupByLibrary.simpleMessage("هل لديك اساله ؟"),
+        "buyTheBackendCode":
+            MessageLookupByLibrary.simpleMessage("قم بشراء نسخه"),
+        "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "changeLanguage": MessageLookupByLibrary.simpleMessage("تغيسر اللغه"),
         "changeTheme": MessageLookupByLibrary.simpleMessage("تغير الثيم"),
         "chats": MessageLookupByLibrary.simpleMessage("الدردشات"),
+        "chooseGroupImage":
+            MessageLookupByLibrary.simpleMessage("اختار صوره للجروب"),
         "chooseImage": MessageLookupByLibrary.simpleMessage("اختار صوره"),
+        "chooseMembers": MessageLookupByLibrary.simpleMessage("اختار الاعضاء"),
+        "codePrivateAndGroupChatWithVChatItsVery":
+            MessageLookupByLibrary.simpleMessage(
+                "اناء محادثه خاصه وجروب دردشه في دقائق"),
+        "contactMeOnWhatsapp":
+            MessageLookupByLibrary.simpleMessage("تواصل معي"),
+        "contactUsAndReportIssuesOrNewFeatures":
+            MessageLookupByLibrary.simpleMessage(
+                "Contact Us And Report issues or new features"),
+        "createGroup": MessageLookupByLibrary.simpleMessage("انشاء جروب دردشه"),
         "dark": MessageLookupByLibrary.simpleMessage("اسود "),
         "email": MessageLookupByLibrary.simpleMessage("البريد"),
         "en": MessageLookupByLibrary.simpleMessage("انجليزي"),
+        "enterTheName": MessageLookupByLibrary.simpleMessage("ادخل الاسم"),
         "error": MessageLookupByLibrary.simpleMessage("خطا"),
+        "groupName": MessageLookupByLibrary.simpleMessage("اسم الجروب شات"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسيه"),
+        "imageHasBeenSelected":
+            MessageLookupByLibrary.simpleMessage("تم اختيار الصوره"),
+        "imageHasBeenSetSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اختيار الصوره"),
+        "imageSizeMustBeLessThan20Mb": MessageLookupByLibrary.simpleMessage(
+            "يجب ان تكون الصوره اقل من 20 ميجا"),
+        "iosTestflightAndPublicFlutterUi": MessageLookupByLibrary.simpleMessage(
+            "ios testflight and public flutter ui"),
         "light": MessageLookupByLibrary.simpleMessage("ابيض "),
+        "loading": MessageLookupByLibrary.simpleMessage("جاري التحميل ..."),
         "logOut": MessageLookupByLibrary.simpleMessage("تسجيل خروج"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
+        "members": MessageLookupByLibrary.simpleMessage("الاعضاء"),
         "message": MessageLookupByLibrary.simpleMessage("رساله"),
         "myGreatRooms": MessageLookupByLibrary.simpleMessage("كل المحادثات"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
+        "newName": MessageLookupByLibrary.simpleMessage("الاسم الجديد"),
         "off": MessageLookupByLibrary.simpleMessage("ايقاف"),
         "offline": MessageLookupByLibrary.simpleMessage("قافل"),
         "ok": MessageLookupByLibrary.simpleMessage("تم"),
         "on": MessageLookupByLibrary.simpleMessage("تشغيل"),
+        "ourFullDocumentation":
+            MessageLookupByLibrary.simpleMessage("اطلع علي كيفيه التشغيل"),
         "password": MessageLookupByLibrary.simpleMessage("كلمه المرور"),
         "register": MessageLookupByLibrary.simpleMessage("تسجيل حساب"),
+        "removeYourSelfFromTheListYourNameIs":
+            MessageLookupByLibrary.simpleMessage(
+                "برجاء حذف اسمك من اللسته اسمك هوه"),
+        "selectAtLestOneUser":
+            MessageLookupByLibrary.simpleMessage("اختار علي الاقل شخص"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
+        "splashScreen": MessageLookupByLibrary.simpleMessage("splash screen"),
+        "success": MessageLookupByLibrary.simpleMessage("نجت العمليه"),
         "test": MessageLookupByLibrary.simpleMessage("تست"),
         "thisDataFromMyServerNotVchat":
             MessageLookupByLibrary.simpleMessage("هذه الداتا من سيرفر خارجي"),
+        "title": MessageLookupByLibrary.simpleMessage("العنوان"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
-        "updateProfile": MessageLookupByLibrary.simpleMessage("تحديث الحساب")
+        "updateImage": MessageLookupByLibrary.simpleMessage("تحديث الصوره"),
+        "updateName": MessageLookupByLibrary.simpleMessage("تحديث الاسم"),
+        "updateProfile": MessageLookupByLibrary.simpleMessage("تحديث الحساب"),
+        "userName": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
+        "usersHasBeenAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اضافه العضو بنجاح"),
+        "vChatUsers": MessageLookupByLibrary.simpleMessage("الاعضاء"),
+        "yourImageHasBeenUpdated":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الصوره"),
+        "yourNameHasBeenUpdated":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الاسم ")
       };
 }
