@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:record/record.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
 
 import '../../../../../services/v_chat_app_service.dart';
@@ -167,20 +168,42 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                 });
               },
               onTap: () async {
-                if (await Permission.microphone.request().isGranted) {
+                if(Platform.isIOS){
+                final isGranted = await Record().hasPermission();
+                if(isGranted){
                   setState(() {
                     isRecording = true;
                     isTyping = false;
                   });
-                } else {
-final recorder = Record();
-                  await recorder.hasPermission()
+                }else{
                   CustomAlert.error(
                     msg: VChatAppService.instance
                         .getTrans(context)
                         .youShouldAcceptMicrophoneToUseVoiceMessage(),
                   );
+                  await Permission.microphone.request();
                 }
+
+                }else{
+                  final isGranted =
+                  await Permission.microphone.request().isGranted;
+
+                  final isLimited =
+                  await Permission.microphone.request().isLimited;
+                  if (isGranted || isLimited) {
+                    setState(() {
+                      isRecording = true;
+                      isTyping = false;
+                    });
+                  } else {
+                    CustomAlert.error(
+                      msg: VChatAppService.instance
+                          .getTrans(context)
+                          .youShouldAcceptMicrophoneToUseVoiceMessage(),
+                    );
+                  }
+                }
+
               },
               child: RoundedContainer(
                 boxShape: BoxShape.circle,

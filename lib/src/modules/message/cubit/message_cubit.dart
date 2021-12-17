@@ -131,7 +131,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   void onAllMessages(List<VChatMessage> messages) {
     for (final m in messages) {
       if (this.messages.indexWhere((element) => element.id == m.id) == -1) {
-        this.messages.add(m);
+        this.messages.insert(0, m);
       }
     }
     emit(MessageLoaded(messages));

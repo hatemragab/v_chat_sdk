@@ -76,20 +76,20 @@ class LocalStorageService {
     );
   }
 
-  Future setRoomMessages(String roomId, List<VChatMessage> messages) async {
-    final messageToInsert = messages;
-    try {
-      final x = messages.sublist(0, 30);
-      messageToInsert.clear();
-      messageToInsert.addAll(x);
-    } catch (err) {
-      //
-    }
-    await database.delete(
-      MessageTable.tableName,
-      where: "${MessageTable.columnRoomId} =?",
-      whereArgs: [roomId],
-    );
+  Future setRoomMessages(String roomId, List<VChatMessage> messageToInsert) async {
+    // final messageToInsert = messages;
+    // try {
+    //   final x = messages.sublist(0, 30);
+    //   messageToInsert.clear();
+    //   messageToInsert.addAll(x);
+    // } catch (err) {
+    //   //
+    // }
+    // await database.delete(
+    //   MessageTable.tableName,
+    //   where: "${MessageTable.columnRoomId} =?",
+    //   whereArgs: [roomId],
+    // );
 
     final batch = database.batch();
     for (final msg in messageToInsert) {
@@ -100,7 +100,7 @@ class LocalStorageService {
           MessageTable.columnRoomId: msg.roomId,
           MessageTable.columnData: jsonEncode(msg.toLocalMap())
         },
-        conflictAlgorithm: ConflictAlgorithm.ignore,
+        conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
     await batch.commit(noResult: true);
@@ -114,7 +114,7 @@ class LocalStorageService {
         MessageTable.columnRoomId: msg.roomId,
         MessageTable.columnData: jsonEncode(msg.toLocalMap())
       },
-      conflictAlgorithm: ConflictAlgorithm.ignore,
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
