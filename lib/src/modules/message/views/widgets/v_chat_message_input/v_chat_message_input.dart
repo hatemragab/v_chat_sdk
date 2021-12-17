@@ -173,6 +173,8 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                     isTyping = false;
                   });
                 } else {
+final recorder = Record();
+                  await recorder.hasPermission()
                   CustomAlert.error(
                     msg: VChatAppService.instance
                         .getTrans(context)
