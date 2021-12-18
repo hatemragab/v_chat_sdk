@@ -22,7 +22,7 @@ class VChatRoomsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: RoomCubit.instance
-        ..onMessageAvatarPressed = onMessageAvatarPressed,
+        ..onMessageAvatarPressed = onMessageAvatarPressed..context = context,
       child: const VChatRoomsScreen(),
     );
   }

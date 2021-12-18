@@ -15,6 +15,7 @@ import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
 import 'models/v_chat_room.dart';
 import 'models/v_chat_user.dart';
+import 'modules/message/views/message_view.dart';
 import 'modules/rooms/cubit/room_cubit.dart';
 import 'services/auth_provider.dart';
 import 'services/local_storage_service.dart';
@@ -185,7 +186,7 @@ class VChatController {
     if (Platform.isIOS) {
       dto.platform = "ios";
     }
-    dto.password = getHashedPassword(dto.email);
+    dto.password = _getHashedPassword(dto.email);
     final user = await _authProvider.register(dto);
     await _saveUser(user);
     VChatAppService.instance.vChatUser = user;
@@ -200,8 +201,25 @@ class VChatController {
   Future<String> createSingleChat({
     required String peerEmail,
     required String message,
+    BuildContext? context,
   }) async {
-    await _vChatUsersApi.createNewSingleRoom(message, peerEmail);
+    final roomData =
+        await _vChatUsersApi.createNewSingleRoom(message, peerEmail);
+    if (context != null) {
+      final room = VChatRoom.fromMap(roomData);
+      await LocalStorageService.instance.setRoomOrUpdate(room);
+      RoomCubit.instance.updateOneRoomInRamAndSort(room);
+      RoomCubit.instance.currentRoomId = room.id;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MessageView(
+            roomId: room.id,
+          ),
+        ),
+      );
+    }
+
     return "Message has been send";
   }
 
@@ -224,7 +242,7 @@ class VChatController {
       dto.platform = "Ios";
     }
 
-    dto.password = getHashedPassword(dto.email);
+    dto.password = _getHashedPassword(dto.email);
     final user = await _authProvider.login(dto);
     await _saveUser(user);
     VChatAppService.instance.vChatUser = user;
@@ -233,7 +251,7 @@ class VChatController {
     return user;
   }
 
-  String getHashedPassword(String email) {
+  String _getHashedPassword(String email) {
     return sha512
         .convert(
           utf8.encode("${VChatAppService.instance.passwordHashKey}_$email"),

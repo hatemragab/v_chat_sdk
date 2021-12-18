@@ -17,7 +17,7 @@ class VChatProvider {
   }
 
   Future createNewSingleRoom(String msg, String peerEmail) async {
-    return (await CustomDio().send(
+    final data = (await CustomDio().send(
       reqMethod: "POST",
       path: "room/single",
       body: {
@@ -26,6 +26,7 @@ class VChatProvider {
       },
     ))
         .data['data'];
+    return data;
   }
 
   Future createNewGroupRoom({required CreateGroupRoomDto dto}) async {

@@ -41,8 +41,11 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
   Widget build(BuildContext context) {
     final t = VChatAppService.instance.getTrans(context);
     final messageController = context.read<MessageCubit>();
-    final currentRoom = roomController.rooms
-        .firstWhere((element) => element.id == roomController.currentRoomId);
+
+    final currentRoom = roomController.rooms.firstWhere(
+      (element) => element.id == roomController.currentRoomId,
+      orElse: () => roomController.rooms[0],
+    );
 
     return Scaffold(
       appBar: const MessageAppBarView(),
@@ -88,9 +91,13 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
           BlocBuilder<RoomCubit, RoomState>(
             bloc: RoomCubit.instance,
             builder: (context, state) {
-              final _room = roomController.rooms.firstWhere(
-                (element) => element.id == messageController.roomId,
+              final _index = roomController.rooms.indexWhere(
+                (element) => element.id == roomController.currentRoomId!,
               );
+              if (_index == -1) {
+                return const SizedBox();
+              }
+              final _room = roomController.rooms[_index];
 
               if (state is RoomLoaded) {
                 if (_room.roomType == RoomType.single) {
@@ -126,9 +133,13 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
             child: BlocBuilder<RoomCubit, RoomState>(
               bloc: RoomCubit.instance,
               builder: (context, state) {
-                final _room = roomController.rooms.firstWhere(
-                  (element) => element.id == messageController.roomId,
+                final _index = roomController.rooms.indexWhere(
+                  (element) => element.id == roomController.currentRoomId!,
                 );
+                if (_index == -1) {
+                  return const SizedBox();
+                }
+                final _room = roomController.rooms[_index];
 
                 if (state is RoomLoaded) {
                   if (_room.roomType == RoomType.single) {

@@ -24,21 +24,25 @@ class _UserProfileState extends State<UserProfile> {
         title: "${widget.user.name} ".text,
       ),
       body: Center(
-        child: InkWell(
-            onTap: startChat,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.messenger,
-                  size: 40,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                S.of(context).message.text,
-              ],
-            )),
+        child: Column(
+          children: [
+            InkWell(
+                onTap: startChat,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.messenger,
+                      size: 40,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    S.of(context).message.text,
+                  ],
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -48,8 +52,10 @@ class _UserProfileState extends State<UserProfile> {
       final res = await CustomAlert.chatAlert(
           context: context, peerEmail: widget.user.email);
       if (res != null) {
+
         await VChatController.instance
-            .createSingleChat(peerEmail: widget.user.email, message: res);
+            .createSingleChat(peerEmail: widget.user.email, message: res,context: context);
+
         CustomAlert.done(
           msg: S.of(context).success,
         );

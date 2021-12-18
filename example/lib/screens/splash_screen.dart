@@ -1,8 +1,10 @@
 import 'dart:developer';
+import 'package:example/controllers/app_controller.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 
 import 'home.dart';
 import 'login_screen.dart';
@@ -51,8 +53,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void startNavigate() async {
     final myModel = GetStorage().hasData("myModel");
+
     await Future.delayed(const Duration(seconds: 1));
-    log(myModel.toString());
+    final lng = GetStorage().hasData("lng");
+    if (lng) {
+      final str = GetStorage().read("lng") as String;
+      final country = str.split("_");
+
+      Provider.of<AppController>(context, listen: false)
+          .setLocale(Locale(country.first, country.last));
+    }
+
     if (myModel) {
       /// there are login data saved
       Navigator.of(context).pushAndRemoveUntil(

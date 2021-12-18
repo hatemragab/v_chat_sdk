@@ -19,58 +19,61 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
       title: BlocBuilder<RoomCubit, RoomState>(
         bloc: RoomCubit.instance,
         builder: (context, state) {
-          try {
-            final _room = roomController.rooms.firstWhere(
-              (element) => element.id == roomController.currentRoomId!,
-            );
-            if (state is RoomLoaded) {
-              final isOnline = _room.isOnline;
-              final typingSt = _room.typingStatus;
-              final isSingle = _room.roomType == RoomType.single;
-              final t = VChatAppService.instance.getTrans(context);
-              return Column(
-                children: [
-                  _room.title.text,
-                  Builder(
-                    builder: (_) {
-                      if (isSingle) {
-                        if (typingSt.status != RoomTypingType.stop) {
-                          if (typingSt.status == RoomTypingType.typing) {
-                            return t.typing().b2.color(Colors.green);
-                          }
-                          if (typingSt.status == RoomTypingType.recording) {
-                            return t.recording().b2.color(Colors.green);
-                          }
-                          return "${typingSt.status.inString} ..."
-                              .b2
-                              .color(Colors.green);
-                        }
-                        if (isOnline == 1) {
-                          return t.online().b2;
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      } else {
-                        if (typingSt.status != RoomTypingType.stop) {
-                          return "${typingSt.name} ${t.isTranslate()} ${typingSt.status.inString} ..."
-                              .b2
-                              .color(Colors.green);
-                        } else {
-                          return "${_room.roomMembersCount.toString()} - ${VChatAppService.instance.maxGroupChatUsers}"
-                              .b2
-                              .height(1.6);
-                        }
-                      }
-                    },
-                  ),
-                ],
-              );
+          final _index = roomController.rooms.indexWhere(
+            (element) => element.id == roomController.currentRoomId!,
+          );
+          if (_index == -1) {
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
             }
-            return _room.title.text;
-          } catch (er) {
-            Navigator.pop(context);
-            rethrow;
+            return const SizedBox();
           }
+          final _room = roomController.rooms[_index];
+
+          if (state is RoomLoaded) {
+            final isOnline = _room.isOnline;
+            final typingSt = _room.typingStatus;
+            final isSingle = _room.roomType == RoomType.single;
+            final t = VChatAppService.instance.getTrans(context);
+            return Column(
+              children: [
+                _room.title.text,
+                Builder(
+                  builder: (_) {
+                    if (isSingle) {
+                      if (typingSt.status != RoomTypingType.stop) {
+                        if (typingSt.status == RoomTypingType.typing) {
+                          return t.typing().b2.color(Colors.green);
+                        }
+                        if (typingSt.status == RoomTypingType.recording) {
+                          return t.recording().b2.color(Colors.green);
+                        }
+                        return "${typingSt.status.inString} ..."
+                            .b2
+                            .color(Colors.green);
+                      }
+                      if (isOnline == 1) {
+                        return t.online().b2;
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    } else {
+                      if (typingSt.status != RoomTypingType.stop) {
+                        return "${typingSt.name} ${t.isTranslate()} ${typingSt.status.inString} ..."
+                            .b2
+                            .color(Colors.green);
+                      } else {
+                        return "${_room.roomMembersCount.toString()} - ${VChatAppService.instance.maxGroupChatUsers}"
+                            .b2
+                            .height(1.6);
+                      }
+                    }
+                  },
+                ),
+              ],
+            );
+          }
+          return _room.title.text;
         },
       ),
       actions: [
@@ -78,9 +81,13 @@ class MessageAppBarView extends StatelessWidget implements PreferredSizeWidget {
           child: BlocBuilder<RoomCubit, RoomState>(
             bloc: RoomCubit.instance,
             builder: (context, state) {
-              final _room = roomController.rooms.firstWhere(
+              final _index = roomController.rooms.indexWhere(
                 (element) => element.id == roomController.currentRoomId!,
               );
+              if (_index == -1) {
+                return const SizedBox();
+              }
+              final _room = roomController.rooms[_index];
               return Padding(
                 padding: const EdgeInsets.only(right: 5),
                 child: InkWell(

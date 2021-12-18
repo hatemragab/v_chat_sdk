@@ -1,3 +1,4 @@
+import 'package:example/utils/br_language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,7 +10,7 @@ import 'controllers/home_controller.dart';
 import 'generated/l10n.dart';
 import 'utils/v_chat_custom_widgets.dart';
 
-const isUseRealServer = true;
+const isUseRealServer = false;
 
 const serverIp =
     isUseRealServer ? "http://170.178.195.150:81" : "http://10.0.2.2:3000";
@@ -36,6 +37,11 @@ void main() async {
       languageCode: "ar",
       countryCode: "EG",
       lookupMessages: ArLanguage(),
+    ),
+    VChatAddLanguageModel(
+      languageCode: "pt",
+      countryCode: "BR",
+      lookupMessages: BrLanguage(),
     ),
   ]);
 

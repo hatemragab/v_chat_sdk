@@ -25,6 +25,7 @@ class RoomCubit extends Cubit<RoomState> {
   )? onMessageAvatarPressed;
 
   final _provider = RoomsApiProvider();
+  late BuildContext context;
 
   final rooms = <VChatRoom>[];
   int loadMorePage = 1;
@@ -153,5 +154,9 @@ class RoomCubit extends Cubit<RoomState> {
 
   VChatRoom getRoomById(String roomId) {
     return rooms.firstWhere((element) => element.id == roomId);
+  }
+
+  void pop() {
+
   }
 }

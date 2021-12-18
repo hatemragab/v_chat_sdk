@@ -98,6 +98,11 @@ class SocketService {
       final roomId = res['roomId'] as String;
       RoomCubit.instance.updateRoomOnlineChanged(status, roomId);
     });
+    _socket!.on("kick_from_group", (roomId ) {
+      if(RoomCubit.instance.isRoomOpen(roomId as String)){
+        RoomCubit.instance.pop();
+      }
+    });
 
     _socket!.on("user_typing_changed", (data) {
       RoomCubit.instance.updateRoomTypingChanged(

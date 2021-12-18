@@ -34,14 +34,21 @@ class _SettingScreenState extends State<SettingScreen> {
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
                     context: context,
-                    data: [S.of(context).ar, S.of(context).en]);
+                    data: [S.of(context).ar, S.of(context).en,"pt_BR"] );
                 if (res == 0) {
+                  await GetStorage().write("lng", "ar");
                   Provider.of<AppController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "ar"));
                 }
                 if (res == 1) {
+                  await GetStorage().write("lng", "en");
                   Provider.of<AppController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "en"));
+                }
+                if (res == 2) {
+                  await GetStorage().write("lng", "pt_BR");
+                  Provider.of<AppController>(context, listen: false)
+                      .setLocale(const Locale.fromSubtags(languageCode: "pt",countryCode: "BR"));
                 }
               },
             ),
@@ -123,7 +130,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       context: context, peerEmail: "hatemragap5@gmail.com");
                   if (res != null) {
                     await VChatController.instance.createSingleChat(
-                        peerEmail: "hatemragap5@gmail.com", message: res);
+                        peerEmail: "hatemragap5@gmail.com", message: res,context: context);
                     CustomAlert.showSuccess(
                       context: context,
                       err: S.of(context).success,
@@ -184,7 +191,7 @@ class ProfileItem extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            title.text
+            Flexible(child: title.text)
           ],
         ),
       ),

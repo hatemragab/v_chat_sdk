@@ -21,7 +21,6 @@ class HomeController extends ChangeNotifier {
     scrollController.addListener(_scrollListener);
 
     /// here user will be online this must be init one user authenticated
-
     if (GetStorage().hasData("myModel")) {
       /// this mean my user has auth so i will bind chat controller to make him online else will throw exception
       VChatController.instance.bindChatControllers(
@@ -52,7 +51,7 @@ class HomeController extends ChangeNotifier {
           await CustomAlert.chatAlert(context: context, peerEmail: email);
       if (res != null) {
         await VChatController.instance
-            .createSingleChat(peerEmail: email, message: res);
+            .createSingleChat(peerEmail: email, message: res,context: context);
         CustomAlert.done(
           msg: S.of(context).success,
         );
