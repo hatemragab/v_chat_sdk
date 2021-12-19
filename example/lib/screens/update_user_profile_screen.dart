@@ -7,6 +7,7 @@ import 'package:textless/textless.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 
+/// this is just example you can define your own design
 class UpdateUserProfileScreen extends StatefulWidget {
   const UpdateUserProfileScreen({Key? key}) : super(key: key);
 
@@ -53,18 +54,6 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
               ),
               ElevatedButton(
                   onPressed: updateName, child: S.of(context).updateName.text),
-
-              // CupertinoTextField(
-              //   placeholder: "old Pass ",
-              //   controller: oldPassC,
-              // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // CupertinoTextField(
-              //   placeholder: "new Pass ",
-              //   controller: newPassC,
-              // ),
               const SizedBox(
                 height: 10,
               ),
@@ -81,8 +70,11 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
       if (nameC.text.isEmpty) {
         throw S.of(context).enterTheName;
       }
+
+      ///update your system first
       // await CustomDio()
-      //     .send(reqMethod: "patch", path: "user", body: {"name": nameC.text});
+      //     .send(reqMethod: "patch", path: "YOUR BACKEND/update", body: {"name": nameC.text});
+      /// then update v chat so user name will be updated in chats
       await VChatController.instance
           .updateUserName(name: nameC.text.toString());
       nameC.clear();
@@ -111,8 +103,8 @@ class _UpdateUserProfileScreenState extends State<UpdateUserProfileScreen> {
         ///update to your service first
         // (await CustomDio().uploadFile(
         //   filePath: img.path,
-        //   isPost: false,
-        //   apiEndPoint: "user",
+        //
+        //   apiEndPoint: "YOUR BACKEND/update",
         // ))
         //     .data['data']
         //     .toString();

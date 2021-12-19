@@ -18,23 +18,29 @@ class LoginController {
     try {
       CustomAlert.customLoadingDialog(context: context);
 
-      ///Login on your system backend
+      ///First Login on your system backend
+      ///Once success login then start login to v chat sdk
       // final d = (await CustomDio().send(
       //         reqMethod: "post",
-      //         path: "user/login",
+      //         path: "YOUR SYSTEM APIS /LOGIN",
       //         body: {"email": email, "password": password}))
       //     .data['data'];
       // final u = User.fromMap(d);
 
       ///Login on v_chat_sdk system
+      ///please note if your app already in production you need to see how to migrate old users from
+      ///https://hatemragab.github.io/VChatSdk-Documentation/docs/backend_installation/z_migrate_old_users
       final u =
           await VChatController.instance.login(context: context, email: email);
+
+      ///save user in example app you can save your user by your way
       await GetStorage().write("myModel", u.toMap());
       Navigator.pop(context);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const Home()),
           (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
+      ///catch v chat sdk exception may be no user found in v chat
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());
       rethrow;

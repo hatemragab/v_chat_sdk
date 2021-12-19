@@ -3,20 +3,18 @@ import 'package:example/utils/load_more_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../models/user.dart';
 import '../utils/custom_alert.dart';
 import '../utils/custom_dio.dart';
 
 class HomeController extends ChangeNotifier {
-  int currentIndex = 0;
+  int navigationTabsIndex = 0;
 
   final usersList = <User>[];
   LoadMoreStatus loadingStatus = LoadMoreStatus.loaded;
   final scrollController = ScrollController();
   String searchText = "";
-
   void init(BuildContext context) {
     scrollController.addListener(_scrollListener);
 
@@ -51,7 +49,7 @@ class HomeController extends ChangeNotifier {
           await CustomAlert.chatAlert(context: context, peerEmail: email);
       if (res != null) {
         await VChatController.instance
-            .createSingleChat(peerEmail: email, message: res,context: context);
+            .createSingleChat(peerEmail: email, message: res, context: context);
         CustomAlert.done(
           msg: S.of(context).success,
         );
@@ -74,7 +72,7 @@ class HomeController extends ChangeNotifier {
   }
 
   void onTabTapped(int index) {
-    currentIndex = index;
+    navigationTabsIndex = index;
     notifyListeners();
   }
 

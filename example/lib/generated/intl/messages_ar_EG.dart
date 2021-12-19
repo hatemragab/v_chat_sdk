@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("البريد"),
         "en": MessageLookupByLibrary.simpleMessage("انجليزي"),
         "enterTheName": MessageLookupByLibrary.simpleMessage("ادخل الاسم"),
+        "enterTitle": MessageLookupByLibrary.simpleMessage("ادخل العنوان"),
         "error": MessageLookupByLibrary.simpleMessage("خطا"),
         "groupName": MessageLookupByLibrary.simpleMessage("اسم الجروب شات"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسيه"),
@@ -68,11 +69,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
         "members": MessageLookupByLibrary.simpleMessage("الاعضاء"),
         "message": MessageLookupByLibrary.simpleMessage("رساله"),
-        "myGreatRooms": MessageLookupByLibrary.simpleMessage("كل المحادثات"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
         "newName": MessageLookupByLibrary.simpleMessage("الاسم الجديد"),
         "off": MessageLookupByLibrary.simpleMessage("ايقاف"),
-        "offline": MessageLookupByLibrary.simpleMessage("قافل"),
         "ok": MessageLookupByLibrary.simpleMessage("تم"),
         "on": MessageLookupByLibrary.simpleMessage("تشغيل"),
         "ourFullDocumentation":
@@ -84,12 +83,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "برجاء حذف اسمك من اللسته اسمك هوه"),
         "selectAtLestOneUser":
             MessageLookupByLibrary.simpleMessage("اختار علي الاقل شخص"),
+        "selected": MessageLookupByLibrary.simpleMessage("تم اختيارهم"),
+        "send": MessageLookupByLibrary.simpleMessage("ارسال"),
+        "setGroupImage":
+            MessageLookupByLibrary.simpleMessage("اضافه صوره للجروب اجباري"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "splashScreen": MessageLookupByLibrary.simpleMessage("splash screen"),
         "success": MessageLookupByLibrary.simpleMessage("نجت العمليه"),
-        "test": MessageLookupByLibrary.simpleMessage("تست"),
-        "thisDataFromMyServerNotVchat":
-            MessageLookupByLibrary.simpleMessage("هذه الداتا من سيرفر خارجي"),
         "title": MessageLookupByLibrary.simpleMessage("العنوان"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateImage": MessageLookupByLibrary.simpleMessage("تحديث الصوره"),
@@ -101,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "vChatUsers": MessageLookupByLibrary.simpleMessage("الاعضاء"),
         "yourImageHasBeenUpdated":
             MessageLookupByLibrary.simpleMessage("تم تحديث الصوره"),
+        "yourMessage": MessageLookupByLibrary.simpleMessage("رسالتك"),
         "yourNameHasBeenUpdated":
             MessageLookupByLibrary.simpleMessage("تم تحديث الاسم ")
       };

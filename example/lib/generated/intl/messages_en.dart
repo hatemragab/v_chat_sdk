@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "en": MessageLookupByLibrary.simpleMessage("en"),
         "enterTheName": MessageLookupByLibrary.simpleMessage("Enter the name"),
+        "enterTitle": MessageLookupByLibrary.simpleMessage("Enter title"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "groupName": MessageLookupByLibrary.simpleMessage("Group Name"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -69,11 +70,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("login"),
         "members": MessageLookupByLibrary.simpleMessage("Members"),
         "message": MessageLookupByLibrary.simpleMessage("Message"),
-        "myGreatRooms": MessageLookupByLibrary.simpleMessage("My great rooms"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "newName": MessageLookupByLibrary.simpleMessage("new name"),
         "off": MessageLookupByLibrary.simpleMessage("Off"),
-        "offline": MessageLookupByLibrary.simpleMessage("offline"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),
         "on": MessageLookupByLibrary.simpleMessage("On"),
         "ourFullDocumentation":
@@ -85,12 +84,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Remove your self from the list your name is"),
         "selectAtLestOneUser":
             MessageLookupByLibrary.simpleMessage("select at lest one user"),
+        "selected": MessageLookupByLibrary.simpleMessage("selected"),
+        "send": MessageLookupByLibrary.simpleMessage("send"),
+        "setGroupImage":
+            MessageLookupByLibrary.simpleMessage("Set Group Image"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "splashScreen": MessageLookupByLibrary.simpleMessage("splash screen"),
         "success": MessageLookupByLibrary.simpleMessage("success"),
-        "test": MessageLookupByLibrary.simpleMessage("test"),
-        "thisDataFromMyServerNotVchat": MessageLookupByLibrary.simpleMessage(
-            "This data from my server not vchat"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateImage": MessageLookupByLibrary.simpleMessage("update image"),
@@ -102,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "vChatUsers": MessageLookupByLibrary.simpleMessage("v chat users"),
         "yourImageHasBeenUpdated": MessageLookupByLibrary.simpleMessage(
             "your image has been updated !"),
+        "yourMessage": MessageLookupByLibrary.simpleMessage("your message"),
         "yourNameHasBeenUpdated":
             MessageLookupByLibrary.simpleMessage("your name has been updated !")
       };

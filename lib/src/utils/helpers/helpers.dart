@@ -68,6 +68,9 @@ class Helpers {
     if (m.messageType == MessageType.add) {
       return "${m.content} ${trans.addedBy()} ${m.senderName}";
     }
+    if (m.messageType == MessageType.info) {
+      return "${m.senderName} ${trans.updateGroupData()}";
+    }
 
     if (m.messageType == MessageType.upgrade) {
       return "${m.content} ${trans.upgradedToAdminBy()} ${m.senderName}";

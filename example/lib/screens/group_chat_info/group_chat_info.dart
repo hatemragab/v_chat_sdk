@@ -12,6 +12,7 @@ import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 import 'package:image_picker/image_picker.dart';
 
+/// please Note this is example you can have your own design
 class GroupChatInfo extends StatefulWidget {
   final String groupId;
   final VChatGroupChatInfo groupChatInfo;
@@ -28,7 +29,8 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
   final members = <VChatGroupUser>[];
   late bool isMeAdmin;
 
-  int paginationIndex = 20;
+  /// user paginationIndex and increase it by +1 to get next page
+  int paginationIndex = 1;
   final scrollController = ScrollController();
   final myModel = GetStorage().read("myModel");
   LoadMoreStatus loadingStatus = LoadMoreStatus.loaded;
@@ -39,6 +41,10 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
   @override
   void initState() {
     scrollController.addListener(_scrollListener);
+
+    /// is current user open the app is admin so you can show or hide update group data
+    /// even is it available for not group admin will throw exception
+    isMeAdmin = widget.groupChatInfo.isMyAdmin;
     getGroupMembers();
     super.initState();
   }
@@ -46,7 +52,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: groupChatInfo.isAdmin
+      floatingActionButton: groupChatInfo.isMyAdmin
           ? FloatingActionButton(
               onPressed: () async {
                 final users = await Navigator.push<List<User>>(
@@ -62,6 +68,10 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                 }
                 try {
                   CustomAlert.customLoadingDialog(context: context);
+
+                  /// add Members To GroupChat will add this users to the group
+                  /// will throw exception if current user not admin
+                  /// if you chose users already in group noting will happen
                   await VChatController.instance.addMembersToGroupChat(
                       groupId: widget.groupId,
                       usersEmails: users.map((e) => e.email).toList());
@@ -100,34 +110,41 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             children: [
               InkWell(
                 onTap: () {
-                  updateGroupImage();
+                  if (isMeAdmin) {
+                    updateGroupImage();
+                  }
                 },
                 child: Stack(
                   children: [
                     ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: CachedNetworkImage(
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
-                          imageUrl: groupChatInfo.imageThumb,
-                        )),
-                    Positioned(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.grey, shape: BoxShape.circle),
-                        child: Icon(
-                          Icons.camera,
-                          color: Colors.white,
-                        ),
+                      borderRadius: BorderRadius.circular(100),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: CachedNetworkImage(
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                        imageUrl: groupChatInfo.imageThumb,
                       ),
-                      bottom: 1,
-                      right: 2,
+                    ),
+                    Visibility(
+                      visible: isMeAdmin,
+                      child: Positioned(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey, shape: BoxShape.circle),
+                          child: Icon(
+                            Icons.camera,
+                            color: Colors.white,
+                          ),
+                        ),
+                        bottom: 1,
+                        right: 2,
+                      ),
                     )
                   ],
                 ),
@@ -146,20 +163,22 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                     SizedBox(
                       width: 5,
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.edit,
-                          size: 19,
-                        )
-                      ],
+                    Visibility(
+                      visible: isMeAdmin,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            size: 19,
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
               ),
               Divider(),
               ListView.separated(
-                controller: scrollController,
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -196,7 +215,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                       ),
                       Row(
                         children: [
-                          widget.groupChatInfo.isAdmin
+                          widget.groupChatInfo.isMyAdmin
                               ? getAdminTrailing(members[index])
                               : SizedBox()
                         ],
@@ -216,7 +235,6 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     scrollController.dispose();
   }
@@ -234,8 +252,10 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
 
   Future getGroupMembers() async {
     this.members.clear();
-    final members = await VChatController.instance.getGroupMembers(
-        groupId: widget.groupId, paginationIndex: paginationIndex);
+
+    /// this api will get group users if current use already member in this group
+    final members = await VChatController.instance
+        .getGroupMembers(groupId: widget.groupId, paginationIndex: 1);
 
     setState(() {
       this.members.addAll(members);
@@ -258,6 +278,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
             TextButton(
                 onPressed: () async {
                   try {
+                    /// use this public api to update group data
                     await VChatController.instance.updateGroupChatTitle(
                         groupId: widget.groupId, title: txt);
                     groupChatInfo = groupChatInfo.copyWith(title: txt);
@@ -285,20 +306,20 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
     try {
       final picker = ImagePicker();
       final img = await picker.pickImage(source: ImageSource.gallery);
-
-      CustomAlert.customLoadingDialog(context: context);
-
       if (img != null) {
+        CustomAlert.customLoadingDialog(context: context);
         if (File(img.path).lengthSync() > 1024 * 1024 * 20) {
           throw S.of(context).imageSizeMustBeLessThan20Mb;
         }
-      }
-      final newImage = await VChatController.instance
-          .updateGroupChatImage(path: img!.path, groupId: widget.groupId);
-      groupChatInfo = groupChatInfo.copyWith(imageThumb: newImage);
-      setState(() {});
 
-      Navigator.pop(context);
+        /// use this public api to update group image
+        final newImage = await VChatController.instance
+            .updateGroupChatImage(path: img.path, groupId: widget.groupId);
+        groupChatInfo = groupChatInfo.copyWith(imageThumb: newImage);
+        setState(() {});
+
+        Navigator.pop(context);
+      }
     } catch (err) {
       Navigator.pop(context);
       CustomAlert.showSuccess(context: context, err: err.toString());
@@ -312,7 +333,8 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
             ? InkWell(
                 onTap: () async {
                   try {
-                    await VChatController.instance.downGradeUserFromGroup(
+                    /// downgrade Group Admin User only if you admin
+                    await VChatController.instance.downgradeGroupAdmin(
                       groupId: widget.groupId,
                       userId: user.id,
                     );
@@ -331,7 +353,8 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
             : InkWell(
                 onTap: () async {
                   try {
-                    await VChatController.instance.upgradeUserFromGroup(
+                    /// upgrade upgrade Group User only if you admin
+                    await VChatController.instance.upgradeGroupUser(
                         groupId: widget.groupId, userId: user.id);
                     members.clear();
                     getGroupMembers();
@@ -354,6 +377,10 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
         InkWell(
           onTap: () async {
             try {
+              /// will delete user from group only if this user in the group
+              /// and current current user is admin
+              /// admin can delete admin but cant delete the group creator
+              /// group creator can delete any user but cant be deleted
               await VChatController.instance.kickUserFromGroup(
                   groupId: widget.groupId, kickedId: user.id);
               members.clear();
@@ -373,18 +400,21 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
   }
 
   Future<List<VChatGroupUser>> getGroupMembersLoadMore() async {
+    /// load more users group data don't forget to add one to paginationIndex
     return await VChatController.instance.getGroupMembers(
         groupId: widget.groupId, paginationIndex: paginationIndex);
   }
 
   Future<void> loadMore() async {
-    paginationIndex += 20;
+    paginationIndex += 1;
+
     final loadedUsers = await getGroupMembersLoadMore();
+
     loadingStatus = LoadMoreStatus.loaded;
     if (loadedUsers.isEmpty) {
       loadingStatus = LoadMoreStatus.completed;
-      members.addAll(loadedUsers);
-      setState(() {});
     }
+    members.addAll(loadedUsers);
+    setState(() {});
   }
 }

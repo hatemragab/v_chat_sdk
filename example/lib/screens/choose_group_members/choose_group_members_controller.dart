@@ -7,6 +7,8 @@ import 'package:example/utils/load_more_type.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
+/// this module for choose users to create group chat
+/// please Note this is example you can have your own design
 class ChooseGroupMembersController extends ChangeNotifier {
   late BuildContext context;
   final users = <User>[];

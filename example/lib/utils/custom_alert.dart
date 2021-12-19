@@ -134,7 +134,7 @@ class CustomAlert {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: "your message".text,
+        title: S.of(context).yourMessage.text,
         content: TextField(
           onChanged: (value) {
             txt = value;
@@ -145,13 +145,13 @@ class CustomAlert {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: "Cancel".text,
+            child: S.of(context).cancel.text,
           ),
           TextButton(
             onPressed: () async {
               Navigator.pop(context, txt);
             },
-            child: "Send".text,
+            child: S.of(context).send.text,
           ),
         ],
       ),

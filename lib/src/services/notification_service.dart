@@ -219,7 +219,7 @@ class NotificationService {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.data['roomId'] != null) {
-    await  LocalStorageService.instance.init();
+    await LocalStorageService.instance.init();
     await LocalStorageService.instance.insertMessage(
       message.data['roomId'].toString(),
       VChatMessage.fromMap(message.data['message']),

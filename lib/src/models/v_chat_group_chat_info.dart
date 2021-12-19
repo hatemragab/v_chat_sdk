@@ -19,7 +19,7 @@ class VChatGroupChatInfo {
     required this.totalGroupMembers,
   });
 
-  bool get isAdmin => role == VChatUserGroupRole.admin;
+  bool get isMyAdmin => role == VChatUserGroupRole.admin;
 
   @override
   String toString() {

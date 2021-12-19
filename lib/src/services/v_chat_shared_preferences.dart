@@ -19,7 +19,9 @@ class SharedPrefsInstance {
       instance.setInt(StorageKeys.databaseVersion, VChatConfig.databaseVersion),
       instance.setInt(StorageKeys.backendBuild, VChatConfig.backendBuild),
       instance.setString(
-          StorageKeys.backendVersion, VChatConfig.backendVersion),
+        StorageKeys.backendVersion,
+        VChatConfig.backendVersion,
+      ),
       instance.setString(StorageKeys.packageBuild, VChatConfig.packageVersion),
     ]);
   }

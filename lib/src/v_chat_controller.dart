@@ -61,7 +61,7 @@ class VChatController {
     required bool enableLogger,
     required String passwordHashKey,
     int maxMediaUploadSize = 50 * 1000 * 1000,
-    int maxGroupChatUsers = 300,
+    int maxGroupChatUsers = 512,
   }) async {
     ///init some service
     await VChatAppService.instance.init(isUseFirebase: isUseFirebase);
@@ -141,6 +141,7 @@ class VChatController {
     return _vChatUsersApi.updateUserImage(path: imagePath);
   }
 
+  /// make sure you init v chat in the Home page of you app to start receive notifications
   /// when you call this function the user will be online and can receive notification
   /// first you have to login or register in v chat other wise will throw Exception
   Future<void> bindChatControllers({
@@ -195,6 +196,7 @@ class VChatController {
     return user;
   }
 
+  /// [context] if you pass the context the the chat will open after send message
   /// **throw** You cant start chat if you start chat your self
   /// **throw** Exception if peer Email Not in v chat Data base ! so first you must migrate all users
   /// **throw** No internet connection
@@ -352,6 +354,10 @@ class VChatController {
     return _vChatUsersApi.updateGroupImage(groupId: groupId, path: path);
   }
 
+  /// will delete user from group only if this user in the group
+  /// and current current user is admin
+  /// admin can delete admin but cant delete the group creator
+  /// group creator can delete any user but cant be deleted
   /// throw exception if current user not admin or if kick the group creator of kick your self be aware !
   /// **throw** No internet connection
   Future kickUserFromGroup({
@@ -364,9 +370,9 @@ class VChatController {
     );
   }
 
-  /// throw exception if current user not admin or if downgrade the group creator
+  /// throw exception if current user not admin or if downgrade the group creator members cant downgrade admins
   /// **throw** No internet connection
-  Future downGradeUserFromGroup({
+  Future downgradeGroupAdmin({
     required String groupId,
     required String userId,
   }) async {
@@ -378,7 +384,7 @@ class VChatController {
 
   /// throw exception if current user not admin
   /// **throw** No internet connection
-  Future upgradeUserFromGroup({
+  Future upgradeGroupUser({
     required String groupId,
     required String userId,
   }) async {

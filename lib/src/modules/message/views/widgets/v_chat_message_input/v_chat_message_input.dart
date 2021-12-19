@@ -9,9 +9,9 @@ import 'package:record/record.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
 
 import '../../../../../services/v_chat_app_service.dart';
-import '../../../../../utils/v_chat_config.dart';
 import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
 import '../../../../../utils/custom_widgets/rounded_container.dart';
+import '../../../../../utils/v_chat_config.dart';
 import 'attachment_picker_widget.dart';
 import 'message_filed.dart';
 import 'message_recored_view.dart';
@@ -168,28 +168,27 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                 });
               },
               onTap: () async {
-                if(Platform.isIOS){
-                final isGranted = await Record().hasPermission();
-                if(isGranted){
-                  setState(() {
-                    isRecording = true;
-                    isTyping = false;
-                  });
-                }else{
-                  CustomAlert.error(
-                    msg: VChatAppService.instance
-                        .getTrans(context)
-                        .youShouldAcceptMicrophoneToUseVoiceMessage(),
-                  );
-                  await Permission.microphone.request();
-                }
-
-                }else{
+                if (Platform.isIOS) {
+                  final isGranted = await Record().hasPermission();
+                  if (isGranted) {
+                    setState(() {
+                      isRecording = true;
+                      isTyping = false;
+                    });
+                  } else {
+                    CustomAlert.error(
+                      msg: VChatAppService.instance
+                          .getTrans(context)
+                          .youShouldAcceptMicrophoneToUseVoiceMessage(),
+                    );
+                    await Permission.microphone.request();
+                  }
+                } else {
                   final isGranted =
-                  await Permission.microphone.request().isGranted;
+                      await Permission.microphone.request().isGranted;
 
                   final isLimited =
-                  await Permission.microphone.request().isLimited;
+                      await Permission.microphone.request().isLimited;
                   if (isGranted || isLimited) {
                     setState(() {
                       isRecording = true;
@@ -203,7 +202,6 @@ class _VChatMessageInputState extends State<VChatMessageInput> {
                     );
                   }
                 }
-
               },
               child: RoundedContainer(
                 boxShape: BoxShape.circle,

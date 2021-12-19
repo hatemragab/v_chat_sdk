@@ -128,5 +128,7 @@ abstract class VChatLookupString {
 
   String storagePermissionMustBeAcceptedToDownloadTheFile();
 
-  String noChatsYet() ;
+  String noChatsYet();
+
+  String updateGroupData();
 }

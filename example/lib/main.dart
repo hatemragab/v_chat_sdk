@@ -10,7 +10,7 @@ import 'controllers/home_controller.dart';
 import 'generated/l10n.dart';
 import 'utils/v_chat_custom_widgets.dart';
 
-const isUseRealServer = false;
+const isUseRealServer = true;
 
 const serverIp =
     isUseRealServer ? "http://170.178.195.150:81" : "http://10.0.2.2:3000";
@@ -18,7 +18,6 @@ const serverIp =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-
 
   await VChatController.instance.init(
     baseUrl: Uri.parse(serverIp),

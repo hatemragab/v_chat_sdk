@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:textless/textless.dart';
 import 'choose_group_members_controller.dart';
 
+/// please Note this is example you can have your own design
 class ChooseGroupMembersPage extends StatelessWidget {
   final bool isFromGroupInfo;
 

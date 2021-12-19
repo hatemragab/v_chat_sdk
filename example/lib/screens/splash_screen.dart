@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:example/controllers/app_controller.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';

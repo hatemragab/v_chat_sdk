@@ -25,6 +25,8 @@ class _UserProfileState extends State<UserProfile> {
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InkWell(
                 onTap: startChat,
@@ -52,9 +54,8 @@ class _UserProfileState extends State<UserProfile> {
       final res = await CustomAlert.chatAlert(
           context: context, peerEmail: widget.user.email);
       if (res != null) {
-
-        await VChatController.instance
-            .createSingleChat(peerEmail: widget.user.email, message: res,context: context);
+        await VChatController.instance.createSingleChat(
+            peerEmail: widget.user.email, message: res, context: context);
 
         CustomAlert.done(
           msg: S.of(context).success,

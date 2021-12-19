@@ -9,7 +9,6 @@ import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
 import 'package:v_chat_sdk/src/services/notification_service.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_typing_type.dart';
 import '../../../models/v_chat_message.dart';

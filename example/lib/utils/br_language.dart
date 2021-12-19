@@ -1,7 +1,6 @@
 import 'package:v_chat_sdk/v_chat_sdk.dart';
 
-class BrLanguage extends VChatLookupString{
-
+class BrLanguage extends VChatLookupString {
   @override
   String areYouSure() => "Tem certeza";
 
@@ -63,7 +62,8 @@ class BrLanguage extends VChatLookupString{
   String test() => "teste";
 
   @override
-  String thisOperationDoneSuccessfully() => "esta operação foi concluída com sucesso totalmente";
+  String thisOperationDoneSuccessfully() =>
+      "esta operação foi concluída com sucesso totalmente";
 
   @override
   String thisOperationFailed() => "esta operação falhou";
@@ -181,7 +181,8 @@ class BrLanguage extends VChatLookupString{
   String leave() => "sair";
 
   @override
-  String messageCopiedToClipboard() => "mensagem copiada para a área de transferência";
+  String messageCopiedToClipboard() =>
+      "mensagem copiada para a área de transferência";
 
   @override
   String notConnectedToServerYet() => "ainda não conectado ao servidor";
@@ -202,6 +203,8 @@ class BrLanguage extends VChatLookupString{
       "A permissão de armazenamento deve ser aceita para fazer o download do arquivo";
 
   @override
-  String noChatsYet() =>"no Chats Yet";
+  String noChatsYet() => "no Chats Yet";
 
+  @override
+  String updateGroupData() => "atualizar os dados do grupo";
 }

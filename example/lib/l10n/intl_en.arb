@@ -1,8 +1,4 @@
 {
-  "test": "test",
-  "offline": "offline",
-  "myGreatRooms": "My great rooms",
-  "thisDataFromMyServerNotVchat": "This data from my server not vchat",
   "settings": "Settings",
   "home": "Home",
   "chats": "Chats",
@@ -59,5 +55,10 @@
   "yourImageHasBeenUpdated": "your image has been updated !",
   "userName": "User name",
   "loading": "Loading ...",
-  "success": "success"
+  "success": "success",
+  "yourMessage": "your message",
+  "send": "send",
+  "enterTitle": "Enter title",
+  "selected": "selected",
+  "setGroupImage": "Set Group Image"
 }

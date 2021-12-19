@@ -110,14 +110,20 @@ Don't forget to see the example attached to github here <a href="https://github.
     <td>👍</td>
     <td>👍</td>
   </tr>
-
+ </tr>
+    <tr>
+    <td>un read message count</td>
+    <td>👍</td>
+    <td>👍</td>
+  </tr>
  <tr>
     <td>smooth performance</td>
     <td>👍</td>
     <td>👍</td>
+
  </tr>
     <tr>
-    <td>Group Chat v1 added</td>
+    <td>Group Chat with administration system</td>
     <td>👍</td>
     <td>👍</td>
   </tr>

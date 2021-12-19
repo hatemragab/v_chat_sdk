@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:textless/textless.dart';
 
+/// please Note this is example you can have your own design
 class CreateGroupPage extends StatelessWidget {
   final List<User> users;
 
@@ -30,7 +31,7 @@ class CreateGroupScreen extends StatelessWidget {
     final controller = context.watch<CreateGroupController>();
     return Scaffold(
       appBar: AppBar(
-        title: "selected ${controller.users.length}".text,
+        title: "${S.of(context).selected} ${controller.users.length}".text,
         elevation: 0,
         centerTitle: true,
       ),
@@ -41,7 +42,7 @@ class CreateGroupScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              "Set Group Image".h6.alignCenter,
+              S.of(context).setGroupImage.h6.alignCenter,
               InkWell(
                 onTap: controller.pickGroupImage,
                 child: controller.imagePath != null

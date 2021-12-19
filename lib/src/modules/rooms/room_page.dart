@@ -7,9 +7,26 @@ import '../../utils/custom_widgets/connection_checker.dart';
 import 'cubit/room_cubit.dart';
 import 'widgets/room_item.dart';
 
+/// [isGroupChat] will be true only if the current chat is group
+/// [isGroupChat] == false then [uniqueId] will be the unique id of user witch you send to v chat while register then you can redirect it to user profile
+/// And [vChatGroupChatInfo] will be null
+/// [isGroupChat] == true then the [uniqueId] is the group id you will need to send it to the group apis like update and add users
+/// And [vChatGroupChatInfo] will be the group Data
+/// you can navigate to this page and define your appbar
+///
+/// ```dart
+///   Navigator.of(context).push(
+///       MaterialPageRoute(
+///         builder: (_) => Scaffold(
+///          appBar: AppBar(),
+///           body: const VChatRoomsView(),
+///         ),
+///       ),
+///     );
+///```
+///
+/// ** Make sure to call this widget only if user has `authenticated` to v chat other will throw exception **
 class VChatRoomsView extends StatelessWidget {
-  /// return the unique id of user witch you send to v chat while register if single chat
-  /// if isGroupChat then group data will be vChatGroupChatInfo and group id will be in uniqueId
   final void Function(
     bool isGroupChat,
     String uniqueId,
@@ -23,7 +40,8 @@ class VChatRoomsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: RoomCubit.instance
-        ..onMessageAvatarPressed = onMessageAvatarPressed..context = context,
+        ..onMessageAvatarPressed = onMessageAvatarPressed
+        ..context = context,
       child: const VChatRoomsScreen(),
     );
   }
@@ -39,7 +57,6 @@ class VChatRoomsScreen extends StatelessWidget {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-
         children: [
           const ConnectionChecker(),
           const SizedBox(
@@ -50,11 +67,18 @@ class VChatRoomsScreen extends StatelessWidget {
               if (state is RoomInitial) {
                 return const SizedBox.shrink();
               } else if (state is RoomEmpty) {
-                return Center(child: VChatAppService.instance.getTrans(context).noChatsYet().h6.color(Colors.red));
-              }else if(state is RoomLoading){
-                return const Center(child: CircularProgressIndicator.adaptive(),);
-              }
-              else if (state is RoomLoaded) {
+                return Center(
+                  child: VChatAppService.instance
+                      .getTrans(context)
+                      .noChatsYet()
+                      .h6
+                      .color(Colors.red),
+                );
+              } else if (state is RoomLoading) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              } else if (state is RoomLoaded) {
                 final rooms = state.rooms;
                 return Expanded(
                   child: Scrollbar(

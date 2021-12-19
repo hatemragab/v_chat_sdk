@@ -50,46 +50,6 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `test`
-  String get test {
-    return Intl.message(
-      'test',
-      name: 'test',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `offline`
-  String get offline {
-    return Intl.message(
-      'offline',
-      name: 'offline',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `My great rooms`
-  String get myGreatRooms {
-    return Intl.message(
-      'My great rooms',
-      name: 'myGreatRooms',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `This data from my server not vchat`
-  String get thisDataFromMyServerNotVchat {
-    return Intl.message(
-      'This data from my server not vchat',
-      name: 'thisDataFromMyServerNotVchat',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -651,6 +611,56 @@ class S {
       args: [],
     );
   }
+
+  /// `your message`
+  String get yourMessage {
+    return Intl.message(
+      'your message',
+      name: 'yourMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `send`
+  String get send {
+    return Intl.message(
+      'send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter title`
+  String get enterTitle {
+    return Intl.message(
+      'Enter title',
+      name: 'enterTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selected`
+  String get selected {
+    return Intl.message(
+      'selected',
+      name: 'selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set Group Image`
+  String get setGroupImage {
+    return Intl.message(
+      'Set Group Image',
+      name: 'setGroupImage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -660,7 +670,6 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
       Locale.fromSubtags(languageCode: 'ar', countryCode: 'EG'),
-      Locale.fromSubtags(languageCode: 'fr'),
       Locale.fromSubtags(languageCode: 'pt', countryCode: 'BR'),
     ];
   }

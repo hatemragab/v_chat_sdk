@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../models/v_chat_message.dart';
 import '../models/v_chat_room.dart';
 import '../sqlite/db_provider.dart';
@@ -69,7 +68,10 @@ class LocalStorageService {
     );
   }
 
-  Future setRoomMessages(String roomId, List<VChatMessage> messageToInsert) async {
+  Future setRoomMessages(
+    String roomId,
+    List<VChatMessage> messageToInsert,
+  ) async {
     final batch = database.batch();
     for (final msg in messageToInsert) {
       batch.insert(
@@ -108,7 +110,7 @@ class LocalStorageService {
     );
 
     for (final x in maps) {
-     // Helpers.vlog(x.toString());
+      // Helpers.vlog(x.toString());
       messages.add(
         VChatMessage.fromMap(
           jsonDecode(x[MessageTable.columnData].toString()),

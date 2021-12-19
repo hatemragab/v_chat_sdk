@@ -6,9 +6,9 @@ import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:v_chat_sdk/v_chat_sdk.dart';
-
 import '../home.dart';
 
+/// please Note this is example you can have your own design
 class CreateGroupController extends ChangeNotifier {
   final BuildContext context;
   final List<User> users;
@@ -24,7 +24,7 @@ class CreateGroupController extends ChangeNotifier {
     try {
       CustomAlert.customLoadingDialog(context: context);
       if (textEditingController.text.isEmpty) {
-        throw "Enter title";
+        throw S.of(context).enterTitle;
       }
       if (imagePath == null) {
         throw S.of(context).chooseGroupImage;
@@ -37,9 +37,6 @@ class CreateGroupController extends ChangeNotifier {
           usersEmails: users.map((e) => e.email).toList(),
         ),
       );
-      // Navigator.pop(context);
-      // Navigator.pop(context);
-      // Navigator.pop(context);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const Home()),
           (Route<dynamic> route) => false);
@@ -56,7 +53,7 @@ class CreateGroupController extends ChangeNotifier {
       if (File(img.path).lengthSync() > 1024 * 1024 * 20) {
         CustomAlert.showError(
             context: context, err: S.of(context).imageSizeMustBeLessThan20Mb);
-        throw "image size must be less than 20 Mb";
+        throw S.of(context).imageSizeMustBeLessThan20Mb;
       }
       imagePath = img.path;
       CustomAlert.done(msg: S.of(context).imageHasBeenSelected);

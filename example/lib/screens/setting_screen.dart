@@ -34,7 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
               onTap: () async {
                 final res = await CustomAlert.customChooseDialog(
                     context: context,
-                    data: [S.of(context).ar, S.of(context).en,"pt_BR"] );
+                    data: [S.of(context).ar, S.of(context).en, "pt_BR"]);
                 if (res == 0) {
                   await GetStorage().write("lng", "ar");
                   Provider.of<AppController>(context, listen: false)
@@ -47,8 +47,9 @@ class _SettingScreenState extends State<SettingScreen> {
                 }
                 if (res == 2) {
                   await GetStorage().write("lng", "pt_BR");
-                  Provider.of<AppController>(context, listen: false)
-                      .setLocale(const Locale.fromSubtags(languageCode: "pt",countryCode: "BR"));
+                  Provider.of<AppController>(context, listen: false).setLocale(
+                      const Locale.fromSubtags(
+                          languageCode: "pt", countryCode: "BR"));
                 }
               },
             ),
@@ -130,7 +131,9 @@ class _SettingScreenState extends State<SettingScreen> {
                       context: context, peerEmail: "hatemragap5@gmail.com");
                   if (res != null) {
                     await VChatController.instance.createSingleChat(
-                        peerEmail: "hatemragap5@gmail.com", message: res,context: context);
+                        peerEmail: "hatemragap5@gmail.com",
+                        message: res,
+                        context: context);
                     CustomAlert.showSuccess(
                       context: context,
                       err: S.of(context).success,

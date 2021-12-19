@@ -23,33 +23,45 @@ class RegisterController {
     try {
       CustomAlert.customLoadingDialog(context: context);
 
-      ///Register on your system backend
+      /// your image validation
       if (imagePath != null) {
         if (File(imagePath!).lengthSync() > 1024 * 1024 * 20) {
           throw "image size must be less than 20 Mb";
         }
       }
 
-      ///first register on your system
+      ///First Register on your system backend
+      // final d = (await CustomDio().send(
+      //         reqMethod: "post",
+      //         path: "YOUR SYSTEM APIS / register",
+      //         body: {"email": email, "password": password}))
+      //     .data['data'];
+      // final u = User.fromMap(d);
 
-      ///then Register on v_chat_sdk system
+      /// Then Register on v_chat_sdk system
       final u = await VChatController.instance.register(
         dto: VChatRegisterDto(
           name: name,
+
+          /// if you pass imagePath to null v chat will use the default user image
+          /// see here for more info
+          /// https://hatemragab.github.io/VChatSdk-Documentation/docs/backend_installation/a_project_settings#update-default-users-image
           userImage: imagePath == null ? null : File(imagePath!),
           email: email,
         ),
         context: context,
       );
+
+      ///save user in example app you can save your user by your way
       await GetStorage().write("myModel", u.toMap());
       Navigator.pop(context);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const Home()),
           (Route<dynamic> route) => false);
     } on VChatSdkException catch (err) {
+      ///catch v chat sdk exception may be no user found in v chat
       Navigator.pop(context);
       CustomAlert.showError(context: context, err: err.toString());
-      //handle vchat exception here
       rethrow;
     } catch (err) {
       Navigator.pop(context);

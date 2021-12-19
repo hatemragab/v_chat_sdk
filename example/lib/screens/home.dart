@@ -13,6 +13,7 @@ import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 import 'group_chat_info/group_chat_info.dart';
 
+/// this is just example you can define your own design
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -23,10 +24,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    /// make sure you
+    /// make sure you init v chat in the home to start receive notifications
     context.read<HomeController>().getUsers(context);
     context.read<HomeController>().init(context);
   }
@@ -35,6 +35,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final _controller = context.watch<HomeController>();
 
+    /// this is just example you can define your own design
+    /// navigation tabs
     final tabs = [
       usersTab(),
       VChatRoomsView(
@@ -57,6 +59,9 @@ class _HomeState extends State<Home> {
       ),
       const SettingScreen()
     ];
+
+    /// this is just example you can define your own design
+    /// navigation appbar
     final childrenAppBars = [
       AppBar(
         title: S.of(context).vChatUsers.text,
@@ -66,10 +71,11 @@ class _HomeState extends State<Home> {
           IconButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UsersSearch(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UsersSearch(),
+                  ),
+                );
               },
               icon: const Icon(Icons.search)),
           IconButton(
@@ -90,7 +96,7 @@ class _HomeState extends State<Home> {
         ],
       ),
       AppBar(
-        title: "Rooms".text,
+        title: S.of(context).chats.text,
         centerTitle: true,
       ),
       AppBar(
@@ -111,13 +117,13 @@ class _HomeState extends State<Home> {
         child: const Icon(Icons.add),
       ),
       appBar: PreferredSize(
-        child: childrenAppBars[_controller.currentIndex],
+        child: childrenAppBars[_controller.navigationTabsIndex],
         preferredSize: const Size.fromHeight(kToolbarHeight),
       ),
-      body: tabs[_controller.currentIndex], // new
+      body: tabs[_controller.navigationTabsIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _controller.onTabTapped,
-        currentIndex: _controller.currentIndex,
+        currentIndex: _controller.navigationTabsIndex,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),

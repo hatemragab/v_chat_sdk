@@ -1,8 +1,4 @@
 {
-  "test": "تست",
-  "offline": "قافل",
-  "myGreatRooms": "كل المحادثات",
-  "thisDataFromMyServerNotVchat": "هذه الداتا من سيرفر خارجي",
   "settings": "الاعدادات",
   "home": "الرئيسيه",
   "chats": "الدردشات",
@@ -59,5 +55,10 @@
   "yourImageHasBeenUpdated": "تم تحديث الصوره",
   "userName": "اسم المستخدم",
   "loading": "جاري التحميل ...",
-  "success": "نجت العمليه"
+  "success": "نجت العمليه",
+  "yourMessage": "رسالتك",
+  "send": "ارسال",
+  "enterTitle": "ادخل العنوان",
+  "selected": "تم اختيارهم",
+  "setGroupImage": "اضافه صوره للجروب اجباري"
 }
