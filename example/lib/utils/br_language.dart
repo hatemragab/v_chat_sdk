@@ -201,4 +201,7 @@ class BrLanguage extends VChatLookupString{
   String storagePermissionMustBeAcceptedToDownloadTheFile() =>
       "A permissão de armazenamento deve ser aceita para fazer o download do arquivo";
 
+  @override
+  String noChatsYet() =>"no Chats Yet";
+
 }

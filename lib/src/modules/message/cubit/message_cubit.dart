@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
 import 'package:v_chat_sdk/src/services/notification_service.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../../../enums/message_type.dart';
 import '../../../enums/room_typing_type.dart';
 import '../../../models/v_chat_message.dart';
@@ -68,7 +69,12 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
 
   ///get messages from sqlite
   Future<void> getLocalMessages() async {
+    // Helpers.vlog("getLocalMessages Room Id is ${roomId}");
     final messages = await LocalStorageService.instance.getRoomMessages(roomId);
+    if (messages.isEmpty) {
+      emit(MessageLoading());
+      return;
+    }
     this.messages.clear();
     this.messages.addAll(messages);
     emit(MessageLoaded(messages));
@@ -78,10 +84,12 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
   Future<void> loadMoreMessages() async {
     try {
       loadingStatus = LoadMoreStatus.loading;
+      // final lastMsg = messages.reduce((curr, next) => curr.createdAt < next.createdAt? curr: next);
       final loadedMessages = await _messageApiProvider.loadMoreMessages(
         roomId,
         messages.last.id,
       );
+      // Helpers.vlog("${messages.last.content}     From Load More");
       loadingStatus = LoadMoreStatus.loaded;
       if (loadedMessages.isEmpty) {
         ///if no more data stop the loading
@@ -129,11 +137,16 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
 
   /// update all messages from server side last 20 message only
   void onAllMessages(List<VChatMessage> messages) {
-    for (final m in messages) {
-      if (this.messages.indexWhere((element) => element.id == m.id) == -1) {
-        this.messages.insert(0, m);
+    if (this.messages.isEmpty) {
+      this.messages.addAll(messages);
+    } else {
+      for (final m in messages) {
+        if (this.messages.indexWhere((element) => element.id == m.id) == -1) {
+          this.messages.insert(0, m);
+        }
       }
     }
+
     emit(MessageLoaded(messages));
   }
 

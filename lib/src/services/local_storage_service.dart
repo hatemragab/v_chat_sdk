@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import '../models/v_chat_message.dart';
 import '../models/v_chat_room.dart';
 import '../sqlite/db_provider.dart';
@@ -40,14 +41,6 @@ class LocalStorageService {
       await database.delete(RoomTable.tableName);
       return;
     }
-    // try {
-    //   final x = rooms.sublist(0, 20);
-    //   roomsToInsert.clear();
-    //   roomsToInsert.addAll(x);
-    // } catch (err) {
-    //   //
-    // }
-
     final batch = database.batch();
     for (final room in roomsToInsert) {
       batch.insert(
@@ -77,20 +70,6 @@ class LocalStorageService {
   }
 
   Future setRoomMessages(String roomId, List<VChatMessage> messageToInsert) async {
-    // final messageToInsert = messages;
-    // try {
-    //   final x = messages.sublist(0, 30);
-    //   messageToInsert.clear();
-    //   messageToInsert.addAll(x);
-    // } catch (err) {
-    //   //
-    // }
-    // await database.delete(
-    //   MessageTable.tableName,
-    //   where: "${MessageTable.columnRoomId} =?",
-    //   whereArgs: [roomId],
-    // );
-
     final batch = database.batch();
     for (final msg in messageToInsert) {
       batch.insert(
@@ -129,6 +108,7 @@ class LocalStorageService {
     );
 
     for (final x in maps) {
+     // Helpers.vlog(x.toString());
       messages.add(
         VChatMessage.fromMap(
           jsonDecode(x[MessageTable.columnData].toString()),

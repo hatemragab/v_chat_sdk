@@ -197,4 +197,7 @@ class ArLanguage implements VChatLookupString {
   @override
   String storagePermissionMustBeAcceptedToDownloadTheFile() =>
       "يجب ان توافق علي اذن تحميل الملفات";
+
+  @override
+  String noChatsYet() =>"لا توجد محادثات ";
 }

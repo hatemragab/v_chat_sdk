@@ -199,4 +199,7 @@ class EnLanguage implements VChatLookupString {
   @override
   String storagePermissionMustBeAcceptedToDownloadTheFile() =>
       "storage Permission Must Be Accepted To Download The File";
+
+  @override
+  String noChatsYet()=>"no Chats Yet";
 }

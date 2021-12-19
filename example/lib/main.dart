@@ -19,6 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
+
   await VChatController.instance.init(
     baseUrl: Uri.parse(serverIp),
     appName: "test_v_chat",

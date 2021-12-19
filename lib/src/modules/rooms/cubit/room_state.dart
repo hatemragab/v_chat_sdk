@@ -11,4 +11,6 @@ class RoomLoaded extends RoomState {
   RoomLoaded(this.rooms);
 }
 
+class RoomLoading extends RoomState {}
+
 class RoomEmpty extends RoomState {}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/models/v_chat_group_chat_info.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import '../../utils/custom_widgets/connection_checker.dart';
 import 'cubit/room_cubit.dart';
 import 'widgets/room_item.dart';
@@ -37,6 +38,8 @@ class VChatRoomsScreen extends StatelessWidget {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+
         children: [
           const ConnectionChecker(),
           const SizedBox(
@@ -47,8 +50,11 @@ class VChatRoomsScreen extends StatelessWidget {
               if (state is RoomInitial) {
                 return const SizedBox.shrink();
               } else if (state is RoomEmpty) {
-                return "No rooms yet".text;
-              } else if (state is RoomLoaded) {
+                return Center(child: VChatAppService.instance.getTrans(context).noChatsYet().h6.color(Colors.red));
+              }else if(state is RoomLoading){
+                return const Center(child: CircularProgressIndicator.adaptive(),);
+              }
+              else if (state is RoomLoaded) {
                 final rooms = state.rooms;
                 return Expanded(
                   child: Scrollbar(

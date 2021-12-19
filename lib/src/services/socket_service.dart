@@ -77,7 +77,7 @@ class SocketService {
   }
 
   Future<void> initSockedEvents() async {
-    _socket!.on("all_rooms", (data) {
+    _socket!.on("all_rooms", (data)  {
       final _roomsMaps = data as List;
       final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
       RoomCubit.instance.setSocketRooms(_rooms);
@@ -85,8 +85,6 @@ class SocketService {
     });
 
     _socket!.on("update_one_room", (_room) {
-      //   print(data.toString());
-      // final _room = jsonDecode(data);
       final room = VChatRoom.fromMap(_room);
       unawaited(LocalStorageService.instance.setRoomOrUpdate(room));
       RoomCubit.instance.updateOneRoomInRamAndSort(room);

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/services/local_storage_service.dart';
 
 import '../modules/message/views/message_view.dart';
 import '../modules/rooms/cubit/room_cubit.dart';
@@ -55,6 +57,7 @@ class NotificationService {
 
   Future initNotification() async {
     final messaging = FirebaseMessaging.instance;
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     messaging.setAutoInitEnabled(true);
     await messaging.getToken();
     await messaging.requestPermission(
@@ -136,12 +139,30 @@ class NotificationService {
 
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
-        if (!RoomCubit.instance.isRoomOpen(message.data['roomId'].toString())) {
+        if (message.data['roomId'] != null) {
+          /// message notifications
+          if (!RoomCubit.instance
+              .isRoomOpen(message.data['roomId'].toString())) {
+            showNotification(
+              title: "${message.notification!.title}",
+              msg: message.notification!.body.toString(),
+              hashCode: message.hashCode,
+              roomId: message.data['roomId'].toString(),
+            );
+          }
+          unawaited(
+            LocalStorageService.instance.insertMessage(
+              message.data['roomId'].toString(),
+              VChatMessage.fromMap(message.data['message']),
+            ),
+          );
+        } else {
+          /// FCM Push notifications
           showNotification(
             title: "${message.notification!.title}",
             msg: message.notification!.body.toString(),
             hashCode: message.hashCode,
-            roomId: message.data['roomId'].toString(),
+            roomId: null,
           );
         }
       }
@@ -150,18 +171,17 @@ class NotificationService {
     messaging.getInitialMessage().then((message) async {
       if (message != null) {
         try {
-          final roomId = message.data['roomId'].toString();
-
-          await Future.delayed(const Duration(milliseconds: 2500));
-          RoomCubit.instance.currentRoomId = roomId;
-
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => MessageView(
-                roomId: roomId,
+          final roomId = message.data['roomId'];
+          if (roomId != null) {
+            RoomCubit.instance.currentRoomId = roomId.toString();
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => MessageView(
+                  roomId: roomId.toString(),
+                ),
               ),
-            ),
-          );
+            );
+          }
         } catch (err) {
           Helpers.vlog(err.toString());
           //
@@ -176,7 +196,7 @@ class NotificationService {
     required String title,
     required String msg,
     required int hashCode,
-    required String roomId,
+    required String? roomId,
   }) {
     // if (Platform.isIOS) {
     //   return;
@@ -195,4 +215,15 @@ class NotificationService {
       ),
     );
   }
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (message.data['roomId'] != null) {
+    await  LocalStorageService.instance.init();
+    await LocalStorageService.instance.insertMessage(
+      message.data['roomId'].toString(),
+      VChatMessage.fromMap(message.data['message']),
+    );
+  }
+  return Future<void>.value();
 }

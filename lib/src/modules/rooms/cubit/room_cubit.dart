@@ -39,6 +39,10 @@ class RoomCubit extends Cubit<RoomState> {
 
   Future getRoomsFromLocal() async {
     final rooms = await LocalStorageService.instance.getRooms();
+    if (rooms.isEmpty) {
+      emit(RoomLoading());
+      return;
+    }
     this.rooms.clear();
     this.rooms.addAll(rooms);
     emit(RoomLoaded(this.rooms));
@@ -50,7 +54,11 @@ class RoomCubit extends Cubit<RoomState> {
   void setSocketRooms(List<VChatRoom> rooms) {
     this.rooms.clear();
     this.rooms.addAll(rooms);
-    emit(RoomLoaded(this.rooms));
+    if (this.rooms.isEmpty) {
+      emit(RoomEmpty());
+    } else {
+      emit(RoomLoaded(this.rooms));
+    }
   }
 
   void updateRoomOnlineChanged(int status, String roomId) {
@@ -156,7 +164,5 @@ class RoomCubit extends Cubit<RoomState> {
     return rooms.firstWhere((element) => element.id == roomId);
   }
 
-  void pop() {
-
-  }
+  void pop() {}
 }

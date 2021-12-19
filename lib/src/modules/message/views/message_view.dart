@@ -58,6 +58,9 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
           Expanded(
             child: BlocBuilder<MessageCubit, MessageState>(
               builder: (context, state) {
+                if(state is MessageLoading){
+                  return const Center(child: CircularProgressIndicator.adaptive());
+                }
                 return Builder(
                   builder: (c) {
                     if (state is MessageLoaded) {

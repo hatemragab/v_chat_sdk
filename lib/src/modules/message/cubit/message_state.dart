@@ -10,3 +10,7 @@ class MessageLoaded extends MessageState {
 
   MessageLoaded(this.messages);
 }
+class MessageLoading extends MessageState {
+  MessageLoading( );
+}
+

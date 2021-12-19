@@ -127,4 +127,6 @@ abstract class VChatLookupString {
   String appNeedThisPermissionToSaveDownloadedFilesInDeviceStorage();
 
   String storagePermissionMustBeAcceptedToDownloadTheFile();
+
+  String noChatsYet() ;
 }
