@@ -27,7 +27,7 @@ void main() async {
     enableLogger: true,
     maxMediaUploadSize: 50 * 1000 * 1000,
     passwordHashKey: "passwordHashKey",
-    maxGroupChatUsers: 500,
+    maxGroupChatUsers: 512,
   );
 
   /// add support new language

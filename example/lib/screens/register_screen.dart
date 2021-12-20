@@ -5,6 +5,7 @@ import 'package:example/utils/custom_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textless/textless.dart';
+import '../app_terms.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -71,6 +72,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                      value: _controller.appTerms,
+                      onChanged: (v) {
+                        setState(() {
+                          _controller.appTerms = v!;
+                        });
+                      }),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => AppTerms()));
+                      },
+                      child: "accept V Chat terms".text.color(Colors.blue))
+                ],
+              ),
+              const SizedBox(
+                height: 10,
               ),
               InkWell(
                   onTap: () async {

@@ -35,6 +35,8 @@ class RoomCubit extends Cubit<RoomState> {
   final scrollController = ScrollController();
   String? currentRoomId;
 
+  bool isOpenMessageImageOrVideo = false;
+
   void getInstance() {}
 
   Future getRoomsFromLocal() async {

@@ -297,7 +297,6 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     if (isEmitTyping) {
       emitTypingChange(0);
     }
-    // Helpers.vlog("close for   cubit called room Id $roomId ${DateTime.now()}");
     super.close();
   }
 

@@ -60,7 +60,8 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
               builder: (context, state) {
                 if (state is MessageLoading) {
                   return const Center(
-                      child: CircularProgressIndicator.adaptive(),);
+                    child: CircularProgressIndicator.adaptive(),
+                  );
                 }
                 return Builder(
                   builder: (c) {

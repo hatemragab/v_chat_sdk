@@ -39,17 +39,20 @@ class _SettingScreenState extends State<SettingScreen> {
                   await GetStorage().write("lng", "ar");
                   Provider.of<AppController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "ar"));
+                  await VChatController.instance.changeLanguage("ar");
                 }
                 if (res == 1) {
                   await GetStorage().write("lng", "en");
                   Provider.of<AppController>(context, listen: false)
                       .setLocale(const Locale.fromSubtags(languageCode: "en"));
+                  await VChatController.instance.changeLanguage("en");
                 }
                 if (res == 2) {
                   await GetStorage().write("lng", "pt_BR");
                   Provider.of<AppController>(context, listen: false).setLocale(
                       const Locale.fromSubtags(
                           languageCode: "pt", countryCode: "BR"));
+                  await VChatController.instance.changeLanguage("pt_BR");
                 }
               },
             ),

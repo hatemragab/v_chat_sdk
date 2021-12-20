@@ -165,7 +165,12 @@ class VChatController {
     if (!getIt.isRegistered<SocketService>()) {
       getIt.registerSingleton(SocketService());
     }
-
+    final preferences = SharedPrefsInstance.instance;
+    final appLang = preferences.getString(StorageKeys.kvChatAppLanguage);
+    if (appLang != null) {
+      VChatAppService.instance.currentLocal = appLang;
+      unawaited(_vChatUsersApi.updateUserLanguage(appLang));
+    }
     NotificationService.instance.init(context);
     RoomCubit.instance.getInstance();
   }
@@ -408,6 +413,9 @@ class VChatController {
 
   /// **throw** No internet connection
   Future changeLanguage(String lng) async {
+    VChatAppService.instance.currentLocal = lng;
+    await SharedPrefsInstance.instance
+        .setString(StorageKeys.kvChatAppLanguage, lng);
     await _vChatUsersApi.updateUserLanguage(lng);
   }
 
@@ -415,6 +423,7 @@ class VChatController {
     await SharedPrefsInstance.init();
     final preferences = SharedPrefsInstance.instance;
     final v = preferences.getBool(StorageKeys.kvChatFirstTimeOpen);
+
     if (v != null && v) {
       /// Not first time to open the app
 

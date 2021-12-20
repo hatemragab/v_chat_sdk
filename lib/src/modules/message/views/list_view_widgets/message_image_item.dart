@@ -38,7 +38,9 @@ class MessageImageItem extends StatelessWidget {
           constraints: const BoxConstraints(maxHeight: 500),
           height: double.parse(_message.messageAttachment!.height!),
           width: double.parse(_message.messageAttachment!.width!),
-          color: Colors.grey[300],
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.black26
+              : Colors.grey[300],
           child: CachedNetworkImage(
             imageUrl: VChatConfig.messagesMediaBaseUrl +
                 _message.messageAttachment!.imageUrl.toString(),

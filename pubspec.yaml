@@ -1,6 +1,6 @@
 name: v_chat_sdk
-description: official sdk for vchat to impement chat system into new or exist flutter app
-version: 1.0.0
+description: official sdk for v chat this is a complete chat ecosystem use flutter for clint node js and socket io for server side flutter chat v chat sdk
+version: 1.0.1
 homepage: https://github.com/hatemragab/v_chat_sdk
 
 environment:
@@ -46,7 +46,7 @@ dependencies:
   # video_thumbnail
   video_thumbnail: ^0.4.3
   # flutter official video_player
-  video_player: ^2.2.7
+  video_player: ^2.2.8
   # record voice chat
   record: ^3.0.2
   # voice recording timer
@@ -77,6 +77,7 @@ dependencies:
   crypto: ^3.0.1
   # for save user app language
   shared_preferences: ^2.0.11
+
 
 
 

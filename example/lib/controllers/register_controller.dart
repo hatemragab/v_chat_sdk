@@ -10,7 +10,7 @@ class RegisterController {
   final emailTxtController = TextEditingController();
   final nameTxtController = TextEditingController();
   final passwordTxtController = TextEditingController();
-
+  bool appTerms = false;
   String? imagePath;
 
   RegisterController(this.context);
@@ -22,6 +22,9 @@ class RegisterController {
 
     try {
       CustomAlert.customLoadingDialog(context: context);
+      if (!appTerms) {
+        throw "accept v chat terms to use the app";
+      }
 
       /// your image validation
       if (imagePath != null) {

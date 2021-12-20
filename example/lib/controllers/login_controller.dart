@@ -9,6 +9,7 @@ class LoginController {
   BuildContext context;
   final emailTxtController = TextEditingController();
   final passwordTxtController = TextEditingController();
+  bool appTerms = false;
 
   LoginController(this.context);
 
@@ -17,6 +18,9 @@ class LoginController {
     //final password = passwordTxtController.text.toString();
     try {
       CustomAlert.customLoadingDialog(context: context);
+      if (!appTerms) {
+        throw "accept v chat terms to use the app";
+      }
 
       ///First Login on your system backend
       ///Once success login then start login to v chat sdk

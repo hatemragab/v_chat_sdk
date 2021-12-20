@@ -214,12 +214,16 @@ class VChatProvider {
   }
 
   Future updateUserLanguage(String lng) async {
-    return CustomDio().send(
-      reqMethod: "patch",
-      path: "user",
-      body: {
-        "appLanguage": lng,
-      },
-    );
+    try {
+      return CustomDio().send(
+        reqMethod: "patch",
+        path: "user",
+        body: {
+          "appLanguage": lng,
+        },
+      );
+    } catch (err) {
+      //
+    }
   }
 }

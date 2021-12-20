@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -59,16 +60,19 @@ class NotificationService {
     final messaging = FirebaseMessaging.instance;
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     messaging.setAutoInitEnabled(true);
-    await messaging.getToken();
+    final token = await messaging.getToken();
+    try {
+      await CustomDio().send(
+        reqMethod: "PATCH",
+        path: "user",
+        body: {"fcmToken": token.toString()},
+      );
+    } catch (err) {
+      //
+    }
     await messaging.requestPermission(
       criticalAlert: true,
     );
-
-    // await messaging.setForegroundNotificationPresentationOptions(
-    //   alert: true,
-    //   badge: true,
-    //   sound: true,
-    // );
     FirebaseMessaging.onMessageOpenedApp.listen(
       (message) async {
         if (message.notification != null) {
@@ -109,10 +113,16 @@ class NotificationService {
           if (RoomCubit.instance.isRoomExit(roomId)) {
             if (RoomCubit.instance.currentRoomId != null) {
               /// there is open room now
-              Navigator.pop(context);
-              await Future.delayed(const Duration(milliseconds: 800));
+              if (Navigator.canPop(context)) {
+                if (RoomCubit.instance.isOpenMessageImageOrVideo) {
+                  Navigator.pop(context);
+                }
+                Navigator.pop(context);
+              }
+              await Future.delayed(const Duration(milliseconds: 600));
             }
             RoomCubit.instance.currentRoomId = roomId;
+
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => MessageView(
@@ -153,7 +163,9 @@ class NotificationService {
           unawaited(
             LocalStorageService.instance.insertMessage(
               message.data['roomId'].toString(),
-              VChatMessage.fromMap(message.data['message']),
+              VChatMessage.fromMap(
+                jsonDecode(message.data['message'].toString()),
+              ),
             ),
           );
         } else {
@@ -222,7 +234,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await LocalStorageService.instance.init();
     await LocalStorageService.instance.insertMessage(
       message.data['roomId'].toString(),
-      VChatMessage.fromMap(message.data['message']),
+      VChatMessage.fromMap(jsonDecode(message.data['message'].toString())),
     );
   }
   return Future<void>.value();

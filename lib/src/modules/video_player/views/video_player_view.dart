@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
 import 'package:video_player/video_player.dart' as vd;
 import 'package:video_viewer/video_viewer.dart';
 
@@ -14,6 +15,19 @@ class VideoPlayerView extends StatefulWidget {
 class _VideoPlayerViewState extends State<VideoPlayerView> {
   late vd.VideoPlayerController videoPlayerController;
   bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    RoomCubit.instance.isOpenMessageImageOrVideo = true;
+  }
+
+  @override
+  void dispose() {
+    RoomCubit.instance.isOpenMessageImageOrVideo = false;
+    videoPlayerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

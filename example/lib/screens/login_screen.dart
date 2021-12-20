@@ -1,3 +1,4 @@
+import 'package:example/app_terms.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
@@ -59,15 +60,40 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
+              Row(
+                children: [
+                  Checkbox(
+                      value: _controller.appTerms,
+                      onChanged: (v) {
+                        setState(() {
+                          _controller.appTerms = v!;
+                        });
+                      }),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => AppTerms()));
+                      },
+                      child: "accept V Chat terms".text.color(Colors.blue))
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               ElevatedButton(
-                  onPressed: _controller.login,
-                  child: S.of(context).login.text),
+                onPressed: _controller.login,
+                child: S.of(context).login.text,
+              ),
               const SizedBox(
                 height: 10,
               ),
               TextButton(
-                  onPressed: _controller.register,
-                  child: S.of(context).register.text),
+                onPressed: _controller.register,
+                child: S.of(context).register.text,
+              ),
             ],
           ),
         ),

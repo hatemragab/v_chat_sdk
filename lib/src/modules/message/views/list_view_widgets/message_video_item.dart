@@ -34,7 +34,9 @@ class MessageVideoItem extends StatelessWidget {
         width: double.parse(att.width!),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.grey,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.black26
+              : Colors.grey[300],
         ),
         child: Stack(
           alignment: Alignment.center,
