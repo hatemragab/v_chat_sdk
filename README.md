@@ -7,7 +7,11 @@
 
 ## Android Test
 
-<a href="https://drive.google.com/file/d/1BpEY2wrzzPqbgT-la0-xHc6VbwFVJ5rz/view?usp=sharing"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
+<a href="https://play.google.com/store/apps/details?id=com.vchatsdk.app"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
+
+## Android Drive APK
+
+<a href="https://drive.google.com/file/d/1BpEY2wrzzPqbgT-la0-xHc6VbwFVJ5rz/view?usp=sharing"> Drive APK </a> <br />
 
 ## IOS Test Flight
 
