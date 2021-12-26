@@ -27,8 +27,8 @@ class MessageSocket {
 
   void connectMessageSocket() {
     _socket = _getSocket();
-    _socket.onConnect((data) async {
-      _socket.on("all_messages", (data) async {
+    _socket.onConnect((data)  {
+      _socket.on("all_messages", (data)  {
         final msgList = jsonDecode(data as String) as List;
         final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
         unawaited(
@@ -46,7 +46,6 @@ class MessageSocket {
         offAllListeners();
         cache.clear();
       });
-      await Future.delayed(const Duration(milliseconds: 100));
       _socket.emit("join", currentRoomId);
     });
   }

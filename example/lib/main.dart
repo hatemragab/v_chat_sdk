@@ -22,7 +22,7 @@ void main() async {
   await VChatController.instance.init(
     baseUrl: Uri.parse(serverIp),
     appName: "test_v_chat",
-    isUseFirebase: true,
+    vChatNotificationType: VChatNotificationType.onesignal,
     widgetsBuilder: VChatCustomWidgets(),
     enableLogger: true,
     maxMediaUploadSize: 50 * 1000 * 1000,

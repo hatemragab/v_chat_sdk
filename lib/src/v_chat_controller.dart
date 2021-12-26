@@ -13,6 +13,7 @@ import 'package:v_chat_sdk/src/models/models.dart';
 import 'dto/create_group_room_dto.dart';
 import 'dto/v_chat_login_dto.dart';
 import 'dto/v_chat_register_dto.dart';
+import 'enums/v_chat_notification_type.dart';
 import 'models/v_chat_room.dart';
 import 'models/v_chat_user.dart';
 import 'modules/message/views/message_view.dart';
@@ -56,7 +57,7 @@ class VChatController {
   Future init({
     required Uri baseUrl,
     required String appName,
-    required bool isUseFirebase,
+    required VChatNotificationType vChatNotificationType,
     VChatWidgetBuilder widgetsBuilder = const VChatWidgetBuilder(),
     required bool enableLogger,
     required String passwordHashKey,
@@ -64,12 +65,13 @@ class VChatController {
     int maxGroupChatUsers = 512,
   }) async {
     ///init some service
-    await VChatAppService.instance.init(isUseFirebase: isUseFirebase);
+    await VChatAppService.instance
+        .init(vChatNotificationType: vChatNotificationType);
     await LocalStorageService.instance.init();
     final appService = VChatAppService.instance;
 
     ///set some constants
-    appService.isUseFirebase = isUseFirebase;
+    appService.vChatNotificationType = vChatNotificationType;
     appService.appName = appName;
     appService.maxGroupChatUsers = maxGroupChatUsers;
     VChatConfig.serverIp = baseUrl.toString();
@@ -110,7 +112,7 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> stopAllNotification(BuildContext context) async {
-    if (VChatAppService.instance.isUseFirebase) {
+    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
       await FirebaseMessaging.instance.deleteToken();
       return VChatAppService.instance
           .getTrans(context)
@@ -122,7 +124,7 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> enableAllNotification() async {
-    if (VChatAppService.instance.isUseFirebase) {
+    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
       final token = (await FirebaseMessaging.instance.getToken()).toString();
       return _vChatUsersApi.updateUserFcmToken(token);
     } else {
@@ -181,7 +183,7 @@ class VChatController {
     required BuildContext context,
     required VChatRegisterDto dto,
   }) async {
-    if (VChatAppService.instance.isUseFirebase) {
+    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app ";
@@ -237,7 +239,7 @@ class VChatController {
     required String email,
   }) async {
     final dto = VChatLoginDto(email: email);
-    if (VChatAppService.instance.isUseFirebase) {
+    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app";

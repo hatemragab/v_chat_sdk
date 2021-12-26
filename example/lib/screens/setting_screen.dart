@@ -1,3 +1,4 @@
+import 'package:example/app_terms.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:example/controllers/app_controller.dart';
 import 'package:example/generated/l10n.dart';
@@ -154,6 +155,15 @@ class _SettingScreenState extends State<SettingScreen> {
               onTap: () async {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const About()));
+              },
+            ),
+            ProfileItem(
+              title: "v chat terms",
+              icon: Icons.file_copy_rounded,
+              onTap: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const AppTerms()),
+                );
               },
             ),
             ProfileItem(
