@@ -84,14 +84,19 @@ class RoomCubit extends Cubit<RoomState> {
   }
 
   Future<void> loadMore() async {
-    final loadedRooms = await _provider.loadMore(loadMorePage);
-    loadingStatus = LoadMoreStatus.loaded;
-    if (loadedRooms.isEmpty) {
-      loadingStatus = LoadMoreStatus.completed;
+    try {
+      final loadedRooms = await _provider.loadMore(loadMorePage);
+      loadingStatus = LoadMoreStatus.loaded;
+      if (loadedRooms.isEmpty) {
+        loadingStatus = LoadMoreStatus.completed;
+      }
+      ++loadMorePage;
+      rooms.addAll(loadedRooms);
+      emit(RoomLoaded(rooms));
+    } catch (err) {
+      CustomAlert.error(msg: "Failed to loadMore");
+      loadMorePage = 1;
     }
-    ++loadMorePage;
-    rooms.addAll(loadedRooms);
-    emit(RoomLoaded(rooms));
   }
 
   bool isRoomOpen(String roomId) => currentRoomId == roomId;

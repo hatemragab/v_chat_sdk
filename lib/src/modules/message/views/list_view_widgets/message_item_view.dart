@@ -61,7 +61,7 @@ class MessageItemView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            VChatAppService.instance.vcBuilder.infoLightMessage(
+            VChatAppService.instance.vcBuilder.infoDarkMessage(
               Helpers.getMessageBody(
                 message,
                 VChatAppService.instance.getTrans(context),

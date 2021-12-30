@@ -20,7 +20,6 @@ class VChatAppService {
 
   late VChatWidgetBuilder vcBuilder;
 
-
   String currentLocal = "en";
 
   late String appName;
@@ -74,7 +73,9 @@ class VChatAppService {
     _lookupMessagesMap[locale] = lookupMessages;
   }
 
-  Future<VChatAppService> init({required VChatNotificationType vChatNotificationType}) async {
+  Future<VChatAppService> init({
+    required VChatNotificationType vChatNotificationType,
+  }) async {
     const storage = FlutterSecureStorage();
 
     await DBProvider.instance.database;

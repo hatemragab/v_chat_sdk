@@ -29,13 +29,14 @@ class NotificationService {
     priority: Priority.max,
   );
   final iosNotificationDetails = const IOSNotificationDetails(
-    presentBadge: true,
+    presentBadge: false,
     presentSound: true,
   );
 
   Future init(BuildContext context) async {
     this.context = context;
-    if (VChatAppService.instance.vChatNotificationType != VChatNotificationType.none ) {
+    if (VChatAppService.instance.vChatNotificationType !=
+        VChatNotificationType.none) {
       await initNotification();
     }
   }

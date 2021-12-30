@@ -73,3 +73,6 @@
 
 ## 1.0.2
 * update packages and support multiple device open same account
+
+## 1.0.3
+* update packages

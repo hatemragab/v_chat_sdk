@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
-import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 
 import '../enums/socket_state_type.dart';
 import '../models/v_chat_room.dart';
@@ -86,9 +85,9 @@ class SocketService {
     });
 
     _socket!.on("update_one_room", (_room) {
-      Helpers.vlog(
-        "update_one_room Event called ${DateTime.now().microsecondsSinceEpoch}",
-      );
+      // Helpers.vlog(
+      //   "update_one_room Event called ${DateTime.now().microsecondsSinceEpoch}",
+      // );
       final room = VChatRoom.fromMap(_room);
       unawaited(LocalStorageService.instance.setRoomOrUpdate(room));
       RoomCubit.instance.updateOneRoomInRamAndSort(room);
