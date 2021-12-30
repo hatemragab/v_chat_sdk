@@ -70,3 +70,6 @@
 
 ## 1.0.1
 * hot fixes
+
+## 1.0.2
+* update packages and support multiple device open same account

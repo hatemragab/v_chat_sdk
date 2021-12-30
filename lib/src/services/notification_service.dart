@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:v_chat_sdk/src/enums/enums.dart';
 import 'package:v_chat_sdk/src/models/v_chat_message.dart';
 import 'package:v_chat_sdk/src/services/local_storage_service.dart';
 
@@ -34,7 +35,7 @@ class NotificationService {
 
   Future init(BuildContext context) async {
     this.context = context;
-    if (VChatAppService.instance.isUseFirebase) {
+    if (VChatAppService.instance.vChatNotificationType != VChatNotificationType.none ) {
       await initNotification();
     }
   }

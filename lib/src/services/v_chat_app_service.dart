@@ -19,7 +19,7 @@ class VChatAppService {
   Map<String, String>? trans;
 
   late VChatWidgetBuilder vcBuilder;
-  late bool isUseFirebase;
+
 
   String currentLocal = "en";
 
@@ -31,6 +31,8 @@ class VChatAppService {
   String? forceLanguage;
 
   late String passwordHashKey;
+
+  late VChatNotificationType vChatNotificationType;
 
   VChatLookupString getTrans(BuildContext context) {
     /// languageCode is EN or AR etc...
@@ -72,11 +74,11 @@ class VChatAppService {
     _lookupMessagesMap[locale] = lookupMessages;
   }
 
-  Future<VChatAppService> init({required bool isUseFirebase}) async {
+  Future<VChatAppService> init({required VChatNotificationType vChatNotificationType}) async {
     const storage = FlutterSecureStorage();
 
     await DBProvider.instance.database;
-    if (isUseFirebase) {
+    if (vChatNotificationType == VChatNotificationType.firebase) {
       await Firebase.initializeApp();
     }
 
