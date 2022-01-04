@@ -154,7 +154,9 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
               ),
               InkWell(
                 onTap: () {
-                  updateGroupTitle();
+                  if (isMeAdmin) {
+                    updateGroupTitle();
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

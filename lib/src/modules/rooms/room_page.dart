@@ -53,9 +53,8 @@ class VChatRoomsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     RoomCubit.instance.setListViewListener();
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Column(
+    return Scaffold(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const ConnectionChecker(),
@@ -91,11 +90,9 @@ class VChatRoomsScreen extends StatelessWidget {
                       key: const PageStorageKey<String>('RoomsTabView'),
                       padding: const EdgeInsets.all(8.0),
                       itemBuilder: (context, index) {
-                        return Material(
-                          child: SizedBox(
-                            height: 70,
-                            child: RoomItem(rooms[index]),
-                          ),
+                        return SizedBox(
+                          height: 70,
+                          child: RoomItem(rooms[index]),
                         );
                       },
                       itemCount: rooms.length,
@@ -103,7 +100,7 @@ class VChatRoomsScreen extends StatelessWidget {
                   ),
                 );
               }
-              throw UnimplementedError();
+              throw const SizedBox();
             },
           ),
         ],

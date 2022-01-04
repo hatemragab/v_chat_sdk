@@ -1,5 +1,1 @@
-enum VChatNotificationType {
-  none,
-  firebase,
-  onesignal
-}
+enum VChatNotificationType { none, firebase, onesignal }

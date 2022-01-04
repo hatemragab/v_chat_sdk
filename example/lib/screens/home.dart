@@ -3,7 +3,6 @@ import 'package:example/generated/l10n.dart';
 import 'package:example/screens/choose_group_members/choose_group_members_screen.dart';
 import 'package:example/screens/setting_screen.dart';
 import 'package:example/screens/user_item.dart';
-
 import 'package:example/screens/users_search.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';

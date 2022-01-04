@@ -8,7 +8,7 @@ import './screens/splash_screen.dart';
 import 'controllers/app_controller.dart';
 import 'controllers/home_controller.dart';
 import 'generated/l10n.dart';
-import 'utils/v_chat_custom_widgets.dart';
+import 'utils/v_chat_utils/v_chat_custom_widgets.dart';
 
 const isUseRealServer = true;
 
@@ -22,7 +22,7 @@ void main() async {
   await VChatController.instance.init(
     baseUrl: Uri.parse(serverIp),
     appName: "test_v_chat",
-    vChatNotificationType: VChatNotificationType.firebase,
+    vChatNotificationType: VChatNotificationType.none,
     widgetsBuilder: VChatCustomWidgets(),
     enableLogger: true,
     maxMediaUploadSize: 50 * 1000 * 1000,

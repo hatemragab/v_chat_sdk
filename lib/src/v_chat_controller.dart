@@ -44,7 +44,7 @@ class VChatController {
 
   final _authProvider = AuthProvider();
 
-  final getIt = GetIt.instance;
+  final _getIt = GetIt.instance;
 
   /// **baseUrl** v chat  backend base url
   /// **appName** your app name to because we create a file in phone internal storage to save files
@@ -112,7 +112,8 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> stopAllNotification(BuildContext context) async {
-    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
+    if (VChatAppService.instance.vChatNotificationType ==
+        VChatNotificationType.firebase) {
       await FirebaseMessaging.instance.deleteToken();
       return VChatAppService.instance
           .getTrans(context)
@@ -124,7 +125,8 @@ class VChatController {
 
   /// **throw** No internet connection
   Future<String> enableAllNotification() async {
-    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
+    if (VChatAppService.instance.vChatNotificationType ==
+        VChatNotificationType.firebase) {
       final token = (await FirebaseMessaging.instance.getToken()).toString();
       return _vChatUsersApi.updateUserFcmToken(token);
     } else {
@@ -164,8 +166,8 @@ class VChatController {
       }
       return;
     }
-    if (!getIt.isRegistered<SocketService>()) {
-      getIt.registerSingleton(SocketService());
+    if (!_getIt.isRegistered<SocketService>()) {
+      _getIt.registerSingleton(SocketService());
     }
     final preferences = SharedPrefsInstance.instance;
     final appLang = preferences.getString(StorageKeys.kvChatAppLanguage);
@@ -183,7 +185,8 @@ class VChatController {
     required BuildContext context,
     required VChatRegisterDto dto,
   }) async {
-    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
+    if (VChatAppService.instance.vChatNotificationType ==
+        VChatNotificationType.firebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app ";
@@ -239,7 +242,8 @@ class VChatController {
     required String email,
   }) async {
     final dto = VChatLoginDto(email: email);
-    if (VChatAppService.instance.vChatNotificationType == VChatNotificationType.firebase) {
+    if (VChatAppService.instance.vChatNotificationType ==
+        VChatNotificationType.firebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
       dto.fcmToken = "you don't use firebase on flutter app";
@@ -295,8 +299,8 @@ class VChatController {
     } catch (err) {
       //
     }
-    getIt.get<SocketService>().destroy();
-    await getIt.unregister<SocketService>();
+    _getIt.get<SocketService>().destroy();
+    await _getIt.unregister<SocketService>();
     const storage = FlutterSecureStorage();
     await storage.delete(key: StorageKeys.kvChatMyModel);
     VChatAppService.instance.vChatUser = null;

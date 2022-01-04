@@ -64,7 +64,7 @@ dependencies:
   # message time
   timeago: ^3.1.0
   #in app notifications
-  flutter_local_notifications: ^9.1.5
+  flutter_local_notifications: ^9.2.0
   path: ^1.8.0
   # save user access token
   flutter_secure_storage: ^5.0.2
