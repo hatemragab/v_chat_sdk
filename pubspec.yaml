@@ -1,6 +1,6 @@
 name: v_chat_sdk
 description: official sdk for v chat this is a complete chat ecosystem use flutter for clint node js and socket io for server side flutter chat v chat sdk
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/hatemragab/v_chat_sdk
 
 environment:

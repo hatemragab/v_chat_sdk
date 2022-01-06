@@ -205,7 +205,7 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              members[index].mame.text,
+                              members[index].name.text,
                               members[index]
                                   .vChatUserGroupRole
                                   .inString

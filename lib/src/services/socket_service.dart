@@ -26,21 +26,20 @@ class SocketService {
   bool get isConnected => _socket!.connected;
 
   Socket getSocket() {
-    return io(VChatConfig.serverIp, <String, dynamic>{
-      'transports': ['websocket'],
-      'pingTimeout': 5000,
-      'connectTimeout': 5000,
-      'pingInterval': 5000,
-      'extraHeaders': <String, String>{
-        'Authorization': VChatAppService.instance.vChatUser!.accessToken,
-        "accept-language": VChatAppService.instance.currentLocal
+    return io(
+      VChatConfig.serverIp,
+      <String, dynamic>{
+        'transports': ['websocket'],
+        'pingTimeout': 5000,
+        'connectTimeout': 5000,
+        'pingInterval': 5000,
+        'extraHeaders': <String, String>{
+          'Authorization': VChatAppService.instance.vChatUser!.accessToken,
+          "accept-language": VChatAppService.instance.currentLocal
+        },
+        'forceNew': true
       },
-      'forceNew': true
-    });
-  }
-
-  void emitRefreshChats() {
-    _socket!.emit("join");
+    );
   }
 
   void connectSocket() {

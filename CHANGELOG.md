@@ -76,3 +76,6 @@
 
 ## 1.0.3
 * update packages
+
+## 1.0.4
+* update packages

@@ -4,7 +4,7 @@ import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 class VChatGroupUser {
   final String id;
   final String email;
-  final String mame;
+  final String name;
   final String image;
   final VChatUserGroupRole vChatUserGroupRole;
 
@@ -13,7 +13,7 @@ class VChatGroupUser {
   const VChatGroupUser({
     required this.id,
     required this.email,
-    required this.mame,
+    required this.name,
     required this.image,
     required this.vChatUserGroupRole,
   });
@@ -24,33 +24,33 @@ class VChatGroupUser {
       (other is VChatGroupUser &&
           runtimeType == other.runtimeType &&
           email == other.email &&
-          mame == other.mame &&
+          name == other.name &&
           image == other.image &&
           vChatUserGroupRole == other.vChatUserGroupRole);
 
   @override
   int get hashCode =>
       email.hashCode ^
-      mame.hashCode ^
+      name.hashCode ^
       image.hashCode ^
       vChatUserGroupRole.hashCode;
 
   @override
   String toString() {
-    return 'VChatGroupUser{ id: $id, email: $email, mame: $mame, image: $image, vChatUserGroupRole: $vChatUserGroupRole,}';
+    return 'VChatGroupUser{ id: $id, email: $email, mame: $name, image: $image, vChatUserGroupRole: $vChatUserGroupRole,}';
   }
 
   VChatGroupUser copyWith({
     String? id,
     String? email,
-    String? mame,
+    String? name,
     String? image,
     VChatUserGroupRole? vChatUserGroupRole,
   }) {
     return VChatGroupUser(
       id: id ?? this.id,
       email: email ?? this.email,
-      mame: mame ?? this.mame,
+      name: name ?? this.name,
       image: image ?? this.image,
       vChatUserGroupRole: vChatUserGroupRole ?? this.vChatUserGroupRole,
     );
@@ -60,7 +60,7 @@ class VChatGroupUser {
     return {
       '_id': id,
       'email': email,
-      'mame': mame,
+      'mame': name,
       'image': image,
       'role': vChatUserGroupRole.inString,
     };
@@ -70,7 +70,7 @@ class VChatGroupUser {
     return VChatGroupUser(
       id: map['_id'] as String,
       email: map['email'] as String,
-      mame: map['name'] as String,
+      name: map['name'] as String,
       image: VChatConfig.profileImageBaseUrl + (map['imageThumb'] as String),
       vChatUserGroupRole: map['role'] == VChatUserGroupRole.admin.inString
           ? VChatUserGroupRole.admin
