@@ -19,13 +19,13 @@ import 'models/v_chat_user.dart';
 import 'modules/message/views/message_view.dart';
 import 'modules/rooms/cubit/room_cubit.dart';
 import 'services/auth_provider.dart';
-import 'services/local_storage_service.dart';
+
 import 'services/notification_service.dart';
 import 'services/socket_service.dart';
 import 'services/v_chat_app_service.dart';
 import 'services/v_chat_provider.dart';
 import 'services/v_chat_shared_preferences.dart';
-import 'sqlite/db_provider.dart';
+
 import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'utils/custom_widgets/custom_alert_dialog.dart';
 import 'utils/helpers/helpers.dart';
@@ -67,7 +67,7 @@ class VChatController {
     ///init some service
     await VChatAppService.instance
         .init(vChatNotificationType: vChatNotificationType);
-    await LocalStorageService.instance.init();
+
     final appService = VChatAppService.instance;
 
     ///set some constants
@@ -219,7 +219,7 @@ class VChatController {
         await _vChatUsersApi.createNewSingleRoom(message, peerEmail);
     if (context != null) {
       final room = VChatRoom.fromMap(roomData);
-      await LocalStorageService.instance.setRoomOrUpdate(room);
+
       RoomCubit.instance.updateOneRoomInRamAndSort(room);
       RoomCubit.instance.currentRoomId = room.id;
       Navigator.push(
@@ -246,13 +246,16 @@ class VChatController {
         VChatNotificationType.firebase) {
       dto.fcmToken = (await FirebaseMessaging.instance.getToken()).toString();
     } else {
-      dto.fcmToken = "you don't use firebase on flutter app";
+      dto.fcmToken = "Out";
     }
     if (Platform.isAndroid) {
       dto.platform = "Android";
     }
     if (Platform.isIOS) {
       dto.platform = "Ios";
+    }
+    if(kIsWeb){
+      dto.platform = "Web";
     }
 
     dto.password = _getHashedPassword(dto.email);
@@ -304,7 +307,7 @@ class VChatController {
     const storage = FlutterSecureStorage();
     await storage.delete(key: StorageKeys.kvChatMyModel);
     VChatAppService.instance.vChatUser = null;
-    await DBProvider.instance.reCreateTables();
+
     NotificationService.instance.cancelAll();
   }
 

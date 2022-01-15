@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
+
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:v_chat_sdk/src/enums/enums.dart';
-import 'package:v_chat_sdk/src/models/v_chat_message.dart';
-import 'package:v_chat_sdk/src/services/local_storage_service.dart';
+
+
 
 import '../modules/message/views/message_view.dart';
 import '../modules/rooms/cubit/room_cubit.dart';
@@ -21,17 +20,6 @@ class NotificationService {
       NotificationService._privateConstructor();
   late BuildContext context;
 
-  final androidNotificationDetails = const AndroidNotificationDetails(
-    "v_chat_channel",
-    "v_chat_channel",
-    icon: "@mipmap/ic_launcher",
-    importance: Importance.max,
-    priority: Priority.max,
-  );
-  final iosNotificationDetails = const IOSNotificationDetails(
-    presentBadge: false,
-    presentSound: true,
-  );
 
   Future init(BuildContext context) async {
     this.context = context;
@@ -41,18 +29,10 @@ class NotificationService {
     }
   }
 
-  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
   void cancelAll() {
-    flutterLocalNotificationsPlugin.cancelAll();
+
   }
 
-  final channel = const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    importance: Importance.max,
-  );
 
   static Future<String?> getFcmToken() async {
     return FirebaseMessaging.instance.getToken();
@@ -60,7 +40,7 @@ class NotificationService {
 
   Future initNotification() async {
     final messaging = FirebaseMessaging.instance;
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
     messaging.setAutoInitEnabled(true);
     final token = await messaging.getToken();
     try {
@@ -99,43 +79,6 @@ class NotificationService {
       },
     );
 
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-
-    await flutterLocalNotificationsPlugin.initialize(
-      const InitializationSettings(
-        android: AndroidInitializationSettings("@mipmap/ic_launcher"),
-        iOS: IOSInitializationSettings(),
-      ),
-      onSelectNotification: (payload) async {
-        if (payload != null) {
-          final roomId = payload;
-          if (RoomCubit.instance.isRoomExit(roomId)) {
-            if (RoomCubit.instance.currentRoomId != null) {
-              /// there is open room now
-              if (Navigator.canPop(context)) {
-                if (RoomCubit.instance.isOpenMessageImageOrVideo) {
-                  Navigator.pop(context);
-                }
-                Navigator.pop(context);
-              }
-              await Future.delayed(const Duration(milliseconds: 600));
-            }
-            RoomCubit.instance.currentRoomId = roomId;
-
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => MessageView(
-                  roomId: roomId,
-                ),
-              ),
-            );
-          }
-        }
-      },
-    );
 
     messaging.onTokenRefresh.listen((event) async {
       try {
@@ -162,14 +105,7 @@ class NotificationService {
               roomId: message.data['roomId'].toString(),
             );
           }
-          unawaited(
-            LocalStorageService.instance.insertMessage(
-              message.data['roomId'].toString(),
-              VChatMessage.fromMap(
-                jsonDecode(message.data['message'].toString()),
-              ),
-            ),
-          );
+
         } else {
           /// FCM Push notifications
           showNotification(
@@ -203,7 +139,6 @@ class NotificationService {
       }
     });
 
-    flutterLocalNotificationsPlugin.cancelAll();
   }
 
   void showNotification({
@@ -215,29 +150,5 @@ class NotificationService {
     // if (Platform.isIOS) {
     //   return;
     // }
-
-    unawaited(
-      flutterLocalNotificationsPlugin.show(
-        hashCode,
-        title,
-        msg,
-        NotificationDetails(
-          android: androidNotificationDetails,
-          iOS: iosNotificationDetails,
-        ),
-        payload: roomId,
-      ),
-    );
   }
-}
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  if (message.data['roomId'] != null) {
-    await LocalStorageService.instance.init();
-    await LocalStorageService.instance.insertMessage(
-      message.data['roomId'].toString(),
-      VChatMessage.fromMap(jsonDecode(message.data['message'].toString())),
-    );
-  }
-  return Future<void>.value();
 }

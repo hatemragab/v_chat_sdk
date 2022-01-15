@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:example/generated/l10n.dart';
 import 'package:example/utils/config.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +51,8 @@ class ChooseGroupMembersScreen extends StatelessWidget {
             leading: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: CachedNetworkImage(
-                  imageUrl: baseImgUrl + usersList[index].imageThumb,
+                child: Image.network(
+                    baseImgUrl + usersList[index].imageThumb,
                   height: 100,
                   width: 60,
                   fit: BoxFit.cover,

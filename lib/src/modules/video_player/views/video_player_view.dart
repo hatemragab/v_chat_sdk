@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
 import 'package:video_player/video_player.dart' as vd;
-import 'package:video_viewer/video_viewer.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoPlayerView extends StatefulWidget {
   final String url;
@@ -35,34 +35,31 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          fit: StackFit.expand,
-          children: [
-            VideoViewer(
-              autoPlay: true,
-              source: {
-                "SubRip Text": VideoSource(
-                  video: vd.VideoPlayerController.network(widget.url),
-                )
-              },
-            ),
-            Positioned(
-              top: 20,
-              left: 10,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 33,
-                ),
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator.adaptive())
+            : Stack(
+                alignment: Alignment.center,
+                fit: StackFit.expand,
+                children: [
+                  VideoPlayer(
+                    videoPlayerController,
+                  ),
+                  Positioned(
+                    top: 20,
+                    left: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 33,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

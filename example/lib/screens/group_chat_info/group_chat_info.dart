@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/generated/l10n.dart';
 import 'package:example/models/user.dart';
 import 'package:example/screens/choose_group_members/choose_group_members_screen.dart';
@@ -124,11 +123,11 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                      child: CachedNetworkImage(
+                      child: Image.network(
+                         groupChatInfo.imageThumb,
                         height: 100,
                         width: 100,
                         fit: BoxFit.cover,
-                        imageUrl: groupChatInfo.imageThumb,
                       ),
                     ),
                     Visibility(
@@ -192,8 +191,8 @@ class _GroupChatInfoState extends State<GroupChatInfo> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: CachedNetworkImage(
-                              imageUrl: members[index].image,
+                            child: Image.network(
+                               members[index].image,
                               height: 50,
                               width: 50,
                               fit: BoxFit.cover,

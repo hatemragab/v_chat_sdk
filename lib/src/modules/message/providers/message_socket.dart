@@ -1,17 +1,17 @@
-import 'dart:async';
+
 import 'dart:convert';
 
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../../models/v_chat_message.dart';
-import '../../../services/local_storage_service.dart';
+
 import '../../../services/v_chat_app_service.dart';
 import '../../../utils/v_chat_config.dart';
 
 class MessageSocket {
   late Socket _socket;
   final String currentRoomId;
-  final localStorageService = LocalStorageService.instance;
+
   final String myId;
   final Function(VChatMessage message) onNewMessage;
   final Function(List<VChatMessage> messages) onAllMessages;
@@ -31,15 +31,12 @@ class MessageSocket {
       _socket.on("all_messages", (data) {
         final msgList = jsonDecode(data as String) as List;
         final x = msgList.map((e) => VChatMessage.fromMap(e)).toList();
-        unawaited(
-          localStorageService.setRoomMessages(currentRoomId, x),
-        );
         onAllMessages(x);
       });
       _socket.on('new_message', (data) async {
         final msgMap = jsonDecode(data as String);
         final message = VChatMessage.fromMap(msgMap);
-        unawaited(localStorageService.insertMessage(currentRoomId, message));
+
         onNewMessage(message);
       });
       _socket.onReconnecting((data) {

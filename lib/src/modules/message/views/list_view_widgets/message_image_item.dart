@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../../models/v_chat_message.dart';
 
@@ -41,12 +40,10 @@ class MessageImageItem extends StatelessWidget {
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.black26
               : Colors.grey[300],
-          child: CachedNetworkImage(
-            imageUrl: VChatConfig.messagesMediaBaseUrl +
+          child: Image.network(
+            VChatConfig.messagesMediaBaseUrl +
                 _message.messageAttachment!.imageUrl.toString(),
             fit: BoxFit.cover,
-            progressIndicatorBuilder: (context, url, progress) =>
-                const Center(child: CircularProgressIndicator.adaptive()),
           ),
         ),
       ),

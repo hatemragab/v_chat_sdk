@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
-import '../sqlite/db_provider.dart';
+
 import '../utils/helpers/helpers.dart';
 import '../utils/storage_keys.dart';
 
@@ -78,7 +78,7 @@ class VChatAppService {
   }) async {
     const storage = FlutterSecureStorage();
 
-    await DBProvider.instance.database;
+
     if (vChatNotificationType == VChatNotificationType.firebase) {
       await Firebase.initializeApp();
     }

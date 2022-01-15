@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:example/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
@@ -34,8 +34,8 @@ class UserItem extends StatelessWidget {
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        child: CachedNetworkImage(
-          imageUrl: baseImgUrl + user.imageThumb,
+        child: Image.network(
+           baseImgUrl + user.imageThumb,
           height: 100,
           width: 60,
           fit: BoxFit.cover,

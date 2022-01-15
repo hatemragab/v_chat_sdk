@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
@@ -14,7 +14,7 @@ import '../../../enums/room_typing_type.dart';
 import '../../../models/v_chat_message.dart';
 import '../../../models/v_chat_message_attachment.dart';
 import '../../../models/v_chat_room_typing.dart';
-import '../../../services/local_storage_service.dart';
+
 import '../../../services/socket_service.dart';
 import '../../../services/v_chat_app_service.dart';
 import '../../../utils/api_utils/dio/custom_dio.dart';
@@ -68,15 +68,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
 
   ///get messages from sqlite
   Future<void> getLocalMessages() async {
-    // Helpers.vlog("getLocalMessages Room Id is ${roomId}");
-    final messages = await LocalStorageService.instance.getRoomMessages(roomId);
-    if (messages.isEmpty) {
-      emit(MessageLoading());
-      return;
-    }
-    this.messages.clear();
-    this.messages.addAll(messages);
-    emit(MessageLoaded(messages));
+    emit(MessageLoading());
   }
 
   ///lode more messages if top retched
@@ -227,9 +219,8 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
       }
       final _pickedImage = File(path);
       final compressedFile = await FileUtils.compressImage(_pickedImage);
+      final properties = decodeJpg(_pickedImage.readAsBytesSync())!;
 
-      final properties =
-          await FlutterNativeImage.getImageProperties(compressedFile.path);
       final fileSize = FileUtils.getFileSize(compressedFile);
       await FileUtils.uploadFile(
         [
@@ -305,9 +296,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     try {
       CustomAlert.customLoadingDialog(context: context);
       final videoFile = File(path);
-      final videoThumb = await FileUtils.getVideoThumb(videoFile);
-      final properties =
-          await FlutterNativeImage.getImageProperties(videoThumb.path);
+      //final videoThumb = await FileUtils.getVideoThumb(videoFile);
       final d = await FileUtils.getVideoDuration(videoFile.path);
       final fileSize = FileUtils.getFileSize(videoFile);
       if (!getIt.get<SocketService>().isConnected) {
@@ -316,7 +305,9 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
             .notConnectedToServerYet();
       }
       await FileUtils.uploadFile(
-        [videoThumb, videoFile],
+        [
+        //  videoThumb,
+          videoFile],
         urlPath,
         body: {
           "roomId": roomId,
@@ -325,8 +316,8 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
           "attachment": jsonEncode(
             VChatMessageAttachment(
               fileSize: fileSize,
-              height: properties.height.toString(),
-              width: properties.width.toString(),
+              height: 700.toString(),
+              width: 400.toString(),
               fileDuration: d,
             ).toMap(),
           )

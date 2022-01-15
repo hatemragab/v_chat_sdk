@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 
@@ -44,8 +44,8 @@ class MessageVideoItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                imageUrl:
+              child: Image.network(
+
                     VChatConfig.messagesMediaBaseUrl + att.imageUrl.toString(),
                 fit: BoxFit.cover,
               ),

@@ -10,7 +10,7 @@ import '../models/v_chat_room.dart';
 import '../models/v_chat_room_typing.dart';
 import '../utils/custom_widgets/custom_alert_dialog.dart';
 import '../utils/v_chat_config.dart';
-import 'local_storage_service.dart';
+
 import 'v_chat_app_service.dart';
 
 class SocketService {
@@ -80,7 +80,6 @@ class SocketService {
       final _roomsMaps = data as List;
       final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
       RoomCubit.instance.setSocketRooms(_rooms);
-      unawaited(LocalStorageService.instance.setRooms(_rooms));
     });
 
     _socket!.on("update_one_room", (_room) {
@@ -88,7 +87,7 @@ class SocketService {
       //   "update_one_room Event called ${DateTime.now().microsecondsSinceEpoch}",
       // );
       final room = VChatRoom.fromMap(_room);
-      unawaited(LocalStorageService.instance.setRoomOrUpdate(room));
+
       RoomCubit.instance.updateOneRoomInRamAndSort(room);
     });
 
@@ -117,7 +116,6 @@ class SocketService {
         final _roomsMaps = data['data'] as List;
         final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();
         RoomCubit.instance.setSocketRooms(_rooms);
-        unawaited(LocalStorageService.instance.setRooms(_rooms));
       },
     );
   }

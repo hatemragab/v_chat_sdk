@@ -46,15 +46,16 @@ class VChatProvider {
   }
 
   Future<String> updateUserFcmToken(String token) async {
-    return (await CustomDio().send(
-      reqMethod: "patch",
-      path: "user",
-      body: {
-        "fcmToken": token,
-      },
-    ))
-        .data['data']
-        .toString();
+    return "";
+    // return (await CustomDio().send(
+    //   reqMethod: "patch",
+    //   path: "user",
+    //   body: {
+    //     "fcmToken": token,
+    //   },
+    // ))
+    //     .data['data']
+    //     .toString();
   }
 
   Future<String> updateUserImage({required String path}) async {

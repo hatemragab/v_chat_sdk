@@ -5,7 +5,7 @@ import 'package:v_chat_sdk/v_chat_sdk.dart';
 import '../../../enums/room_type.dart';
 import '../../../models/v_chat_room.dart';
 import '../../../models/v_chat_room_typing.dart';
-import '../../../services/local_storage_service.dart';
+
 import '../../../utils/custom_widgets/custom_alert_dialog.dart';
 
 import '../room_api_provider.dart';
@@ -40,14 +40,8 @@ class RoomCubit extends Cubit<RoomState> {
   void getInstance() {}
 
   Future getRoomsFromLocal() async {
-    final rooms = await LocalStorageService.instance.getRooms();
-    if (rooms.isEmpty) {
-      emit(RoomLoading());
-      return;
-    }
-    this.rooms.clear();
-    this.rooms.addAll(rooms);
-    emit(RoomLoaded(this.rooms));
+    emit(RoomLoading());
+
   }
 
   bool isRoomExit(String id) =>
