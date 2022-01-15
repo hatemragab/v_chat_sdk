@@ -27,8 +27,6 @@ dependencies:
   # for integrate notification with firebase
   firebase_messaging: ^11.2.4
   image_picker: ^0.8.4+4
-  # store chat offline
-  sqflite: ^2.0.1
   # sql data base path
   path_provider: ^2.0.8
   # real time chat
