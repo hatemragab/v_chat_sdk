@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:v_chat_sdk/src/dto/v_chat_notification_settings.dart';
 
 import '../../v_chat_sdk.dart';
 import '../models/v_chat_user.dart';
@@ -32,6 +33,7 @@ class VChatAppService {
   late String passwordHashKey;
 
   late VChatNotificationType vChatNotificationType;
+  late VChatNotificationSettings vChatNotificationSettings;
 
   VChatLookupString getTrans(BuildContext context) {
     /// languageCode is EN or AR etc...

@@ -76,6 +76,8 @@ class SocketService {
   }
 
   Future<void> initSockedEvents() async {
+
+
     _socket!.on("all_rooms", (data) {
       final _roomsMaps = data as List;
       final _rooms = _roomsMaps.map((e) => VChatRoom.fromMap(e)).toList();

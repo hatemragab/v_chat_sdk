@@ -15,19 +15,15 @@ import '../utils/helpers/helpers.dart';
 import 'v_chat_app_service.dart';
 
 class NotificationService {
+  late AndroidNotificationDetails androidNotificationDetails;
+
   NotificationService._privateConstructor();
 
   static final NotificationService instance =
       NotificationService._privateConstructor();
+
   late BuildContext context;
 
-  final androidNotificationDetails = const AndroidNotificationDetails(
-    "v_chat_channel",
-    "v_chat_channel",
-    icon: "@mipmap/ic_launcher",
-    importance: Importance.max,
-    priority: Priority.max,
-  );
   final iosNotificationDetails = const IOSNotificationDetails(
     presentBadge: false,
     presentSound: true,
@@ -37,6 +33,7 @@ class NotificationService {
     this.context = context;
     if (VChatAppService.instance.vChatNotificationType !=
         VChatNotificationType.none) {
+
       await initNotification();
     }
   }
@@ -59,7 +56,18 @@ class NotificationService {
   }
 
   Future initNotification() async {
+    final st = VChatAppService.instance.vChatNotificationSettings;
+    androidNotificationDetails = AndroidNotificationDetails(
+      "v_chat_channel",
+      "v_chat_channel",
+      playSound: st.sound,
+      enableVibration: st.vibrate,
+      icon: st.icon,
+      importance: Importance.max,
+      priority: Priority.max,
+    );
     final messaging = FirebaseMessaging.instance;
+
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     messaging.setAutoInitEnabled(true);
     final token = await messaging.getToken();
@@ -105,9 +113,11 @@ class NotificationService {
         ?.createNotificationChannel(channel);
 
     await flutterLocalNotificationsPlugin.initialize(
-      const InitializationSettings(
-        android: AndroidInitializationSettings("@mipmap/ic_launcher"),
-        iOS: IOSInitializationSettings(),
+        InitializationSettings(
+        android: AndroidInitializationSettings(st.icon,),
+        iOS:   IOSInitializationSettings(
+          defaultPresentSound: st.sound,
+        ),
       ),
       onSelectNotification: (payload) async {
         if (payload != null) {

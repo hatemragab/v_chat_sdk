@@ -12,6 +12,7 @@ import 'package:v_chat_sdk/src/models/models.dart';
 
 import 'dto/create_group_room_dto.dart';
 import 'dto/v_chat_login_dto.dart';
+import 'dto/v_chat_notification_settings.dart';
 import 'dto/v_chat_register_dto.dart';
 import 'enums/v_chat_notification_type.dart';
 import 'models/v_chat_room.dart';
@@ -26,7 +27,6 @@ import 'services/v_chat_app_service.dart';
 import 'services/v_chat_provider.dart';
 import 'services/v_chat_shared_preferences.dart';
 import 'sqlite/db_provider.dart';
-import 'utils/api_utils/dio/v_chat_sdk_exception.dart';
 import 'utils/custom_widgets/custom_alert_dialog.dart';
 import 'utils/helpers/helpers.dart';
 import 'utils/storage_keys.dart';
@@ -58,6 +58,8 @@ class VChatController {
     required Uri baseUrl,
     required String appName,
     required VChatNotificationType vChatNotificationType,
+    VChatNotificationSettings vChatNotificationSettings =
+        const VChatNotificationSettings(),
     VChatWidgetBuilder widgetsBuilder = const VChatWidgetBuilder(),
     required bool enableLogger,
     required String passwordHashKey,
@@ -66,12 +68,13 @@ class VChatController {
   }) async {
     ///init some service
     await VChatAppService.instance
-        .init(vChatNotificationType: vChatNotificationType);
+        .init(vChatNotificationType: vChatNotificationType );
     await LocalStorageService.instance.init();
     final appService = VChatAppService.instance;
 
     ///set some constants
     appService.vChatNotificationType = vChatNotificationType;
+    appService.vChatNotificationSettings = vChatNotificationSettings;
     appService.appName = appName;
     appService.maxGroupChatUsers = maxGroupChatUsers;
     VChatConfig.serverIp = baseUrl.toString();
@@ -153,9 +156,10 @@ class VChatController {
     String? email,
   }) async {
     if (VChatAppService.instance.vChatUser == null && email == null) {
-      throw VChatSdkException(
-        "You must login or register to v chat first if you migrate old users then send email parameter is required",
-      );
+      return;
+      // throw VChatSdkException(
+      //   "You must login or register to v chat first if you migrate old users then send email parameter is required",
+      // );
     }
 
     if (VChatAppService.instance.vChatUser == null && email != null) {
