@@ -68,7 +68,7 @@ class VChatController {
   }) async {
     ///init some service
     await VChatAppService.instance
-        .init(vChatNotificationType: vChatNotificationType );
+        .init(vChatNotificationType: vChatNotificationType);
     await LocalStorageService.instance.init();
     final appService = VChatAppService.instance;
 

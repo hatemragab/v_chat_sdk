@@ -33,7 +33,6 @@ class NotificationService {
     this.context = context;
     if (VChatAppService.instance.vChatNotificationType !=
         VChatNotificationType.none) {
-
       await initNotification();
     }
   }
@@ -113,9 +112,11 @@ class NotificationService {
         ?.createNotificationChannel(channel);
 
     await flutterLocalNotificationsPlugin.initialize(
-        InitializationSettings(
-        android: AndroidInitializationSettings(st.icon,),
-        iOS:   IOSInitializationSettings(
+      InitializationSettings(
+        android: AndroidInitializationSettings(
+          st.icon,
+        ),
+        iOS: IOSInitializationSettings(
           defaultPresentSound: st.sound,
         ),
       ),

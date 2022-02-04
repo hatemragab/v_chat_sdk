@@ -79,3 +79,6 @@
 
 ## 1.0.4
 * update packages
+
+## 1.1.0
+* support custom notifications settings
