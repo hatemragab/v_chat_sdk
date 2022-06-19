@@ -48,7 +48,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
         emitTypingChange(1);
       }
     });
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     NotificationService.instance.cancelAll();
     setListViewListener();
     isSingle =
@@ -293,7 +293,7 @@ class MessageCubit extends Cubit<MessageState> with WidgetsBindingObserver {
     _messageSocket.dispose();
     RoomCubit.instance.currentRoomId = null;
     scrollController.dispose();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     if (isEmitTyping) {
       emitTypingChange(0);
     }

@@ -1,6 +1,6 @@
 name: v_chat_sdk
 description: official sdk for v chat this is a complete chat ecosystem use flutter for clint node js and socket io for server side flutter chat v chat sdk
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/hatemragab/v_chat_sdk
 
 environment:
@@ -23,10 +23,10 @@ dependencies:
   # http request
   dio: ^4.0.4
   #init firebase
-  firebase_core: ^1.11.0
+  firebase_core: ^1.12.0
   # for integrate notification with firebase
-  firebase_messaging: ^11.2.5
-  image_picker: ^0.8.4+4
+  firebase_messaging: ^11.2.6
+  image_picker: ^0.8.4+6
   # store chat offline /no web support
   sqflite: ^2.0.2
   # sql data base path /no web support
@@ -36,7 +36,7 @@ dependencies:
   # date format
   intl: ^0.17.0
   # get files
-  file_picker: ^4.3.1
+  file_picker: ^4.3.3
   # crop image and reduce its quality /no web support
   flutter_native_image: ^0.0.6+1
   # ask for files permissions /no web support
@@ -46,7 +46,7 @@ dependencies:
   # video_thumbnail /no web support
   video_thumbnail: ^0.4.3
   # flutter official video_player
-  video_player: ^2.2.11
+  video_player: ^2.2.18
   # record voice chat
   record: ^3.0.2
   # voice recording timer
@@ -62,7 +62,7 @@ dependencies:
   # cached_network_image /no web support
   cached_network_image: ^3.2.0
   # message time
-  timeago: ^3.1.0
+  timeago: ^3.2.1
   #in app notifications /no web support
   flutter_local_notifications: ^9.2.0
   path: ^1.8.0
@@ -76,7 +76,7 @@ dependencies:
   # for has the password
   crypto: ^3.0.1
   # for save user app language
-  shared_preferences: ^2.0.12
+  shared_preferences: ^2.0.13
 
 
 

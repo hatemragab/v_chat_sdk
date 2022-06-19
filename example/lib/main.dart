@@ -13,7 +13,7 @@ import 'utils/v_chat_utils/v_chat_custom_widgets.dart';
 const isUseRealServer = true;
 
 const serverIp =
-    isUseRealServer ? "https://test.vchatsdk.com" : "http://10.0.2.2:3000";
+    isUseRealServer ? "https://test.vchatsdk.com" : "http://10.0.2.2:3001";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

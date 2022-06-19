@@ -13,7 +13,6 @@ class VChatRoom {
   final int updatedAt;
   final String creatorId;
   final int isMute;
-
   final int isOnline;
   final String title;
   final String thumbImage;

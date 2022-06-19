@@ -82,3 +82,5 @@
 
 ## 1.1.0
 * support custom notifications settings
+## 1.1.2
+* update packages

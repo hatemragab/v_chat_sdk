@@ -68,7 +68,6 @@ class _MessageViewScreenState extends State<MessageViewScreen> {
                     if (state is MessageLoaded) {
                       final messagesList = state.messages;
                       return Scrollbar(
-                        showTrackOnHover: true,
                         child: ListView.separated(
                           reverse: true,
                           controller: messageController.scrollController,
