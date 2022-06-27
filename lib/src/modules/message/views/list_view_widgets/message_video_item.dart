@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-
-import '../../../../models/v_chat_message.dart';
-import '../../../../utils/custom_widgets/rounded_container.dart';
-import '../../../../utils/v_chat_config.dart';
-import '../../../video_player/views/video_player_view.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/modules/video_player/views/video_player_view.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/rounded_container.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class MessageVideoItem extends StatelessWidget {
   final VChatMessage _message;

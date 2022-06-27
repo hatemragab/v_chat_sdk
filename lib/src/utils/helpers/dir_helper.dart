@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/api_utils/dio/v_chat_sdk_exception.dart';
-
-import '../../services/v_chat_app_service.dart';
 
 class DirHelper {
   DirHelper._();

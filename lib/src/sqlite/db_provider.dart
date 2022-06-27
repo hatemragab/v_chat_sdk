@@ -1,10 +1,9 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk/src/sqlite/tables/message_table.dart';
+import 'package:v_chat_sdk/src/sqlite/tables/room_table.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
-
-import '../utils/helpers/helpers.dart';
-import 'tables/message_table.dart';
-import 'tables/room_table.dart';
 
 class DBProvider {
   DBProvider._();

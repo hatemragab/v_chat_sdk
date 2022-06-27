@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
-import '../../../../models/v_chat_message.dart';
-import '../../../../services/v_chat_app_service.dart';
 
 class MessageTextItem extends StatelessWidget {
   final VChatMessage message;

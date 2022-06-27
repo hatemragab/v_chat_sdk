@@ -5,9 +5,9 @@ import 'package:record/record.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
-import '../../../../../utils/custom_widgets/rounded_container.dart';
-import '../../../../../utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/rounded_container.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 
 class MessageRecordView extends StatefulWidget {
   final Function(String path, String duration) onReceiveRecord;
@@ -101,11 +101,11 @@ class _MessageRecordViewState extends State<MessageRecordView> {
         if (Platform.isIOS) {
           await recorder.start(
             bitRate: 75000,
-            encoder: AudioEncoder.AAC_HE,
+            encoder: AudioEncoder.aacHe,
           );
         } else {
           await recorder.start(
-            encoder: AudioEncoder.AAC_HE,
+            encoder: AudioEncoder.aacHe,
             bitRate: 40000,
             //samplingRate: 64100.0,
           );

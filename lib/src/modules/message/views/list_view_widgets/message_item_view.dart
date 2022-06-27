@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_sdk/src/enums/message_type.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
 import 'package:v_chat_sdk/src/models/v_chat_room.dart';
+import 'package:v_chat_sdk/src/modules/message/cubit/message_cubit.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/message_file_view.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/message_image_item.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/message_text_item.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/message_video_item.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/message_voice_view.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/render_message_send_at_day_item.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/circle_image.dart';
 import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
-import '../../../../enums/message_type.dart';
-import '../../../../models/v_chat_message.dart';
-import '../../cubit/message_cubit.dart';
-import 'message_file_view.dart';
-import 'message_image_item.dart';
-import 'message_text_item.dart';
-import 'message_video_item.dart';
-import 'message_voice_view.dart';
-import 'render_message_send_at_day_item.dart';
 
 class MessageItemView extends StatelessWidget {
   final VChatMessage message;

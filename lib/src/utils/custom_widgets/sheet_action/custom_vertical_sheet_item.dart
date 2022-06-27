@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:textless/textless.dart';
 
-import '../../../services/v_chat_app_service.dart';
-import 'sheet_vertical_item.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/sheet_action/sheet_vertical_item.dart';
 
 class CustomVerticalSheetItem {
   CustomVerticalSheetItem._();

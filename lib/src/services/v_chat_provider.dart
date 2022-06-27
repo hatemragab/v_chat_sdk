@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:v_chat_sdk/src/utils/api_utils/dio/custom_dio.dart';
 import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
-
-import '../../v_chat_sdk.dart';
-import '../utils/api_utils/dio/custom_dio.dart';
+import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 class VChatProvider {
   Future checkIfThereRoom(String peerEmail) async {

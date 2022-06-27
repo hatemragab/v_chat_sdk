@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../../models/v_chat_message.dart';
-
-import '../../../../utils/v_chat_config.dart';
-import '../../../image_viewer/views/image_viewer_view.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/modules/image_viewer/views/image_viewer_view.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class MessageImageItem extends StatelessWidget {
   final VChatMessage _message;

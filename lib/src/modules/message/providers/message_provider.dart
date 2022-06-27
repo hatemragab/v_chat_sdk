@@ -1,5 +1,5 @@
-import '../../../models/v_chat_message.dart';
-import '../../../utils/api_utils/dio/custom_dio.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/custom_dio.dart';
 
 class MessageProvider {
   Future<List<VChatMessage>> loadMoreMessages(

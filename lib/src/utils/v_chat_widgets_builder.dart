@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import 'custom_widgets/audio_wave.dart';
-import 'custom_widgets/auto_direction.dart';
-import 'custom_widgets/read_more_text.dart';
-import 'custom_widgets/rounded_container.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/audio_wave.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/read_more_text.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/rounded_container.dart';
 
 class VChatWidgetBuilder {
   const VChatWidgetBuilder();

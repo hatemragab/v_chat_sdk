@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-import '../../../../models/v_chat_message.dart';
-import '../../../../utils/custom_widgets/rounded_container.dart';
-import '../../../../utils/date_util.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/rounded_container.dart';
+import 'package:v_chat_sdk/src/utils/date_util.dart';
 
 class RenderMessageSendAtDayItem extends StatelessWidget {
   final int index;

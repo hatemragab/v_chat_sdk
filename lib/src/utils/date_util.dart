@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import '../services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
 
 enum Days { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 

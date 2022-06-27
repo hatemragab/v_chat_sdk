@@ -2,10 +2,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
 import 'package:v_chat_sdk/src/utils/custom_widgets/audio_wave.dart';
-import '../../../models/v_chat_message.dart';
-import '../../../utils/v_chat_config.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class VoicePlayer extends StatefulWidget {
   final VChatMessage message;
@@ -131,9 +130,10 @@ class _VoicePlayerState extends State<VoicePlayer> {
 
   Future<void> startPlayVoice() async {
     await audioPlayer.play(
-      VChatConfig.messagesMediaBaseUrl +
-          widget.message.messageAttachment!.playUrl!,
-      stayAwake: true,
+      UrlSource(
+        VChatConfig.messagesMediaBaseUrl +
+            widget.message.messageAttachment!.playUrl!,
+      ),
     );
     audioPlayer.onDurationChanged.listen((event) {
       setState(() {
@@ -143,7 +143,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
     setState(() {
       isPlaying = true;
     });
-    audioPlayer.onPlayerCompletion.listen((event) {
+    audioPlayer.onPlayerComplete.listen((event) {
       setState(() {
         isPlaying = false;
       });

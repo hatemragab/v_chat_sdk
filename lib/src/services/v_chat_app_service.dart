@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../../v_chat_sdk.dart';
-import '../models/v_chat_user.dart';
-import '../sqlite/db_provider.dart';
-import '../utils/helpers/helpers.dart';
-import '../utils/storage_keys.dart';
+import 'package:v_chat_sdk/src/models/v_chat_user.dart';
+import 'package:v_chat_sdk/src/sqlite/db_provider.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/storage_keys.dart';
+import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 class VChatAppService {
   VChatAppService._privateConstructor();

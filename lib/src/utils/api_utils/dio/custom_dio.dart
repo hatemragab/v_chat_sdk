@@ -1,9 +1,10 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
-import '../../../services/v_chat_app_service.dart';
-import '../../helpers/helpers.dart';
-import '../../v_chat_config.dart';
-import 'v_chat_sdk_exception.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/v_chat_sdk_exception.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class CustomDio {
   final vChatController = VChatAppService.instance;

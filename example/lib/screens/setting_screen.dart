@@ -101,8 +101,8 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).ourFullDocumentation,
               icon: Icons.document_scanner_outlined,
               onTap: () async {
-                if (!await launch(
-                    "https://hatemragab.github.io/VChatSdk-Documentation")) {
+                if (!await launchUrl(
+                    Uri.parse("https://hatemragab.github.io/VChatSdk-Documentation"))) {
                   throw 'Could not launch  ';
                 }
               },
@@ -111,8 +111,8 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).buyTheBackendCode,
               icon: Icons.document_scanner_outlined,
               onTap: () async {
-                if (!await launch(
-                    "https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700")) {
+                if (!await launchUrl(
+                    Uri.parse("https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700"))) {
                   throw 'Could not launch  ';
                 }
               },
@@ -121,7 +121,7 @@ class _SettingScreenState extends State<SettingScreen> {
               title: S.of(context).iosTestflightAndPublicFlutterUi,
               icon: Icons.document_scanner_outlined,
               onTap: () async {
-                if (!await launch("https://github.com/hatemragab/v_chat_sdk")) {
+                if (!await launchUrl(Uri.parse("https://github.com/hatemragab/v_chat_sdk"))) {
                   throw 'Could not launch  ';
                 }
               },

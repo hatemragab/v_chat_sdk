@@ -6,13 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:v_chat_sdk/src/enums/enums.dart';
 import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/modules/message/views/message_view.dart';
+import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
 import 'package:v_chat_sdk/src/services/local_storage_service.dart';
-
-import '../modules/message/views/message_view.dart';
-import '../modules/rooms/cubit/room_cubit.dart';
-import '../utils/api_utils/dio/custom_dio.dart';
-import '../utils/helpers/helpers.dart';
-import 'v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/custom_dio.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 
 class NotificationService {
   late AndroidNotificationDetails androidNotificationDetails;

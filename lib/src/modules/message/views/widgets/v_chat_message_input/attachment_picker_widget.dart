@@ -4,9 +4,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../../services/v_chat_app_service.dart';
-import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
-import '../../../../../utils/v_chat_config.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class AttachmentPickerWidget extends StatelessWidget {
   const AttachmentPickerWidget({Key? key}) : super(key: key);

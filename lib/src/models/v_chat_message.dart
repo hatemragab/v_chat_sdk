@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import '../enums/message_type.dart';
-import '../utils/helpers/helpers.dart';
-import 'v_chat_message_attachment.dart';
+import 'package:v_chat_sdk/src/enums/message_type.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message_attachment.dart';
+import 'package:v_chat_sdk/src/utils/helpers/helpers.dart';
 
 @immutable
 class VChatMessage {

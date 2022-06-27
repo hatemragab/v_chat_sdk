@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/modules/voice_player/views/voice_player.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-
-import '../../../../models/v_chat_message.dart';
-import '../../../voice_player/views/voice_player.dart';
 
 class MessageVoiceView extends StatelessWidget {
   final VChatMessage _message;

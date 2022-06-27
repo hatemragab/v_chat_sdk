@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/message_type.dart';
 import 'package:v_chat_sdk/src/models/v_chat_message.dart';
-import '../../../v_chat_sdk.dart';
-import '../../services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 class Helpers {
   Helpers._();

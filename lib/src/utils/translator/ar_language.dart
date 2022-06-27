@@ -1,4 +1,4 @@
-import 'v_chat_lookup_string.dart';
+import 'package:v_chat_sdk/src/utils/translator/v_chat_lookup_string.dart';
 
 class ArLanguage implements VChatLookupString {
   @override

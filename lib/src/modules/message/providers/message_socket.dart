@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:socket_io_client/socket_io_client.dart';
 
-import '../../../models/v_chat_message.dart';
-import '../../../services/local_storage_service.dart';
-import '../../../services/v_chat_app_service.dart';
-import '../../../utils/v_chat_config.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/services/local_storage_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class MessageSocket {
   late Socket _socket;

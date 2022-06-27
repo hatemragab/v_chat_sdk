@@ -12,14 +12,13 @@ import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message_attachment.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/custom_dio.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
+import 'package:v_chat_sdk/src/utils/helpers/dir_helper.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-
-import '../models/v_chat_message_attachment.dart';
-import '../services/v_chat_app_service.dart';
-import 'api_utils/dio/custom_dio.dart';
-import 'custom_widgets/custom_alert_dialog.dart';
-import 'helpers/dir_helper.dart';
-import 'v_chat_config.dart';
 
 class FileUtils {
   FileUtils._();

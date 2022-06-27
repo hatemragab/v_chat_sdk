@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../services/v_chat_app_service.dart';
-import '../../../../../utils/custom_widgets/auto_direction.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/auto_direction.dart';
 
 class MessageFiled extends StatefulWidget {
   final TextEditingController controller;

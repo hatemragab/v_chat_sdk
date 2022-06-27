@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../v_chat_config.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class CircleImage {
   CircleImage._();

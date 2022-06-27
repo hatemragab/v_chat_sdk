@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:textless/textless.dart';
 
-import '../../enums/socket_state_type.dart';
-import '../../services/socket_service.dart';
-import '../../services/v_chat_app_service.dart';
-import 'rounded_container.dart';
+import 'package:v_chat_sdk/src/enums/socket_state_type.dart';
+import 'package:v_chat_sdk/src/services/socket_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/rounded_container.dart';
 
 class ConnectionChecker extends StatelessWidget {
   const ConnectionChecker({Key? key}) : super(key: key);

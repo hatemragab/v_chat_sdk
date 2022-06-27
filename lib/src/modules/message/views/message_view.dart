@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
-import '../../../enums/room_type.dart';
-import '../../../services/v_chat_app_service.dart';
-import '../../../utils/custom_widgets/circle_image.dart';
-import '../../../utils/custom_widgets/connection_checker.dart';
-import '../../rooms/cubit/room_cubit.dart';
-import '../cubit/message_cubit.dart';
-import 'list_view_widgets/message_item_view.dart';
-import 'widgets/message_appbar_view.dart';
-import 'widgets/v_chat_message_input/v_chat_message_input.dart';
+import 'package:v_chat_sdk/src/enums/room_type.dart';
+import 'package:v_chat_sdk/src/modules/message/cubit/message_cubit.dart';
+import 'package:v_chat_sdk/src/modules/message/views/list_view_widgets/message_item_view.dart';
+import 'package:v_chat_sdk/src/modules/message/views/widgets/message_appbar_view.dart';
+import 'package:v_chat_sdk/src/modules/message/views/widgets/v_chat_message_input/v_chat_message_input.dart';
+import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/circle_image.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/connection_checker.dart';
 
 class MessageView extends StatelessWidget {
   final String roomId;

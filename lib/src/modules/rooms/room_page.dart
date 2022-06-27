@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk/src/models/v_chat_group_chat_info.dart';
+import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
+import 'package:v_chat_sdk/src/modules/rooms/widgets/room_item.dart';
 import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
-import '../../utils/custom_widgets/connection_checker.dart';
-import 'cubit/room_cubit.dart';
-import 'widgets/room_item.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/connection_checker.dart';
 
 /// [isGroupChat] will be true only if the current chat is group
 /// [isGroupChat] == false then [uniqueId] will be the unique id of user witch you send to v chat while register then you can redirect it to user profile

@@ -1,28 +1,29 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart';
 import 'package:v_chat_sdk/src/enums/load_more_type.dart';
+import 'package:v_chat_sdk/src/enums/message_type.dart';
 import 'package:v_chat_sdk/src/enums/room_type.dart';
+import 'package:v_chat_sdk/src/enums/room_typing_type.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message_attachment.dart';
+import 'package:v_chat_sdk/src/models/v_chat_room_typing.dart';
+import 'package:v_chat_sdk/src/modules/message/providers/message_provider.dart';
+import 'package:v_chat_sdk/src/modules/message/providers/message_socket.dart';
+import 'package:v_chat_sdk/src/modules/rooms/cubit/room_cubit.dart';
+import 'package:v_chat_sdk/src/services/local_storage_service.dart';
 import 'package:v_chat_sdk/src/services/notification_service.dart';
-import '../../../enums/message_type.dart';
-import '../../../enums/room_typing_type.dart';
-import '../../../models/v_chat_message.dart';
-import '../../../models/v_chat_message_attachment.dart';
-import '../../../models/v_chat_room_typing.dart';
-import '../../../services/local_storage_service.dart';
-import '../../../services/socket_service.dart';
-import '../../../services/v_chat_app_service.dart';
-import '../../../utils/api_utils/dio/custom_dio.dart';
-import '../../../utils/custom_widgets/custom_alert_dialog.dart';
-import '../../../utils/file_utils.dart';
-import '../../rooms/cubit/room_cubit.dart';
-import '../providers/message_provider.dart';
-import '../providers/message_socket.dart';
+import 'package:v_chat_sdk/src/services/socket_service.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/custom_dio.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
+import 'package:v_chat_sdk/src/utils/file_utils.dart';
 
 part 'message_state.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import '../enums/room_type.dart';
-import '../enums/room_typing_type.dart';
-import 'v_chat_group_chat_info.dart';
-import 'v_chat_message.dart';
-import 'v_chat_room_typing.dart';
+import 'package:v_chat_sdk/src/enums/room_type.dart';
+import 'package:v_chat_sdk/src/enums/room_typing_type.dart';
+import 'package:v_chat_sdk/src/models/v_chat_group_chat_info.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/models/v_chat_room_typing.dart';
 
 @immutable
 class VChatRoom {

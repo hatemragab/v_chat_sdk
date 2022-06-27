@@ -1,4 +1,4 @@
-import '../enums/room_typing_type.dart';
+import 'package:v_chat_sdk/src/enums/room_typing_type.dart';
 
 class VChatRoomTyping {
   RoomTypingType status;

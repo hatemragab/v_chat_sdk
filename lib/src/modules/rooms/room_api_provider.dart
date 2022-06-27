@@ -1,5 +1,5 @@
-import '../../models/v_chat_room.dart';
-import '../../utils/api_utils/dio/custom_dio.dart';
+import 'package:v_chat_sdk/src/models/v_chat_room.dart';
+import 'package:v_chat_sdk/src/utils/api_utils/dio/custom_dio.dart';
 
 class RoomsApiProvider {
   Future<List<VChatRoom>> loadMore(int page) async {

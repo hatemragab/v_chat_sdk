@@ -1,4 +1,4 @@
-import '../../v_chat_sdk.dart';
+import 'package:v_chat_sdk/v_chat_sdk.dart';
 
 class VChatAddLanguageModel {
   final String languageCode;

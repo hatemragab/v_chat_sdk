@@ -6,15 +6,14 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
+import 'package:v_chat_sdk/src/modules/message/views/widgets/v_chat_message_input/attachment_picker_widget.dart';
+import 'package:v_chat_sdk/src/modules/message/views/widgets/v_chat_message_input/message_filed.dart';
+import 'package:v_chat_sdk/src/modules/message/views/widgets/v_chat_message_input/message_recored_view.dart';
 import 'package:v_chat_sdk/src/services/socket_service.dart';
-
-import '../../../../../services/v_chat_app_service.dart';
-import '../../../../../utils/custom_widgets/custom_alert_dialog.dart';
-import '../../../../../utils/custom_widgets/rounded_container.dart';
-import '../../../../../utils/v_chat_config.dart';
-import 'attachment_picker_widget.dart';
-import 'message_filed.dart';
-import 'message_recored_view.dart';
+import 'package:v_chat_sdk/src/services/v_chat_app_service.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/custom_alert_dialog.dart';
+import 'package:v_chat_sdk/src/utils/custom_widgets/rounded_container.dart';
+import 'package:v_chat_sdk/src/utils/v_chat_config.dart';
 
 class VChatMessageInput extends StatefulWidget {
   final Function() onReceiveText;

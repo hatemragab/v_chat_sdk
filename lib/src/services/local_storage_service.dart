@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
-import '../models/v_chat_message.dart';
-import '../models/v_chat_room.dart';
-import '../sqlite/db_provider.dart';
-import '../sqlite/tables/message_table.dart';
-import '../sqlite/tables/room_table.dart';
+import 'package:v_chat_sdk/src/models/v_chat_message.dart';
+import 'package:v_chat_sdk/src/models/v_chat_room.dart';
+import 'package:v_chat_sdk/src/sqlite/db_provider.dart';
+import 'package:v_chat_sdk/src/sqlite/tables/message_table.dart';
+import 'package:v_chat_sdk/src/sqlite/tables/room_table.dart';
 
 class LocalStorageService {
   LocalStorageService._privateConstructor();
