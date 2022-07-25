@@ -84,3 +84,6 @@
 * support custom notifications settings
 ## 1.1.2
 * update packages
+## 1.1.3
+* fix ios notification
+* fix ios recording

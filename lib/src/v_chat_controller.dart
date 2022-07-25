@@ -178,7 +178,7 @@ class VChatController {
       VChatAppService.instance.currentLocal = appLang;
       unawaited(_vChatUsersApi.updateUserLanguage(appLang));
     }
-    NotificationService.instance.init(context);
+    unawaited(NotificationService.instance.init(context));
     RoomCubit.instance.getInstance();
   }
 

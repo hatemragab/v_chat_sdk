@@ -100,8 +100,6 @@ class _MessageRecordViewState extends State<MessageRecordView> {
       try {
         if (Platform.isIOS) {
           await recorder.start(
-            bitRate: 75000,
-            encoder: AudioEncoder.aacHe,
           );
         } else {
           await recorder.start(

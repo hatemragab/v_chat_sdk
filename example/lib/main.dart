@@ -13,7 +13,7 @@ import 'utils/v_chat_utils/v_chat_custom_widgets.dart';
 const isUseRealServer = true;
 
 const serverIp =
-    isUseRealServer ? "https://test.vchatsdk.com" : "http://10.0.2.2:3001";
+    isUseRealServer ? "https://test.vchatsdk.com" : "http://10.0.2.2:3000";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ void main() async {
   await VChatController.instance.init(
     baseUrl: Uri.parse(serverIp),
     appName: "test_v_chat",
-    vChatNotificationType: VChatNotificationType.none,
+    vChatNotificationType: VChatNotificationType.firebase,
     widgetsBuilder: VChatCustomWidgets(),
     enableLogger: true,
     maxMediaUploadSize: 50 * 1000 * 1000,

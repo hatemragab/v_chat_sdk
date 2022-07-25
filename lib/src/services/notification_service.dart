@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,12 @@ class NotificationService {
     final messaging = FirebaseMessaging.instance;
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    messaging.setForegroundNotificationPresentationOptions(
+      badge: true,
+      alert: true,
+      sound: true,
+    );
+
     messaging.setAutoInitEnabled(true);
     final token = await messaging.getToken();
     try {
@@ -222,9 +229,9 @@ class NotificationService {
     required int hashCode,
     required String? roomId,
   }) {
-    // if (Platform.isIOS) {
-    //   return;
-    // }
+    if (Platform.isIOS) {
+      return;
+    }
 
     unawaited(
       flutterLocalNotificationsPlugin.show(
