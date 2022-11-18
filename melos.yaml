@@ -1,0 +1,24 @@
+name: v_chat_sdk
+repository: https://github.com/hatemragab/v_chat_sdk
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: false
+
+scripts:
+  lint:
+    run: melos run format && melos run analyze
+
+  analyze:
+    run: |
+      melos exec -c 1 -- \
+          dart analyze . --fatal-infos
+  format:
+    run: melos exec -c 1 -- \
+      flutter format .
+  fix:
+    run: melos exec -c 1 -- \
+      dart fix --apply
