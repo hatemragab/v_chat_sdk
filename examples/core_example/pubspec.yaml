@@ -7,6 +7,8 @@ environment:
 
 dependencies: 
   cupertino_icons: ^1.0.2
+  v_chat_sdk_core:
+    path: ../../packages/v_chat_sdk_core
   get: 4.6.5
   flutter: 
     sdk: flutter
