@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:v_chat_sdk_core/src/i10n/lang/en.dart';
 
 import 'default_localizations.dart';
 
@@ -33,23 +32,37 @@ class VChatLocalizations<T extends VChatLocalizationLabels> {
   static VChatLocalizationDelegate delegate = const VChatLocalizationDelegate();
 
   static VChatLocalizationDelegate
-      withDefaultOverrides<T extends EnLocalizations>(T overrides) {
-    return VChatLocalizationDelegate<T>(overrides);
+      withDefaultOverrides<T extends VChatLocalizationLabels>(
+          T overrides, Locale locale) {
+    return VChatLocalizationDelegate<T>(overrides, locale);
+  }
+
+  static VChatLocalizationDelegate
+      addNewLocal<T extends VChatLocalizationLabels>(
+    T overrides,
+    Locale locale,
+  ) {
+    return VChatLocalizationDelegate<T>(overrides, locale);
   }
 }
 
 class VChatLocalizationDelegate<T extends VChatLocalizationLabels>
     extends LocalizationsDelegate<VChatLocalizations> {
   final T? overrides;
+  final Locale? locale;
   final bool _forceSupportAllLocales;
 
   const VChatLocalizationDelegate([
     this.overrides,
+    this.locale,
     this._forceSupportAllLocales = false,
   ]);
 
   @override
   bool isSupported(Locale locale) {
+    if (this.locale != null) {
+      return this.locale!.languageCode == locale.languageCode;
+    }
     return _forceSupportAllLocales ||
         localizations.keys.contains(locale.languageCode);
   }

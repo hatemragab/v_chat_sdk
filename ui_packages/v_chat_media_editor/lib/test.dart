@@ -15,7 +15,7 @@ class _MediaEditorTestState extends State<MediaEditorTest> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l.passwordInputLabel,
+          l.emailInputLabel,
         ),
       ),
     );
