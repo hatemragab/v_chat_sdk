@@ -1,7 +1,6 @@
 name: v_chat_firebase_fcm
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -10,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  v_chat_sdk_core:
+    path: ../v_chat_sdk_core
+  firebase_core: ^2.3.0
+  firebase_messaging: ^14.1.2
 
 dev_dependencies:
   flutter_test:

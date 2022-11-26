@@ -12,6 +12,7 @@ class _MediaEditorTestState extends State<MediaEditorTest> {
   @override
   Widget build(BuildContext context) {
     final l = VChatLocalizations.labelsOf(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
