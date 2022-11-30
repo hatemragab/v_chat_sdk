@@ -8,6 +8,8 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.2
   get: 4.6.5
+  v_chat_firebase_fcm:
+    path: ../../packages/v_chat_firebase_fcm
   flutter: 
     sdk: flutter
 

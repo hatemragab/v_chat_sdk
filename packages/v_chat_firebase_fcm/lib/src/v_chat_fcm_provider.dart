@@ -10,23 +10,22 @@ class VChatFcmProver extends VChatPushProviderBase {
 
   @override
   Future<String?> getToken() async {
-    try {
-      //todo add vapidKey if web
-      return await FirebaseMessaging.instance.getToken();
-    } catch (err) {
-      //todo set logger here
-      return null;
-    }
+    return FirebaseMessaging.instance.getToken();
   }
 
   @override
   Future<bool> init() async {
+    ///this function will throw if the device not support google play service!
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp();
-      //todo set logger here app already init
       return true;
+    } else {
+      return false;
     }
-    //todo set logger here app has been init
-    return false;
+  }
+
+  @override
+  VChatPushService serviceName() {
+    return VChatPushService.firebase;
   }
 }

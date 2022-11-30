@@ -1,73 +1,59 @@
-import 'package:v_chat_sdk_core/src/exceptions/http/v_chat_http_models.dart';
+import 'package:chopper/chopper.dart';
 
 import '../v_chat_base_exception.dart';
 
 abstract class VChatBaseHttpException extends VChatBaseException {
   final int statusCode;
-  final VChatHttpRequest request;
-  final VChatHttpResponse response;
+  final Response chopperRes;
 
   VChatBaseHttpException({
     required this.statusCode,
-    required this.request,
-    required this.response,
+    required this.chopperRes,
     required super.exception,
   });
 }
 
 class VChatHttpBadRequest extends VChatBaseHttpException {
-  final VChatHttpRequest vChatRequest;
+  final Response vChatChopperRes;
 
-  final VChatHttpResponse vChatResponse;
-
-  final Object vChatException;
+  final String vChatException;
 
   VChatHttpBadRequest({
-    required this.vChatRequest,
-    required this.vChatResponse,
+    required this.vChatChopperRes,
     required this.vChatException,
   }) : super(
           statusCode: 400,
           exception: vChatException,
-          request: vChatRequest,
-          response: vChatResponse,
+          chopperRes: vChatChopperRes,
         );
 }
 
 class VChatHttpForbidden extends VChatBaseHttpException {
-  final VChatHttpRequest vChatRequest;
-
-  final VChatHttpResponse vChatResponse;
+  final Response vChatChopperRes;
 
   final Object vChatException;
 
   VChatHttpForbidden({
-    required this.vChatRequest,
-    required this.vChatResponse,
+    required this.vChatChopperRes,
     required this.vChatException,
   }) : super(
           statusCode: 403,
           exception: vChatException,
-          request: vChatRequest,
-          response: vChatResponse,
+          chopperRes: vChatChopperRes,
         );
 }
 
 class VChatHttpNotFound extends VChatBaseHttpException {
-  final VChatHttpRequest vChatRequest;
-
-  final VChatHttpResponse vChatResponse;
+  final Response vChatChopperRes;
 
   final Object vChatException;
 
   VChatHttpNotFound({
-    required this.vChatRequest,
-    required this.vChatResponse,
+    required this.vChatChopperRes,
     required this.vChatException,
   }) : super(
           statusCode: 404,
           exception: vChatException,
-          request: vChatRequest,
-          response: vChatResponse,
+          chopperRes: vChatChopperRes,
         );
 }

@@ -1,6 +1,6 @@
 abstract class VChatBaseException implements Exception {
   final Object exception;
-  final Object? stack;
+  final StackTrace? stack;
 
   VChatBaseException({
     required this.exception,

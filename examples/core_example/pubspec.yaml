@@ -9,8 +9,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   v_chat_sdk_core:
     path: ../../packages/v_chat_sdk_core
-  v_chat_firebase_fcm:
-    path: ../../packages/v_chat_firebase_fcm
+  textless:
+#  v_chat_firebase_fcm:
+#    path: ../../packages/v_chat_firebase_fcm
   get: 4.6.5
   flutter: 
     sdk: flutter
