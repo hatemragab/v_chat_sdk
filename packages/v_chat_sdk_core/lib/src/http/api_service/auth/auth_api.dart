@@ -30,7 +30,7 @@ abstract class AuthApi extends ChopperService {
     String? accessToken,
   }) {
     final client = ChopperClient(
-      baseUrl: baseUrl ?? ApiConstants.baseUrl,
+      baseUrl: baseUrl ?? AppConstants.baseUrl,
       services: [
         _$AuthApi(),
       ],

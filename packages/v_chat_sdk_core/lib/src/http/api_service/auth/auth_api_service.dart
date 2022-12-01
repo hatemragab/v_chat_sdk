@@ -15,13 +15,21 @@ class VChatAuthApiService {
     final body = dto.toMap();
     final response = await _authApi.login(body);
     throwIfNotSuccess(response);
-    await AppPref.setHashedString(
-      StorageKeys.accessToken,
-      response.body['data']['accessToken'].toString(),
-    );
-    return VIdentifierUser.fromMap(
+    final myUser = VIdentifierUser.fromMap(
       response.body['data']['user'] as Map<String, dynamic>,
     );
+    await Future.wait([
+      AppPref.setHashedString(
+        StorageKeys.accessToken,
+        response.body['data']['accessToken'].toString(),
+      ),
+      AppPref.setString(
+        StorageKeys.appLanguage,
+        dto.language,
+      ),
+      AppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
+    ]);
+    return myUser;
   }
 
   Future<VIdentifierUser> register(VChatRegisterDto dto) async {
@@ -34,14 +42,21 @@ class VChatAuthApiService {
                 source: dto.image!,
               ));
     throwIfNotSuccess(response);
-    await AppPref.setHashedString(
-      StorageKeys.accessToken,
-      response.body['data']['accessToken'].toString(),
-    );
-
-    return VIdentifierUser.fromMap(
+    final myUser = VIdentifierUser.fromMap(
       response.body['data']['user'] as Map<String, dynamic>,
     );
+    await Future.wait([
+      AppPref.setHashedString(
+        StorageKeys.accessToken,
+        response.body['data']['accessToken'].toString(),
+      ),
+      AppPref.setString(
+        StorageKeys.appLanguage,
+        dto.language,
+      ),
+      AppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
+    ]);
+    return myUser;
   }
 
   static VChatAuthApiService create({
@@ -50,7 +65,7 @@ class VChatAuthApiService {
   }) {
     _authApi = AuthApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? ApiConstants.baseUrl,
+      baseUrl: baseUrl ?? AppConstants.baseUrl,
     );
     return VChatAuthApiService._();
   }

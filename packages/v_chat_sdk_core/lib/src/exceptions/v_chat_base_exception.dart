@@ -12,3 +12,7 @@ abstract class VChatBaseException implements Exception {
     return exception.toString();
   }
 }
+
+class VChatDartException extends VChatBaseException {
+  VChatDartException({required super.exception});
+}

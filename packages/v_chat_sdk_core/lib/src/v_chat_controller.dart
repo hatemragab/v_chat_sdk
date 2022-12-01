@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:event_bus_plus/event_bus_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
@@ -10,15 +9,15 @@ import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/utils/device_info.dart';
 import 'package:v_chat_sdk_core/src/utils/enums.dart';
+import 'package:v_chat_sdk_core/src/utils/event_bus.dart';
 
 import '../v_chat_sdk_core.dart';
 import 'http/abstraction/auth_abs.dart';
 
-final vChatEvents = EventBus();
-
 class VChatController implements AuthEndPoints {
   final log = Logger('VChatController');
   final _getIt = GetIt.I;
+  final vChatEvents = EventBusSingleton.instance.vChatEvents;
 
   ///singleton
   VChatController._privateConstructor();
@@ -70,7 +69,6 @@ class VChatController implements AuthEndPoints {
       pushKey: await _helper.getFcmToken(),
       password: await _helper.getPasswordFromIdentifier(identifier),
     );
-
     final user = await _authApiService.login(dto);
     _socketController.connect();
     return user;
@@ -115,6 +113,7 @@ class VChatController implements AuthEndPoints {
       await AppPref.remove(element);
     }
     _socketController.disconnect();
+
     vChatEvents.dispose();
   }
 

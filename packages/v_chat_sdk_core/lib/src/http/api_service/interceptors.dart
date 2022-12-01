@@ -65,7 +65,7 @@ class AuthInterceptor implements RequestInterceptor {
     oldHeaders['authorization'] = "Bearer ${access ?? AppPref.getHashedString(
           key: StorageKeys.accessToken,
         )}";
-    oldHeaders["clint-version"] = ApiConstants.clintVersion;
+    oldHeaders["clint-version"] = AppConstants.clintVersion;
     return request.copyWith(
       headers: oldHeaders,
     );

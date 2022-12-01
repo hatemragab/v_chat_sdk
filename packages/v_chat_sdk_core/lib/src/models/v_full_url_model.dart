@@ -5,7 +5,7 @@ class VFullUrlModel {
   late final String fullUrl;
 
   VFullUrlModel(this.originalUrl) {
-    fullUrl = "${ApiConstants.getMediaBaseUrl}$originalUrl";
+    fullUrl = "${AppConstants.getMediaBaseUrl}$originalUrl";
   }
 
   // to String
