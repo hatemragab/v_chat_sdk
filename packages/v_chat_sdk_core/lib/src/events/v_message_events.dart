@@ -25,9 +25,9 @@ class VInsertMessageEvent extends VMessageEvents {
 }
 
 class VDeleteMessageEvent extends VMessageEvents {
-  final VBaseMessage? upMessage;
+  VBaseMessage? upMessage;
 
-  const VDeleteMessageEvent({
+  VDeleteMessageEvent({
     required super.roomId,
     required super.localId,
     this.upMessage,

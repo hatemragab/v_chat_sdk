@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
+import 'package:v_chat_sdk_core/src/local_db/local_storage_service.dart';
 import 'package:v_chat_sdk_core/src/types/platform_file_source.dart';
 import 'package:v_chat_sdk_core/src/types/platforms.dart';
 import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
@@ -16,7 +16,6 @@ import 'http/abstraction/auth_abs.dart';
 
 class VChatController implements AuthEndPoints {
   final log = Logger('VChatController');
-  final _getIt = GetIt.I;
   final vChatEvents = EventBusSingleton.instance.vChatEvents;
 
   ///singleton
@@ -30,8 +29,6 @@ class VChatController implements AuthEndPoints {
   late final ControllerHelper _helper;
   late final VChatConfig config;
   bool isControllerInit = false;
-  late final VChatAuthApiService _authApiService;
-  late final SocketController _socketController;
   late final VNativeApi vNativeApi;
 
   Future<void> init({
@@ -47,9 +44,9 @@ class VChatController implements AuthEndPoints {
     this.config = config;
     await AppPref.init();
     _helper = await ControllerHelper.instance.init(config);
-    _lazyInject();
-    _authApiService = _getIt.get<VChatAuthApiService>();
-    _socketController = _getIt.get<SocketController>()..connect();
+    _initApiService();
+    SocketController.instance.connect();
+    await LocalStorageService.instance.init();
     vNativeApi = VNativeApi();
   }
 
@@ -69,8 +66,8 @@ class VChatController implements AuthEndPoints {
       pushKey: await _helper.getFcmToken(),
       password: await _helper.getPasswordFromIdentifier(identifier),
     );
-    final user = await _authApiService.login(dto);
-    _socketController.connect();
+    final user = await vNativeApi.login(dto);
+    SocketController.instance.connect();
     return user;
   }
 
@@ -95,8 +92,8 @@ class VChatController implements AuthEndPoints {
       image: image,
     );
 
-    final user = await _authApiService.register(dto);
-    _socketController.connect();
+    final user = await vNativeApi.register(dto);
+    SocketController.instance.connect();
     return user;
   }
 
@@ -104,7 +101,7 @@ class VChatController implements AuthEndPoints {
   @override
   Future<void> logout() async {
     try {
-      await _authApiService.logout();
+      await vNativeApi.logout();
       await config.pushProvider?.deleteToken();
     } catch (err) {
       log.warning(err);
@@ -112,7 +109,7 @@ class VChatController implements AuthEndPoints {
     for (var element in StorageKeys.values) {
       await AppPref.remove(element);
     }
-    _socketController.disconnect();
+    SocketController.instance.disconnect();
 
     vChatEvents.dispose();
   }
@@ -126,12 +123,11 @@ class VChatController implements AuthEndPoints {
       );
       return false;
     }
-    _socketController.connect();
+    SocketController.instance.connect();
     return true;
   }
 
-  void _lazyInject() {
-    _getIt.registerLazySingleton(() => VChatAuthApiService.create());
-    _getIt.registerLazySingleton(() => SocketController());
+  void _initApiService() {
+    VChatAuthApiService.instance.init();
   }
 }

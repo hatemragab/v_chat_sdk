@@ -9,7 +9,9 @@ import 'auth_api.dart';
 class VChatAuthApiService {
   VChatAuthApiService._();
 
-  static late final AuthApi _authApi;
+  static final VChatAuthApiService instance = VChatAuthApiService._();
+
+  late final AuthApi _authApi;
 
   Future<VIdentifierUser> login(VChatLoginDto dto) async {
     final body = dto.toMap();
@@ -59,7 +61,7 @@ class VChatAuthApiService {
     return myUser;
   }
 
-  static VChatAuthApiService create({
+  VChatAuthApiService init({
     String? baseUrl,
     String? accessToken,
   }) {

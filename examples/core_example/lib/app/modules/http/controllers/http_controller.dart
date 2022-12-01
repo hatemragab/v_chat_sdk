@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class HttpController extends GetxController {
-  final authService = VChatAuthApiService.create();
+  final authService = VChatAuthApiService.instance.init();
   final httpModels = <HttpModel>[
     HttpModel(
       endpoint: "/text",

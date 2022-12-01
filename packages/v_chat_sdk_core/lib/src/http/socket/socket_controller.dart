@@ -8,12 +8,7 @@ import '../../events/socket_status_event.dart';
 import '../../utils/event_bus.dart';
 
 class SocketController implements ISocketIoClient {
-  bool get isSocketConnected => socketIoClient.socket.connected;
-  final log = Logger('SocketController');
-  final socketIoClient = SocketIoClient();
-  final vChatEvents = EventBusSingleton.instance.vChatEvents;
-
-  SocketController() {
+  SocketController._() {
     socketIoClient.socket.onConnect(
       (data) {
         log.finer("Socket connected !!");
@@ -24,6 +19,13 @@ class SocketController implements ISocketIoClient {
       vChatEvents.fire(const VSocketStatusEvent(false));
     });
   }
+
+  static final SocketController instance = SocketController._();
+
+  bool get isSocketConnected => socketIoClient.socket.connected;
+  final log = Logger('SocketController');
+  final socketIoClient = SocketIoClient();
+  final vChatEvents = EventBusSingleton.instance.vChatEvents;
 
   @override
   void connect() {

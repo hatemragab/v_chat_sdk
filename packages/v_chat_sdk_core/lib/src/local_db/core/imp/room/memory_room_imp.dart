@@ -28,7 +28,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VBaseRoom>> search(String text, RoomType? roomType) {
+  Future<List<VBaseRoom>> search(String text, int limit, RoomType? roomType) {
     ///case filterType ==null search in all room types !
     if (roomType == null) {
       return Future.value(
@@ -145,7 +145,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
 
   @override
   Future<VBaseRoom?> getOneWithLastMessageByRoomId(String roomId) async {
-    return Future.value(_rooms.singleWhereOrNull((e) => e.id == roomId));
+    return Future.value(getRoomById(roomId));
   }
 
   @override

@@ -35,7 +35,11 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VBaseRoom>> search(String text, RoomType? roomType) async {
+  Future<List<VBaseRoom>> search(
+    String text,
+    int limit,
+    RoomType? roomType,
+  ) async {
     if (roomType == null) {
       final maps = await _database.rawQuery(
         _prefixRoomFilterQuery(

@@ -33,7 +33,7 @@ abstract class BaseLocalRoomRepo {
 
   Future<VBaseRoom?> getOneWithLastMessageByRoomId(String roomId);
 
-  Future<List<VBaseRoom>> search(String text, RoomType? roomType);
+  Future<List<VBaseRoom>> search(String text, int limit, RoomType? roomType);
 
   Future<List<VBaseRoom>> getRoomsWithLastMessage({int limit = 300});
 }

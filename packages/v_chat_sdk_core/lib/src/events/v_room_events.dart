@@ -5,9 +5,9 @@ import '../models/socket/room_typing_model.dart';
 import '../models/v_room/single_room/single_ban_model.dart';
 
 abstract class VRoomEvents extends AppEvent {
-  final String roomId;
+  String roomId;
 
-  const VRoomEvents({required this.roomId});
+  VRoomEvents({required this.roomId});
 
   @override
   List<Object?> get props => [roomId];
@@ -16,7 +16,7 @@ abstract class VRoomEvents extends AppEvent {
 class InsertRoomEvent extends VRoomEvents {
   final VBaseRoom room;
 
-  const InsertRoomEvent({
+  InsertRoomEvent({
     required super.roomId,
     required this.room,
   });
@@ -27,7 +27,7 @@ class InsertRoomEvent extends VRoomEvents {
 class BlockSingleRoomEvent extends VRoomEvents {
   final SingleBanModel banModel;
 
-  const BlockSingleRoomEvent({
+  BlockSingleRoomEvent({
     required super.roomId,
     required this.banModel,
   });
@@ -38,7 +38,7 @@ class BlockSingleRoomEvent extends VRoomEvents {
 class UpdateRoomOnlineEvent extends VRoomEvents {
   final OnlineOfflineModel model;
 
-  const UpdateRoomOnlineEvent({
+  UpdateRoomOnlineEvent({
     required super.roomId,
     required this.model,
   });
@@ -49,7 +49,7 @@ class UpdateRoomOnlineEvent extends VRoomEvents {
 class UpdateRoomTypingEvent extends VRoomEvents {
   final RoomTypingModel typingModel;
 
-  const UpdateRoomTypingEvent({
+  UpdateRoomTypingEvent({
     required super.roomId,
     required this.typingModel,
   });
@@ -60,7 +60,7 @@ class UpdateRoomTypingEvent extends VRoomEvents {
 class UpdateRoomNameEvent extends VRoomEvents {
   final String name;
 
-  const UpdateRoomNameEvent({
+  UpdateRoomNameEvent({
     required super.roomId,
     required this.name,
   });
@@ -71,7 +71,7 @@ class UpdateRoomNameEvent extends VRoomEvents {
 class UpdateRoomImageEvent extends VRoomEvents {
   final String image;
 
-  const UpdateRoomImageEvent({
+  UpdateRoomImageEvent({
     required super.roomId,
     required this.image,
   });
@@ -80,13 +80,13 @@ class UpdateRoomImageEvent extends VRoomEvents {
 }
 
 class UpdateRoomUnReadCountByOneEvent extends VRoomEvents {
-  const UpdateRoomUnReadCountByOneEvent({
+  UpdateRoomUnReadCountByOneEvent({
     required super.roomId,
   });
 }
 
 class UpdateRoomUnReadCountToZeroEvent extends VRoomEvents {
-  const UpdateRoomUnReadCountToZeroEvent({
+  UpdateRoomUnReadCountToZeroEvent({
     required super.roomId,
   });
 }
@@ -94,7 +94,7 @@ class UpdateRoomUnReadCountToZeroEvent extends VRoomEvents {
 class UpdateRoomMuteEvent extends VRoomEvents {
   final bool isMuted;
 
-  const UpdateRoomMuteEvent({
+  UpdateRoomMuteEvent({
     required super.roomId,
     required this.isMuted,
   });
@@ -103,7 +103,7 @@ class UpdateRoomMuteEvent extends VRoomEvents {
 }
 
 class DeleteRoomEvent extends VRoomEvents {
-  const DeleteRoomEvent({
+  DeleteRoomEvent({
     required super.roomId,
   });
 }
