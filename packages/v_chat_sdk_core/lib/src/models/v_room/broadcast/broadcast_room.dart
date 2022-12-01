@@ -1,12 +1,11 @@
 import '../base_room.dart';
 
-class BroadcastRoom extends BaseRoom {
-  BroadcastRoom({
+class VBroadcastRoom extends VBaseRoom {
+  VBroadcastRoom({
     required super.id,
     required super.title,
     required super.enTitle,
     required super.thumbImage,
-    required super.transTo,
     required super.isArchived,
     required super.roomType,
     required super.unReadCount,
@@ -21,7 +20,7 @@ class BroadcastRoom extends BaseRoom {
     required super.nickName,
   });
 
-  BroadcastRoom.fromMap(super.map) : super.fromMap();
+  VBroadcastRoom.fromMap(super.map) : super.fromMap();
 
-  BroadcastRoom.fromLocalMap(super.map) : super.fromLocalMap();
+  VBroadcastRoom.fromLocalMap(super.map) : super.fromLocalMap();
 }

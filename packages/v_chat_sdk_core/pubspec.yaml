@@ -35,6 +35,7 @@ dependencies:
   objectid: ^2.1.0
   sqlite3_flutter_libs: ^0.5.10
   diacritic: ^0.1.3
+  collection: ^1.16.0
   flutter_localizations:
     sdk: flutter
   v_chat_voice_player:

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 
 import '../../../../v_chat_sdk_core.dart';
+import '../../../local_db/tables/message_table.dart';
 import '../../../types/message_video_data.dart';
 import '../base_message/base_message.dart';
-import '../db_tables_name.dart';
 
 class VVideoMessage extends VBaseMessage {
   final MessageVideoData fileSource;
@@ -30,7 +30,6 @@ class VVideoMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
     required this.fileSource,
   });
 
@@ -74,11 +73,9 @@ class VVideoMessage extends VBaseMessage {
   }
 
   @override
-  Map<String, dynamic> toLocalMap({
-    bool withOutConTr = false,
-  }) {
+  Map<String, dynamic> toLocalMap() {
     return {
-      ...super.toLocalMap(withOutConTr: withOutConTr),
+      ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
     };
   }

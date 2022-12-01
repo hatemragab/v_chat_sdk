@@ -22,7 +22,6 @@ class VTextMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
   });
 
   VTextMessage.buildMessage({

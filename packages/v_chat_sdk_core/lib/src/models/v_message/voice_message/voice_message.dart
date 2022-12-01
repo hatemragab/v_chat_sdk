@@ -5,9 +5,9 @@ import 'package:v_chat_sdk_core/src/models/v_message/voice_message/voice_stream.
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 import '../../../../v_chat_sdk_core.dart';
+import '../../../local_db/tables/message_table.dart';
 import '../base_message/base_message.dart';
 import '../core/message_voice_data.dart';
-import '../db_tables_name.dart';
 import 'i_voice_message.dart';
 
 class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
@@ -34,7 +34,6 @@ class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
     required this.fileSource,
   }) {
     _controller = _getVoiceController();
@@ -63,11 +62,9 @@ class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
   // }
 
   @override
-  Map<String, dynamic> toLocalMap({
-    bool withOutConTr = false,
-  }) {
+  Map<String, dynamic> toLocalMap() {
     return {
-      ...super.toLocalMap(withOutConTr: withOutConTr),
+      ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
     };
   }

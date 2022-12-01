@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import '../../../local_db/tables/message_table.dart';
 import '../base_message/base_message.dart';
-import '../db_tables_name.dart';
 import 'msg_info_att.dart';
 
 class VInfoMessage extends VBaseMessage {
@@ -27,7 +27,6 @@ class VInfoMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
     required this.infoAtt,
   });
 
@@ -52,7 +51,7 @@ class VInfoMessage extends VBaseMessage {
     bool withOutConTr = false,
   }) {
     return {
-      ...super.toLocalMap(withOutConTr: withOutConTr),
+      ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(infoAtt.toMap())
     };
   }

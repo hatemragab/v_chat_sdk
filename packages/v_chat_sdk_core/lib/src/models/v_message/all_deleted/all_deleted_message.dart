@@ -21,7 +21,6 @@ class VAllDeletedMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
   });
 
   VAllDeletedMessage.fromRemoteMap(super.map) : super.fromRemoteMap();

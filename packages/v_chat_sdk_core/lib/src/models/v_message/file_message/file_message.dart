@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 
 import '../../../../v_chat_sdk_core.dart';
+import '../../../local_db/tables/message_table.dart';
 import '../../../types/platform_file_source.dart';
 import '../base_message/base_message.dart';
 import '../core/message_file_data.dart';
-import '../db_tables_name.dart';
 
 class VFileMessage extends VBaseMessage {
   final VMessageFileData fileSource;
@@ -31,7 +31,6 @@ class VFileMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
     required this.fileSource,
   });
 
@@ -62,7 +61,7 @@ class VFileMessage extends VBaseMessage {
     bool withOutConTr = false,
   }) {
     return {
-      ...super.toLocalMap(withOutConTr: withOutConTr),
+      ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
     };
   }

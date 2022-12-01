@@ -1,12 +1,11 @@
 import '../base_room.dart';
 
-class SingleRoom extends BaseRoom {
-  SingleRoom({
+class VSingleRoom extends VBaseRoom {
+  VSingleRoom({
     required super.id,
     required super.title,
     required super.enTitle,
     required super.thumbImage,
-    required super.transTo,
     required super.isArchived,
     required super.roomType,
     required super.isMuted,
@@ -21,14 +20,14 @@ class SingleRoom extends BaseRoom {
     required super.nickName,
   });
 
-  SingleRoom.fromMap(super.map) : super.fromMap();
+  VSingleRoom.fromMap(super.map) : super.fromMap();
 
-  SingleRoom.empty() : super.empty();
+  VSingleRoom.empty() : super.empty();
 
   @override
   String toString() {
-    return 'SingleRoom{isOnline: $isOnline, typingStatus: $typingStatus, nickName: $nickName, isMuted: $isMuted, peerId: $peerId, blockerId: $blockerId} => Base is {id: $id, title: $title, enTitle: $enTitle, thumbImage: $thumbImage, roomType: $roomType, transTo: $transTo, isArchived: $isArchived, unReadCount: $unReadCount, lastMessage: $lastMessage, isDeleted: $isDeleted, createdAt: $createdAt, isSelected: $isSelected,';
+    return 'SingleRoom{isOnline: $isOnline, typingStatus: $typingStatus, nickName: $nickName, isMuted: $isMuted, peerId: $peerId, blockerId: $blockerId} => Base is {id: $id, title: $title, enTitle: $enTitle, thumbImage: $thumbImage, roomType: $roomType, isArchived: $isArchived, unReadCount: $unReadCount, lastMessage: $lastMessage, isDeleted: $isDeleted, createdAt: $createdAt, isSelected: $isSelected,';
   }
 
-  SingleRoom.fromLocalMap(super.map) : super.fromLocalMap();
+  VSingleRoom.fromLocalMap(super.map) : super.fromLocalMap();
 }

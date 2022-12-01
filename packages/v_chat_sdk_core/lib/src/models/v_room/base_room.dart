@@ -2,23 +2,18 @@ import 'dart:convert';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:v_chat_sdk_core/src/models/v_room/single_room/single_room.dart';
 
 import '../../../v_chat_sdk_core.dart';
+import '../../local_db/tables/room_table.dart';
 import '../socket/room_typing_model.dart';
-import '../v_message/base_message/base_message.dart';
 import '../v_message/core/message_factory.dart';
-import '../v_message/db_tables_name.dart';
-import '../v_message/empty_message.dart';
-import 'group/group_room.dart';
 
-abstract class BaseRoom {
+abstract class VBaseRoom {
   final String id;
   String title;
   String enTitle;
   VFullUrlModel thumbImage;
   RoomType roomType;
-  String? transTo;
   bool isArchived;
   int unReadCount;
   VBaseMessage lastMessage;
@@ -33,13 +28,12 @@ abstract class BaseRoom {
   final String? peerId;
   String? blockerId;
 
-  BaseRoom({
+  VBaseRoom({
     required this.id,
     required this.title,
     required this.enTitle,
     required this.roomType,
     required this.thumbImage,
-    required this.transTo,
     required this.isArchived,
     required this.unReadCount,
     required this.lastMessage,
@@ -53,9 +47,8 @@ abstract class BaseRoom {
     this.typingStatus = RoomTypingModel.offline,
   });
 
-  BaseRoom.empty()
+  VBaseRoom.empty()
       : id = "",
-        transTo = null,
         title = "",
         thumbImage = VFullUrlModel("empty!.png"),
         isArchived = false,
@@ -72,9 +65,8 @@ abstract class BaseRoom {
         peerId = null,
         lastMessage = VEmptyMessage();
 
-  BaseRoom.fromMap(Map<String, dynamic> map)
+  VBaseRoom.fromMap(Map<String, dynamic> map)
       : id = map['rId'] as String,
-        transTo = map['tTo'] as String?,
         title = map['t'] as String,
         thumbImage = VFullUrlModel(map['img'] as String),
         isArchived = map['isA'] as bool,
@@ -95,14 +87,13 @@ abstract class BaseRoom {
                 (map['messages'] as List).first as Map<String, dynamic>,
               );
 
-  BaseRoom.fromLocalMap(Map<String, dynamic> map)
+  VBaseRoom.fromLocalMap(Map<String, dynamic> map)
       : id = map[RoomTable.columnId] as String,
         roomType =
             RoomType.values.byName(map[RoomTable.columnRoomType] as String),
         title = map[RoomTable.columnTitle] as String,
         thumbImage = VFullUrlModel(map[RoomTable.columnThumbImage] as String),
         isArchived = (map[RoomTable.columnIsArchived] as int) == 1,
-        transTo = map[RoomTable.columnTransTo] as String?,
         createdAt = DateTime.parse(map[RoomTable.columnCreatedAt] as String),
         enTitle = map[RoomTable.columnEnTitle] as String,
         unReadCount = map[RoomTable.columnUnReadCount] as int,
@@ -126,7 +117,6 @@ abstract class BaseRoom {
       RoomTable.columnEnTitle: enTitle,
       RoomTable.columnRoomType: roomType.name,
       RoomTable.columnIsArchived: isArchived ? 1 : 0,
-      RoomTable.columnTransTo: transTo,
       RoomTable.columnIsDeleted: isDeleted ? 1 : 0,
       RoomTable.columnUnReadCount: unReadCount,
       RoomTable.columnCreatedAt: createdAt.toUtc().toIso8601String(),
@@ -142,27 +132,27 @@ abstract class BaseRoom {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is BaseRoom && runtimeType == other.runtimeType && id == other.id);
+      (other is VBaseRoom &&
+          runtimeType == other.runtimeType &&
+          id == other.id);
 
   @override
   int get hashCode => id.hashCode;
-
-  bool get isTransEnable => transTo != null;
 
   DateTime get lastMessageTime => lastMessage.createdAtDate;
 
   @override
   String toString() {
-    return 'BaseRoom{id: $id, title: $title, enTitle: $enTitle, thumbImage: $thumbImage, roomType: $roomType, transTo: $transTo, isArchived: $isArchived, unReadCount: $unReadCount, lastMessage: $lastMessage, isDeleted: $isDeleted, createdAt: $createdAt, isSelected: $isSelected,}';
+    return 'BaseRoom{id: $id, title: $title, enTitle: $enTitle, thumbImage: $thumbImage, roomType: $roomType, isArchived: $isArchived, unReadCount: $unReadCount, lastMessage: $lastMessage, isDeleted: $isDeleted, createdAt: $createdAt, isSelected: $isSelected,}';
   }
 
   ///getters
   bool get isRoomMuted {
     final current = this;
-    if (current is SingleRoom) {
+    if (current is VSingleRoom) {
       return current.isMuted;
     }
-    if (current is GroupRoom) {
+    if (current is VGroupRoom) {
       return current.isMuted;
     }
     return false;
@@ -170,10 +160,10 @@ abstract class BaseRoom {
 
   String? get roomTypingText {
     final current = this;
-    if (current is SingleRoom) {
+    if (current is VSingleRoom) {
       return current.typingStatus.inSingleText;
     }
-    if (current is GroupRoom) {
+    if (current is VGroupRoom) {
       return current.typingStatus.inGroupText;
     }
     return null;
@@ -181,7 +171,7 @@ abstract class BaseRoom {
 
   bool get isRoomOnline {
     final current = this;
-    if (current is SingleRoom) {
+    if (current is VSingleRoom) {
       return current.isOnline;
     }
     return false;

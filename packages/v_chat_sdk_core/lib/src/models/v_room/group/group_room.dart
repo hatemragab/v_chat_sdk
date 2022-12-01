@@ -1,12 +1,11 @@
 import '../base_room.dart';
 
-class GroupRoom extends BaseRoom {
-  GroupRoom({
+class VGroupRoom extends VBaseRoom {
+  VGroupRoom({
     required super.id,
     required super.title,
     required super.enTitle,
     required super.thumbImage,
-    required super.transTo,
     required super.isArchived,
     required super.isMuted,
     required super.unReadCount,
@@ -21,7 +20,7 @@ class GroupRoom extends BaseRoom {
     required super.nickName,
   });
 
-  GroupRoom.fromMap(super.map) : super.fromMap();
+  VGroupRoom.fromMap(super.map) : super.fromMap();
 
-  GroupRoom.fromLocalMap(super.map) : super.fromLocalMap();
+  VGroupRoom.fromLocalMap(super.map) : super.fromLocalMap();
 }

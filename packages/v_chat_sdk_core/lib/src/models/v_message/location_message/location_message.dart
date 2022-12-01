@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 
 import '../../../../v_chat_sdk_core.dart';
+import '../../../local_db/tables/message_table.dart';
 import '../base_message/base_message.dart';
-import '../db_tables_name.dart';
 import 'location_message_data.dart';
 
 class VLocationMessage extends VBaseMessage {
@@ -30,7 +30,6 @@ class VLocationMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required super.contentTr,
     required this.data,
   });
 
@@ -52,7 +51,7 @@ class VLocationMessage extends VBaseMessage {
     bool withOutConTr = false,
   }) {
     return {
-      ...super.toLocalMap(withOutConTr: withOutConTr),
+      ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(data.toMap()),
     };
   }

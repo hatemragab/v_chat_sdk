@@ -18,7 +18,6 @@ class VEmptyMessage extends VBaseMessage {
           replyTo: null,
           seenAt: null,
           isStared: false,
-          contentTr: null,
           deliveredAt: null,
           messageStatus: MessageSendingStatusEnum.serverConfirm,
           forwardId: null,

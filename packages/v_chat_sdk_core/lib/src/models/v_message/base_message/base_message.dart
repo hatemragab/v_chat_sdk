@@ -6,9 +6,9 @@ import 'package:objectid/objectid.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../v_chat_sdk_core.dart';
+import '../../../local_db/tables/message_table.dart';
 import '../../../types/platforms.dart';
 import '../core/message_factory.dart';
-import '../db_tables_name.dart';
 
 abstract class VBaseMessage {
   VBaseMessage({
@@ -31,7 +31,6 @@ abstract class VBaseMessage {
     required this.deletedAt,
     required this.parentBroadcastId,
     required this.isStared,
-    required this.contentTr,
   });
 
   //id will be changed if message get from remote
@@ -66,7 +65,6 @@ abstract class VBaseMessage {
 
   //if message send through broadcast
   String? parentBroadcastId;
-  String? contentTr;
 
   // unique message id that is used to unique the message access all messages
   // it good because the message id will changed
@@ -90,7 +88,6 @@ abstract class VBaseMessage {
         roomId = map['rId'] as String,
         isStared = map['isStared'] == null ? false : map['isStared'] as bool,
         content = map['c'] as String,
-        contentTr = null,
         messageType = MessageType.values.byName(map['mT'] as String),
         replyTo = map['rTo'] == null
             ? null
@@ -118,7 +115,6 @@ abstract class VBaseMessage {
         isStared = (map[MessageTable.columnIsStar] as int) == 1,
         content = map[MessageTable.columnContent] as String,
         seenAt = map[MessageTable.columnSeenAt] as String?,
-        contentTr = map[MessageTable.columnContentTr] as String?,
         replyTo = map[MessageTable.columnReplyTo] == null
             ? null
             : MessageFactory.createBaseMessage(
@@ -138,9 +134,7 @@ abstract class VBaseMessage {
         messageType = MessageType.values
             .byName(map[MessageTable.columnMessageType] as String);
 
-  Map<String, Object?> toLocalMap({
-    bool withOutConTr = false,
-  }) {
+  Map<String, Object?> toLocalMap() {
     final map = {
       MessageTable.columnId: id,
       MessageTable.columnSenderId: senderId,
@@ -154,7 +148,6 @@ abstract class VBaseMessage {
       MessageTable.columnReplyTo:
           replyTo == null ? null : jsonEncode(replyTo!.toLocalMap()),
       MessageTable.columnSeenAt: seenAt,
-      MessageTable.columnContentTr: contentTr,
       MessageTable.columnDeliveredAt: deliveredAt,
       MessageTable.columnForwardId: forwardId,
       MessageTable.columnDeletedAt: deletedAt,
@@ -164,9 +157,6 @@ abstract class VBaseMessage {
       MessageTable.columnCreatedAt: createdAt,
       MessageTable.columnUpdatedAt: updatedAt,
     };
-    if (withOutConTr) {
-      map.remove(MessageTable.columnContentTr);
-    }
     return map;
   }
 
@@ -217,8 +207,6 @@ abstract class VBaseMessage {
 
   bool get isMeSender => senderId == AppConstants.myProfile.baseUser.vChatId;
 
-  bool get isTrans => contentTr != null;
-
   bool get isFromBroadcast => parentBroadcastId != null;
 
   bool get isContainReply => replyTo != null;
@@ -255,7 +243,7 @@ abstract class VBaseMessage {
 
   @override
   String toString() {
-    return 'BaseMessage{id: $id, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, platform: $platform, roomId: $roomId, content: $content, messageType: $messageType, messageStatus: $messageStatus, replyTo: $replyTo, seenAt: $seenAt, deliveredAt: $deliveredAt, forwardId: $forwardId, deletedAt: $deletedAt, parentBroadcastId: $parentBroadcastId, contentTr: $contentTr, localId: $localId, createdAt: $createdAt, updatedAt: $updatedAt, isDeleted: $isDeleted, isStared: $isStared}';
+    return 'BaseMessage{id: $id, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, platform: $platform, roomId: $roomId, content: $content, messageType: $messageType, messageStatus: $messageStatus, replyTo: $replyTo, seenAt: $seenAt, deliveredAt: $deliveredAt, forwardId: $forwardId, deletedAt: $deletedAt, parentBroadcastId: $parentBroadcastId,  localId: $localId, createdAt: $createdAt, updatedAt: $updatedAt, isDeleted: $isDeleted, isStared: $isStared}';
   }
 
   VBaseMessage.buildMessage({
