@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  desktop_webview_auth
   platform_device_id_linux
   sqlite3_flutter_libs
 )

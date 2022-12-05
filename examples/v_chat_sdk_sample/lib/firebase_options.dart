@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '706118575283',
     projectId: 'v-chat-sdk-v2',
     storageBucket: 'v-chat-sdk-v2.appspot.com',
-    iosClientId: '706118575283-36suf2ucff8cdel98n6rpc9o81cqj1n4.apps.googleusercontent.com',
+    iosClientId:
+        '706118575283-36suf2ucff8cdel98n6rpc9o81cqj1n4.apps.googleusercontent.com',
     iosBundleId: 'com.vchatsdk.app.v2',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '706118575283',
     projectId: 'v-chat-sdk-v2',
     storageBucket: 'v-chat-sdk-v2.appspot.com',
-    iosClientId: '706118575283-36suf2ucff8cdel98n6rpc9o81cqj1n4.apps.googleusercontent.com',
+    iosClientId:
+        '706118575283-36suf2ucff8cdel98n6rpc9o81cqj1n4.apps.googleusercontent.com',
     iosBundleId: 'com.vchatsdk.app.v2',
   );
 }
