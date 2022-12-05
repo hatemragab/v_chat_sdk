@@ -66,7 +66,7 @@ class LocalStorageService
       event,
     );
     if (!message.isMeSender) {
-      //increment the chat counter
+      ///increment the chat counter
       await updateRoomUnreadCountAddOne(
         UpdateRoomUnReadCountByOneEvent(roomId: message.roomId),
       );
