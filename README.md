@@ -1,3 +1,4 @@
+<img src="https://user-images.githubusercontent.com/37384769/205896099-f91a6878-7d37-4ebb-8a84-986c2224854d.png" />
 
 # V_Chat_SDK Micro service
 

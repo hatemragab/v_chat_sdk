@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_sizes/file_sizes.dart';
 import 'package:mime_type/mime_type.dart';
@@ -32,6 +33,20 @@ class PlatformFileSource {
   bool get isFromUrl => url != null;
 
   String get readableSize => FileSize.getSize(fileSize);
+
+  List<int> get getBytes {
+    if (bytes != null) {
+      return bytes!;
+    }
+    if (filePath != null) {
+      return File(filePath!).readAsBytesSync().toList();
+    }
+    throw UnimplementedError();
+  }
+
+  Uint8List get uint8List {
+    return Uint8List.fromList(getBytes);
+  }
 
   PlatformFileSource.fromBytes({
     required this.name,
