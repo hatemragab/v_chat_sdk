@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 class SplashController extends GetxController {
@@ -14,8 +15,10 @@ class SplashController extends GetxController {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       // Go to login
+      AuthRepo.isAuth.value = false;
       Get.offAndToNamed(Routes.REGISTER);
     } else {
+      AuthRepo.isAuth.value = true;
       Get.offAndToNamed(Routes.HOME);
     }
   }

@@ -46,10 +46,12 @@ dependencies:
   path: ^1.8.2
   encrypt: ^5.0.1
   chopper: ^5.1.0
+  firebase_pagination: ^3.0.0
   image_cropper: ^3.0.1
   wechat_camera_picker: ^3.6.3
   http_parser: ^4.0.2
-
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies: 
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.10.0
@@ -66,4 +68,5 @@ flutter:
   assets: 
     - assets/images/
   uses-material-design: true
-
+flutter_intl:
+  enabled: true

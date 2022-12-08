@@ -1,23 +1,13 @@
 import 'package:get/get.dart';
+import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
+import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 class ExploreTabController extends GetxController {
-  //TODO: Implement ExploreTabController
+  final ProductRepository repository;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  ExploreTabController(this.repository);
+
+  void onCreateProduct() {
+    Get.toNamed(Routes.CREATE_PRODUCT);
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

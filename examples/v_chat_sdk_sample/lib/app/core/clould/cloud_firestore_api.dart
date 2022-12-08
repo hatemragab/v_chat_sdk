@@ -8,32 +8,34 @@ class CloudFireStoreApi {
   CloudFireStoreApi({required this.collection});
 
   // STREAM request
-  Stream<QuerySnapshot> getStreamCollection() =>
-      fireStore.collection(collection).snapshots();
+  Stream<QuerySnapshot> getStreamCollection() => fireStore
+      .collection(collection)
+      .orderBy("createdAt", descending: true)
+      .snapshots();
 
-  Stream<DocumentSnapshot> getStreamDocument(id) =>
+  Stream<DocumentSnapshot> getStreamDocument(String id) =>
       fireStore.collection(collection).doc(id).snapshots();
 
   // GET request
   Future<QuerySnapshot> getCollection() =>
       fireStore.collection(collection).get();
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getDocument(id) =>
+  Future<DocumentSnapshot<Map<String, dynamic>>> getDocument(String id) =>
       fireStore.collection(collection).doc(id).get();
 
   // Post request
-  Future<void> postDocument(obj, {String? id}) async {
+  Future<void> postDocument(Map<String, dynamic> obj, {String? id}) async {
     id != null
         ? await fireStore.collection(collection).doc(id).set(obj)
         : await fireStore.collection(collection).doc().set(obj);
   }
 
   // update
-  Future<void> updateDocument(obj, id) async =>
+  Future<void> updateDocument(Map<String, dynamic> obj, String id) async =>
       await fireStore.collection(collection).doc(id).update(obj);
 
   // update
-  Future<void> deleteDocument(id) async =>
+  Future<void> deleteDocument(String id) async =>
       await fireStore.collection(collection).doc(id).delete();
 
   // other Requests
@@ -49,7 +51,7 @@ class CloudFireStoreApi {
     }
   }
 
-  Future<bool> checkIfFieldExist(dynamic field) async {
+  Future<bool> checkIfFieldExist(Map<String, dynamic> field) async {
     try {
       // Get reference to Firestore collection
       var collectionRef = fireStore

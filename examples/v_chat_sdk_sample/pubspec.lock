@@ -386,6 +386,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  firebase_database:
+    dependency: transitive
+    description:
+      name: firebase_database
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "10.0.6"
+  firebase_database_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_database_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2+14"
+  firebase_database_web:
+    dependency: transitive
+    description:
+      name: firebase_database_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1+16"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -407,6 +428,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.8"
+  firebase_pagination:
+    dependency: "direct main"
+    description:
+      name: firebase_pagination
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -504,7 +532,7 @@ packages:
     source: hosted
     version: "2.0.1"
   flutter_localizations:
-    dependency: transitive
+    dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"

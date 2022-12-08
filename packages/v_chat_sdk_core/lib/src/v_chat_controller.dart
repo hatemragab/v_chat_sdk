@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/local_db/local_storage_service.dart';
-import 'package:v_chat_sdk_core/src/types/platform_file_source.dart';
-import 'package:v_chat_sdk_core/src/types/platforms.dart';
 import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/utils/device_info.dart';

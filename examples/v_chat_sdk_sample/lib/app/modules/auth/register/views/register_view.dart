@@ -22,13 +22,15 @@ class RegisterView extends GetView<RegisterController> {
         logo: Image.asset('assets/images/logo.png'),
         // backgroundImage: 'images/background_image.jpg',
         signUpMode: SignUpModes.both,
+        validateName: false,
+
         socialLogins: _socialLogins(context),
         nameValidator: const ValidatorModel(
           checkLowerCase: false,
           checkNumber: false,
           checkSpace: false,
           checkUpperCase: false,
-          length: 3,
+          length: 8,
         ),
         emailValidator: ValidatorModel(
             validatorCallback: (String? email) => 'What an email! $email'),

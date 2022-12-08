@@ -32,6 +32,8 @@ class PlatformFileSource {
 
   bool get isFromUrl => url != null;
 
+  bool get isNotUrl => isFromBytes || isFromPath;
+
   String get readableSize => FileSize.getSize(fileSize);
 
   List<int> get getBytes {
@@ -66,7 +68,8 @@ class PlatformFileSource {
   PlatformFileSource.fromUrl({
     required this.fileSize,
     required String url,
-  })  : url = VFullUrlModel(url),
+    bool isFullUrl = false,
+  })  : url = VFullUrlModel(url, isFullUrl),
         name = basename(url) {
     mimeType = getMimeType;
   }

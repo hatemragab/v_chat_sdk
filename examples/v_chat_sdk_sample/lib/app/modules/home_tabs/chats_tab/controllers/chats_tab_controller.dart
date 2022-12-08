@@ -1,23 +1,11 @@
 import 'package:get/get.dart';
 
+import '../../../../core/utils/app_alert.dart';
+
 class ChatsTabController extends GetxController {
-  //TODO: Implement ChatsTabController
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void onCreateGroupOrBroadcast() async {
+    final res = await AppAlert.showAskListDialog(
+        title: "Create Group or Broadcast?", content: ["Group", "Broadcast"]);
+    print(res);
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

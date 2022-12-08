@@ -29,7 +29,7 @@ class RegisterController extends GetxController {
 
   Future<String?> onLogin(LoginData loginData) async {
     try {
-      final user = await AppAuth.loginWithEmailAndPassword(
+      final user = await AuthRepo.loginWithEmailAndPassword(
           loginData.email, loginData.password);
       final userFromFire = await repository.getId(user.uid);
       await AppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
@@ -37,7 +37,6 @@ class RegisterController extends GetxController {
     } catch (err) {
       AppAlert.showErrorSnackBar(msg: err.toString());
       print(err);
-      rethrow;
       return err.toString();
     }
     return null;
@@ -46,15 +45,16 @@ class RegisterController extends GetxController {
   Future<String?> onSignup(SignUpData signUpData) async {
     try {
       // AppAlert.showLoading();
-      final user = await AppAuth.signUpWithEmailAndPassword(
+      final user = await AuthRepo.signUpWithEmailAndPassword(
         emailAddress: signUpData.email,
         password: signUpData.password,
       );
       final userFromFire = UserModel(
         uid: user.uid,
         userName: signUpData.name,
-        createdAt: DateTime.now(),
-        imageUrl: "default_user_image.png",
+        createdAt: DateTime.now().toUtc(),
+        imageUrl:
+            "https://firebasestorage.googleapis.com/v0/b/v-chat-sdk-v2.appspot.com/o/images%2Fdefault_user_image.png?alt=media&token=13bd6095-614f-42d2-a626-0fbbb0668d3c",
       );
       await repository.add(userFromFire);
       await AppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());

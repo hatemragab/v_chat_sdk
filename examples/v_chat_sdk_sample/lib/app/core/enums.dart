@@ -11,3 +11,11 @@ enum StorageKeys {
   isLogin,
   isDev
 }
+
+enum ApiCallStatus {
+  loading,
+  success,
+  error,
+  empty,
+  holding,
+}

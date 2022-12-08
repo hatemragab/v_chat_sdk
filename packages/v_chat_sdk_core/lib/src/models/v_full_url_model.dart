@@ -4,8 +4,12 @@ class VFullUrlModel {
   final String originalUrl;
   late final String fullUrl;
 
-  VFullUrlModel(this.originalUrl) {
-    fullUrl = "${AppConstants.getMediaBaseUrl}$originalUrl";
+  VFullUrlModel(this.originalUrl, [bool isFullUrl = false]) {
+    if (isFullUrl) {
+      fullUrl = originalUrl;
+    } else {
+      fullUrl = "${AppConstants.getMediaBaseUrl}$originalUrl";
+    }
   }
 
   // to String

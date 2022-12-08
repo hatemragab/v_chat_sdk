@@ -1,15 +1,16 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:get/get.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:textless/textless.dart';
 
 abstract class AppAlert {
   static ProgressDialog? _progressDialog;
 
   static Future showLoading(
-      {String message = "Please wait ...", bool isDismissible = false}) async {
+      //todo fix trans
+      {String message = "Please wait ...",
+      bool isDismissible = false}) async {
     _progressDialog = ProgressDialog(
       Get.context!,
       type: ProgressDialogType.Normal,
@@ -38,7 +39,6 @@ abstract class AppAlert {
 
   static Future hideLoading() async {
     if (_progressDialog == null) {
-      log("hideLoading _progressDialog is nulllll");
       return;
     }
     await _progressDialog!.hide();
@@ -54,14 +54,15 @@ abstract class AppAlert {
     );
   }
 
-  static Future<int> showAskAlertDialog({
+  static Future<int> showAskYesNoDialog({
     required String title,
     required String content,
   }) async {
     final x = await FlutterPlatformAlert.showAlert(
-        windowTitle: title,
-        text: content,
-        alertStyle: AlertButtonStyle.yesNoCancel);
+      windowTitle: title,
+      text: content,
+      alertStyle: AlertButtonStyle.yesNo,
+    );
     if (x == AlertButton.yesButton) {
       return 1;
     }
@@ -69,10 +70,46 @@ abstract class AppAlert {
     return 0;
   }
 
+  static Future<T?> showAskListDialog<T>({
+    required String title,
+    required List<T> content,
+  }) async {
+    return showDialog<T?>(
+      context: Get.context!,
+      builder: (ctx) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: content
+                  .map((e) => ListTile(
+                        title: e.toString().text,
+                        onTap: () {
+                          Navigator.pop(Get.context!, e);
+                        },
+                      ))
+                  .toList(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(Get.context!);
+              },
+              //todo fix trans
+              child: "Cancel".text,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   static void showSuccessSnackBar({
     required String msg,
   }) {
     Get.showSnackbar(GetSnackBar(
+      //todo fix trans
       title: "Success",
       message: msg,
       duration: const Duration(seconds: 3),
@@ -83,6 +120,7 @@ abstract class AppAlert {
     required String msg,
   }) {
     Get.showSnackbar(GetSnackBar(
+      //todo fix trans
       title: "Error",
       message: msg,
       duration: const Duration(seconds: 5),

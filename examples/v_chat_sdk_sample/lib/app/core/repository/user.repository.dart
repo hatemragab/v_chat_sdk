@@ -19,17 +19,17 @@ class UserRepository {
         .toList());
   }
 
-  Future<UserModel> getId(id) async {
+  Future<UserModel> getId(String id) async {
     final json = await apiClient.getDocument(id);
 
     return UserModel.fromMap(json.data()!);
   }
 
-  Future delete(id) {
+  Future delete(String id) {
     return apiClient.deleteDocument(id);
   }
 
-  Future edit(obj, id) {
+  Future edit(Map<String, dynamic> obj, String id) {
     return apiClient.updateDocument(obj, id);
   }
 

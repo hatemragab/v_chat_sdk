@@ -2,11 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get/get.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart' as apple;
 
-class AppAuth {
-  static Future<User?> getCurrentUser(String uid) async {
-    return FirebaseAuth.instance.currentUser;
+abstract class AuthRepo {
+  static final isAuth = false.obs;
+
+  static Future<User> get currentUser async {
+    return FirebaseAuth.instance.currentUser!;
   }
 
   /// login with email and password with firebase
@@ -15,9 +18,11 @@ class AppAuth {
   static Future<User> loginWithEmailAndPassword(
       String email, String password) async {
     try {
-      return (await auth.FirebaseAuth.instance
+      final x = (await auth.FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password))
           .user!;
+      isAuth.value = true;
+      return x;
     } on auth.FirebaseAuthException catch (exception, s) {
       debugPrint('$exception$s');
       switch ((exception).code) {
@@ -63,7 +68,7 @@ class AppAuth {
     auth.UserCredential authResult = await auth.FirebaseAuth.instance
         .signInWithCredential(
             auth.FacebookAuthProvider.credential(token.token));
-    User? user = await getCurrentUser(authResult.user?.uid ?? '');
+    // User? user = await getCurrentUser(authResult.user?.uid ?? '');
     List<String> fullName = (userData['name'] as String).split(' ');
     String firstName = '';
     String lastName = '';
@@ -78,9 +83,12 @@ class AppAuth {
     required String password,
   }) async {
     try {
-      return (await auth.FirebaseAuth.instance.createUserWithEmailAndPassword(
-              email: emailAddress, password: password))
+      final x = (await auth.FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+                  email: emailAddress, password: password))
           .user!;
+      isAuth.value = true;
+      return x;
     } on auth.FirebaseAuthException catch (error) {
       debugPrint('$error${error.stackTrace}');
       String message = 'Couldn\'t sign up';
@@ -109,6 +117,7 @@ class AppAuth {
   }
 
   static logout() async {
+    isAuth.value = false;
     await auth.FirebaseAuth.instance.signOut();
   }
 
@@ -121,10 +130,10 @@ class AppAuth {
   }) async {
     auth.UserCredential userCredential =
         await auth.FirebaseAuth.instance.signInWithCredential(credential);
-    User? user = await getCurrentUser(userCredential.user?.uid ?? '');
-    if (user != null) {
-      return user;
-    } else {}
+    // User? user = await getCurrentUser(userCredential.user?.uid ?? '');
+    // if (user != null) {
+    //   return user;
+    // } else {}
   }
 
   static loginWithApple() async {
@@ -156,24 +165,24 @@ class AppAuth {
   ) async {
     auth.UserCredential authResult =
         await auth.FirebaseAuth.instance.signInWithCredential(credential);
-    User? user = await getCurrentUser(authResult.user?.uid ?? '');
-    if (user != null) {
-      return user;
-    } else {
-      // user = User(
-      //   email: appleIdCredential.email ?? '',
-      //   firstName: appleIdCredential.fullName?.givenName ?? '',
-      //   profilePictureURL: '',
-      //   userID: authResult.user?.uid ?? '',
-      //   lastName: appleIdCredential.fullName?.familyName ?? '',
-      // );
-      // String? errorMessage = await createNewUser(user);
-      // if (errorMessage == null) {
-      //   return user;
-      // } else {
-      //   return errorMessage;
-      // }
-    }
+    // User? user = await getCurrentUser(authResult.user?.uid ?? '');
+    // if (user != null) {
+    //   return user;
+    // } else {
+    //   // user = User(
+    //   //   email: appleIdCredential.email ?? '',
+    //   //   firstName: appleIdCredential.fullName?.givenName ?? '',
+    //   //   profilePictureURL: '',
+    //   //   userID: authResult.user?.uid ?? '',
+    //   //   lastName: appleIdCredential.fullName?.familyName ?? '',
+    //   // );
+    //   // String? errorMessage = await createNewUser(user);
+    //   // if (errorMessage == null) {
+    //   //   return user;
+    //   // } else {
+    //   //   return errorMessage;
+    //   // }
+    // }
   }
 
   static resetPassword(String emailAddress) async =>

@@ -1,17 +1,25 @@
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+
 class UserModel {
   final String uid;
-  final String userName;
+  String userName;
   final DateTime createdAt;
-  final String imageUrl;
+  String imageUrl;
 
 //<editor-fold desc="Data Methods">
 
-  const UserModel({
+  UserModel({
     required this.uid,
     required this.userName,
     required this.createdAt,
     required this.imageUrl,
   });
+
+  PlatformFileSource get imgAsPlatformSource => PlatformFileSource.fromUrl(
+        fileSize: 0,
+        url: imageUrl,
+        isFullUrl: true,
+      );
 
   @override
   bool operator ==(Object other) =>

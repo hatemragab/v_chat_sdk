@@ -16,10 +16,10 @@ class HomeBinding extends Bindings {
       ChatsTabController(),
     );
     Get.put<ExploreTabController>(
-      ExploreTabController(),
+      ExploreTabController(Get.find()),
     );
     Get.put<SettingsTabController>(
-      SettingsTabController(),
+      SettingsTabController(Get.find()),
     );
     Get.put<HomeController>(
       HomeController(),
