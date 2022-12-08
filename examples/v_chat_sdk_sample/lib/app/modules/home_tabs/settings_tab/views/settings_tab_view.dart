@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/settings_tab/views/widgets/profile_item.dart';
 
 import '../controllers/settings_tab_controller.dart';
@@ -22,8 +23,20 @@ class SettingsTabView extends GetView<SettingsTabController> {
             children: [
               Image.asset(
                 "assets/images/logo.png",
-                height: 130,
-                width: 130,
+                height: 180,
+                width: 180,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              "Welcome to V Chat v2.0".h6.alignCenter,
+              const SizedBox(
+                height: 20,
+              ),
+              ProfileItem(
+                title: "My orders",
+                onPress: controller.goToOrders,
+                iconData: Icons.shopping_cart,
               ),
               const SizedBox(
                 height: 20,

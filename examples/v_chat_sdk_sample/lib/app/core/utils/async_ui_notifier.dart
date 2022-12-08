@@ -6,7 +6,7 @@ import '../enums.dart';
 Future<void> safeApiCall<T>({
   Function()? onLoading,
   bool showSnackError = true,
-  required Rx<ApiCallStatus> apiState,
+  Rx<ApiCallStatus>? apiState,
   required Function() request,
   required Function(T response) onSuccess,
   Function(String exception)? onError,
@@ -15,16 +15,25 @@ Future<void> safeApiCall<T>({
     if (onLoading != null) {
       onLoading();
     }
-    apiState.value = ApiCallStatus.loading;
+    if (apiState != null) {
+      apiState.value = ApiCallStatus.loading;
+    }
+
     final res = await request();
     await onSuccess(res);
-    apiState.value = ApiCallStatus.success;
+    if (apiState != null) {
+      apiState.value = ApiCallStatus.success;
+    }
+
     return;
   } catch (err) {
     if (showSnackError) {
       AppAlert.showErrorSnackBar(msg: err.toString());
     }
-    apiState.value = ApiCallStatus.error;
+    if (apiState != null) {
+      apiState.value = ApiCallStatus.error;
+    }
+
     if (onError != null) {
       onError(err.toString());
     }

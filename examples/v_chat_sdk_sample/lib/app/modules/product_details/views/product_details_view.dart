@@ -1,22 +1,93 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:textless/textless.dart';
+import 'package:v_chat_sdk_sample/app/core/platfrom_widgets/platform_cache_image_widget.dart';
 
+import '../../../core/widgets/chat_btn.dart';
 import '../controllers/product_details_controller.dart';
 
 class ProductDetailsView extends GetView<ProductDetailsController> {
   const ProductDetailsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final m = controller.productModel;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ProductDetailsView'),
+        title: Text(m.title),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          'ProductDetailsView is working',
-          style: TextStyle(fontSize: 20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              PlatformCacheImageWidget(
+                source: m.imgAsPlatformSource,
+                size: Size(100, MediaQuery.of(context).size.height / 3),
+                fit: BoxFit.cover,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(child: m.title.h6.maxLine(1).overflowEllipsis),
+                        "${m.price} \$".toString().h6.color(Colors.red)
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Divider(),
+                    m.desc.text,
+                    const Divider(),
+                    Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: ChatBtn(
+                              onPress: controller.startChat,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            child: FloatingActionButton(
+                              onPressed: controller.startAddOrder,
+                              heroTag:
+                                  "${DateTime.now().microsecondsSinceEpoch}",
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.add),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text("Place order"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

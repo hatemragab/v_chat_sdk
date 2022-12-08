@@ -6,6 +6,7 @@ import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 import '../../../../core/platfrom_widgets/platform_cache_image_widget.dart';
+import '../../../../core/utils/app_auth.dart';
 import '../controllers/users_tab_controller.dart';
 
 class UsersTabView extends GetView<UsersTabController> {
@@ -14,10 +15,10 @@ class UsersTabView extends GetView<UsersTabController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: controller.onCreateGroupOrBroadcast,
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: controller.onCreateGroupOrBroadcast,
+      //   child: const Icon(Icons.add),
+      // ),
       appBar: AppBar(
         title: const Text('All Users'),
         centerTitle: true,
@@ -25,13 +26,16 @@ class UsersTabView extends GetView<UsersTabController> {
       body: FirestorePagination(
         isLive: true,
         viewType: ViewType.list,
-        limit: 10,
+        limit: 30,
         query: FirebaseFirestore.instance
             .collection('users')
             .orderBy("createdAt", descending: true),
         itemBuilder: (context, documentSnapshot, index) {
           final user = UserModel.fromMap(
               documentSnapshot.data() as Map<String, dynamic>);
+          if (user.uid == AppAuth.getMyModel.uid) {
+            return const SizedBox();
+          }
           return ListTile(
             onTap: () => Get.toNamed(
               Routes.PEER_PROFILE,

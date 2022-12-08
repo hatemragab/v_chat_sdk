@@ -12,6 +12,10 @@ abstract class Routes {
   static const PEER_PROFILE = _Paths.PEER_PROFILE;
   static const CREATE_PRODUCT = _Paths.CREATE_PRODUCT;
   static const PRODUCT_DETAILS = _Paths.PRODUCT_DETAILS;
+  static const MY_ORDERS = _Paths.MY_ORDERS;
+  static const CHOOSE_MEMBERS = _Paths.CHOOSE_MEMBERS;
+  static const CREATE_GROUP = _Paths.CREATE_GROUP;
+  static const CREATE_BROADCAST = _Paths.CREATE_BROADCAST;
 }
 
 abstract class _Paths {
@@ -25,4 +29,8 @@ abstract class _Paths {
   static const PEER_PROFILE = '/peer-profile';
   static const CREATE_PRODUCT = '/create-product';
   static const PRODUCT_DETAILS = '/product-details';
+  static const MY_ORDERS = '/my-orders';
+  static const CHOOSE_MEMBERS = '/choose-members';
+  static const CREATE_GROUP = '/create-group';
+  static const CREATE_BROADCAST = '/create-broadcast';
 }

@@ -4,6 +4,7 @@ import 'package:textless/textless.dart';
 
 import '../../../core/platfrom_widgets/platform_cache_image_widget.dart';
 import '../../../core/widgets/async_widgets_builder.dart';
+import '../../../core/widgets/chat_btn.dart';
 import '../controllers/peer_profile_controller.dart';
 
 class PeerProfileView extends GetView<PeerProfileController> {
@@ -16,6 +17,12 @@ class PeerProfileView extends GetView<PeerProfileController> {
         title: const Text('Peer Profile View'),
         centerTitle: true,
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ChatBtn(
+          onPress: controller.onStartChat,
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: AsyncWidgetsBuilder(
@@ -23,41 +30,31 @@ class PeerProfileView extends GetView<PeerProfileController> {
           successWidget: () {
             return Center(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(
                     height: 30,
                   ),
-                  SizedBox(
-                    height: 130,
-                    width: 130,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: PlatformCacheImageWidget(
-                        source: controller.peerData.imgAsPlatformSource,
-                        fit: BoxFit.cover,
+                  Center(
+                    child: SizedBox(
+                      height: 130,
+                      width: 130,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: PlatformCacheImageWidget(
+                          source: controller.peerData.imgAsPlatformSource,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  controller.peerData.userName.h6,
+                  Center(child: controller.peerData.userName.h6),
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.chat),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      ElevatedButton(
-                        onPressed: controller.onStartChat,
-                        child: const Text("Start Chat"),
-                      ),
-                    ],
-                  )
                 ],
               ),
             );

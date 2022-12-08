@@ -7,10 +7,10 @@ import 'package:textless/textless.dart';
 abstract class AppAlert {
   static ProgressDialog? _progressDialog;
 
-  static Future showLoading(
-      //todo fix trans
-      {String message = "Please wait ...",
-      bool isDismissible = false}) async {
+  static Future showLoading({
+    String message = "Please wait ...",
+    bool isDismissible = false,
+  }) async {
     _progressDialog = ProgressDialog(
       Get.context!,
       type: ProgressDialogType.Normal,
@@ -18,15 +18,26 @@ abstract class AppAlert {
     );
     _progressDialog!.style(
       message: message,
-      backgroundColor: Get.isDarkMode ? Colors.black87 : Colors.white,
+      backgroundColor: Get.isDarkMode
+          ? const Color(0xff39393d).withOpacity(.9)
+          : Colors.white,
       borderRadius: 10.0,
+      maxProgress: 100,
       progressWidget: Container(
         padding: const EdgeInsets.all(8.0),
-        child: const CircularProgressIndicator(),
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: Row(
+            children: const [
+              CircularProgressIndicator.adaptive(),
+            ],
+          ),
+        ),
       ),
       messageTextStyle: Get.isDarkMode
-          ? const TextStyle(color: Colors.white)
-          : const TextStyle(color: Colors.black),
+          ? const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+          : const TextStyle(color: Colors.black12, fontWeight: FontWeight.bold),
       elevation: 10.0,
       insetAnimCurve: Curves.easeInOut,
     );

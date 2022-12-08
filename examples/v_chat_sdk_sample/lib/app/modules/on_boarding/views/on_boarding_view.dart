@@ -27,11 +27,17 @@ class OnBoardingView extends GetView<OnBoardingController> {
           padding: const EdgeInsets.only(top: 40),
           child: IntroductionScreen(
             key: introKey,
-
             pages: [
               PageViewModel(
-                title: "V Chat sdk v2",
-                body: "V Chat sdk v2",
+                title: "Login or register",
+                body: '''
+               * welcome to the most cheep chat system provider no firebase used for save chat data! 
+               * this example just work on the firebase for login and register but the purpose of this 
+                 example to show how to integrate chat to your existing or new system
+               * v chat support social login and phone login through
+                 just send the user id which you has inserted in your system the data base \n
+               *  
+                ''',
                 image: _buildImage('images/logo.png'),
                 decoration: pageDecoration,
               ),

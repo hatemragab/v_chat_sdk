@@ -92,4 +92,8 @@ class SettingsTabController extends GetxController {
       Get.offAndToNamed(Routes.SPLASH);
     }
   }
+
+  void goToOrders() {
+    Get.toNamed(Routes.MY_ORDERS);
+  }
 }

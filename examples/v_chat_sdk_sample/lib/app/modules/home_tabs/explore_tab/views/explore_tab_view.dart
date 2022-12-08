@@ -83,14 +83,20 @@ class ExploreTabView extends GetView<ExploreTabController> {
                     children: [
                       Center(
                         child: Container(
+                          width: 100,
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                              color: Colors.green.withOpacity(.5),
-                              borderRadius: BorderRadius.circular(100)),
-                          child: product.title.text.maxLine(1).overflowClip,
+                            color: Colors.green.withOpacity(.5),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: product.title.text
+                              .maxLine(1)
+                              .overflowClip
+                              .alignCenter,
                         ),
                       ),
                       Container(
+                        width: 60,
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             color: Colors.red.withOpacity(.5),
@@ -99,7 +105,8 @@ class ExploreTabView extends GetView<ExploreTabController> {
                             .toString()
                             .text
                             .maxLine(1)
-                            .overflowClip,
+                            .overflowClip
+                            .alignCenter,
                       ),
                     ],
                   ),

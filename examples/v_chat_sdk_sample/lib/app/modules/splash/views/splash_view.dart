@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:textless/textless.dart';
 
 import '../controllers/splash_controller.dart';
 
@@ -28,9 +29,23 @@ class SplashView extends GetView<SplashController> {
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
-                const CircularProgressIndicator.adaptive(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    "V 2.0.0".text
+                  ],
+                ),
               ],
             ),
             const SizedBox(),
