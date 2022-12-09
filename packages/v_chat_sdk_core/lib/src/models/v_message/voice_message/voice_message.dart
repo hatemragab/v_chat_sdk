@@ -1,14 +1,11 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:v_chat_sdk_core/src/models/v_message/voice_message/voice_stream.dart';
-import 'package:v_chat_voice_player/v_chat_voice_player.dart';
+import 'package:v_chat_ui/v_chat_ui.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
-import '../base_message/base_message.dart';
 import '../core/message_voice_data.dart';
-import 'i_voice_message.dart';
 
 class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
   late final VoiceMessageController _controller;

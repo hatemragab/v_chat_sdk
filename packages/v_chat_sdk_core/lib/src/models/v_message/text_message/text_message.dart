@@ -42,4 +42,28 @@ class VTextMessage extends VBaseMessage {
 
   @override
   int get hashCode => localId.hashCode;
+
+  static VTextMessage getFakeMessage(String id) {
+    return VTextMessage(
+      id: "msg$id",
+      senderId: "senderId",
+      senderName: "senderName",
+      senderImageThumb: VFullUrlModel("xx.png"),
+      messageStatus: MessageSendingStatusEnum.serverConfirm,
+      platform: "Android",
+      roomId: id,
+      content: "content $id",
+      messageType: MessageType.text,
+      localId: "localId",
+      createdAt: DateTime.now().toIso8601String(),
+      updatedAt: DateTime.now().toIso8601String(),
+      replyTo: null,
+      seenAt: null,
+      deliveredAt: null,
+      forwardId: null,
+      deletedAt: null,
+      parentBroadcastId: null,
+      isStared: false,
+    );
+  }
 }

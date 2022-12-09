@@ -30,7 +30,7 @@ class VChatController implements AuthEndPoints {
   late final VNativeApi vNativeApi;
 
   Future<void> init({
-    required VChatConfig config,
+    required VChatConfig vChatConfig,
   }) async {
     if (isControllerInit) {
       log.warning(
@@ -39,9 +39,9 @@ class VChatController implements AuthEndPoints {
       return;
     }
     isControllerInit = true;
-    this.config = config;
+    config = vChatConfig;
     await AppPref.init();
-    _helper = await ControllerHelper.instance.init(config);
+    _helper = await ControllerHelper.instance.init(vChatConfig);
     _initApiService();
     SocketController.instance.connect();
     await LocalStorageService.instance.init();

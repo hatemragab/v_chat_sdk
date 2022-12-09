@@ -13,7 +13,11 @@ abstract class AppConstants {
   static const dbVersion = 1;
   static const socketInterval = 10; //10sec
   static String get baseServerIp {
-    return VChatController.instance.config.baseUrl.toString();
+    final uri = VChatController.instance.config.baseUrl;
+    if (uri.hasPort) {
+      return "${uri.scheme}://${uri.host}:${uri.port}";
+    }
+    return "${uri.scheme}://${uri.host}";
   }
 
   static String get baseUrl {

@@ -5,7 +5,7 @@ import '../../../../models/socket/room_typing_model.dart';
 import '../../abstraction/base_local_room_repo.dart';
 
 class MemoryRoomImp extends BaseLocalRoomRepo {
-  final _rooms = <VBaseRoom>[];
+  final _rooms = <VRoom>[];
 
   @override
   Future<int> delete(DeleteRoomEvent event) {
@@ -13,7 +13,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
     return Future.value(1);
   }
 
-  VBaseRoom? getRoomById(String id) {
+  VRoom? getRoomById(String id) {
     return _rooms.singleWhereOrNull((e) => e.id == id);
   }
 
@@ -28,7 +28,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VBaseRoom>> search(String text, int limit, RoomType? roomType) {
+  Future<List<VRoom>> search(String text, int limit, RoomType? roomType) {
     ///case filterType ==null search in all room types !
     if (roomType == null) {
       return Future.value(
@@ -117,7 +117,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VBaseRoom>> getRoomsWithLastMessage({int limit = 300}) async {
+  Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300}) async {
     return _rooms.sortedByCompare(
       (element) => element.lastMessage.id,
       (a, b) => 1,
@@ -134,7 +134,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> insertMany(List<VBaseRoom> rooms) async {
+  Future<int> insertMany(List<VRoom> rooms) async {
     for (final room in rooms) {
       if (!_rooms.contains(room)) {
         _rooms.add(room);
@@ -144,7 +144,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<VBaseRoom?> getOneWithLastMessageByRoomId(String roomId) async {
+  Future<VRoom?> getOneWithLastMessageByRoomId(String roomId) async {
     return Future.value(getRoomById(roomId));
   }
 
@@ -162,7 +162,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<VBaseRoom?> getOneByPeerId(String peerId) async {
+  Future<VRoom?> getOneByPeerId(String peerId) async {
     return _rooms.singleWhereOrNull((e) => e.peerId == peerId);
   }
 }

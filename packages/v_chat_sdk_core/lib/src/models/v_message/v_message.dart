@@ -9,6 +9,7 @@ export './link_preview_data.dart';
 export './location_message/location_message.dart';
 export './location_message/location_message_data.dart';
 export './message_upload_model.dart';
+export './text_message/text_message.dart';
 export './video_message/video_message.dart';
 export './voice_message/i_voice_message.dart';
 export './voice_message/voice_message.dart';

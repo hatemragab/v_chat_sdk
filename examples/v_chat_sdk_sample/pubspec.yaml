@@ -36,6 +36,10 @@ dependencies:
     sdk: flutter
   v_chat_sdk_core: 
     path: ../../packages/v_chat_sdk_core
+  v_chat_firebase_fcm:
+    path: ../../packages/v_chat_firebase_fcm
+  v_chat_ui:
+    path: ../../ui_packages/v_chat_ui
   animated_login: ^1.5.5
   mime: ^1.0.2
   intl: ^0.17.0

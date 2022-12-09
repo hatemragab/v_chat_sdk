@@ -35,7 +35,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VBaseRoom>> search(
+  Future<List<VRoom>> search(
     String text,
     int limit,
     RoomType? roomType,
@@ -47,7 +47,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
           150,
         ),
       );
-      return maps.map((e) => RoomFactory.createRoom(e)).toList();
+      return maps.map((e) => VRoom.fromLocalMap(e)).toList();
     }
     final maps = await _database.rawQuery(
       _prefixRoomFilterQuery(
@@ -55,7 +55,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
         150,
       ),
     );
-    return maps.map((e) => RoomFactory.createRoom(e)).toList();
+    return maps.map((e) => VRoom.fromLocalMap(e)).toList();
   }
 
   @override
@@ -151,11 +151,11 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VBaseRoom>> getRoomsWithLastMessage({int limit = 300}) async {
+  Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300}) async {
     final maps = await _database.rawQuery(
       _prefixRoomFilterQuery(null, limit),
     );
-    return maps.map((e) => RoomFactory.createRoom(e)).toList();
+    return maps.map((e) => VRoom.fromLocalMap(e)).toList();
   }
 
   String _prefixRoomFilterQuery(String? where, int? limit) {
@@ -186,7 +186,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> insertMany(List<VBaseRoom> rooms) async {
+  Future<int> insertMany(List<VRoom> rooms) async {
     final batch = _database.batch();
     for (final e in rooms) {
       batch.insert(
@@ -200,12 +200,12 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<VBaseRoom?> getOneWithLastMessageByRoomId(String roomId) async {
+  Future<VRoom?> getOneWithLastMessageByRoomId(String roomId) async {
     final maps = await _database.rawQuery(
       _prefixRoomFilterQuery("WHERE r1.$_id ='$roomId'", 1),
     );
     if (maps.isEmpty) return null;
-    return RoomFactory.createRoom(maps.first);
+    return VRoom.fromLocalMap(maps.first);
   }
 
   @override
@@ -225,13 +225,13 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<VBaseRoom?> getOneByPeerId(String peerId) async {
+  Future<VRoom?> getOneByPeerId(String peerId) async {
     final maps = await _database.rawQuery(
       _prefixRoomFilterQuery(
         "WHERE r1.${RoomTable.columnPeerId} = '$peerId'",
         1,
       ),
     );
-    return maps.isEmpty ? null : RoomFactory.createRoom(maps.first);
+    return maps.isEmpty ? null : VRoom.fromLocalMap(maps.first);
   }
 }

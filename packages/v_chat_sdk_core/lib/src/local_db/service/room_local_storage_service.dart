@@ -3,7 +3,6 @@ import 'package:sqflite/sqflite.dart';
 import '../../../v_chat_sdk_core.dart';
 import '../../models/socket/room_typing_model.dart';
 import '../../models/v_room/single_room/single_ban_model.dart';
-import '../../types/platforms.dart';
 import '../../utils/event_bus.dart';
 import '../core/abstraction/base_local_room_repo.dart';
 import '../core/imp/room/memory_room_imp.dart';
@@ -23,11 +22,11 @@ mixin RoomLocalStorageService {
     }
   }
 
-  Future<List<VBaseRoom>> getRooms({int limit = 300}) async {
+  Future<List<VRoom>> getRooms({int limit = 300}) async {
     return localRoomRepo.getRoomsWithLastMessage(limit: limit);
   }
 
-  Future<VBaseRoom?> getRoomById(String id) {
+  Future<VRoom?> getRoomById(String id) {
     return localRoomRepo.getOneWithLastMessageByRoomId(id);
   }
 
@@ -83,14 +82,14 @@ mixin RoomLocalStorageService {
     return localRoomRepo.updateIsMuted(event);
   }
 
-  Future<List<VBaseRoom>> searchRoom({
+  Future<List<VRoom>> searchRoom({
     required String text,
     int limit = 20,
   }) async {
     return localRoomRepo.search(text, limit, null);
   }
 
-  Future<VBaseRoom?> getRoomByPeerId(String peerId) async {
+  Future<VRoom?> getRoomByPeerId(String peerId) async {
     return localRoomRepo.getOneByPeerId(peerId);
   }
 

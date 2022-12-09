@@ -14,7 +14,7 @@ abstract class VRoomEvents extends AppEvent {
 }
 
 class InsertRoomEvent extends VRoomEvents {
-  final VBaseRoom room;
+  final VRoom room;
 
   InsertRoomEvent({
     required super.roomId,

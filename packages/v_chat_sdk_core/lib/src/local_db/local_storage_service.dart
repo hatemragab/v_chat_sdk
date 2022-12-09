@@ -7,7 +7,6 @@ import 'package:v_chat_sdk_core/src/local_db/tables/db_provider.dart';
 
 import '../../v_chat_sdk_core.dart';
 import '../models/api_cache_model.dart';
-import '../types/platforms.dart';
 import 'core/abstraction/base_local_api_cache_repo.dart';
 import 'core/imp/api_cache/api_cache_memory_imp.dart';
 import 'core/imp/api_cache/api_cache_sql_imp.dart';
@@ -42,7 +41,7 @@ class LocalStorageService
     return localRoomRepo.delete(event);
   }
 
-  Future<void> safeInsertRoom(VBaseRoom room) async {
+  Future<void> safeInsertRoom(VRoom room) async {
     if (await localRoomRepo.getOneWithLastMessageByRoomId(room.id) == null) {
       final event = InsertRoomEvent(roomId: room.id, room: room);
       await localRoomRepo.insert(event);
@@ -83,7 +82,7 @@ class LocalStorageService
     return 0;
   }
 
-  Future<int> cacheRooms(List<VBaseRoom> rooms) async {
+  Future<int> cacheRooms(List<VRoom> rooms) async {
     if (rooms.isEmpty) {
       await localRoomRepo.reCreate();
       return 1;

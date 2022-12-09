@@ -178,10 +178,10 @@ abstract class VBaseMessage {
 
   @override
   bool operator ==(Object other) =>
-      other is VBaseMessage && localId == other.localId;
+      other is VBaseMessage && localId == other.localId && id == other.id;
 
   @override
-  int get hashCode => localId.hashCode;
+  int get hashCode => localId.hashCode ^ id.hashCode;
 
   ///Some Getters
   bool get isForward => forwardId != null;

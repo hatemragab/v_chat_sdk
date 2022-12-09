@@ -2,9 +2,12 @@ import 'dart:ui' as ui;
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import 'app/core/app_service.dart';
 import 'app/core/enums.dart';
@@ -20,11 +23,30 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await VChatController.I.init(
+    vChatConfig: VChatConfig(
+      passwordHashKey: "YOUR STRONG PASSWORD HASH KEY!",
+      baseUrl: _getBaseUrl(),
+      pushProvider: VChatFcmProver(),
+    ),
+  );
   await AppPref.init();
   final appService = Get.put<AppService>(AppService());
   setAppTheme(appService);
   await setAppLanguage(appService);
   runApp(const MyApp());
+}
+
+Uri _getBaseUrl() {
+  if (kDebugMode) {
+    if (kIsWeb || Platforms.isIOS) {
+      return Uri.parse("http://localhost:3000");
+    }
+    //this will only working on the android emulator
+    //to test on real device get you ipv4 first google it ! how to get my ipv4
+    return Uri.parse("http://10.0.2.2:3000");
+  }
+  return Uri.parse("http://v_chat_endpoint:3000");
 }
 
 class MyApp extends StatelessWidget {

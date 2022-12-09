@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_ui/v_chat_ui.dart';
 
 import '../controllers/chats_tab_controller.dart';
 
@@ -17,11 +18,8 @@ class ChatsTabView extends GetView<ChatsTabController> {
         title: const Text('Chats Tab View'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'ChatsTabView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: VRoomBody(
+        controller: controller.vRoomController,
       ),
     );
   }

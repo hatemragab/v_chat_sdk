@@ -11,7 +11,7 @@ abstract class BaseLocalRoomRepo {
 
   Future<int> updateName(UpdateRoomNameEvent event);
 
-  Future<int> insertMany(List<VBaseRoom> rooms);
+  Future<int> insertMany(List<VRoom> rooms);
 
   Future<int> updateImage(UpdateRoomImageEvent event);
 
@@ -27,13 +27,13 @@ abstract class BaseLocalRoomRepo {
 
   Future<int> setAllOffline();
 
-  Future<VBaseRoom?> getOneByPeerId(String roomId);
+  Future<VRoom?> getOneByPeerId(String roomId);
 
   Future<String?> getRoomIdByPeerId(String peerId);
 
-  Future<VBaseRoom?> getOneWithLastMessageByRoomId(String roomId);
+  Future<VRoom?> getOneWithLastMessageByRoomId(String roomId);
 
-  Future<List<VBaseRoom>> search(String text, int limit, RoomType? roomType);
+  Future<List<VRoom>> search(String text, int limit, RoomType? roomType);
 
-  Future<List<VBaseRoom>> getRoomsWithLastMessage({int limit = 300});
+  Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300});
 }

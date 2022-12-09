@@ -2,7 +2,7 @@ enum VChatPushService { firebase, onesignal }
 
 enum VChatHttpMethods { get, post, patch, delete }
 
-enum VChatLoadingState { loading, success, error, ideal }
+enum VChatLoadingState { loading, success, error, ideal, empty }
 
 enum SupportedFilesType { image, file, video }
 
