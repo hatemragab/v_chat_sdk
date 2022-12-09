@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   v_chat_sdk_core:
-    path: ../v_chat_sdk_core
+    path: ../../packages/v_chat_sdk_core
   firebase_core: ^2.3.0
   firebase_messaging: ^14.1.2
 
