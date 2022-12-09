@@ -1263,14 +1263,14 @@ packages:
   v_chat_firebase_fcm:
     dependency: "direct main"
     description:
-      path: "../../packages/v_chat_firebase_fcm"
+      path: "../../push_providers/v_chat_firebase_fcm"
       relative: true
     source: path
     version: "0.0.1"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
-      path: "../../packages/v_chat_sdk_core"
+      path: "../v_chat_sdk_core"
       relative: true
     source: path
     version: "0.0.1"

@@ -3,8 +3,8 @@ repository: https://github.com/hatemragab/v_chat_sdk
 
 packages:
   - packages/**
-  - examples/**
   - ui_packages/**
+  - push_providers/**
 
 command:
   bootstrap:
