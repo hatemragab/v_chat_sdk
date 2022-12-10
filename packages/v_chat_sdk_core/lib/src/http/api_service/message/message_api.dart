@@ -7,31 +7,28 @@ import 'package:http/io_client.dart';
 import '../../../../v_chat_sdk_core.dart';
 import '../interceptors.dart';
 
-part 'auth_api.chopper.dart';
+part 'message_api.chopper.dart';
 
-@ChopperApi(baseUrl: 'auth')
-abstract class AuthApi extends ChopperService {
-  @Post(path: "/login")
-  Future<Response> login(@Body() Map<String, dynamic> body);
-
-  @Post(path: "/register")
+@ChopperApi(baseUrl: 'channel/{roomId}/message')
+abstract class MessageApi extends ChopperService {
+  ///create message to channel
+  @Post(path: "/")
   @multipart
-  Future<Response> register(
+  Future<Response> createMessage(
+    @Path('roomId') String roomId,
     @PartMap() List<PartValue> body,
     @PartFile("file") MultipartFile? file,
+    @PartFile("file") MultipartFile? secondFile,
   );
 
-  @Post(path: "/logout")
-  Future<Response> logout();
-
-  static AuthApi create({
+  static MessageApi create({
     String? baseUrl,
     String? accessToken,
   }) {
     final client = ChopperClient(
       baseUrl: baseUrl ?? AppConstants.baseUrl,
       services: [
-        _$AuthApi(),
+        _$MessageApi(),
       ],
       converter: const JsonConverter(),
       interceptors: [AuthInterceptor()],
@@ -39,9 +36,9 @@ abstract class AuthApi extends ChopperService {
       client: Platforms.isWeb
           ? null
           : IOClient(
-              HttpClient()..connectionTimeout = const Duration(seconds: 10),
+              HttpClient()..connectionTimeout = const Duration(seconds: 8),
             ),
     );
-    return _$AuthApi(client);
+    return _$MessageApi(client);
   }
 }

@@ -6,10 +6,8 @@ import '../../../utils/http_helper.dart';
 import '../interceptors.dart';
 import 'auth_api.dart';
 
-class VChatAuthApiService {
-  VChatAuthApiService._();
-
-  static final VChatAuthApiService instance = VChatAuthApiService._();
+class AuthApiService {
+  AuthApiService._();
 
   static late final AuthApi _authApi;
 
@@ -62,7 +60,7 @@ class VChatAuthApiService {
     return myUser;
   }
 
-  static VChatAuthApiService init({
+  static AuthApiService init({
     String? baseUrl,
     String? accessToken,
   }) {
@@ -70,7 +68,7 @@ class VChatAuthApiService {
       accessToken: accessToken,
       baseUrl: baseUrl ?? AppConstants.baseUrl,
     );
-    return VChatAuthApiService._();
+    return AuthApiService._();
   }
 
   Future<bool> logout() async {

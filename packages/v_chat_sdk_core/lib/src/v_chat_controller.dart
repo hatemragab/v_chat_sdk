@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
-import 'package:v_chat_sdk_core/src/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
+import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/utils/enums.dart';
@@ -64,11 +64,14 @@ class VChatController with WidgetsBindingObserver {
     _instance.config = vChatConfig;
     await AppPref.init();
     _instance._helper = await ControllerHelper.instance.init(vChatConfig);
-    SocketController.instance.connect();
     _instance.nNNativeApi = await VNativeApi.init();
-    _instance.auth =
-        Auth(_instance.nNNativeApi, _instance._helper, _instance.config);
+    _instance.auth = Auth(
+      _instance.nNNativeApi,
+      _instance._helper,
+      _instance.config,
+    );
     _widgetsBindingInstance?.addObserver(_instance);
+    SocketController.instance.connect();
     return _instance;
   }
 

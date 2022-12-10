@@ -1,8 +1,19 @@
+import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
+import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
+import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_message.dart';
+import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_room.dart';
+import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
+
 import '../../v_chat_sdk_core.dart';
+import '../local_db/tables/db_provider.dart';
+import 'local/native_local_cache.dart';
+import 'local/native_local_message.dart';
+import 'local/native_local_room.dart';
 
 class VNativeApi {
-  final local = LocalNativeApi();
-  final remote = RemoteNativeApi();
+  final local = _LocalNativeApi();
+  final remote = _RemoteNativeApi();
 
   VNativeApi._();
 
@@ -10,53 +21,45 @@ class VNativeApi {
 
   static final _instance = VNativeApi._();
 
-  VNativeApi get I {
+  static VNativeApi get I {
+    return _instance;
+  }
+
+  static Future<VNativeApi> init() async {
     assert(
       !_instance._isControllerInit,
       'This controller is already initialized',
     );
-    return _instance;
-  }
-
-  static init() async {
     _instance._isControllerInit = true;
     await _instance.local.init();
+    return _instance;
   }
 }
 
-class LocalNativeApi {
-  Future init() async {}
+class _LocalNativeApi {
+  late final NativeLocalMessage message;
+  late final NativeLocalRoom room;
+  late final NativeLocalApiCache apiCache;
+
+  Future init() async {
+    final database = await DBProvider.instance.database;
+    message = NativeLocalMessage(database);
+    await message.prepareMessages();
+    room = NativeLocalRoom(database);
+    apiCache = NativeLocalApiCache(database);
+    await room.prepareRooms();
+  }
 }
 
-class RemoteNativeApi {
-  final remoteSocketIo = RemoteSocketIo();
-  final remoteRoom = RemoteRoom();
-  final remoteAuth = RemoteAuth(
-    VChatAuthApiService.init(),
+class _RemoteNativeApi {
+  final remoteSocketIo = NativeRemoteSocketIo();
+  final remoteRoom = NativeRemoteRoom(
+    ChannelApiService.init(),
   );
-  final remoteMessage = RemoteMessage();
-}
-
-class RemoteSocketIo {}
-
-class RemoteRoom {}
-
-class RemoteMessage {}
-
-class RemoteAuth {
-  final VChatAuthApiService _authApiService;
-
-  RemoteAuth(this._authApiService);
-
-  Future<VIdentifierUser> login(VChatLoginDto dto) {
-    return Future.value(_authApiService.login(dto));
-  }
-
-  Future<VIdentifierUser> register(VChatRegisterDto dto) {
-    return Future.value(_authApiService.register(dto));
-  }
-
-  Future<bool> logout() {
-    return Future.value(_authApiService.logout());
-  }
+  final remoteAuth = NativeRemoteAuth(
+    AuthApiService.init(),
+  );
+  final remoteMessage = NativeRemoteMessage(
+    MessageApiService.init(),
+  );
 }

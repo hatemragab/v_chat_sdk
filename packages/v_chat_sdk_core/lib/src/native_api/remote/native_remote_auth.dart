@@ -1,7 +1,10 @@
-import '../../v_chat_sdk_core.dart';
+import '../../../v_chat_sdk_core.dart';
 
-mixin NativeAuthApi {
-  final _authApiService = VChatAuthApiService.instance;
+class NativeRemoteAuth {
+  final AuthApiService _authApiService;
+
+  NativeRemoteAuth(this._authApiService);
+
   Future<VIdentifierUser> login(VChatLoginDto dto) {
     return Future.value(_authApiService.login(dto));
   }
