@@ -84,7 +84,6 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             appBarElevation: 20,
           ),
-          // Use dark or light theme based on system setting.
         );
       },
     );

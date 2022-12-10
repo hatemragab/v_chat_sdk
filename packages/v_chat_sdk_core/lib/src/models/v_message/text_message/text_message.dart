@@ -46,9 +46,9 @@ class VTextMessage extends VBaseMessage {
   static VTextMessage getFakeMessage(String id) {
     return VTextMessage(
       id: "msg$id",
-      senderId: "senderId",
+      senderId: "VCHAT_V2_FAKE_ID",
       senderName: "senderName",
-      senderImageThumb: VFullUrlModel("xx.png"),
+      senderImageThumb: VFullUrlModel("https://picsum.photos/300/300", true),
       messageStatus: MessageSendingStatusEnum.serverConfirm,
       platform: "Android",
       roomId: id,

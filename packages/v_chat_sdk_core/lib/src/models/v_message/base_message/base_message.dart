@@ -183,6 +183,13 @@ abstract class VBaseMessage {
   @override
   int get hashCode => localId.hashCode ^ id.hashCode;
 
+  bool get isMeSender {
+    if (senderId == "VCHAT_V2_FAKE_ID") {
+      return false;
+    }
+    return AppConstants.myProfile.baseUser.vChatId == senderId;
+  }
+
   ///Some Getters
   bool get isForward => forwardId != null;
 
@@ -204,8 +211,6 @@ abstract class VBaseMessage {
   //   if (seenAt == null) return "---";
   //   return t.format(DateTime.parse(seenAt!).toLocal());
   // }
-
-  bool get isMeSender => senderId == AppConstants.myProfile.baseUser.vChatId;
 
   bool get isFromBroadcast => parentBroadcastId != null;
 

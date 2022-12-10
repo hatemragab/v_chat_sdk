@@ -28,11 +28,11 @@ class VRoomController extends ChangeNotifier {
         notifyListeners();
       },
       request: () async {
-        await Future.delayed(const Duration(milliseconds: 3200));
+        await Future.delayed(const Duration(milliseconds: 1200));
         return List.generate(
           2,
           (index) => VRoom.fakeRoom(
-            index.toString(),
+            index,
           ),
         );
       },

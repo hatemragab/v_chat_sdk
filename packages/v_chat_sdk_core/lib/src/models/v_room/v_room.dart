@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:diacritic/diacritic.dart';
+import 'package:intl/intl.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../local_db/tables/room_table.dart';
@@ -179,23 +180,28 @@ class VRoom {
     return false;
   }
 
-  static VRoom fakeRoom(String id) {
+  bool get isRoomUnread => unReadCount != 0;
+
+  String get lastMessageTimeString =>
+      DateFormat.jm().format(lastMessage.createdAtDate);
+
+  static VRoom fakeRoom(int id) {
     return VRoom(
-      id: id,
-      title: "${id}title",
+      id: id.toString(),
+      title: "Title $id",
       enTitle: "enTitle",
-      thumbImage: VFullUrlModel("xx.png"),
+      thumbImage: VFullUrlModel("https://picsum.photos/300/${id + 299}", true),
       isArchived: false,
       roomType: RoomType.s,
-      isMuted: false,
+      isMuted: id % 2 == 0,
       unReadCount: 0,
-      lastMessage: VTextMessage.getFakeMessage(id),
+      lastMessage: VTextMessage.getFakeMessage(id.toString()),
       isDeleted: false,
       createdAt: DateTime.now(),
-      isOnline: false,
+      isOnline: id % 2 == 0,
       peerId: "peerId",
       blockerId: null,
-      typingStatus: RoomTypingModel.offline,
+      typingStatus: id == 0 ? RoomTypingModel.typing : RoomTypingModel.offline,
       nickName: null,
     );
   }

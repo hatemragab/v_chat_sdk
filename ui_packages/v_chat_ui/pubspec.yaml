@@ -16,6 +16,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   just_audio: ^0.9.21
   phosphor_flutter: ^1.4.0
+  textless: ^6.6.6
   flutter_painter:
     git:
       url: https://github.com/omarhurani/flutter_painter

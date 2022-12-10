@@ -29,13 +29,13 @@ class VRoomBody extends StatelessWidget {
               itemBuilder: (context, index) {
                 final room = controller.rooms[index];
                 return StreamBuilder<VRoom>(
-                  stream: controller.roomStateStream.stream.where(
-                    (e) => e.id == room.id,
+                  stream: controller.roomStateStream.stream.skipWhile(
+                    (e) => e.id != room.id,
                   ),
                   initialData: room,
                   builder: (context, snapshot) {
                     return VRoomItem(
-                      vBaseRoom: snapshot.data!,
+                      room: snapshot.data!,
                       onRoomItemPress: (room) {
                         if (onRoomItemPress != null) {
                           onRoomItemPress!(room);

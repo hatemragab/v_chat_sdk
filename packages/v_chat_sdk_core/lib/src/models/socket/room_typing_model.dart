@@ -23,6 +23,18 @@ class RoomTypingModel {
     status: RoomTypingEnum.stop,
     userId: "offline",
   );
+  static const RoomTypingModel typing = RoomTypingModel(
+    name: "fake typing",
+    roomId: "fake",
+    status: RoomTypingEnum.typing,
+    userId: "fake",
+  );
+  static const RoomTypingModel recoding = RoomTypingModel(
+    name: "fake recoding",
+    roomId: "fake",
+    status: RoomTypingEnum.recording,
+    userId: "fake",
+  );
 
   RoomTypingModel copyWith({
     String? roomId,

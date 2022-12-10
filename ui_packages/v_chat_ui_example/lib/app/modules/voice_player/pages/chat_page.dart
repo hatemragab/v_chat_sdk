@@ -1,0 +1,149 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:v_chat_ui/v_chat_ui.dart';
+import 'package:v_chat_ui_example/app/modules/voice_player/pages/voice_player.dart';
+
+// ignore: must_be_immutable
+class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key}) : super(key: key);
+
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final list = <VModel>[];
+
+  @override
+  void initState() {
+    super.initState();
+    list.addAll(List.generate(
+      100,
+      (i) => VModel(
+        id: "$i".toString(),
+        controller: VoiceMessageController(
+          audioSrc:
+              UrlSrc("https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3"),
+          onPlaying: onPlaying,
+          id: "$i".toString(),
+          maxDuration: const Duration(milliseconds: 187115),
+          onPause: (String id) {},
+          onComplete: onComplete,
+        ),
+      ),
+    ));
+  }
+
+  void onComplete(String id) {
+    final cIndex = list.indexWhere((e) => e.id == id);
+    if (cIndex == -1) {
+      return;
+    }
+    if (cIndex == list.length - 1) {
+      return;
+    }
+    if (list.length - 1 != cIndex) {
+      list[cIndex + 1].controller.initAndPlay();
+    }
+  }
+
+  void onPlaying(String id) {
+    for (var e in list) {
+      if (e.id != id) {
+        if (e.controller.isPlaying) {
+          e.controller.pausePlaying();
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Example"),
+        centerTitle: true,
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            elevation: 0,
+            heroTag: "cc",
+            onPressed: () {
+              final id = "${Random().nextInt(2364566745)}".toString();
+              list.insert(
+                0,
+                VModel(
+                  id: id,
+                  controller: VoiceMessageController(
+                    audioSrc: UrlSrc(
+                        "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3"),
+                    onPlaying: (id) {},
+                    id: id,
+                    maxDuration: const Duration(milliseconds: 187115),
+                    onPause: (String id) {},
+                    onComplete: (id) {},
+                  ),
+                ),
+              );
+              setState(() {});
+            },
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            elevation: 0,
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return const VoicePlayer(
+                    duration: Duration(seconds: 7, minutes: 3),
+                    url:
+                        "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
+                  );
+                },
+              );
+            },
+            child: const Icon(Icons.music_note),
+          ),
+        ],
+      ),
+      body: ListView.separated(
+        padding: const EdgeInsets.all(10),
+        reverse: false,
+        separatorBuilder: (context, index) => const Divider(),
+        itemBuilder: (context, i) {
+          return VoiceMessageView(
+            controller: list[i].controller,
+            key: ValueKey(list[i].id),
+          );
+        },
+        itemCount: list.length,
+      ),
+    );
+  }
+}
+
+class VModel {
+  final String id;
+
+  final VoiceMessageController controller;
+
+  VModel({
+    required this.id,
+    required this.controller,
+  });
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is VModel && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+}
