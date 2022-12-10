@@ -14,9 +14,9 @@ class ArLocalizations extends VChatLocalizationLabels {
   final String signInActionText;
 
   const ArLocalizations({
-    this.emailInputLabel = 'الايميل',
-    this.passwordInputLabel = 'باسورد',
-    this.signInActionText = 'لوجن',
-    this.registerActionText = 'ريجيستر',
+    this.emailInputLabel = 'البريد الالكتروني',
+    this.passwordInputLabel = 'كلمه المرور',
+    this.signInActionText = 'تسجيل دخول',
+    this.registerActionText = 'تسجيل حساب جديد',
   });
 }

@@ -1,7 +1,6 @@
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
 import '../../../utils/http_helper.dart';
-import '../text_message/text_message.dart';
 
 abstract class MessageFactory {
   static VBaseMessage createBaseMessage(Map<String, dynamic> map) {

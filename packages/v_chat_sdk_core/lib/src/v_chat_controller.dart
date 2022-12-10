@@ -1,131 +1,110 @@
-import 'dart:ui';
-
+import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
+import 'package:v_chat_sdk_core/src/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
-import 'package:v_chat_sdk_core/src/local_db/local_storage_service.dart';
 import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
-import 'package:v_chat_sdk_core/src/utils/device_info.dart';
 import 'package:v_chat_sdk_core/src/utils/enums.dart';
 import 'package:v_chat_sdk_core/src/utils/event_bus.dart';
 
 import '../v_chat_sdk_core.dart';
-import 'http/abstraction/auth_abs.dart';
+import 'native_api/v_native_api.dart';
 
-class VChatController implements AuthEndPoints {
-  final log = Logger('VChatController');
-  final vChatEvents = EventBusSingleton.instance.vChatEvents;
+/// VChatController instance.
+///
+/// It must be initialized before used, otherwise an error is thrown.
+///
+/// ```dart
+/// await VChatController.init(...)
+/// ```
+///
+/// Use it:
+///
+/// ```dart
+/// final i = VChatController.I;
+/// ```
+class VChatController with WidgetsBindingObserver {
+  final _log = Logger('VChatController');
+  final _vChatEvents = EventBusSingleton.instance.vChatEvents;
+
+  static WidgetsBinding? get _widgetsBindingInstance => WidgetsBinding.instance;
 
   ///singleton
-  VChatController._privateConstructor();
+  VChatController._();
 
-  static final instance = VChatController._privateConstructor();
+  static final _instance = VChatController._();
 
-  static VChatController get I => instance;
+  static VChatController get I {
+    assert(
+      _instance._isControllerInit,
+      'You must initialize the v chat controller instance before calling VChatController.I',
+    );
+    return _instance;
+  }
+
+  late final Auth auth;
 
   ///v chat variables
   late final ControllerHelper _helper;
   late final VChatConfig config;
-  bool isControllerInit = false;
-  late final VNativeApi vNativeApi;
+  bool _isControllerInit = false;
+  late final VNativeApi nNNativeApi;
 
-  Future<void> init({
+  /// Initialize the [VChatController] instance.
+  ///
+  /// It's necessary to initialize before calling [VChatController.I]
+  static Future<VChatController> init({
     required VChatConfig vChatConfig,
   }) async {
-    if (isControllerInit) {
-      log.warning(
-        "You must call this function once ! this will throw in future updates",
-      );
-      return;
-    }
-    isControllerInit = true;
-    config = vChatConfig;
+    assert(
+      !_instance._isControllerInit,
+      'This controller is already initialized',
+    );
+    _instance._isControllerInit = true;
+    _instance.config = vChatConfig;
     await AppPref.init();
-    _helper = await ControllerHelper.instance.init(vChatConfig);
-    _initApiService();
+    _instance._helper = await ControllerHelper.instance.init(vChatConfig);
     SocketController.instance.connect();
-    await LocalStorageService.instance.init();
-    vNativeApi = VNativeApi();
+    _instance.nNNativeApi = await VNativeApi.init();
+    _instance.auth =
+        Auth(_instance.nNNativeApi, _instance._helper, _instance.config);
+    _widgetsBindingInstance?.addObserver(_instance);
+    return _instance;
   }
 
-  ///login to v chat system
-  @override
-  Future<VIdentifierUser> login({
-    required String identifier,
-    required Locale deviceLanguage,
-  }) async {
-    final deviceHelper = DeviceInfoHelper();
-    final dto = VChatLoginDto(
-      identifier: identifier,
-      platform: Platforms.currentPlatform,
-      deviceId: await deviceHelper.getId(),
-      deviceInfo: await deviceHelper.getDeviceMapInfo(),
-      language: deviceLanguage.languageCode,
-      pushKey: await _helper.getFcmToken(),
-      password: await _helper.getPasswordFromIdentifier(identifier),
-    );
-    final user = await vNativeApi.login(dto);
-    SocketController.instance.connect();
-    return user;
+  void dispose() {
+    _isControllerInit = false;
+    _widgetsBindingInstance?.removeObserver(this);
   }
 
-  ///register to v chat system
   @override
-  Future<VIdentifierUser> register({
-    required String identifier,
-    required String fullName,
-    PlatformFileSource? image,
-    required Locale deviceLanguage,
-  }) async {
-    final deviceHelper = DeviceInfoHelper();
-    final dto = VChatRegisterDto(
-      identifier: identifier,
-      fullName: fullName,
-      deviceId: await deviceHelper.getId(),
-      language: deviceLanguage.languageCode,
-      platform: Platforms.currentPlatform,
-      password: await _helper.getPasswordFromIdentifier(identifier),
-      deviceInfo: await deviceHelper.getDeviceMapInfo(),
-      pushKey: await _helper.getFcmToken(),
-      image: image,
-    );
-
-    final user = await vNativeApi.register(dto);
-    SocketController.instance.connect();
-    return user;
-  }
-
-  ///delete user device from v chat sdk
-  @override
-  Future<void> logout() async {
-    try {
-      await vNativeApi.logout();
-      await config.pushProvider?.deleteToken();
-    } catch (err) {
-      log.warning(err);
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _log.fine("AppLifecycleState.resumed:");
+        break;
+      case AppLifecycleState.inactive:
+        _log.fine("AppLifecycleState.inactive:");
+        break;
+      case AppLifecycleState.paused:
+        _log.fine("AppLifecycleState.paused:");
+        break;
+      case AppLifecycleState.detached:
+        _log.fine("AppLifecycleState.detached:");
+        break;
     }
-    for (var element in StorageKeys.values) {
-      await AppPref.remove(element);
-    }
-    SocketController.instance.disconnect();
-
-    vChatEvents.dispose();
   }
 
   ///make sure you already login or already login to v chat
   bool connectToSocket() {
     final access = AppPref.getHashedString(key: StorageKeys.accessToken);
     if (access == null) {
-      log.warning(
+      _log.warning(
         "You try to connect to socket with out login please make sure you call VChatController.instance.login first",
       );
       return false;
     }
     SocketController.instance.connect();
     return true;
-  }
-
-  void _initApiService() {
-    VChatAuthApiService.instance.init();
   }
 }

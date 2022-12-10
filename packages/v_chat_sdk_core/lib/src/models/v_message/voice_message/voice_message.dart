@@ -5,7 +5,7 @@ import 'package:v_chat_ui/v_chat_ui.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
-import '../core/message_voice_data.dart';
+import 'message_voice_data.dart';
 
 class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
   late final VoiceMessageController _controller;

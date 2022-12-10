@@ -13,7 +13,7 @@ abstract class AppConstants {
   static const dbVersion = 1;
   static const socketInterval = 10; //10sec
   static String get baseServerIp {
-    final uri = VChatController.instance.config.baseUrl;
+    final uri = VChatController.I.config.baseUrl;
     if (uri.hasPort) {
       return "${uri.scheme}://${uri.host}:${uri.port}";
     }
@@ -25,7 +25,7 @@ abstract class AppConstants {
   }
 
   static String get getMediaBaseUrl {
-    final s3BucketUrl = VChatController.instance.config.s3BucketUrl;
+    final s3BucketUrl = VChatController.I.config.s3BucketUrl;
     if (s3BucketUrl != null) {
       return s3BucketUrl;
     }

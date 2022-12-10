@@ -7,5 +7,4 @@ export './src/http/http.dart';
 export './src/i10n/i10n.dart';
 export './src/types/types.dart';
 export './src/utils/utils.dart';
-export './src/v_chat_controller.dart' hide _vChatEvents;
-export 'src/native_api/v_native_api.dart';
+export './src/v_chat_controller.dart';

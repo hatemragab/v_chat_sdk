@@ -23,7 +23,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await VChatController.I.init(
+  await VChatController.init(
     vChatConfig: VChatConfig(
       passwordHashKey: "YOUR STRONG PASSWORD HASH KEY!",
       baseUrl: _getBaseUrl(),

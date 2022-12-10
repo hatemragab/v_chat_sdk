@@ -11,7 +11,7 @@ class VChatAuthApiService {
 
   static final VChatAuthApiService instance = VChatAuthApiService._();
 
-  late final AuthApi _authApi;
+  static late final AuthApi _authApi;
 
   Future<VIdentifierUser> login(VChatLoginDto dto) async {
     final body = dto.toMap();
@@ -37,12 +37,13 @@ class VChatAuthApiService {
   Future<VIdentifierUser> register(VChatRegisterDto dto) async {
     final body = dto.toListOfPartValue();
     final response = await _authApi.register(
-        body,
-        dto.image == null
-            ? null
-            : await HttpHelpers.getMultipartFile(
-                source: dto.image!,
-              ));
+      body,
+      dto.image == null
+          ? null
+          : await HttpHelpers.getMultipartFile(
+              source: dto.image!,
+            ),
+    );
     throwIfNotSuccess(response);
     final myUser = VIdentifierUser.fromMap(
       response.body['data']['user'] as Map<String, dynamic>,
@@ -61,7 +62,7 @@ class VChatAuthApiService {
     return myUser;
   }
 
-  VChatAuthApiService init({
+  static VChatAuthApiService init({
     String? baseUrl,
     String? accessToken,
   }) {

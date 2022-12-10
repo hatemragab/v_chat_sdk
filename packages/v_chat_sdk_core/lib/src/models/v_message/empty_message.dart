@@ -1,5 +1,4 @@
 import '../../../v_chat_sdk_core.dart';
-import 'base_message/base_message.dart';
 
 class VEmptyMessage extends VBaseMessage {
   VEmptyMessage()

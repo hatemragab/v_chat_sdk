@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 abstract class VChatLogger {
   static String name = "V_CHAT_SDK";
 
@@ -10,9 +8,8 @@ abstract class VChatLogger {
   }
 
   static void green(String text) {
-    log(
+    print(
       '\x1B[32m$text\x1B[0m',
-      name: name,
     );
   }
 

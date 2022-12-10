@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../../../v_chat_sdk_core.dart';
-import '../../types/platforms.dart';
 import '../../utils/event_bus.dart';
 import '../core/abstraction/base_local_message_repo.dart';
 import '../core/imp/message/memory_message_imp.dart';
