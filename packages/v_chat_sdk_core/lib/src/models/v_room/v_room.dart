@@ -192,7 +192,7 @@ class VRoom {
       enTitle: "enTitle",
       thumbImage: VFullUrlModel("https://picsum.photos/300/${id + 299}", true),
       isArchived: false,
-      roomType: RoomType.s,
+      roomType: id == 0 ? RoomType.g : RoomType.s,
       isMuted: id % 2 == 0,
       unReadCount: 0,
       lastMessage: VTextMessage.getFakeMessage(id.toString()),
