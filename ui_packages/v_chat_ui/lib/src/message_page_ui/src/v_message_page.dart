@@ -5,8 +5,6 @@ import 'package:v_chat_ui/src/message_page_ui/src/v_message_controller.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/widgets/v_message_app_bare.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/widgets/v_message_item.dart';
 
-import '../../message_input/src/v_message_input.dart';
-
 class VMessagePage extends StatefulWidget {
   const VMessagePage({
     Key? key,
@@ -77,7 +75,7 @@ class _VMessagePageState extends State<VMessagePage> {
               },
             ),
           ),
-          const VMessageInput()
+          // const VMessageInput()
         ],
       ),
     );

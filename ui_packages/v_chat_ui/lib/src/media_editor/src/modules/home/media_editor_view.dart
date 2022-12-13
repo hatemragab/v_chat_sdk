@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/src/media_editor/src/modules/home/widgets/horz_media_item.dart';
+import 'package:v_chat_ui/src/media_editor/src/modules/home/widgets/media_item.dart';
 
-import '../../../../../v_chat_ui.dart';
+import '../../core/core.dart';
 import 'media_editor_controller.dart';
-import 'widgets/media_item.dart';
 
 class MediaEditorView extends StatefulWidget {
   final List<PlatformFileSource> files;

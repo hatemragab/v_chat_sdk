@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../v_chat_ui.dart';
+import 'media_editor_platform_file.dart';
 
 class PlatformsImage extends StatelessWidget {
-  const PlatformsImage({super.key,
+  const PlatformsImage({
+    super.key,
     required this.height,
     required this.width,
     required this.fit,

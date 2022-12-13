@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_ui/v_chat_ui.dart';
 
 class HomeController extends GetxController {
   final files = <PlatformFileSource>[].obs;
@@ -32,22 +30,22 @@ class HomeController extends GetxController {
           );
         }
       }
-      final editedFiles = await Navigator.of(Get.context!).push(
-        MaterialPageRoute(
-          builder: ((context) => MediaEditorView(files: mediaFiles)),
-        ),
-      ) as List<BaseMediaEditor>?;
-      if (editedFiles == null) {
-        return;
-      }
-      for (final f in editedFiles) {
-        print(f.toString());
-        // if (f is MediaEditorImage) {
-        //   files.add(f.data.fileSource);
-        // } else if (f is MediaEditorVideo) {
-        //   files.add(f.data.fileSource);
-        // }
-      }
+      // final editedFiles = await Navigator.of(Get.context!).push(
+      //   MaterialPageRoute(
+      //     builder: ((context) => MediaEditorView(files: mediaFiles)),
+      //   ),
+      // ) as List<BaseMediaEditor>?;
+      // if (editedFiles == null) {
+      //   return;
+      // }
+      // for (final f in editedFiles) {
+      //   print(f.toString());
+      //   // if (f is MediaEditorImage) {
+      //   //   files.add(f.data.fileSource);
+      //   // } else if (f is MediaEditorVideo) {
+      //   //   files.add(f.data.fileSource);
+      //   // }
+      // }
     } else {
       // User canceled the picker
     }

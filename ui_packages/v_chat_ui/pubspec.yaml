@@ -17,6 +17,8 @@ dependencies:
   just_audio: ^0.9.21
   phosphor_flutter: ^1.4.0
   textless: ^6.6.6
+  file_picker: ^5.2.3
+  wechat_camera_picker: ^3.6.5
   flutter_painter:
     git:
       url: https://github.com/omarhurani/flutter_painter
@@ -34,6 +36,34 @@ dependencies:
   flutter_native_image: ^0.0.6+1
   path_provider: ^2.0.11
   helpers: ^1.1.4
+  uuid: ^3.0.5
+  permission_handler: ^10.2.0
+  animated_text_kit: ^4.2.1
+  record: ^3.0.2
+  build_context: ^3.0.0
+  cached_network_image: ^3.2.3
+  stop_watch_timer: ^2.0.0
+  place_picker: ^0.10.0
+  photo_view: ^0.14.0
+  flutter_parsed_text: ^2.2.1
+  shimmer: ^2.0.0
+  timeago: ^3.3.0
+  swipe_to: ^1.0.2
+  url_launcher: ^6.1.7
+  latlong2: ^0.8.1
+  cross_file: ^0.3.3+2
+  giphy_get: ^3.1.1
+  open_file_plus: ^3.3.0
+  audio_waveforms:
+    git: https://github.com/yohom/audio_waveforms
+  emoji_picker_flutter:
+    git:
+      url: https://github.com/Fintasys/emoji_picker_flutter
+      ref: Add-Web-Support-2
+  flutter_mentions:
+    git:
+      url: https://github.com/hatemragab/flutter_mentions
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

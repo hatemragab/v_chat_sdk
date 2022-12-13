@@ -9,7 +9,7 @@ import 'package:image_cropping/image_cropping.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-import '../../../../../v_chat_ui.dart';
+import '../../core/core.dart';
 import '../pinter/image_pinter_view.dart';
 import '../video_player/views/video_player_view.dart';
 

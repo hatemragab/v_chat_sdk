@@ -1,34 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:v_chat_ui/src/room_page_ui/src/builder/color_builder.dart';
-import 'package:v_chat_ui/src/room_page_ui/src/builder/icon_builder.dart';
 
-class VTheme extends InheritedWidget {
-  final VThemeData dataLight;
-  final VThemeData dataDark;
-  final Brightness brightness;
-
-  const VTheme({
-    super.key,
-    required Widget child,
-    required this.brightness,
-    required this.dataLight,
-    required this.dataDark,
-  }) : super(child: child);
-
-  @override
-  bool updateShouldNotify(VTheme oldWidget) => dataLight != oldWidget.dataLight;
-
-  static VTheme? of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<VTheme>();
-
-  VThemeData get vThemeData {
-    if (brightness == Brightness.dark) {
-      return dataDark;
-    }
-    return dataLight;
-  }
-}
+import 'builder/color_builder.dart';
+import 'builder/icon_builder.dart';
 
 // class VThemeDataV2 {
 //   final ColorBuilder? colorBuilder;
@@ -46,7 +19,6 @@ class VTheme extends InheritedWidget {
 //         );
 //   }
 // }
-
 class VThemeData {
   final ColorBuilder colorBuilder;
   final IconBuilder iconBuilder;

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../../../../../v_chat_ui.dart';
+import '../../../core/core.dart';
 
 class HorzMediaItem extends StatelessWidget {
   final BaseMediaEditor mediaFile;

@@ -5,6 +5,8 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import '../models/v_message/base_message/base_message.dart';
 
 abstract class AppConstants {
+  static String mapsApiKey = "mapsApiKeymapsApiKey";
+
   const AppConstants._();
 
   static String clintVersion = "2.0.0";
@@ -18,6 +20,10 @@ abstract class AppConstants {
       return "${uri.scheme}://${uri.host}:${uri.port}";
     }
     return "${uri.scheme}://${uri.host}";
+  }
+
+  static int get maxMediaSize {
+    return VChatController.I.config.maxMediaUploadSize;
   }
 
   static String get baseUrl {

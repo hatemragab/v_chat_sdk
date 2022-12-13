@@ -29,7 +29,7 @@ class DBProvider {
       path,
       version: AppConstants.dbVersion,
       onUpgrade: (db, oldVersion, newVersion) async {
-        reCreateTables();
+       await reCreateTables(db);
       },
       onCreate: (db, version) async {
         await db.transaction((txn) async {
@@ -51,8 +51,8 @@ class DBProvider {
     );
   }
 
-  Future reCreateTables() async {
-    final db = await database;
+  Future reCreateTables(Database db) async {
+
     await db.transaction((txn) async {
       await RoomTable.recreateTable(txn);
       await MessageTable.recreateTable(txn);

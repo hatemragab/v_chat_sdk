@@ -66,7 +66,7 @@ class PlatformFileSource {
   }
 
   PlatformFileSource.fromUrl({
-    required this.fileSize,
+    this.fileSize = 0,
     required String url,
     bool isFullUrl = false,
   })  : url = VFullUrlModel(url, isFullUrl),
