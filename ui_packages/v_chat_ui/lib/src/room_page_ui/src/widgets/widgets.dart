@@ -1,1 +1,1 @@
-export './v_room_item.dart';
+export 'room_item/v_room_item.dart';

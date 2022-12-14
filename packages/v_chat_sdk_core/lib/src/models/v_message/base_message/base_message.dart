@@ -184,7 +184,7 @@ abstract class VBaseMessage {
   int get hashCode => localId.hashCode ^ id.hashCode;
 
   bool get isMeSender {
-    if (senderId == "VCHAT_V2_FAKE_ID") {
+    if (content.startsWith("Fake")) {
       return false;
     }
     return AppConstants.myProfile.baseUser.vChatId == senderId;
@@ -269,6 +269,29 @@ abstract class VBaseMessage {
         senderImageThumb =
             AppConstants.myProfile.baseUser.userImages.smallImage,
         messageStatus = MessageSendingStatusEnum.sending,
+        parentBroadcastId = broadcastId,
+        deletedAt = null,
+        seenAt = null,
+        deliveredAt = null;
+
+  VBaseMessage.buildFakeMessage({
+    required this.content,
+    required this.messageType,
+    this.forwardId,
+    String? broadcastId,
+    this.replyTo,
+  })  : id = ObjectId().hexString,
+        localId = Uuid().v4(),
+        roomId = "roomId $content",
+        platform = Platforms.currentPlatform,
+        createdAt = DateTime.now().toLocal().toIso8601String(),
+        updatedAt = DateTime.now().toLocal().toIso8601String(),
+        senderId = AppConstants.fakeMyProfile.baseUser.vChatId,
+        isStared = false,
+        senderName = AppConstants.fakeMyProfile.baseUser.fullName,
+        senderImageThumb =
+            AppConstants.fakeMyProfile.baseUser.userImages.smallImage,
+        messageStatus = MessageSendingStatusEnum.serverConfirm,
         parentBroadcastId = broadcastId,
         deletedAt = null,
         seenAt = null,

@@ -48,7 +48,7 @@ class VChatController with WidgetsBindingObserver {
   late final ControllerHelper _helper;
   late final VChatConfig config;
   bool _isControllerInit = false;
-  late final VNativeApi nNNativeApi;
+  late final VNativeApi nativeApi;
 
   /// Initialize the [VChatController] instance.
   ///
@@ -64,9 +64,9 @@ class VChatController with WidgetsBindingObserver {
     _instance.config = vChatConfig;
     await AppPref.init();
     _instance._helper = await ControllerHelper.instance.init(vChatConfig);
-    _instance.nNNativeApi = await VNativeApi.init();
+    _instance.nativeApi = await VNativeApi.init();
     _instance.auth = Auth(
-      _instance.nNNativeApi,
+      _instance.nativeApi,
       _instance._helper,
       _instance.config,
     );

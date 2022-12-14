@@ -7,6 +7,7 @@ import '../../../../core/utils/app_alert.dart';
 
 class ChatsTabController extends GetxController {
   final vRoomController = VRoomController();
+
   void onCreateGroupOrBroadcast() async {
     final l = ["Group", "Broadcast"];
     final res = await AppAlert.showAskListDialog(

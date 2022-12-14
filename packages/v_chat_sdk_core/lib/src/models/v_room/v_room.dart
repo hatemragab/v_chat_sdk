@@ -146,27 +146,27 @@ class VRoom {
   ///getters
   bool get isRoomMuted {
     final current = this;
-    if (isSingle) {
+    if (roomType.isSingle) {
       return current.isMuted;
     }
-    if (isGroup) {
+    if (roomType.isGroup) {
       return current.isMuted;
     }
     return false;
   }
 
-  bool get isSingle => roomType == RoomType.s;
-
-  bool get isGroup => roomType == RoomType.g;
-
-  bool get isBroadcast => roomType == RoomType.b;
+  // bool get isSingle => roomType == RoomType.s;
+  //
+  // bool get isGroup => roomType == RoomType.g;
+  //
+  // bool get isBroadcast => roomType == RoomType.b;
 
   String? get roomTypingText {
     final current = this;
-    if (isSingle) {
+    if (roomType.isSingle) {
       return current.typingStatus.inSingleText;
     }
-    if (isGroup) {
+    if (roomType.isGroup) {
       return current.typingStatus.inGroupText;
     }
     return null;
@@ -174,7 +174,7 @@ class VRoom {
 
   bool get isRoomOnline {
     final current = this;
-    if (isSingle) {
+    if (roomType.isSingle) {
       return current.isOnline;
     }
     return false;
@@ -182,20 +182,23 @@ class VRoom {
 
   bool get isRoomUnread => unReadCount != 0;
 
+  //todo fix
+  bool get isMeBlocker => true;
+
   String get lastMessageTimeString =>
       DateFormat.jm().format(lastMessage.createdAtDate);
 
   static VRoom fakeRoom(int id) {
     return VRoom(
       id: id.toString(),
-      title: "Title $id",
+      title: "${id == 0 ? "Group" : ""} $id",
       enTitle: "enTitle",
       thumbImage: VFullUrlModel("https://picsum.photos/300/${id + 299}", true),
       isArchived: false,
       roomType: id == 0 ? RoomType.g : RoomType.s,
       isMuted: id % 2 == 0,
       unReadCount: 0,
-      lastMessage: VTextMessage.getFakeMessage(id.toString()),
+      lastMessage: VTextMessage.buildFakeMessage(id.toString()),
       isDeleted: false,
       createdAt: DateTime.now(),
       isOnline: id % 2 == 0,
@@ -203,6 +206,44 @@ class VRoom {
       blockerId: null,
       typingStatus: id == 0 ? RoomTypingModel.typing : RoomTypingModel.offline,
       nickName: null,
+    );
+  }
+
+  VRoom copyWith({
+    String? id,
+    String? title,
+    String? enTitle,
+    VFullUrlModel? thumbImage,
+    RoomType? roomType,
+    bool? isArchived,
+    int? unReadCount,
+    VBaseMessage? lastMessage,
+    bool? isDeleted,
+    DateTime? createdAt,
+    bool? isMuted,
+    bool? isOnline,
+    RoomTypingModel? typingStatus,
+    String? nickName,
+    String? peerId,
+    String? blockerId,
+  }) {
+    return VRoom(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      enTitle: enTitle ?? this.enTitle,
+      thumbImage: thumbImage ?? this.thumbImage,
+      roomType: roomType ?? this.roomType,
+      isArchived: isArchived ?? this.isArchived,
+      unReadCount: unReadCount ?? this.unReadCount,
+      lastMessage: lastMessage ?? this.lastMessage,
+      isDeleted: isDeleted ?? this.isDeleted,
+      createdAt: createdAt ?? this.createdAt,
+      isMuted: isMuted ?? this.isMuted,
+      isOnline: isOnline ?? this.isOnline,
+      typingStatus: typingStatus ?? this.typingStatus,
+      nickName: nickName ?? this.nickName,
+      peerId: peerId ?? this.peerId,
+      blockerId: blockerId ?? this.blockerId,
     );
   }
 }

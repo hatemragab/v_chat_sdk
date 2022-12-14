@@ -10,7 +10,6 @@ class MessageTextFiled extends StatelessWidget {
   final VoidCallback onShowEmoji;
   final VoidCallback onCameraPress;
   final Widget Function(Map<String, dynamic>)? suggestionBuilder;
-
   final VoidCallback onAttachFilePress;
   final Function(String value) onSubmit;
   final List<Map<String, dynamic>> searchData;
@@ -46,9 +45,6 @@ class MessageTextFiled extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-
-        ///mention!
-
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 5, top: 5),
@@ -90,11 +86,9 @@ class MessageTextFiled extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(
           width: 10,
         ),
-
         Visibility(
           visible: !isTyping,
           child: Row(

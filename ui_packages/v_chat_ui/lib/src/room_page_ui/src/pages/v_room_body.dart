@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/src/room_page_ui/src/pages/v_room_controller.dart';
-import 'package:v_chat_ui/src/room_page_ui/src/widgets/v_room_item.dart';
+import 'package:v_chat_ui/src/room_page_ui/src/widgets/room_item/v_room_item.dart';
 
 class VRoomBody extends StatelessWidget {
   const VRoomBody({
     Key? key,
     required this.controller,
     this.onRoomItemPress,
+    this.onRoomItemLongPress,
   }) : super(key: key);
   final VRoomController controller;
   final Function(VRoom room)? onRoomItemPress;
+  final Function(VRoom room)? onRoomItemLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,12 @@ class VRoomBody extends StatelessWidget {
                   builder: (context, snapshot) {
                     return VRoomItem(
                       room: snapshot.data!,
+                      onRoomItemLongPress: (room) {
+                        if (onRoomItemLongPress != null) {
+                          onRoomItemLongPress!(room);
+                        }
+                        controller.onRoomItemLongPress(room, context);
+                      },
                       onRoomItemPress: (room) {
                         if (onRoomItemPress != null) {
                           onRoomItemPress!(room);

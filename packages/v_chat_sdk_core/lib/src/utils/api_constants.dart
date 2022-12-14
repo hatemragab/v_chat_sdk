@@ -51,6 +51,11 @@ abstract class AppConstants {
     );
   }
 
+  static VIdentifierUser get fakeMyProfile {
+    return VIdentifierUser(
+        identifier: "FAKE identifier", baseUser: VBaseUser.fromFakeData());
+  }
+
   static String get myId {
     return myProfile.baseUser.vChatId;
   }

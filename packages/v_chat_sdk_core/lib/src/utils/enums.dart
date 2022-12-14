@@ -61,6 +61,14 @@ enum RoomType {
   b,
 }
 
+extension StrType on RoomType {
+  bool get isGroup => this == RoomType.g;
+
+  bool get isSingle => this == RoomType.s;
+
+  bool get isBroadcast => this == RoomType.b;
+}
+
 enum RoomTypingEnum { stop, typing, recording }
 
 enum MessageSendingStatusEnum {

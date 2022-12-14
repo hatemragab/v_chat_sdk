@@ -3,8 +3,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../models/app_bare_state.dart';
+import '../models/input_state.dart';
+
 class VMessageController extends ChangeNotifier {
-  final VRoom vRoom;
+  final VRoom _vRoom;
+  late final ValueNotifier<AppBareState> appBareState;
+  final inputState = ValueNotifier<InputState>(InputState());
   final messageStateStream = StreamController<VBaseMessage>.broadcast();
   var roomPageState = VChatLoadingState.ideal;
   final _messagePaginationModel = VPaginationModel<VBaseMessage>(
@@ -16,8 +21,14 @@ class VMessageController extends ChangeNotifier {
 
   List<VBaseMessage> get messages =>
       List.unmodifiable(_messagePaginationModel.values);
+  final bool isInTesting;
 
-  VMessageController(this.vRoom) {
+  VMessageController(this._vRoom, [this.isInTesting = false]) {
+    appBareState = ValueNotifier<AppBareState>(
+      AppBareState(
+        _vRoom,
+      ),
+    );
     initMessages();
   }
 
@@ -31,7 +42,7 @@ class VMessageController extends ChangeNotifier {
         await Future.delayed(const Duration(milliseconds: 1200));
         return List.generate(
           20,
-          (index) => VTextMessage.getFakeMessage(
+          (index) => VTextMessage.buildFakeMessage(
             index.toString(),
           ),
         );
@@ -50,9 +61,32 @@ class VMessageController extends ChangeNotifier {
 
   @override
   void dispose() {
-    super.dispose();
     messageStateStream.close();
+    super.dispose();
   }
 
   void onMessageItemPress(VBaseMessage message) {}
+
+  void onTyping(RoomTypingModel p1) {
+    if (appBareState.value.typingModel.isTyping) {
+      _vRoom.typingStatus = RoomTypingModel.offline;
+    } else {
+      _vRoom.typingStatus = p1;
+    }
+    appBareState.notifyListeners();
+  }
+
+  onSubmitText(String message) {}
+
+  onMentionRequireSearch(String text) {}
+
+  onSubmitMedia(List<PlatformFileSource> files) {}
+
+  onSubmitVoice(VMessageVoiceData data) {}
+
+  onSubmitFiles(List<PlatformFileSource> files) {}
+
+  onSubmitLocation(VLocationMessageData data) {}
+
+  onTypingChange(RoomTypingEnum typing) {}
 }

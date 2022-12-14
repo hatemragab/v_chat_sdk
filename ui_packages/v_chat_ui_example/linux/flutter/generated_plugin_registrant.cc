@@ -6,6 +6,7 @@
 
 #include "generated_plugin_registrant.h"
 
+#include <dynamic_color/dynamic_color_plugin.h>
 #include <flutter_platform_alert/flutter_platform_alert_plugin.h>
 #include <flutter_secure_storage_linux/flutter_secure_storage_linux_plugin.h>
 #include <platform_device_id_linux/platform_device_id_linux_plugin.h>
@@ -13,6 +14,9 @@
 #include <url_launcher_linux/url_launcher_plugin.h>
 
 void fl_register_plugins(FlPluginRegistry* registry) {
+  g_autoptr(FlPluginRegistrar) dynamic_color_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "DynamicColorPlugin");
+  dynamic_color_plugin_register_with_registrar(dynamic_color_registrar);
   g_autoptr(FlPluginRegistrar) flutter_platform_alert_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterPlatformAlertPlugin");
   flutter_platform_alert_plugin_register_with_registrar(flutter_platform_alert_registrar);

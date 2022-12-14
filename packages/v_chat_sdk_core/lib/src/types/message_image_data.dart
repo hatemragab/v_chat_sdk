@@ -62,5 +62,16 @@ class MessageImageData {
     );
   }
 
+  factory MessageImageData.fromFakeData() {
+    return MessageImageData(
+      fileSource: PlatformFileSource.fromUrl(
+        url: "https://picsum.photos/600/600",
+        isFullUrl: true,
+      ),
+      width: 600,
+      height: 600,
+    );
+  }
+
 //</editor-fold>
 }

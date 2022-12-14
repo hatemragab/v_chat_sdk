@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  dynamic_color
   flutter_platform_alert
   flutter_secure_storage_linux
   platform_device_id_linux

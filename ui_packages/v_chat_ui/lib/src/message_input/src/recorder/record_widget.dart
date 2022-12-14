@@ -31,7 +31,7 @@ class RecordWidgetState extends State<RecordWidget> {
   //todo get from user this value
   int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
   final uuid = const u.Uuid();
-  late AppRecorder recorder;
+  AppRecorder? recorder;
 
   @override
   void initState() {
@@ -79,12 +79,12 @@ class RecordWidgetState extends State<RecordWidget> {
 
   Future<bool> _start() async {
     if (Platforms.isWeb) {
-      await recorder.start();
+      await recorder!.start();
     } else {
       final path = await _getDir();
-      await recorder.start(path);
+      await recorder!.start(path);
     }
-    if (await recorder.isRecording()) {
+    if (await recorder!.isRecording()) {
       startCounterUp();
       return true;
     }
@@ -94,7 +94,7 @@ class RecordWidgetState extends State<RecordWidget> {
   Future<VMessageVoiceData> stopRecord() async {
     pauseCounter();
     await Future.delayed(const Duration(milliseconds: 10));
-    final path = await recorder.stop();
+    final path = await recorder!.stop();
     if (path != null) {
       List<int>? bytes;
       late final XFile? xFile;
@@ -114,7 +114,7 @@ class RecordWidgetState extends State<RecordWidget> {
                 filePath: uri.path,
               ),
       );
-      await close();
+      //await close();
       return data;
     }
     throw "record path is null here ! while stop the record";
@@ -148,7 +148,7 @@ class RecordWidgetState extends State<RecordWidget> {
             children: [
               InkWell(
                 onTap: () {
-                  close();
+                  // close();
                   widget.onCancel();
                 },
                 child: const Icon(
@@ -157,13 +157,13 @@ class RecordWidgetState extends State<RecordWidget> {
                   size: 30,
                 ),
               ),
-              const InkWell(
-                child: Icon(
-                  Icons.pause_circle_outline,
-                  size: 30,
-                  color: Colors.grey,
-                ),
-              ),
+              // const InkWell(
+              //   child: Icon(
+              //     Icons.pause_circle_outline,
+              //     size: 30,
+              //     color: Colors.grey,
+              //   ),
+              // ),
               const SizedBox()
             ],
           ),
@@ -172,16 +172,16 @@ class RecordWidgetState extends State<RecordWidget> {
     );
   }
 
-  // @override
-  // void dispose() {
-  //   close();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    close();
+    super.dispose();
+  }
 
-  Future close() async {
+  Future<void> close() async {
     stopCounter();
-    await recorder.stop();
+    await recorder?.stop();
     _stopWatchTimer.dispose();
-    await recorder.close();
+    await recorder?.close();
   }
 }

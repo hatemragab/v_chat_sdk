@@ -5,8 +5,11 @@ class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
   final Function(VBaseMessage msg)? onMessageItemPress;
 
-  const VMessageItem({Key? key, required this.message, this.onMessageItemPress})
-      : super(key: key);
+  const VMessageItem({
+    Key? key,
+    required this.message,
+    this.onMessageItemPress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

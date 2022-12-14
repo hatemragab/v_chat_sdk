@@ -34,6 +34,12 @@ class VTextMessage extends VBaseMessage {
 
   VTextMessage.fromRemoteMap(super.map) : super.fromRemoteMap();
 
+  VTextMessage.buildFakeMessage(String content)
+      : super.buildFakeMessage(
+          content: "Fake $content",
+          messageType: MessageType.text,
+        );
+
   VTextMessage.fromLocalMap(super.map) : super.fromLocalMap();
 
   @override
@@ -42,28 +48,4 @@ class VTextMessage extends VBaseMessage {
 
   @override
   int get hashCode => localId.hashCode;
-
-  static VTextMessage getFakeMessage(String id) {
-    return VTextMessage(
-      id: "msg$id",
-      senderId: "VCHAT_V2_FAKE_ID",
-      senderName: "senderName",
-      senderImageThumb: VFullUrlModel("https://picsum.photos/300/300", true),
-      messageStatus: MessageSendingStatusEnum.serverConfirm,
-      platform: "Android",
-      roomId: id,
-      content: "content $id",
-      messageType: MessageType.text,
-      localId: "localId",
-      createdAt: DateTime.now().toIso8601String(),
-      updatedAt: DateTime.now().toIso8601String(),
-      replyTo: null,
-      seenAt: null,
-      deliveredAt: null,
-      forwardId: null,
-      deletedAt: null,
-      parentBroadcastId: null,
-      isStared: false,
-    );
-  }
 }

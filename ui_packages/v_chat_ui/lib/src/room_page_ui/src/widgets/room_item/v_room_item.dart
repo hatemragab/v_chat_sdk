@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_ui/src/core/extension.dart';
 
-import '../../../../v_chat_ui.dart';
-import 'colored_circle_container.dart';
+import '../../../../../v_chat_ui.dart';
+import '../colored_circle_container.dart';
 
 class VRoomItem extends StatelessWidget {
   final VRoom room;
   final Function(VRoom room) onRoomItemPress;
+  final Function(VRoom room) onRoomItemLongPress;
 
   const VRoomItem({
     required this.room,
     super.key,
     required this.onRoomItemPress,
+    required this.onRoomItemLongPress,
   });
 
   @override
   Widget build(BuildContext context) {
-    final vTheme = VTheme.of(context)!.vThemeData;
+    final vRoomTheme = context.vRoomTheme;
     return ListTile(
+      dense: false,
       onLongPress: () {
-        onRoomItemPress(room);
+        onRoomItemLongPress(room);
       },
       onTap: () {
         onRoomItemPress(room);
@@ -28,7 +32,7 @@ class VRoomItem extends StatelessWidget {
       leading: CircleAvatar(
         foregroundColor: Theme.of(context).primaryColor,
         backgroundColor: Colors.transparent,
-        radius: 35,
+        radius: 40,
         backgroundImage: NetworkImage(room.thumbImage.fullUrl),
       ),
       isThreeLine: false,
@@ -38,19 +42,21 @@ class VRoomItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: room.title.h6.maxLine(1).alignStart.overflowEllipsis,
+            child: room.title.h6.maxLine(1).alignStart.overflowEllipsis.styled(
+                  style: vRoomTheme.titleStyle,
+                ),
           ),
-          _getMessageTime(vTheme)
+          _getMessageTime(vRoomTheme)
         ],
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _getTypingOrMessage(vTheme),
+          _getTypingOrMessage(vRoomTheme),
           Row(
             children: [
               if (room.isMuted)
-                vTheme.iconBuilder.muteIcon
+                vRoomTheme.muteIcon
               else
                 const SizedBox.shrink(),
               _getRoomUnreadCount(),
@@ -61,7 +67,7 @@ class VRoomItem extends StatelessWidget {
     );
   }
 
-  Widget _getMessageTime(VThemeData vThemeData) {
+  Widget _getMessageTime(VRoomTheme vThemeData) {
     return room.lastMessageTimeString.h6.size(14).regular.color(
           room.isRoomUnread ? Colors.black : Colors.grey,
         );
@@ -76,13 +82,9 @@ class VRoomItem extends StatelessWidget {
       );
     }
     return const SizedBox.shrink();
-    return Padding(
-      padding: const EdgeInsets.all(6),
-      child: "".text,
-    );
   }
 
-  Widget _getTypingOrMessage(VThemeData themeData) {
+  Widget _getTypingOrMessage(VRoomTheme themeData) {
     final String? roomTyping = room.roomTypingText;
     if (roomTyping != null) {
       return roomTyping.text.color(Colors.green);
@@ -107,19 +109,19 @@ class VRoomItem extends StatelessWidget {
     );
   }
 
-  Widget _getMessageStatusIfSender(VThemeData themeData) {
+  Widget _getMessageStatusIfSender(VRoomTheme themeData) {
     final isSender = room.lastMessage.isMeSender;
-    Widget icon = themeData.iconBuilder.sendMessageIcon;
+    Widget icon = themeData.vMsgStatusTheme.sendIcon;
     if (isSender) {
       if (room.lastMessage.isSending) {
-        icon = themeData.iconBuilder.pendingMessageIcon;
+        themeData.vMsgStatusTheme.pendingIcon;
       }
       if (room.lastMessage.isSendError) {
-        icon = themeData.iconBuilder.errorMessageIcon;
+        icon = themeData.vMsgStatusTheme.refreshIcon;
       } else if (room.lastMessage.seenAt != null) {
-        icon = themeData.iconBuilder.deliverMessageIcon;
+        icon = themeData.vMsgStatusTheme.seenIcon;
       } else if (room.lastMessage.deliveredAt != null) {
-        icon = themeData.iconBuilder.seenMessageIcon;
+        icon = themeData.vMsgStatusTheme.deliverIcon;
       }
       return Padding(
         padding: const EdgeInsets.only(right: 3),

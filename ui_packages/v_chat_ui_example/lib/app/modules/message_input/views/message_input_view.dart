@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/v_chat_ui.dart';
 
@@ -11,13 +12,33 @@ class MessageInputView extends GetView<MessageInputController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: const Text('MessageInputView'),
         actions: [
           IconButton(
-              onPressed: () => controller.logs.clear(),
-              icon: const Icon(Icons.delete))
+            onPressed: () => controller.logs.clear(),
+            icon: const Icon(Icons.delete),
+          ),
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: controller.banPress,
+                  child: controller.isBan.value
+                      ? const Text("un Ban")
+                      : const Text("Ban"),
+                ),
+                PopupMenuItem(
+                  onTap: () => controller.setReplyPress(isText: true),
+                  child: const Text("Reply be text msg"),
+                ),
+                PopupMenuItem(
+                  onTap: () => controller.setReplyPress(isText: false),
+                  child: const Text("Reply be image msg"),
+                ),
+              ];
+            },
+          )
         ],
         centerTitle: true,
       ),
@@ -25,51 +46,60 @@ class MessageInputView extends GetView<MessageInputController> {
         children: [
           Expanded(
             child: Obx(() {
-              return ListView.builder(
+              return ListView.separated(
                 reverse: true,
                 padding: const EdgeInsets.all(8),
+                separatorBuilder: (context, index) => Divider(),
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      controller.logs[index].fName,
-                    ),
-                    subtitle: Text(
-                      controller.logs[index].data,
-                    ),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      controller.logs[index].fName.s2,
+                      controller.logs[index].data.cap
+                    ],
                   );
+                  // return ListTile(
+                  //   dense: true,
+                  //   minVerticalPadding: 10,
+                  //   contentPadding: EdgeInsets.zero,
+                  //   title: controller.logs[index].fName.s2,
+                  //   subtitle: controller.logs[index].data.cap,
+                  // );
                 },
                 itemCount: controller.logs.length,
               );
             }),
           ),
-          VMessageInputWidget(
-            onSubmitText: (String message) {
-              controller.logs.add(InputLog("onSubmitText", message));
-            },
-            onMentionRequireSearch: (String text) {
-              controller.logs.add(InputLog("onMentionRequireSearch", text));
-            },
-            onSubmitMedia: (List<PlatformFileSource> files) {
-              controller.logs.add(InputLog("onSubmitMedia", files.toString()));
-            },
-            onSubmitVoice: (VMessageVoiceData data) {
-              controller.logs.add(InputLog("onSubmitVoice", data.toString()));
-            },
-            onSubmitFiles: (List<PlatformFileSource> files) {
-              controller.logs.add(InputLog("onSubmitFiles", files.toString()));
-            },
-            onSubmitLocation: (VLocationMessageData data) {
-              controller.logs
-                  .add(InputLog("onSubmitLocation", data.toString()));
-            },
-            onTypingChange: (RoomTypingEnum typing) {
-              controller.logs
-                  .add(InputLog("onTypingChange", typing.toString()));
-            },
-          ),
+          Obx(() {
+            return VMessageInputWidget(
+              stopChatWidget: controller.isBan.value ? _getBanWidget() : null,
+              replyWidget: controller.isReplying
+                  ? _getReplyWidget(controller.replyMsg.value)
+                  : null,
+              onSubmitText: controller.onSubmitText,
+              onMentionRequireSearch: controller.onMentionRequireSearch,
+              onSubmitMedia: controller.onSubmitMedia,
+              onSubmitVoice: controller.onSubmitVoice,
+              onSubmitFiles: controller.onSubmitFiles,
+              onSubmitLocation: controller.onSubmitLocation,
+              onTypingChange: controller.onTypingChange,
+            );
+          }),
         ],
       ),
     );
+  }
+
+  Widget _getBanWidget() {
+    return const Text("BANNNED");
+  }
+
+  Widget _getReplyWidget(Object value) {
+    if (value is VTextMessage) {
+      return const Text("VTextMessage");
+    } else if (value is VImageMessage) {
+      return const Text("V Image msg");
+    }
+    throw UnimplementedError();
   }
 }

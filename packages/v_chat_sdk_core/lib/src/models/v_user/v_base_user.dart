@@ -54,6 +54,14 @@ class VBaseUser {
     );
   }
 
+  factory VBaseUser.fromFakeData() {
+    return VBaseUser(
+      vChatId: "fake vChatId",
+      fullName: "fake FullName",
+      userImages: VUserImage.fromFakeSingleUrl(),
+    );
+  }
+
 //</editor-fold>
 }
 

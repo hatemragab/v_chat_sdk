@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_ui/v_chat_ui.dart';
 
 import 'app/core/app_service.dart';
 import 'app/core/enums.dart';
@@ -64,11 +65,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           themeMode: appService.themeMode,
           initialBinding: LazyInjection(),
-          theme: FlexThemeData.light(
-            scheme: FlexScheme.green,
-            useMaterial3: true,
-            appBarElevation: 20,
-          ),
           localizationsDelegates: const [
             S.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -78,10 +74,19 @@ class MyApp extends StatelessWidget {
           supportedLocales: S.delegate.supportedLocales,
           locale: appService.locale,
           fallbackLocale: const Locale("en"),
-          // The Mandy red, dark theme.
+          theme: FlexThemeData.light(
+              scheme: FlexScheme.green,
+              useMaterial3: true,
+              appBarElevation: 20,
+              extensions: <ThemeExtension<dynamic>>[
+                VRoomTheme.light(),
+              ]),
           darkTheme: FlexThemeData.dark(
             scheme: FlexScheme.green,
             useMaterial3: true,
+            extensions: <ThemeExtension<dynamic>>[
+              VRoomTheme.dark(),
+            ],
             appBarElevation: 20,
           ),
         );

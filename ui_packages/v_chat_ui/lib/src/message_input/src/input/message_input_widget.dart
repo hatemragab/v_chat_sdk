@@ -1,16 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mentions/flutter_mentions.dart';
-import 'package:textless/textless.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:place_picker/entities/localization_item.dart';
+import 'package:place_picker/entities/location_result.dart';
+import 'package:place_picker/widgets/place_picker.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/src/core/extension.dart';
+import 'package:v_chat_ui/src/core/platfrom_widgets/v_app_alert.dart';
 import 'package:v_chat_ui/src/message_input/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_ui/src/message_input/src/input/widgets/message_record_btn.dart';
 import 'package:v_chat_ui/src/message_input/src/input/widgets/message_send_btn.dart';
 import 'package:v_chat_ui/src/message_input/src/input/widgets/message_text_filed.dart';
 
-import '../../../core/platfrom_widgets/platform_cache_image_widget.dart';
 import '../../../core/utils/app_pick.dart';
-import '../media_picker/media_picker_widget.dart';
 import '../recorder/record_widget.dart';
 
 class VMessageInputWidget extends StatefulWidget {
@@ -48,7 +51,10 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   int _textOffset = 0;
   final _textEditingController = AnnotationEditingController();
   final _focusNode = FocusNode();
-  List<Map<String, dynamic>> _usersMap = [];
+  final List<Map<String, dynamic>> _usersMap = [
+    {"image": "https://picsum.photos/600/600", "display": "user1", "id": "1"},
+    {"image": "https://picsum.photos/600/601", "display": "user2", "id": "2"},
+  ];
 
   bool get _isRecording => _typingType == RoomTypingEnum.recording;
 
@@ -76,8 +82,13 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.stopChatWidget != null) {
+      _typingType = RoomTypingEnum.stop;
+      _isEmojiShowing = false;
+      _textEditingController.clear();
+      _text = "";
       return widget.stopChatWidget!;
     }
+
     return Column(
       children: [
         Padding(
@@ -113,23 +124,23 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         MessageTextFiled(
                           suggestionBuilder: (data) {
                             return SafeArea(
-                              child: ListTile(
-                                dense: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 30,
-                                  vertical: 1,
+                              child: Container(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                        //todo  fix
+                                        data['image'],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 20.0,
+                                    ),
+                                    Text(data['display']),
+                                  ],
                                 ),
-                                leading: PlatformCacheImageWidget(
-                                  source: PlatformFileSource.fromUrl(
-                                    url: data['image'].toString(),
-                                  ),
-                                  size: const Size(25, 25),
-                                  fit: BoxFit.contain,
-                                ),
-                                title: data['display']
-                                    .toString()
-                                    .text
-                                    .color(Colors.black),
                               ),
                             );
                           },
@@ -247,19 +258,57 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   }
 
   void _onAttachFilePress(BuildContext context) async {
-    await showModalBottomSheet(
-      context: context,
-      elevation: 0,
-      enableDrag: true,
-      isDismissible: true,
-      builder: (context) {
-        return MediaPickerWidget(
-          onSubmitFiles: widget.onSubmitFiles,
-          onSubmitLocation: widget.onSubmitLocation,
-          onSubmitMedia: widget.onSubmitMedia,
+    final res = await VAppAlert.showModalSheet(content: [
+      //todo fix
+      ModelSheetItem(title: 'Media', id: 1, iconData: Icons.image),
+      ModelSheetItem(title: 'Files', id: 2, iconData: Icons.attach_file),
+      ModelSheetItem(
+        title: 'Location',
+        iconData: Icons.location_on_outlined,
+        id: 3,
+      ),
+    ], context: context, title: "Share media and location");
+    if (res != null) {
+      if (res.id == 1) {
+        final files = await AppPick.getMedia();
+        if (files != null) {
+          widget.onSubmitMedia(files);
+        }
+      } else if (res.id == 2) {
+        final files = await AppPick.getFiles();
+        if (files != null) {
+          widget.onSubmitFiles(files);
+        }
+      } else if (res.id == 3) {
+        final LocationResult? result = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PlacePicker(
+              AppConstants.mapsApiKey,
+              //todo fix trans
+              localizationItem: LocalizationItem(languageCode: "en"),
+            ),
+          ),
         );
-      },
-    );
+        if (result != null && result.latLng != null && result.latLng != null) {
+          // final localFile = await DefaultCacheManager().getSingleFile(
+          //   "https://maps.googleapis.com/maps/api/staticmap?center=${result.latLng!.latitude},${result.latLng!.longitude}&zoom=15&size=800x400&key=${AppConstants.mapsApiKey}",
+          // );
+          final location = VLocationMessageData(
+            latLng: LatLng(
+              result.latLng!.latitude,
+              result.latLng!.longitude,
+            ),
+            linkPreviewData: VLinkPreviewData(
+              title: result.name,
+              desc: result.formattedAddress,
+              link:
+                  "https://maps.google.com/?q=${result.latLng!.latitude},${result.latLng!.longitude}",
+            ),
+          );
+          widget.onSubmitLocation(location);
+        }
+      }
+    }
   }
 
   void _onCameraPress(BuildContext context) async {

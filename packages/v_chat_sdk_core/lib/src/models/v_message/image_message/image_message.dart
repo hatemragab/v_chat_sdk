@@ -81,4 +81,11 @@ class VImageMessage extends VBaseMessage {
       MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
     };
   }
+
+  VImageMessage.buildFakeMessage()
+      : fileSource = MessageImageData.fromFakeData(),
+        super.buildFakeMessage(
+          content: "Fake this is fake image message",
+          messageType: MessageType.image,
+        );
 }
