@@ -3,8 +3,12 @@ import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/src/core/extension.dart';
 
-import '../../../../../v_chat_ui.dart';
-import '../colored_circle_container.dart';
+import '../room_item_widgets/message_status_icon.dart';
+import '../room_item_widgets/room_item_msg.dart';
+import '../room_item_widgets/room_last_msg_time.dart';
+import '../room_item_widgets/room_mute_widget.dart';
+import '../room_item_widgets/room_typing_widget.dart';
+import '../room_item_widgets/room_un_read_counter.dart';
 
 class VRoomItem extends StatelessWidget {
   final VRoom room;
@@ -32,102 +36,74 @@ class VRoomItem extends StatelessWidget {
       leading: CircleAvatar(
         foregroundColor: Theme.of(context).primaryColor,
         backgroundColor: Colors.transparent,
-        radius: 40,
+        radius: 28,
         backgroundImage: NetworkImage(room.thumbImage.fullUrl),
       ),
-      isThreeLine: false,
-      contentPadding: EdgeInsets.zero,
+      minVerticalPadding: 0,
+      contentPadding: EdgeInsets.zero.copyWith(right: 10, left: 10),
       style: ListTileStyle.list,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: room.title.h6.maxLine(1).alignStart.overflowEllipsis.styled(
-                  style: vRoomTheme.titleStyle,
-                ),
+            child:
+                room.title.text.maxLine(1).alignStart.overflowEllipsis.styled(
+                      style: vRoomTheme.titleStyle,
+                    ),
           ),
-          _getMessageTime(vRoomTheme)
+          RoomLastMsgTime(
+            isRoomUnread: room.isRoomUnread,
+            lastMessageTimeString: room.lastMessageTimeString,
+          )
         ],
       ),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _getTypingOrMessage(vRoomTheme),
+          if (room.roomTypingText != null)
+            RoomTypingWidget(
+              text: room.roomTypingText!,
+            )
+          else if (room.lastMessage.isMeSender)
+            Flexible(
+              child: Row(
+                children: [
+                  //status
+                  MessageStatusIcon(vBaseMessage: room.lastMessage),
+                  //grey
+                  Flexible(
+                    child: RoomItemMsg(
+                      msg: room.lastMessage.getTextTrans,
+                      isBold: false,
+                    ),
+                  )
+                ],
+              ),
+            )
+          else if (room.isRoomUnread)
+            //bold
+            Flexible(
+              child: RoomItemMsg(
+                msg: room.lastMessage.getTextTrans,
+                isBold: true,
+              ),
+            )
+          else
+            //normal gray
+            Flexible(
+              child: RoomItemMsg(
+                msg: room.lastMessage.getTextTrans,
+                isBold: false,
+              ),
+            ),
           Row(
             children: [
-              if (room.isMuted)
-                vRoomTheme.muteIcon
-              else
-                const SizedBox.shrink(),
-              _getRoomUnreadCount(),
+              RoomMuteWidget(isMuted: room.isMuted),
+              RoomUnReadWidget(unReadCount: room.unReadCount),
             ],
           )
         ],
       ),
     );
-  }
-
-  Widget _getMessageTime(VRoomTheme vThemeData) {
-    return room.lastMessageTimeString.h6.size(14).regular.color(
-          room.isRoomUnread ? Colors.black : Colors.grey,
-        );
-  }
-
-  Widget _getRoomUnreadCount() {
-    if (room.isRoomUnread) {
-      return ColoredCircleContainer(
-        text: room.unReadCount.toString(),
-        padding: const EdgeInsets.all(6),
-        backgroundColor: Colors.grey,
-      );
-    }
-    return const SizedBox.shrink();
-  }
-
-  Widget _getTypingOrMessage(VRoomTheme themeData) {
-    final String? roomTyping = room.roomTypingText;
-    if (roomTyping != null) {
-      return roomTyping.text.color(Colors.green);
-    }
-    return Flexible(
-      child: Row(
-        children: [
-          _getMessageStatusIfSender(themeData),
-          if (room.isRoomUnread)
-            Flexible(
-              child: room.lastMessage.content.text.medium
-                  .color(Colors.black)
-                  .maxLine(1)
-                  .overflowEllipsis,
-            )
-          else
-            Flexible(
-              child: room.lastMessage.content.text.maxLine(1).overflowEllipsis,
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget _getMessageStatusIfSender(VRoomTheme themeData) {
-    final isSender = room.lastMessage.isMeSender;
-    Widget icon = themeData.vMsgStatusTheme.sendIcon;
-    if (isSender) {
-      if (room.lastMessage.isSending) {
-        themeData.vMsgStatusTheme.pendingIcon;
-      }
-      if (room.lastMessage.isSendError) {
-        icon = themeData.vMsgStatusTheme.refreshIcon;
-      } else if (room.lastMessage.seenAt != null) {
-        icon = themeData.vMsgStatusTheme.seenIcon;
-      } else if (room.lastMessage.deliveredAt != null) {
-        icon = themeData.vMsgStatusTheme.deliverIcon;
-      }
-      return Padding(
-        padding: const EdgeInsets.only(right: 3),
-        child: icon,
-      );
-    }
-    return const SizedBox.shrink();
   }
 }

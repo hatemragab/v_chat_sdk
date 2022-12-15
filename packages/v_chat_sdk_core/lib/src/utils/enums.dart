@@ -72,6 +72,7 @@ extension StrType on RoomType {
 enum RoomTypingEnum { stop, typing, recording }
 
 enum MessageSendingStatusEnum {
+  //send
   serverConfirm,
   error,
   sending,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../../../../room_page_ui/src/widgets/room_item_widgets/room_typing_widget.dart';
 import '../../models/app_bare_state.dart';
 
 class VTestingMessageAppBare extends StatelessWidget {
@@ -19,7 +20,11 @@ class VTestingMessageAppBare extends StatelessWidget {
         title: Text(
           state.roomTitle,
         ),
-        subtitle: state.typingText != null ? Text(state.typingText!) : null,
+        subtitle: state.typingText != null
+            ? RoomTypingWidget(
+                text: state.typingText!,
+              )
+            : null,
       ),
       actions: [
         PopupMenuButton(

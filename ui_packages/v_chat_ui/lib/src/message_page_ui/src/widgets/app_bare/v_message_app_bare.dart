@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/models/app_bare_state.dart';
 
+import '../../../../room_page_ui/src/widgets/room_item_widgets/room_typing_widget.dart';
+
 class VMessageAppBare extends StatelessWidget {
   final AppBareState state;
 
@@ -16,7 +18,11 @@ class VMessageAppBare extends StatelessWidget {
         title: Text(
           state.roomTitle,
         ),
-        subtitle: state.typingText != null ? Text(state.typingText!) : null,
+        subtitle: state.typingText != null
+            ? RoomTypingWidget(
+                text: state.typingText!!,
+              )
+            : null,
       ),
     );
   }

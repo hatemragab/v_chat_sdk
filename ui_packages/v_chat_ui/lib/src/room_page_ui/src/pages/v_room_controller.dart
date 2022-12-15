@@ -33,7 +33,7 @@ class VRoomController extends ChangeNotifier {
       request: () async {
         await Future.delayed(const Duration(milliseconds: 1200));
         return List.generate(
-          2,
+          12,
           (index) => VRoom.fakeRoom(
             index,
           ),
