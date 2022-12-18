@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:v_chat_ui/src/core/extension.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RoomMuteWidget extends StatelessWidget {
   final bool isMuted;

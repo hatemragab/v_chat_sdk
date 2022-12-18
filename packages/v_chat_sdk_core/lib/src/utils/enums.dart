@@ -2,24 +2,6 @@ enum VChatPushService { firebase, onesignal }
 
 enum VChatHttpMethods { get, post, patch, delete }
 
-enum VChatLoadingState { loading, success, error, ideal, empty }
-
-enum SupportedFilesType { image, file, video }
-
-enum StorageKeys {
-  accessToken,
-  isFirstRun,
-  appMetaData,
-  appLanguage,
-  clintVersion,
-  vMyProfile,
-  appTheme,
-  lastAppliedUpdate,
-  lastSuccessFetchRoomsTime,
-  isLogin,
-  isDev
-}
-
 enum MessageType {
   text,
   image,
@@ -69,16 +51,12 @@ extension StrType on RoomType {
   bool get isBroadcast => this == RoomType.b;
 }
 
-enum RoomTypingEnum { stop, typing, recording }
-
 enum MessageSendingStatusEnum {
   //send
   serverConfirm,
   error,
   sending,
 }
-
-enum LoadMoreStatus { loading, loaded, error, completed }
 
 enum MessageInfoType {
   updateTitle,
@@ -95,5 +73,3 @@ enum MessageInfoType {
 }
 
 enum GroupMemberRole { admin, member, superAdmin }
-
-enum PaginationType { page, id }

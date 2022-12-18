@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../../v_chat_sdk_core.dart';
-import '../../../../models/socket/room_typing_model.dart';
 import '../../abstraction/base_local_room_repo.dart';
 
 class MemoryRoomImp extends BaseLocalRoomRepo {

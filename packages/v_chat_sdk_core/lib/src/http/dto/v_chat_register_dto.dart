@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:v_chat_sdk_core/src/types/platform_file_source.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VChatRegisterDto {
   final String identifier;

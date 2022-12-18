@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_pick.dart';
-import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+ import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../core/repository/user.repository.dart';
-import '../../../../core/utils/app_alert.dart';
-import '../../../../core/utils/app_pref.dart';
+
 import '../../authenticate.dart';
 
 class RegisterController extends GetxController {
@@ -35,7 +34,7 @@ class RegisterController extends GetxController {
       await AppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
-      AppAlert.showErrorSnackBar(msg: err.toString());
+      VAppAlert.showErrorSnackBar(msg: err.toString(),context: Get.context!);
       print(err);
       return err.toString();
     }
@@ -60,7 +59,7 @@ class RegisterController extends GetxController {
       await AppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
-      AppAlert.showErrorSnackBar(msg: err.toString());
+      VAppAlert.showErrorSnackBar(msg: err.toString(),context: Get.context!);
       print(err);
       //AppAlert.hideLoading();
       return err.toString();

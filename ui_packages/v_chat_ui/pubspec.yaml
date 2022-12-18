@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   v_chat_sdk_core:
     path: ../../packages/v_chat_sdk_core
+  v_chat_utils:
+    path: ../../packages/v_chat_utils
   provider: ^6.0.4
   flutter_cache_manager: ^3.3.0
   just_audio: ^0.9.21

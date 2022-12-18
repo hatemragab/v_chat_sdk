@@ -36,6 +36,8 @@ dependencies:
     sdk: flutter
   v_chat_sdk_core: 
     path: ../../packages/v_chat_sdk_core
+  v_chat_utils:
+    path: ../../packages/v_chat_utils
   v_chat_firebase_fcm:
     path: ../../push_providers/v_chat_firebase_fcm
   v_chat_ui:

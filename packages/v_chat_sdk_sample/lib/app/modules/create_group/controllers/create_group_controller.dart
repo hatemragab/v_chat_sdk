@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/async_ui_notifier.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/utils/app_alert.dart';
-import '../../../core/utils/app_auth.dart';
-import '../../../core/utils/app_pick.dart';
-import '../../../routes/app_pages.dart';
+ import '../../../core/utils/app_auth.dart';
+ import '../../../routes/app_pages.dart';
 
 class CreateGroupController extends GetxController {
   final List<UserModel> users;
@@ -29,14 +27,14 @@ class CreateGroupController extends GetxController {
   void onSave() async {
     final name = nameController.text.toString();
     if (name.isEmpty) {
-      AppAlert.showErrorSnackBar(msg: "name must not empty");
+      VAppAlert.showErrorSnackBar(msg: "name must not empty",context: Get.context!);
     }
     if (groupImage == null) {
-      AppAlert.showErrorSnackBar(msg: "image must not empty");
+      VAppAlert.showErrorSnackBar(msg: "image must not empty",context: Get.context!);
     }
-    await safeApiCall(
+    await vSafeApiCall(
       onLoading: () {
-        AppAlert.showLoading();
+        VAppAlert.showLoading(context: Get.context!);
       },
       request: () async {
         await Future.delayed(const Duration(seconds: 1));
@@ -44,11 +42,11 @@ class CreateGroupController extends GetxController {
         // V CHAT REQUEST
       },
       onSuccess: (response) {
-        AppAlert.hideLoading();
+        VAppAlert.hideLoading(  );
         Get.until((route) => route.settings.name == Routes.HOME);
       },
       onError: (exception) {
-        AppAlert.hideLoading();
+        VAppAlert.hideLoading( );
       },
     );
   }

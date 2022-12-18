@@ -6,7 +6,6 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const ROOM_UI = _Paths.ROOM_UI;
   static const MESSAGE_UI = _Paths.MESSAGE_UI;
-  static const MESSAGE_INPUT = _Paths.MESSAGE_INPUT;
 }
 
 abstract class _Paths {
@@ -14,5 +13,4 @@ abstract class _Paths {
   static const HOME = '/home';
   static const ROOM_UI = '/room-ui';
   static const MESSAGE_UI = '/message-ui';
-  static const MESSAGE_INPUT = '/message-input';
 }

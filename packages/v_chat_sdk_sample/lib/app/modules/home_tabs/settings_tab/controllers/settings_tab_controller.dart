@@ -3,10 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/app_service.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_alert.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_pref.dart';
-import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
+ import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../core/enums.dart';
 import '../../../../core/utils/app_localization.dart';
@@ -18,8 +17,9 @@ class SettingsTabController extends GetxController {
   SettingsTabController(this.appService);
 
   Future<void> updateLanguage() async {
-    final res = await AppAlert.showAskListDialog<AppLanguage>(
+    final res = await VAppAlert.showAskListDialog<AppLanguage>(
       title: "Choose language",
+        context: Get.context!,
       content: <AppLanguage>[
         AppLanguage("العربيه", const Locale("ar")),
         AppLanguage("English", const Locale("en"))
@@ -32,7 +32,7 @@ class SettingsTabController extends GetxController {
   }
 
   Future<void> changeTheme() async {
-    final res = await AppAlert.showAskListDialog<AppTheme>(
+    final res = await VAppAlert.showAskListDialog<AppTheme>(
       title: "Choose Theme",
       content: [
         AppTheme(
@@ -47,7 +47,7 @@ class SettingsTabController extends GetxController {
           "System",
           ThemeMode.system,
         )
-      ],
+      ], context: Get.context!,
     );
     if (res != null) {
       await AppPref.setString(
@@ -63,8 +63,9 @@ class SettingsTabController extends GetxController {
   }
 
   Future<void> updateNotification() async {
-    final res = await AppAlert.showAskListDialog(
+    final res = await VAppAlert.showAskListDialog(
       title: "Choose language",
+      context: Get.context!,
       content: ["Enable", "Stop"],
     );
     print(res);
@@ -81,9 +82,10 @@ class SettingsTabController extends GetxController {
   Future<void> openTerms() async {}
 
   Future<void> logout() async {
-    final res = await AppAlert.showAskYesNoDialog(
+    final res = await VAppAlert.showAskYesNoDialog(
       //todo fix trnas
       title: "You are bout to logout",
+      context: Get.context!,
       content: "Are you sure to logout ?",
     );
     if (res == 1) {

@@ -39,6 +39,8 @@ dependencies:
     sdk: flutter
   v_chat_ui:
     path: ../../ui_packages/v_chat_ui
+  v_chat_utils:
+    path: ../v_chat_utils
 dev_dependencies:
   flutter_test:
     sdk: flutter

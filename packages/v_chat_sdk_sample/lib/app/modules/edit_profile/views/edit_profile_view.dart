@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/platfrom_widgets/platform_cache_image_widget.dart';
-import '../controllers/edit_profile_controller.dart';
+ import '../controllers/edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
   const EditProfileView({Key? key}) : super(key: key);

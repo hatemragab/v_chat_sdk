@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
-import '../../utils/enums.dart';
 
 class ErrorInterceptor implements ErrorConverter {
   @override

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_alert.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChooseMembersController extends GetxController {
   final selected = <UserModel>[].obs;
@@ -17,7 +17,7 @@ class ChooseMembersController extends GetxController {
     if (selected.isNotEmpty) {
       Get.back(result: selected.value);
     } else {
-      AppAlert.showErrorSnackBar(msg: "choose member");
+      VAppAlert.showErrorSnackBar(msg: "choose member",context: Get.context!);
     }
   }
 }

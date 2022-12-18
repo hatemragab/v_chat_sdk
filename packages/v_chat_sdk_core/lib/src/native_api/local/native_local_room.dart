@@ -1,10 +1,10 @@
 import 'package:sqflite/sqlite_api.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../local_db/core/abstraction/base_local_room_repo.dart';
 import '../../local_db/core/imp/room/memory_room_imp.dart';
 import '../../local_db/core/imp/room/sql_room_imp.dart';
-import '../../models/socket/room_typing_model.dart';
 import '../../models/v_room/single_room/single_ban_model.dart';
 import '../../utils/event_bus.dart';
 

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/models/order.model.dart';
 import 'package:v_chat_sdk_sample/app/core/widgets/app_btn.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/platfrom_widgets/platform_cache_image_widget.dart';
-import '../controllers/my_orders_controller.dart';
+ import '../controllers/my_orders_controller.dart';
 
 class MyOrdersView extends GetView<MyOrdersController> {
   const MyOrdersView({Key? key}) : super(key: key);

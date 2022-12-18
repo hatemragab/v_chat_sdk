@@ -603,15 +603,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_mentions:
-    dependency: transitive
-    description:
-      path: "."
-      ref: a088c3aea8dacf2e7f3f31e12a1db5a5f22eb89b
-      resolved-ref: a088c3aea8dacf2e7f3f31e12a1db5a5f22eb89b
-      url: "https://github.com/hatemragab/flutter_mentions"
-    source: git
-    version: "2.0.1"
   flutter_native_image:
     dependency: transitive
     description:
@@ -649,13 +640,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.7"
-  flutter_portal:
-    dependency: transitive
-    description:
-      name: flutter_portal
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   flutter_secure_storage:
     dependency: transitive
     description:
@@ -1270,6 +1254,13 @@ packages:
       url: "https://github.com/mostafaAbdelazim/progress_dialog.git"
     source: git
     version: "1.2.4"
+  progress_dialog_null_safe:
+    dependency: transitive
+    description:
+      name: progress_dialog_null_safe
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   provider:
     dependency: transitive
     description:
@@ -1590,6 +1581,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  v_chat_mention_controller:
+    dependency: transitive
+    description:
+      name: v_chat_mention_controller
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
@@ -1601,6 +1599,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../../ui_packages/v_chat_ui"
+      relative: true
+    source: path
+    version: "0.0.1"
+  v_chat_utils:
+    dependency: "direct main"
+    description:
+      path: "../v_chat_utils"
       relative: true
     source: path
     version: "0.0.1"

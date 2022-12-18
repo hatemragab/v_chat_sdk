@@ -1219,6 +1219,13 @@ packages:
       url: "https://github.com/mostafaAbdelazim/progress_dialog.git"
     source: git
     version: "1.2.4"
+  progress_dialog_null_safe:
+    dependency: transitive
+    description:
+      name: progress_dialog_null_safe
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   provider:
     dependency: transitive
     description:
@@ -1564,6 +1571,13 @@ packages:
     dependency: "direct main"
     description:
       path: "../v_chat_ui"
+      relative: true
+    source: path
+    version: "0.0.1"
+  v_chat_utils:
+    dependency: "direct main"
+    description:
+      path: "../../packages/v_chat_utils"
       relative: true
     source: path
     version: "0.0.1"

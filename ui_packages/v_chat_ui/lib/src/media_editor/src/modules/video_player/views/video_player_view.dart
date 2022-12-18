@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:video_player/video_player.dart' as vd;
 
 class VideoPlayerView extends StatefulWidget {
@@ -11,10 +11,10 @@ class VideoPlayerView extends StatefulWidget {
   const VideoPlayerView({super.key, required this.messageVideoData});
 
   @override
-  _VideoPlayerViewState createState() => _VideoPlayerViewState();
+  VideoPlayerViewState createState() => VideoPlayerViewState();
 }
 
-class _VideoPlayerViewState extends State<VideoPlayerView> {
+class VideoPlayerViewState extends State<VideoPlayerView> {
   late vd.VideoPlayerController videoPlayerController;
   bool isLoading = true;
 

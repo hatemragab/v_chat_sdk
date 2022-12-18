@@ -1,7 +1,6 @@
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
-import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
-import 'package:v_chat_sdk_core/src/utils/enums.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class ISocketIoClient {
   void connect();

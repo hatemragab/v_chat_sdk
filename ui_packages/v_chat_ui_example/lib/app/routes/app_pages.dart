@@ -2,8 +2,6 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/message_input/bindings/message_input_binding.dart';
-import '../modules/message_input/views/message_input_view.dart';
 import '../modules/message_ui/bindings/message_ui_binding.dart';
 import '../modules/message_ui/views/message_ui_view.dart';
 import '../modules/room_ui/bindings/room_ui_binding.dart';
@@ -31,11 +29,6 @@ class AppPages {
       name: _Paths.MESSAGE_UI,
       page: () => const MessageUiView(),
       binding: MessageUiBinding(),
-    ),
-    GetPage(
-      name: _Paths.MESSAGE_INPUT,
-      page: () => const MessageInputView(),
-      binding: MessageInputBinding(),
     ),
   ];
 }

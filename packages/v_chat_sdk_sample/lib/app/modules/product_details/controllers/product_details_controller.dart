@@ -2,10 +2,9 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/models/order.model.dart';
 import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
 import 'package:v_chat_sdk_sample/app/core/repository/order.repository.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_alert.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/async_ui_notifier.dart';
-import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+ import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
+ import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ProductDetailsController extends GetxController {
   final ProductModel productModel;
@@ -14,8 +13,9 @@ class ProductDetailsController extends GetxController {
   ProductDetailsController(this.productModel, this.orderRepository);
 
   void startChat() async {
-    final res = await AppAlert.showAskYesNoDialog(
+    final res = await VAppAlert.showAskYesNoDialog(
       title: "Start v chat sdk product chat",
+      context: Get.context!,
       content:
           "by click yes the product chat will created and product data will pinned in the unique product chat",
     );
@@ -23,15 +23,16 @@ class ProductDetailsController extends GetxController {
   }
 
   void startAddOrder() async {
-    final res = await AppAlert.showAskYesNoDialog(
+    final res = await VAppAlert.showAskYesNoDialog(
       title: "Add fake order",
+      context: Get.context!,
       content:
           "This fake order to show how to start chat with delivery person after adding the order you can start chat with the delivery about the order",
     );
     if (res == 1) {
-      safeApiCall(
+      vSafeApiCall(
         onLoading: () {
-          AppAlert.showLoading();
+          VAppAlert.showLoading(context: Get.context!);
         },
         request: () async {
           return await orderRepository.add(OrderModel(
@@ -42,7 +43,7 @@ class ProductDetailsController extends GetxController {
           ));
         },
         onSuccess: (response) {
-          AppAlert.hideLoading();
+          VAppAlert.hideLoading( );
           Get.toNamed(Routes.MY_ORDERS);
         },
       );

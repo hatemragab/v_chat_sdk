@@ -1,5 +1,6 @@
+import 'package:v_chat_utils/v_chat_utils.dart';
+
 import '../enums.dart';
-import 'app_pref.dart';
 
 abstract class AppLocalization {
   static String? get languageCode =>

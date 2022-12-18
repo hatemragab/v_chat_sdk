@@ -63,15 +63,6 @@ class HomeView extends GetView<HomeController> {
                     child: "Media picker".h5,
                   ),
                 ),
-                InkWell(
-                  onTap: () => Get.toNamed(Routes.MESSAGE_INPUT),
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    color: Colors.green[600],
-                    alignment: Alignment.center,
-                    child: 'Message input'.h5,
-                  ),
-                ),
               ],
             ),
           ),

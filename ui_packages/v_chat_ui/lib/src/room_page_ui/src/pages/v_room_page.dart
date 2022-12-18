@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/src/room_page_ui/src/pages/v_room_controller.dart';
 import 'package:v_chat_ui/src/room_page_ui/src/widgets/room_item/v_room_item.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VRoomPage extends StatelessWidget {
   const VRoomPage({

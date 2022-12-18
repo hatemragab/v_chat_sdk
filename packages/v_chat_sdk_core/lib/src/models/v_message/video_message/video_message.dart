@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
-import '../../../types/message_video_data.dart';
 import '../base_message/base_message.dart';
 
 class VVideoMessage extends VBaseMessage {

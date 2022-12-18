@@ -1,7 +1,6 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:v_chat_sdk_core/src/models/v_room/v_room.dart';
+import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_ui/src/core/platfrom_widgets/v_app_alert.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RoomItemController {
   Future openForSingle(VRoom room, BuildContext context) async {

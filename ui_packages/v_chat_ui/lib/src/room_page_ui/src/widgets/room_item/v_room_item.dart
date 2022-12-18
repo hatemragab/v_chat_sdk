@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_ui/src/core/extension.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../room_item_widgets/message_status_icon.dart';
 import '../room_item_widgets/room_item_msg.dart';

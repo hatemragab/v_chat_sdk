@@ -2,15 +2,16 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_ui/v_chat_ui.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../../core/utils/app_alert.dart';
 
 class ChatsTabController extends GetxController {
   final vRoomController = VRoomController();
 
   void onCreateGroupOrBroadcast() async {
     final l = ["Group", "Broadcast"];
-    final res = await AppAlert.showAskListDialog(
+    final res = await VAppAlert.showAskListDialog(
+      context: Get.context!,
       title: "Create Group or Broadcast?",
       content: l,
     );

@@ -4,10 +4,10 @@ import 'package:chopper/chopper.dart';
 import 'package:intl/intl.dart';
 import 'package:objectid/objectid.dart';
 import 'package:uuid/uuid.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
-import '../../../types/platforms.dart';
 import '../core/message_factory.dart';
 
 abstract class VBaseMessage {

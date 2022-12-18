@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_ui/src/media_editor/src/modules/home/widgets/horz_media_item.dart';
 import 'package:v_chat_ui/src/media_editor/src/modules/home/widgets/media_item.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../core/core.dart';
 import 'media_editor_controller.dart';

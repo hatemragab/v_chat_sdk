@@ -47,6 +47,8 @@ dependencies:
   http_parser: ^4.0.2
   v_chat_sdk_core:
     path: ../../packages/v_chat_sdk_core
+  v_chat_utils:
+    path: ../../packages/v_chat_utils
   v_chat_ui:
     path: ../v_chat_ui
   flutter: 

@@ -2,8 +2,8 @@ import 'package:sqflite/sqlite_api.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_api_cache_repo.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/imp/api_cache/api_cache_memory_imp.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/imp/api_cache/api_cache_sql_imp.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../v_chat_sdk_core.dart';
 import '../../models/api_cache_model.dart';
 
 class NativeLocalApiCache {

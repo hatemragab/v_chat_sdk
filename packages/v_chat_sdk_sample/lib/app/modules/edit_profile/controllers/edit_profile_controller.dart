@@ -4,12 +4,10 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/clould/cloud_fire_upload.dart';
 import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/core/repository/user.repository.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_alert.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_pref.dart';
+ import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/utils/app_pick.dart';
-import '../../auth/authenticate.dart';
+ import '../../auth/authenticate.dart';
 
 class EditProfileController extends GetxController {
   final user = AppAuth.getMyModel;
@@ -35,7 +33,7 @@ class EditProfileController extends GetxController {
   }
 
   void onSave() async {
-    AppAlert.showLoading();
+    VAppAlert.showLoading(context: Get.context!);
     final name = nameController.text.toString();
     user.userName = name;
     if (userImage.isNotUrl) {
@@ -44,9 +42,9 @@ class EditProfileController extends GetxController {
     }
     await repository.edit(user.toMap(), user.uid);
     await AppPref.setMap(StorageKeys.myProfile, user.toMap());
-    AppAlert.hideLoading();
+    VAppAlert.hideLoading( );
     AuthRepo.isAuth.refresh();
-    AppAlert.showSuccessSnackBar(msg: "Update successfully");
+    VAppAlert.showSuccessSnackBar(msg: "Update successfully",context: Get.context!);
   }
 
   @override

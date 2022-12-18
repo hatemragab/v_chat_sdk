@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chopper/chopper.dart';
 import 'package:http/http.dart' hide Response, Request;
 import 'package:http/io_client.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../interceptors.dart';
@@ -39,7 +40,7 @@ abstract class AuthApi extends ChopperService {
       client: Platforms.isWeb
           ? null
           : IOClient(
-              HttpClient()..connectionTimeout = const Duration(seconds: 10),
+              HttpClient()..connectionTimeout = const Duration(seconds: 7),
             ),
     );
     return _$AuthApi(client);

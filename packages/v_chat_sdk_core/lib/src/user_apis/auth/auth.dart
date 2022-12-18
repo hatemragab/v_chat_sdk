@@ -3,14 +3,13 @@ import 'dart:ui';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/abstraction/abstraction.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../http/socket/socket_controller.dart';
 import '../../native_api/v_native_api.dart';
-import '../../utils/app_pref.dart';
 import '../../utils/controller_helper.dart';
 import '../../utils/device_info.dart';
-import '../../utils/enums.dart';
 import '../../utils/event_bus.dart';
 
 class Auth implements AuthEndPoints {

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_ui/src/message_page_ui/src/models/input_state.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/widgets/app_bare/v_message_app_bare.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/widgets/app_bare/v_testing_message_app_bare.dart';
-import 'package:v_chat_ui/src/message_page_ui/src/widgets/input_widgets/reply_msg_widget.dart';
-import 'package:v_chat_ui/src/message_page_ui/src/widgets/input_widgets/stop_typing_widget.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/widgets/v_message_item.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_ui.dart';
 import '../models/app_bare_state.dart';
@@ -97,25 +95,25 @@ class _VMessagePageState extends State<VMessagePage> {
               },
             ),
           ),
-          ValueListenableBuilder<InputState>(
-            valueListenable: controller.inputState,
-            builder: (_, value, __) {
-              return VMessageInputWidget(
-                onSubmitText: controller.onSubmitText,
-                onSubmitMedia: controller.onSubmitMedia,
-                onSubmitVoice: controller.onSubmitVoice,
-                onSubmitFiles: controller.onSubmitFiles,
-                onSubmitLocation: controller.onSubmitLocation,
-                onTypingChange: controller.onTypingChange,
-                googleMapsApiKey: "test",
-                replyWidget: value.replyMsg == null
-                    ? null
-                    : ReplyMsgWidget(vBaseMessage: value.replyMsg!),
-                stopChatWidget:
-                    value.isCloseInput ? const StopTypingWidget() : null,
-              );
-            },
-          )
+          // ValueListenableBuilder<InputState>(
+          //   valueListenable: controller.inputState,
+          //   builder: (_, value, __) {
+          //     return VMessageInputWidget(
+          //       onSubmitText: controller.onSubmitText,
+          //       onSubmitMedia: controller.onSubmitMedia,
+          //       onSubmitVoice: controller.onSubmitVoice,
+          //       onSubmitFiles: controller.onSubmitFiles,
+          //       onSubmitLocation: controller.onSubmitLocation,
+          //       onTypingChange: controller.onTypingChange,
+          //       googleMapsApiKey: "test",
+          //       replyWidget: value.replyMsg == null
+          //           ? null
+          //           : ReplyMsgWidget(vBaseMessage: value.replyMsg!),
+          //       stopChatWidget:
+          //           value.isCloseInput ? const StopTypingWidget() : null,
+          //     );
+          //   },
+          // )
         ],
       ),
     );

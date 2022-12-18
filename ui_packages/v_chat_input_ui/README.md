@@ -1,0 +1,6 @@
+- input ui used to get 
+- images
+- files 
+- videos
+- and voice
+- Emojis support

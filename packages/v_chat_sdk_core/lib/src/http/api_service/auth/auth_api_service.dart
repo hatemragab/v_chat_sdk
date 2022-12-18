@@ -1,7 +1,6 @@
-import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
-import '../../../utils/enums.dart';
 import '../../../utils/http_helper.dart';
 import '../interceptors.dart';
 import 'auth_api.dart';

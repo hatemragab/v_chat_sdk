@@ -1,4 +1,4 @@
-import '../../../types/platform_file_source.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VMessageFileData {
   PlatformFileSource fileSource;

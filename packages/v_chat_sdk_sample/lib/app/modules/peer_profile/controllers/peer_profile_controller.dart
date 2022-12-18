@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/enums.dart';
 import '../../../core/models/user.model.dart';
 import '../../../core/repository/user.repository.dart';
-import '../../../core/utils/async_ui_notifier.dart';
 
 class PeerProfileController extends GetxController {
   final String uuId;
@@ -21,13 +21,21 @@ class PeerProfileController extends GetxController {
   }
 
   Future getUser() async {
-    await safeApiCall<UserModel>(
-      apiState: apiCallStatus,
+    await vSafeApiCall<UserModel>(
+      onLoading: () {
+        apiCallStatus.value = ApiCallStatus.loading;
+      },
+
       request: () {
         return repository.getId(uuId);
       },
       onSuccess: (response) {
+        apiCallStatus.value = ApiCallStatus.success;
         peerData = response;
+      },
+      onError: (exception) {
+        apiCallStatus.value = ApiCallStatus.error;
+        print(exception);
       },
     );
   }

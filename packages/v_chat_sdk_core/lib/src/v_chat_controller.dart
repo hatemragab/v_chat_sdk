@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
-import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
-import 'package:v_chat_sdk_core/src/utils/enums.dart';
 import 'package:v_chat_sdk_core/src/utils/event_bus.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../v_chat_sdk_core.dart';
 import 'native_api/v_native_api.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
-import 'package:v_chat_sdk_sample/app/core/platfrom_widgets/platform_cache_image_widget.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/widgets/chat_btn.dart';
 import '../controllers/product_details_controller.dart';

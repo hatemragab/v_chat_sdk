@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-
-import '../types/platform_file_source.dart';
-import '../types/platforms.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class HttpHelpers {
   static Future<http.MultipartFile> getMultipartFile({

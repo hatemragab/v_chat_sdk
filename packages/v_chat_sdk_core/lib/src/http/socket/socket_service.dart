@@ -6,6 +6,7 @@ import 'package:v_chat_sdk_core/src/models/socket/on_deliver_room_messages_model
 import 'package:v_chat_sdk_core/src/models/socket/on_enter_room_model.dart';
 import 'package:v_chat_sdk_core/src/models/socket/room_typing_model.dart';
 import 'package:v_chat_sdk_core/src/models/v_room/single_room/my_single_room_info.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../local_db/core/imp/api_cache/api_cache_keys.dart';
@@ -14,8 +15,6 @@ import '../../native_api/local/native_local_cache.dart';
 import '../../native_api/local/native_local_message.dart';
 import '../../native_api/local/native_local_room.dart';
 import '../../native_api/v_native_api.dart';
-import '../../utils/app_pref.dart';
-import '../../utils/enums.dart';
 
 class SocketService {
   final _log = Logger('SocketService');

@@ -1,8 +1,5 @@
-import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
-import 'package:v_chat_sdk_core/src/utils/enums.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
-import '../models/v_message/base_message/base_message.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class AppConstants {
   static String mapsApiKey = "mapsApiKeymapsApiKey";

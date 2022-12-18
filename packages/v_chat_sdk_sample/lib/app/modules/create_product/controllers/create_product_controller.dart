@@ -5,11 +5,9 @@ import 'package:v_chat_sdk_sample/app/core/clould/cloud_fire_upload.dart';
 import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
 import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_alert.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/utils/app_auth.dart';
-import '../../../core/utils/app_pick.dart';
-import '../../../core/utils/async_ui_notifier.dart';
 
 class CreateProductController extends GetxController {
   final ProductRepository repository;
@@ -23,32 +21,35 @@ class CreateProductController extends GetxController {
 
   Future create() async {
     if (nameController.text.isEmpty) {
-      AppAlert.showErrorSnackBar(msg: "title should not empty");
+      VAppAlert.showErrorSnackBar(
+          msg: "title should not empty", context: Get.context!);
       return;
     }
     if (descController.text.isEmpty) {
-      AppAlert.showErrorSnackBar(msg: "description should not empty");
+      VAppAlert.showErrorSnackBar(
+          msg: "description should not empty", context: Get.context!);
       return;
     }
     if (priceController.text.isEmpty) {
-      AppAlert.showErrorSnackBar(msg: "price should not empty");
+      VAppAlert.showErrorSnackBar(
+          msg: "price should not empty", context: Get.context!);
       return;
     }
     if (productImage == null) {
-      AppAlert.showErrorSnackBar(msg: "image should not empty");
+      VAppAlert.showErrorSnackBar(
+          msg: "image should not empty", context: Get.context!);
       return;
     }
-    await safeApiCall(
-      apiState: ApiCallStatus.holding.obs,
-      onSuccess: (response) {
-        AppAlert.hideLoading();
+    await vSafeApiCall(
+       onSuccess: (response) {
+        VAppAlert.hideLoading();
         Get.back();
       },
       onError: (exception) {
-        AppAlert.hideLoading();
+        VAppAlert.hideLoading();
       },
       onLoading: () {
-        AppAlert.showLoading();
+        VAppAlert.showLoading(context: Get.context!);
       },
       request: () async {
         final imgUrl =

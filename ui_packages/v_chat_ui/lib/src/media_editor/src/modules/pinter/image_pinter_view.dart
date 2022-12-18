@@ -8,12 +8,12 @@ import 'package:flutter_painter/flutter_painter.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ImagePinterView extends StatefulWidget {
   final PlatformFileSource platformFileSource;
 
-  const ImagePinterView({required this.platformFileSource});
+  const ImagePinterView({super.key, required this.platformFileSource});
 
   @override
   State<ImagePinterView> createState() => _ImagePinterViewState();

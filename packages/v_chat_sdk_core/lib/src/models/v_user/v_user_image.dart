@@ -1,4 +1,4 @@
-import '../v_full_url_model.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VUserImage {
   final VFullUrlModel fullImage;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:v_chat_ui/src/core/extension.dart';
 import 'package:v_chat_ui/src/message_page_ui/src/widgets/shared/text_parser_widget.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RoomItemMsg extends StatelessWidget {
   final String msg;
