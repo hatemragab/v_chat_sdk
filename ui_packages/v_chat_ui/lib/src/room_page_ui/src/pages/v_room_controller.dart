@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_ui/src/core/extension.dart';
 
 import '../../../message_page_ui/src/page/v_message_page.dart';
 import '../widgets/room_item/room_item_controller.dart';
@@ -58,10 +59,8 @@ class VRoomController extends ChangeNotifier {
   }
 
   void onRoomItemPress(VRoom room, BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => VMessagePage(
-        vRoom: room,
-      ),
+    context.toPage(VMessagePage(
+      vRoom: room,
     ));
   }
 

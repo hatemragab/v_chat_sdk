@@ -20,7 +20,7 @@ class VMessageAppBare extends StatelessWidget {
         ),
         subtitle: state.typingText != null
             ? RoomTypingWidget(
-                text: state.typingText!!,
+                text: state.typingText!,
               )
             : null,
       ),

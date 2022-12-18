@@ -9,13 +9,11 @@ class RoomUiView extends GetView<RoomUiController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return VRoomPage(
+      controller: controller.roomController,
       appBar: AppBar(
         title: const Text('Room Ui View'),
         centerTitle: true,
-      ),
-      body: VRoomBody(
-        controller: controller.roomController,
       ),
     );
   }

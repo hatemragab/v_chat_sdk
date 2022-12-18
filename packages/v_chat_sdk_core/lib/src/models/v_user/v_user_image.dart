@@ -19,9 +19,12 @@ class VUserImage {
         smallImage = VFullUrlModel(url);
 
   VUserImage.fromFakeSingleUrl()
-      : fullImage = VFullUrlModel("https://picsum.photos/300/300", true),
-        chatImage = VFullUrlModel("https://picsum.photos/300/300", true),
-        smallImage = VFullUrlModel("https://picsum.photos/300/300", true);
+      : fullImage =
+            VFullUrlModel("https://picsum.photos/300/300", isFullUrl: true),
+        chatImage =
+            VFullUrlModel("https://picsum.photos/300/300", isFullUrl: true),
+        smallImage =
+            VFullUrlModel("https://picsum.photos/300/300", isFullUrl: true);
 
   @override
   String toString() {

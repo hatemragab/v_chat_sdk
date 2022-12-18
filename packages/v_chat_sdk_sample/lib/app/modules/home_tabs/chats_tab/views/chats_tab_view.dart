@@ -9,18 +9,16 @@ class ChatsTabView extends GetView<ChatsTabController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: controller.onCreateGroupOrBroadcast,
-        child: const Icon(Icons.add),
-      ),
+    return VRoomPage(
       appBar: AppBar(
         title: const Text('Chats Tab View'),
         centerTitle: true,
       ),
-      body: VRoomBody(
-        controller: controller.vRoomController,
+      floatingActionButton: FloatingActionButton(
+        onPressed: controller.onCreateGroupOrBroadcast,
+        child: const Icon(Icons.add),
       ),
+      controller: controller.vRoomController,
     );
   }
 }

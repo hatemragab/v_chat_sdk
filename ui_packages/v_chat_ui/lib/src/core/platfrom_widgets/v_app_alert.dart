@@ -179,8 +179,8 @@ abstract class VAppAlert {
   }
 }
 
-class ModelSheetItem {
-  final int id;
+class ModelSheetItem<T> {
+  final T id;
   final String title;
   final IconData? iconData;
 

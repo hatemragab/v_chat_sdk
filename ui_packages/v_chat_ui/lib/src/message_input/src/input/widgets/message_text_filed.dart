@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mentions/flutter_mentions.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class MessageTextFiled extends StatelessWidget {
-  final AnnotationEditingController textEditingController;
+  final VChatTextMentionController textEditingController;
   final FocusNode focusNode;
   final bool isTyping;
   final VoidCallback onShowEmoji;
   final VoidCallback onCameraPress;
-  final Widget Function(Map<String, dynamic>)? suggestionBuilder;
   final VoidCallback onAttachFilePress;
   final Function(String value) onSubmit;
-  final List<Map<String, dynamic>> searchData;
-  final void Function(String trigger, String value)? onSearchChanged;
 
   const MessageTextFiled({
     super.key,
     required this.textEditingController,
-    required this.onSearchChanged,
     required this.focusNode,
     required this.onShowEmoji,
-    required this.suggestionBuilder,
     required this.onCameraPress,
     required this.onAttachFilePress,
     required this.isTyping,
     required this.onSubmit,
-    required this.searchData,
   });
 
   @override
@@ -38,25 +32,31 @@ class MessageTextFiled extends StatelessWidget {
           onTap: onShowEmoji,
           child: const Icon(
             PhosphorIcons.smiley,
-            size: 28,
+            size: 26,
             color: Colors.green,
           ),
         ),
         const SizedBox(
-          width: 10,
+          width: 4,
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 5, top: 5),
-            child: FlutterMentions(
-              onSearchChanged: onSearchChanged,
-              annotationEditingController: textEditingController,
-              suggestionPosition: SuggestionPosition.Top,
+            padding: const EdgeInsets.only(bottom: 0, top: 0),
+            child: TextField(
               textCapitalization: TextCapitalization.sentences,
+              controller: textEditingController,
               focusNode: focusNode,
               maxLines: 5,
+              style: const TextStyle(height: 1.3),
               minLines: 1,
-              suggestionListHeight: 400,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.only(top: 7, bottom: 5),
+                border: InputBorder.none,
+                hintText: "Type your message",
+                fillColor: Colors.transparent,
+                isDense: true,
+                //constraints: BoxConstraints(maxHeight: 30, minHeight: 20),
+              ),
               onSubmitted: Platforms.isMobile
                   ? null
                   : (value) {
@@ -68,26 +68,14 @@ class MessageTextFiled extends StatelessWidget {
                     },
               textInputAction:
                   !Platforms.isMobile ? null : TextInputAction.newline,
-              decoration: InputDecoration.collapsed(
-                ///todo trans
-                hintText: "typeAMessage",
-              ),
               keyboardType: Platforms.isMobile
                   ? TextInputType.multiline
                   : TextInputType.text,
-              mentions: [
-                Mention(
-                  suggestionBuilder: suggestionBuilder,
-                  style: const TextStyle(color: Colors.blue),
-                  trigger: '@',
-                  data: searchData,
-                )
-              ],
             ),
           ),
         ),
         const SizedBox(
-          width: 10,
+          width: 3,
         ),
         Visibility(
           visible: !isTyping,
@@ -98,7 +86,7 @@ class MessageTextFiled extends StatelessWidget {
                   onTap: onCameraPress,
                   child: const Icon(
                     PhosphorIcons.camera,
-                    size: 25,
+                    size: 26,
                     color: Colors.green,
                   ),
                 ),
@@ -112,7 +100,7 @@ class MessageTextFiled extends StatelessWidget {
           onTap: onAttachFilePress,
           child: const Icon(
             PhosphorIcons.paperclip,
-            size: 25,
+            size: 26,
             color: Colors.green,
           ),
         ),

@@ -76,8 +76,9 @@ class MessageInputView extends GetView<MessageInputController> {
               replyWidget: controller.isReplying
                   ? _getReplyWidget(controller.replyMsg.value)
                   : null,
+              googleMapsApiKey: "texst",
               onSubmitText: controller.onSubmitText,
-              onMentionRequireSearch: controller.onMentionRequireSearch,
+              onMentionSearch: controller.onMentionRequireSearch,
               onSubmitMedia: controller.onSubmitMedia,
               onSubmitVoice: controller.onSubmitVoice,
               onSubmitFiles: controller.onSubmitFiles,

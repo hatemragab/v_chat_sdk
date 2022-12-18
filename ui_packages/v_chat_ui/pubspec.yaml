@@ -31,7 +31,6 @@ dependencies:
   #  video_editor: ^1.4.3
   mime_type: ^1.0.0
   mime: ^1.0.2
-  flutter_portal: ^1.1.2
   path: ^1.8.1
   progress_dialog:
     git: https://github.com/mostafaAbdelazim/progress_dialog.git
@@ -57,6 +56,7 @@ dependencies:
   latlong2: ^0.8.1
   cross_file: ^0.3.3+2
   giphy_get: ^3.1.1
+  v_chat_mention_controller: ^1.0.0
   open_file_plus: ^3.3.0
   audio_waveforms:
     git: https://github.com/yohom/audio_waveforms
@@ -64,10 +64,6 @@ dependencies:
     git:
       url: https://github.com/Fintasys/emoji_picker_flutter
       ref: Add-Web-Support-2
-  flutter_mentions:
-    git:
-      url: https://github.com/hatemragab/flutter_mentions
-      ref: a088c3aea8dacf2e7f3f31e12a1db5a5f22eb89b
 
 dev_dependencies:
   flutter_test:

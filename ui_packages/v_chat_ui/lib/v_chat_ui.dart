@@ -1,7 +1,7 @@
 library v_chat_ui;
 
-export 'package:flutter_portal/flutter_portal.dart';
-
+export './src/core/core.dart';
+export './src/core/utils/enums.dart';
 export './src/core/v_theme/theme.dart';
 export './src/message_input/v_message_input.dart';
 export './src/message_page_ui/v_message_page_ui.dart';

@@ -69,7 +69,7 @@ class PlatformFileSource {
     this.fileSize = 0,
     required String url,
     bool isFullUrl = false,
-  })  : url = VFullUrlModel(url, isFullUrl),
+  })  : url = VFullUrlModel(url, isFullUrl: isFullUrl),
         name = basename(url) {
     mimeType = getMimeType;
   }
