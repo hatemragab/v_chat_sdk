@@ -11,9 +11,11 @@ import 'package:v_chat_input_ui/src/recorder/recorders.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RecordWidget extends StatefulWidget {
+  final Duration maxTime;
   const RecordWidget({
     super.key,
     required this.onCancel,
+    required this.maxTime,
   });
 
   final VoidCallback onCancel;

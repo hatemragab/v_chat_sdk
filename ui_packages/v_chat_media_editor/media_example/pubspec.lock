@@ -265,15 +265,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.6+1"
-  flutter_painter:
+  flutter_painter_v2:
     dependency: transitive
     description:
-      path: "."
-      ref: "2.0.0"
-      resolved-ref: "822282d3cc95472ca62ca0b7cde7e9ca308ebb48"
-      url: "https://github.com/omarhurani/flutter_painter"
-    source: git
-    version: "1.0.1"
+      name: flutter_painter_v2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:

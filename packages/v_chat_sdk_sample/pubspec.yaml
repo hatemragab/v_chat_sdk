@@ -30,13 +30,10 @@ dependencies:
   flex_color_scheme: ^6.1.1
   get: 4.6.5
   flutter_platform_alert: ^0.3.0
-  progress_dialog: 
-    git: https://github.com/mostafaAbdelazim/progress_dialog.git
   flutter: 
     sdk: flutter
   v_chat_sdk_core: ^0.0.2
-  v_chat_utils:
-    path: ../../packages/v_chat_utils
+  v_chat_utils: ^0.0.2
   v_chat_firebase_fcm:
     path: ../../push_providers/v_chat_firebase_fcm
   v_chat_ui:

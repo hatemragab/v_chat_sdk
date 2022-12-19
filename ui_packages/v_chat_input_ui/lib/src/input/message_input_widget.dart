@@ -46,8 +46,14 @@ class VMessageInputWidget extends StatefulWidget {
   /// widget to render if the chat has been closed my be this user leave group or has banned!
   final Widget? stopChatWidget;
 
+  /// set max timeout for recording
+  final Duration maxRecordTime;
+
   ///if not provided the the user cant see the option of send location
   final String? googleMapsApiKey;
+
+  ///text-field hint
+  final VInputLanguage language;
 
   ///google maps localizations
   final String googleMapsLangKey;
@@ -61,10 +67,12 @@ class VMessageInputWidget extends StatefulWidget {
     required this.onSubmitLocation,
     required this.onTypingChange,
     this.replyWidget,
+    this.maxRecordTime = const Duration(minutes: 30),
     this.onAttachIconPress,
     this.stopChatWidget,
     this.onMentionSearch,
     this.googleMapsApiKey,
+    this.language = const VInputLanguage(),
     this.googleMapsLangKey = "en",
   });
 
@@ -149,16 +157,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                       top: 8,
                       bottom: 8,
                     ),
-                    decoration: BoxDecoration(
-                      color:
-                          //todo fix
-                          context.isDark
-                              ? const Color(0xf7232121)
-                              : Colors.white,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
+                    decoration: context.vInputTheme.containerDecoration,
                     child: Column(
                       children: [
                         if (_showMentionList)
@@ -190,6 +189,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         if (_isRecording)
                           RecordWidget(
                             key: _recordStateKey,
+                            maxTime: widget.maxRecordTime,
                             onCancel: () {
                               _changeTypingType(RoomTypingEnum.stop);
                             },
@@ -197,6 +197,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         else
                           MessageTextFiled(
                             focusNode: _focusNode,
+                            hint: widget.language.textFieldHint,
                             isTyping: _typingType == RoomTypingEnum.typing,
                             onSubmit: (v) {
                               if (v.isNotEmpty) {
@@ -209,7 +210,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                             textEditingController: _textEditingController,
                             onShowEmoji: _showEmoji,
                             onAttachFilePress: () =>
-                                _onAttachFilePress(context),
+                                _onAttachFilePress(context, widget.language),
                             onCameraPress: () => _onCameraPress(context),
                           ),
                       ],
@@ -301,28 +302,28 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     setState(() {});
   }
 
-  void _onAttachFilePress(BuildContext context) async {
+  void _onAttachFilePress(BuildContext context, VInputLanguage language) async {
     late AttachEnumRes? res;
     if (widget.onAttachIconPress != null) {
       res = await widget.onAttachIconPress!();
     } else {
       final x = await VAppAlert.showModalSheet(content: [
         ModelSheetItem<AttachEnumRes>(
-          title: 'Media',
+          title: language.media,
           id: AttachEnumRes.media,
           iconData: Icons.image,
         ),
         ModelSheetItem<AttachEnumRes>(
-            title: 'Files',
+            title: language.files,
             id: AttachEnumRes.files,
             iconData: Icons.attach_file),
         if (widget.googleMapsApiKey != null)
           ModelSheetItem<AttachEnumRes>(
-            title: 'Location',
+            title: language.location,
             iconData: Icons.location_on_outlined,
             id: AttachEnumRes.location,
           ),
-      ], context: context, title: "Share media and location");
+      ], context: context, title: language.shareMediaAndLocation);
       if (x == null) return null;
       res = x.id as AttachEnumRes;
     }

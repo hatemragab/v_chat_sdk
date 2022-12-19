@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_chat_input_ui/src/models/models.dart';
 
 class MessageRecordBtn extends StatelessWidget {
   final VoidCallback onRecordClick;
@@ -10,17 +10,7 @@ class MessageRecordBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onRecordClick,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.green,
-        ),
-        child: const Icon(
-          PhosphorIcons.microphoneFill,
-          color: Colors.white,
-        ),
-      ),
+      child: context.vInputTheme.recordBtn,
     );
   }
 }

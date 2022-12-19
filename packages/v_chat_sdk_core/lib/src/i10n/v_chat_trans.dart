@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'default_localizations.dart';
 
-const kDefaultLocale = Locale('ar');
+const kDefaultLocale = Locale('en');
 
 class VChatLocalizations<T extends VChatLocalizationLabels> {
   final Locale locale;

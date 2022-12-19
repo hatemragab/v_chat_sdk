@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_chat_input_ui/src/models/v_input_theme.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -7,6 +7,7 @@ class MessageTextFiled extends StatelessWidget {
   final VChatTextMentionController textEditingController;
   final FocusNode focusNode;
   final bool isTyping;
+  final String hint;
   final VoidCallback onShowEmoji;
   final VoidCallback onCameraPress;
   final VoidCallback onAttachFilePress;
@@ -20,6 +21,7 @@ class MessageTextFiled extends StatelessWidget {
     required this.onCameraPress,
     required this.onAttachFilePress,
     required this.isTyping,
+    required this.hint,
     required this.onSubmit,
   });
 
@@ -30,11 +32,7 @@ class MessageTextFiled extends StatelessWidget {
       children: [
         InkWell(
           onTap: onShowEmoji,
-          child: const Icon(
-            PhosphorIcons.smiley,
-            size: 26,
-            color: Colors.green,
-          ),
+          child: context.vInputTheme.emojiIcon,
         ),
         const SizedBox(
           width: 4,
@@ -47,16 +45,10 @@ class MessageTextFiled extends StatelessWidget {
               controller: textEditingController,
               focusNode: focusNode,
               maxLines: 5,
-              style: const TextStyle(height: 1.3),
+              style: context.vInputTheme.textFieldTextStyle,
               minLines: 1,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 7, bottom: 5),
-                border: InputBorder.none,
-                hintText: "Type your message",
-                fillColor: Colors.transparent,
-                isDense: true,
-                //constraints: BoxConstraints(maxHeight: 30, minHeight: 20),
-              ),
+              decoration: context.vInputTheme.textFieldDecoration
+                  .copyWith(hintText: hint),
               onSubmitted: VPlatforms.isMobile
                   ? null
                   : (value) {
@@ -84,11 +76,7 @@ class MessageTextFiled extends StatelessWidget {
               if (VPlatforms.isMobile)
                 InkWell(
                   onTap: onCameraPress,
-                  child: const Icon(
-                    PhosphorIcons.camera,
-                    size: 26,
-                    color: Colors.green,
-                  ),
+                  child: context.vInputTheme.cameraIcon,
                 ),
               const SizedBox(
                 width: 10,
@@ -98,11 +86,7 @@ class MessageTextFiled extends StatelessWidget {
         ),
         InkWell(
           onTap: onAttachFilePress,
-          child: const Icon(
-            PhosphorIcons.paperclip,
-            size: 26,
-            color: Colors.green,
-          ),
+          child: context.vInputTheme.fileIcon,
         ),
       ],
     );

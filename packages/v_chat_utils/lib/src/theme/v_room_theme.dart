@@ -60,12 +60,6 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
       return this;
     }
     return this;
-    // return VRoomTheme._(
-    //   color: Color.lerp(color, other.color, t),
-    //   decoration: BoxDecoration.lerp(decoration, other.decoration, t),
-    //   titleStyle: TextStyle.lerp(titleStyle, other.titleStyle, t),
-    //   muteIcon: null,
-    // );
   }
 }
 

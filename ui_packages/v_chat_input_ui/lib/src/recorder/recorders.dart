@@ -1,4 +1,4 @@
-import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:audio_waveforms_fix/audio_waveforms.dart';
 import 'package:record/record.dart';
 
 abstract class AppRecorder {

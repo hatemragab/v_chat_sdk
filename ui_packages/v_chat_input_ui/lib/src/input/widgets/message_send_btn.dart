@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_chat_input_ui/src/models/v_input_theme.dart';
 
 class MessageSendBtn extends StatelessWidget {
   final VoidCallback onSend;
@@ -13,17 +13,7 @@ class MessageSendBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onSend,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.green,
-        ),
-        child: const Icon(
-          PhosphorIcons.paperPlaneRight,
-          color: Colors.white,
-        ),
-      ),
+      child: context.vInputTheme.sendBtn,
     );
   }
 }

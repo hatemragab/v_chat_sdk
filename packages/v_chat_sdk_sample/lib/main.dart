@@ -60,11 +60,12 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           themeMode: appService.themeMode,
           initialBinding: LazyInjection(),
-          localizationsDelegates: const [
+          localizationsDelegates: [
             S.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+            VChatLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
           locale: appService.locale,

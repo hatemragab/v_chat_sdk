@@ -43,15 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  audio_waveforms:
+  audio_waveforms_fix:
     dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: a46a0b8ef063730fa4338ca087b6f442f8184bfc
-      url: "https://github.com/yohom/audio_waveforms"
-    source: git
-    version: "0.1.3"
+      name: audio_waveforms_fix
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:
