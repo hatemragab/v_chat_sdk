@@ -983,9 +983,9 @@ packages:
   v_chat_utils:
     dependency: "direct main"
     description:
-      name: v_chat_utils
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../../packages/v_chat_utils"
+      relative: true
+    source: path
     version: "0.0.1"
   vector_math:
     dependency: transitive
@@ -1058,5 +1058,5 @@ packages:
     source: hosted
     version: "6.1.0"
 sdks:
-  dart: ">=2.18.5 <3.0.0"
+  dart: ">=2.18.0 <3.0.0"
   flutter: ">=3.3.0"

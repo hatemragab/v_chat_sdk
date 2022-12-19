@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: v_chat_input_ui,v_chat_utils
+dependency_overrides:
+  v_chat_input_ui:
+    path: ..
+  v_chat_utils:
+    path: ../../../packages/v_chat_utils

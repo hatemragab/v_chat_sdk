@@ -27,13 +27,13 @@ class HomeView extends GetView<HomeController> {
                       ? const Text("un Ban")
                       : const Text("Ban"),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   // onTap: () => controller.setReplyPress(isText: true),
-                  child: const Text("Reply be text msg"),
+                  child: Text("Reply be text msg"),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   // onTap: () => controller.setReplyPress(isText: false),
-                  child: const Text("Reply be image msg"),
+                  child: Text("Reply be image msg"),
                 ),
               ];
             },

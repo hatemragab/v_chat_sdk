@@ -11,7 +11,6 @@ import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_input_ui.dart';
-import '../enums.dart';
 import '../permission_manager.dart';
 import '../recorder/record_widget.dart';
 

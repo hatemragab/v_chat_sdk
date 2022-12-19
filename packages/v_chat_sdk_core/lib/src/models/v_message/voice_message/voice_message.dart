@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:v_chat_ui/v_chat_ui.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
 
-class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
-  late final VoiceMessageController _controller;
+class VVoiceMessage extends VBaseMessage {
   final VMessageVoiceData fileSource;
 
   VVoiceMessage({
@@ -32,26 +30,20 @@ class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
     required super.parentBroadcastId,
     required super.isStared,
     required this.fileSource,
-  }) {
-    _controller = _getVoiceController();
-  }
+  });
 
   VVoiceMessage.fromRemoteMap(super.map)
       : fileSource = VMessageVoiceData.fromMap(
           map['msgAtt'] as Map<String, dynamic>,
         ),
-        super.fromRemoteMap() {
-    _controller = _getVoiceController();
-  }
+        super.fromRemoteMap();
 
   VVoiceMessage.fromLocalMap(super.map)
       : fileSource = VMessageVoiceData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
-        super.fromLocalMap() {
-    _controller = _getVoiceController();
-  }
+        super.fromLocalMap();
 
   // @override
   // Map<String, dynamic> toRemoteMap() {
@@ -86,39 +78,37 @@ class VVoiceMessage extends VBaseMessage implements IVoiceMessageController {
   }) : super.buildMessage(
           content: AppConstants.thisContentIsVoice,
           messageType: MessageType.voice,
-        ) {
-    initVoiceController();
-  }
+        );
 
-  void initVoiceController() {
-    _controller = _getVoiceController();
-  }
+// void initVoiceController() {
+//   _controller = _getVoiceController();
+// }
 
-  VoiceMessageController _getVoiceController() {
-    return VoiceMessageController(
-      id: id,
-      audioSrc: _getAudioSrc(),
-      maxDuration: fileSource.durationObj,
-      onComplete: (id) {
-        voiceStreamEmitter.sink.add(VoiceComplete(id));
-      },
-      onPause: (id) {},
-      onPlaying: (id) {
-        voiceStreamEmitter.sink.add(VoiceOnPlay(id));
-      },
-    );
-  }
+// VoiceMessageController _getVoiceController() {
+//   return VoiceMessageController(
+//     id: id,
+//     audioSrc: _getAudioSrc(),
+//     maxDuration: fileSource.durationObj,
+//     onComplete: (id) {
+//       voiceStreamEmitter.sink.add(VoiceComplete(id));
+//     },
+//     onPause: (id) {},
+//     onPlaying: (id) {
+//       voiceStreamEmitter.sink.add(VoiceOnPlay(id));
+//     },
+//   );
+// }
 
-  AudioSrc _getAudioSrc() {
-    if (fileSource.fileSource.bytes != null) {
-      return BytesSrc(fileSource.fileSource.bytes!);
-    }
-    if (fileSource.fileSource.filePath != null) {
-      return FileSrc(fileSource.fileSource.filePath!);
-    }
-    return UrlSrc(fileSource.fileSource.url!.fullUrl);
-  }
+// AudioSrc _getAudioSrc() {
+//   if (fileSource.fileSource.bytes != null) {
+//     return BytesSrc(fileSource.fileSource.bytes!);
+//   }
+//   if (fileSource.fileSource.filePath != null) {
+//     return FileSrc(fileSource.fileSource.filePath!);
+//   }
+//   return UrlSrc(fileSource.fileSource.url!.fullUrl);
+// }
 
-  @override
-  VoiceMessageController getVoiceController() => _controller;
+// @override
+// VoiceMessageController getVoiceController() => _controller;
 }
