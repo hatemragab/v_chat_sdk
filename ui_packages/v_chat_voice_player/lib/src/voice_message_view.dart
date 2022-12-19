@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:v_chat_voice_player/src/voice_message_controller.dart';
 
-import '../v_chat_voice_player.dart';
 import 'helpers/utils.dart';
 import 'widgets/noises.dart';
 

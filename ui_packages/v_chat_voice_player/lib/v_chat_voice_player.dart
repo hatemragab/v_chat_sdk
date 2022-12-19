@@ -1,7 +1,4 @@
 library v_chat_voice_player;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export './src/voice_message_controller.dart';
+export './src/voice_message_view.dart';

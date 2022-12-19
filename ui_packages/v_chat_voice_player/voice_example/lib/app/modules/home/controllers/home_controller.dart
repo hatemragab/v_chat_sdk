@@ -1,23 +1,24 @@
 import 'package:get/get.dart';
+import 'package:v_chat_voice_player/v_chat_voice_player.dart';
+
+import '../views/home_view.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final Map<String, VoiceMessageController> _voiceControllers = {};
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  VoiceMessageController getVoiceController(VoiceMessageModel voice) {
+    final item = _voiceControllers[voice.id];
+    if (item == null) {
+      final controller = VoiceMessageController(
+        id: voice.id,
+        audioSrc: voice.dataSource,
+        onComplete: (id) {},
+        onPause: (id) {},
+        onPlaying: (id) {},
+      );
+      _voiceControllers.addAll({voice.id: controller});
+      return controller;
+    }
+    return item;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

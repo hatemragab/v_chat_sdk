@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../helpers/colors.dart';
+import '../../../../voice_player/helpers/colors.dart';
 
 /// document will be added
 // ignore: must_be_immutable

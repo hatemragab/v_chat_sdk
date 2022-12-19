@@ -4,40 +4,38 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart'
-as cache if (dart.library.html) 'dart:html';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart' as cache;
 import 'package:just_audio/just_audio.dart' as jsAudio;
 import 'package:just_audio/just_audio.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import 'helpers/bytes_custom_source.dart';
 import 'helpers/play_status.dart';
 import 'helpers/utils.dart';
 
-
-abstract class AudioSrc {
-}
-
-class FileSrc extends AudioSrc {
-  final String path;
-
-  FileSrc(this.path);
-}
-
-class UrlSrc extends AudioSrc {
-  final String url;
-
-  UrlSrc(this.url);
-}
-
-class BytesSrc extends AudioSrc {
-  final List<int> bytes;
-
-  BytesSrc(this.bytes);
-}
-
+// abstract class AudioSrc {
+// }
+//
+// class FileSrc extends AudioSrc {
+//   final String path;
+//
+//   FileSrc(this.path);
+// }
+//
+// class UrlSrc extends AudioSrc {
+//   final String url;
+//
+//   UrlSrc(this.url);
+// }
+//
+// class BytesSrc extends AudioSrc {
+//   final List<int> bytes;
+//
+//   BytesSrc(this.bytes);
+// }
 
 class VoiceMessageController extends MyTicker {
-  final AudioSrc audioSrc;
+  final PlatformFileSource audioSrc;
   late Duration maxDuration;
   Duration currentDuration = Duration.zero;
   final Function(String id) onComplete;
@@ -83,7 +81,7 @@ class VoiceMessageController extends MyTicker {
   VoiceMessageController({
     required this.id,
     required this.audioSrc,
-    required this.maxDuration,
+    this.maxDuration = Duration.zero,
     required this.onComplete,
     required this.onPause,
     required this.onPlaying,
@@ -118,21 +116,21 @@ class VoiceMessageController extends MyTicker {
     }
   }
 
-  bool get isFile => audioSrc is FileSrc;
+  bool get isFile => audioSrc.isFromPath;
 
-  bool get isBytes => audioSrc is BytesSrc;
+  bool get isBytes => audioSrc.isFromBytes;
 
-  bool get isUrl => audioSrc is UrlSrc;
+  bool get isUrl => audioSrc.isFromUrl;
 
   Future<String> _getFileFromCache() async {
     if (isFile) {
-      return (audioSrc as FileSrc).path;
+      return audioSrc.filePath!;
     }
     if (isBytes) {
       throw "isBytes should not call here !";
     }
     final p = await cache.DefaultCacheManager().getSingleFile(
-        (audioSrc as UrlSrc).url,
+      audioSrc.url!.fullUrl,
     );
     return p.path;
   }
@@ -175,17 +173,16 @@ class VoiceMessageController extends MyTicker {
   Future startPlayingForJs() async {
     if (isBytes) {
       await _player.setAudioSource(
-        BytesCustomSource((audioSrc as BytesSrc).bytes),
+        BytesCustomSource(audioSrc.bytes!),
         initialPosition: currentDuration,
       );
     }
     if (isUrl) {
       await _player.setAudioSource(
-        AudioSource.uri(Uri.parse((audioSrc as UrlSrc).url)),
+        AudioSource.uri(Uri.parse(audioSrc.url!.fullUrl)),
         initialPosition: currentDuration,
       );
     }
-
     _player.play();
     _player.setSpeed(speed.getSpeed);
   }
@@ -242,7 +239,7 @@ class VoiceMessageController extends MyTicker {
     }
   }
 
-  void changeSpeed() {
+  void changeSpeed() async {
     switch (speed) {
       case PlaySpeed.x1:
         speed = PlaySpeed.x1_25;
@@ -257,10 +254,10 @@ class VoiceMessageController extends MyTicker {
         speed = PlaySpeed.x2;
         break;
       case PlaySpeed.x2:
-        speed = PlaySpeed.x2;
+        speed = PlaySpeed.x1;
         break;
     }
-    _player.setSpeed(speed.getSpeed);
+    await _player.setSpeed(speed.getSpeed);
     _updateUi();
   }
 
@@ -312,9 +309,8 @@ class VoiceMessageController extends MyTicker {
   Future setMaxDurationForJs() async {
     try {
       if (isUrl) {
-        final maxDuration = await jsAudio.AudioPlayer().setAudioSource(
-          AudioSource.uri(Uri.parse((audioSrc as UrlSrc).url)),
-        );
+        final maxDuration = await jsAudio.AudioPlayer()
+            .setAudioSource(AudioSource.uri(Uri.parse(audioSrc.url!.fullUrl)));
         if (maxDuration != null) {
           this.maxDuration = maxDuration;
           animController.duration = maxDuration;
@@ -322,7 +318,7 @@ class VoiceMessageController extends MyTicker {
       }
       if (isBytes) {
         final maxDuration = await jsAudio.AudioPlayer().setAudioSource(
-          BytesCustomSource((audioSrc as BytesSrc).bytes),
+          BytesCustomSource(audioSrc.bytes!),
         );
         if (maxDuration != null) {
           this.maxDuration = maxDuration;
@@ -332,7 +328,8 @@ class VoiceMessageController extends MyTicker {
     } catch (err) {
       if (kDebugMode) {
         print(
-            "cant get the max duration from the BytesSrc BytesSrc BytesSrc !",);
+          "cant get the max duration from the BytesSrc BytesSrc BytesSrc !",
+        );
       }
     }
   }

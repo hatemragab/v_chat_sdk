@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:v_chat_ui/v_chat_ui.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 class VoicePlayer extends StatefulWidget {
   final String url;
@@ -10,10 +11,10 @@ class VoicePlayer extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VoicePlayerState createState() => _VoicePlayerState();
+  VoicePlayerState createState() => VoicePlayerState();
 }
 
-class _VoicePlayerState extends State<VoicePlayer> {
+class VoicePlayerState extends State<VoicePlayer> {
   bool isLoading = true;
   late String path;
   late final VoiceMessageController messageController;
@@ -78,7 +79,7 @@ class _VoicePlayerState extends State<VoicePlayer> {
   void init() async {
     await download();
     messageController = VoiceMessageController(
-      audioSrc: FileSrc(path),
+      audioSrc: PlatformFileSource.fromPath(filePath: path),
       maxDuration: widget.duration,
       id: "1",
       onPlaying: (id) {},
