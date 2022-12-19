@@ -8,7 +8,7 @@ import '../../../local_db/tables/message_table.dart';
 import '../base_message/base_message.dart';
 
 class VVideoMessage extends VBaseMessage {
-  final MessageVideoData fileSource;
+  final VMessageVideoData fileSource;
 
   VVideoMessage({
     required super.id,
@@ -34,13 +34,13 @@ class VVideoMessage extends VBaseMessage {
   });
 
   VVideoMessage.fromRemoteMap(super.map)
-      : fileSource = MessageVideoData.fromMap(
+      : fileSource = VMessageVideoData.fromMap(
           map['msgAtt'] as Map<String, dynamic>,
         ),
         super.fromRemoteMap();
 
   VVideoMessage.fromLocalMap(super.map)
-      : fileSource = MessageVideoData.fromMap(
+      : fileSource = VMessageVideoData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),

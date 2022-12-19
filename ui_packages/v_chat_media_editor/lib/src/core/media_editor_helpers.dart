@@ -41,7 +41,7 @@ abstract class MediaEditorHelpers {
     return c.future;
   }
 
-  static Future<int> getVideoDurationMill(PlatformFileSource file) async {
+  static Future<int> getVideoDurationMill(VPlatformFileSource file) async {
     if (file.isFromBytes) {
       return 000;
       // final controller = VideoPlayerController.contentUri(

@@ -18,7 +18,7 @@ class MediaEditorController {
     init();
   }
 
-  final List<PlatformFileSource> platformFiles;
+  final List<VPlatformFileSource> platformFiles;
   final mediaFiles = <BaseMediaEditor>[];
   final MediaEditorConfig config;
   bool isLoading = true;
@@ -102,7 +102,7 @@ class MediaEditorController {
             platformFileSource: item.data.fileSource,
           ),
         ),
-      ) as PlatformFileSource?;
+      ) as VPlatformFileSource?;
       if (editedFile != null) {
         item.data.fileSource = editedFile;
       }
@@ -132,7 +132,7 @@ class MediaEditorController {
     for (final f in platformFiles) {
       if (f.getMediaType == SupportedFilesType.image) {
         final mImage = MediaEditorImage(
-          data: MessageImageData(
+          data: VMessageImageData(
             fileSource: f,
             width: -1,
             height: -1,
@@ -140,12 +140,12 @@ class MediaEditorController {
         );
         mediaFiles.add(mImage);
       } else if (f.getMediaType == SupportedFilesType.video) {
-        late MessageImageData? thumb = null;
+        late VMessageImageData? thumb = null;
         if (f.filePath != null) {
           thumb = await _getThumb(f.filePath!);
         }
         final mFile = MediaEditorVideo(
-          data: MessageVideoData(
+          data: VMessageVideoData(
             fileSource: f,
             duration: -1,
             thumbImage: thumb,
@@ -160,7 +160,7 @@ class MediaEditorController {
     startCompressImagesIfNeed();
   }
 
-  Future<MessageImageData?> _getThumb(String path) async {
+  Future<VMessageImageData?> _getThumb(String path) async {
     final thumbPath = await VideoThumbnail.thumbnailFile(
       video: path,
       maxWidth: 600,
@@ -169,8 +169,8 @@ class MediaEditorController {
     );
     if (thumbPath == null) return null;
     final thumbImageData = await _getImageInfo(path: thumbPath);
-    return MessageImageData(
-      fileSource: PlatformFileSource.fromPath(filePath: thumbPath),
+    return VMessageImageData(
+      fileSource: VPlatformFileSource.fromPath(filePath: thumbPath),
       width: thumbImageData.image.width,
       height: thumbImageData.image.height,
     );

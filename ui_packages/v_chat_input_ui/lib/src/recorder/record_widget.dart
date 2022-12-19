@@ -35,7 +35,7 @@ class RecordWidgetState extends State<RecordWidget> {
   @override
   void initState() {
     super.initState();
-    if (Platforms.isMobile) {
+    if (VPlatforms.isMobile) {
       recorder = MobileRecorder();
     } else {
       recorder = PlatformRecorder();
@@ -77,7 +77,7 @@ class RecordWidgetState extends State<RecordWidget> {
   }
 
   Future<bool> _start() async {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       await recorder!.start();
     } else {
       final path = await _getDir();
@@ -97,19 +97,19 @@ class RecordWidgetState extends State<RecordWidget> {
     if (path != null) {
       List<int>? bytes;
       late final XFile? xFile;
-      if (Platforms.isWeb) {
+      if (VPlatforms.isWeb) {
         xFile = XFile(path);
         bytes = await xFile.readAsBytes();
       }
       final uri = Uri.parse(path);
       final data = VMessageVoiceData(
         duration: recordMilli,
-        fileSource: Platforms.isWeb
-            ? PlatformFileSource.fromBytes(
+        fileSource: VPlatforms.isWeb
+            ? VPlatformFileSource.fromBytes(
                 name: "${DateTime.now().microsecondsSinceEpoch}.wave",
                 bytes: bytes!,
               )
-            : PlatformFileSource.fromPath(
+            : VPlatformFileSource.fromPath(
                 filePath: uri.path,
               ),
       );

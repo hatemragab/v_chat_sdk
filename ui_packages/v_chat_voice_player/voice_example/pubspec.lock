@@ -738,9 +738,9 @@ packages:
   v_chat_utils:
     dependency: "direct main"
     description:
-      name: v_chat_utils
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../../../packages/v_chat_utils"
+      relative: true
+    source: path
     version: "0.0.1"
   v_chat_voice_player:
     dependency: "direct main"

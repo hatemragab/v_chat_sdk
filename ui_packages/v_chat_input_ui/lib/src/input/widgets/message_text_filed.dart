@@ -57,7 +57,7 @@ class MessageTextFiled extends StatelessWidget {
                 isDense: true,
                 //constraints: BoxConstraints(maxHeight: 30, minHeight: 20),
               ),
-              onSubmitted: Platforms.isMobile
+              onSubmitted: VPlatforms.isMobile
                   ? null
                   : (value) {
                       if (value.isNotEmpty) {
@@ -67,8 +67,8 @@ class MessageTextFiled extends StatelessWidget {
                       textEditingController.clear();
                     },
               textInputAction:
-                  !Platforms.isMobile ? null : TextInputAction.newline,
-              keyboardType: Platforms.isMobile
+                  !VPlatforms.isMobile ? null : TextInputAction.newline,
+              keyboardType: VPlatforms.isMobile
                   ? TextInputType.multiline
                   : TextInputType.text,
             ),
@@ -81,7 +81,7 @@ class MessageTextFiled extends StatelessWidget {
           visible: !isTyping,
           child: Row(
             children: [
-              if (Platforms.isMobile)
+              if (VPlatforms.isMobile)
                 InkWell(
                   onTap: onCameraPress,
                   child: const Icon(

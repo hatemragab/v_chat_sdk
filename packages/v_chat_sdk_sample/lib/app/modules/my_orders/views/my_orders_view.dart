@@ -6,7 +6,7 @@ import 'package:v_chat_sdk_sample/app/core/models/order.model.dart';
 import 'package:v_chat_sdk_sample/app/core/widgets/app_btn.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../controllers/my_orders_controller.dart';
+import '../controllers/my_orders_controller.dart';
 
 class MyOrdersView extends GetView<MyOrdersController> {
   const MyOrdersView({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
             return ListTile(
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: PlatformCacheImageWidget(
+                child: VPlatformCacheImageWidget(
                   source: order.productModel.imgAsPlatformSource,
                   fit: BoxFit.cover,
                   size: Size(60, 60),

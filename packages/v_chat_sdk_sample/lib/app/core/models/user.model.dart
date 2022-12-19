@@ -15,7 +15,7 @@ class UserModel {
     required this.imageUrl,
   });
 
-  PlatformFileSource get imgAsPlatformSource => PlatformFileSource.fromUrl(
+  VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
         fileSize: 0,
         url: imageUrl,
         isFullUrl: true,

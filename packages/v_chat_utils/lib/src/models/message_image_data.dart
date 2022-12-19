@@ -1,13 +1,13 @@
 import '../../v_chat_utils.dart';
 
-class MessageImageData {
-  PlatformFileSource fileSource;
+class VMessageImageData {
+  VPlatformFileSource fileSource;
   int width;
   int height;
 
 //<editor-fold desc="Data Methods">
 
-  MessageImageData({
+  VMessageImageData({
     required this.fileSource,
     required this.width,
     required this.height,
@@ -16,7 +16,7 @@ class MessageImageData {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is MessageImageData &&
+      (other is VMessageImageData &&
           runtimeType == other.runtimeType &&
           fileSource == other.fileSource &&
           width == other.width &&
@@ -34,12 +34,12 @@ class MessageImageData {
 
   bool get isFromBytes => fileSource.bytes != null;
 
-  MessageImageData copyWith({
-    PlatformFileSource? fileSource,
+  VMessageImageData copyWith({
+    VPlatformFileSource? fileSource,
     int? width,
     int? height,
   }) {
-    return MessageImageData(
+    return VMessageImageData(
       fileSource: fileSource ?? this.fileSource,
       width: width ?? this.width,
       height: height ?? this.height,
@@ -54,17 +54,17 @@ class MessageImageData {
     };
   }
 
-  factory MessageImageData.fromMap(Map<String, dynamic> map) {
-    return MessageImageData(
-      fileSource: PlatformFileSource.fromMap(map),
+  factory VMessageImageData.fromMap(Map<String, dynamic> map) {
+    return VMessageImageData(
+      fileSource: VPlatformFileSource.fromMap(map),
       width: map['width'] as int,
       height: map['height'] as int,
     );
   }
 
-  factory MessageImageData.fromFakeData() {
-    return MessageImageData(
-      fileSource: PlatformFileSource.fromUrl(
+  factory VMessageImageData.fromFakeData() {
+    return VMessageImageData(
+      fileSource: VPlatformFileSource.fromUrl(
         url: "https://picsum.photos/600/600",
         isFullUrl: true,
       ),

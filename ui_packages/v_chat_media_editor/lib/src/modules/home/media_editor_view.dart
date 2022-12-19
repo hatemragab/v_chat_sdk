@@ -9,7 +9,7 @@ import '../../core/core.dart';
 import 'media_editor_controller.dart';
 
 class MediaEditorView extends StatefulWidget {
-  final List<PlatformFileSource> files;
+  final List<VPlatformFileSource> files;
   final MediaEditorConfig config;
 
   const MediaEditorView({

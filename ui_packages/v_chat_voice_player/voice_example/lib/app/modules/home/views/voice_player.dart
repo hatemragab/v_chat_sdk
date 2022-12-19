@@ -79,7 +79,7 @@ class VoicePlayerState extends State<VoicePlayer> {
   void init() async {
     await download();
     messageController = VoiceMessageController(
-      audioSrc: PlatformFileSource.fromPath(filePath: path),
+      audioSrc: VPlatformFileSource.fromPath(filePath: path),
       maxDuration: widget.duration,
       id: "1",
       onPlaying: (id) {},

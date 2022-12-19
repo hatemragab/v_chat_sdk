@@ -12,7 +12,7 @@ class NativeLocalMessage {
   final _emitter = EventBusSingleton.instance.vChatEvents;
   Stream<VMessageEvents> get messageStream => _emitter.on<VMessageEvents>();
   NativeLocalMessage(Database database) {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       _localMessageRepo = MemoryMessageImp();
     } else {
       _localMessageRepo = SqlMessageImp(database);

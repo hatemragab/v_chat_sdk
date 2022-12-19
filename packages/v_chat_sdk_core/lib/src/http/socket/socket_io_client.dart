@@ -25,7 +25,7 @@ class SocketIoClient implements ISocketIoClient {
 
   static Socket _getSocket() {
     final accessString =
-        AppPref.getHashedString(key: StorageKeys.accessToken) ?? '';
+        VAppPref.getHashedString(key: StorageKeys.accessToken) ?? '';
     // print(accessString);
     // if (accessString.isEmpty) {
     //   throw Exception("_getSocket while AppAuth.myAccessToken is Empty !");

@@ -1,14 +1,11 @@
 import 'package:animated_login/src/models/login_data.dart';
 import 'package:animated_login/src/models/signup_data.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
- import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../core/repository/user.repository.dart';
-
 import '../../authenticate.dart';
 
 class RegisterController extends GetxController {
@@ -16,10 +13,10 @@ class RegisterController extends GetxController {
 
   RegisterController(this.repository);
 
-  PlatformFileSource? userImage;
+  VPlatformFileSource? userImage;
 
   void getImage() async {
-    final userImage = await AppPick.getCroppedImage();
+    final userImage = await VAppPick.getCroppedImage();
     if (userImage != null) {
       this.userImage = userImage;
     }
@@ -31,10 +28,10 @@ class RegisterController extends GetxController {
       final user = await AuthRepo.loginWithEmailAndPassword(
           loginData.email, loginData.password);
       final userFromFire = await repository.getId(user.uid);
-      await AppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
+      await VAppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
-      VAppAlert.showErrorSnackBar(msg: err.toString(),context: Get.context!);
+      VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
       print(err);
       return err.toString();
     }
@@ -56,10 +53,10 @@ class RegisterController extends GetxController {
             "https://firebasestorage.googleapis.com/v0/b/v-chat-sdk-v2.appspot.com/o/images%2Fdefault_user_image.png?alt=media&token=13bd6095-614f-42d2-a626-0fbbb0668d3c",
       );
       await repository.add(userFromFire);
-      await AppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
+      await VAppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
-      VAppAlert.showErrorSnackBar(msg: err.toString(),context: Get.context!);
+      VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
       print(err);
       //AppAlert.hideLoading();
       return err.toString();

@@ -5,13 +5,13 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 import '../../v_chat_utils.dart';
 
-abstract class AppPick {
+abstract class VAppPick {
   static bool isPicking = false;
 
-  static Future<PlatformFileSource?> getCroppedImage() async {
+  static Future<VPlatformFileSource?> getCroppedImage() async {
     final img = await getImage();
     if (img != null) {
-      if (Platforms.isMobile) {
+      if (VPlatforms.isMobile) {
         final croppedFile = await ImageCropper().cropImage(
           sourcePath: img.filePath!,
           compressQuality: 70,
@@ -41,14 +41,14 @@ abstract class AppPick {
         if (croppedFile == null) {
           return null;
         }
-        return PlatformFileSource.fromPath(filePath: croppedFile.path);
+        return VPlatformFileSource.fromPath(filePath: croppedFile.path);
       }
       return img;
     }
     return null;
   }
 
-  static Future<PlatformFileSource?> getImage({
+  static Future<VPlatformFileSource?> getImage({
     bool fromCamera = false,
   }) async {
     isPicking = true;
@@ -59,12 +59,12 @@ abstract class AppPick {
     if (pickedFile == null) return null;
     final file = pickedFile.files.first;
     if (file.bytes != null) {
-      return PlatformFileSource.fromBytes(name: file.name, bytes: file.bytes!);
+      return VPlatformFileSource.fromBytes(name: file.name, bytes: file.bytes!);
     }
-    return PlatformFileSource.fromPath(filePath: file.path!);
+    return VPlatformFileSource.fromPath(filePath: file.path!);
   }
 
-  static Future<List<PlatformFileSource>?> getImages() async {
+  static Future<List<VPlatformFileSource>?> getImages() async {
     isPicking = true;
     final FilePickerResult? pickedFile = await FilePicker.platform
         .pickFiles(type: FileType.image, allowMultiple: true);
@@ -72,16 +72,16 @@ abstract class AppPick {
     if (pickedFile == null) return null;
     return pickedFile.files.map((e) {
       if (e.bytes != null) {
-        return PlatformFileSource.fromBytes(
+        return VPlatformFileSource.fromBytes(
           name: e.name,
           bytes: e.bytes!,
         );
       }
-      return PlatformFileSource.fromPath(filePath: e.path!);
+      return VPlatformFileSource.fromPath(filePath: e.path!);
     }).toList();
   }
 
-  static Future<List<PlatformFileSource>?> getMedia() async {
+  static Future<List<VPlatformFileSource>?> getMedia() async {
     isPicking = true;
     final xFiles = await FilePicker.platform.pickFiles(
       type: FileType.media,
@@ -92,16 +92,16 @@ abstract class AppPick {
     if (xFiles.files.isEmpty) return null;
     return xFiles.files.map((e) {
       if (e.bytes != null) {
-        return PlatformFileSource.fromBytes(
+        return VPlatformFileSource.fromBytes(
           name: e.name,
           bytes: e.bytes!,
         );
       }
-      return PlatformFileSource.fromPath(filePath: e.path!);
+      return VPlatformFileSource.fromPath(filePath: e.path!);
     }).toList();
   }
 
-  static Future<PlatformFileSource?> getVideo() async {
+  static Future<VPlatformFileSource?> getVideo() async {
     isPicking = true;
     final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.video,
@@ -110,15 +110,15 @@ abstract class AppPick {
     if (pickedFile == null) return null;
     final e = pickedFile.files.first;
     if (e.bytes != null) {
-      return PlatformFileSource.fromBytes(
+      return VPlatformFileSource.fromBytes(
         name: e.name,
         bytes: e.bytes!,
       );
     }
-    return PlatformFileSource.fromPath(filePath: e.path!);
+    return VPlatformFileSource.fromPath(filePath: e.path!);
   }
 
-  static Future<List<PlatformFileSource>?> getFiles() async {
+  static Future<List<VPlatformFileSource>?> getFiles() async {
     isPicking = true;
     final FilePickerResult? xFiles = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -128,16 +128,16 @@ abstract class AppPick {
     if (xFiles.files.isEmpty) return null;
     return xFiles.files.map((e) {
       if (e.bytes != null) {
-        return PlatformFileSource.fromBytes(
+        return VPlatformFileSource.fromBytes(
           name: e.name,
           bytes: e.bytes!,
         );
       }
-      return PlatformFileSource.fromPath(filePath: e.path!);
+      return VPlatformFileSource.fromPath(filePath: e.path!);
     }).toList();
   }
 
-  static Future<PlatformFileSource?> pickFromWeAssetCamera(
+  static Future<VPlatformFileSource?> pickFromWeAssetCamera(
     XFileCapturedCallback on,
     BuildContext context,
   ) async {
@@ -156,6 +156,6 @@ abstract class AppPick {
       return null;
     }
     final f = (await entity.file)!;
-    return PlatformFileSource.fromPath(filePath: f.path);
+    return VPlatformFileSource.fromPath(filePath: f.path);
   }
 }

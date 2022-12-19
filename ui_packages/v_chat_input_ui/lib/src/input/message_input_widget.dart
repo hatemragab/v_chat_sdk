@@ -20,10 +20,10 @@ class VMessageInputWidget extends StatefulWidget {
   final Function(String message) onSubmitText;
 
   ///callback when user send images or videos or mixed
-  final Function(List<PlatformFileSource> files) onSubmitMedia;
+  final Function(List<VPlatformFileSource> files) onSubmitMedia;
 
   ///callback when user send files
-  final Function(List<PlatformFileSource> files) onSubmitFiles;
+  final Function(List<VPlatformFileSource> files) onSubmitFiles;
 
   ///callback when user send location will call only if [googleMapsApiKey] has value
   final Function(VLocationMessageData data) onSubmitLocation;
@@ -119,7 +119,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         });
       }
     });
-    if (!Platforms.isMobile) {
+    if (!VPlatforms.isMobile) {
       _focusNode.requestFocus();
     }
   }
@@ -253,7 +253,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
               ],
             ),
           ),
-          if (Platforms.isMac)
+          if (VPlatforms.isMac)
             const SizedBox.shrink()
           else
             EmojiKeyboard(
@@ -329,13 +329,13 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     if (res != null) {
       switch (res) {
         case AttachEnumRes.media:
-          final files = await AppPick.getMedia();
+          final files = await VAppPick.getMedia();
           if (files != null) {
             widget.onSubmitMedia(files);
           }
           break;
         case AttachEnumRes.files:
-          final files = await AppPick.getFiles();
+          final files = await VAppPick.getFiles();
           if (files != null) {
             widget.onSubmitFiles(files);
           }
@@ -377,10 +377,10 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
       final x = await PermissionManager.askForCamera();
       if (!x) return;
     }
-    final entity = await AppPick.pickFromWeAssetCamera(
+    final entity = await VAppPick.pickFromWeAssetCamera(
       (p0, p1) {
         widget.onSubmitMedia([
-          PlatformFileSource.fromPath(
+          VPlatformFileSource.fromPath(
             filePath: p0.path,
           )
         ]);

@@ -22,7 +22,7 @@ class ProductModel {
     required this.title,
   });
 
-  PlatformFileSource get imgAsPlatformSource => PlatformFileSource.fromUrl(
+  VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
         fileSize: 0,
         url: imageUrl,
         isFullUrl: true,

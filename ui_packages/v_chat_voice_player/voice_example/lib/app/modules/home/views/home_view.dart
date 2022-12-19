@@ -27,7 +27,7 @@ class HomeViewState extends State<HomeView> {
       100,
       (i) => VoiceMessageModel(
         id: "$i",
-        dataSource: PlatformFileSource.fromUrl(
+        dataSource: VPlatformFileSource.fromUrl(
           url: "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
           isFullUrl: true,
         ),
@@ -77,7 +77,7 @@ class HomeViewState extends State<HomeView> {
                 0,
                 VoiceMessageModel(
                     id: "${DateTime.now().millisecond}",
-                    dataSource: PlatformFileSource.fromUrl(
+                    dataSource: VPlatformFileSource.fromUrl(
                       url:
                           "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
                       isFullUrl: true,
@@ -128,7 +128,7 @@ class HomeViewState extends State<HomeView> {
 
 class VoiceMessageModel {
   final String id;
-  final PlatformFileSource dataSource;
+  final VPlatformFileSource dataSource;
   final int? maxDuration;
 
   VoiceMessageModel({

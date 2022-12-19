@@ -34,7 +34,7 @@ abstract class MessageApi extends ChopperService {
       converter: const JsonConverter(),
       interceptors: [AuthInterceptor()],
       errorConverter: ErrorInterceptor(),
-      client: Platforms.isWeb
+      client: VPlatforms.isWeb
           ? null
           : IOClient(
               HttpClient()..connectionTimeout = const Duration(seconds: 8),

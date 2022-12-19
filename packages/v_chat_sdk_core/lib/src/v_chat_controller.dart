@@ -61,7 +61,7 @@ class VChatController with WidgetsBindingObserver {
     );
     _instance._isControllerInit = true;
     _instance.config = vChatConfig;
-    await AppPref.init();
+    await VAppPref.init();
     _instance._helper = await ControllerHelper.instance.init(vChatConfig);
     _instance.nativeApi = await VNativeApi.init();
     _instance.auth = Auth(
@@ -99,7 +99,7 @@ class VChatController with WidgetsBindingObserver {
 
   ///make sure you already login or already login to v chat
   bool connectToSocket() {
-    final access = AppPref.getHashedString(key: StorageKeys.accessToken);
+    final access = VAppPref.getHashedString(key: StorageKeys.accessToken);
     if (access == null) {
       _log.warning(
         "You try to connect to socket with out login please make sure you call VChatController.instance.login first",

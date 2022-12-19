@@ -6,7 +6,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:video_player/video_player.dart' as vd;
 
 class VideoPlayerView extends StatefulWidget {
-  final MessageVideoData messageVideoData;
+  final VMessageVideoData messageVideoData;
 
   const VideoPlayerView({super.key, required this.messageVideoData});
 

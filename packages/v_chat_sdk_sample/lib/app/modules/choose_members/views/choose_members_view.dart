@@ -7,7 +7,7 @@ import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/models/user.model.dart';
- import '../controllers/choose_members_controller.dart';
+import '../controllers/choose_members_controller.dart';
 
 class ChooseMembersView extends GetView<ChooseMembersController> {
   const ChooseMembersView({Key? key}) : super(key: key);
@@ -71,7 +71,7 @@ class ChooseMembersView extends GetView<ChooseMembersController> {
                     },
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: PlatformCacheImageWidget(
+                      child: VPlatformCacheImageWidget(
                         source: user.imgAsPlatformSource,
                         size: const Size(60, 60),
                         fit: BoxFit.cover,

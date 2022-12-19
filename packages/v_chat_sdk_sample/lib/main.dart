@@ -35,7 +35,7 @@ void main() async {
 
 Uri _getBaseUrl() {
   if (kDebugMode) {
-    if (kIsWeb || Platforms.isIOS) {
+    if (kIsWeb || VPlatforms.isIOS) {
       return Uri.parse("http://localhost:3000");
     }
     //this will only working on the android emulator
@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
 }
 
 void setAppTheme(AppService appService) {
-  final theme = AppPref.getStringOrNull(StorageKeys.appTheme);
+  final theme = VAppPref.getStringOrNull(StorageKeys.appTheme);
   if (theme != null) {
     if (theme == ThemeMode.light.name) {
       appService.setTheme(ThemeMode.light);

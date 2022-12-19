@@ -12,11 +12,11 @@ class CreateBroadcastController extends GetxController {
   CreateBroadcastController(this.users);
 
   final user = AppAuth.getMyModel;
-  PlatformFileSource? groupImage;
+  VPlatformFileSource? groupImage;
   final nameController = TextEditingController();
 
   void onCameraClick() async {
-    final image = await AppPick.getCroppedImage();
+    final image = await VAppPick.getCroppedImage();
     if (image != null) {
       groupImage = image;
       update();

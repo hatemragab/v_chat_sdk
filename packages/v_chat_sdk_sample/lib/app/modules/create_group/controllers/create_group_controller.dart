@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../../../core/utils/app_auth.dart';
- import '../../../routes/app_pages.dart';
+import '../../../core/utils/app_auth.dart';
+import '../../../routes/app_pages.dart';
 
 class CreateGroupController extends GetxController {
   final List<UserModel> users;
@@ -13,11 +12,11 @@ class CreateGroupController extends GetxController {
   CreateGroupController(this.users);
 
   final user = AppAuth.getMyModel;
-  PlatformFileSource? groupImage;
+  VPlatformFileSource? groupImage;
   final nameController = TextEditingController();
 
   void onCameraClick() async {
-    final image = await AppPick.getCroppedImage();
+    final image = await VAppPick.getCroppedImage();
     if (image != null) {
       groupImage = image;
       update();
@@ -27,10 +26,12 @@ class CreateGroupController extends GetxController {
   void onSave() async {
     final name = nameController.text.toString();
     if (name.isEmpty) {
-      VAppAlert.showErrorSnackBar(msg: "name must not empty",context: Get.context!);
+      VAppAlert.showErrorSnackBar(
+          msg: "name must not empty", context: Get.context!);
     }
     if (groupImage == null) {
-      VAppAlert.showErrorSnackBar(msg: "image must not empty",context: Get.context!);
+      VAppAlert.showErrorSnackBar(
+          msg: "image must not empty", context: Get.context!);
     }
     await vSafeApiCall(
       onLoading: () {
@@ -42,11 +43,11 @@ class CreateGroupController extends GetxController {
         // V CHAT REQUEST
       },
       onSuccess: (response) {
-        VAppAlert.hideLoading(  );
+        VAppAlert.hideLoading();
         Get.until((route) => route.settings.name == Routes.HOME);
       },
       onError: (exception) {
-        VAppAlert.hideLoading( );
+        VAppAlert.hideLoading();
       },
     );
   }

@@ -2,7 +2,7 @@ import 'dart:io' as io;
 
 import 'package:flutter/foundation.dart';
 
-abstract class Platforms {
+abstract class VPlatforms {
   static bool isWeb = kIsWeb;
 
   static bool get isMobile =>

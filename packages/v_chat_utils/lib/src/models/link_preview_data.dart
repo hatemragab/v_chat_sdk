@@ -1,7 +1,7 @@
 import 'message_image_data.dart';
 
 class VLinkPreviewData {
-  final MessageImageData? image;
+  final VMessageImageData? image;
   final String? title;
   final String? desc;
   final String? link;
@@ -31,7 +31,7 @@ class VLinkPreviewData {
     return VLinkPreviewData(
       image: map['image'] == null
           ? null
-          : MessageImageData.fromMap(
+          : VMessageImageData.fromMap(
               map['image'] as Map<String, dynamic>,
             ),
       title: map['title'] as String?,

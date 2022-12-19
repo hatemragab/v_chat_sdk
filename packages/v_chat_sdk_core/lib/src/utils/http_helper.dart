@@ -4,10 +4,10 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class HttpHelpers {
   static Future<http.MultipartFile> getMultipartFile({
-    required PlatformFileSource source,
+    required VPlatformFileSource source,
     String fieldName = "file",
   }) async {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       return http.MultipartFile.fromBytes(
         fieldName,
         filename: source.name,

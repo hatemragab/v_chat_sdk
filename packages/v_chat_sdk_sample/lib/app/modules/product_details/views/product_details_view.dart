@@ -23,7 +23,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              PlatformCacheImageWidget(
+              VPlatformCacheImageWidget(
                 source: m.imgAsPlatformSource,
                 size: Size(100, MediaQuery.of(context).size.height / 3),
                 fit: BoxFit.cover,

@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums.dart';
 
-abstract class AppPref {
+abstract class VAppPref {
   static late final SharedPreferences instance;
 
   static Future<void> init() async {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../controllers/create_group_controller.dart';
+import '../controllers/create_group_controller.dart';
 
 class CreateGroupView extends GetView<CreateGroupController> {
   const CreateGroupView({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class CreateGroupView extends GetView<CreateGroupController> {
                                   Icons.camera_alt_outlined,
                                   size: 100,
                                 )
-                              : PlatformCacheImageWidget(
+                              : VPlatformCacheImageWidget(
                                   source: controller.groupImage!,
                                   fit: BoxFit.cover,
                                 ),

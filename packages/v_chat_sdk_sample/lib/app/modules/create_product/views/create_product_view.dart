@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/widgets/app_btn.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../controllers/create_product_controller.dart';
+import '../controllers/create_product_controller.dart';
 
 class CreateProductView extends GetView<CreateProductController> {
   const CreateProductView({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class CreateProductView extends GetView<CreateProductController> {
                                   Icons.camera_alt_outlined,
                                   size: 100,
                                 )
-                              : PlatformCacheImageWidget(
+                              : VPlatformCacheImageWidget(
                                   source: controller.productImage!,
                                   fit: BoxFit.cover,
                                 ),

@@ -16,7 +16,7 @@ mixin RoomLocalStorageService {
   initRoomLocalStorage({
     required Database database,
   }) {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       localRoomRepo = MemoryRoomImp();
     } else {
       localRoomRepo = SqlRoomImp(database);

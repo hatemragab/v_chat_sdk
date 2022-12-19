@@ -35,7 +35,7 @@ class Auth implements AuthEndPoints {
     final deviceHelper = DeviceInfoHelper();
     final dto = VChatLoginDto(
       identifier: identifier,
-      platform: Platforms.currentPlatform,
+      platform: VPlatforms.currentPlatform,
       deviceId: await deviceHelper.getId(),
       deviceInfo: await deviceHelper.getDeviceMapInfo(),
       language: deviceLanguage.languageCode,
@@ -52,7 +52,7 @@ class Auth implements AuthEndPoints {
   Future<VIdentifierUser> register({
     required String identifier,
     required String fullName,
-    PlatformFileSource? image,
+    VPlatformFileSource? image,
     required Locale deviceLanguage,
   }) async {
     final deviceHelper = DeviceInfoHelper();
@@ -61,7 +61,7 @@ class Auth implements AuthEndPoints {
       fullName: fullName,
       deviceId: await deviceHelper.getId(),
       language: deviceLanguage.languageCode,
-      platform: Platforms.currentPlatform,
+      platform: VPlatforms.currentPlatform,
       password: await _helper.getPasswordFromIdentifier(identifier),
       deviceInfo: await deviceHelper.getDeviceMapInfo(),
       pushKey: await _helper.getFcmToken(),
@@ -83,7 +83,7 @@ class Auth implements AuthEndPoints {
       _log.warning(err);
     }
     for (var element in StorageKeys.values) {
-      await AppPref.remove(element);
+      await VAppPref.remove(element);
     }
     SocketController.instance.disconnect();
 

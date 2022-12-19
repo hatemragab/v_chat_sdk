@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/clould/cloud_fire_upload.dart';
-import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
 import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -12,7 +10,7 @@ import '../../../core/utils/app_auth.dart';
 class CreateProductController extends GetxController {
   final ProductRepository repository;
   final user = AppAuth.getMyModel;
-  PlatformFileSource? productImage;
+  VPlatformFileSource? productImage;
   final nameController = TextEditingController();
   final descController = TextEditingController();
   final priceController = TextEditingController();
@@ -41,7 +39,7 @@ class CreateProductController extends GetxController {
       return;
     }
     await vSafeApiCall(
-       onSuccess: (response) {
+      onSuccess: (response) {
         VAppAlert.hideLoading();
         Get.back();
       },
@@ -69,7 +67,7 @@ class CreateProductController extends GetxController {
   }
 
   void onCameraClick() async {
-    final image = await AppPick.getImage();
+    final image = await VAppPick.getImage();
     if (image != null) {
       productImage = image;
       update();

@@ -49,7 +49,7 @@ class HomeController extends GetxController {
         .toList();
   }
 
-  void onSubmitMedia(List<PlatformFileSource> files) {
+  void onSubmitMedia(List<VPlatformFileSource> files) {
     printOnScreen(InputLog("onSubmitMedia", files.toString()));
   }
 
@@ -57,7 +57,7 @@ class HomeController extends GetxController {
     printOnScreen(InputLog("onSubmitVoice", data.toString()));
   }
 
-  void onSubmitFiles(List<PlatformFileSource> files) {
+  void onSubmitFiles(List<VPlatformFileSource> files) {
     printOnScreen(InputLog("onSubmitFiles", files.toString()));
   }
 

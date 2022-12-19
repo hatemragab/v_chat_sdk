@@ -17,12 +17,12 @@ class DeviceInfoHelper {
   }
 
   Future<bool> isRealDevice() async {
-    if (Platforms.isMobile) {
-      if (Platforms.isIOS) {
+    if (VPlatforms.isMobile) {
+      if (VPlatforms.isIOS) {
         final deviceInfo = await deviceInfoPlugin.iosInfo;
         return deviceInfo.isPhysicalDevice;
       } else {
-        if (Platforms.isAndroid) {
+        if (VPlatforms.isAndroid) {
           final deviceInfo = await deviceInfoPlugin.androidInfo;
           return deviceInfo.isPhysicalDevice;
         }

@@ -7,7 +7,7 @@ import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
 
 class VImageMessage extends VBaseMessage {
-  final MessageImageData fileSource;
+  final VMessageImageData fileSource;
 
   VImageMessage({
     required super.id,
@@ -33,13 +33,13 @@ class VImageMessage extends VBaseMessage {
   });
 
   VImageMessage.fromRemoteMap(super.map)
-      : fileSource = MessageImageData.fromMap(
+      : fileSource = VMessageImageData.fromMap(
           map['msgAtt'] as Map<String, dynamic>,
         ),
         super.fromRemoteMap();
 
   VImageMessage.fromLocalMap(super.map)
-      : fileSource = MessageImageData.fromMap(
+      : fileSource = VMessageImageData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -82,7 +82,7 @@ class VImageMessage extends VBaseMessage {
   }
 
   VImageMessage.buildFakeMessage()
-      : fileSource = MessageImageData.fromFakeData(),
+      : fileSource = VMessageImageData.fromFakeData(),
         super.buildFakeMessage(
           content: "Fake this is fake image message",
           messageType: MessageType.image,

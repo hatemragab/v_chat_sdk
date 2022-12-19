@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../controllers/edit_profile_controller.dart';
+import '../controllers/edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
   const EditProfileView({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class EditProfileView extends GetView<EditProfileController> {
                       width: 130,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: PlatformCacheImageWidget(
+                        child: VPlatformCacheImageWidget(
                           source: controller.userImage,
                           fit: BoxFit.cover,
                         ),

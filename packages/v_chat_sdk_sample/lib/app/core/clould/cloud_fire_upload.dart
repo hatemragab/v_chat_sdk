@@ -7,7 +7,7 @@ abstract class CloudFireUpload {
   static Reference storage = FirebaseStorage.instance.ref();
 
   static Future<String> uploadFile(
-    PlatformFileSource fileSource,
+    VPlatformFileSource fileSource,
     String userID,
   ) async {
     Reference upload = storage.child("images/$userID.png");

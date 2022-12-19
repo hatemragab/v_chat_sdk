@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../../../core/widgets/async_widgets_builder.dart';
+import '../../../core/widgets/async_widgets_builder.dart';
 import '../../../core/widgets/chat_btn.dart';
 import '../controllers/peer_profile_controller.dart';
 
@@ -41,7 +41,7 @@ class PeerProfileView extends GetView<PeerProfileController> {
                       width: 130,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: PlatformCacheImageWidget(
+                        child: VPlatformCacheImageWidget(
                           source: controller.peerData.imgAsPlatformSource,
                           fit: BoxFit.cover,
                         ),

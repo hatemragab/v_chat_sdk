@@ -12,7 +12,7 @@ class VChatRegisterDto {
   final String platform;
   final String password;
   final Map<String, dynamic> deviceInfo;
-  final PlatformFileSource? image;
+  final VPlatformFileSource? image;
 
 //<editor-fold desc="Data Methods">
 

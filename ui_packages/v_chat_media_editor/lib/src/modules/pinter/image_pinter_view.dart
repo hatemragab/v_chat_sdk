@@ -11,7 +11,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ImagePinterView extends StatefulWidget {
-  final PlatformFileSource platformFileSource;
+  final VPlatformFileSource platformFileSource;
 
   const ImagePinterView({super.key, required this.platformFileSource});
 

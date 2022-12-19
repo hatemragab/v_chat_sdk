@@ -54,7 +54,7 @@ class ExploreTabView extends GetView<ExploreTabController> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: PlatformCacheImageWidget(
+                          child: VPlatformCacheImageWidget(
                             source: product.userModel.imgAsPlatformSource,
                             size: const Size(30, 30),
                             fit: BoxFit.contain,
@@ -111,7 +111,7 @@ class ExploreTabView extends GetView<ExploreTabController> {
                     ],
                   ),
                 ),
-                child: PlatformCacheImageWidget(
+                child: VPlatformCacheImageWidget(
                   source: product.imgAsPlatformSource,
                   size: const Size(120, 120),
                   fit: BoxFit.contain,

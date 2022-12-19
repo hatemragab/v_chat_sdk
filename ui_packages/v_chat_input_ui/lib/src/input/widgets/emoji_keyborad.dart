@@ -20,7 +20,7 @@ class EmojiKeyboard extends StatelessWidget {
     return Offstage(
       offstage: !isEmojiShowing,
       child: SizedBox(
-        height: Platforms.isWeb ? MediaQuery.of(context).size.height / 3 : 250,
+        height: VPlatforms.isWeb ? MediaQuery.of(context).size.height / 3 : 250,
         child: EmojiPicker(
           onEmojiSelected: (category, emoji) {
             onEmojiSelected(emoji);
@@ -28,7 +28,7 @@ class EmojiKeyboard extends StatelessWidget {
           onBackspacePressed: onBackspacePressed,
           config: Config(
             // Issue: https://github.com/flutter/flutter/issues/28894
-            emojiSizeMax: 32 * (Platforms.isIOS ? 1.30 : 1.0),
+            emojiSizeMax: 32 * (VPlatforms.isIOS ? 1.30 : 1.0),
             bgColor: isDark ? Colors.black54 : const Color(0xFFF2F2F2),
           ),
         ),

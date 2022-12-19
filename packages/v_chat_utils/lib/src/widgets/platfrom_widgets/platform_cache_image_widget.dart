@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 
 import '../../../v_chat_utils.dart';
 
-class PlatformCacheImageWidget extends StatelessWidget {
-  final PlatformFileSource source;
+class VPlatformCacheImageWidget extends StatelessWidget {
+  final VPlatformFileSource source;
   final Size? size;
   final BoxFit? fit;
 
-  const PlatformCacheImageWidget({
+  const VPlatformCacheImageWidget({
     super.key,
     required this.source,
     this.size,

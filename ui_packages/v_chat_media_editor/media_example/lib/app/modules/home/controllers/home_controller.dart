@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
-  final files = <PlatformFileSource>[].obs;
+  final files = <VPlatformFileSource>[].obs;
 
   void onGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -15,18 +15,18 @@ class HomeController extends GetxController {
     );
 
     if (result != null) {
-      final mediaFiles = <PlatformFileSource>[];
+      final mediaFiles = <VPlatformFileSource>[];
       if (kIsWeb) {
         for (final f in result.files) {
           mediaFiles.add(
-            PlatformFileSource.fromBytes(name: f.name, bytes: f.bytes!),
+            VPlatformFileSource.fromBytes(name: f.name, bytes: f.bytes!),
           );
         }
       } else {
         List<File> files = result.paths.map((path) => File(path!)).toList();
         for (var e in files) {
           mediaFiles.add(
-            PlatformFileSource.fromPath(filePath: e.path),
+            VPlatformFileSource.fromPath(filePath: e.path),
           );
         }
       }

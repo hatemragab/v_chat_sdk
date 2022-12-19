@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
- import '../controllers/create_broadcast_controller.dart';
+import '../controllers/create_broadcast_controller.dart';
 
 class CreateBroadcastView extends GetView<CreateBroadcastController> {
   const CreateBroadcastView({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class CreateBroadcastView extends GetView<CreateBroadcastController> {
                                   Icons.camera_alt_outlined,
                                   size: 100,
                                 )
-                              : PlatformCacheImageWidget(
+                              : VPlatformCacheImageWidget(
                                   source: controller.groupImage!,
                                   fit: BoxFit.cover,
                                 ),

@@ -61,7 +61,7 @@ class AuthInterceptor implements RequestInterceptor {
   @override
   FutureOr<Request> onRequest(Request request) {
     final oldHeaders = Map.of(request.headers);
-    oldHeaders['authorization'] = "Bearer ${access ?? AppPref.getHashedString(
+    oldHeaders['authorization'] = "Bearer ${access ?? VAppPref.getHashedString(
           key: StorageKeys.accessToken,
         )}";
     oldHeaders["clint-version"] = AppConstants.clintVersion;

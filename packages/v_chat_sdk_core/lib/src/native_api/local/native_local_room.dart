@@ -13,7 +13,7 @@ class NativeLocalRoom {
   final _emitter = EventBusSingleton.instance.vChatEvents;
   Stream<VRoomEvents> get roomStream => _emitter.on<VRoomEvents>();
   NativeLocalRoom(Database database) {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       _roomRepo = MemoryRoomImp();
     } else {
       _roomRepo = SqlRoomImp(database);

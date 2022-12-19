@@ -10,7 +10,7 @@ class NativeLocalApiCache {
   late final BaseLocalApiCacheRepo _apiCacheRepo;
 
   NativeLocalApiCache(Database database) {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       _apiCacheRepo = ApiCacheMemoryImp();
     } else {
       _apiCacheRepo = ApiCacheSqlImp(database);

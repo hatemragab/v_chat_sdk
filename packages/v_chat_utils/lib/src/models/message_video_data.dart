@@ -1,24 +1,19 @@
 import '../../v_chat_utils.dart';
-import 'message_image_data.dart';
 
-extension on Duration {
-  String format() => '$this'.split('.')[0].padLeft(8, '0');
-}
-
-class MessageVideoData {
-  PlatformFileSource fileSource;
-  MessageImageData? thumbImage;
+class VMessageVideoData {
+  VPlatformFileSource fileSource;
+  VMessageImageData? thumbImage;
   int duration;
 
   Duration get durationObj => Duration(milliseconds: duration);
 
   String get dateFormat {
-    return durationObj.format();
+    return '$durationObj'.split('.')[0].padLeft(8, '0');
   }
 
 //<editor-fold desc="Data Methods">
 
-  MessageVideoData({
+  VMessageVideoData({
     required this.fileSource,
     this.thumbImage,
     required this.duration,
@@ -41,13 +36,13 @@ class MessageVideoData {
     };
   }
 
-  factory MessageVideoData.fromMap(Map<String, dynamic> map) {
-    return MessageVideoData(
-      fileSource: PlatformFileSource.fromMap(map),
+  factory VMessageVideoData.fromMap(Map<String, dynamic> map) {
+    return VMessageVideoData(
+      fileSource: VPlatformFileSource.fromMap(map),
       duration: map['duration'] == null ? 0 : map['duration'] as int,
       thumbImage: map['thumbImage'] == null
           ? null
-          : MessageImageData.fromMap(
+          : VMessageImageData.fromMap(
               map['thumbImage'] as Map<String, dynamic>,
             ),
     );

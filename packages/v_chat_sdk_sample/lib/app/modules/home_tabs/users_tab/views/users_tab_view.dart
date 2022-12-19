@@ -43,7 +43,7 @@ class UsersTabView extends GetView<UsersTabController> {
             ),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(50),
-              child: PlatformCacheImageWidget(
+              child: VPlatformCacheImageWidget(
                 source: user.imgAsPlatformSource,
                 size: const Size(60, 60),
                 fit: BoxFit.cover,

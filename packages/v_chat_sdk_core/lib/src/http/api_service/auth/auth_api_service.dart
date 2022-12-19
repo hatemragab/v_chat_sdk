@@ -18,15 +18,15 @@ class AuthApiService {
       response.body['data']['user'] as Map<String, dynamic>,
     );
     await Future.wait([
-      AppPref.setHashedString(
+      VAppPref.setHashedString(
         StorageKeys.accessToken,
         response.body['data']['accessToken'].toString(),
       ),
-      AppPref.setString(
+      VAppPref.setString(
         StorageKeys.appLanguage,
         dto.language,
       ),
-      AppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
+      VAppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
     ]);
     return myUser;
   }
@@ -46,15 +46,15 @@ class AuthApiService {
       response.body['data']['user'] as Map<String, dynamic>,
     );
     await Future.wait([
-      AppPref.setHashedString(
+      VAppPref.setHashedString(
         StorageKeys.accessToken,
         response.body['data']['accessToken'].toString(),
       ),
-      AppPref.setString(
+      VAppPref.setString(
         StorageKeys.appLanguage,
         dto.language,
       ),
-      AppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
+      VAppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
     ]);
     return myUser;
   }

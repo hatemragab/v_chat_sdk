@@ -14,7 +14,7 @@ mixin MessageLocalStorage {
   initMessageLocalStorage({
     required Database database,
   }) {
-    if (Platforms.isWeb) {
+    if (VPlatforms.isWeb) {
       localMessageRepo = MemoryMessageImp();
     } else {
       localMessageRepo = SqlMessageImp(database);

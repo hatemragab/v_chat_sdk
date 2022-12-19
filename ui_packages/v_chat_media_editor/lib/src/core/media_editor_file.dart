@@ -16,7 +16,7 @@ abstract class BaseMediaEditor {
 }
 
 class MediaEditorImage extends BaseMediaEditor {
-  MessageImageData data;
+  VMessageImageData data;
 
   MediaEditorImage({
     String? id,
@@ -32,7 +32,7 @@ class MediaEditorImage extends BaseMediaEditor {
 }
 
 class MediaEditorVideo extends BaseMediaEditor {
-  MessageVideoData data;
+  VMessageVideoData data;
 
   MediaEditorVideo({
     String? id,

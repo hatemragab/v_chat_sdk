@@ -34,7 +34,7 @@ class VFileMessage extends VBaseMessage {
 
   VFileMessage.fromRemoteMap(super.map)
       : fileSource = VMessageFileData(
-          fileSource: PlatformFileSource.fromMap(
+          fileSource: VPlatformFileSource.fromMap(
             map['msgAtt'] as Map<String, dynamic>,
           ),
         ),
@@ -42,7 +42,7 @@ class VFileMessage extends VBaseMessage {
 
   VFileMessage.fromLocalMap(super.map)
       : fileSource = VMessageFileData(
-          fileSource: PlatformFileSource.fromMap(
+          fileSource: VPlatformFileSource.fromMap(
             jsonDecode(map[MessageTable.columnAttachment] as String)
                 as Map<String, dynamic>,
           ),

@@ -8,7 +8,7 @@ import 'package:v_chat_utils/src/models/v_full_url_model.dart';
 
 import '../utils/enums.dart';
 
-class PlatformFileSource {
+class VPlatformFileSource {
   String name;
   VFullUrlModel? url;
   String? filePath;
@@ -16,7 +16,7 @@ class PlatformFileSource {
   String? mimeType;
   int fileSize;
 
-  PlatformFileSource._({
+  VPlatformFileSource._({
     required this.name,
     this.url,
     this.filePath,
@@ -51,7 +51,7 @@ class PlatformFileSource {
     return Uint8List.fromList(getBytes);
   }
 
-  PlatformFileSource.fromBytes({
+  VPlatformFileSource.fromBytes({
     required this.name,
     required List<int> this.bytes,
   }) : fileSize = bytes.length {
@@ -59,14 +59,14 @@ class PlatformFileSource {
     mimeType = getMimeType;
   }
 
-  PlatformFileSource.fromPath({
+  VPlatformFileSource.fromPath({
     required String this.filePath,
   })  : fileSize = File(filePath).lengthSync(),
         name = basename(filePath) {
     mimeType = getMimeType;
   }
 
-  PlatformFileSource.fromUrl({
+  VPlatformFileSource.fromUrl({
     this.fileSize = 0,
     required String url,
     bool isFullUrl = false,
@@ -104,11 +104,11 @@ class PlatformFileSource {
     return SupportedFilesType.file;
   }
 
-  factory PlatformFileSource.fromMap(Map<String, dynamic> map) {
+  factory VPlatformFileSource.fromMap(Map<String, dynamic> map) {
     if (map['filePath'] == null && map['bytes'] == null && map['url'] == null) {
       throw "PlatformFileSource.fromMap at lest filePath or bytes or url not null $map";
     }
-    return PlatformFileSource._(
+    return VPlatformFileSource._(
       name: map['name'] as String,
       url: map['url'] == null ? null : VFullUrlModel(map['url'] as String),
       filePath: map['filePath'] as String?,

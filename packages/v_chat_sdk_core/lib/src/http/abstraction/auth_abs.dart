@@ -13,7 +13,7 @@ abstract class AuthEndPoints {
   Future<VIdentifierUser> register({
     required String identifier,
     required String fullName,
-    PlatformFileSource? image,
+    VPlatformFileSource? image,
     required Locale deviceLanguage,
   });
 

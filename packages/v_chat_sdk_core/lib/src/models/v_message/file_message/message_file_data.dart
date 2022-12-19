@@ -1,7 +1,7 @@
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VMessageFileData {
-  PlatformFileSource fileSource;
+  VPlatformFileSource fileSource;
 
 //<editor-fold desc="Data Methods">
 
@@ -25,7 +25,7 @@ class VMessageFileData {
   }
 
   VMessageFileData copyWith({
-    PlatformFileSource? fileSource,
+    VPlatformFileSource? fileSource,
   }) {
     return VMessageFileData(
       fileSource: fileSource ?? this.fileSource,
@@ -38,7 +38,7 @@ class VMessageFileData {
 
   factory VMessageFileData.fromMap(Map<String, dynamic> map) {
     return VMessageFileData(
-      fileSource: PlatformFileSource.fromMap(map),
+      fileSource: VPlatformFileSource.fromMap(map),
     );
   }
 

@@ -35,7 +35,7 @@ import 'helpers/utils.dart';
 // }
 
 class VoiceMessageController extends MyTicker {
-  final PlatformFileSource audioSrc;
+  final VPlatformFileSource audioSrc;
   late Duration maxDuration;
   Duration currentDuration = Duration.zero;
   final Function(String id) onComplete;

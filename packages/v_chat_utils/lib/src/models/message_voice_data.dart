@@ -1,7 +1,7 @@
 import 'platform_file_source.dart';
 
 class VMessageVoiceData {
-  PlatformFileSource fileSource;
+  VPlatformFileSource fileSource;
   int duration;
 
 //<editor-fold desc="Data Methods">
@@ -29,7 +29,7 @@ class VMessageVoiceData {
   }
 
   VMessageVoiceData copyWith({
-    PlatformFileSource? fileSource,
+    VPlatformFileSource? fileSource,
     int? duration,
   }) {
     return VMessageVoiceData(
@@ -47,7 +47,7 @@ class VMessageVoiceData {
 
   factory VMessageVoiceData.fromMap(Map<String, dynamic> map) {
     return VMessageVoiceData(
-      fileSource: PlatformFileSource.fromMap(map),
+      fileSource: VPlatformFileSource.fromMap(map),
       duration: map['duration'] as int,
     );
   }
