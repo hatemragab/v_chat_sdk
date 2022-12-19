@@ -81,7 +81,7 @@ class VoiceMessageController extends MyTicker {
   VoiceMessageController({
     required this.id,
     required this.audioSrc,
-    this.maxDuration = Duration.zero,
+    this.maxDuration = const Duration(days: 1),
     required this.onComplete,
     required this.onPause,
     required this.onPlaying,

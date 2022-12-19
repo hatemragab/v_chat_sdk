@@ -12,7 +12,7 @@ class AppBareState {
     this.memberCount,
   ]);
 
-  RoomTypingModel get typingModel => _room.typingStatus;
+  VSocketRoomTypingModel get typingModel => _room.typingStatus;
 
   bool get isOnline => _room.isOnline;
 

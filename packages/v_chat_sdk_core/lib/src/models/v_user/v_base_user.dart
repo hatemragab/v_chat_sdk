@@ -40,9 +40,9 @@ class VBaseUser {
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': this.vChatId,
-      'fullName': this.fullName,
-      'userImages': this.userImages.toMap(),
+      '_id': vChatId,
+      'fullName': fullName,
+      'userImages': userImages.toMap(),
     };
   }
 

@@ -8,6 +8,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
+import '../../../utils/api_constants.dart';
 import '../core/message_factory.dart';
 
 abstract class VBaseMessage {
@@ -259,7 +260,7 @@ abstract class VBaseMessage {
     String? broadcastId,
     this.replyTo,
   })  : id = ObjectId().hexString,
-        localId = Uuid().v4(),
+        localId = const Uuid().v4(),
         platform = VPlatforms.currentPlatform,
         createdAt = DateTime.now().toLocal().toIso8601String(),
         updatedAt = DateTime.now().toLocal().toIso8601String(),
@@ -281,7 +282,7 @@ abstract class VBaseMessage {
     String? broadcastId,
     this.replyTo,
   })  : id = ObjectId().hexString,
-        localId = Uuid().v4(),
+        localId = const Uuid().v4(),
         roomId = "roomId $content",
         platform = VPlatforms.currentPlatform,
         createdAt = DateTime.now().toLocal().toIso8601String(),

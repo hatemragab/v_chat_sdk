@@ -1,6 +1,6 @@
 import '../../../../v_chat_sdk_core.dart';
 
-class RoomDataMemberModel {
+class VRoomDataMemberModel {
   final RoomType roomType;
   String? transTo;
   String title;
@@ -13,7 +13,7 @@ class RoomDataMemberModel {
 
 //<editor-fold desc="Data Methods">
 
-  RoomDataMemberModel({
+  VRoomDataMemberModel({
     required this.roomType,
     this.transTo,
     required this.title,
@@ -44,8 +44,8 @@ class RoomDataMemberModel {
     };
   }
 
-  factory RoomDataMemberModel.fromMap(Map<String, dynamic> map) {
-    return RoomDataMemberModel(
+  factory VRoomDataMemberModel.fromMap(Map<String, dynamic> map) {
+    return VRoomDataMemberModel(
       roomType: RoomType.values.byName(map['rT'] as String),
       transTo: map['tTo'] as String?,
       title: map['t'] as String,

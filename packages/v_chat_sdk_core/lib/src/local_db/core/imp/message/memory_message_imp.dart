@@ -137,9 +137,9 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
 
   @override
   Future<int> updateMessagesFromSendingToError() {
-    for (final e in _messages) {
-      e.messageStatus = MessageSendingStatusEnum.error;
-    }
+    // for (final e in _messages) {
+    //   e.messageStatus = MessageSendingStatusEnum.error;
+    // }
     return Future.value(1);
   }
 

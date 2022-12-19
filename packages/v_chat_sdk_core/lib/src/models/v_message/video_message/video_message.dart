@@ -5,7 +5,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
-import '../base_message/base_message.dart';
+import '../../../utils/api_constants.dart';
 
 class VVideoMessage extends VBaseMessage {
   final VMessageVideoData fileSource;

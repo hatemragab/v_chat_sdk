@@ -26,7 +26,7 @@ dependencies:
   giphy_get: ^3.1.1
   v_chat_mention_controller: ^1.0.0
   textless: ^6.6.6
-  v_chat_utils: ^0.0.1
+  v_chat_utils: ^0.0.2
 #  audio_waveforms: ^0.1.5+1
   audio_waveforms:
     git: https://github.com/yohom/audio_waveforms

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,7 +70,6 @@ class HomeViewState extends State<HomeView> {
             elevation: 0,
             heroTag: "cc",
             onPressed: () {
-              final id = "${Random().nextInt(2364566745)}".toString();
               voicesList.insert(
                 0,
                 VoiceMessageModel(
@@ -112,7 +109,7 @@ class HomeViewState extends State<HomeView> {
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(10),
-        reverse: false,
+        reverse: true,
         separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, i) {
           return VoiceMessageView(

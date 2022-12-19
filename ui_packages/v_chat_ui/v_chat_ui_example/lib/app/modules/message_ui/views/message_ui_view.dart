@@ -13,7 +13,7 @@ class MessageUiView extends GetView<MessageUiController> {
         title: const Text('MessageUiView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'MessageUiView is working',
           style: TextStyle(fontSize: 20),

@@ -13,7 +13,7 @@ class AboutView extends GetView<AboutController> {
         title: const Text('AboutView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'AboutView is working',
           style: TextStyle(fontSize: 20),

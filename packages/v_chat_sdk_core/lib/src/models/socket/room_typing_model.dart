@@ -1,8 +1,8 @@
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../v_chat_sdk_core.dart';
+import '../../utils/api_constants.dart';
 
-class RoomTypingModel {
+class VSocketRoomTypingModel {
   final RoomTypingEnum status;
   final String roomId;
   final String userId;
@@ -12,39 +12,39 @@ class RoomTypingModel {
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
-  const RoomTypingModel({
+  const VSocketRoomTypingModel({
     required this.status,
     required this.roomId,
     required this.name,
     required this.userId,
   });
 
-  static const RoomTypingModel offline = RoomTypingModel(
+  static const VSocketRoomTypingModel offline = VSocketRoomTypingModel(
     name: "offline",
     roomId: "offline",
     status: RoomTypingEnum.stop,
     userId: "offline",
   );
-  static const RoomTypingModel typing = RoomTypingModel(
+  static const VSocketRoomTypingModel typing = VSocketRoomTypingModel(
     name: "fake typing",
     roomId: "fake",
     status: RoomTypingEnum.typing,
     userId: "fake",
   );
-  static const RoomTypingModel recoding = RoomTypingModel(
+  static const VSocketRoomTypingModel recoding = VSocketRoomTypingModel(
     name: "fake recoding",
     roomId: "fake",
     status: RoomTypingEnum.recording,
     userId: "fake",
   );
 
-  RoomTypingModel copyWith({
+  VSocketRoomTypingModel copyWith({
     String? roomId,
     String? userId,
     String? name,
     RoomTypingEnum? status,
   }) {
-    return RoomTypingModel(
+    return VSocketRoomTypingModel(
       roomId: roomId ?? this.roomId,
       userId: userId ?? this.userId,
       name: name ?? this.name,
@@ -84,8 +84,8 @@ class RoomTypingModel {
     return "$name ${_statusInText!}";
   }
 
-  factory RoomTypingModel.fromMap(Map<String, dynamic> map) {
-    return RoomTypingModel(
+  factory VSocketRoomTypingModel.fromMap(Map<String, dynamic> map) {
+    return VSocketRoomTypingModel(
       status: RoomTypingEnum.values.byName(map['status'] as String),
       name: map['name'] as String,
       userId: map['userId'] as String,

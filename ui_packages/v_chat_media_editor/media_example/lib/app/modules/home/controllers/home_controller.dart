@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
   final files = <VPlatformFileSource>[].obs;
+  final proccessedData = <BaseMediaEditor>[].obs;
 
   void onGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -30,22 +33,24 @@ class HomeController extends GetxController {
           );
         }
       }
-      // final editedFiles = await Navigator.of(Get.context!).push(
-      //   MaterialPageRoute(
-      //     builder: ((context) => MediaEditorView(files: mediaFiles)),
-      //   ),
-      // ) as List<BaseMediaEditor>?;
-      // if (editedFiles == null) {
-      //   return;
-      // }
-      // for (final f in editedFiles) {
-      //   print(f.toString());
-      //   // if (f is MediaEditorImage) {
-      //   //   files.add(f.data.fileSource);
-      //   // } else if (f is MediaEditorVideo) {
-      //   //   files.add(f.data.fileSource);
-      //   // }
-      // }
+      final editedFiles = await Navigator.of(Get.context!).push(
+        MaterialPageRoute(
+          builder: ((context) => MediaEditorView(files: mediaFiles)),
+        ),
+      ) as List<BaseMediaEditor>?;
+      if (editedFiles == null) {
+        return;
+      }
+      proccessedData.clear();
+      proccessedData.addAll(editedFiles);
+      for (final f in editedFiles) {
+        print(f.toString());
+        // if (f is MediaEditorImage) {
+        //   files.add(f.data.fileSource);
+        // } else if (f is MediaEditorVideo) {
+        //   files.add(f.data.fileSource);
+        // }
+      }
     } else {
       // User canceled the picker
     }

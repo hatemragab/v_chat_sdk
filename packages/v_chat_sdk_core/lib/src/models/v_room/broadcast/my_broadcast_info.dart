@@ -1,18 +1,18 @@
-class MyBroadcastInfo {
+class VMyBroadcastInfo {
   final int totalUsers;
 
 //<editor-fold desc="Data Methods">
 
-  const MyBroadcastInfo({
+  const VMyBroadcastInfo({
     required this.totalUsers,
   });
 
-  MyBroadcastInfo.empty() : totalUsers = 0;
+  VMyBroadcastInfo.empty() : totalUsers = 0;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is MyBroadcastInfo &&
+      (other is VMyBroadcastInfo &&
           runtimeType == other.runtimeType &&
           totalUsers == other.totalUsers);
 
@@ -24,10 +24,10 @@ class MyBroadcastInfo {
     return 'MyBroadcastInfo{ totalUsers: $totalUsers,}';
   }
 
-  MyBroadcastInfo copyWith({
+  VMyBroadcastInfo copyWith({
     int? totalUsers,
   }) {
-    return MyBroadcastInfo(
+    return VMyBroadcastInfo(
       totalUsers: totalUsers ?? this.totalUsers,
     );
   }
@@ -38,8 +38,8 @@ class MyBroadcastInfo {
     };
   }
 
-  factory MyBroadcastInfo.fromMap(Map<String, dynamic> map) {
-    return MyBroadcastInfo(
+  factory VMyBroadcastInfo.fromMap(Map<String, dynamic> map) {
+    return VMyBroadcastInfo(
       totalUsers: map['totalUsers'] as int,
     );
   }

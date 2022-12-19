@@ -29,12 +29,7 @@ class VPaginationModel<T> {
 
   @override
   String toString() {
-    return 'PaginationModel{' +
-        ' values: $values,' +
-        ' page: $page,' +
-        ' limit: $limit,' +
-        ' nextPage: $nextPage,' +
-        '}';
+    return 'PaginationModel{ values: $values, page: $page, limit: $limit, nextPage: $nextPage,}';
   }
 
   VPaginationModel copyWith({
@@ -53,10 +48,10 @@ class VPaginationModel<T> {
 
   Map<String, dynamic> toMap() {
     return {
-      'values': this.values,
-      'page': this.page,
-      'limit': this.limit,
-      'nextPage': this.nextPage,
+      'values': values,
+      'page': page,
+      'limit': limit,
+      'nextPage': nextPage,
     };
   }
 

@@ -44,3 +44,17 @@ class MediaEditorVideo extends BaseMediaEditor {
     return 'MediaEditorVideo{data $data}';
   }
 }
+
+class MediaEditorFile extends BaseMediaEditor {
+  VPlatformFileSource data;
+
+  MediaEditorFile({
+    String? id,
+    required this.data,
+  }) : super(id: id ?? DateTime.now().microsecondsSinceEpoch.toString());
+
+  @override
+  String toString() {
+    return 'MediaEditorFile{data $data}';
+  }
+}

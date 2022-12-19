@@ -68,9 +68,9 @@ class VMessageController extends ChangeNotifier {
 
   void onMessageItemPress(VBaseMessage message) {}
 
-  void onTyping(RoomTypingModel p1) {
+  void onTyping(VSocketRoomTypingModel p1) {
     if (appBareState.value.typingModel.isTyping) {
-      _vRoom.typingStatus = RoomTypingModel.offline;
+      _vRoom.typingStatus = VSocketRoomTypingModel.offline;
     } else {
       _vRoom.typingStatus = p1;
     }

@@ -4,7 +4,6 @@ import 'package:diacritic/diacritic.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../../../v_chat_sdk_core.dart';
-import '../../../../models/socket/room_typing_model.dart';
 import '../../../tables/message_table.dart';
 import '../../../tables/room_table.dart';
 import '../../abstraction/base_local_room_repo.dart';
@@ -180,7 +179,8 @@ class SqlRoomImp extends BaseLocalRoomRepo {
       _table,
       {
         RoomTable.columnIsOnline: 0,
-        RoomTable.columnRoomTyping: jsonEncode(RoomTypingModel.offline.toMap()),
+        RoomTable.columnRoomTyping:
+            jsonEncode(VSocketRoomTypingModel.offline.toMap()),
       },
     );
   }

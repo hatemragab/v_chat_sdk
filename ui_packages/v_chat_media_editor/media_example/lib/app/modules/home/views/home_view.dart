@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_media_editor/v_chat_media_editor.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -11,7 +13,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: controller.onGallery,
-        child: Text(
+        child: const Text(
           "Open Gallery",
           textAlign: TextAlign.center,
         ),
@@ -20,6 +22,38 @@ class HomeView extends GetView<HomeController> {
         title: const Text('Home View'),
         centerTitle: true,
       ),
+      body: Obx(() {
+        final data = controller.proccessedData;
+        return ListView.separated(
+          padding: const EdgeInsets.all(10),
+          separatorBuilder: (context, index) =>
+              const Divider(color: Colors.black, height: 20, thickness: 2),
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Text(
+                  data[index].toString(),
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                if (data[index] is MediaEditorImage)
+                  VPlatformCacheImageWidget(
+                    source: (data[index] as MediaEditorImage).data.fileSource,
+                    size: const Size.fromHeight(400),
+                  )
+                else if (data[index] is MediaEditorVideo)
+                  Text(
+                      "Video wit thumb ${(data[index] as MediaEditorVideo).data.thumbImage}")
+                else
+                  Text("File ${data[index].toString()}")
+              ],
+            );
+          },
+          itemCount: data.length,
+        );
+      }),
     );
   }
 }

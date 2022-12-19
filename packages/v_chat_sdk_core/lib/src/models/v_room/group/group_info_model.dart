@@ -2,15 +2,15 @@ import 'package:v_chat_sdk_core/src/models/v_room/group/room_data_member_model.d
 
 import '../../../../v_chat_sdk_core.dart';
 
-class GroupInfoModel {
-  RoomDataMemberModel roomDataMemberModel;
+class VGroupInfoModel {
+  VRoomDataMemberModel roomDataMemberModel;
   GroupMemberRole myRole;
   String? groupDescription;
   int memberCount;
 
 //<editor-fold desc="Data Methods">
 
-  GroupInfoModel({
+  VGroupInfoModel({
     required this.roomDataMemberModel,
     required this.myRole,
     required this.memberCount,
@@ -39,9 +39,9 @@ class GroupInfoModel {
     };
   }
 
-  factory GroupInfoModel.fromMap(Map<String, dynamic> map) {
-    return GroupInfoModel(
-      roomDataMemberModel: RoomDataMemberModel.fromMap(
+  factory VGroupInfoModel.fromMap(Map<String, dynamic> map) {
+    return VGroupInfoModel(
+      roomDataMemberModel: VRoomDataMemberModel.fromMap(
         map['roomData'] as Map<String, dynamic>,
       ),
       myRole: GroupMemberRole.values.byName(

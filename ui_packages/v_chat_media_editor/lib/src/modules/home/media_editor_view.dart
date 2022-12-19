@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/horz_media_item.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/media_item.dart';
@@ -70,7 +69,7 @@ class _MediaEditorViewState extends State<MediaEditorView> {
                             return controller.onStartDraw(item, context);
                           }
                         },
-                        isActive: kIsWeb ? false : !controller.isLoading,
+                        isProcessing: controller.isLoading,
                       );
                     },
                     itemCount: controller.mediaFiles.length,

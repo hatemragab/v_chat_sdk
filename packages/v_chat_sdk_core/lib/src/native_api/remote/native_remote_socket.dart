@@ -4,7 +4,6 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../http/socket/socket_controller.dart';
-import '../../models/socket/room_typing_model.dart';
 import '../../utils/event_bus.dart';
 
 class NativeRemoteSocketIo {
@@ -21,7 +20,7 @@ class NativeRemoteSocketIo {
   void emitGetMyOnline(List<String> ids) =>
       SocketController.instance.emitGetMyOnline(jsonEncode(ids));
 
-  void emitUpdateRoomStatus(RoomTypingModel model) =>
+  void emitUpdateRoomStatus(VSocketRoomTypingModel model) =>
       SocketController.instance.emitUpdateRoomStatus(jsonEncode(model.toMap()));
 
   void emitDeliverRoomMessages(String roomId) => SocketController.instance

@@ -20,7 +20,6 @@ enum NotificationType {
   singleChat,
   broadcastChat,
   deleteMessage,
-  newFollow
 }
 
 enum GroupMsgInfo {
@@ -67,9 +66,7 @@ enum MessageInfoType {
   leave,
   kick,
   createGroup,
-  createProject,
   addToBroadcast,
-  addToProject
 }
 
 enum GroupMemberRole { admin, member, superAdmin }

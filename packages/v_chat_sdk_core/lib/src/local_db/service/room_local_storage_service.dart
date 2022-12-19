@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
-import '../../models/socket/room_typing_model.dart';
 import '../../models/v_room/single_room/single_ban_model.dart';
 import '../../utils/event_bus.dart';
 import '../core/abstraction/base_local_room_repo.dart';
@@ -31,14 +30,15 @@ mixin RoomLocalStorageService {
     return localRoomRepo.getOneWithLastMessageByRoomId(id);
   }
 
-  Future<int?> updateRoomTyping(RoomTypingModel typing) {
+  Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) {
     final event =
         UpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
     emitter.fire(event);
     return localRoomRepo.updateTyping(event);
   }
 
-  Future<int> updateRoomSingleBlock(SingleBanModel block, String roomId) async {
+  Future<int> updateRoomSingleBlock(
+      VSingleBanModel block, String roomId) async {
     final event = BlockSingleRoomEvent(banModel: block, roomId: roomId);
     emitter.fire(event);
     return 1;

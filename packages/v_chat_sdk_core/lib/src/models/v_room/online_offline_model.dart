@@ -1,10 +1,10 @@
-class OnlineOfflineModel {
+class VOnlineOfflineModel {
   final String peerId;
   final bool isOnline;
 
 //<editor-fold desc="Data Methods">
 
-  const OnlineOfflineModel({
+  const VOnlineOfflineModel({
     required this.peerId,
     required this.isOnline,
   });
@@ -12,7 +12,7 @@ class OnlineOfflineModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is OnlineOfflineModel &&
+      (other is VOnlineOfflineModel &&
           runtimeType == other.runtimeType &&
           peerId == other.peerId &&
           isOnline == other.isOnline);
@@ -25,11 +25,11 @@ class OnlineOfflineModel {
     return 'OnlineOfflineModel{ peerId: $peerId, isOnline: $isOnline,}';
   }
 
-  OnlineOfflineModel copyWith({
+  VOnlineOfflineModel copyWith({
     String? peerId,
     bool? isOnline,
   }) {
-    return OnlineOfflineModel(
+    return VOnlineOfflineModel(
       peerId: peerId ?? this.peerId,
       isOnline: isOnline ?? this.isOnline,
     );
@@ -42,8 +42,8 @@ class OnlineOfflineModel {
     };
   }
 
-  factory OnlineOfflineModel.fromMap(Map<String, dynamic> map) {
-    return OnlineOfflineModel(
+  factory VOnlineOfflineModel.fromMap(Map<String, dynamic> map) {
+    return VOnlineOfflineModel(
       peerId: map['peerId'] as String,
       isOnline: map['isOnline'] as bool,
     );

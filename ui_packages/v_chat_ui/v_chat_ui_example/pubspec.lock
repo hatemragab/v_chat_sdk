@@ -1554,24 +1554,24 @@ packages:
   v_chat_sdk_core:
     dependency: "direct main"
     description:
-      path: "../../packages/v_chat_sdk_core"
+      path: "../../../packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   v_chat_ui:
     dependency: "direct main"
     description:
-      path: "../v_chat_ui"
+      path: ".."
       relative: true
     source: path
     version: "0.0.1"
   v_chat_utils:
     dependency: "direct main"
     description:
-      path: "../../packages/v_chat_utils"
+      path: "../../../packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   vector_math:
     dependency: transitive
     description:

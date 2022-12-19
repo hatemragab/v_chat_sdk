@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import '../../../local_db/tables/message_table.dart';
-import '../base_message/base_message.dart';
+import '../base_message/v_base_message.dart';
 import 'msg_info_att.dart';
 
 class VInfoMessage extends VBaseMessage {
-  final MsgInfoAtt infoAtt;
+  final VMsgInfoAtt infoAtt;
 
   VInfoMessage({
     required super.id,
@@ -31,11 +31,11 @@ class VInfoMessage extends VBaseMessage {
   });
 
   VInfoMessage.fromRemoteMap(super.map)
-      : infoAtt = MsgInfoAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      : infoAtt = VMsgInfoAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();
 
   VInfoMessage.fromLocalMap(super.map)
-      : infoAtt = MsgInfoAtt.fromMap(
+      : infoAtt = VMsgInfoAtt.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),

@@ -1,14 +1,14 @@
 import 'package:chopper/chopper.dart';
 import 'package:http/http.dart' as http;
 
-class MessageUploadModel {
+class VMessageUploadModel {
   final List<PartValue> body;
   final http.MultipartFile? file1;
   final http.MultipartFile? file2;
   final String roomId;
   final String msgLocalId;
 
-  const MessageUploadModel({
+  const VMessageUploadModel({
     required this.body,
     required this.roomId,
     required this.msgLocalId,
@@ -19,7 +19,7 @@ class MessageUploadModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MessageUploadModel &&
+      other is VMessageUploadModel &&
           runtimeType == other.runtimeType &&
           msgLocalId == other.msgLocalId;
 

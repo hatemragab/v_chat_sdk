@@ -4,7 +4,6 @@ import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/models/socket/on_deliver_room_messages_model.dart';
 import 'package:v_chat_sdk_core/src/models/socket/on_enter_room_model.dart';
-import 'package:v_chat_sdk_core/src/models/socket/room_typing_model.dart';
 import 'package:v_chat_sdk_core/src/models/v_room/single_room/my_single_room_info.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -67,7 +66,7 @@ class SocketService {
     }
   }
 
-  void handleOnGetMyOnlineList(List<OnlineOfflineModel> dataModelList) {
+  void handleOnGetMyOnlineList(List<VOnlineOfflineModel> dataModelList) {
     for (final e in dataModelList) {
       unawaited(
         _localRoom.updateRoomOnline(
@@ -81,7 +80,7 @@ class SocketService {
     }
   }
 
-  void handleOnEnterChatRoom(OnEnterRoomModel model) {
+  void handleOnEnterChatRoom(VSocketOnRoomSeenModel model) {
     unawaited(
       _localMessage.updateMessagesSetSeen(
         VUpdateMessageSeenEvent(
@@ -93,7 +92,7 @@ class SocketService {
     );
   }
 
-  void handleOnDeliverRoomMessages(OnDeliverRoomMessagesModel model) {
+  void handleOnDeliverRoomMessages(VSocketOnDeliverMessagesModel model) {
     unawaited(
       _localMessage.updateMessagesSetDeliver(
         VUpdateMessageDeliverEvent(
@@ -105,14 +104,14 @@ class SocketService {
     );
   }
 
-  Future<void> handleOnRoomTypingChanged(RoomTypingModel x) async {
+  Future<void> handleOnRoomTypingChanged(VSocketRoomTypingModel x) async {
     if (!x.isMe) {
       await _localRoom.updateRoomTyping(x);
     }
   }
 
   Future<void> handleOnSingleRoomBan(
-    MySingleRoomInfo mySingleRoomInfo,
+    VMySingleRoomInfo mySingleRoomInfo,
     String roomId,
   ) async {
     final apiCache = ApiCacheModel(

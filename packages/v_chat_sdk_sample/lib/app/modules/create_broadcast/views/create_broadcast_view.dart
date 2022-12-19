@@ -61,7 +61,7 @@ class CreateBroadcastView extends GetView<CreateBroadcastController> {
               ),
               TextField(
                 controller: controller.nameController,
-                decoration: InputDecoration(hintText: "broadcast title"),
+                decoration: const InputDecoration(hintText: "broadcast title"),
               ),
               const SizedBox(
                 height: 20,

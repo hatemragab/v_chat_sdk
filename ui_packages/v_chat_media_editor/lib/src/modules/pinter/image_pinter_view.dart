@@ -449,7 +449,7 @@ class _ImagePinterViewState extends State<ImagePinterView> {
     final bytes = await image.pngBytes;
     if (widget.platformFileSource.bytes != null) {
       widget.platformFileSource.bytes = bytes;
-      return Navigator.of(context).pop(widget.platformFileSource);
+      return context.pop(widget.platformFileSource);
     } else {
       final tempFile = File(
         join(
@@ -459,7 +459,7 @@ class _ImagePinterViewState extends State<ImagePinterView> {
       );
       final file = await tempFile.writeAsBytes(bytes!);
       widget.platformFileSource.filePath = file.path;
-      return Navigator.of(context).pop(widget.platformFileSource);
+      return context.pop(widget.platformFileSource);
     }
   }
 

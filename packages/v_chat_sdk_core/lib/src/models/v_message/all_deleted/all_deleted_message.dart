@@ -1,4 +1,4 @@
-import '../base_message/base_message.dart';
+import '../base_message/v_base_message.dart';
 
 class VAllDeletedMessage extends VBaseMessage {
   VAllDeletedMessage({

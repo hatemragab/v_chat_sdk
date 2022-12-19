@@ -40,14 +40,15 @@ class NativeLocalRoom {
     }
   }
 
-  Future<int?> updateRoomTyping(RoomTypingModel typing) {
+  Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) {
     final event =
         UpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
     _emitter.fire(event);
     return _roomRepo.updateTyping(event);
   }
 
-  Future<int> updateRoomSingleBlock(SingleBanModel block, String roomId) async {
+  Future<int> updateRoomSingleBlock(
+      VSingleBanModel block, String roomId) async {
     final event = BlockSingleRoomEvent(banModel: block, roomId: roomId);
     _emitter.fire(event);
     return 1;

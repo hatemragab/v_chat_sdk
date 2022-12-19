@@ -1,6 +1,7 @@
 import '../../../../v_chat_sdk_core.dart';
+import '../../../utils/api_constants.dart';
 
-class MsgInfoAtt {
+class VMsgInfoAtt {
   final MessageInfoType action;
   final String targetName;
   final String targetId;
@@ -8,7 +9,7 @@ class MsgInfoAtt {
 
 //<editor-fold desc="Data Methods">
 
-  MsgInfoAtt({
+  VMsgInfoAtt({
     required this.action,
     required this.targetName,
     required this.targetId,
@@ -38,8 +39,8 @@ class MsgInfoAtt {
     };
   }
 
-  factory MsgInfoAtt.fromMap(Map<String, dynamic> map) {
-    return MsgInfoAtt(
+  factory VMsgInfoAtt.fromMap(Map<String, dynamic> map) {
+    return VMsgInfoAtt(
       action: MessageInfoType.values.byName(map['action'] as String),
       targetName: map['targetName'] as String,
       adminName: map['adminName'] as String,

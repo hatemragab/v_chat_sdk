@@ -103,7 +103,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessagesToSeen(VUpdateMessageSeenEvent event) async {
     await updateMessagesToDeliver(
       VUpdateMessageDeliverEvent(
-        deliverRoomMessagesModel: OnDeliverRoomMessagesModel(
+        deliverRoomMessagesModel: VSocketOnDeliverMessagesModel(
           roomId: event.roomId,
           userId: event.onEnterRoomModel.userId,
           date: event.onEnterRoomModel.date,
@@ -179,7 +179,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
         MessageTable.columnMessageStatus: MessageSendingStatusEnum.error.name,
       },
       where: "${MessageTable.columnMessageStatus} =?",
-      whereArgs: [MessageSendingStatusEnum.error.name],
+      whereArgs: [MessageSendingStatusEnum.sending.name],
     );
   }
 

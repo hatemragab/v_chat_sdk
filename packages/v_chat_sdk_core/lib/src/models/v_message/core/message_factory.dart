@@ -62,21 +62,21 @@ abstract class MessageFactory {
     }
   }
 
-  static Future<MessageUploadModel> createUploadMessage(
+  static Future<VMessageUploadModel> createUploadMessage(
     VBaseMessage msg,
   ) async {
     if (msg.forwardId != null) {
       return createForwardUploadMessage(msg);
     }
     if (msg is VTextMessage) {
-      return MessageUploadModel(
+      return VMessageUploadModel(
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
         msgLocalId: msg.localId,
       );
     }
     if (msg is VVoiceMessage) {
-      return MessageUploadModel(
+      return VMessageUploadModel(
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
         msgLocalId: msg.localId,
@@ -86,14 +86,14 @@ abstract class MessageFactory {
       );
     }
     if (msg is VLocationMessage) {
-      return MessageUploadModel(
+      return VMessageUploadModel(
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
       );
     }
     if (msg is VFileMessage) {
-      return MessageUploadModel(
+      return VMessageUploadModel(
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
@@ -103,7 +103,7 @@ abstract class MessageFactory {
       );
     }
     if (msg is VImageMessage) {
-      return MessageUploadModel(
+      return VMessageUploadModel(
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
@@ -113,7 +113,7 @@ abstract class MessageFactory {
       );
     }
     if (msg is VVideoMessage) {
-      return MessageUploadModel(
+      return VMessageUploadModel(
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
@@ -132,10 +132,10 @@ abstract class MessageFactory {
     );
   }
 
-  static Future<MessageUploadModel> createForwardUploadMessage(
+  static Future<VMessageUploadModel> createForwardUploadMessage(
     VBaseMessage msg,
   ) async {
-    return MessageUploadModel(
+    return VMessageUploadModel(
       body: msg.toListOfPartValue(),
       roomId: msg.roomId,
       msgLocalId: msg.localId,

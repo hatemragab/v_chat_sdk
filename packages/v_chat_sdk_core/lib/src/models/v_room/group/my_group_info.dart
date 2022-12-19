@@ -1,15 +1,15 @@
-class MyGroupInfo {
+class VMyGroupInfo {
   bool isMeOut;
   int membersCount;
 
 //<editor-fold desc="Data Methods">
 
-  MyGroupInfo({
+  VMyGroupInfo({
     required this.isMeOut,
     required this.membersCount,
   });
 
-  MyGroupInfo.empty()
+  VMyGroupInfo.empty()
       : membersCount = 0,
         isMeOut = false;
 
@@ -18,11 +18,11 @@ class MyGroupInfo {
     return 'MyGroupInfo{ isMeOut: $isMeOut, membersCount: $membersCount,}';
   }
 
-  MyGroupInfo copyWith({
+  VMyGroupInfo copyWith({
     bool? isMeOut,
     int? membersCount,
   }) {
-    return MyGroupInfo(
+    return VMyGroupInfo(
       isMeOut: isMeOut ?? this.isMeOut,
       membersCount: membersCount ?? this.membersCount,
     );
@@ -35,8 +35,8 @@ class MyGroupInfo {
     };
   }
 
-  factory MyGroupInfo.fromMap(Map<String, dynamic> map) {
-    return MyGroupInfo(
+  factory VMyGroupInfo.fromMap(Map<String, dynamic> map) {
+    return VMyGroupInfo(
       isMeOut: map['isMeOut'] as bool,
       membersCount: map['membersCount'] as int,
     );

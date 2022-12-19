@@ -45,11 +45,10 @@ dependencies:
   image_cropper: ^3.0.1
   wechat_camera_picker: ^3.6.3
   http_parser: ^4.0.2
-  v_chat_sdk_core:
-    path: ../../packages/v_chat_sdk_core
-  v_chat_utils: ^0.0.1
+  v_chat_sdk_core: ^0.0.2
+  v_chat_utils: ^0.0.2
   v_chat_ui:
-    path: ../v_chat_ui
+    path: ../../v_chat_ui
   flutter: 
     sdk: flutter
   flutter_localizations:

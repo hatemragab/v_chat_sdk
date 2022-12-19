@@ -8,6 +8,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:video_player/video_player.dart';
 
 abstract class MediaEditorHelpers {
+  ///get file type [MediaEditorType]
   static MediaEditorType getTypeFromName(String name) {
     return _getMediaType(name);
   }
@@ -25,7 +26,11 @@ abstract class MediaEditorHelpers {
     return MediaEditorType.file;
   }
 
-  static Future<ImageInfo> getImageInfo({List<int>? bytes, String? path}) {
+  ///get image info like width and height
+  static Future<ImageInfo> getImageInfo({
+    List<int>? bytes,
+    String? path,
+  }) {
     late final Image image;
     if (kIsWeb) {
       image = Image.memory(Uint8List.fromList(bytes!));
@@ -41,6 +46,7 @@ abstract class MediaEditorHelpers {
     return c.future;
   }
 
+  ///only [VPlatformFileSource.fromPath(filePath: filePath)] will work!
   static Future<int> getVideoDurationMill(VPlatformFileSource file) async {
     if (file.isFromBytes) {
       return 000;

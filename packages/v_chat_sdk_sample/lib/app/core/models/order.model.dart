@@ -34,12 +34,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel{' +
-        ' id: $id,' +
-        ' productModel: $productModel,' +
-        ' userId: $userId,' +
-        ' createdAt: $createdAt,' +
-        '}';
+    return 'OrderModel{ id: $id, productModel: $productModel, userId: $userId, createdAt: $createdAt,}';
   }
 
   OrderModel copyWith({
@@ -58,10 +53,10 @@ class OrderModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this.id,
-      'productModel': this.productModel.toMap(),
-      'userId': this.userId,
-      'createdAt': this.createdAt.toIso8601String(),
+      'id': id,
+      'productModel': productModel.toMap(),
+      'userId': userId,
+      'createdAt': createdAt.toIso8601String(),
     };
   }
 

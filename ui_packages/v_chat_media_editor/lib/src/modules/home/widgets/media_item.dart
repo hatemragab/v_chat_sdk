@@ -2,18 +2,19 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_chat_media_editor/src/modules/home/widgets/image_item.dart';
+import 'package:v_chat_media_editor/src/modules/home/widgets/video_item.dart';
 
 import '../../../core/core.dart';
+import 'file_item.dart';
 
 class MediaItem extends StatelessWidget {
   final VoidCallback onCloseClicked;
-
   final Function(BaseMediaEditor item) onDelete;
   final Function(BaseMediaEditor item) onCrop;
   final Function(BaseMediaEditor item) onStartDraw;
   final Function(BaseMediaEditor item) onPlayVideo;
-  final bool isActive;
+  final bool isProcessing;
 
   final BaseMediaEditor mediaFile;
 
@@ -24,115 +25,46 @@ class MediaItem extends StatelessWidget {
     required this.onDelete,
     required this.onCrop,
     required this.onStartDraw,
-    required this.isActive,
+    required this.isProcessing,
     required this.onPlayVideo,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  iconSize: 30,
-                  onPressed: onCloseClicked,
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      iconSize: 30,
-                      onPressed: isActive ? () => onDelete(mediaFile) : null,
-                      icon: const Icon(
-                        PhosphorIcons.trash,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    if (mediaFile is MediaEditorVideo)
-                      const SizedBox()
-                    else
-                      IconButton(
-                        iconSize: 30,
-                        onPressed: isActive ? () => onCrop(mediaFile) : null,
-                        icon: const Icon(
-                          PhosphorIcons.crop,
-                          color: Colors.white,
-                        ),
-                      ),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    IconButton(
-                      iconSize: 30,
-                      onPressed: isActive ? () => onStartDraw(mediaFile) : null,
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-        if (!isActive && mediaFile is MediaEditorVideo)
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                CircularProgressIndicator.adaptive(),
-              ],
-            ),
-          )
-        else
-          Expanded(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                getImage(),
-                if (mediaFile is MediaEditorVideo)
-                  InkWell(
-                    onTap: () => onPlayVideo(mediaFile),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 70,
-                          width: 70,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.black,
-                          ),
-                          child: const Icon(
-                            PhosphorIcons.playFill,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-              ],
-            ),
-          ),
-      ],
-    );
+    if (isProcessing) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          CircularProgressIndicator.adaptive(),
+        ],
+      );
+    }
+    if (mediaFile is MediaEditorImage) {
+      return ImageItem(
+        image: mediaFile as MediaEditorImage,
+        onCloseClicked: onCloseClicked,
+        onCrop: onCrop,
+        onDelete: onDelete,
+        onStartDraw: onStartDraw,
+      );
+    } else if (mediaFile is MediaEditorVideo) {
+      return VideoItem(
+        video: mediaFile as MediaEditorVideo,
+        onCloseClicked: onCloseClicked,
+        onPlayVideo: onPlayVideo,
+        onDelete: onDelete,
+      );
+    } else {
+      return FileItem(
+        file: mediaFile as MediaEditorFile,
+        onCloseClicked: onCloseClicked,
+        onDelete: onDelete,
+      );
+    }
   }
 
   Widget getImage() {
-    final BoxFit? fit = null;
+    const BoxFit? fit = null;
     if (mediaFile is MediaEditorImage) {
       final m = mediaFile as MediaEditorImage;
       if (m.data.isFromPath) {

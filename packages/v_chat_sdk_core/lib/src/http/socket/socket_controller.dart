@@ -8,7 +8,6 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import '../../../v_chat_sdk_core.dart';
 import '../../models/socket/on_deliver_room_messages_model.dart';
 import '../../models/socket/on_enter_room_model.dart';
-import '../../models/socket/room_typing_model.dart';
 import '../../models/v_message/core/message_factory.dart';
 import '../../models/v_room/single_room/my_single_room_info.dart';
 import '../../native_api/v_native_api.dart';
@@ -73,7 +72,7 @@ class SocketController implements ISocketIoClient {
     _socket.on(SocketEvents.v1OnMyOnline.name, (dynamic data) async {
       final dataMap = jsonDecode(data.toString()) as List;
       final dataModelList = dataMap
-          .map((e) => OnlineOfflineModel.fromMap(e as Map<String, dynamic>))
+          .map((e) => VOnlineOfflineModel.fromMap(e as Map<String, dynamic>))
           .toList();
       _socketService.handleOnGetMyOnlineList(dataModelList);
     });
@@ -81,28 +80,28 @@ class SocketController implements ISocketIoClient {
       _log.warning("SocketEvents.v1OnException:$data");
     });
     _socket.on(SocketEvents.v1OnEnterChatRoom.name, (dynamic data) async {
-      final model = OnEnterRoomModel.fromMap(
+      final model = VSocketOnRoomSeenModel.fromMap(
         jsonDecode(data.toString()) as Map<String, dynamic>,
       );
       await Future.delayed(const Duration(milliseconds: 100));
       _socketService.handleOnEnterChatRoom(model);
     });
     _socket.on(SocketEvents.v1OnDeliverChatRoom.name, (dynamic data) async {
-      final model = OnDeliverRoomMessagesModel.fromMap(
+      final model = VSocketOnDeliverMessagesModel.fromMap(
         jsonDecode(data.toString()) as Map<String, dynamic>,
       );
       await Future.delayed(const Duration(milliseconds: 100));
       _socketService.handleOnDeliverRoomMessages(model);
     });
     _socket.on(SocketEvents.v1OnRoomStatusChange.name, (dynamic data) async {
-      final x = RoomTypingModel.fromMap(
+      final x = VSocketRoomTypingModel.fromMap(
         jsonDecode(data.toString()) as Map<String, dynamic>,
       );
       await _socketService.handleOnRoomTypingChanged(x);
     });
     _socket.on(SocketEvents.v1OnBanUserChat.name, (dynamic data) async {
       final data = jsonDecode(json.toString()) as Map<String, dynamic>;
-      final mySingleRoomInfo = MySingleRoomInfo.fromMap(data);
+      final mySingleRoomInfo = VMySingleRoomInfo.fromMap(data);
       await _socketService.handleOnSingleRoomBan(
           mySingleRoomInfo, data['roomId'] as String);
     });

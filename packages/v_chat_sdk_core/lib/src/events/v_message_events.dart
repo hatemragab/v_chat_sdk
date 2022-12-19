@@ -64,7 +64,7 @@ class VUpdateMessageStatusEvent extends VMessageEvents {
 }
 
 class VUpdateMessageSeenEvent extends VMessageEvents {
-  final OnEnterRoomModel onEnterRoomModel;
+  final VSocketOnRoomSeenModel onEnterRoomModel;
 
   const VUpdateMessageSeenEvent({
     required super.roomId,
@@ -77,7 +77,7 @@ class VUpdateMessageSeenEvent extends VMessageEvents {
 }
 
 class VUpdateMessageDeliverEvent extends VMessageEvents {
-  final OnDeliverRoomMessagesModel deliverRoomMessagesModel;
+  final VSocketOnDeliverMessagesModel deliverRoomMessagesModel;
 
   const VUpdateMessageDeliverEvent({
     required super.roomId,

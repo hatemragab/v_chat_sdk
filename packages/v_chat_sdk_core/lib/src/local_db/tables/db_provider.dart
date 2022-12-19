@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
 
-import '../../../v_chat_sdk_core.dart';
+import '../../utils/api_constants.dart';
 import 'api_cache_table.dart';
 import 'message_table.dart';
 
@@ -29,7 +29,7 @@ class DBProvider {
       path,
       version: AppConstants.dbVersion,
       onUpgrade: (db, oldVersion, newVersion) async {
-       await reCreateTables(db);
+        await reCreateTables(db);
       },
       onCreate: (db, version) async {
         await db.transaction((txn) async {
@@ -52,7 +52,6 @@ class DBProvider {
   }
 
   Future reCreateTables(Database db) async {
-
     await db.transaction((txn) async {
       await RoomTable.recreateTable(txn);
       await MessageTable.recreateTable(txn);

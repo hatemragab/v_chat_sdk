@@ -21,7 +21,7 @@ class VRoom {
   final DateTime createdAt;
   bool isMuted;
   bool isOnline;
-  RoomTypingModel typingStatus;
+  VSocketRoomTypingModel typingStatus;
   String? nickName;
   final String? peerId;
   String? blockerId;
@@ -42,7 +42,7 @@ class VRoom {
     this.blockerId,
     required this.peerId,
     required this.nickName,
-    this.typingStatus = RoomTypingModel.offline,
+    this.typingStatus = VSocketRoomTypingModel.offline,
   });
 
   VRoom.empty()
@@ -57,7 +57,7 @@ class VRoom {
         isMuted = false,
         isDeleted = false,
         nickName = null,
-        typingStatus = RoomTypingModel.offline,
+        typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
         blockerId = null,
         peerId = null,
@@ -75,7 +75,7 @@ class VRoom {
         isMuted = map['isM'] as bool,
         isDeleted = map['isD'] as bool,
         nickName = null,
-        typingStatus = RoomTypingModel.offline,
+        typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
         blockerId = map['bId'] as String?,
         peerId = map['pId'] as String?,
@@ -98,7 +98,7 @@ class VRoom {
         isMuted = (map[RoomTable.columnIsMuted] as int) == 1,
         isDeleted = (map[RoomTable.columnIsDeleted] as int) == 1,
         nickName = map[RoomTable.columnNickName] as String?,
-        typingStatus = RoomTypingModel.fromMap(
+        typingStatus = VSocketRoomTypingModel.fromMap(
           jsonDecode(map[RoomTable.columnRoomTyping] as String)
               as Map<String, dynamic>,
         ),
@@ -204,7 +204,9 @@ class VRoom {
       isOnline: id % 2 == 0,
       peerId: "peerId",
       blockerId: null,
-      typingStatus: id == 0 ? RoomTypingModel.typing : RoomTypingModel.offline,
+      typingStatus: id == 0
+          ? VSocketRoomTypingModel.typing
+          : VSocketRoomTypingModel.offline,
       nickName: null,
     );
   }
@@ -222,7 +224,7 @@ class VRoom {
     DateTime? createdAt,
     bool? isMuted,
     bool? isOnline,
-    RoomTypingModel? typingStatus,
+    VSocketRoomTypingModel? typingStatus,
     String? nickName,
     String? peerId,
     String? blockerId,

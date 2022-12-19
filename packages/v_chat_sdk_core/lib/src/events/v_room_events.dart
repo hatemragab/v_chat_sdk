@@ -1,7 +1,6 @@
 import 'package:event_bus_plus/res/app_event.dart';
 
 import '../../v_chat_sdk_core.dart';
-import '../models/socket/room_typing_model.dart';
 import '../models/v_room/single_room/single_ban_model.dart';
 
 abstract class VRoomEvents extends AppEvent {
@@ -25,7 +24,7 @@ class InsertRoomEvent extends VRoomEvents {
 }
 
 class BlockSingleRoomEvent extends VRoomEvents {
-  final SingleBanModel banModel;
+  final VSingleBanModel banModel;
 
   BlockSingleRoomEvent({
     required super.roomId,
@@ -36,7 +35,7 @@ class BlockSingleRoomEvent extends VRoomEvents {
 }
 
 class UpdateRoomOnlineEvent extends VRoomEvents {
-  final OnlineOfflineModel model;
+  final VOnlineOfflineModel model;
 
   UpdateRoomOnlineEvent({
     required super.roomId,
@@ -47,7 +46,7 @@ class UpdateRoomOnlineEvent extends VRoomEvents {
 }
 
 class UpdateRoomTypingEvent extends VRoomEvents {
-  final RoomTypingModel typingModel;
+  final VSocketRoomTypingModel typingModel;
 
   UpdateRoomTypingEvent({
     required super.roomId,

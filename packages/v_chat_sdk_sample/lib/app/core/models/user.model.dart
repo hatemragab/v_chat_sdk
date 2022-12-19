@@ -37,12 +37,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel{' +
-        ' uid: $uid,' +
-        ' userName: $userName,' +
-        ' createdAt: $createdAt,' +
-        ' imageUrl: $imageUrl,' +
-        '}';
+    return 'UserModel{ uid: $uid, userName: $userName, createdAt: $createdAt, imageUrl: $imageUrl,}';
   }
 
   UserModel copyWith({
@@ -61,10 +56,10 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'uid': this.uid,
-      'userName': this.userName,
-      'createdAt': this.createdAt.toIso8601String(),
-      'imageUrl': this.imageUrl,
+      'uid': uid,
+      'userName': userName,
+      'createdAt': createdAt.toIso8601String(),
+      'imageUrl': imageUrl,
     };
   }
 

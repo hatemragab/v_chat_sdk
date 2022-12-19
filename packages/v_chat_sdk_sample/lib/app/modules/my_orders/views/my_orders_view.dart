@@ -36,7 +36,7 @@ class MyOrdersView extends GetView<MyOrdersController> {
                 child: VPlatformCacheImageWidget(
                   source: order.productModel.imgAsPlatformSource,
                   fit: BoxFit.cover,
-                  size: Size(60, 60),
+                  size: const Size(60, 60),
                 ),
               ),
               title: Text(order.productModel.title),

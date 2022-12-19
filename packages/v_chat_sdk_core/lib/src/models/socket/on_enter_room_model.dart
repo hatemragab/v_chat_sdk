@@ -1,11 +1,11 @@
-import '../../../v_chat_sdk_core.dart';
+import '../../utils/api_constants.dart';
 
-class OnEnterRoomModel {
+class VSocketOnRoomSeenModel {
   final String roomId;
   final String userId;
   final String date;
 
-  const OnEnterRoomModel({
+  const VSocketOnRoomSeenModel({
     required this.roomId,
     required this.userId,
     required this.date,
@@ -28,8 +28,8 @@ class OnEnterRoomModel {
 
   bool get isMe => AppConstants.myId == userId;
 
-  factory OnEnterRoomModel.fromMap(Map<String, dynamic> map) {
-    return OnEnterRoomModel(
+  factory VSocketOnRoomSeenModel.fromMap(Map<String, dynamic> map) {
+    return VSocketOnRoomSeenModel(
       roomId: map['roomId'] as String,
       userId: map['userId'] as String,
       date: map['date'] as String,

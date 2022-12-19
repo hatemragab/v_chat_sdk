@@ -5,6 +5,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
+import '../../../utils/api_constants.dart';
 
 class VVoiceMessage extends VBaseMessage {
   final VMessageVoiceData fileSource;
@@ -79,36 +80,4 @@ class VVoiceMessage extends VBaseMessage {
           content: AppConstants.thisContentIsVoice,
           messageType: MessageType.voice,
         );
-
-// void initVoiceController() {
-//   _controller = _getVoiceController();
-// }
-
-// VoiceMessageController _getVoiceController() {
-//   return VoiceMessageController(
-//     id: id,
-//     audioSrc: _getAudioSrc(),
-//     maxDuration: fileSource.durationObj,
-//     onComplete: (id) {
-//       voiceStreamEmitter.sink.add(VoiceComplete(id));
-//     },
-//     onPause: (id) {},
-//     onPlaying: (id) {
-//       voiceStreamEmitter.sink.add(VoiceOnPlay(id));
-//     },
-//   );
-// }
-
-// AudioSrc _getAudioSrc() {
-//   if (fileSource.fileSource.bytes != null) {
-//     return BytesSrc(fileSource.fileSource.bytes!);
-//   }
-//   if (fileSource.fileSource.filePath != null) {
-//     return FileSrc(fileSource.fileSource.filePath!);
-//   }
-//   return UrlSrc(fileSource.fileSource.url!.fullUrl);
-// }
-
-// @override
-// VoiceMessageController getVoiceController() => _controller;
 }

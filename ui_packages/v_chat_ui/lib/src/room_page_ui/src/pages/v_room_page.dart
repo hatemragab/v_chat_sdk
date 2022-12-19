@@ -28,7 +28,7 @@ class VRoomPage extends StatelessWidget {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: appBar ??
             AppBar(
-              title: Text("Rooms"),
+              title: const Text("Rooms"),
               centerTitle: true,
             ),
       ),

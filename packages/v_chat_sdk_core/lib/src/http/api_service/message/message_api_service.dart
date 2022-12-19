@@ -1,4 +1,4 @@
-import '../../../../v_chat_sdk_core.dart';
+import '../../../utils/api_constants.dart';
 import 'message_api.dart';
 
 class MessageApiService {

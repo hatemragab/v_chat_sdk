@@ -47,7 +47,7 @@ class CloudFireStoreApi {
       var doc = await collectionRef.doc(docId).get();
       return doc.exists;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -63,7 +63,7 @@ class CloudFireStoreApi {
 
       return doc.docs.isEmpty;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

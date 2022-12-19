@@ -1,11 +1,11 @@
-import '../../../v_chat_sdk_core.dart';
+import '../../utils/api_constants.dart';
 
-class OnDeliverRoomMessagesModel {
+class VSocketOnDeliverMessagesModel {
   final String roomId;
   final String userId;
   final String date;
 
-  const OnDeliverRoomMessagesModel({
+  const VSocketOnDeliverMessagesModel({
     required this.roomId,
     required this.userId,
     required this.date,
@@ -28,8 +28,8 @@ class OnDeliverRoomMessagesModel {
     };
   }
 
-  factory OnDeliverRoomMessagesModel.fromMap(Map<String, dynamic> map) {
-    return OnDeliverRoomMessagesModel(
+  factory VSocketOnDeliverMessagesModel.fromMap(Map<String, dynamic> map) {
+    return VSocketOnDeliverMessagesModel(
       roomId: map['roomId'] as String,
       userId: map['userId'] as String,
       date: map['date'] as String,

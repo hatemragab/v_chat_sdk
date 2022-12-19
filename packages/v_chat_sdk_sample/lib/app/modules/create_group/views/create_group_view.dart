@@ -61,7 +61,7 @@ class CreateGroupView extends GetView<CreateGroupController> {
               ),
               TextField(
                 controller: controller.nameController,
-                decoration: InputDecoration(hintText: "group title"),
+                decoration: const InputDecoration(hintText: "group title"),
               ),
               const SizedBox(
                 height: 20,

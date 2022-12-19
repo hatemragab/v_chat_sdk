@@ -1,15 +1,15 @@
-import '../../../../v_chat_sdk_core.dart';
+import '../../../utils/api_constants.dart';
 
-class SingleBanModel {
+class VSingleBanModel {
   final bool banned;
   final String? bannerId;
 
-  const SingleBanModel({
+  const VSingleBanModel({
     required this.banned,
     required this.bannerId,
   });
 
-  SingleBanModel.empty()
+  VSingleBanModel.empty()
       : banned = false,
         bannerId = null;
 
@@ -27,8 +27,8 @@ class SingleBanModel {
     };
   }
 
-  factory SingleBanModel.fromMap(Map<String, dynamic> map) {
-    return SingleBanModel(
+  factory VSingleBanModel.fromMap(Map<String, dynamic> map) {
+    return VSingleBanModel(
       banned: map['banned'] as bool,
       bannerId: map['bannerId'] as String?,
     );

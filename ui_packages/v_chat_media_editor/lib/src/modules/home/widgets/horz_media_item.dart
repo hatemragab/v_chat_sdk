@@ -57,7 +57,7 @@ class HorzMediaItem extends StatelessWidget {
   }
 
   Widget getImage() {
-    final fit = BoxFit.cover;
+    const fit = BoxFit.cover;
     if (mediaFile is MediaEditorImage) {
       final m = mediaFile as MediaEditorImage;
       if (m.data.isFromPath) {

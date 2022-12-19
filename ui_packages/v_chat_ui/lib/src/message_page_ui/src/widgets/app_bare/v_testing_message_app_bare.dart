@@ -6,7 +6,7 @@ import '../../models/app_bare_state.dart';
 
 class VTestingMessageAppBare extends StatelessWidget {
   final AppBareState state;
-  final Function(RoomTypingModel) onTyping;
+  final Function(VSocketRoomTypingModel) onTyping;
   const VTestingMessageAppBare({
     Key? key,
     required this.state,
@@ -33,7 +33,7 @@ class VTestingMessageAppBare extends StatelessWidget {
               PopupMenuItem(
                 child: const Text("send typing"),
                 onTap: () {
-                  onTyping(RoomTypingModel.typing);
+                  onTyping(VSocketRoomTypingModel.typing);
                 },
               ),
             ];

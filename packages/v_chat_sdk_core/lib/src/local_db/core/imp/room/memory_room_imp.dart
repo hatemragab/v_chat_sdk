@@ -128,7 +128,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   Future<int> setAllOffline() async {
     for (final element in _rooms) {
       element.isOnline = false;
-      element.typingStatus = RoomTypingModel.offline;
+      element.typingStatus = VSocketRoomTypingModel.offline;
     }
     return Future.value(1);
   }

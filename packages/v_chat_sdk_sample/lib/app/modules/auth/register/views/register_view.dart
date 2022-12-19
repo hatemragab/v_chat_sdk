@@ -47,8 +47,8 @@ class RegisterView extends GetView<RegisterController> {
           length: 8,
         ),
         changeLangDefaultOnPressed: () async {},
-        languageOptions: [LanguageOption(code: "en", value: "en")],
-        selectedLanguage: LanguageOption(code: "en", value: "en"),
+        languageOptions: const [LanguageOption(code: "en", value: "en")],
+        selectedLanguage: const LanguageOption(code: "en", value: "en"),
         initialMode: AuthMode.login,
         onAuthModeChange: (AuthMode newMode) async {
           // currentMode = newMode;
@@ -108,5 +108,7 @@ class RegisterView extends GetView<RegisterController> {
             iconPath: 'assets/images/facebook.png'),
       ];
 
-  Future<String?> _socialCallback(String type) async {}
+  Future<String?> _socialCallback(String type) async {
+    return null;
+  }
 }

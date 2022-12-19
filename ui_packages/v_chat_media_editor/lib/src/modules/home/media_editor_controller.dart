@@ -15,7 +15,7 @@ import '../video_player/views/video_player_view.dart';
 
 class MediaEditorController {
   MediaEditorController(this.platformFiles, this.config) {
-    init();
+    _init();
   }
 
   final List<VPlatformFileSource> platformFiles;
@@ -38,7 +38,7 @@ class MediaEditorController {
     if (mediaFiles.isEmpty) {
       return Navigator.pop(context);
     }
-    updateScreen();
+    _updateScreen();
   }
 
   Future<void> onCrop(MediaEditorImage item, BuildContext context) async {
@@ -47,7 +47,7 @@ class MediaEditorController {
       if (path != null) {
         item.data.fileSource.filePath = path;
       }
-      updateScreen();
+      _updateScreen();
       return;
     }
     final croppedBytes = await ImageCropping.cropImage(
@@ -69,7 +69,7 @@ class MediaEditorController {
     );
     if (croppedBytes != null) {
       item.data.fileSource.bytes = croppedBytes;
-      updateScreen();
+      _updateScreen();
     }
   }
 
@@ -107,7 +107,7 @@ class MediaEditorController {
         item.data.fileSource = editedFile;
       }
     }
-    updateScreen();
+    _updateScreen();
   }
 
   void close() {
@@ -121,14 +121,14 @@ class MediaEditorController {
       element.isSelected = false;
     }
     mediaFiles[index].isSelected = true;
-    updateScreen();
+    _updateScreen();
   }
 
-  void updateScreen() {
+  void _updateScreen() {
     updater.notifyListeners();
   }
 
-  Future init() async {
+  Future _init() async {
     for (final f in platformFiles) {
       if (f.getMediaType == SupportedFilesType.image) {
         final mImage = MediaEditorImage(
@@ -140,7 +140,7 @@ class MediaEditorController {
         );
         mediaFiles.add(mImage);
       } else if (f.getMediaType == SupportedFilesType.video) {
-        late VMessageImageData? thumb = null;
+        late VMessageImageData? thumb;
         if (f.filePath != null) {
           thumb = await _getThumb(f.filePath!);
         }
@@ -152,11 +152,13 @@ class MediaEditorController {
           ),
         );
         mediaFiles.add(mFile);
+      } else {
+        mediaFiles.add(MediaEditorFile(data: f));
       }
     }
     mediaFiles[0].isSelected = true;
     isLoading = false;
-    updateScreen();
+    _updateScreen();
     startCompressImagesIfNeed();
   }
 
@@ -216,12 +218,12 @@ class MediaEditorController {
             await _compressJsImage(f.data.fileSource.bytes!);
       }
     }
-    updateScreen();
+    _updateScreen();
   }
 
   Future<void> onSubmitData(BuildContext context) async {
     isCompressing = true;
-    updateScreen();
+    _updateScreen();
     for (final f in mediaFiles) {
       if (f is MediaEditorImage && f.data.isFromPath) {
         final data = await _getImageInfo(path: f.data.fileSource.filePath!);

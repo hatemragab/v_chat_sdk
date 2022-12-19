@@ -5,6 +5,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
+import '../../../utils/api_constants.dart';
 
 class VFileMessage extends VBaseMessage {
   final VMessageFileData fileSource;
