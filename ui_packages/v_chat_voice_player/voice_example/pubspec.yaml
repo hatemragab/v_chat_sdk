@@ -8,7 +8,7 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.2
   get: 4.6.5
-  v_chat_utils: ^0.0.2
+  v_chat_utils: ^0.0.3
   flutter_cache_manager: ^3.3.0
   sizer: ^2.0.15
   v_chat_voice_player:

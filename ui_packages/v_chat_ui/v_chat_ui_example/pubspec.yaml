@@ -46,7 +46,7 @@ dependencies:
   wechat_camera_picker: ^3.6.3
   http_parser: ^4.0.2
   v_chat_sdk_core: ^0.0.2
-  v_chat_utils: ^0.0.2
+  v_chat_utils: ^0.0.3
   v_chat_ui:
     path: ../../v_chat_ui
   flutter: 

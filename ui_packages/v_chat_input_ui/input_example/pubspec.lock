@@ -43,13 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  audio_waveforms_fix:
+  audio_waveforms:
     dependency: transitive
     description:
-      name: audio_waveforms_fix
+      name: audio_waveforms
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2"
+    version: "1.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -832,21 +832,42 @@ packages:
       name: record
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.4"
+    version: "4.4.3"
+  record_linux:
+    dependency: transitive
+    description:
+      name: record_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4"
+  record_macos:
+    dependency: transitive
+    description:
+      name: record_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   record_platform_interface:
     dependency: transitive
     description:
       name: record_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.5.0"
   record_web:
     dependency: transitive
     description:
       name: record_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.5.0"
+  record_windows:
+    dependency: transitive
+    description:
+      name: record_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.2"
   rxdart:
     dependency: transitive
     description:
@@ -1096,7 +1117,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1110,14 +1131,14 @@ packages:
       path: "../../../packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   vector_math:
     dependency: transitive
     description:

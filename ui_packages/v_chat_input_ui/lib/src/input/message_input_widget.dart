@@ -37,6 +37,9 @@ class VMessageInputWidget extends StatefulWidget {
   ///callback when user clicked send attachment
   final Future<VAttachEnumRes?> Function()? onAttachIconPress;
 
+  ///callback if you want to implement custom mention item builder
+  final Widget Function(MentionWithPhoto)? mentionItemBuilder;
+
   ///callback when user start add '@' or '@...' if text is empty that means the user just start type '@'
   final Future<List<MentionWithPhoto>> Function(String)? onMentionSearch;
 
@@ -67,6 +70,7 @@ class VMessageInputWidget extends StatefulWidget {
     required this.onSubmitLocation,
     required this.onTypingChange,
     this.replyWidget,
+    this.mentionItemBuilder,
     this.maxRecordTime = const Duration(minutes: 30),
     this.onAttachIconPress,
     this.stopChatWidget,
@@ -159,24 +163,39 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                     ),
                     decoration: context.vInputTheme.containerDecoration,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (_showMentionList)
                           SizedBox(
                             height: 200,
                             child: ListView.builder(
-                              itemBuilder: (context, index) => ListTile(
-                                leading: VCircleAvatar(
-                                  fullUrl: _mentionsWithPhoto[index].photo,
-                                  radius: 20,
-                                ),
-                                dense: false,
-                                contentPadding: EdgeInsets.zero,
-                                onTap: () {
-                                  _textEditingController
-                                      .addMention(_mentionsWithPhoto[index]);
-                                },
-                                title: Text(_mentionsWithPhoto[index].display),
-                              ),
+                              itemBuilder: (context, index) {
+                                if (widget.mentionItemBuilder != null) {
+                                  return InkWell(
+                                    onTap: () {
+                                      _textEditingController.addMention(
+                                          _mentionsWithPhoto[index]);
+                                    },
+                                    child: widget.mentionItemBuilder!(
+                                      _mentionsWithPhoto[index],
+                                    ),
+                                  );
+                                }
+                                return ListTile(
+                                  leading: VCircleAvatar(
+                                    fullUrl: _mentionsWithPhoto[index].photo,
+                                    radius: 20,
+                                  ),
+                                  dense: false,
+                                  contentPadding: EdgeInsets.zero,
+                                  onTap: () {
+                                    _textEditingController
+                                        .addMention(_mentionsWithPhoto[index]);
+                                  },
+                                  title:
+                                      Text(_mentionsWithPhoto[index].display),
+                                );
+                              },
                               itemCount: _mentionsWithPhoto.length,
                             ),
                           )
@@ -258,29 +277,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
             const SizedBox.shrink()
           else
             EmojiKeyboard(
-              onBackspacePressed: () {
-                _textOffset = _textOffset - 2;
-                _textEditingController
-                  ..text = _textEditingController.text.characters
-                      .skipLast(1)
-                      .toString()
-                  ..selection = TextSelection.fromPosition(
-                    TextPosition(
-                      offset: _textOffset,
-                    ),
-                  );
-              },
-              onEmojiSelected: (e) {
-                final String suffixText = _text.substring(_textOffset);
-                final String prefixText = _text.substring(0, _textOffset);
-                _textEditingController.text = prefixText + e.emoji + suffixText;
-                _textEditingController.selection = TextSelection.fromPosition(
-                  TextPosition(
-                    offset: _textOffset,
-                  ),
-                );
-                _textOffset = _textOffset + 2;
-              },
+              controller: _textEditingController,
               isEmojiShowing: _isEmojiShowing,
             ),
         ],

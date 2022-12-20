@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
   emoji_picker_flutter
   platform_device_id_linux
+  record_linux
   sqlite3_flutter_libs
   url_launcher_linux
 )

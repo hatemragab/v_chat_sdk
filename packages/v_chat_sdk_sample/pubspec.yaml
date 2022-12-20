@@ -33,7 +33,7 @@ dependencies:
   flutter: 
     sdk: flutter
   v_chat_sdk_core: ^0.0.2
-  v_chat_utils: ^0.0.2
+  v_chat_utils: ^0.0.3
   v_chat_firebase_fcm:
     path: ../../push_providers/v_chat_firebase_fcm
   v_chat_ui:
@@ -47,7 +47,6 @@ dependencies:
   file_sizes: ^1.0.6
   path: ^1.8.2
   encrypt: ^5.0.1
-  chopper: ^5.1.0
   firebase_pagination: ^3.0.0
   image_cropper: ^3.0.1
   wechat_camera_picker: ^3.6.3
@@ -71,4 +70,4 @@ flutter:
     - assets/images/
   uses-material-design: true
 flutter_intl:
-  enabled: true
+  enabled: false

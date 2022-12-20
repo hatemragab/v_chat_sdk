@@ -39,7 +39,7 @@ dependencies:
   collection: ^1.16.0
   flutter_localizations:
     sdk: flutter
-  v_chat_utils: ^0.0.2
+  v_chat_utils: ^0.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -9,7 +9,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: 4.6.5
   file_picker: ^5.2.4
-  v_chat_utils: ^0.0.2
+  v_chat_utils: ^0.0.3
   v_chat_media_editor:
     path: ../
   flutter: 
