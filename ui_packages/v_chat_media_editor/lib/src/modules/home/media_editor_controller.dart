@@ -19,7 +19,7 @@ class MediaEditorController {
   }
 
   final List<VPlatformFileSource> platformFiles;
-  final mediaFiles = <BaseMediaEditor>[];
+  final mediaFiles = <VBaseMediaEditor>[];
   final MediaEditorConfig config;
   bool isLoading = true;
   bool isCompressing = false;
@@ -33,7 +33,7 @@ class MediaEditorController {
     Navigator.pop(context);
   }
 
-  void onDelete(BaseMediaEditor item, BuildContext context) {
+  void onDelete(VBaseMediaEditor item, BuildContext context) {
     mediaFiles.remove(item);
     if (mediaFiles.isEmpty) {
       return Navigator.pop(context);
@@ -41,7 +41,7 @@ class MediaEditorController {
     _updateScreen();
   }
 
-  Future<void> onCrop(MediaEditorImage item, BuildContext context) async {
+  Future<void> onCrop(VMediaEditorImage item, BuildContext context) async {
     if (item.data.isFromPath) {
       final path = await _ioImageCropper(item.data.fileSource.filePath!);
       if (path != null) {
@@ -74,7 +74,7 @@ class MediaEditorController {
   }
 
   Future onStartEditVideo(
-    MediaEditorVideo item,
+    VMediaEditorVideo item,
     BuildContext context,
   ) async {
     // if (item.data.isFromPath) {
@@ -92,10 +92,10 @@ class MediaEditorController {
   }
 
   Future<void> onStartDraw(
-    BaseMediaEditor item,
+    VBaseMediaEditor item,
     BuildContext context,
   ) async {
-    if (item is MediaEditorImage) {
+    if (item is VMediaEditorImage) {
       final editedFile = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => ImagePinterView(
@@ -131,7 +131,7 @@ class MediaEditorController {
   Future _init() async {
     for (final f in platformFiles) {
       if (f.getMediaType == VSupportedFilesType.image) {
-        final mImage = MediaEditorImage(
+        final mImage = VMediaEditorImage(
           data: VMessageImageData(
             fileSource: f,
             width: -1,
@@ -144,7 +144,7 @@ class MediaEditorController {
         if (f.filePath != null) {
           thumb = await _getThumb(f.filePath!);
         }
-        final mFile = MediaEditorVideo(
+        final mFile = VMediaEditorVideo(
           data: VMessageVideoData(
             fileSource: f,
             duration: -1,
@@ -153,7 +153,7 @@ class MediaEditorController {
         );
         mediaFiles.add(mFile);
       } else {
-        mediaFiles.add(MediaEditorFile(data: f));
+        mediaFiles.add(VMediaEditorFile(data: f));
       }
     }
     mediaFiles[0].isSelected = true;
@@ -196,8 +196,8 @@ class MediaEditorController {
     return bytes;
   }
 
-  void onPlayVideo(BaseMediaEditor item, BuildContext context) {
-    if (item is MediaEditorVideo) {
+  void onPlayVideo(VBaseMediaEditor item, BuildContext context) {
+    if (item is VMediaEditorVideo) {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => VideoPlayerView(
@@ -210,10 +210,10 @@ class MediaEditorController {
 
   Future<void> startCompressImagesIfNeed() async {
     for (final f in mediaFiles) {
-      if (f is MediaEditorImage && f.data.fileSource.filePath != null) {
+      if (f is VMediaEditorImage && f.data.fileSource.filePath != null) {
         f.data.fileSource.filePath =
             (await _compressIoImage(f.data.fileSource.filePath!)).path;
-      } else if (f is MediaEditorImage && f.data.fileSource.bytes != null) {
+      } else if (f is VMediaEditorImage && f.data.fileSource.bytes != null) {
         f.data.fileSource.bytes =
             await _compressJsImage(f.data.fileSource.bytes!);
       }
@@ -225,15 +225,15 @@ class MediaEditorController {
     isCompressing = true;
     _updateScreen();
     for (final f in mediaFiles) {
-      if (f is MediaEditorImage && f.data.isFromPath) {
+      if (f is VMediaEditorImage && f.data.isFromPath) {
         final data = await _getImageInfo(path: f.data.fileSource.filePath!);
         f.data.width = data.image.width;
         f.data.height = data.image.height;
-      } else if (f is MediaEditorImage && f.data.isFromBytes) {
+      } else if (f is VMediaEditorImage && f.data.isFromBytes) {
         final data = await _getImageInfo(bytes: f.data.fileSource.bytes!);
         f.data.width = data.image.width;
         f.data.height = data.image.height;
-      } else if (f is MediaEditorVideo) {
+      } else if (f is VMediaEditorVideo) {
         f.data.duration =
             await MediaEditorHelpers.getVideoDurationMill(f.data.fileSource);
       }

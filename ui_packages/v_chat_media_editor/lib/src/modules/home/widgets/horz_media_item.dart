@@ -7,7 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../core/core.dart';
 
 class HorzMediaItem extends StatelessWidget {
-  final BaseMediaEditor mediaFile;
+  final VBaseMediaEditor mediaFile;
   final bool isLoading;
 
   const HorzMediaItem({
@@ -30,11 +30,11 @@ class HorzMediaItem extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          if (isLoading && mediaFile is MediaEditorVideo)
+          if (isLoading && mediaFile is VMediaEditorVideo)
             const SizedBox()
           else
             getImage(),
-          if (mediaFile is MediaEditorVideo)
+          if (mediaFile is VMediaEditorVideo)
             Positioned(
               top: 0,
               right: 0,
@@ -58,8 +58,8 @@ class HorzMediaItem extends StatelessWidget {
 
   Widget getImage() {
     const fit = BoxFit.cover;
-    if (mediaFile is MediaEditorImage) {
-      final m = mediaFile as MediaEditorImage;
+    if (mediaFile is VMediaEditorImage) {
+      final m = mediaFile as VMediaEditorImage;
       if (m.data.isFromPath) {
         return Image.file(
           File(m.data.fileSource.filePath!),
@@ -72,8 +72,8 @@ class HorzMediaItem extends StatelessWidget {
           fit: fit,
         );
       }
-    } else if (mediaFile is MediaEditorVideo) {
-      final m = mediaFile as MediaEditorVideo;
+    } else if (mediaFile is VMediaEditorVideo) {
+      final m = mediaFile as VMediaEditorVideo;
       if (m.data.isFromPath) {
         return Image.file(
           File(m.data.thumbImage!.fileSource.filePath!),

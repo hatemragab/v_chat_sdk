@@ -59,13 +59,13 @@ class _MediaEditorViewState extends State<MediaEditorView> {
                         onCloseClicked: () => controller.onEmptyPress(context),
                         onDelete: (item) => controller.onDelete(item, context),
                         onCrop: (item) => controller.onCrop(
-                            item as MediaEditorImage, context),
+                            item as VMediaEditorImage, context),
                         onPlayVideo: (item) =>
                             controller.onPlayVideo(item, context),
                         onStartDraw: (item) {
-                          if (item is MediaEditorVideo) {
+                          if (item is VMediaEditorVideo) {
                             return controller.onStartEditVideo(item, context);
-                          } else if (item is MediaEditorImage) {
+                          } else if (item is VMediaEditorImage) {
                             return controller.onStartDraw(item, context);
                           }
                         },

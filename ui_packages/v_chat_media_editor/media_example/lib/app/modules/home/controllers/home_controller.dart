@@ -9,12 +9,12 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
   final files = <VPlatformFileSource>[].obs;
-  final proccessedData = <BaseMediaEditor>[].obs;
+  final proccessedData = <VBaseMediaEditor>[].obs;
 
   void onGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
-      type: FileType.media,
+      //type: FileType.media,
     );
 
     if (result != null) {
@@ -37,7 +37,7 @@ class HomeController extends GetxController {
         MaterialPageRoute(
           builder: ((context) => MediaEditorView(files: mediaFiles)),
         ),
-      ) as List<BaseMediaEditor>?;
+      ) as List<VBaseMediaEditor>?;
       if (editedFiles == null) {
         return;
       }
@@ -45,11 +45,11 @@ class HomeController extends GetxController {
       proccessedData.addAll(editedFiles);
       for (final f in editedFiles) {
         print(f.toString());
-        // if (f is MediaEditorImage) {
-        //   files.add(f.data.fileSource);
-        // } else if (f is MediaEditorVideo) {
-        //   files.add(f.data.fileSource);
-        // }
+        if (f is VMediaEditorImage) {
+          files.add(f.data.fileSource);
+        } else if (f is VMediaEditorVideo) {
+          files.add(f.data.fileSource);
+        }
       }
     } else {
       // User canceled the picker

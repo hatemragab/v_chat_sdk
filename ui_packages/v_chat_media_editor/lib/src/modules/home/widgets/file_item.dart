@@ -3,9 +3,9 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:v_chat_media_editor/src/core/core.dart';
 
 class FileItem extends StatelessWidget {
-  final MediaEditorFile file;
+  final VMediaEditorFile file;
   final VoidCallback onCloseClicked;
-  final Function(MediaEditorFile item) onDelete;
+  final Function(VMediaEditorFile item) onDelete;
 
   const FileItem({
     Key? key,
@@ -52,8 +52,13 @@ class FileItem extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          file.data.toString(),
+        Align(
+          alignment: Alignment.center,
+          child: Text(
+            file.data.name.toString(),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w800),
+          ),
         )
       ],
     );
