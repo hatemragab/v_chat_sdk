@@ -4,3 +4,5 @@
 - set prefix for all units to avoid complex address
 ## 0.0.3
 - add prefix to some missing labels
+## 0.0.4
+- fix VAppPref bug

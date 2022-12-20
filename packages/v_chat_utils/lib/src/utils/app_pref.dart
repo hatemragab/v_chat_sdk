@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'enums.dart';
 
 abstract class VAppPref {
-  static late final SharedPreferences? _instance;
+  static SharedPreferences? _instance;
 
   static get instance => _instance!;
   static late String _hashKey;
