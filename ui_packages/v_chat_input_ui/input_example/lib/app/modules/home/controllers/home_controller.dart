@@ -1,13 +1,14 @@
 import 'package:get/get.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
   final logs = <InputLog>[].obs;
   final isBan = false.obs;
-  final replyMsg = Object().obs;
+  VBaseMessage replyMsg = VEmptyMessage();
 
-  bool get isReplying => false;
+  final isReplying = false.obs;
   final _serverMentions = List.generate(
     1000,
     (i) => MentionWithPhoto(
@@ -23,13 +24,14 @@ class HomeController extends GetxController {
     isBan.toggle();
   }
 
-  // void setReplyPress({required bool isText}) {
-  //   if (isText) {
-  //     replyMsg.value = core.VTextMessage.buildFakeMessage("id");
-  //   } else {
-  //     replyMsg.value = core.VImageMessage.buildFakeMessage();
-  //   }
-  // }
+  void setReplyPress({required bool isText}) {
+    if (isText) {
+      replyMsg = VTextMessage.buildFakeMessage("id");
+    } else {
+      replyMsg = VImageMessage.buildFakeMessage();
+    }
+    isReplying.value = true;
+  }
 
   void onSubmitText(String message) {
     printOnScreen(InputLog("onSubmitText", message));
@@ -72,7 +74,7 @@ class HomeController extends GetxController {
 
   void printOnScreen(InputLog log, {bool dissmiseReply = true}) {
     if (dissmiseReply) {
-      replyMsg.value = Object();
+      isReplying.value = false;
     }
     logs.add(log);
   }

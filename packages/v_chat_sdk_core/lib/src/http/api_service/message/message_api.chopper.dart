@@ -23,7 +23,7 @@ class _$MessageApi extends MessageApi {
     MultipartFile? file,
     MultipartFile? secondFile,
   ) {
-    final String $url = 'channel/{roomId}/message/';
+    final Uri $url = Uri.parse('channel/{roomId}/message/');
     final List<PartValue> $parts = <PartValue>[
       PartValueFile<MultipartFile?>(
         'file',

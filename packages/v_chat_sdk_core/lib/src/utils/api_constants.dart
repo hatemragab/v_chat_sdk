@@ -27,6 +27,10 @@ abstract class AppConstants {
     return "$baseServerIp/api/v2";
   }
 
+  static Uri get baseUri {
+    return Uri.parse("$baseServerIp/api/v2");
+  }
+
   static String get getMediaBaseUrl {
     final s3BucketUrl = VChatController.I.config.s3BucketUrl;
     if (s3BucketUrl != null) {

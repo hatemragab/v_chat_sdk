@@ -28,7 +28,7 @@ dependencies:
   textless: ^6.6.6
   v_chat_utils: ^0.0.2
 #  audio_waveforms: ^0.1.5+1
-  audio_waveforms_fix: ^0.0.1
+  audio_waveforms_fix: ^0.0.2
   emoji_picker_flutter: ^1.5.1
 dev_dependencies:
   flutter_test:

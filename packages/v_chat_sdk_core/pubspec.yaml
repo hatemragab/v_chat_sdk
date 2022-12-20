@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   http: ^0.13.5
   logging: ^1.1.0
-  chopper: ^5.1.0
+  chopper: ^6.0.0
   http_parser: ^4.0.2
   encrypt: ^5.0.1
   mime: ^1.0.2
@@ -44,8 +44,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  build_runner: ^2.3.2
-  chopper_generator: ^5.1.0+1
+  build_runner: ^2.3.3
+  chopper_generator: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

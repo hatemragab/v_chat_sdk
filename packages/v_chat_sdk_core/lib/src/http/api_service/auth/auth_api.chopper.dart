@@ -18,7 +18,7 @@ class _$AuthApi extends AuthApi {
 
   @override
   Future<Response<dynamic>> login(Map<String, dynamic> body) {
-    final String $url = 'auth/login';
+    final Uri $url = Uri.parse('auth/login');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -34,7 +34,7 @@ class _$AuthApi extends AuthApi {
     List<PartValue<dynamic>> body,
     MultipartFile? file,
   ) {
-    final String $url = 'auth/register';
+    final Uri $url = Uri.parse('auth/register');
     final List<PartValue> $parts = <PartValue>[
       PartValueFile<MultipartFile?>(
         'file',
@@ -54,7 +54,7 @@ class _$AuthApi extends AuthApi {
 
   @override
   Future<Response<dynamic>> logout() {
-    final String $url = 'auth/logout';
+    final Uri $url = Uri.parse('auth/logout');
     final Request $request = Request(
       'POST',
       $url,

@@ -27,7 +27,7 @@ abstract class MessageApi extends ChopperService {
     String? accessToken,
   }) {
     final client = ChopperClient(
-      baseUrl: baseUrl ?? AppConstants.baseUrl,
+      baseUrl: AppConstants.baseUri,
       services: [
         _$MessageApi(),
       ],
@@ -37,7 +37,7 @@ abstract class MessageApi extends ChopperService {
       client: VPlatforms.isWeb
           ? null
           : IOClient(
-              HttpClient()..connectionTimeout = const Duration(seconds: 8),
+              HttpClient()..connectionTimeout = const Duration(seconds: 6),
             ),
     );
     return _$MessageApi(client);

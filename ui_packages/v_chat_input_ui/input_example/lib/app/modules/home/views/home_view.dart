@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -27,12 +29,12 @@ class HomeView extends GetView<HomeController> {
                       ? const Text("un Ban")
                       : const Text("Ban"),
                 ),
-                const PopupMenuItem(
-                  // onTap: () => controller.setReplyPress(isText: true),
+                PopupMenuItem(
+                  onTap: () => controller.setReplyPress(isText: true),
                   child: Text("Reply be text msg"),
                 ),
-                const PopupMenuItem(
-                  // onTap: () => controller.setReplyPress(isText: false),
+                PopupMenuItem(
+                  onTap: () => controller.setReplyPress(isText: false),
                   child: Text("Reply be image msg"),
                 ),
               ];
@@ -72,11 +74,13 @@ class HomeView extends GetView<HomeController> {
           Obx(() {
             return VMessageInputWidget(
               stopChatWidget: controller.isBan.value ? _getBanWidget() : null,
-              replyWidget: null,
-              // replyWidget: controller.isReplying
-              //     ? _getReplyWidget(controller.replyMsg.value)
-              //     : null,
+              replyWidget: controller.isReplying.value
+                  ? _getReplyWidget(controller.replyMsg)
+                  : null,
               googleMapsApiKey: "texst",
+              onAttachIconPress: () async {
+                return AttachEnumRes.media;
+              },
               onSubmitText: controller.onSubmitText,
               onMentionSearch: controller.onMentionRequireSearch,
               onSubmitMedia: controller.onSubmitMedia,
@@ -95,12 +99,12 @@ class HomeView extends GetView<HomeController> {
     return const Text("BANNNED");
   }
 
-  // Widget _getReplyWidget(Object value) {
-  //   if (value is VTextMessage) {
-  //     return const Text("VTextMessage");
-  //   } else if (value is VImageMessage) {
-  //     return const Text("V Image msg");
-  //   }
-  //   throw UnimplementedError();
-  // }
+  Widget _getReplyWidget(Object value) {
+    if (value is VTextMessage) {
+      return const Text("VTextMessage");
+    } else if (value is VImageMessage) {
+      return const Text("V Image msg");
+    }
+    throw UnimplementedError();
+  }
 }
