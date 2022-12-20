@@ -1,3 +1,4 @@
 ## 0.0.1
-
-* TODO: Describe initial release.
+- initial release.
+## 0.0.3
+- update v_chat_utils to v 0.0.3 
