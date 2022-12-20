@@ -31,7 +31,8 @@ class SocketService {
   bool get isSocketConnected => _socketIoClient.socket.connected;
 
   void handleConnect() {
-    final access = VAppPref.getHashedString(key: StorageKeys.accessToken) ?? "";
+    final access =
+        VAppPref.getHashedString(key: VStorageKeys.accessToken) ?? "";
     if (access.isNotEmpty) {
       _socketIoClient.socket.io.options = {
         ..._socketIoClient.socket.io.options,

@@ -40,7 +40,7 @@ abstract class AppConstants {
   }
 
   static VIdentifierUser get myProfile {
-    final map = VAppPref.getMap(StorageKeys.vMyProfile);
+    final map = VAppPref.getMap(VStorageKeys.vMyProfile);
     if (map == null) {
       throw VChatDartException(
         exception:
@@ -66,7 +66,7 @@ abstract class AppConstants {
   }
 
   static String get sdkLanguage =>
-      VAppPref.getStringOrNull(StorageKeys.appLanguage) ?? "en";
+      VAppPref.getStringOrNull(VStorageKeys.appLanguage) ?? "en";
 
   static String getMessageBody(VBaseMessage m) {
     return m.content;

@@ -67,7 +67,7 @@ class HomeController extends GetxController {
     printOnScreen(InputLog("onSubmitLocation", data.toString()));
   }
 
-  void onTypingChange(RoomTypingEnum typing) {
+  void onTypingChange(VRoomTypingEnum typing) {
     printOnScreen(InputLog("onTypingChange", typing.toString()),
         dissmiseReply: false);
   }

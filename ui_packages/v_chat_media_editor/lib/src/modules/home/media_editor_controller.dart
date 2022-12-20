@@ -130,7 +130,7 @@ class MediaEditorController {
 
   Future _init() async {
     for (final f in platformFiles) {
-      if (f.getMediaType == SupportedFilesType.image) {
+      if (f.getMediaType == VSupportedFilesType.image) {
         final mImage = MediaEditorImage(
           data: VMessageImageData(
             fileSource: f,
@@ -139,7 +139,7 @@ class MediaEditorController {
           ),
         );
         mediaFiles.add(mImage);
-      } else if (f.getMediaType == SupportedFilesType.video) {
+      } else if (f.getMediaType == VSupportedFilesType.video) {
         late VMessageImageData? thumb;
         if (f.filePath != null) {
           thumb = await _getThumb(f.filePath!);

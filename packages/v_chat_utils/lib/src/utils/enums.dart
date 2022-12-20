@@ -1,12 +1,12 @@
-enum LoadMoreStatus { loading, loaded, error, completed }
+enum VLoadMoreStatus { loading, loaded, error, completed }
 
 enum VChatLoadingState { loading, success, error, ideal, empty }
 
-enum SupportedFilesType { image, file, video }
+enum VSupportedFilesType { image, file, video }
 
-enum RoomTypingEnum { stop, typing, recording }
+enum VRoomTypingEnum { stop, typing, recording }
 
-enum StorageKeys {
+enum VStorageKeys {
   accessToken,
   isFirstRun,
   appMetaData,
@@ -21,4 +21,4 @@ enum StorageKeys {
   myProfile
 }
 
-enum AttachEnumRes { media, files, location }
+enum VAttachEnumRes { media, files, location }

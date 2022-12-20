@@ -32,10 +32,10 @@ class VMessageInputWidget extends StatefulWidget {
   final Function(VMessageVoiceData data) onSubmitVoice;
 
   ///callback when user start typing or recording or stop
-  final Function(RoomTypingEnum typing) onTypingChange;
+  final Function(VRoomTypingEnum typing) onTypingChange;
 
   ///callback when user clicked send attachment
-  final Future<AttachEnumRes?> Function()? onAttachIconPress;
+  final Future<VAttachEnumRes?> Function()? onAttachIconPress;
 
   ///callback when user start add '@' or '@...' if text is empty that means the user just start type '@'
   final Future<List<MentionWithPhoto>> Function(String)? onMentionSearch;
@@ -83,14 +83,14 @@ class VMessageInputWidget extends StatefulWidget {
 class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   bool _isEmojiShowing = false;
   String _text = "";
-  RoomTypingEnum _typingType = RoomTypingEnum.stop;
+  VRoomTypingEnum _typingType = VRoomTypingEnum.stop;
   int _textOffset = 0;
   final _textEditingController = VChatTextMentionController();
   final _focusNode = FocusNode();
 
-  bool get _isRecording => _typingType == RoomTypingEnum.recording;
+  bool get _isRecording => _typingType == VRoomTypingEnum.recording;
 
-  bool get _isTyping => _typingType == RoomTypingEnum.typing;
+  bool get _isTyping => _typingType == VRoomTypingEnum.typing;
 
   bool get _isSendBottomEnable => _isTyping || _isRecording;
   final _recordStateKey = GlobalKey<RecordWidgetState>();
@@ -135,7 +135,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.stopChatWidget != null) {
-      _typingType = RoomTypingEnum.stop;
+      _typingType = VRoomTypingEnum.stop;
       _isEmojiShowing = false;
       _textEditingController.clear();
       _text = "";
@@ -191,20 +191,20 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                             key: _recordStateKey,
                             maxTime: widget.maxRecordTime,
                             onCancel: () {
-                              _changeTypingType(RoomTypingEnum.stop);
+                              _changeTypingType(VRoomTypingEnum.stop);
                             },
                           )
                         else
                           MessageTextFiled(
                             focusNode: _focusNode,
                             hint: widget.language.textFieldHint,
-                            isTyping: _typingType == RoomTypingEnum.typing,
+                            isTyping: _typingType == VRoomTypingEnum.typing,
                             onSubmit: (v) {
                               if (v.isNotEmpty) {
                                 widget.onSubmitText(v);
                                 _text = "";
                                 _textEditingController.clear();
-                                _changeTypingType(RoomTypingEnum.stop);
+                                _changeTypingType(VRoomTypingEnum.stop);
                               }
                             },
                             textEditingController: _textEditingController,
@@ -227,7 +227,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         widget.onSubmitVoice(
                           await _recordStateKey.currentState!.stopRecord(),
                         );
-                        _changeTypingType(RoomTypingEnum.stop);
+                        _changeTypingType(VRoomTypingEnum.stop);
                       } else if (_text.isNotEmpty) {
                         widget.onSubmitText(_text);
                         _text = "";
@@ -241,12 +241,12 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                       final isAllowRecord =
                           await PermissionManager.isAllowRecord();
                       if (isAllowRecord) {
-                        _changeTypingType(RoomTypingEnum.recording);
+                        _changeTypingType(VRoomTypingEnum.recording);
                       } else {
                         final isAllowRecord =
                             await PermissionManager.askForRecord();
                         if (isAllowRecord) {
-                          _changeTypingType(RoomTypingEnum.recording);
+                          _changeTypingType(VRoomTypingEnum.recording);
                         }
                       }
                     },
@@ -303,45 +303,45 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   }
 
   void _onAttachFilePress(BuildContext context, VInputLanguage language) async {
-    late AttachEnumRes? res;
+    late VAttachEnumRes? res;
     if (widget.onAttachIconPress != null) {
       res = await widget.onAttachIconPress!();
     } else {
       final x = await VAppAlert.showModalSheet(content: [
-        ModelSheetItem<AttachEnumRes>(
+        ModelSheetItem<VAttachEnumRes>(
           title: language.media,
-          id: AttachEnumRes.media,
+          id: VAttachEnumRes.media,
           iconData: Icons.image,
         ),
-        ModelSheetItem<AttachEnumRes>(
+        ModelSheetItem<VAttachEnumRes>(
             title: language.files,
-            id: AttachEnumRes.files,
+            id: VAttachEnumRes.files,
             iconData: Icons.attach_file),
         if (widget.googleMapsApiKey != null)
-          ModelSheetItem<AttachEnumRes>(
+          ModelSheetItem<VAttachEnumRes>(
             title: language.location,
             iconData: Icons.location_on_outlined,
-            id: AttachEnumRes.location,
+            id: VAttachEnumRes.location,
           ),
       ], context: context, title: language.shareMediaAndLocation);
       if (x == null) return null;
-      res = x.id as AttachEnumRes;
+      res = x.id as VAttachEnumRes;
     }
     if (res != null) {
       switch (res) {
-        case AttachEnumRes.media:
+        case VAttachEnumRes.media:
           final files = await VAppPick.getMedia();
           if (files != null) {
             widget.onSubmitMedia(files);
           }
           break;
-        case AttachEnumRes.files:
+        case VAttachEnumRes.files:
           final files = await VAppPick.getFiles();
           if (files != null) {
             widget.onSubmitFiles(files);
           }
           break;
-        case AttachEnumRes.location:
+        case VAttachEnumRes.location:
           if (widget.googleMapsApiKey == null) return;
           final LocationResult? result = await context.toPage<LocationResult?>(
             PlacePicker(
@@ -395,14 +395,14 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
 
   void _textEditListener() {
     _text = _textEditingController.text;
-    if (_text.isNotEmpty && _typingType != RoomTypingEnum.typing) {
-      _changeTypingType(RoomTypingEnum.typing);
-    } else if (_text.isEmpty && _typingType != RoomTypingEnum.stop) {
-      _changeTypingType(RoomTypingEnum.stop);
+    if (_text.isNotEmpty && _typingType != VRoomTypingEnum.typing) {
+      _changeTypingType(VRoomTypingEnum.typing);
+    } else if (_text.isEmpty && _typingType != VRoomTypingEnum.stop) {
+      _changeTypingType(VRoomTypingEnum.stop);
     }
   }
 
-  void _changeTypingType(RoomTypingEnum typingType) {
+  void _changeTypingType(VRoomTypingEnum typingType) {
     if (typingType != _typingType) {
       setState(() {
         _typingType = typingType;
@@ -413,8 +413,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
 
   @override
   void dispose() {
-    if (_typingType != RoomTypingEnum.stop) {
-      widget.onTypingChange(RoomTypingEnum.stop);
+    if (_typingType != VRoomTypingEnum.stop) {
+      widget.onTypingChange(VRoomTypingEnum.stop);
     }
     _focusNode.dispose();
     _textEditingController.dispose();

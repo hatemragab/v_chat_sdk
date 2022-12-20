@@ -99,7 +99,7 @@ class VChatController with WidgetsBindingObserver {
 
   ///make sure you already login or already login to v chat
   bool connectToSocket() {
-    final access = VAppPref.getHashedString(key: StorageKeys.accessToken);
+    final access = VAppPref.getHashedString(key: VStorageKeys.accessToken);
     if (access == null) {
       _log.warning(
         "You try to connect to socket with out login please make sure you call VChatController.instance.login first",

@@ -2,8 +2,8 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class AppLocalization {
   static String? get languageCode =>
-      VAppPref.getStringOrNull(StorageKeys.appLanguage);
+      VAppPref.getStringOrNull(VStorageKeys.appLanguage);
 
   static Future<void> updateLanguageCode(String languageCode) =>
-      VAppPref.setString(StorageKeys.appLanguage, languageCode);
+      VAppPref.setString(VStorageKeys.appLanguage, languageCode);
 }

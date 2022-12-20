@@ -91,17 +91,17 @@ class VPlatformFileSource {
     return 'PlatformFileSource{name: $name, url:$url filePath: $filePath, mimeType: $mimeType, size: $fileSize bytes ${bytes?.length}';
   }
 
-  SupportedFilesType get getMediaType {
+  VSupportedFilesType get getMediaType {
     final mimeStr = mimeType;
-    if (mimeStr == null) return SupportedFilesType.file;
+    if (mimeStr == null) return VSupportedFilesType.file;
     final fileType = mimeStr.split('/').first;
     if (fileType == "video") {
-      return SupportedFilesType.video;
+      return VSupportedFilesType.video;
     }
     if (fileType == "image") {
-      return SupportedFilesType.image;
+      return VSupportedFilesType.image;
     }
-    return SupportedFilesType.file;
+    return VSupportedFilesType.file;
   }
 
   factory VPlatformFileSource.fromMap(Map<String, dynamic> map) {

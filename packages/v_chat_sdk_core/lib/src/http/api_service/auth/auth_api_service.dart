@@ -20,14 +20,14 @@ class AuthApiService {
     );
     await Future.wait([
       VAppPref.setHashedString(
-        StorageKeys.accessToken,
+        VStorageKeys.accessToken,
         response.body['data']['accessToken'].toString(),
       ),
       VAppPref.setString(
-        StorageKeys.appLanguage,
+        VStorageKeys.appLanguage,
         dto.language,
       ),
-      VAppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
+      VAppPref.setMap(VStorageKeys.vMyProfile, myUser.toMap())
     ]);
     return myUser;
   }
@@ -48,14 +48,14 @@ class AuthApiService {
     );
     await Future.wait([
       VAppPref.setHashedString(
-        StorageKeys.accessToken,
+        VStorageKeys.accessToken,
         response.body['data']['accessToken'].toString(),
       ),
       VAppPref.setString(
-        StorageKeys.appLanguage,
+        VStorageKeys.appLanguage,
         dto.language,
       ),
-      VAppPref.setMap(StorageKeys.vMyProfile, myUser.toMap())
+      VAppPref.setMap(VStorageKeys.vMyProfile, myUser.toMap())
     ]);
     return myUser;
   }

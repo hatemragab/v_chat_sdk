@@ -89,5 +89,5 @@ class VMessageController extends ChangeNotifier {
 
   onSubmitLocation(VLocationMessageData data) {}
 
-  onTypingChange(RoomTypingEnum typing) {}
+  onTypingChange(VRoomTypingEnum typing) {}
 }

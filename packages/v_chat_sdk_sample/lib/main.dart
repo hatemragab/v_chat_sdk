@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
 }
 
 void setAppTheme(AppService appService) {
-  final theme = VAppPref.getStringOrNull(StorageKeys.appTheme);
+  final theme = VAppPref.getStringOrNull(VStorageKeys.appTheme);
   if (theme != null) {
     if (theme == ThemeMode.light.name) {
       appService.setTheme(ThemeMode.light);

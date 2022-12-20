@@ -3,7 +3,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../utils/api_constants.dart';
 
 class VSocketRoomTypingModel {
-  final RoomTypingEnum status;
+  final VRoomTypingEnum status;
   final String roomId;
   final String userId;
   final String name;
@@ -22,19 +22,19 @@ class VSocketRoomTypingModel {
   static const VSocketRoomTypingModel offline = VSocketRoomTypingModel(
     name: "offline",
     roomId: "offline",
-    status: RoomTypingEnum.stop,
+    status: VRoomTypingEnum.stop,
     userId: "offline",
   );
   static const VSocketRoomTypingModel typing = VSocketRoomTypingModel(
     name: "fake typing",
     roomId: "fake",
-    status: RoomTypingEnum.typing,
+    status: VRoomTypingEnum.typing,
     userId: "fake",
   );
   static const VSocketRoomTypingModel recoding = VSocketRoomTypingModel(
     name: "fake recoding",
     roomId: "fake",
-    status: RoomTypingEnum.recording,
+    status: VRoomTypingEnum.recording,
     userId: "fake",
   );
 
@@ -42,7 +42,7 @@ class VSocketRoomTypingModel {
     String? roomId,
     String? userId,
     String? name,
-    RoomTypingEnum? status,
+    VRoomTypingEnum? status,
   }) {
     return VSocketRoomTypingModel(
       roomId: roomId ?? this.roomId,
@@ -52,11 +52,11 @@ class VSocketRoomTypingModel {
     );
   }
 
-  bool get isTyping => status == RoomTypingEnum.typing;
+  bool get isTyping => status == VRoomTypingEnum.typing;
 
-  bool get isRecording => status == RoomTypingEnum.recording;
+  bool get isRecording => status == VRoomTypingEnum.recording;
 
-  bool get isStopTyping => status == RoomTypingEnum.stop;
+  bool get isStopTyping => status == VRoomTypingEnum.stop;
 
   @override
   String toString() {
@@ -70,11 +70,11 @@ class VSocketRoomTypingModel {
   String? get _statusInText {
     //todo fix trnas
     switch (status) {
-      case RoomTypingEnum.stop:
+      case VRoomTypingEnum.stop:
         return null;
-      case RoomTypingEnum.typing:
+      case VRoomTypingEnum.typing:
         return "S.current.typing";
-      case RoomTypingEnum.recording:
+      case VRoomTypingEnum.recording:
         return "S.current.recording";
     }
   }
@@ -86,7 +86,7 @@ class VSocketRoomTypingModel {
 
   factory VSocketRoomTypingModel.fromMap(Map<String, dynamic> map) {
     return VSocketRoomTypingModel(
-      status: RoomTypingEnum.values.byName(map['status'] as String),
+      status: VRoomTypingEnum.values.byName(map['status'] as String),
       name: map['name'] as String,
       userId: map['userId'] as String,
       roomId: map['roomId'] as String,

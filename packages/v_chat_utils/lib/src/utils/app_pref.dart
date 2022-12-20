@@ -18,13 +18,13 @@ abstract class VAppPref {
     _hashKey = hasKey;
   }
 
-  static String? getStringOrNull(StorageKeys key) =>
+  static String? getStringOrNull(VStorageKeys key) =>
       instance.getString(key.name);
 
   static String? getStringOrNullKey(String key) => instance.getString(key);
 
   static Future<void> setString(
-    StorageKeys key,
+    VStorageKeys key,
     String value,
   ) {
     return instance.setString(key.name, value);
@@ -38,7 +38,7 @@ abstract class VAppPref {
   }
 
   static Future<void> setHashedString(
-    StorageKeys sKey,
+    VStorageKeys sKey,
     String value,
   ) {
     final plainText = value;
@@ -51,7 +51,7 @@ abstract class VAppPref {
   }
 
   static String? getHashedString({
-    required StorageKeys key,
+    required VStorageKeys key,
     SharedPreferences? preferences,
   }) {
     late String? plainText;
@@ -69,15 +69,15 @@ abstract class VAppPref {
   }
 
   static bool isLogin() {
-    return getBool(StorageKeys.isLogin);
+    return getBool(VStorageKeys.isLogin);
   }
 
   static Future<void> setLogOut() {
-    return remove(StorageKeys.isLogin);
+    return remove(VStorageKeys.isLogin);
   }
 
   static Future<void> setLogin() async {
-    return setBool(StorageKeys.isLogin, true);
+    return setBool(VStorageKeys.isLogin, true);
   }
 
   static int? getIntOrNull(
@@ -92,7 +92,7 @@ abstract class VAppPref {
       getIntOrNull(key) ?? defult;
 
   static bool getBool(
-    StorageKeys key,
+    VStorageKeys key,
   ) =>
       instance.getBool(key.name) ?? false;
 
@@ -103,14 +103,14 @@ abstract class VAppPref {
       instance.setInt(key, value);
 
   static Future<void> setBool(
-    StorageKeys key,
+    VStorageKeys key,
     // ignore: avoid_positional_boolean_parameters
     bool value,
   ) =>
       instance.setBool(key.name, value);
 
   static Map<String, dynamic>? getMap(
-    StorageKeys key,
+    VStorageKeys key,
   ) {
     final data = getStringOrNull(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
@@ -124,7 +124,7 @@ abstract class VAppPref {
   }
 
   static Future<void> setMap(
-    StorageKeys key,
+    VStorageKeys key,
     Map<String, dynamic> map,
   ) =>
       setString(key, jsonEncode(map));
@@ -138,7 +138,7 @@ abstract class VAppPref {
   static Future<void> clear() => instance.clear();
 
   static Future<void> remove(
-    StorageKeys key,
+    VStorageKeys key,
   ) =>
       instance.remove(key.name);
 

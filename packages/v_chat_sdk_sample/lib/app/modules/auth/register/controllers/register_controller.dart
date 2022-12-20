@@ -28,7 +28,7 @@ class RegisterController extends GetxController {
       final user = await AuthRepo.loginWithEmailAndPassword(
           loginData.email, loginData.password);
       final userFromFire = await repository.getId(user.uid);
-      await VAppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
+      await VAppPref.setMap(VStorageKeys.myProfile, userFromFire.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
@@ -53,7 +53,7 @@ class RegisterController extends GetxController {
             "https://firebasestorage.googleapis.com/v0/b/v-chat-sdk-v2.appspot.com/o/images%2Fdefault_user_image.png?alt=media&token=13bd6095-614f-42d2-a626-0fbbb0668d3c",
       );
       await repository.add(userFromFire);
-      await VAppPref.setMap(StorageKeys.myProfile, userFromFire.toMap());
+      await VAppPref.setMap(VStorageKeys.myProfile, userFromFire.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);

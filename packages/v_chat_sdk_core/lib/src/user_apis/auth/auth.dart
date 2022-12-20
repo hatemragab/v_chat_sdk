@@ -82,7 +82,7 @@ class Auth implements AuthEndPoints {
     } catch (err) {
       _log.warning(err);
     }
-    for (var element in StorageKeys.values) {
+    for (var element in VStorageKeys.values) {
       await VAppPref.remove(element);
     }
     SocketController.instance.disconnect();

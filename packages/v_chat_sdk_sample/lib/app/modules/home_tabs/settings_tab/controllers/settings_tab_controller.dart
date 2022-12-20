@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/app_service.dart';
@@ -50,7 +49,7 @@ class SettingsTabController extends GetxController {
     );
     if (res != null) {
       await VAppPref.setString(
-        StorageKeys.appTheme,
+        VStorageKeys.appTheme,
         res.mode.name,
       );
       appService.setTheme(res.mode);

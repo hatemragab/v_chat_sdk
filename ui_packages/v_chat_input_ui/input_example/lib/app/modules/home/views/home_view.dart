@@ -79,7 +79,7 @@ class HomeView extends GetView<HomeController> {
                   : null,
               googleMapsApiKey: "texst",
               onAttachIconPress: () async {
-                return AttachEnumRes.media;
+                return VAttachEnumRes.media;
               },
               onSubmitText: controller.onSubmitText,
               onMentionSearch: controller.onMentionRequireSearch,
