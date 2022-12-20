@@ -6,10 +6,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'enums.dart';
 
 abstract class VAppPref {
-  static late final SharedPreferences instance;
+  static late final SharedPreferences? _instance;
 
-  static Future<void> init() async {
-    instance = await SharedPreferences.getInstance();
+  static get instance => _instance!;
+  static late String _hashKey;
+
+  static Future<void> init({
+    String hasKey = "",
+  }) async {
+    _instance ??= await SharedPreferences.getInstance();
+    _hashKey = hasKey;
   }
 
   static String? getStringOrNull(StorageKeys key) =>
