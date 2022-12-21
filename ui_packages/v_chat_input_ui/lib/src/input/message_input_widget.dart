@@ -221,7 +221,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                             isTyping: _typingType == VRoomTypingEnum.typing,
                             onSubmit: (v) {
                               if (v.isNotEmpty) {
-                                widget.onSubmitText(v);
+                                widget.onSubmitText(
+                                    _textEditingController.markupText);
                                 _text = "";
                                 _textEditingController.clear();
                                 _changeTypingType(VRoomTypingEnum.stop);
@@ -249,7 +250,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         );
                         _changeTypingType(VRoomTypingEnum.stop);
                       } else if (_text.isNotEmpty) {
-                        widget.onSubmitText(_text);
+                        widget.onSubmitText(_textEditingController.markupText);
                         _text = "";
                         _textEditingController.clear();
                       }

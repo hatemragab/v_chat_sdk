@@ -5,8 +5,8 @@ import 'package:v_chat_voice_player/src/voice_message_controller.dart';
 import 'helpers/utils.dart';
 import 'widgets/noises.dart';
 
-class VoiceMessageView extends StatelessWidget {
-  final VoiceMessageController controller;
+class VVoiceMessageView extends StatelessWidget {
+  final VVoiceMessageController controller;
   final Color backgroundColor;
   final Color circlesColor;
   final Color activeSliderColor;
@@ -14,7 +14,7 @@ class VoiceMessageView extends StatelessWidget {
   final TextStyle circlesTextStyle;
   final TextStyle counterTextStyle;
 
-  const VoiceMessageView({
+  const VVoiceMessageView({
     Key? key,
     required this.controller,
     this.backgroundColor = Colors.white,

@@ -17,7 +17,7 @@ class VoicePlayer extends StatefulWidget {
 class VoicePlayerState extends State<VoicePlayer> {
   bool isLoading = true;
   late String path;
-  late final VoiceMessageController messageController;
+  late final VVoiceMessageController messageController;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class VoicePlayerState extends State<VoicePlayer> {
                   if (isLoading)
                     const CircularProgressIndicator.adaptive()
                   else
-                    VoiceMessageView(
+                    VVoiceMessageView(
                       controller: messageController,
                     ),
                   const SizedBox(
@@ -78,7 +78,7 @@ class VoicePlayerState extends State<VoicePlayer> {
 
   void init() async {
     await download();
-    messageController = VoiceMessageController(
+    messageController = VVoiceMessageController(
       audioSrc: VPlatformFileSource.fromPath(filePath: path),
       maxDuration: widget.duration,
       id: "1",

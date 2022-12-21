@@ -5,7 +5,7 @@ import '../views/home_view.dart';
 
 class MsgVoiceControllersModel {
   final String id;
-  final VoiceMessageController controller;
+  final VVoiceMessageController controller;
 
   MsgVoiceControllersModel(this.id, this.controller);
 
@@ -23,11 +23,11 @@ class MsgVoiceControllersModel {
 class HomeController extends GetxController {
   final _voiceControllers = <MsgVoiceControllersModel>[];
 
-  VoiceMessageController getVoiceController(VoiceMessageModel voice) {
+  VVoiceMessageController getVoiceController(VoiceMessageModel voice) {
     final item =
         _voiceControllers.firstWhereOrNull((element) => element.id == voice.id);
     if (item == null) {
-      final controller = VoiceMessageController(
+      final controller = VVoiceMessageController(
         id: voice.id,
         audioSrc: voice.dataSource,
         onComplete: onComplete,

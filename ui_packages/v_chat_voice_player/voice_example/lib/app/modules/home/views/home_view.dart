@@ -112,7 +112,7 @@ class HomeViewState extends State<HomeView> {
         reverse: true,
         separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, i) {
-          return VoiceMessageView(
+          return VVoiceMessageView(
             controller: controller.getVoiceController(voicesList[i]),
             key: ValueKey(voicesList[i].id),
           );

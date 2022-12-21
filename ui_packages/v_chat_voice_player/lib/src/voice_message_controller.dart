@@ -34,7 +34,7 @@ import 'helpers/utils.dart';
 //   BytesSrc(this.bytes);
 // }
 
-class VoiceMessageController extends MyTicker {
+class VVoiceMessageController extends MyTicker {
   final VPlatformFileSource audioSrc;
   late Duration maxDuration;
   Duration currentDuration = Duration.zero;
@@ -78,7 +78,7 @@ class VoiceMessageController extends MyTicker {
 
   double get maxMillSeconds => maxDuration.inMilliseconds.toDouble();
 
-  VoiceMessageController({
+  VVoiceMessageController({
     required this.id,
     required this.audioSrc,
     this.maxDuration = const Duration(days: 1),

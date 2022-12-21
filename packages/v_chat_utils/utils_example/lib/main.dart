@@ -3,7 +3,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await VAppPref.init();
+  await VAppPref.init(hasKey: "dfgdfklkeggereteth");
   runApp(const MyApp());
 }
 

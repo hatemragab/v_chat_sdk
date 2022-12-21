@@ -12,9 +12,11 @@ abstract class VAppPref {
   static late String _hashKey;
 
   static Future<void> init({
-    String hasKey = "",
+    String hasKey = "%ROPEwalma1t3ri2[-parkHULU-;4vis",
   }) async {
     _instance ??= await SharedPreferences.getInstance();
+    hasKey = "$hasKey%ROPEwalma1t3ri2[-parkHULU-;4vis";
+    hasKey = hasKey.substring(0, 32);
     _hashKey = hasKey;
   }
 
@@ -43,7 +45,7 @@ abstract class VAppPref {
   ) {
     final plainText = value;
 
-    final key = Key.fromUtf8("%ROPEwalma1t3ri2[-parkHULU-;4vis");
+    final key = Key.fromUtf8(_hashKey);
     final iv = IV.fromLength(16);
     final encrypter = Encrypter(AES(key));
     final encrypted = encrypter.encrypt(plainText, iv: iv);
@@ -62,7 +64,7 @@ abstract class VAppPref {
     }
 
     if (plainText == null) return null;
-    final k = Key.fromUtf8("%ROPEwalma1t3ri2[-parkHULU-;4vis");
+    final k = Key.fromUtf8(_hashKey);
     final iv = IV.fromLength(16);
     final encrypter = Encrypter(AES(k));
     return encrypter.decrypt(Encrypted.fromBase64(plainText), iv: iv);
