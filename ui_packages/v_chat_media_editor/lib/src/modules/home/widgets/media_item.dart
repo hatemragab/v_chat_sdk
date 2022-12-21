@@ -4,19 +4,19 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/image_item.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/video_item.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/core.dart';
 import 'file_item.dart';
 
 class MediaItem extends StatelessWidget {
   final VoidCallback onCloseClicked;
-  final Function(VBaseMediaEditor item) onDelete;
-  final Function(VBaseMediaEditor item) onCrop;
-  final Function(VBaseMediaEditor item) onStartDraw;
-  final Function(VBaseMediaEditor item) onPlayVideo;
+  final Function(VBaseMediaRes item) onDelete;
+  final Function(VBaseMediaRes item) onCrop;
+  final Function(VBaseMediaRes item) onStartDraw;
+  final Function(VBaseMediaRes item) onPlayVideo;
   final bool isProcessing;
 
-  final VBaseMediaEditor mediaFile;
+  final VBaseMediaRes mediaFile;
 
   const MediaItem({
     super.key,
@@ -39,24 +39,24 @@ class MediaItem extends StatelessWidget {
         ],
       );
     }
-    if (mediaFile is VMediaEditorImage) {
+    if (mediaFile is VMediaImageRes) {
       return ImageItem(
-        image: mediaFile as VMediaEditorImage,
+        image: mediaFile as VMediaImageRes,
         onCloseClicked: onCloseClicked,
         onCrop: onCrop,
         onDelete: onDelete,
         onStartDraw: onStartDraw,
       );
-    } else if (mediaFile is VMediaEditorVideo) {
+    } else if (mediaFile is VMediaVideoRes) {
       return VideoItem(
-        video: mediaFile as VMediaEditorVideo,
+        video: mediaFile as VMediaVideoRes,
         onCloseClicked: onCloseClicked,
         onPlayVideo: onPlayVideo,
         onDelete: onDelete,
       );
     } else {
       return FileItem(
-        file: mediaFile as VMediaEditorFile,
+        file: mediaFile as VMediaFileRes,
         onCloseClicked: onCloseClicked,
         onDelete: onDelete,
       );
@@ -65,8 +65,8 @@ class MediaItem extends StatelessWidget {
 
   Widget getImage() {
     const BoxFit? fit = null;
-    if (mediaFile is VMediaEditorImage) {
-      final m = mediaFile as VMediaEditorImage;
+    if (mediaFile is VMediaImageRes) {
+      final m = mediaFile as VMediaImageRes;
       if (m.data.isFromPath) {
         return Image.file(
           File(m.data.fileSource.filePath!),
@@ -79,8 +79,8 @@ class MediaItem extends StatelessWidget {
           fit: fit,
         );
       }
-    } else if (mediaFile is VMediaEditorVideo) {
-      final m = mediaFile as VMediaEditorVideo;
+    } else if (mediaFile is VMediaVideoRes) {
+      final m = mediaFile as VMediaVideoRes;
       if (m.data.isFromPath) {
         return Image.file(
           File(m.data.thumbImage!.fileSource.filePath!),

@@ -38,14 +38,14 @@ class HomeView extends GetView<HomeController> {
                 const SizedBox(
                   height: 5,
                 ),
-                if (data[index] is VMediaEditorImage)
+                if (data[index] is VMediaImageRes)
                   VPlatformCacheImageWidget(
-                    source: (data[index] as VMediaEditorImage).data.fileSource,
+                    source: (data[index] as VMediaImageRes).data.fileSource,
                     size: const Size.fromHeight(400),
                   )
-                else if (data[index] is VMediaEditorVideo)
+                else if (data[index] is VMediaVideoRes)
                   Text(
-                      "Video wit thumb ${(data[index] as VMediaEditorVideo).data.thumbImage}")
+                      "Video wit thumb ${(data[index] as VMediaVideoRes).data.thumbImage}")
                 else
                   Text("File ${data[index].toString()}")
               ],

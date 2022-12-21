@@ -9,7 +9,8 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
   final files = <VPlatformFileSource>[].obs;
-  final proccessedData = <VBaseMediaEditor>[].obs;
+  final proccessedData = <VBaseMediaRes>[].obs;
+  final _x = VMediaEditorHelpers();
 
   void onGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -37,17 +38,18 @@ class HomeController extends GetxController {
         MaterialPageRoute(
           builder: ((context) => MediaEditorView(files: mediaFiles)),
         ),
-      ) as List<VBaseMediaEditor>?;
+      ) as List<VBaseMediaRes>?;
       if (editedFiles == null) {
         return;
       }
+
       proccessedData.clear();
       proccessedData.addAll(editedFiles);
       for (final f in editedFiles) {
         print(f.toString());
-        if (f is VMediaEditorImage) {
+        if (f is VMediaImageRes) {
           files.add(f.data.fileSource);
-        } else if (f is VMediaEditorVideo) {
+        } else if (f is VMediaVideoRes) {
           files.add(f.data.fileSource);
         }
       }

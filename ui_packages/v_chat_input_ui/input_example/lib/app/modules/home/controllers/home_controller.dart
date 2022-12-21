@@ -51,7 +51,7 @@ class HomeController extends GetxController {
         .toList();
   }
 
-  void onSubmitMedia(List<VPlatformFileSource> files) {
+  void onSubmitMedia(List<VBaseMediaRes> files) {
     printOnScreen(InputLog("onSubmitMedia", files.toString()));
   }
 

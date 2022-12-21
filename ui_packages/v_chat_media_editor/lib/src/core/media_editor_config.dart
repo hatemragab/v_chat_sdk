@@ -1,5 +1,5 @@
-class MediaEditorConfig {
-  const MediaEditorConfig({
+class VMediaEditorConfig {
+  const VMediaEditorConfig({
     this.maxVideoSizeMb = 100,
     this.imageQuality = 50,
   });

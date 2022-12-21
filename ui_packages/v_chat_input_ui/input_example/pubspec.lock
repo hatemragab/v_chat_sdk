@@ -127,6 +127,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  chewie:
+    dependency: transitive
+    description:
+      name: chewie
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.6"
   chopper:
     dependency: transitive
     description:
@@ -333,6 +340,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_native_image:
+    dependency: transitive
+    description:
+      name: flutter_native_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6+1"
+  flutter_painter_v2:
+    dependency: transitive
+    description:
+      name: flutter_painter_v2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -441,6 +462,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
+  helpers:
+    dependency: transitive
+    description:
+      name: helpers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   html:
     dependency: transitive
     description:
@@ -1118,6 +1146,13 @@ packages:
       relative: true
     source: path
     version: "0.0.3"
+  v_chat_media_editor:
+    dependency: "direct overridden"
+    description:
+      path: "../../v_chat_media_editor"
+      relative: true
+    source: path
+    version: "0.0.3"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1138,7 +1173,7 @@ packages:
       path: "../../../packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   vector_math:
     dependency: transitive
     description:
@@ -1181,6 +1216,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.13"
+  video_thumbnail:
+    dependency: transitive
+    description:
+      name: video_thumbnail
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.3"
+  wakelock:
+    dependency: transitive
+    description:
+      name: wakelock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.2"
+  wakelock_macos:
+    dependency: transitive
+    description:
+      name: wakelock_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  wakelock_platform_interface:
+    dependency: transitive
+    description:
+      name: wakelock_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
+  wakelock_web:
+    dependency: transitive
+    description:
+      name: wakelock_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
+  wakelock_windows:
+    dependency: transitive
+    description:
+      name: wakelock_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   wechat_camera_picker:
     dependency: transitive
     description:

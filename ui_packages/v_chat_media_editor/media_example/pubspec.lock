@@ -783,14 +783,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.3"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   vector_math:
     dependency: transitive
     description:

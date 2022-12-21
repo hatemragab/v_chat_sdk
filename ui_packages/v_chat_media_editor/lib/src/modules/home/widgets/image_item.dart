@@ -4,11 +4,11 @@ import 'package:v_chat_media_editor/src/core/core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ImageItem extends StatelessWidget {
-  final VMediaEditorImage image;
+  final VMediaImageRes image;
   final VoidCallback onCloseClicked;
-  final Function(VMediaEditorImage item) onDelete;
-  final Function(VMediaEditorImage item) onCrop;
-  final Function(VMediaEditorImage item) onStartDraw;
+  final Function(VMediaImageRes item) onDelete;
+  final Function(VMediaImageRes item) onCrop;
+  final Function(VMediaImageRes item) onStartDraw;
 
   const ImageItem(
       {Key? key,

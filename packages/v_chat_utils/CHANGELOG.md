@@ -6,3 +6,5 @@
 - add prefix to some missing labels
 ## 0.0.4
 - fix VAppPref bug
+ ## 0.0.5
+- support for VBaseMediaRes

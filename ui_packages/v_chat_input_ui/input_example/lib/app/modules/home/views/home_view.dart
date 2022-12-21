@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -78,9 +77,6 @@ class HomeView extends GetView<HomeController> {
                   ? _getReplyWidget(controller.replyMsg)
                   : null,
               googleMapsApiKey: "texst",
-              onAttachIconPress: () async {
-                return VAttachEnumRes.media;
-              },
               onSubmitText: controller.onSubmitText,
               onMentionSearch: controller.onMentionRequireSearch,
               onSubmitMedia: controller.onSubmitMedia,

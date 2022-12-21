@@ -1,24 +1,24 @@
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-abstract class VBaseMediaEditor {
+abstract class VBaseMediaRes {
   bool isSelected = false;
   final String id;
 
-  VBaseMediaEditor({
+  VBaseMediaRes({
     required this.id,
   });
 
   @override
-  bool operator ==(Object other) => other is VBaseMediaEditor && id == other.id;
+  bool operator ==(Object other) => other is VBaseMediaRes && id == other.id;
 
   @override
   int get hashCode => id.hashCode;
 }
 
-class VMediaEditorImage extends VBaseMediaEditor {
+class VMediaImageRes extends VBaseMediaRes {
   VMessageImageData data;
 
-  VMediaEditorImage({
+  VMediaImageRes({
     String? id,
     required this.data,
   }) : super(
@@ -31,10 +31,10 @@ class VMediaEditorImage extends VBaseMediaEditor {
   }
 }
 
-class VMediaEditorVideo extends VBaseMediaEditor {
+class VMediaVideoRes extends VBaseMediaRes {
   VMessageVideoData data;
 
-  VMediaEditorVideo({
+  VMediaVideoRes({
     String? id,
     required this.data,
   }) : super(id: id ?? DateTime.now().microsecondsSinceEpoch.toString());
@@ -45,10 +45,10 @@ class VMediaEditorVideo extends VBaseMediaEditor {
   }
 }
 
-class VMediaEditorFile extends VBaseMediaEditor {
+class VMediaFileRes extends VBaseMediaRes {
   VPlatformFileSource data;
 
-  VMediaEditorFile({
+  VMediaFileRes({
     String? id,
     required this.data,
   }) : super(id: id ?? DateTime.now().microsecondsSinceEpoch.toString());

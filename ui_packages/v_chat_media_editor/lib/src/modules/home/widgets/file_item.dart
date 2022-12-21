@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:v_chat_media_editor/src/core/core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class FileItem extends StatelessWidget {
-  final VMediaEditorFile file;
+  final VMediaFileRes file;
   final VoidCallback onCloseClicked;
-  final Function(VMediaEditorFile item) onDelete;
+  final Function(VMediaFileRes item) onDelete;
 
   const FileItem({
     Key? key,

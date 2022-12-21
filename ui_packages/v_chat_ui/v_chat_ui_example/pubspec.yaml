@@ -40,7 +40,6 @@ dependencies:
   file_sizes: ^1.0.6
   path: ^1.8.2
   encrypt: ^5.0.1
-  chopper: ^5.1.0
   firebase_pagination: ^3.0.0
   image_cropper: ^3.0.1
   wechat_camera_picker: ^3.6.3

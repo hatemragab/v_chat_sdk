@@ -7,6 +7,7 @@ import 'package:v_chat_input_ui/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_record_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_send_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_text_filed.dart';
+import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -20,7 +21,7 @@ class VMessageInputWidget extends StatefulWidget {
   final Function(String message) onSubmitText;
 
   ///callback when user send images or videos or mixed
-  final Function(List<VPlatformFileSource> files) onSubmitMedia;
+  final Function(List<VBaseMediaRes> files) onSubmitMedia;
 
   ///callback when user send files
   final Function(List<VPlatformFileSource> files) onSubmitFiles;
@@ -88,9 +89,9 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   bool _isEmojiShowing = false;
   String _text = "";
   VRoomTypingEnum _typingType = VRoomTypingEnum.stop;
-  int _textOffset = 0;
   final _textEditingController = VChatTextMentionController();
   final _focusNode = FocusNode();
+  final _vMediaEditorHelpers = VMediaEditorHelpers();
 
   bool get _isRecording => _typingType == VRoomTypingEnum.recording;
 
@@ -290,12 +291,6 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     _focusNode.canRequestFocus = true;
     await Future.delayed(const Duration(milliseconds: 50));
     _isEmojiShowing = !_isEmojiShowing;
-    if (_isEmojiShowing) {
-      final of = _textEditingController.selection.base.offset;
-      if (of != -1) {
-        _textOffset = of;
-      }
-    }
     setState(() {});
   }
 
@@ -329,7 +324,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         case VAttachEnumRes.media:
           final files = await VAppPick.getMedia();
           if (files != null) {
-            widget.onSubmitMedia(files);
+            final resFiles = await _processFilesToSubmit(files);
+            widget.onSubmitMedia(resFiles);
           }
           break;
         case VAttachEnumRes.files:
@@ -377,17 +373,19 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     }
     final entity = await VAppPick.pickFromWeAssetCamera(
       (p0, p1) {
-        widget.onSubmitMedia([
-          VPlatformFileSource.fromPath(
-            filePath: p0.path,
-          )
-        ]);
+        _sendWeChatImage(VPlatformFileSource.fromPath(
+          filePath: p0.path,
+        ));
         return true;
       },
       context,
     );
     if (entity == null) return;
-    widget.onSubmitMedia([entity]);
+    widget.onSubmitMedia(await _processFilesToSubmit([entity]));
+  }
+
+  Future<void> _sendWeChatImage(VPlatformFileSource entity) async {
+    widget.onSubmitMedia(await _processFilesToSubmit([entity]));
   }
 
   void _textEditListener() {
@@ -416,5 +414,43 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     _focusNode.dispose();
     _textEditingController.dispose();
     super.dispose();
+  }
+
+  Future<List<VBaseMediaRes>> _processFilesToSubmit(
+    List<VPlatformFileSource> files,
+  ) async {
+    final resFiles = <VBaseMediaRes>[];
+    for (final sourceFile in files) {
+      if (sourceFile.isImage) {
+        final compressedImage =
+            await _vMediaEditorHelpers.compressIoImage(fileSource: sourceFile);
+        final imageData = await _vMediaEditorHelpers.getImageInfo(
+            fileSource: compressedImage);
+        resFiles.add(
+          VMediaImageRes(
+            data: VMessageImageData(
+              fileSource: compressedImage,
+              height: imageData.image.height,
+              width: imageData.image.width,
+            ),
+          ),
+        );
+      } else if (sourceFile.isVideo) {
+        final videoDuration =
+            await _vMediaEditorHelpers.getVideoDurationMill(sourceFile);
+        final thumbData =
+            await _vMediaEditorHelpers.getVideoThumb(fileSource: sourceFile);
+        resFiles.add(
+          VMediaVideoRes(
+            data: VMessageVideoData(
+              fileSource: sourceFile,
+              duration: videoDuration,
+              thumbImage: thumbData,
+            ),
+          ),
+        );
+      }
+    }
+    return resFiles;
   }
 }

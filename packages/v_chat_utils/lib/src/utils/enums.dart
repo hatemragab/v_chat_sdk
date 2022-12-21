@@ -2,7 +2,11 @@ enum VLoadMoreStatus { loading, loaded, error, completed }
 
 enum VChatLoadingState { loading, success, error, ideal, empty }
 
-enum VSupportedFilesType { image, file, video }
+enum VSupportedFilesType {
+  image,
+  file,
+  video,
+}
 
 enum VRoomTypingEnum { stop, typing, recording }
 

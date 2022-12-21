@@ -4,10 +4,10 @@ import 'package:v_chat_media_editor/src/core/core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VideoItem extends StatelessWidget {
-  final VMediaEditorVideo video;
+  final VMediaVideoRes video;
   final VoidCallback onCloseClicked;
-  final Function(VMediaEditorVideo item) onDelete;
-  final Function(VMediaEditorVideo item) onPlayVideo;
+  final Function(VMediaVideoRes item) onDelete;
+  final Function(VMediaVideoRes item) onPlayVideo;
 
   const VideoItem(
       {Key? key,

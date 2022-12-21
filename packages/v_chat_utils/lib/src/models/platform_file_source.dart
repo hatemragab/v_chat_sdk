@@ -104,6 +104,12 @@ class VPlatformFileSource {
     return VSupportedFilesType.file;
   }
 
+  bool get isFile => getMediaType == VSupportedFilesType.file;
+
+  bool get isVideo => getMediaType == VSupportedFilesType.video;
+
+  bool get isImage => getMediaType == VSupportedFilesType.image;
+
   factory VPlatformFileSource.fromMap(Map<String, dynamic> map) {
     if (map['filePath'] == null && map['bytes'] == null && map['url'] == null) {
       throw "PlatformFileSource.fromMap at lest filePath or bytes or url not null $map";
