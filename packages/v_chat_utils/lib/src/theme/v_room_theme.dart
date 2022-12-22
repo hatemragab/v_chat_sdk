@@ -1,68 +1,5 @@
 import 'package:flutter/material.dart';
 
-class VRoomTheme extends ThemeExtension<VRoomTheme> {
-  final Color color;
-  final BoxDecoration decoration;
-  final Widget muteIcon;
-  final TextStyle titleStyle;
-  final VMsgStatusTheme vMsgStatusTheme;
-  final bool isDark;
-
-  VRoomTheme._({
-    required this.color,
-    required this.decoration,
-    required this.muteIcon,
-    required this.titleStyle,
-    required this.vMsgStatusTheme,
-    required this.isDark,
-  });
-
-  VRoomTheme.light({
-    this.color = Colors.black,
-    this.decoration = const BoxDecoration(color: Colors.white),
-    this.muteIcon = const Icon(Icons.notifications_off_outlined),
-    this.titleStyle = const TextStyle(),
-    this.vMsgStatusTheme = const VMsgStatusTheme.light(),
-    this.isDark = false,
-  });
-
-  VRoomTheme.dark({
-    this.color = Colors.white,
-    this.decoration = const BoxDecoration(color: Colors.black12),
-    this.muteIcon = const Icon(Icons.notifications_off_outlined),
-    this.titleStyle = const TextStyle(),
-    this.vMsgStatusTheme = const VMsgStatusTheme.dark(),
-    this.isDark = true,
-  });
-
-  @override
-  ThemeExtension<VRoomTheme> copyWith({
-    Color? color,
-    BoxDecoration? decoration,
-    Widget? muteIcon,
-    TextStyle? titleStyle,
-    VMsgStatusTheme? vMsgStatusTheme,
-    bool? isDark,
-  }) {
-    return VRoomTheme._(
-      color: color ?? this.color,
-      decoration: decoration ?? this.decoration,
-      muteIcon: muteIcon ?? this.muteIcon,
-      titleStyle: titleStyle ?? this.titleStyle,
-      vMsgStatusTheme: vMsgStatusTheme ?? this.vMsgStatusTheme,
-      isDark: isDark ?? this.isDark,
-    );
-  }
-
-  @override
-  ThemeExtension<VRoomTheme> lerp(ThemeExtension<VRoomTheme>? other, double t) {
-    if (other is! VRoomTheme) {
-      return this;
-    }
-    return this;
-  }
-}
-
 class VMsgStatusTheme {
   final Widget pendingIcon;
   final Widget sendIcon;
@@ -93,4 +30,20 @@ class VMsgStatusTheme {
     this.seenIcon = const Icon(Icons.done_all, color: Colors.blue),
     this.refreshIcon = const Icon(Icons.refresh, color: Colors.red),
   });
+
+  VMsgStatusTheme copyWith({
+    Widget? pendingIcon,
+    Widget? sendIcon,
+    Widget? deliverIcon,
+    Widget? seenIcon,
+    Widget? refreshIcon,
+  }) {
+    return VMsgStatusTheme._(
+      pendingIcon: pendingIcon ?? this.pendingIcon,
+      sendIcon: sendIcon ?? this.sendIcon,
+      deliverIcon: deliverIcon ?? this.deliverIcon,
+      seenIcon: seenIcon ?? this.seenIcon,
+      refreshIcon: refreshIcon ?? this.refreshIcon,
+    );
+  }
 }

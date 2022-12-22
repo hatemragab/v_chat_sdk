@@ -74,15 +74,11 @@ class MyApp extends StatelessWidget {
               scheme: FlexScheme.green,
               useMaterial3: true,
               appBarElevation: 20,
-              extensions: <ThemeExtension<dynamic>>[
-                VRoomTheme.light(),
-              ]),
+              extensions: <ThemeExtension<dynamic>>[]),
           darkTheme: FlexThemeData.dark(
             scheme: FlexScheme.green,
             useMaterial3: true,
-            extensions: <ThemeExtension<dynamic>>[
-              VRoomTheme.dark(),
-            ],
+            extensions: <ThemeExtension<dynamic>>[],
             appBarElevation: 20,
           ),
         );

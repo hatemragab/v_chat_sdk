@@ -741,14 +741,14 @@ packages:
       path: "../../../packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.0.6"
   v_chat_voice_player:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   vector_math:
     dependency: transitive
     description:

@@ -1145,14 +1145,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.5"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../v_chat_media_editor"
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1173,7 +1173,7 @@ packages:
       path: "../../../packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.0.6"
   vector_math:
     dependency: transitive
     description:

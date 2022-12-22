@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_ui/v_chat_ui.dart';
+import 'package:v_chat_room_page/v_chat_room_page.dart';
 
 import '../controllers/chats_tab_controller.dart';
 
@@ -9,7 +9,7 @@ class ChatsTabView extends GetView<ChatsTabController> {
 
   @override
   Widget build(BuildContext context) {
-    return VRoomPage(
+    return VChatPage(
       appBar: AppBar(
         title: const Text('Chats Tab View'),
         centerTitle: true,

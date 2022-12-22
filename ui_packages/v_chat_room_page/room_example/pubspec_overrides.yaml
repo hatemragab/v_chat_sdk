@@ -1,0 +1,8 @@
+# melos_managed_dependency_overrides: v_chat_room_page,v_chat_sdk_core,v_chat_utils
+dependency_overrides:
+  v_chat_room_page:
+    path: ..
+  v_chat_sdk_core:
+    path: ../../../packages/v_chat_sdk_core
+  v_chat_utils:
+    path: ../../../packages/v_chat_utils

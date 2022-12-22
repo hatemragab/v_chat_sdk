@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
+import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
-import 'package:v_chat_ui/v_chat_ui.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
 
 class ChatsTabController extends GetxController {
   final vRoomController = VRoomController();

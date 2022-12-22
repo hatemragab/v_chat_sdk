@@ -75,6 +75,14 @@ class VPlatformFileSource {
     mimeType = getMimeType;
   }
 
+  VPlatformFileSource.fromVUrl({
+    this.fileSize = 0,
+    required VFullUrlModel vFullUrlModel,
+  })  : url = vFullUrlModel,
+        name = basename(vFullUrlModel.fullUrl) {
+    mimeType = getMimeType;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
