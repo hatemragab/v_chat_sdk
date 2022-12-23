@@ -1,9 +1,10 @@
+import 'package:auto_direction/auto_direction.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_input_ui/src/models/v_input_theme.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class MessageTextFiled extends StatelessWidget {
+class MessageTextFiled extends StatefulWidget {
   final VChatTextMentionController textEditingController;
   final FocusNode focusNode;
   final bool isTyping;
@@ -26,12 +27,18 @@ class MessageTextFiled extends StatelessWidget {
   });
 
   @override
+  State<MessageTextFiled> createState() => _MessageTextFiledState();
+}
+
+class _MessageTextFiledState extends State<MessageTextFiled> {
+  String txt = "";
+  @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         InkWell(
-          onTap: onShowEmoji,
+          onTap: widget.onShowEmoji,
           child: context.vInputTheme.emojiIcon,
         ),
         const SizedBox(
@@ -40,29 +47,37 @@ class MessageTextFiled extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 0, top: 0),
-            child: TextField(
-              textCapitalization: TextCapitalization.sentences,
-              controller: textEditingController,
-              focusNode: focusNode,
-              maxLines: 5,
-              style: context.vInputTheme.textFieldTextStyle,
-              minLines: 1,
-              decoration: context.vInputTheme.textFieldDecoration
-                  .copyWith(hintText: hint),
-              onSubmitted: VPlatforms.isMobile
-                  ? null
-                  : (value) {
-                      if (value.isNotEmpty) {
-                        onSubmit(value);
-                      }
-                      focusNode.requestFocus();
-                      textEditingController.clear();
-                    },
-              textInputAction:
-                  !VPlatforms.isMobile ? null : TextInputAction.newline,
-              keyboardType: VPlatforms.isMobile
-                  ? TextInputType.multiline
-                  : TextInputType.text,
+            child: AutoDirection(
+              text: txt,
+              child: TextField(
+                textCapitalization: TextCapitalization.sentences,
+                controller: widget.textEditingController,
+                focusNode: widget.focusNode,
+                maxLines: 5,
+                onChanged: (value) {
+                  setState(() {
+                    txt = value;
+                  });
+                },
+                style: context.vInputTheme.textFieldTextStyle,
+                minLines: 1,
+                decoration: context.vInputTheme.textFieldDecoration
+                    .copyWith(hintText: widget.hint),
+                onSubmitted: VPlatforms.isMobile
+                    ? null
+                    : (value) {
+                        if (value.isNotEmpty) {
+                          widget.onSubmit(value);
+                        }
+                        widget.focusNode.requestFocus();
+                        widget.textEditingController.clear();
+                      },
+                textInputAction:
+                    !VPlatforms.isMobile ? null : TextInputAction.newline,
+                keyboardType: VPlatforms.isMobile
+                    ? TextInputType.multiline
+                    : TextInputType.text,
+              ),
             ),
           ),
         ),
@@ -70,12 +85,12 @@ class MessageTextFiled extends StatelessWidget {
           width: 3,
         ),
         Visibility(
-          visible: !isTyping,
+          visible: !widget.isTyping,
           child: Row(
             children: [
               if (VPlatforms.isMobile)
                 InkWell(
-                  onTap: onCameraPress,
+                  onTap: widget.onCameraPress,
                   child: context.vInputTheme.cameraIcon,
                 ),
               const SizedBox(
@@ -85,7 +100,7 @@ class MessageTextFiled extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: onAttachFilePress,
+          onTap: widget.onAttachFilePress,
           child: context.vInputTheme.fileIcon,
         ),
       ],

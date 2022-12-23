@@ -3,20 +3,24 @@ import 'package:v_chat_room_page/src/shared/theme/room_item_theme.dart';
 
 class VRoomTheme extends ThemeExtension<VRoomTheme> {
   final VChatItemBuilder vChatItemBuilder;
+  final BoxDecoration scaffoldDecoration;
 
   VRoomTheme._({
     required this.vChatItemBuilder,
+    required this.scaffoldDecoration,
   });
 
   factory VRoomTheme.light() {
     return VRoomTheme._(
       vChatItemBuilder: VChatItemBuilder.light(),
+      scaffoldDecoration: const BoxDecoration(),
     );
   }
 
   factory VRoomTheme.dark() {
     return VRoomTheme._(
       vChatItemBuilder: VChatItemBuilder.dark(),
+      scaffoldDecoration: const BoxDecoration(),
     );
   }
 
@@ -30,9 +34,11 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
 
   VRoomTheme copyWith({
     VChatItemBuilder? vChatItemBuilder,
+    BoxDecoration? scaffoldDDecoration,
   }) {
     return VRoomTheme._(
       vChatItemBuilder: vChatItemBuilder ?? this.vChatItemBuilder,
+      scaffoldDecoration: scaffoldDDecoration ?? this.scaffoldDecoration,
     );
   }
 }

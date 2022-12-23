@@ -4,7 +4,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../models/app_bare_state.dart';
-import '../../src.dart';
+import '../../v_message.dart';
 import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/app_bare/v_testing_message_app_bare.dart';
 import '../../widgets/v_message_item.dart';

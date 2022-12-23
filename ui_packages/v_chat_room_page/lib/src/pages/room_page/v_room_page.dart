@@ -32,48 +32,51 @@ class VChatPage extends StatelessWidget {
               centerTitle: true,
             ),
       ),
-      body: ChangeNotifierProvider<VRoomController>.value(
-        value: controller,
-        builder: (context, child) {
-          final controller = context.watch<VRoomController>();
-          return VAsyncWidgetsBuilder(
-            loadingState: controller.roomPageState,
-            onRefresh: controller.initRooms,
-            successWidget: () {
-              return ListView.builder(
-                key: UniqueKey(),
-                cacheExtent: 300,
-                itemBuilder: (context, index) {
-                  final room = controller.rooms[index];
-                  return StreamBuilder<VRoom>(
-                    stream: controller.roomStateStream.stream.skipWhile(
-                      (e) => e.id != room.id,
-                    ),
-                    initialData: room,
-                    builder: (context, snapshot) {
-                      return VRoomItem(
-                        room: snapshot.data!,
-                        onRoomItemLongPress: (room) {
-                          if (onRoomItemLongPress != null) {
-                            onRoomItemLongPress!(room);
-                          }
-                          controller.onRoomItemLongPress(room, context);
-                        },
-                        onRoomItemPress: (room) {
-                          if (onRoomItemPress != null) {
-                            onRoomItemPress!(room);
-                          }
-                          controller.onRoomItemPress(room, context);
-                        },
-                      );
-                    },
-                  );
-                },
-                itemCount: controller.rooms.length,
-              );
-            },
-          );
-        },
+      body: Container(
+        decoration: context.vRoomTheme.scaffoldDecoration,
+        child: ChangeNotifierProvider<VRoomController>.value(
+          value: controller,
+          builder: (context, child) {
+            final controller = context.watch<VRoomController>();
+            return VAsyncWidgetsBuilder(
+              loadingState: controller.roomPageState,
+              onRefresh: controller.initRooms,
+              successWidget: () {
+                return ListView.builder(
+                  key: UniqueKey(),
+                  cacheExtent: 300,
+                  itemBuilder: (context, index) {
+                    final room = controller.rooms[index];
+                    return StreamBuilder<VRoom>(
+                      stream: controller.roomStateStream.stream.skipWhile(
+                        (e) => e.id != room.id,
+                      ),
+                      initialData: room,
+                      builder: (context, snapshot) {
+                        return VRoomItem(
+                          room: snapshot.data!,
+                          onRoomItemLongPress: (room) {
+                            if (onRoomItemLongPress != null) {
+                              onRoomItemLongPress!(room);
+                            }
+                            controller.onRoomItemLongPress(room, context);
+                          },
+                          onRoomItemPress: (room) {
+                            if (onRoomItemPress != null) {
+                              onRoomItemPress!(room);
+                            }
+                            controller.onRoomItemPress(room, context);
+                          },
+                        );
+                      },
+                    );
+                  },
+                  itemCount: controller.rooms.length,
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

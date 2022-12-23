@@ -30,6 +30,7 @@ dependencies:
   audio_waveforms: ^1.0.0
   emoji_picker_flutter: ^1.5.1
   v_chat_media_editor: ^0.0.4
+  auto_direction: ^0.0.6
 
 dev_dependencies:
   flutter_test:
