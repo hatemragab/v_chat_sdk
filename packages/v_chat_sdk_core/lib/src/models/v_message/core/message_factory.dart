@@ -1,3 +1,6 @@
+import 'package:v_chat_sdk_core/src/models/v_message/call_message/call_message.dart';
+import 'package:v_chat_sdk_core/src/models/v_message/custom_message/custom_message.dart';
+
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
 import '../../../utils/http_helper.dart';
@@ -27,9 +30,9 @@ abstract class MessageFactory {
       case MessageType.info:
         return VInfoMessage.fromRemoteMap(map);
       case MessageType.call:
-        throw UnimplementedError("MessageType.call");
-      case MessageType.bot:
-        throw UnimplementedError("MessageType.bot");
+        return VCallMessage.fromRemoteMap(map);
+      case MessageType.custom:
+        return VCustomMessage.fromRemoteMap(map);
     }
   }
 
@@ -56,9 +59,9 @@ abstract class MessageFactory {
       case MessageType.info:
         return VInfoMessage.fromLocalMap(map);
       case MessageType.call:
-        throw UnimplementedError("MessageType.call");
-      case MessageType.bot:
-        throw UnimplementedError("MessageType.bot");
+        return VCallMessage.fromLocalMap(map);
+      case MessageType.custom:
+        return VCustomMessage.fromLocalMap(map);
     }
   }
 
@@ -125,6 +128,13 @@ abstract class MessageFactory {
         file1: await HttpHelpers.getMultipartFile(
           source: msg.fileSource.fileSource,
         ),
+      );
+    }
+    if (msg is VCustomMessage) {
+      return VMessageUploadModel(
+        msgLocalId: msg.localId,
+        body: msg.toListOfPartValue(),
+        roomId: msg.roomId,
       );
     }
     throw UnimplementedError(

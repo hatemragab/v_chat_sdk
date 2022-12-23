@@ -34,11 +34,11 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
 
   VRoomTheme copyWith({
     VChatItemBuilder? vChatItemBuilder,
-    BoxDecoration? scaffoldDDecoration,
+    BoxDecoration? scaffoldDecoration,
   }) {
     return VRoomTheme._(
       vChatItemBuilder: vChatItemBuilder ?? this.vChatItemBuilder,
-      scaffoldDecoration: scaffoldDDecoration ?? this.scaffoldDecoration,
+      scaffoldDecoration: scaffoldDecoration ?? this.scaffoldDecoration,
     );
   }
 }

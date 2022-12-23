@@ -11,8 +11,27 @@ enum MessageType {
   location,
   allDeleted,
   call,
+  custom,
   info,
-  bot
+}
+
+extension MessageTypeExt on MessageType {
+  bool get isMiddle => this == MessageType.info;
+  bool get isImage => this == MessageType.image;
+
+  bool get isInfo => this == MessageType.info;
+
+  bool get isVideo => this == MessageType.video;
+
+  bool get isLocation => this == MessageType.location;
+
+  bool get isVoice => this == MessageType.voice;
+
+  bool get isFile => this == MessageType.file;
+
+  bool get isText => this == MessageType.text;
+
+  bool get isAllDeleted => this == MessageType.allDeleted;
 }
 
 enum NotificationType {
@@ -32,6 +51,11 @@ enum GroupMsgInfo {
   bAdd,
   bKick,
   bDeleted,
+}
+
+enum CallStatus {
+  inComing,
+  cancel,
 }
 
 enum SocketStateType { connected, connecting }
@@ -55,6 +79,16 @@ enum MessageSendingStatusEnum {
   serverConfirm,
   error,
   sending,
+}
+
+extension MessageSendingStatusEnumExt on MessageSendingStatusEnum {
+  bool get isSending => this == MessageSendingStatusEnum.sending;
+
+  bool get isServerConfirm => this == MessageSendingStatusEnum.serverConfirm;
+
+  bool get isSendingOrError => isSending || isSendError;
+
+  bool get isSendError => this == MessageSendingStatusEnum.error;
 }
 
 enum MessageInfoType {

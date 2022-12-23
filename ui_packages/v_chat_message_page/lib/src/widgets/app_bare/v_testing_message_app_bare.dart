@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../models/app_bare_state.dart';
-import '../shared/message_typing_widget.dart';
+import '../message_items/shared/message_typing_widget.dart';
 
 class VTestingMessageAppBare extends StatelessWidget {
   final AppBareState state;

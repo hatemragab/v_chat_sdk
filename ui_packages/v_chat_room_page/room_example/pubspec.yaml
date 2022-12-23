@@ -10,6 +10,8 @@ dependencies:
   get: 4.6.5
   v_chat_utils: ^0.0.6
   v_chat_sdk_core: ^0.0.3
+  flutter_localizations:
+    sdk: flutter
   v_chat_room_page:
     path: ../
   flutter: 

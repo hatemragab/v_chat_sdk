@@ -81,7 +81,7 @@ class VMessageController extends ChangeNotifier {
 
   onMentionRequireSearch(String text) {}
 
-  onSubmitMedia(List<VPlatformFileSource> files) {}
+  onSubmitMedia(List<VBaseMediaRes> files) {}
 
   onSubmitVoice(VMessageVoiceData data) {}
 

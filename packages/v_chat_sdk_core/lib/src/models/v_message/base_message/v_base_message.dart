@@ -34,48 +34,48 @@ abstract class VBaseMessage {
     required this.isStared,
   });
 
-  //id will be changed if message get from remote
+  ///id will be changed if message get from remote
   String id;
 
-  // sender data
+  /// sender data
   String senderId;
   String senderName;
   VFullUrlModel senderImageThumb;
 
-  //which pla-from this message send through
+  ///which pla-from this message send through
   final String platform;
   String roomId;
 
-  //message text from server
+  ///message text from server
   String content;
   MessageType messageType;
 
-  //serverConfirm,error,sending
+  ///serverConfirm,error,sending
   MessageSendingStatusEnum messageStatus;
 
-  // only will have value if this message reply to another
+  /// only will have value if this message reply to another
   VBaseMessage? replyTo;
   String? seenAt;
   String? deliveredAt;
 
-  //forward from message id
+  ///forward from message id
   String? forwardId;
 
-  // when message deleted from all
+  /// when message deleted from all
   String? deletedAt;
 
-  //if message send through broadcast
+  ///if message send through broadcast
   String? parentBroadcastId;
 
-  // unique message id that is used to unique the message access all messages
-  // it good because the message id will changed
+  /// unique message id that is used to unique the message access all messages
+  /// it good because the message id will changed
   String localId;
 
-  //when the message was send
+  ///when the message was send
   String createdAt;
   final String updatedAt;
 
-  // is user intent to delete this message
+  /// is user intent to delete this message
   bool isDeleted = false;
   bool isStared;
 
@@ -104,7 +104,7 @@ abstract class VBaseMessage {
         messageStatus = MessageSendingStatusEnum.serverConfirm,
         updatedAt = map['updatedAt'] as String;
 
-  // from local
+  /// from local
   VBaseMessage.fromLocalMap(Map<String, dynamic> map)
       : id = map[MessageTable.columnId] as String,
         senderId = map[MessageTable.columnSenderId] as String,
@@ -185,9 +185,8 @@ abstract class VBaseMessage {
   int get hashCode => localId.hashCode ^ id.hashCode;
 
   bool get isMeSender {
-    if (content.startsWith("Fake")) {
-      return false;
-    }
+    return DateTime.now().millisecond % 2 == 0;
+    if (content.startsWith("Fake")) {}
     return AppConstants.myProfile.baseUser.vChatId == senderId;
   }
 
@@ -208,11 +207,6 @@ abstract class VBaseMessage {
   DateTime? get deletedAtDate =>
       deletedAt == null ? null : DateTime.parse(deletedAt!).toLocal();
 
-  // String get seenAtTimeAgo {
-  //   if (seenAt == null) return "---";
-  //   return t.format(DateTime.parse(seenAt!).toLocal());
-  // }
-
   bool get isFromBroadcast => parentBroadcastId != null;
 
   bool get isContainReply => replyTo != null;
@@ -220,32 +214,6 @@ abstract class VBaseMessage {
   String get getTextTrans {
     return AppConstants.getMessageBody(this);
   }
-
-  bool get isSending => messageStatus == MessageSendingStatusEnum.sending;
-
-  bool get isServerConfirm =>
-      messageStatus == MessageSendingStatusEnum.serverConfirm;
-
-  bool get isSendingOrError => isSending || isSendError;
-
-  bool get isSendError => messageStatus == MessageSendingStatusEnum.error;
-
-  /// if Msg contain image
-  bool get isImage => messageType == MessageType.image;
-
-  bool get isInfo => messageType == MessageType.info;
-
-  bool get isVideo => messageType == MessageType.video;
-
-  bool get isLocation => messageType == MessageType.location;
-
-  bool get isVoice => messageType == MessageType.voice;
-
-  bool get isFile => messageType == MessageType.file;
-
-  bool get isText => messageType == MessageType.text;
-
-  bool get isAllDeleted => messageType == MessageType.allDeleted;
 
   @override
   String toString() {

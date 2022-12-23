@@ -15,10 +15,10 @@ class MessageStatusIcon extends StatelessWidget {
     final themeData = context.vRoomTheme;
     Widget icon = themeData.vChatItemBuilder.lastMessageStatus.sendIcon;
 
-    if (vBaseMessage.isSending) {
+    if (vBaseMessage.messageStatus.isSending) {
       themeData.vChatItemBuilder.lastMessageStatus.pendingIcon;
     }
-    if (vBaseMessage.isSendError) {
+    if (vBaseMessage.messageStatus.isSendError) {
       icon = themeData.vChatItemBuilder.lastMessageStatus.refreshIcon;
     } else if (vBaseMessage.seenAt != null) {
       icon = themeData.vChatItemBuilder.lastMessageStatus.seenIcon;

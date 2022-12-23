@@ -35,7 +35,7 @@ class VTextMessage extends VBaseMessage {
 
   VTextMessage.buildFakeMessage(String content)
       : super.buildFakeMessage(
-          content: "Fake $content Fake Fake Fake Fake Fake Fake Fake Fake Fake",
+          content: "dsfsd sdgsdg ",
           messageType: MessageType.text,
         );
 

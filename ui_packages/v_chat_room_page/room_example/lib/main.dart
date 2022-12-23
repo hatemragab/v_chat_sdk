@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -10,9 +11,17 @@ void main() {
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        VChatLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      locale: const Locale('en'),
       theme: ThemeData.light().copyWith(extensions: [
         VRoomTheme.light().copyWith(
-          scaffoldDDecoration: const BoxDecoration(
+          scaffoldDecoration: const BoxDecoration(
               // image: DecorationImage(
               //   image: AssetImage("assets/images/bulb.jpg"),
               //   fit: BoxFit.cover,

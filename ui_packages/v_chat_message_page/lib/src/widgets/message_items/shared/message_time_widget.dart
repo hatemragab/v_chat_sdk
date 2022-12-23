@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:textless/textless.dart';
 
 class MessageTimeWidget extends StatelessWidget {
   final DateTime dateTime;
-  const MessageTimeWidget({Key? key, required this.dateTime}) : super(key: key);
+
+  const MessageTimeWidget({
+    Key? key,
+    required this.dateTime,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: "dateTime".text,
+    );
   }
 }

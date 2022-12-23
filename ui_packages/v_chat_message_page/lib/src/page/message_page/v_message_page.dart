@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../models/app_bare_state.dart';
+import '../../models/input_state.dart';
 import '../../v_message.dart';
 import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/app_bare/v_testing_message_app_bare.dart';
+import '../../widgets/input_widgets/reply_msg_widget.dart';
+import '../../widgets/input_widgets/stop_typing_widget.dart';
 import '../../widgets/v_message_item.dart';
 
 class VMessagePage extends StatefulWidget {
@@ -67,8 +71,11 @@ class _VMessagePageState extends State<VMessagePage> {
                   loadingState: controller.roomPageState,
                   onRefresh: controller.initMessages,
                   successWidget: () {
-                    return ListView.builder(
+                    return ListView.separated(
                       key: UniqueKey(),
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: 10,
+                      ),
                       cacheExtent: 300,
                       itemBuilder: (context, index) {
                         final message = controller.messages[index];
@@ -95,25 +102,25 @@ class _VMessagePageState extends State<VMessagePage> {
               },
             ),
           ),
-          // ValueListenableBuilder<InputState>(
-          //   valueListenable: controller.inputState,
-          //   builder: (_, value, __) {
-          //     return VMessageInputWidget(
-          //       onSubmitText: controller.onSubmitText,
-          //       onSubmitMedia: controller.onSubmitMedia,
-          //       onSubmitVoice: controller.onSubmitVoice,
-          //       onSubmitFiles: controller.onSubmitFiles,
-          //       onSubmitLocation: controller.onSubmitLocation,
-          //       onTypingChange: controller.onTypingChange,
-          //       googleMapsApiKey: "test",
-          //       replyWidget: value.replyMsg == null
-          //           ? null
-          //           : ReplyMsgWidget(vBaseMessage: value.replyMsg!),
-          //       stopChatWidget:
-          //           value.isCloseInput ? const StopTypingWidget() : null,
-          //     );
-          //   },
-          // )
+          ValueListenableBuilder<InputState>(
+            valueListenable: controller.inputState,
+            builder: (_, value, __) {
+              return VMessageInputWidget(
+                onSubmitText: controller.onSubmitText,
+                onSubmitMedia: controller.onSubmitMedia,
+                onSubmitVoice: controller.onSubmitVoice,
+                onSubmitFiles: controller.onSubmitFiles,
+                onSubmitLocation: controller.onSubmitLocation,
+                onTypingChange: controller.onTypingChange,
+                googleMapsApiKey: "test",
+                replyWidget: value.replyMsg == null
+                    ? null
+                    : ReplyMsgWidget(vBaseMessage: value.replyMsg!),
+                stopChatWidget:
+                    value.isCloseInput ? const StopTypingWidget() : null,
+              );
+            },
+          )
         ],
       ),
     );

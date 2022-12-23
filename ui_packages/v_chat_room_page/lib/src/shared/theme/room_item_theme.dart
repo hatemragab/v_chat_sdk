@@ -14,7 +14,8 @@ class VChatItemBuilder {
   });
 
   final Widget Function(String title) getChatTitle;
-  final Widget Function(VFullUrlModel urlModel, bool isOnline) getChatAvatar;
+  final Widget Function(VFullUrlModel urlModel, String chatTitle, bool isOnline)
+      getChatAvatar;
   final VMsgStatusTheme lastMessageStatus;
   final Widget muteIcon;
   final TextStyle seenLastMessageTextStyle;
@@ -23,11 +24,16 @@ class VChatItemBuilder {
   factory VChatItemBuilder.light() {
     return VChatItemBuilder._(
       getChatTitle: (title) {
-        return Text(title);
+        return Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+          overflow: TextOverflow.ellipsis,
+        );
       },
-      getChatAvatar: (urlModel, isOnline) => ChatAvatarImage(
+      getChatAvatar: (urlModel, chatTitle, isOnline) => ChatAvatarImage(
         imageUrl: urlModel,
         isOnline: isOnline,
+        chatTitle: chatTitle,
       ),
       muteIcon: const Icon(Icons.notifications_off),
       unSeenLastMessageTextStyle: const TextStyle(
@@ -46,11 +52,16 @@ class VChatItemBuilder {
     return VChatItemBuilder._(
       muteIcon: const Icon(Icons.notifications_off),
       getChatTitle: (title) {
-        return Text(title);
+        return Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+          overflow: TextOverflow.ellipsis,
+        );
       },
-      getChatAvatar: (urlModel, isOnline) => ChatAvatarImage(
+      getChatAvatar: (urlModel, chatTitle, isOnline) => ChatAvatarImage(
         imageUrl: urlModel,
         isOnline: isOnline,
+        chatTitle: chatTitle,
       ),
       unSeenLastMessageTextStyle: const TextStyle(
         overflow: TextOverflow.ellipsis,
