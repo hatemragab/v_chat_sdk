@@ -37,6 +37,8 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.10
   diacritic: ^0.1.3
   collection: ^1.16.0
+  #for testing only
+  random_string: ^2.3.1
   flutter_localizations:
     sdk: flutter
   v_chat_utils: ^0.0.5

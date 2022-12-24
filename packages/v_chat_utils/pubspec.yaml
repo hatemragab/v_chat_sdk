@@ -21,6 +21,7 @@ dependencies:
   file_picker: ^5.2.3
   image_cropping: ^0.0.13
   image: ^3.2.2
+  url_launcher: ^6.1.7
   image_cropper: ^3.0.0
   wechat_camera_picker: ^3.6.5
   encrypt: ^5.0.1
@@ -33,6 +34,7 @@ dependencies:
   mime: ^1.0.2
   http: ^0.13.5
   collection: ^1.16.0
+  flutter_parsed_text: ^2.2.1
   http_parser: ^4.0.2
 dev_dependencies:
   flutter_test:

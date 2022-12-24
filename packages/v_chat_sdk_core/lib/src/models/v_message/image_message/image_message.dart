@@ -8,7 +8,7 @@ import '../../../local_db/tables/message_table.dart';
 import '../../../utils/api_constants.dart';
 
 class VImageMessage extends VBaseMessage {
-  final VMessageImageData fileSource;
+  final VMessageImageData data;
 
   VImageMessage({
     required super.id,
@@ -30,17 +30,17 @@ class VImageMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required this.fileSource,
+    required this.data,
   });
 
   VImageMessage.fromRemoteMap(super.map)
-      : fileSource = VMessageImageData.fromMap(
+      : data = VMessageImageData.fromMap(
           map['msgAtt'] as Map<String, dynamic>,
         ),
         super.fromRemoteMap();
 
   VImageMessage.fromLocalMap(super.map)
-      : fileSource = VMessageImageData.fromMap(
+      : data = VMessageImageData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -48,12 +48,12 @@ class VImageMessage extends VBaseMessage {
 
   @override
   Map<String, dynamic> toRemoteMap() {
-    return {...super.toRemoteMap(), 'msgAtt': fileSource.toMap()};
+    return {...super.toRemoteMap(), 'msgAtt': data.toMap()};
   }
 
   VImageMessage.buildMessage({
     required super.roomId,
-    required this.fileSource,
+    required this.data,
     super.forwardId,
     super.broadcastId,
     super.replyTo,
@@ -71,19 +71,24 @@ class VImageMessage extends VBaseMessage {
 
   @override
   String toString() {
-    return 'ImageMessage{fileSource: $fileSource}';
+    return 'ImageMessage{fileSource: $data}';
   }
 
   @override
   Map<String, dynamic> toLocalMap() {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap())
     };
   }
 
-  VImageMessage.buildFakeMessage()
-      : fileSource = VMessageImageData.fromFakeData(),
+  VImageMessage.buildFakeMessage({
+    required int high,
+    required int width,
+  })  : data = VMessageImageData.fromFakeData(
+          width: width,
+          high: high,
+        ),
         super.buildFakeMessage(
           content: "Fake this is fake image message",
           messageType: MessageType.image,

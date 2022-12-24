@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../v_chat_utils.dart';
 
-class VPlatformCacheImageWidget extends StatelessWidget {
+class VPlatformCacheImageWidget extends StatefulWidget {
   final VPlatformFileSource source;
   final Size? size;
   final BoxFit? fit;
@@ -20,40 +20,50 @@ class VPlatformCacheImageWidget extends StatelessWidget {
   });
 
   @override
+  State<VPlatformCacheImageWidget> createState() =>
+      _VPlatformCacheImageWidgetState();
+}
+
+class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
+  var imageKey = UniqueKey();
+  @override
   Widget build(BuildContext context) {
-    if (source.bytes != null) {
+    if (widget.source.bytes != null) {
       return Image.memory(
-        Uint8List.fromList(source.bytes!),
-        width: size == null ? null : size!.width,
-        fit: fit,
-        height: size == null ? null : size!.height,
+        Uint8List.fromList(widget.source.bytes!),
+        width: widget.size == null ? null : widget.size!.width,
+        fit: widget.fit,
+        height: widget.size == null ? null : widget.size!.height,
       );
     }
-    if (source.filePath != null) {
+    if (widget.source.filePath != null) {
       return Image.file(
-        File(source.filePath!),
-        width: size == null ? null : size!.width,
-        height: size == null ? null : size!.height,
-        fit: fit,
+        File(widget.source.filePath!),
+        width: widget.size == null ? null : widget.size!.width,
+        height: widget.size == null ? null : widget.size!.height,
+        fit: widget.fit,
       );
     }
 
     return CachedNetworkImage(
-      height: size == null ? null : size!.height,
-      width: size == null ? null : size!.width,
-      fit: fit,
-      imageUrl: source.url!.fullUrl,
-      imageBuilder: (context, imageProvider) => DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: imageProvider,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
+      key: imageKey,
+      height: widget.size == null ? null : widget.size!.height,
+      width: widget.size == null ? null : widget.size!.width,
+      fit: widget.fit,
+      matchTextDirection: true,
+      imageUrl: widget.source.url!.fullUrl,
       placeholder: (context, url) =>
           const CupertinoActivityIndicator.partiallyRevealed(),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) => InkWell(
+        onTap: () {
+          setState(() {
+            imageKey = UniqueKey();
+          });
+        },
+        child: const Icon(
+          Icons.refresh,
+        ),
+      ),
     );
   }
 }

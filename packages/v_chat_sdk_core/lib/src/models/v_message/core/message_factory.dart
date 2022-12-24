@@ -111,7 +111,7 @@ abstract class MessageFactory {
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
         file1: await HttpHelpers.getMultipartFile(
-          source: msg.fileSource.fileSource,
+          source: msg.data.fileSource,
         ),
       );
     }

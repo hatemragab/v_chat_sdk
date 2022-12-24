@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:textless/textless.dart';
 
 class MessageTimeWidget extends StatelessWidget {
@@ -12,7 +13,7 @@ class MessageTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: "dateTime".text,
+      child: DateFormat.jm().format(dateTime.toLocal()).cap,
     );
   }
 }

@@ -62,14 +62,17 @@ class VMessageImageData {
     );
   }
 
-  factory VMessageImageData.fromFakeData() {
+  factory VMessageImageData.fromFakeData({
+    required int high,
+    required int width,
+  }) {
     return VMessageImageData(
       fileSource: VPlatformFileSource.fromUrl(
-        url: "https://picsum.photos/600/600",
+        url: "https://picsum.photos/$width/$high",
         isFullUrl: true,
       ),
-      width: 600,
-      height: 600,
+      width: width,
+      height: high,
     );
   }
 

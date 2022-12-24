@@ -198,7 +198,7 @@ class VRoom {
       roomType: id == 0 ? RoomType.g : RoomType.s,
       isMuted: id % 2 == 0,
       unReadCount: id % 2 == 0 ? 0 : id,
-      lastMessage: VTextMessage.buildFakeMessage(id.toString()),
+      lastMessage: VTextMessage.buildFakeMessage(id),
       isDeleted: false,
       createdAt: DateTime.now(),
       isOnline: id % 2 == 0,

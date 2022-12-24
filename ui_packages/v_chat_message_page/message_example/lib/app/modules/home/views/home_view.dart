@@ -11,6 +11,9 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return VMessagePage(
       vRoom: controller.vRoom,
+      onMentionPress: (userId) {
+        print("userId userId $userId");
+      },
     );
   }
 }

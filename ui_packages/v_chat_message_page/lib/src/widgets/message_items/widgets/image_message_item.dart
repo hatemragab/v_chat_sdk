@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+
+import '../shared/constraint_image.dart';
+
 class ImageMessageItem extends StatelessWidget {
-  const ImageMessageItem({Key? key}) : super(key: key);
+  final VImageMessage message;
+
+  const ImageMessageItem({
+    Key? key,
+    required this.message,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ConstraintImage(
+      data: message.data,
+    );
   }
 }

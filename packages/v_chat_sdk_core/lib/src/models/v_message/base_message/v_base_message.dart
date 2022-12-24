@@ -32,6 +32,7 @@ abstract class VBaseMessage {
     required this.deletedAt,
     required this.parentBroadcastId,
     required this.isStared,
+    this.isTesting = false,
   });
 
   ///id will be changed if message get from remote
@@ -44,10 +45,11 @@ abstract class VBaseMessage {
 
   ///which pla-from this message send through
   final String platform;
-  String roomId;
+  final String roomId;
+  final bool isTesting;
 
   ///message text from server
-  String content;
+  final String content;
   MessageType messageType;
 
   ///serverConfirm,error,sending
@@ -81,6 +83,7 @@ abstract class VBaseMessage {
 
   VBaseMessage.fromRemoteMap(Map<String, dynamic> map)
       : id = map['_id'] as String,
+        isTesting = false,
         senderId = map['sId'] as String,
         senderName = map['sName'] as String,
         senderImageThumb = VFullUrlModel(map['sImg'] as String),
@@ -107,6 +110,7 @@ abstract class VBaseMessage {
   /// from local
   VBaseMessage.fromLocalMap(Map<String, dynamic> map)
       : id = map[MessageTable.columnId] as String,
+        isTesting = false,
         senderId = map[MessageTable.columnSenderId] as String,
         senderName = map[MessageTable.columnSenderName] as String,
         senderImageThumb =
@@ -185,8 +189,9 @@ abstract class VBaseMessage {
   int get hashCode => localId.hashCode ^ id.hashCode;
 
   bool get isMeSender {
-    return DateTime.now().millisecond % 2 == 0;
-    if (content.startsWith("Fake")) {}
+    if (isTesting) {
+      return id.hashCode % 2 == 0;
+    }
     return AppConstants.myProfile.baseUser.vChatId == senderId;
   }
 
@@ -225,6 +230,7 @@ abstract class VBaseMessage {
     required this.roomId,
     required this.messageType,
     this.forwardId,
+    this.isTesting = false,
     String? broadcastId,
     this.replyTo,
   })  : id = ObjectId().hexString,
@@ -250,6 +256,7 @@ abstract class VBaseMessage {
     String? broadcastId,
     this.replyTo,
   })  : id = ObjectId().hexString,
+        isTesting = true,
         localId = const Uuid().v4(),
         roomId = "roomId $content",
         platform = VPlatforms.currentPlatform,

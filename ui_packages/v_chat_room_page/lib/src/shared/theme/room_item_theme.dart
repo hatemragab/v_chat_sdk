@@ -26,7 +26,7 @@ class VChatItemBuilder {
       getChatTitle: (title) {
         return Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
           overflow: TextOverflow.ellipsis,
         );
       },
@@ -41,9 +41,8 @@ class VChatItemBuilder {
         fontWeight: FontWeight.w500,
         color: Colors.black,
       ),
-      seenLastMessageTextStyle: const TextStyle(
-        overflow: TextOverflow.ellipsis,
-      ),
+      seenLastMessageTextStyle:
+          const TextStyle(overflow: TextOverflow.ellipsis, color: Colors.grey),
       lastMessageStatus: const VMsgStatusTheme.light(),
     );
   }
@@ -54,7 +53,7 @@ class VChatItemBuilder {
       getChatTitle: (title) {
         return Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
           overflow: TextOverflow.ellipsis,
         );
       },
@@ -68,9 +67,8 @@ class VChatItemBuilder {
         fontWeight: FontWeight.w500,
         color: Colors.white,
       ),
-      seenLastMessageTextStyle: const TextStyle(
-        overflow: TextOverflow.ellipsis,
-      ),
+      seenLastMessageTextStyle:
+          const TextStyle(overflow: TextOverflow.ellipsis, color: Colors.grey),
       lastMessageStatus: const VMsgStatusTheme.dark(),
     );
   }

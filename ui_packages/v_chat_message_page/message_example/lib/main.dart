@@ -10,6 +10,7 @@ void main() {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       locale: Locale("en"),
+      theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
     ),
   );

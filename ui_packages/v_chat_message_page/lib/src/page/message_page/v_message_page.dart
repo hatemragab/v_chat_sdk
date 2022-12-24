@@ -11,15 +11,17 @@ import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/app_bare/v_testing_message_app_bare.dart';
 import '../../widgets/input_widgets/reply_msg_widget.dart';
 import '../../widgets/input_widgets/stop_typing_widget.dart';
-import '../../widgets/v_message_item.dart';
+import '../../widgets/message_items/v_message_item.dart';
 
 class VMessagePage extends StatefulWidget {
   const VMessagePage({
     Key? key,
     required this.vRoom,
+    required this.onMentionPress,
     this.onMessageItemPress,
     this.appBare,
   }) : super(key: key);
+  final Function(String userId) onMentionPress;
 
   final Function(VBaseMessage message)? onMessageItemPress;
   final Widget Function(AppBareState state)? appBare;
@@ -35,7 +37,11 @@ class _VMessagePageState extends State<VMessagePage> {
   @override
   void initState() {
     super.initState();
-    controller = VMessageController(widget.vRoom, true);
+    controller = VMessageController(
+      vRoom: widget.vRoom,
+      onMentionPress: widget.onMentionPress,
+      isInTesting: true,
+    );
   }
 
   @override
@@ -73,7 +79,7 @@ class _VMessagePageState extends State<VMessagePage> {
                   successWidget: () {
                     return ListView.separated(
                       key: UniqueKey(),
-                      separatorBuilder: (context, index) => SizedBox(
+                      separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
                       ),
                       cacheExtent: 300,
@@ -87,9 +93,9 @@ class _VMessagePageState extends State<VMessagePage> {
                           initialData: message,
                           builder: (context, snapshot) {
                             return VMessageItem(
+                              itemController: controller.itemController,
                               message: snapshot.data!,
-                              onMessageItemPress: widget.onMessageItemPress ??
-                                  controller.onMessageItemPress,
+                              onMentionPress: controller.onMentionPress,
                             );
                           },
                         );

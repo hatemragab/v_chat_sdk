@@ -19,17 +19,17 @@ class RoomItemMsg extends StatelessWidget {
       return VTextParserWidget(
         text: msg,
         enableTabs: false,
-        parseMentions: true,
+        onMentionPress: (userId) {},
         maxLines: 1,
-        style: theme.unSeenLastMessageTextStyle,
+        textStyle: theme.unSeenLastMessageTextStyle,
       );
     }
     return VTextParserWidget(
       text: msg,
       enableTabs: false,
-      parseMentions: true,
+      onMentionPress: (userId) {},
       maxLines: 1,
-      style: theme.seenLastMessageTextStyle,
+      textStyle: theme.seenLastMessageTextStyle,
     );
   }
 }

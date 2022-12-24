@@ -1,5 +1,9 @@
 export './all_deleted/all_deleted_message.dart';
 export './base_message/v_base_message.dart';
+export './call_message/call_message.dart';
+export './call_message/msg_call_att.dart';
+export './custom_message/custom_message.dart';
+export './custom_message/custom_msg_att.dart';
 export './empty_message.dart';
 export './file_message/file_message.dart';
 export './file_message/message_file_data.dart';

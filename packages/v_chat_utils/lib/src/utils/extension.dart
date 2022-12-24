@@ -15,4 +15,6 @@ extension MediaQueryExt2 on BuildContext {
           builder: (context) => page,
         ),
       );
+
+  bool get isRtl => Directionality.of(this).name.toLowerCase() == "rtl";
 }

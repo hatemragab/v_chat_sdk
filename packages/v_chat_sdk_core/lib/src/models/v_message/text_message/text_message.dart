@@ -1,3 +1,5 @@
+import 'package:random_string/random_string.dart';
+
 import '../../../../v_chat_sdk_core.dart';
 
 class VTextMessage extends VBaseMessage {
@@ -33,9 +35,9 @@ class VTextMessage extends VBaseMessage {
 
   VTextMessage.fromRemoteMap(super.map) : super.fromRemoteMap();
 
-  VTextMessage.buildFakeMessage(String content)
+  VTextMessage.buildFakeMessage(int index)
       : super.buildFakeMessage(
-          content: "dsfsd sdgsdg ",
+          content: randomString(index * 25),
           messageType: MessageType.text,
         );
 

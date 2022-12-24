@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
-import 'package:v_chat_message_page/v_chat_message_page.dart';
+import 'package:v_chat_message_page/src/v_message.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
+
+import 'bubble_special_one.dart';
 
 class DirectionItemHolder extends StatelessWidget {
   final Widget child;
@@ -14,20 +16,16 @@ class DirectionItemHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          decoration: context
-              .vMessageTheme.vMessageItemBuilder.directionalItemDecoration,
-          constraints: context.vMessageTheme.vMessageItemBuilder
-              .directionalItemConstraints(context),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: ["test  $isMeSender".text, Row()],
-          ),
-        ),
-      ],
+    final isRtl = context.isRtl;
+
+    return BubbleSpecialOne(
+      isSender: isMeSender,
+      isRtl: isRtl,
+      tail: true,
+      color: context.vMessageTheme.vMessageItemBuilder.holderColor(
+        isMeSender,
+      ),
+      child: child,
     );
   }
 }

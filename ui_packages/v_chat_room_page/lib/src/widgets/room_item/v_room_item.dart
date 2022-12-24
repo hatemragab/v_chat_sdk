@@ -76,7 +76,8 @@ class VRoomItem extends StatelessWidget {
                               children: [
                                 //status
                                 MessageStatusIcon(
-                                    vBaseMessage: room.lastMessage),
+                                  vBaseMessage: room.lastMessage,
+                                ),
                                 //grey
                                 Flexible(
                                   child: RoomItemMsg(
@@ -117,90 +118,6 @@ class VRoomItem extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-
-    return ListTile(
-      horizontalTitleGap: 12,
-      dense: false,
-      onLongPress: () {
-        onRoomItemLongPress(room);
-      },
-      onTap: () {
-        onRoomItemPress(room);
-      },
-
-      ///chat avatar
-      leading: theme.vChatItemBuilder.getChatAvatar(
-        room.thumbImage,
-        room.title,
-        room.isOnline,
-      ),
-      minVerticalPadding: 0,
-      contentPadding: EdgeInsets.zero.copyWith(right: 10, left: 10),
-      style: ListTileStyle.list,
-
-      ///chat header
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: ChatTitle(title: room.title),
-          ),
-          ChatLastMsgTime(
-            lastMessageTimeString: room.lastMessageTimeString,
-          )
-        ],
-      ),
-
-      ///last message with message status if me sender and mute if chat has been muted
-      ///and unread counter
-      subtitle: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          if (room.roomTypingText != null)
-            ChatTypingWidget(
-              text: room.roomTypingText!,
-            )
-          else if (room.lastMessage.isMeSender)
-            Flexible(
-              child: Row(
-                children: [
-                  //status
-                  MessageStatusIcon(vBaseMessage: room.lastMessage),
-                  //grey
-                  Flexible(
-                    child: RoomItemMsg(
-                      msg: room.lastMessage.getTextTrans,
-                      isBold: false,
-                    ),
-                  )
-                ],
-              ),
-            )
-          else if (room.isRoomUnread)
-            //bold
-            Flexible(
-              child: RoomItemMsg(
-                msg: room.lastMessage.getTextTrans,
-                isBold: true,
-              ),
-            )
-          else
-            //normal gray
-            Flexible(
-              child: RoomItemMsg(
-                msg: room.lastMessage.getTextTrans,
-                isBold: false,
-              ),
-            ),
-          Row(
-            children: [
-              ChatMuteWidget(isMuted: room.isMuted),
-              ChatUnReadWidget(unReadCount: room.unReadCount),
-            ],
-          )
-        ],
       ),
     );
   }

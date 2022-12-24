@@ -7,7 +7,10 @@ class HomeController extends GetxController {
   late final VMessageController msgController;
 
   HomeController(this.vRoom) {
-    msgController = VMessageController(vRoom);
+    msgController = VMessageController(
+      vRoom: vRoom,
+      onMentionPress: (userId) {},
+    );
   }
 
   @override

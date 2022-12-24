@@ -6,9 +6,12 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../models/app_bare_state.dart';
 import '../../models/input_state.dart';
+import '../../widgets/message_items/v_message_item_controller.dart';
 
 class VMessageController extends ChangeNotifier {
-  final VRoom _vRoom;
+  final Function(String userId) onMentionPress;
+
+  final VRoom vRoom;
   late final ValueNotifier<AppBareState> appBareState;
   final inputState = ValueNotifier<InputState>(InputState());
   final messageStateStream = StreamController<VBaseMessage>.broadcast();
@@ -19,15 +22,20 @@ class VMessageController extends ChangeNotifier {
     page: 1,
     nextPage: null,
   );
+  final itemController = VMessageItemController();
 
   List<VBaseMessage> get messages =>
       List.unmodifiable(_messagePaginationModel.values);
   final bool isInTesting;
 
-  VMessageController(this._vRoom, [this.isInTesting = false]) {
+  VMessageController({
+    required this.vRoom,
+    required this.onMentionPress,
+    this.isInTesting = false,
+  }) {
     appBareState = ValueNotifier<AppBareState>(
       AppBareState(
-        _vRoom,
+        vRoom,
       ),
     );
     initMessages();
@@ -43,9 +51,11 @@ class VMessageController extends ChangeNotifier {
         await Future.delayed(const Duration(milliseconds: 1200));
         return List.generate(
           20,
-          (index) => VTextMessage.buildFakeMessage(
-            index.toString(),
-          ),
+          (index) => index == 2
+              ? VImageMessage.buildFakeMessage(width: 1024, high: 1024)
+              : VTextMessage.buildFakeMessage(
+                  index,
+                ),
         );
       },
       onSuccess: (response) {
@@ -70,9 +80,9 @@ class VMessageController extends ChangeNotifier {
 
   void onTyping(VSocketRoomTypingModel p1) {
     if (appBareState.value.typingModel.isTyping) {
-      _vRoom.typingStatus = VSocketRoomTypingModel.offline;
+      vRoom.typingStatus = VSocketRoomTypingModel.offline;
     } else {
-      _vRoom.typingStatus = p1;
+      vRoom.typingStatus = p1;
     }
     appBareState.notifyListeners();
   }

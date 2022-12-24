@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+
 class CustomMessageItem extends StatelessWidget {
-  const CustomMessageItem({Key? key}) : super(key: key);
+  final VCustomMessage message;
+  const CustomMessageItem({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
