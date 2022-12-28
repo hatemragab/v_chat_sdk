@@ -11,7 +11,9 @@ import '../../utils/event_bus.dart';
 class NativeLocalRoom {
   late final BaseLocalRoomRepo _roomRepo;
   final _emitter = EventBusSingleton.instance.vChatEvents;
+
   Stream<VRoomEvents> get roomStream => _emitter.on<VRoomEvents>();
+
   NativeLocalRoom(Database database) {
     if (VPlatforms.isWeb) {
       _roomRepo = MemoryRoomImp();
@@ -20,9 +22,9 @@ class NativeLocalRoom {
     }
   }
 
-  Future<int> prepareRooms() async {
-    return _roomRepo.setAllOffline();
-  }
+  // Future<int> prepareRooms() async {
+  //   return _roomRepo.setAllOffline();
+  // }
 
   Future<List<VRoom>> getRooms({int limit = 300}) async {
     return _roomRepo.getRoomsWithLastMessage(limit: limit);
@@ -34,42 +36,43 @@ class NativeLocalRoom {
 
   Future<void> safeInsertRoom(VRoom room) async {
     if (await _roomRepo.getOneWithLastMessageByRoomId(room.id) == null) {
-      final event = InsertRoomEvent(roomId: room.id, room: room);
+      final event = VInsertRoomEvent(roomId: room.id, room: room);
       await _roomRepo.insert(event);
       _emitter.fire(event);
     }
   }
 
-  Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) {
+  Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) async {
     final event =
-        UpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
+        VUpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
     _emitter.fire(event);
-    return _roomRepo.updateTyping(event);
+    return 1;
+    // return _roomRepo.updateTyping(event);
   }
 
   Future<int> updateRoomSingleBlock(
       VSingleBanModel block, String roomId) async {
-    final event = BlockSingleRoomEvent(banModel: block, roomId: roomId);
+    final event = VBlockSingleRoomEvent(banModel: block, roomId: roomId);
     _emitter.fire(event);
     return 1;
   }
 
-  Future<int> updateRoomOnline(UpdateRoomOnlineEvent event) async {
+  Future<int> updateRoomOnline(VUpdateRoomOnlineEvent event) async {
     final roomId = await _roomRepo.getRoomIdByPeerId(event.model.peerId);
     if (roomId != null) {
-      event.roomId = roomId;
-      _emitter.fire(event);
-      return _roomRepo.updateOnline(event);
+      _emitter.fire(VUpdateRoomOnlineEvent(model: event.model, roomId: roomId));
+      return 1;
+      // return _roomRepo.updateOnline(event);
     }
     return 1;
   }
 
-  Future<int> updateRoomName(UpdateRoomNameEvent event) async {
+  Future<int> updateRoomName(VUpdateRoomNameEvent event) async {
     _emitter.fire(event);
     return _roomRepo.updateName(event);
   }
 
-  Future<int> updateRoomImage(UpdateRoomImageEvent event) async {
+  Future<int> updateRoomImage(VUpdateRoomImageEvent event) async {
     _emitter.fire(event);
     return _roomRepo.updateImage(event);
   }
@@ -77,19 +80,19 @@ class NativeLocalRoom {
   Future<int> updateRoomUnreadCountAddOne(
     String roomId,
   ) async {
-    final event = UpdateRoomUnReadCountByOneEvent(roomId: roomId);
+    final event = VUpdateRoomUnReadCountByOneEvent(roomId: roomId);
     _emitter.fire(event);
     return _roomRepo.updateCountByOne(event);
   }
 
   Future<int> updateRoomUnreadToZero(
-    UpdateRoomUnReadCountToZeroEvent event,
+    VUpdateRoomUnReadCountToZeroEvent event,
   ) async {
     _emitter.fire(event);
     return _roomRepo.updateCountToZero(event);
   }
 
-  Future<int> updateRoomIsMuted(UpdateRoomMuteEvent event) async {
+  Future<int> updateRoomIsMuted(VUpdateRoomMuteEvent event) async {
     _emitter.fire(event);
     return _roomRepo.updateIsMuted(event);
   }
@@ -109,8 +112,8 @@ class NativeLocalRoom {
     return _roomRepo.reCreate();
   }
 
-  Future<int> offAllRooms() async {
-    await _roomRepo.setAllOffline();
-    return 1;
-  }
+// Future<int> offAllRooms() async {
+//   await _roomRepo.setAllOffline();
+//   return 1;
+// }
 }

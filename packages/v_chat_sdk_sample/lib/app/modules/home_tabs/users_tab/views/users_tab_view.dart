@@ -33,13 +33,13 @@ class UsersTabView extends GetView<UsersTabController> {
         itemBuilder: (context, documentSnapshot, index) {
           final user = UserModel.fromMap(
               documentSnapshot.data() as Map<String, dynamic>);
-          if (user.uid == AppAuth.getMyModel.uid) {
+          if (user.id == AppAuth.getMyModel.id) {
             return const SizedBox();
           }
           return ListTile(
             onTap: () => Get.toNamed(
               Routes.PEER_PROFILE,
-              arguments: user.uid,
+              arguments: user.id,
             ),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(50),

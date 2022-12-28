@@ -14,7 +14,7 @@ import '../../utils/event_bus.dart';
 
 class Auth implements AuthEndPoints {
   final VNativeApi _vNativeApi;
-  final ControllerHelper _helper;
+  final ControllerHelper _helper = ControllerHelper.instance;
   final VChatConfig _chatConfig;
   final _log = Logger('Auth');
 
@@ -22,7 +22,6 @@ class Auth implements AuthEndPoints {
 
   Auth(
     this._vNativeApi,
-    this._helper,
     this._chatConfig,
   );
 

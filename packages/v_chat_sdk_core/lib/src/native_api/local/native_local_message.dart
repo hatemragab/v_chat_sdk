@@ -10,7 +10,9 @@ import '../../utils/event_bus.dart';
 class NativeLocalMessage {
   late BaseLocalMessageRepo _localMessageRepo;
   final _emitter = EventBusSingleton.instance.vChatEvents;
+
   Stream<VMessageEvents> get messageStream => _emitter.on<VMessageEvents>();
+
   NativeLocalMessage(Database database) {
     if (VPlatforms.isWeb) {
       _localMessageRepo = MemoryMessageImp();
@@ -69,9 +71,13 @@ class NativeLocalMessage {
       message!.createdAt,
       message.roomId,
     );
-    await _localMessageRepo.delete(event);
-    event.upMessage = beforeMsg;
-    _emitter.fire(event);
+    final newEvent = VDeleteMessageEvent(
+      localId: msg.localId,
+      roomId: msg.roomId,
+      upMessage: beforeMsg,
+    );
+    await _localMessageRepo.delete(newEvent);
+    _emitter.fire(newEvent);
     return 1;
   }
 
@@ -83,13 +89,10 @@ class NativeLocalMessage {
     return 1;
   }
 
-  Future<int> updateMessageIdByLocalId(
+  Future<int> updateFullMessage(
     VBaseMessage message,
   ) async {
-    await _localMessageRepo.updateMessageIdByLocalId(
-      localId: message.localId,
-      messageId: message.id,
-    );
+    await _localMessageRepo.updateFullMessage(baseMessage: message);
     return 1;
   }
 
@@ -119,7 +122,7 @@ class NativeLocalMessage {
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return _localMessageRepo.getMessagesByStatus(
-        status: MessageSendingStatusEnum.error);
+        status: MessageEmitStatus.error);
   }
 
   Future<List<VBaseMessage>> searchMessage(

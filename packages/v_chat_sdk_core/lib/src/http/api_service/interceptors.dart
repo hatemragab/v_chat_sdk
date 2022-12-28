@@ -24,34 +24,30 @@ class ErrorInterceptor implements ErrorConverter {
   }
 }
 
-void throwIfNotSuccess(Response response) {
-  if (response.isSuccessful) return;
-  if (response.statusCode == 400) {
+void throwIfNotSuccess(Response res) {
+  if (res.isSuccessful) return;
+  if (res.statusCode == 400) {
     throw VChatHttpBadRequest(
-      vChatException:
-          (response.error! as Map<String, dynamic>)['data'].toString(),
-      vChatChopperRes: response,
+      vChatException: (res.error! as Map<String, dynamic>)['data'].toString(),
     );
-  } else if (response.statusCode == 404) {
+  } else if (res.statusCode == 404) {
     throw VChatHttpNotFound(
-      vChatException:
-          (response.error! as Map<String, dynamic>)['data'].toString(),
-      vChatChopperRes: response,
+      vChatException: (res.error! as Map<String, dynamic>)['data'].toString(),
     );
-  } else if (response.statusCode == 403) {
+  } else if (res.statusCode == 403) {
     throw VChatHttpForbidden(
-      vChatException:
-          (response.error! as Map<String, dynamic>)['data'].toString(),
-      vChatChopperRes: response,
+      vChatException: (res.error! as Map<String, dynamic>)['data'].toString(),
     );
   }
-  if (!response.isSuccessful) {
+  if (!res.isSuccessful) {
     throw VChatHttpBadRequest(
-      vChatException:
-          (response.error! as Map<String, dynamic>)['data'].toString(),
-      vChatChopperRes: response,
+      vChatException: (res.error! as Map<String, dynamic>)['data'].toString(),
     );
   }
+}
+
+Map<String, dynamic> extractDataFromResponse(Response res) {
+  return (res.body as Map<String, dynamic>)['data'] as Map<String, dynamic>;
 }
 
 class AuthInterceptor implements RequestInterceptor {

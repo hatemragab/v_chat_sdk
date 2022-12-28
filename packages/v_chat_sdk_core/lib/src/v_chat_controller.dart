@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
-import 'package:v_chat_sdk_core/src/utils/event_bus.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../v_chat_sdk_core.dart';
@@ -24,7 +24,6 @@ import 'native_api/v_native_api.dart';
 /// ```
 class VChatController with WidgetsBindingObserver {
   final _log = Logger('VChatController');
-  final _vChatEvents = EventBusSingleton.instance.vChatEvents;
 
   static WidgetsBinding? get _widgetsBindingInstance => WidgetsBinding.instance;
 
@@ -62,15 +61,17 @@ class VChatController with WidgetsBindingObserver {
     _instance._isControllerInit = true;
     _instance.config = vChatConfig;
     await VAppPref.init();
-    _instance._helper = await ControllerHelper.instance.init(vChatConfig);
+    _instance._helper = await ControllerHelper.instance.init(
+      _instance.config,
+    );
     _instance.nativeApi = await VNativeApi.init();
     _instance.auth = Auth(
       _instance.nativeApi,
-      _instance._helper,
       _instance.config,
     );
     _widgetsBindingInstance?.addObserver(_instance);
     SocketController.instance.connect();
+    mediaBaseUrl = AppConstants.getMediaBaseUrl;
     return _instance;
   }
 

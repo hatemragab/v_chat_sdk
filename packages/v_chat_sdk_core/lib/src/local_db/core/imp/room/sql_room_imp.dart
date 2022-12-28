@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:diacritic/diacritic.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -16,7 +14,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   SqlRoomImp(this._database);
 
   @override
-  Future<int> delete(DeleteRoomEvent event) {
+  Future<int> delete(VDeleteRoomEvent event) {
     return _database.delete(
       _table,
       where: "$_id =?",
@@ -25,7 +23,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> insert(InsertRoomEvent event) {
+  Future<int> insert(VInsertRoomEvent event) {
     return _database.insert(
       _table,
       event.room.toLocalMap(),
@@ -37,7 +35,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<List<VRoom>> search(
     String text,
     int limit,
-    RoomType? roomType,
+    VRoomType? roomType,
   ) async {
     if (roomType == null) {
       final maps = await _database.rawQuery(
@@ -58,7 +56,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateBlockSingleRoom(BlockSingleRoomEvent event) {
+  Future<int> updateBlockSingleRoom(VBlockSingleRoomEvent event) {
     return _database.update(
       _table,
       {
@@ -70,7 +68,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateCountByOne(UpdateRoomUnReadCountByOneEvent event) {
+  Future<int> updateCountByOne(VUpdateRoomUnReadCountByOneEvent event) {
     return _database.rawUpdate(
       "UPDATE $_table SET ${RoomTable.columnUnReadCount} = ${RoomTable.columnUnReadCount} + 1 WHERE ${RoomTable.columnId} =?",
       [event.roomId],
@@ -78,7 +76,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateCountToZero(UpdateRoomUnReadCountToZeroEvent event) {
+  Future<int> updateCountToZero(VUpdateRoomUnReadCountToZeroEvent event) {
     return _database.update(
       _table,
       {
@@ -90,7 +88,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateImage(UpdateRoomImageEvent event) {
+  Future<int> updateImage(VUpdateRoomImageEvent event) {
     return _database.update(
       _table,
       {
@@ -102,7 +100,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateIsMuted(UpdateRoomMuteEvent event) {
+  Future<int> updateIsMuted(VUpdateRoomMuteEvent event) {
     return _database.update(
       _table,
       {
@@ -114,7 +112,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateName(UpdateRoomNameEvent event) {
+  Future<int> updateName(VUpdateRoomNameEvent event) {
     return _database.update(
       _table,
       {
@@ -125,29 +123,29 @@ class SqlRoomImp extends BaseLocalRoomRepo {
     );
   }
 
-  @override
-  Future<int> updateOnline(UpdateRoomOnlineEvent event) {
-    return _database.update(
-      _table,
-      {
-        RoomTable.columnIsOnline: event.model.isOnline ? 1 : 0,
-      },
-      where: "$_id =?",
-      whereArgs: [event.roomId],
-    );
-  }
+  // @override
+  // Future<int> updateOnline(UpdateRoomOnlineEvent event) {
+  //   return _database.update(
+  //     _table,
+  //     {
+  //       RoomTable.columnIsOnline: event.model.isOnline ? 1 : 0,
+  //     },
+  //     where: "$_id =?",
+  //     whereArgs: [event.roomId],
+  //   );
+  // }
 
-  @override
-  Future<int> updateTyping(UpdateRoomTypingEvent event) {
-    return _database.update(
-      _table,
-      {
-        RoomTable.columnRoomTyping: jsonEncode(event.typingModel.toMap()),
-      },
-      where: "$_id =?",
-      whereArgs: [event.roomId],
-    );
-  }
+  // @override
+  // Future<int> updateTyping(UpdateRoomTypingEvent event) {
+  //   return _database.update(
+  //     _table,
+  //     {
+  //       RoomTable.columnRoomTyping: jsonEncode(event.typingModel.toMap()),
+  //     },
+  //     where: "$_id =?",
+  //     whereArgs: [event.roomId],
+  //   );
+  // }
 
   @override
   Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300}) async {
@@ -173,17 +171,17 @@ class SqlRoomImp extends BaseLocalRoomRepo {
     ''';
   }
 
-  @override
-  Future<int> setAllOffline() {
-    return _database.update(
-      _table,
-      {
-        RoomTable.columnIsOnline: 0,
-        RoomTable.columnRoomTyping:
-            jsonEncode(VSocketRoomTypingModel.offline.toMap()),
-      },
-    );
-  }
+  // @override
+  // Future<int> setAllOffline() {
+  //   return _database.update(
+  //     _table,
+  //     {
+  //       RoomTable.columnIsOnline: 0,
+  //       RoomTable.columnRoomTyping:
+  //           jsonEncode(VSocketRoomTypingModel.offline.toMap()),
+  //     },
+  //   );
+  // }
 
   @override
   Future<int> insertMany(List<VRoom> rooms) async {

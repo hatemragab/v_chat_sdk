@@ -4,6 +4,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -19,6 +20,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await Supabase.initialize(
+    url: "https://qtkcgcmeqyyvhzvjebvr.supabase.co",
+    anonKey:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0a2NnY21lcXl5dmh6dmplYnZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzA1OTcyODgsImV4cCI6MTk4NjE3MzI4OH0.yaEOvgShEGTbv4ryYgeGZwK5oR1XOKNQOgs8R_xhq0E",
   );
   await VChatController.init(
     vChatConfig: VChatConfig(

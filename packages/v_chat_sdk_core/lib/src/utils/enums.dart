@@ -60,35 +60,32 @@ enum CallStatus {
 
 enum SocketStateType { connected, connecting }
 
-enum RoomType {
-  s,
-  g,
-  b,
+enum VRoomType { s, g, b, o }
+
+extension StrType on VRoomType {
+  bool get isGroup => this == VRoomType.g;
+
+  bool get isSingle => this == VRoomType.s;
+
+  bool get isBroadcast => this == VRoomType.b;
+  bool get isCustom => this == VRoomType.o;
 }
 
-extension StrType on RoomType {
-  bool get isGroup => this == RoomType.g;
-
-  bool get isSingle => this == RoomType.s;
-
-  bool get isBroadcast => this == RoomType.b;
-}
-
-enum MessageSendingStatusEnum {
+enum MessageEmitStatus {
   //send
   serverConfirm,
   error,
   sending,
 }
 
-extension MessageSendingStatusEnumExt on MessageSendingStatusEnum {
-  bool get isSending => this == MessageSendingStatusEnum.sending;
+extension MessageSendingStatusEnumExt on MessageEmitStatus {
+  bool get isSending => this == MessageEmitStatus.sending;
 
-  bool get isServerConfirm => this == MessageSendingStatusEnum.serverConfirm;
+  bool get isServerConfirm => this == MessageEmitStatus.serverConfirm;
 
   bool get isSendingOrError => isSending || isSendError;
 
-  bool get isSendError => this == MessageSendingStatusEnum.error;
+  bool get isSendError => this == MessageEmitStatus.error;
 }
 
 enum MessageInfoType {
@@ -104,3 +101,5 @@ enum MessageInfoType {
 }
 
 enum GroupMemberRole { admin, member, superAdmin }
+
+enum MessagesFilter { media, links, file, voice, all }

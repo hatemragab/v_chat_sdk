@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../models/app_bare_state.dart';
 import '../../models/input_state.dart';
@@ -20,12 +18,18 @@ class VMessagePage extends StatefulWidget {
     required this.onMentionPress,
     this.onMessageItemPress,
     this.appBare,
+    this.googleMapsApiKey,
+    this.onAppBarTitlePress,
   }) : super(key: key);
-  final Function(String userId) onMentionPress;
+  final Function(String identifier) onMentionPress;
 
   final Function(VBaseMessage message)? onMessageItemPress;
+  final Function(String id, VRoomType roomType)? onAppBarTitlePress;
   final Widget Function(AppBareState state)? appBare;
   final VRoom vRoom;
+
+  ///set api if you want to make users able to pick locations
+  final String? googleMapsApiKey;
 
   @override
   State<VMessagePage> createState() => _VMessagePageState();
@@ -68,45 +72,38 @@ class _VMessagePageState extends State<VMessagePage> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ChangeNotifierProvider<VMessageController>.value(
-              value: controller,
-              builder: (context, child) {
-                final controller = context.watch<VMessageController>();
-                return VAsyncWidgetsBuilder(
-                  loadingState: controller.roomPageState,
-                  onRefresh: controller.initMessages,
-                  successWidget: () {
-                    return ListView.separated(
-                      key: UniqueKey(),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
+          ValueListenableBuilder<List<VBaseMessage>>(
+            valueListenable: controller.messageState.stateNotifier,
+            builder: (_, value, __) {
+              return Expanded(
+                child: ListView.separated(
+                  key: UniqueKey(),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
+                  cacheExtent: 300,
+                  itemBuilder: (context, index) {
+                    final message = value[index];
+                    return StreamBuilder<VBaseMessage>(
+                      stream: controller.messageState.messageStateStream.stream
+                          .takeWhile(
+                        (e) => e.localId == message.localId,
                       ),
-                      cacheExtent: 300,
-                      itemBuilder: (context, index) {
-                        final message = controller.messages[index];
-                        return StreamBuilder<VBaseMessage>(
-                          stream:
-                              controller.messageStateStream.stream.takeWhile(
-                            (e) => e.localId == message.localId,
-                          ),
-                          initialData: message,
-                          builder: (context, snapshot) {
-                            return VMessageItem(
-                              itemController: controller.itemController,
-                              message: snapshot.data!,
-                              onMentionPress: controller.onMentionPress,
-                            );
-                          },
+                      initialData: message,
+                      builder: (context, snapshot) {
+                        return VMessageItem(
+                          itemController: controller.itemController,
+                          message: snapshot.data!,
+                          onMentionPress: controller.onMentionPress,
                         );
                       },
-                      itemCount: controller.messages.length,
-                      reverse: true,
                     );
                   },
-                );
-              },
-            ),
+                  itemCount: value.length,
+                  reverse: true,
+                ),
+              );
+            },
           ),
           ValueListenableBuilder<InputState>(
             valueListenable: controller.inputState,
@@ -118,7 +115,7 @@ class _VMessagePageState extends State<VMessagePage> {
                 onSubmitFiles: controller.onSubmitFiles,
                 onSubmitLocation: controller.onSubmitLocation,
                 onTypingChange: controller.onTypingChange,
-                googleMapsApiKey: "test",
+                googleMapsApiKey: widget.googleMapsApiKey,
                 replyWidget: value.replyMsg == null
                     ? null
                     : ReplyMsgWidget(vBaseMessage: value.replyMsg!),

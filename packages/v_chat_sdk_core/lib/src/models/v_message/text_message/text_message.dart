@@ -35,10 +35,13 @@ class VTextMessage extends VBaseMessage {
 
   VTextMessage.fromRemoteMap(super.map) : super.fromRemoteMap();
 
-  VTextMessage.buildFakeMessage(int index)
-      : super.buildFakeMessage(
+  VTextMessage.buildFakeMessage({
+    required int index,
+    MessageEmitStatus messageStatus = MessageEmitStatus.serverConfirm,
+  }) : super.buildFakeMessage(
           content: randomString(index * 25),
           messageType: MessageType.text,
+          messageStatus: messageStatus,
         );
 
   VTextMessage.fromLocalMap(super.map) : super.fromLocalMap();

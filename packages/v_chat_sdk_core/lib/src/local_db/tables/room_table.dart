@@ -5,19 +5,17 @@ class RoomTable {
 
   static const tableName = 'tb_r';
   static const columnId = '${tableName}_id';
-  static const columnRoomType = '${tableName}_r_r';
-  static const columnTitle = '${tableName}_r';
+  static const columnRoomType = '${tableName}_room_type';
+  static const columnTitle = '${tableName}_title';
   static const columnThumbImage = '${tableName}_img';
-  static const columnRoomTyping = '${tableName}_typing';
-  static const columnIsArchived = '${tableName}_i_a';
-  static const columnIsOnline = '${tableName}_i_onl';
-  static const columnIsMuted = '${tableName}_i_m';
-  static const columnPeerId = '${tableName}_p_id';
-  static const columnBlockerId = '${tableName}_b_id';
-  static const columnIsDeleted = '${tableName}_is_del';
-  static const columnEnTitle = '${tableName}_en_t';
-  static const columnUnReadCount = '${tableName}_un_c';
-  static const columnNickName = '${tableName}_n_name';
+  static const columnIsArchived = '${tableName}_is_archived';
+  static const columnIsMuted = '${tableName}_is_muted';
+  static const columnPeerId = '${tableName}_peer_id';
+  static const columnPeerIdentifier = '${tableName}_peer_identifier';
+  static const columnBlockerId = '${tableName}_blocker_id';
+  static const columnEnTitle = '${tableName}_title_en';
+  static const columnUnReadCount = '${tableName}_un_counter';
+  static const columnNickName = '${tableName}_nick_name';
   static const columnCreatedAt = '${tableName}_created_at';
 
   static Future<void> recreateTable(Transaction db) async {
@@ -38,17 +36,17 @@ class RoomTable {
             $columnRoomType     TEXT   ,
             $columnTitle     TEXT   ,
             $columnEnTitle     TEXT   ,
-            $columnRoomTyping     TEXT   ,
             $columnThumbImage     TEXT   ,
             $columnCreatedAt     TEXT   ,
             $columnIsArchived     INTEGER ,
-            $columnIsOnline     INTEGER ,
+            
             $columnIsMuted     INTEGER ,
             $columnPeerId     TEXT   ,
+            $columnPeerIdentifier     TEXT   ,
             $columnBlockerId     TEXT   ,
             $columnNickName     TEXT   ,
             $columnUnReadCount     INTEGER ,
-            $columnIsDeleted     INTEGER ,
+           
          
             UNIQUE($columnId, $columnPeerId) ON CONFLICT REPLACE
             )        
@@ -62,13 +60,5 @@ class RoomTable {
       ON $tableName ($columnId)
     ''',
     );
-  }
-
-  static Future<void> addColumnIsTranslateEnable(dynamic db) async {
-    //  await db.execute(
-    //    '''
-    //  alter table $tableName add column $columnTransTo TEXT DEFAULT null
-    // ''',
-    //  );
   }
 }

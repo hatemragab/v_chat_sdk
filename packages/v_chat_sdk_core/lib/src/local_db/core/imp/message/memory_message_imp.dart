@@ -3,7 +3,7 @@ import 'package:collection/collection.dart';
 import '../../../../../v_chat_sdk_core.dart';
 import '../../abstraction/base_local_message_repo.dart';
 
-extension X on List<VBaseMessage> {
+extension CSortById on List<VBaseMessage> {
   List<VBaseMessage> sortById() {
     sort((a, b) {
       return b.id.compareTo(a.id);
@@ -63,7 +63,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessageStatus(VUpdateMessageStatusEvent event) async {
     final msg = await findByLocalId(event.localId);
     if (msg == null) return 0;
-    msg.messageStatus = event.messageSendingStatusEnum;
+    msg.messageStatus = event.emitState;
     return Future.value(1);
   }
 
@@ -81,9 +81,9 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   ) async {
     for (final m in _messages) {
       if (m.roomId == event.roomId &&
-          m.senderId == event.deliverRoomMessagesModel.userId &&
+          m.senderId == event.model.userId &&
           m.deliveredAt == null) {
-        m.deliveredAt = event.deliverRoomMessagesModel.date;
+        m.deliveredAt = event.model.date;
       }
     }
     return Future.value(1);
@@ -93,10 +93,10 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessagesToSeen(VUpdateMessageSeenEvent event) async {
     for (final m in _messages) {
       if (m.roomId == event.roomId &&
-          m.senderId == event.onEnterRoomModel.userId &&
+          m.senderId == event.model.userId &&
           m.seenAt == null) {
-        m.seenAt = event.onEnterRoomModel.date;
-        m.deliveredAt ??= event.onEnterRoomModel.date;
+        m.seenAt = event.model.date;
+        m.deliveredAt ??= event.model.date;
       }
     }
     return Future.value(1);
@@ -104,7 +104,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
 
   @override
   Future<List<VBaseMessage>> getMessagesByStatus({
-    required MessageSendingStatusEnum status,
+    required MessageEmitStatus status,
     int limit = 50,
   }) {
     return Future.value(
@@ -144,17 +144,6 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateMessageIdByLocalId({
-    required String localId,
-    required String messageId,
-  }) async {
-    final msg = await findByLocalId(localId);
-    if (msg == null) return Future.value(0);
-    msg.id = messageId;
-    return Future.value(1);
-  }
-
-  @override
   Future<int> reCreate() {
     _messages.clear();
     return Future.value(1);
@@ -174,5 +163,16 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
       }
     }
     return Future.value(1);
+  }
+
+  @override
+  Future<int> updateFullMessage({
+    required VBaseMessage baseMessage,
+  }) async {
+    final msgIndex = _messages.indexOf(baseMessage);
+    if (msgIndex != -1) {
+      _messages[msgIndex] = baseMessage;
+    }
+    return 1;
   }
 }

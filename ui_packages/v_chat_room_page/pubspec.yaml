@@ -15,7 +15,6 @@ dependencies:
   v_chat_utils: ^0.0.6
   v_chat_sdk_core: ^0.0.3
   phosphor_flutter: ^1.4.0
-  provider: ^6.0.4
   textless: ^6.6.6
   helpers: ^1.1.4
   uuid: ^3.0.5
@@ -23,6 +22,7 @@ dependencies:
   build_context: ^3.0.0
   flutter_advanced_avatar: ^1.1.0
   timeago: ^3.3.0
+  collection:
 
 dev_dependencies:
   flutter_test:

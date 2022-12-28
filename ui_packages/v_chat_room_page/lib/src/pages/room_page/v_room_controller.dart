@@ -1,64 +1,45 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:v_chat_room_page/src/pages/room_page/room_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../assets/data/api_rooms.dart';
+import '../../assets/data/local_rooms.dart';
 import '../../widgets/room_item/room_item_controller.dart';
 
-class VRoomController extends ChangeNotifier {
+class VRoomController {
   bool isTesting;
 
   VRoomController({
     this.isTesting = false,
   }) {
-    initRooms();
+    _getRoomsFromLocal();
     //VChatController.I.nativeApi.local.room.roomStream.listen((event) {});
   }
 
-  final roomStateStream = StreamController<VRoom>.broadcast();
   final roomItemController = RoomItemController();
-  var roomPageState = VChatLoadingState.ideal;
-  final _roomPaginationModel = VPaginationModel<VRoom>(
-    values: <VRoom>[],
-    limit: 20,
-    page: 1,
-    nextPage: null,
-  );
 
-  List<VRoom> get rooms => List.unmodifiable(_roomPaginationModel.values);
+  final roomState = RoomState();
 
-  Future<void> initRooms() async {
+  List<VRoom> get rooms => roomState.stateRooms;
+
+  Future<void> _getRoomsFromLocal() async {
     await vSafeApiCall<List<VRoom>>(
-      onLoading: () {
-        roomPageState = VChatLoadingState.loading;
-        notifyListeners();
-      },
       request: () async {
-        await Future.delayed(const Duration(milliseconds: 1200));
-        return List.generate(
-          12,
-          (index) => VRoom.fakeRoom(
-            index,
-          ),
-        );
+        await Future.delayed(const Duration(milliseconds: 100));
+        return [VRoom.fromLocalMap(fakeLocalRooms.first)];
       },
       onSuccess: (response) {
-        _roomPaginationModel.values.addAll(response);
-        roomPageState = VChatLoadingState.success;
-        notifyListeners();
-      },
-      onError: (exception) {
-        roomPageState = VChatLoadingState.error;
-        notifyListeners();
+        roomState.updateCacheState(response);
       },
     );
+    getRoomsFromApi();
   }
 
-  @override
   void dispose() {
-    super.dispose();
-    roomStateStream.close();
+    roomState.close();
   }
 
   void onRoomItemPress(VRoom room, BuildContext context) {
@@ -69,15 +50,30 @@ class VRoomController extends ChangeNotifier {
 
   void onRoomItemLongPress(VRoom room, BuildContext context) async {
     switch (room.roomType) {
-      case RoomType.s:
+      case VRoomType.s:
         await roomItemController.openForSingle(room, context);
         break;
-      case RoomType.g:
+      case VRoomType.g:
         await roomItemController.openForGroup(room, context);
         break;
-      case RoomType.b:
+      case VRoomType.b:
         await roomItemController.openForBroadcast(room, context);
         break;
+      case VRoomType.o:
+        // TODO: Handle this case.
+        break;
     }
+  }
+
+  void getRoomsFromApi() async {
+    await vSafeApiCall<List<VRoom>>(
+      request: () async {
+        await Future.delayed(const Duration(milliseconds: 1100));
+        return [VRoom.fromMap(fakeApiRooms.first)];
+      },
+      onSuccess: (response) {
+        roomState.updateCacheState(response);
+      },
+    );
   }
 }

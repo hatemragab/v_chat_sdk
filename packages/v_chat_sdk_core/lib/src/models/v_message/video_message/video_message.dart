@@ -8,7 +8,7 @@ import '../../../local_db/tables/message_table.dart';
 import '../../../utils/api_constants.dart';
 
 class VVideoMessage extends VBaseMessage {
-  final VMessageVideoData fileSource;
+  final VMessageVideoData data;
 
   VVideoMessage({
     required super.id,
@@ -30,17 +30,17 @@ class VVideoMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required this.fileSource,
+    required this.data,
   });
 
   VVideoMessage.fromRemoteMap(super.map)
-      : fileSource = VMessageVideoData.fromMap(
+      : data = VMessageVideoData.fromMap(
           map['msgAtt'] as Map<String, dynamic>,
         ),
         super.fromRemoteMap();
 
   VVideoMessage.fromLocalMap(super.map)
-      : fileSource = VMessageVideoData.fromMap(
+      : data = VMessageVideoData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -52,7 +52,7 @@ class VVideoMessage extends VBaseMessage {
   // }
   VVideoMessage.buildMessage({
     required super.roomId,
-    required this.fileSource,
+    required this.data,
     super.forwardId,
     super.broadcastId,
     super.replyTo,
@@ -67,7 +67,7 @@ class VVideoMessage extends VBaseMessage {
       ...super.toListOfPartValue(),
       PartValue(
         'attachment',
-        jsonEncode(fileSource.toMap()),
+        jsonEncode(data.toMap()),
       ),
     ];
   }
@@ -76,7 +76,7 @@ class VVideoMessage extends VBaseMessage {
   Map<String, dynamic> toLocalMap() {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap())
     };
   }
 }

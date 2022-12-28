@@ -7,7 +7,7 @@ import '../logger/v_logger.dart';
 import 'event_bus.dart';
 
 class ControllerHelper {
-  late final VChatConfig config;
+  late final VChatConfig _config;
   final _log = Logger('ControllerHelper');
   Timer? _timer;
 
@@ -18,8 +18,9 @@ class ControllerHelper {
   ControllerHelper._();
 
   Future<ControllerHelper> init(
-    VChatConfig config,
+    final VChatConfig config,
   ) async {
+    _config = config;
     _initLogger(config.enableLog);
     await _initPushService(config.pushProvider);
     _initSocketTimer();
@@ -77,11 +78,11 @@ class ControllerHelper {
   }
 
   Future<String?> getFcmToken() async {
-    if (!config.isPushEnable) {
+    if (!_config.isPushEnable) {
       return null;
     }
     try {
-      return await config.pushProvider!.getToken();
+      return await _config.pushProvider!.getToken();
     } catch (err) {
       _log.warning(err);
     }

@@ -4,105 +4,114 @@ import '../../v_chat_sdk_core.dart';
 import '../models/v_room/single_room/single_ban_model.dart';
 
 abstract class VRoomEvents extends AppEvent {
-  String roomId;
+  final String roomId;
 
-  VRoomEvents({required this.roomId});
+  const VRoomEvents({
+    required this.roomId,
+  });
 
   @override
   List<Object?> get props => [roomId];
 }
 
-class InsertRoomEvent extends VRoomEvents {
+class VInsertRoomEvent extends VRoomEvents {
   final VRoom room;
 
-  InsertRoomEvent({
+  const VInsertRoomEvent({
     required super.roomId,
     required this.room,
   });
+
   @override
   List<Object?> get props => [super.props, room];
 }
 
-class BlockSingleRoomEvent extends VRoomEvents {
+class VBlockSingleRoomEvent extends VRoomEvents {
   final VSingleBanModel banModel;
 
-  BlockSingleRoomEvent({
+  const VBlockSingleRoomEvent({
     required super.roomId,
     required this.banModel,
   });
+
   @override
   List<Object?> get props => [super.props, banModel];
 }
 
-class UpdateRoomOnlineEvent extends VRoomEvents {
+class VUpdateRoomOnlineEvent extends VRoomEvents {
   final VOnlineOfflineModel model;
 
-  UpdateRoomOnlineEvent({
+  const VUpdateRoomOnlineEvent({
     required super.roomId,
     required this.model,
   });
+
   @override
   List<Object?> get props => [super.props, model];
 }
 
-class UpdateRoomTypingEvent extends VRoomEvents {
+class VUpdateRoomTypingEvent extends VRoomEvents {
   final VSocketRoomTypingModel typingModel;
 
-  UpdateRoomTypingEvent({
+  const VUpdateRoomTypingEvent({
     required super.roomId,
     required this.typingModel,
   });
+
   @override
   List<Object?> get props => [super.props, typingModel];
 }
 
-class UpdateRoomNameEvent extends VRoomEvents {
+class VUpdateRoomNameEvent extends VRoomEvents {
   final String name;
 
-  UpdateRoomNameEvent({
+  const VUpdateRoomNameEvent({
     required super.roomId,
     required this.name,
   });
+
   @override
   List<Object?> get props => [super.props, name];
 }
 
-class UpdateRoomImageEvent extends VRoomEvents {
+class VUpdateRoomImageEvent extends VRoomEvents {
   final String image;
 
-  UpdateRoomImageEvent({
+  const VUpdateRoomImageEvent({
     required super.roomId,
     required this.image,
   });
+
   @override
   List<Object?> get props => [super.props, image];
 }
 
-class UpdateRoomUnReadCountByOneEvent extends VRoomEvents {
-  UpdateRoomUnReadCountByOneEvent({
+class VUpdateRoomUnReadCountByOneEvent extends VRoomEvents {
+  const VUpdateRoomUnReadCountByOneEvent({
     required super.roomId,
   });
 }
 
-class UpdateRoomUnReadCountToZeroEvent extends VRoomEvents {
-  UpdateRoomUnReadCountToZeroEvent({
+class VUpdateRoomUnReadCountToZeroEvent extends VRoomEvents {
+  const VUpdateRoomUnReadCountToZeroEvent({
     required super.roomId,
   });
 }
 
-class UpdateRoomMuteEvent extends VRoomEvents {
+class VUpdateRoomMuteEvent extends VRoomEvents {
   final bool isMuted;
 
-  UpdateRoomMuteEvent({
+  const VUpdateRoomMuteEvent({
     required super.roomId,
     required this.isMuted,
   });
+
   @override
   List<Object?> get props => [super.props, isMuted];
 }
 
-class DeleteRoomEvent extends VRoomEvents {
-  DeleteRoomEvent({
+class VDeleteRoomEvent extends VRoomEvents {
+  const VDeleteRoomEvent({
     required super.roomId,
   });
 }

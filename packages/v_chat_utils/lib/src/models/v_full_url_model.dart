@@ -1,12 +1,18 @@
+String? mediaBaseUrl;
+
 class VFullUrlModel {
   final String originalUrl;
   late final String fullUrl;
-  static String? mediaBaseUrl;
 
   VFullUrlModel(
     this.originalUrl, {
     bool isFullUrl = false,
   }) {
+    if (originalUrl.startsWith("http")) {
+      fullUrl = originalUrl;
+      return;
+    }
+
     if (isFullUrl) {
       fullUrl = originalUrl;
     } else {
@@ -18,6 +24,9 @@ class VFullUrlModel {
   }
 
   VFullUrlModel.fromFullUrl(this.fullUrl) : originalUrl = fullUrl;
+  VFullUrlModel.fromFakeUrl()
+      : fullUrl = "https://picsum.photos/500/500",
+        originalUrl = "https://picsum.photos/500/500";
 
   // to String
   @override

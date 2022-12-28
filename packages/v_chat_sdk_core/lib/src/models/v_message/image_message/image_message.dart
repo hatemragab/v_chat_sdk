@@ -92,5 +92,6 @@ class VImageMessage extends VBaseMessage {
         super.buildFakeMessage(
           content: "Fake this is fake image message",
           messageType: MessageType.image,
+          messageStatus: MessageEmitStatus.serverConfirm,
         );
 }

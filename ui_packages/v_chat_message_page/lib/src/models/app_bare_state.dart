@@ -20,7 +20,7 @@ class AppBareState {
 
   String get roomId => _room.id;
 
-  RoomType get roomType => _room.roomType;
+  VRoomType get roomType => _room.roomType;
 
   String? get typingText => _room.roomTypingText;
 

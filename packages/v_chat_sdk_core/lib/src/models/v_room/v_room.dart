@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:diacritic/diacritic.dart';
 import 'package:intl/intl.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -13,17 +11,18 @@ class VRoom {
   String title;
   String enTitle;
   VFullUrlModel thumbImage;
-  RoomType roomType;
+  VRoomType roomType;
   bool isArchived;
   int unReadCount;
   VBaseMessage lastMessage;
-  bool isDeleted;
+  bool isDeleted = false;
   final DateTime createdAt;
   bool isMuted;
   bool isOnline;
   VSocketRoomTypingModel typingStatus;
   String? nickName;
   final String? peerId;
+  final String? peerIdentifier;
   String? blockerId;
 
   VRoom({
@@ -35,12 +34,12 @@ class VRoom {
     required this.isArchived,
     required this.unReadCount,
     required this.lastMessage,
-    required this.isDeleted,
     required this.createdAt,
     required this.isMuted,
     this.isOnline = false,
     this.blockerId,
     required this.peerId,
+    required this.peerIdentifier,
     required this.nickName,
     this.typingStatus = VSocketRoomTypingModel.offline,
   });
@@ -50,13 +49,14 @@ class VRoom {
         title = "",
         thumbImage = VFullUrlModel("empty!.png"),
         isArchived = false,
-        roomType = RoomType.s,
+        roomType = VRoomType.s,
         createdAt = DateTime.now(),
         enTitle = "",
         unReadCount = 0,
         isMuted = false,
         isDeleted = false,
         nickName = null,
+        peerIdentifier = null,
         typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
         blockerId = null,
@@ -68,12 +68,13 @@ class VRoom {
         title = map['t'] as String,
         thumbImage = VFullUrlModel(map['img'] as String),
         isArchived = map['isA'] as bool,
-        roomType = RoomType.values.byName(map['rT'] as String),
+        roomType = VRoomType.values.byName(map['rT'] as String),
         createdAt = DateTime.parse(map['createdAt'] as String),
         enTitle = removeDiacritics(map['t'] as String),
         unReadCount = map['uC'] as int,
         isMuted = map['isM'] as bool,
         isDeleted = map['isD'] as bool,
+        peerIdentifier = map['pIdentifier'] as String?,
         nickName = null,
         typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
@@ -88,7 +89,7 @@ class VRoom {
   VRoom.fromLocalMap(Map<String, dynamic> map)
       : id = map[RoomTable.columnId] as String,
         roomType =
-            RoomType.values.byName(map[RoomTable.columnRoomType] as String),
+            VRoomType.values.byName(map[RoomTable.columnRoomType] as String),
         title = map[RoomTable.columnTitle] as String,
         thumbImage = VFullUrlModel(map[RoomTable.columnThumbImage] as String),
         isArchived = (map[RoomTable.columnIsArchived] as int) == 1,
@@ -96,13 +97,11 @@ class VRoom {
         enTitle = map[RoomTable.columnEnTitle] as String,
         unReadCount = map[RoomTable.columnUnReadCount] as int,
         isMuted = (map[RoomTable.columnIsMuted] as int) == 1,
-        isDeleted = (map[RoomTable.columnIsDeleted] as int) == 1,
+        // isDeleted = (map[RoomTable.columnIsDeleted] as int) == 1,
         nickName = map[RoomTable.columnNickName] as String?,
-        typingStatus = VSocketRoomTypingModel.fromMap(
-          jsonDecode(map[RoomTable.columnRoomTyping] as String)
-              as Map<String, dynamic>,
-        ),
-        isOnline = (map[RoomTable.columnIsOnline] as int) == 1,
+        peerIdentifier = map[RoomTable.columnPeerIdentifier] as String?,
+        typingStatus = VSocketRoomTypingModel.offline,
+        isOnline = false,
         blockerId = map[RoomTable.columnBlockerId] as String?,
         peerId = map[RoomTable.columnPeerId] as String?,
         lastMessage = MessageFactory.createBaseMessage(map);
@@ -115,12 +114,10 @@ class VRoom {
       RoomTable.columnEnTitle: enTitle,
       RoomTable.columnRoomType: roomType.name,
       RoomTable.columnIsArchived: isArchived ? 1 : 0,
-      RoomTable.columnIsDeleted: isDeleted ? 1 : 0,
       RoomTable.columnUnReadCount: unReadCount,
       RoomTable.columnCreatedAt: createdAt.toUtc().toIso8601String(),
       RoomTable.columnIsMuted: isMuted ? 1 : 0,
-      RoomTable.columnIsOnline: isOnline ? 1 : 0,
-      RoomTable.columnRoomTyping: jsonEncode(typingStatus.toMap()),
+      RoomTable.columnPeerIdentifier: peerIdentifier,
       RoomTable.columnNickName: nickName,
       RoomTable.columnPeerId: peerId,
       RoomTable.columnBlockerId: blockerId,
@@ -190,16 +187,16 @@ class VRoom {
   static VRoom fakeRoom(int id) {
     return VRoom(
       id: id.toString(),
+      peerIdentifier: null,
       title: "${id == 0 ? "Group" : ""} $id",
       enTitle: "enTitle",
       thumbImage: VFullUrlModel("https://picsum.photos/300/${id + 299}",
           isFullUrl: true),
       isArchived: false,
-      roomType: id == 0 ? RoomType.g : RoomType.s,
+      roomType: id == 0 ? VRoomType.g : VRoomType.s,
       isMuted: id % 2 == 0,
       unReadCount: id % 2 == 0 ? 0 : id,
-      lastMessage: VTextMessage.buildFakeMessage(id),
-      isDeleted: false,
+      lastMessage: VTextMessage.buildFakeMessage(index: id),
       createdAt: DateTime.now(),
       isOnline: id % 2 == 0,
       peerId: "peerId",
@@ -216,7 +213,7 @@ class VRoom {
     String? title,
     String? enTitle,
     VFullUrlModel? thumbImage,
-    RoomType? roomType,
+    VRoomType? roomType,
     bool? isArchived,
     int? unReadCount,
     VBaseMessage? lastMessage,
@@ -227,10 +224,12 @@ class VRoom {
     VSocketRoomTypingModel? typingStatus,
     String? nickName,
     String? peerId,
+    String? peerIdentifier,
     String? blockerId,
   }) {
     return VRoom(
       id: id ?? this.id,
+      peerIdentifier: peerIdentifier ?? this.peerIdentifier,
       title: title ?? this.title,
       enTitle: enTitle ?? this.enTitle,
       thumbImage: thumbImage ?? this.thumbImage,
@@ -238,7 +237,6 @@ class VRoom {
       isArchived: isArchived ?? this.isArchived,
       unReadCount: unReadCount ?? this.unReadCount,
       lastMessage: lastMessage ?? this.lastMessage,
-      isDeleted: isDeleted ?? this.isDeleted,
       createdAt: createdAt ?? this.createdAt,
       isMuted: isMuted ?? this.isMuted,
       isOnline: isOnline ?? this.isOnline,

@@ -47,7 +47,7 @@ class _LocalNativeApi {
     await message.prepareMessages();
     room = NativeLocalRoom(database);
     apiCache = NativeLocalApiCache(database);
-    await room.prepareRooms();
+    // await room.prepareRooms();
   }
 }
 

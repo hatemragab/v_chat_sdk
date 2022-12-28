@@ -3,7 +3,7 @@ import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class MessageStatusIcon extends StatelessWidget {
-  final MessageSendingStatusEnum messageStatus;
+  final MessageEmitStatus messageStatus;
   final bool isMeSender;
   final bool isSeen;
   final bool isDeliver;
@@ -22,20 +22,20 @@ class MessageStatusIcon extends StatelessWidget {
     if (!isMeSender) {
       return const SizedBox.shrink();
     }
-    Widget icon = themeData.vMessageItemBuilder.messageSendingStatus.sendIcon;
-    if (messageStatus.isSending) {
-      themeData.vMessageItemBuilder.messageSendingStatus.pendingIcon;
-    }
-    if (messageStatus.isSendError) {
-      icon = themeData.vMessageItemBuilder.messageSendingStatus.refreshIcon;
-    } else if (isSeen) {
-      icon = themeData.vMessageItemBuilder.messageSendingStatus.seenIcon;
-    } else if (isDeliver) {
-      icon = themeData.vMessageItemBuilder.messageSendingStatus.deliverIcon;
-    }
     return Padding(
       padding: const EdgeInsets.only(right: 3),
-      child: icon,
+      child: _getIcon(themeData),
     );
+  }
+
+  Widget _getIcon(themeData) {
+    switch (messageStatus) {
+      case MessageEmitStatus.serverConfirm:
+        return themeData.vMessageItemBuilder.messageSendingStatus.sendIcon;
+      case MessageEmitStatus.error:
+        return themeData.vMessageItemBuilder.messageSendingStatus.refreshIcon;
+      case MessageEmitStatus.sending:
+        return themeData.vMessageItemBuilder.messageSendingStatus.pendingIcon;
+    }
   }
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../chat.dart';
 
-class VChatPage extends StatelessWidget {
+class VChatPage extends StatefulWidget {
   const VChatPage({
     Key? key,
     required this.controller,
@@ -21,12 +19,17 @@ class VChatPage extends StatelessWidget {
   final Widget? floatingActionButton;
 
   @override
+  State<VChatPage> createState() => _VChatPageState();
+}
+
+class _VChatPageState extends State<VChatPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: floatingActionButton,
+      floatingActionButton: widget.floatingActionButton,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: appBar ??
+        child: widget.appBar ??
             AppBar(
               title: const Text("Rooms"),
               centerTitle: true,
@@ -34,50 +37,50 @@ class VChatPage extends StatelessWidget {
       ),
       body: Container(
         decoration: context.vRoomTheme.scaffoldDecoration,
-        child: ChangeNotifierProvider<VRoomController>.value(
-          value: controller,
-          builder: (context, child) {
-            final controller = context.watch<VRoomController>();
-            return VAsyncWidgetsBuilder(
-              loadingState: controller.roomPageState,
-              onRefresh: controller.initRooms,
-              successWidget: () {
-                return ListView.builder(
-                  key: UniqueKey(),
-                  cacheExtent: 300,
-                  itemBuilder: (context, index) {
-                    final room = controller.rooms[index];
-                    return StreamBuilder<VRoom>(
-                      stream: controller.roomStateStream.stream.skipWhile(
-                        (e) => e.id != room.id,
-                      ),
-                      initialData: room,
-                      builder: (context, snapshot) {
-                        return VRoomItem(
-                          room: snapshot.data!,
-                          onRoomItemLongPress: (room) {
-                            if (onRoomItemLongPress != null) {
-                              onRoomItemLongPress!(room);
-                            }
-                            controller.onRoomItemLongPress(room, context);
-                          },
-                          onRoomItemPress: (room) {
-                            if (onRoomItemPress != null) {
-                              onRoomItemPress!(room);
-                            }
-                            controller.onRoomItemPress(room, context);
-                          },
-                        );
+        child: ValueListenableBuilder<VPaginationModel<VRoom>>(
+          valueListenable: widget.controller.roomState.roomNotifier,
+          builder: (_, value, __) {
+            return ListView.builder(
+              key: UniqueKey(),
+              cacheExtent: 300,
+              itemBuilder: (context, index) {
+                final room = value.values[index];
+                return StreamBuilder<VRoom>(
+                  stream: widget.controller.roomState.roomStateStream.stream
+                      .skipWhile(
+                    (e) => e.id != room.id,
+                  ),
+                  initialData: room,
+                  builder: (context, snapshot) {
+                    return VRoomItem(
+                      room: snapshot.data!,
+                      onRoomItemLongPress: (room) {
+                        if (widget.onRoomItemLongPress != null) {
+                          widget.onRoomItemLongPress!(room);
+                        }
+                        widget.controller.onRoomItemLongPress(room, context);
+                      },
+                      onRoomItemPress: (room) {
+                        if (widget.onRoomItemPress != null) {
+                          widget.onRoomItemPress!(room);
+                        }
+                        widget.controller.onRoomItemPress(room, context);
                       },
                     );
                   },
-                  itemCount: controller.rooms.length,
                 );
               },
+              itemCount: value.values.length,
             );
           },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
   }
 }

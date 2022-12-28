@@ -13,6 +13,7 @@ dependencies:
   firebase_storage: ^11.0.4
   shared_preferences: ^2.0.15
   flutter_facebook_auth: ^5.0.6
+  supabase_flutter: ^1.2.2
   http: ^0.13.5
   image_picker: ^0.8.6
   cached_network_image: ^3.2.2
@@ -21,7 +22,7 @@ dependencies:
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   bottom_navy_bar: ^6.0.0
-  textless:
+  textless: ^6.6.6
   url_launcher: ^6.1.6
   file_picker: ^5.2.2
   firebase_messaging: ^14.1.3

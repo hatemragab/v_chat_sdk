@@ -32,7 +32,6 @@ abstract class VBaseMessage {
     required this.deletedAt,
     required this.parentBroadcastId,
     required this.isStared,
-    this.isTesting = false,
   });
 
   ///id will be changed if message get from remote
@@ -46,14 +45,13 @@ abstract class VBaseMessage {
   ///which pla-from this message send through
   final String platform;
   final String roomId;
-  final bool isTesting;
 
   ///message text from server
   final String content;
   MessageType messageType;
 
   ///serverConfirm,error,sending
-  MessageSendingStatusEnum messageStatus;
+  MessageEmitStatus messageStatus;
 
   /// only will have value if this message reply to another
   VBaseMessage? replyTo;
@@ -83,7 +81,6 @@ abstract class VBaseMessage {
 
   VBaseMessage.fromRemoteMap(Map<String, dynamic> map)
       : id = map['_id'] as String,
-        isTesting = false,
         senderId = map['sId'] as String,
         senderName = map['sName'] as String,
         senderImageThumb = VFullUrlModel(map['sImg'] as String),
@@ -104,13 +101,12 @@ abstract class VBaseMessage {
         parentBroadcastId = map['pBId'] as String?,
         localId = map['lId'] as String,
         createdAt = map['createdAt'] as String,
-        messageStatus = MessageSendingStatusEnum.serverConfirm,
+        messageStatus = MessageEmitStatus.serverConfirm,
         updatedAt = map['updatedAt'] as String;
 
   /// from local
   VBaseMessage.fromLocalMap(Map<String, dynamic> map)
       : id = map[MessageTable.columnId] as String,
-        isTesting = false,
         senderId = map[MessageTable.columnSenderId] as String,
         senderName = map[MessageTable.columnSenderName] as String,
         senderImageThumb =
@@ -128,14 +124,14 @@ abstract class VBaseMessage {
               ),
         deliveredAt = map[MessageTable.columnDeliveredAt] as String?,
         forwardId = map[MessageTable.columnForwardId] as String?,
-        deletedAt = map[MessageTable.columnDeletedAt] as String?,
+        deletedAt = map[MessageTable.columnAllDeletedAt] as String?,
         parentBroadcastId =
             map[MessageTable.columnParentBroadcastId] as String?,
         localId = map[MessageTable.columnLocalId] as String,
         createdAt = map[MessageTable.columnCreatedAt] as String,
         updatedAt = map[MessageTable.columnUpdatedAt] as String,
-        messageStatus = MessageSendingStatusEnum.values
-            .byName(map[MessageTable.columnMessageStatus] as String),
+        messageStatus = MessageEmitStatus.values
+            .byName(map[MessageTable.columnMessageEmitStatus] as String),
         messageType = MessageType.values
             .byName(map[MessageTable.columnMessageType] as String);
 
@@ -155,8 +151,8 @@ abstract class VBaseMessage {
       MessageTable.columnSeenAt: seenAt,
       MessageTable.columnDeliveredAt: deliveredAt,
       MessageTable.columnForwardId: forwardId,
-      MessageTable.columnDeletedAt: deletedAt,
-      MessageTable.columnMessageStatus: messageStatus.name,
+      MessageTable.columnAllDeletedAt: deletedAt,
+      MessageTable.columnMessageEmitStatus: messageStatus.name,
       MessageTable.columnParentBroadcastId: parentBroadcastId,
       MessageTable.columnLocalId: localId,
       MessageTable.columnCreatedAt: createdAt,
@@ -189,9 +185,6 @@ abstract class VBaseMessage {
   int get hashCode => localId.hashCode ^ id.hashCode;
 
   bool get isMeSender {
-    if (isTesting) {
-      return id.hashCode % 2 == 0;
-    }
     return AppConstants.myProfile.baseUser.vChatId == senderId;
   }
 
@@ -230,7 +223,6 @@ abstract class VBaseMessage {
     required this.roomId,
     required this.messageType,
     this.forwardId,
-    this.isTesting = false,
     String? broadcastId,
     this.replyTo,
   })  : id = ObjectId().hexString,
@@ -243,7 +235,7 @@ abstract class VBaseMessage {
         senderName = AppConstants.myProfile.baseUser.fullName,
         senderImageThumb =
             AppConstants.myProfile.baseUser.userImages.smallImage,
-        messageStatus = MessageSendingStatusEnum.sending,
+        messageStatus = MessageEmitStatus.sending,
         parentBroadcastId = broadcastId,
         deletedAt = null,
         seenAt = null,
@@ -252,11 +244,11 @@ abstract class VBaseMessage {
   VBaseMessage.buildFakeMessage({
     required this.content,
     required this.messageType,
+    required this.messageStatus,
     this.forwardId,
     String? broadcastId,
     this.replyTo,
   })  : id = ObjectId().hexString,
-        isTesting = true,
         localId = const Uuid().v4(),
         roomId = "roomId $content",
         platform = VPlatforms.currentPlatform,
@@ -267,7 +259,6 @@ abstract class VBaseMessage {
         senderName = AppConstants.fakeMyProfile.baseUser.fullName,
         senderImageThumb =
             AppConstants.fakeMyProfile.baseUser.userImages.smallImage,
-        messageStatus = MessageSendingStatusEnum.serverConfirm,
         parentBroadcastId = broadcastId,
         deletedAt = null,
         seenAt = null,

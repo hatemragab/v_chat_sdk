@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  app_links
   dynamic_color
   emoji_picker_flutter
   flutter_platform_alert

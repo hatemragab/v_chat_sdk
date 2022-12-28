@@ -5,7 +5,7 @@ import '../base_message/v_base_message.dart';
 import 'msg_call_att.dart';
 
 class VCallMessage extends VBaseMessage {
-  final VMsgCallAtt infoAtt;
+  final VMsgCallAtt data;
 
   VCallMessage({
     required super.id,
@@ -27,15 +27,15 @@ class VCallMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required this.infoAtt,
+    required this.data,
   });
 
   VCallMessage.fromRemoteMap(super.map)
-      : infoAtt = VMsgCallAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      : data = VMsgCallAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();
 
   VCallMessage.fromLocalMap(super.map)
-      : infoAtt = VMsgCallAtt.fromMap(
+      : data = VMsgCallAtt.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -52,7 +52,7 @@ class VCallMessage extends VBaseMessage {
   }) {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(infoAtt.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap())
     };
   }
 }

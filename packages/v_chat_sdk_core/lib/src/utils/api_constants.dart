@@ -32,9 +32,9 @@ abstract class AppConstants {
   }
 
   static String get getMediaBaseUrl {
-    final s3BucketUrl = VChatController.I.config.s3BucketUrl;
-    if (s3BucketUrl != null) {
-      return s3BucketUrl;
+    final isS3Supported = VChatController.I.config.s3Supported;
+    if (isS3Supported) {
+      return "$baseUrl/s3/?key=";
     }
     return "$baseUrl/public/";
   }

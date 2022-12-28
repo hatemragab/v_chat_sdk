@@ -15,9 +15,8 @@ abstract class BaseLocalMessageRepo {
 
   Future<int> updateMessagesToDeliver(VUpdateMessageDeliverEvent event);
   Future<int> insertMany(List<VBaseMessage> messages);
-  Future<int> updateMessageIdByLocalId({
-    required String localId,
-    required String messageId,
+  Future<int> updateFullMessage({
+    required VBaseMessage baseMessage,
   });
 
   Future<int> updateMessagesFromSendingToError();
@@ -43,7 +42,7 @@ abstract class BaseLocalMessageRepo {
   });
 
   Future<List<VBaseMessage>> getMessagesByStatus({
-    required MessageSendingStatusEnum status,
+    required MessageEmitStatus status,
     int limit = 50,
   });
 }

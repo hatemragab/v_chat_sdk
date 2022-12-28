@@ -8,7 +8,7 @@ import '../../../local_db/tables/message_table.dart';
 import '../../../utils/api_constants.dart';
 
 class VVoiceMessage extends VBaseMessage {
-  final VMessageVoiceData fileSource;
+  final VMessageVoiceData data;
 
   VVoiceMessage({
     required super.id,
@@ -30,17 +30,17 @@ class VVoiceMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required this.fileSource,
+    required this.data,
   });
 
   VVoiceMessage.fromRemoteMap(super.map)
-      : fileSource = VMessageVoiceData.fromMap(
+      : data = VMessageVoiceData.fromMap(
           map['msgAtt'] as Map<String, dynamic>,
         ),
         super.fromRemoteMap();
 
   VVoiceMessage.fromLocalMap(super.map)
-      : fileSource = VMessageVoiceData.fromMap(
+      : data = VMessageVoiceData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -55,7 +55,7 @@ class VVoiceMessage extends VBaseMessage {
   Map<String, dynamic> toLocalMap() {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(fileSource.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap())
     };
   }
 
@@ -65,14 +65,14 @@ class VVoiceMessage extends VBaseMessage {
       ...super.toListOfPartValue(),
       PartValue(
         'attachment',
-        jsonEncode(fileSource.toMap()),
+        jsonEncode(data.toMap()),
       ),
     ];
   }
 
   VVoiceMessage.buildMessage({
     required super.roomId,
-    required this.fileSource,
+    required this.data,
     super.forwardId,
     super.broadcastId,
     super.replyTo,

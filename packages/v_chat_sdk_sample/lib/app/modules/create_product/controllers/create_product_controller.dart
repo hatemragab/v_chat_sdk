@@ -50,10 +50,9 @@ class CreateProductController extends GetxController {
         VAppAlert.showLoading(context: Get.context!);
       },
       request: () async {
-        final imgUrl =
-            await CloudFireUpload.uploadFile(productImage!, user.uid);
+        final imgUrl = await CloudFireUpload.uploadFile(productImage!, user.id);
         final product = ProductModel(
-          productId: "${DateTime.now().microsecondsSinceEpoch}-${user.uid}",
+          productId: "${DateTime.now().microsecondsSinceEpoch}-${user.id}",
           price: int.parse(priceController.text),
           userModel: user,
           desc: descController.text,

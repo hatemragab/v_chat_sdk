@@ -8,7 +8,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   final _rooms = <VRoom>[];
 
   @override
-  Future<int> delete(DeleteRoomEvent event) {
+  Future<int> delete(VDeleteRoomEvent event) {
     _rooms.removeWhere((e) => event.roomId == e.id);
     return Future.value(1);
   }
@@ -18,7 +18,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> insert(InsertRoomEvent event) {
+  Future<int> insert(VInsertRoomEvent event) {
     final room = getRoomById(event.room.id);
 
     ///room already exist!
@@ -28,7 +28,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<List<VRoom>> search(String text, int limit, RoomType? roomType) {
+  Future<List<VRoom>> search(String text, int limit, VRoomType? roomType) {
     ///case filterType ==null search in all room types !
     if (roomType == null) {
       return Future.value(
@@ -49,7 +49,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateBlockSingleRoom(BlockSingleRoomEvent event) async {
+  Future<int> updateBlockSingleRoom(VBlockSingleRoomEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.blockerId = event.banModel.bannerId;
@@ -58,7 +58,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
 
   @override
   Future<int> updateCountByOne(
-    UpdateRoomUnReadCountByOneEvent event,
+    VUpdateRoomUnReadCountByOneEvent event,
   ) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
@@ -67,7 +67,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateImage(UpdateRoomImageEvent event) async {
+  Future<int> updateImage(VUpdateRoomImageEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.thumbImage = VFullUrlModel(event.image);
@@ -75,7 +75,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateIsMuted(UpdateRoomMuteEvent event) async {
+  Future<int> updateIsMuted(VUpdateRoomMuteEvent event) async {
     final old = getRoomById(event.roomId);
     if (old == null) return 0;
     old.isMuted = event.isMuted;
@@ -83,7 +83,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateName(UpdateRoomNameEvent event) async {
+  Future<int> updateName(VUpdateRoomNameEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.title = event.name;
@@ -91,7 +91,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateOnline(UpdateRoomOnlineEvent event) async {
+  Future<int> updateOnline(VUpdateRoomOnlineEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.isOnline = event.model.isOnline;
@@ -99,7 +99,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateTyping(UpdateRoomTypingEvent event) async {
+  Future<int> updateTyping(VUpdateRoomTypingEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.typingStatus = event.typingModel;
@@ -108,7 +108,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
 
   @override
   Future<int> updateCountToZero(
-    UpdateRoomUnReadCountToZeroEvent event,
+    VUpdateRoomUnReadCountToZeroEvent event,
   ) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;

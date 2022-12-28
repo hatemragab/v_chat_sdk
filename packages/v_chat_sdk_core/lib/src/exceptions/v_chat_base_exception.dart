@@ -16,3 +16,7 @@ abstract class VChatBaseException implements Exception {
 class VChatDartException extends VChatBaseException {
   VChatDartException({required super.exception});
 }
+
+class VUserInternetException extends VChatBaseException {
+  VUserInternetException({required super.exception});
+}

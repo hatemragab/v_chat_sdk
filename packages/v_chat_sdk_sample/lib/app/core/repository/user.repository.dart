@@ -34,6 +34,6 @@ class UserRepository {
   }
 
   Future add(UserModel obj) {
-    return apiClient.postDocument(obj.toMap(), id: obj.uid);
+    return apiClient.postDocument(obj.toMap(), id: obj.id);
   }
 }

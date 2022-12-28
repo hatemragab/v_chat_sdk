@@ -9,6 +9,7 @@ class MessageBroadcastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!isFromBroadcast) return const SizedBox.shrink();
     return const Padding(
       padding: EdgeInsets.only(right: 5),
       child: Icon(

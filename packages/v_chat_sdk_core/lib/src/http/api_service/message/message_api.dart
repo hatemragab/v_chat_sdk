@@ -22,6 +22,40 @@ abstract class MessageApi extends ChopperService {
     @PartFile("file") MultipartFile? secondFile,
   );
 
+  @Get(path: "/")
+  Future<Response> getRoomMessages(
+    @Path("roomId") String roomId,
+    @QueryMap() Map<String, dynamic> query,
+  );
+
+  @Delete(path: "/{messageId}/delete/me")
+  Future<Response> deleteMessageFromMe(
+    @Path("roomId") String roomId,
+    @Path("messageId") String messageId,
+  );
+
+  @Delete(path: "/{messageId}/delete/all")
+  Future<Response> deleteMessageFromAll(
+    @Path("roomId") String roomId,
+    @Path("messageId") String mId,
+  );
+
+  @Get(path: "/{messageId}/status/summary")
+  Future<Response> getMessageStatusSummary(
+    @Path("roomId") String roomId,
+    @Path("messageId") String messageId,
+  );
+
+  @Get(path: "/{messageId}/status/{type}", optionalBody: true)
+  Future<Response> getMessageStatus(
+    @Path("roomId") String roomId,
+    @Path("messageId") String mId,
+
+    ///it can be seen or deliver
+    @QueryMap() Map<String, Object> query,
+    @Path("type") String type,
+  );
+
   static MessageApi create({
     String? baseUrl,
     String? accessToken,

@@ -71,7 +71,7 @@ class SocketService {
     for (final e in dataModelList) {
       unawaited(
         _localRoom.updateRoomOnline(
-          UpdateRoomOnlineEvent(
+          VUpdateRoomOnlineEvent(
             ///this value will updated later
             roomId: '',
             model: e,
@@ -87,7 +87,7 @@ class SocketService {
         VUpdateMessageSeenEvent(
           roomId: model.roomId,
           localId: model.roomId,
-          onEnterRoomModel: model,
+          model: model,
         ),
       ),
     );
@@ -99,7 +99,7 @@ class SocketService {
         VUpdateMessageDeliverEvent(
           roomId: model.roomId,
           localId: model.roomId,
-          deliverRoomMessagesModel: model,
+          model: model,
         ),
       ),
     );

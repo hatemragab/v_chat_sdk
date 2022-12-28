@@ -42,8 +42,11 @@ mixin MessageLocalStorage {
       message.roomId,
     );
     await localMessageRepo.delete(event);
-    event.upMessage = beforeMsg;
-    emitter.fire(event);
+    emitter.fire(VDeleteMessageEvent(
+      localId: msg.localId,
+      roomId: msg.roomId,
+      upMessage: beforeMsg,
+    ));
     return 1;
   }
 
@@ -55,13 +58,17 @@ mixin MessageLocalStorage {
     return 1;
   }
 
-  Future<int> updateMessageIdByLocalId(
+  Future<int> updateFullMessage(
     VBaseMessage message,
   ) async {
-    await localMessageRepo.updateMessageIdByLocalId(
-      localId: message.localId,
-      messageId: message.id,
+    await localMessageRepo.updateFullMessage(
+      baseMessage: message,
     );
+    emitter.fire(VUpdateMessageEvent(
+      roomId: message.roomId,
+      localId: message.localId,
+      messageModel: message,
+    ));
     return 1;
   }
 
@@ -91,7 +98,7 @@ mixin MessageLocalStorage {
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return localMessageRepo.getMessagesByStatus(
-        status: MessageSendingStatusEnum.error);
+        status: MessageEmitStatus.error);
   }
 
   Future<List<VBaseMessage>> searchMessage(

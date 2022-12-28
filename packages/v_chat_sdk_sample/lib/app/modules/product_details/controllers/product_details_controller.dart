@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/models/order.model.dart';
 import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
 import 'package:v_chat_sdk_sample/app/core/repository/order.repository.dart';
- import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
- import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
+import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ProductDetailsController extends GetxController {
@@ -38,12 +38,12 @@ class ProductDetailsController extends GetxController {
           return await orderRepository.add(OrderModel(
             id: "${DateTime.now().microsecondsSinceEpoch}",
             productModel: productModel,
-            userId: AppAuth.getMyModel.uid,
+            userId: AppAuth.getMyModel.id,
             createdAt: DateTime.now().toUtc(),
           ));
         },
         onSuccess: (response) {
-          VAppAlert.hideLoading( );
+          VAppAlert.hideLoading();
           Get.toNamed(Routes.MY_ORDERS);
         },
       );

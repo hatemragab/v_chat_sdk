@@ -5,7 +5,7 @@ import '../base_message/v_base_message.dart';
 import 'msg_info_att.dart';
 
 class VInfoMessage extends VBaseMessage {
-  final VMsgInfoAtt infoAtt;
+  final VMsgInfoAtt data;
 
   VInfoMessage({
     required super.id,
@@ -27,15 +27,15 @@ class VInfoMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required this.infoAtt,
+    required this.data,
   });
 
   VInfoMessage.fromRemoteMap(super.map)
-      : infoAtt = VMsgInfoAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      : data = VMsgInfoAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();
 
   VInfoMessage.fromLocalMap(super.map)
-      : infoAtt = VMsgInfoAtt.fromMap(
+      : data = VMsgInfoAtt.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -52,7 +52,7 @@ class VInfoMessage extends VBaseMessage {
   }) {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(infoAtt.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap())
     };
   }
 }

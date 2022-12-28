@@ -26,7 +26,7 @@ class HomeController extends GetxController {
 
   void setReplyPress({required bool isText}) {
     if (isText) {
-      replyMsg = VTextMessage.buildFakeMessage(1);
+      replyMsg = VTextMessage.buildFakeMessage(index: 1);
     } else {
       replyMsg = VImageMessage.buildFakeMessage(high: 300, width: 300);
     }

@@ -1,31 +1,31 @@
 import '../../../../v_chat_sdk_core.dart';
 
 abstract class BaseLocalRoomRepo {
-  Future<int> insert(InsertRoomEvent event);
+  Future<int> insert(VInsertRoomEvent event);
 
-  Future<int> updateBlockSingleRoom(BlockSingleRoomEvent event);
+  Future<int> updateBlockSingleRoom(VBlockSingleRoomEvent event);
 
-  Future<int> updateOnline(UpdateRoomOnlineEvent event);
+  // Future<int> updateOnline(UpdateRoomOnlineEvent event);
 
-  Future<int> updateTyping(UpdateRoomTypingEvent event);
+  // Future<int> updateTyping(UpdateRoomTypingEvent event);
 
-  Future<int> updateName(UpdateRoomNameEvent event);
+  Future<int> updateName(VUpdateRoomNameEvent event);
 
   Future<int> insertMany(List<VRoom> rooms);
 
-  Future<int> updateImage(UpdateRoomImageEvent event);
+  Future<int> updateImage(VUpdateRoomImageEvent event);
 
-  Future<int> updateCountByOne(UpdateRoomUnReadCountByOneEvent event);
+  Future<int> updateCountByOne(VUpdateRoomUnReadCountByOneEvent event);
 
-  Future<int> updateCountToZero(UpdateRoomUnReadCountToZeroEvent event);
+  Future<int> updateCountToZero(VUpdateRoomUnReadCountToZeroEvent event);
 
-  Future<int> updateIsMuted(UpdateRoomMuteEvent event);
+  Future<int> updateIsMuted(VUpdateRoomMuteEvent event);
 
-  Future<int> delete(DeleteRoomEvent event);
+  Future<int> delete(VDeleteRoomEvent event);
 
   Future<void> reCreate();
 
-  Future<int> setAllOffline();
+  // Future<int> setAllOffline();
 
   Future<VRoom?> getOneByPeerId(String roomId);
 
@@ -33,7 +33,7 @@ abstract class BaseLocalRoomRepo {
 
   Future<VRoom?> getOneWithLastMessageByRoomId(String roomId);
 
-  Future<List<VRoom>> search(String text, int limit, RoomType? roomType);
+  Future<List<VRoom>> search(String text, int limit, VRoomType? roomType);
 
   Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300});
 }

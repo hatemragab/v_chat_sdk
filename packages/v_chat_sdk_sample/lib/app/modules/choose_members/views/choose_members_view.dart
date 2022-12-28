@@ -62,7 +62,7 @@ class ChooseMembersView extends GetView<ChooseMembersController> {
                   final user = UserModel.fromMap(
                     documentSnapshot.data() as Map<String, dynamic>,
                   );
-                  if (user.uid == AppAuth.getMyModel.uid) {
+                  if (user.id == AppAuth.getMyModel.id) {
                     return const SizedBox();
                   }
                   return ListTile(

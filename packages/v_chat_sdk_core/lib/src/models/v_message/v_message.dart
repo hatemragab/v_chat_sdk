@@ -15,3 +15,4 @@ export './message_upload_model.dart';
 export './text_message/text_message.dart';
 export './video_message/video_message.dart';
 export './voice_message/voice_message.dart';
+export './core/message_factory.dart';

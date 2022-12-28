@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../../../../v_chat_sdk_core.dart';
 import '../../../../models/socket/on_deliver_room_messages_model.dart';
-import '../../../../models/v_message/core/message_factory.dart';
 import '../../../tables/message_table.dart';
 import '../../abstraction/base_local_message_repo.dart';
 
@@ -64,7 +63,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     return _database.update(
       _table,
       {
-        MessageTable.columnMessageStatus: event.messageSendingStatusEnum.name,
+        MessageTable.columnMessageEmitStatus: event.emitState.name,
       },
       where: "$_localId =?",
       whereArgs: [event.localId],
@@ -88,14 +87,14 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     return _database.update(
       _table,
       {
-        MessageTable.columnDeliveredAt: event.deliverRoomMessagesModel.date,
+        MessageTable.columnDeliveredAt: event.model.date,
       },
       where: '''
       ${MessageTable.columnRoomId} =?
       AND ${MessageTable.columnSenderId} =?
       AND  ${MessageTable.columnDeliveredAt} IS NULL 
       ''',
-      whereArgs: [event.roomId, event.deliverRoomMessagesModel.userId],
+      whereArgs: [event.roomId, event.model.userId],
     );
   }
 
@@ -103,10 +102,10 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessagesToSeen(VUpdateMessageSeenEvent event) async {
     await updateMessagesToDeliver(
       VUpdateMessageDeliverEvent(
-        deliverRoomMessagesModel: VSocketOnDeliverMessagesModel(
+        model: VSocketOnDeliverMessagesModel(
           roomId: event.roomId,
-          userId: event.onEnterRoomModel.userId,
-          date: event.onEnterRoomModel.date,
+          userId: event.model.userId,
+          date: event.model.date,
         ),
         roomId: event.roomId,
         localId: event.localId,
@@ -115,25 +114,25 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     return _database.update(
       MessageTable.tableName,
       {
-        MessageTable.columnSeenAt: event.onEnterRoomModel.date,
+        MessageTable.columnSeenAt: event.model.date,
       },
       where: '''
           ${MessageTable.columnRoomId} =? 
           AND ${MessageTable.columnSenderId} =?
           AND ${MessageTable.columnSeenAt} IS NULL
           ''',
-      whereArgs: [event.onEnterRoomModel.roomId, event.onEnterRoomModel.userId],
+      whereArgs: [event.model.roomId, event.model.userId],
     );
   }
 
   @override
   Future<List<VBaseMessage>> getMessagesByStatus({
-    required MessageSendingStatusEnum status,
+    required MessageEmitStatus status,
     int limit = 50,
   }) async {
     final maps = await _database.query(
       _table,
-      where: "${MessageTable.columnMessageStatus} =?",
+      where: "${MessageTable.columnMessageEmitStatus} =?",
       whereArgs: [status.name],
       orderBy: "${MessageTable.columnId} DESC",
       limit: limit,
@@ -176,10 +175,10 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     return _database.update(
       _table,
       {
-        MessageTable.columnMessageStatus: MessageSendingStatusEnum.error.name,
+        MessageTable.columnMessageEmitStatus: MessageEmitStatus.error.name,
       },
-      where: "${MessageTable.columnMessageStatus} =?",
-      whereArgs: [MessageSendingStatusEnum.sending.name],
+      where: "${MessageTable.columnMessageEmitStatus} =?",
+      whereArgs: [MessageEmitStatus.sending.name],
     );
   }
 
@@ -198,19 +197,6 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateMessageIdByLocalId({
-    required String localId,
-    required String messageId,
-  }) {
-    return _database.update(
-      _table,
-      {MessageTable.columnId: messageId},
-      where: "$_localId =?",
-      whereArgs: [localId],
-    );
-  }
-
-  @override
   Future<void> reCreate() async {
     return _database.transaction((txn) => MessageTable.recreateTable(txn));
   }
@@ -218,5 +204,16 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   @override
   Future<int> deleteAllMessagesByRoomId(String roomId) {
     return _database.delete(_table, where: "$_roomId =?", whereArgs: [roomId]);
+  }
+
+  @override
+  Future<int> updateFullMessage({
+    required VBaseMessage baseMessage,
+  }) {
+    return _database.insert(
+      _table,
+      baseMessage.toLocalMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 }

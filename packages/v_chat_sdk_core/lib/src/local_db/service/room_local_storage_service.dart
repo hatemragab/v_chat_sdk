@@ -30,55 +30,59 @@ mixin RoomLocalStorageService {
     return localRoomRepo.getOneWithLastMessageByRoomId(id);
   }
 
-  Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) {
+  Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) async {
     final event =
-        UpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
+        VUpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
     emitter.fire(event);
-    return localRoomRepo.updateTyping(event);
+    return 1;
+    // return localRoomRepo.updateTyping(event);
   }
 
   Future<int> updateRoomSingleBlock(
       VSingleBanModel block, String roomId) async {
-    final event = BlockSingleRoomEvent(banModel: block, roomId: roomId);
+    final event = VBlockSingleRoomEvent(banModel: block, roomId: roomId);
     emitter.fire(event);
     return 1;
   }
 
-  Future<int> updateRoomOnline(UpdateRoomOnlineEvent event) async {
+  Future<int> updateRoomOnline(VUpdateRoomOnlineEvent event) async {
     final roomId = await localRoomRepo.getRoomIdByPeerId(event.model.peerId);
     if (roomId != null) {
-      event.roomId = roomId;
-      emitter.fire(event);
-      return localRoomRepo.updateOnline(event);
+      emitter.fire(VUpdateRoomOnlineEvent(
+        roomId: roomId,
+        model: event.model,
+      ));
+      return 1;
+      // return localRoomRepo.updateOnline(event);
     }
     return 1;
   }
 
-  Future<int> updateRoomName(UpdateRoomNameEvent event) async {
+  Future<int> updateRoomName(VUpdateRoomNameEvent event) async {
     emitter.fire(event);
     return localRoomRepo.updateName(event);
   }
 
-  Future<int> updateRoomImage(UpdateRoomImageEvent event) async {
+  Future<int> updateRoomImage(VUpdateRoomImageEvent event) async {
     emitter.fire(event);
     return localRoomRepo.updateImage(event);
   }
 
   Future<int> updateRoomUnreadCountAddOne(
-    UpdateRoomUnReadCountByOneEvent event,
+    VUpdateRoomUnReadCountByOneEvent event,
   ) async {
     emitter.fire(event);
     return localRoomRepo.updateCountByOne(event);
   }
 
   Future<int> updateRoomUnreadToZero(
-    UpdateRoomUnReadCountToZeroEvent event,
+    VUpdateRoomUnReadCountToZeroEvent event,
   ) async {
     emitter.fire(event);
     return localRoomRepo.updateCountToZero(event);
   }
 
-  Future<int> updateRoomIsMuted(UpdateRoomMuteEvent event) async {
+  Future<int> updateRoomIsMuted(VUpdateRoomMuteEvent event) async {
     emitter.fire(event);
     return localRoomRepo.updateIsMuted(event);
   }
@@ -98,8 +102,8 @@ mixin RoomLocalStorageService {
     return localRoomRepo.reCreate();
   }
 
-  Future<int> offAllRooms() async {
-    await localRoomRepo.setAllOffline();
-    return 1;
-  }
+// Future<int> offAllRooms() async {
+//   await localRoomRepo.setAllOffline();
+//   return 1;
+// }
 }

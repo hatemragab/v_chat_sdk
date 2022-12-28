@@ -1,5 +1,5 @@
 class VPaginationModel<T> {
-  final List<T> values;
+  List<T> values;
   int page;
   int limit;
   int? nextPage;
@@ -48,16 +48,26 @@ class VPaginationModel<T> {
 
   Map<String, dynamic> toMap() {
     return {
-      'values': values,
       'page': page,
       'limit': limit,
-      'nextPage': nextPage,
     };
   }
 
   factory VPaginationModel.fromMap(Map<String, dynamic> map) {
     return VPaginationModel(
-      values: List<T>.from(map['values'] as List),
+      values: List<T>.from(map['docs'] as List),
+      page: map['page'] as int,
+      limit: map['limit'] as int,
+      nextPage: map['nextPage'] as int?,
+    );
+  }
+
+  factory VPaginationModel.fromCustomMap({
+    required List<T> values,
+    required Map<String, dynamic> map,
+  }) {
+    return VPaginationModel(
+      values: values,
       page: map['page'] as int,
       limit: map['limit'] as int,
       nextPage: map['nextPage'] as int?,

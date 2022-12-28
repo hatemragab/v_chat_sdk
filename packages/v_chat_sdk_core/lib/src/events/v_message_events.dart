@@ -8,7 +8,10 @@ abstract class VMessageEvents extends AppEvent {
   final String roomId;
   final String localId;
 
-  const VMessageEvents({required this.roomId, required this.localId});
+  const VMessageEvents({
+    required this.roomId,
+    required this.localId,
+  });
 
   @override
   List<Object?> get props => [roomId, localId];
@@ -24,10 +27,20 @@ class VInsertMessageEvent extends VMessageEvents {
   });
 }
 
-class VDeleteMessageEvent extends VMessageEvents {
-  VBaseMessage? upMessage;
+class VUpdateMessageEvent extends VMessageEvents {
+  final VBaseMessage messageModel;
 
-  VDeleteMessageEvent({
+  const VUpdateMessageEvent({
+    required super.roomId,
+    required super.localId,
+    required this.messageModel,
+  });
+}
+
+class VDeleteMessageEvent extends VMessageEvents {
+  final VBaseMessage? upMessage;
+
+  const VDeleteMessageEvent({
     required super.roomId,
     required super.localId,
     this.upMessage,
@@ -51,40 +64,40 @@ class VUpdateMessageTypeEvent extends VMessageEvents {
 }
 
 class VUpdateMessageStatusEvent extends VMessageEvents {
-  final MessageSendingStatusEnum messageSendingStatusEnum;
+  final MessageEmitStatus emitState;
 
   const VUpdateMessageStatusEvent({
     required super.roomId,
     required super.localId,
-    required this.messageSendingStatusEnum,
+    required this.emitState,
   });
 
   @override
-  List<Object?> get props => [super.props, messageSendingStatusEnum];
+  List<Object?> get props => [super.props, emitState];
 }
 
 class VUpdateMessageSeenEvent extends VMessageEvents {
-  final VSocketOnRoomSeenModel onEnterRoomModel;
+  final VSocketOnRoomSeenModel model;
 
   const VUpdateMessageSeenEvent({
     required super.roomId,
     required super.localId,
-    required this.onEnterRoomModel,
+    required this.model,
   });
 
   @override
-  List<Object?> get props => [super.props, onEnterRoomModel];
+  List<Object?> get props => [super.props, model];
 }
 
 class VUpdateMessageDeliverEvent extends VMessageEvents {
-  final VSocketOnDeliverMessagesModel deliverRoomMessagesModel;
+  final VSocketOnDeliverMessagesModel model;
 
   const VUpdateMessageDeliverEvent({
     required super.roomId,
     required super.localId,
-    required this.deliverRoomMessagesModel,
+    required this.model,
   });
 
   @override
-  List<Object?> get props => [super.props, deliverRoomMessagesModel];
+  List<Object?> get props => [super.props, model];
 }

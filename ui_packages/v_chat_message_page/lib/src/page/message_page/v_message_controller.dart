@@ -1,31 +1,32 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:v_chat_message_page/src/page/message_page/message_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../message_uploader/message_queue.dart';
 import '../../models/app_bare_state.dart';
 import '../../models/input_state.dart';
 import '../../widgets/message_items/v_message_item_controller.dart';
+import 'message_provider.dart';
 
-class VMessageController extends ChangeNotifier {
+class VMessageController {
   final Function(String userId) onMentionPress;
-
+  late final StreamSubscription _messagesStream;
   final VRoom vRoom;
+  final _provider = MessageProvider();
+  final messageState = MessageState();
   late final ValueNotifier<AppBareState> appBareState;
-  final inputState = ValueNotifier<InputState>(InputState());
-  final messageStateStream = StreamController<VBaseMessage>.broadcast();
-  var roomPageState = VChatLoadingState.ideal;
-  final _messagePaginationModel = VPaginationModel<VBaseMessage>(
-    values: <VBaseMessage>[],
-    limit: 20,
-    page: 1,
-    nextPage: null,
-  );
+  final _inputState = ValueNotifier<InputState>(InputState());
+  final _localStorage = VChatController.I.nativeApi.local;
+  final _remoteStorage = VChatController.I.nativeApi.remote;
+
+  ValueNotifier<InputState> get inputState => _inputState;
+
   final itemController = VMessageItemController();
 
-  List<VBaseMessage> get messages =>
-      List.unmodifiable(_messagePaginationModel.values);
+  List<VBaseMessage> get messages => messageState.stateMessages;
   final bool isInTesting;
 
   VMessageController({
@@ -38,42 +39,44 @@ class VMessageController extends ChangeNotifier {
         vRoom,
       ),
     );
-    initMessages();
+    _initLocalMessages();
+    _listenToMessageStream();
   }
 
-  Future<void> initMessages() async {
+  Future<void> _initLocalMessages() async {
     await vSafeApiCall<List<VBaseMessage>>(
-      onLoading: () {
-        roomPageState = VChatLoadingState.loading;
-        notifyListeners();
-      },
       request: () async {
-        await Future.delayed(const Duration(milliseconds: 1200));
-        return List.generate(
-          20,
-          (index) => index == 2
-              ? VImageMessage.buildFakeMessage(width: 1024, high: 1024)
-              : VTextMessage.buildFakeMessage(
-                  index,
-                ),
-        );
+        if (isInTesting) {
+          return await _provider.getFakeMessages();
+        } else {
+          return await VChatController.I.nativeApi.local.message
+              .getRoomMessages(vRoom.id);
+        }
       },
       onSuccess: (response) {
-        _messagePaginationModel.values.addAll(response);
-        roomPageState = VChatLoadingState.success;
-        notifyListeners();
-      },
-      onError: (exception) {
-        roomPageState = VChatLoadingState.error;
-        notifyListeners();
+        messageState.updateCacheState(response);
       },
     );
+    await getApiMessages();
   }
 
-  @override
-  void dispose() {
-    messageStateStream.close();
-    super.dispose();
+  Future<void> getApiMessages() async {
+    await vSafeApiCall<List<VBaseMessage>>(
+      request: () async {
+        if (isInTesting) {
+          return await _provider.getFakeApiMessages();
+        } else {
+          return VChatController.I.nativeApi.remote.remoteMessage.apiService
+              .getRoomMessages(
+            roomId: vRoom.id,
+            dto: const VRoomMessagesDto(),
+          );
+        }
+      },
+      onSuccess: (response) {
+        messageState.updateCacheState(response);
+      },
+    );
   }
 
   void onMessageItemPress(VBaseMessage message) {}
@@ -87,17 +90,67 @@ class VMessageController extends ChangeNotifier {
     appBareState.notifyListeners();
   }
 
-  onSubmitText(String message) {}
+  Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
+    localMsg.replyTo = _inputState.value.replyMsg;
+    await _localStorage.message.insertMessage(localMsg);
+    MessageUploaderQueue.instance.addToQueue(
+      await MessageFactory.createUploadMessage(localMsg),
+    );
+    _inputState.value.replyMsg = null;
+    _inputState.notifyListeners();
+  }
 
-  onMentionRequireSearch(String text) {}
+  void onSubmitText(String message) {
+    final localMsg = VTextMessage.buildMessage(
+      content: message,
+      roomId: vRoom.id,
+    );
+    _onSubmitSendMessage(localMsg);
+  }
 
-  onSubmitMedia(List<VBaseMediaRes> files) {}
+  void onMentionRequireSearch(String text) {}
 
-  onSubmitVoice(VMessageVoiceData data) {}
+  void onSubmitMedia(List<VBaseMediaRes> files) {}
 
-  onSubmitFiles(List<VPlatformFileSource> files) {}
+  void onSubmitVoice(VMessageVoiceData data) {}
 
-  onSubmitLocation(VLocationMessageData data) {}
+  void onSubmitFiles(List<VPlatformFileSource> files) {}
 
-  onTypingChange(VRoomTypingEnum typing) {}
+  void onSubmitLocation(VLocationMessageData data) {}
+
+  void onTypingChange(VRoomTypingEnum typing) {}
+
+  void dispose() {
+    messageState.close();
+    _messagesStream.cancel();
+  }
+
+  void _listenToMessageStream() {
+    _messagesStream = _localStorage.message.messageStream
+        .takeWhile((e) => e.roomId == vRoom.id)
+        .listen((event) {
+      if (event is VInsertMessageEvent) {
+        //insert the message
+        return messageState.insertMessage(event.messageModel);
+      }
+      if (event is VUpdateMessageEvent) {
+        return messageState.updateMessage(event.messageModel);
+      }
+      if (event is VDeleteMessageEvent) {
+        return messageState.deleteMessage(event.localId);
+      }
+      if (event is VUpdateMessageTypeEvent) {
+        return messageState.updateMessageType(event.localId, event.messageType);
+      }
+      if (event is VUpdateMessageStatusEvent) {
+        return messageState.updateMessageStatus(event.localId, event.emitState);
+      }
+      if (event is VUpdateMessageSeenEvent) {
+        return messageState.seenAll(event.model);
+      }
+      if (event is VUpdateMessageDeliverEvent) {
+        return messageState.deliverAll(event.model);
+      }
+    });
+  }
 }

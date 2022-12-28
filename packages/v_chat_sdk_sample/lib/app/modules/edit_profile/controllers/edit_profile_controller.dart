@@ -36,9 +36,9 @@ class EditProfileController extends GetxController {
     user.userName = name;
     if (userImage.isNotUrl) {
       //upload image
-      user.imageUrl = await CloudFireUpload.uploadFile(userImage, user.uid);
+      user.imageUrl = await CloudFireUpload.uploadFile(userImage, user.id);
     }
-    await repository.edit(user.toMap(), user.uid);
+    await repository.edit(user.toMap(), user.id);
     await VAppPref.setMap(VStorageKeys.myProfile, user.toMap());
     VAppAlert.hideLoading();
     AuthRepo.isAuth.refresh();

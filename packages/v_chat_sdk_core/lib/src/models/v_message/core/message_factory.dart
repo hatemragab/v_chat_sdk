@@ -84,7 +84,7 @@ abstract class MessageFactory {
         roomId: msg.roomId,
         msgLocalId: msg.localId,
         file1: await HttpHelpers.getMultipartFile(
-          source: msg.fileSource.fileSource,
+          source: msg.data.fileSource,
         ),
       );
     }
@@ -101,7 +101,7 @@ abstract class MessageFactory {
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
         file1: await HttpHelpers.getMultipartFile(
-          source: msg.fileSource.fileSource,
+          source: msg.data.fileSource,
         ),
       );
     }
@@ -120,13 +120,13 @@ abstract class MessageFactory {
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
-        file2: msg.fileSource.thumbImage == null
+        file2: msg.data.thumbImage == null
             ? null
             : await HttpHelpers.getMultipartFile(
-                source: msg.fileSource.thumbImage!.fileSource,
+                source: msg.data.thumbImage!.fileSource,
               ),
         file1: await HttpHelpers.getMultipartFile(
-          source: msg.fileSource.fileSource,
+          source: msg.data.fileSource,
         ),
       );
     }

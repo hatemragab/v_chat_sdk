@@ -5,7 +5,7 @@ import '../base_message/v_base_message.dart';
 import 'custom_msg_att.dart';
 
 class VCustomMessage extends VBaseMessage {
-  final VCustomMsgAtt dataAtt;
+  final VCustomMsgAtt data;
 
   VCustomMessage({
     required super.id,
@@ -27,15 +27,15 @@ class VCustomMessage extends VBaseMessage {
     required super.deletedAt,
     required super.parentBroadcastId,
     required super.isStared,
-    required this.dataAtt,
+    required this.data,
   });
 
   VCustomMessage.fromRemoteMap(super.map)
-      : dataAtt = VCustomMsgAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      : data = VCustomMsgAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();
 
   VCustomMessage.fromLocalMap(super.map)
-      : dataAtt = VCustomMsgAtt.fromMap(
+      : data = VCustomMsgAtt.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),
@@ -50,7 +50,7 @@ class VCustomMessage extends VBaseMessage {
   Map<String, dynamic> toLocalMap() {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(dataAtt.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap())
     };
   }
 }

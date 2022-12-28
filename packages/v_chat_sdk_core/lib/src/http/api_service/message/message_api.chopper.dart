@@ -44,4 +44,83 @@ class _$MessageApi extends MessageApi {
     );
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> getRoomMessages(
+    String roomId,
+    Map<String, dynamic> query,
+  ) {
+    final Uri $url = Uri.parse('channel/{roomId}/message/');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteMessageFromMe(
+    String roomId,
+    String messageId,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/{roomId}/message/${messageId}/delete/me');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteMessageFromAll(
+    String roomId,
+    String mId,
+  ) {
+    final Uri $url = Uri.parse('channel/{roomId}/message/${mId}/delete/all');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getMessageStatusSummary(
+    String roomId,
+    String messageId,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/{roomId}/message/${messageId}/status/summary');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getMessageStatus(
+    String roomId,
+    String mId,
+    Map<String, Object> query,
+    String type,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/{roomId}/message/${mId}/status/${type}');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
 }
