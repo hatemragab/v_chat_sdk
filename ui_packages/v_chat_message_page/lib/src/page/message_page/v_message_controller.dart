@@ -8,7 +8,6 @@ import 'package:v_chat_message_page/src/page/message_page/states/message_state.d
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../message_uploader/message_queue.dart';
 import '../../widgets/message_items/v_message_item_controller.dart';
 import '../message_stream_state.dart';
 import 'message_provider.dart';

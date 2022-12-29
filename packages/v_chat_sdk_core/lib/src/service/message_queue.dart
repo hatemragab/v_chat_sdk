@@ -1,9 +1,11 @@
+import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class MessageUploaderQueue {
   final _uploadQueue = <VMessageUploadModel>[];
   final _localStorage = VChatController.I.nativeApi.local.message;
   final _remoteStorage = VChatController.I.nativeApi.remote;
+  final _log = Logger("MessageUploaderQueue");
 
   ///singleton
   MessageUploaderQueue._();
@@ -32,14 +34,13 @@ class MessageUploaderQueue {
       // rethrow;
     } on VChatBaseHttpException catch (err) {
       await _deleteTheMessage(uploadModel);
-      print("VChatBaseHttpException $err");
-      //rethrow;
+      _log.warning("VChatBaseHttpException", err);
     } on VUserInternetException catch (err) {
       await _setErrorToMessage(uploadModel);
-      print("UserInternetExceptionUserInternetException $err");
+      _log.info("UserInternetExceptionUserInternetException", err);
     } catch (err) {
       await _deleteTheMessage(uploadModel);
-      print("_onUnknownException   $err");
+      _log.warning("_onUnknownException", err);
       // rethrow;
     } finally {
       _uploadQueue.remove(uploadModel);

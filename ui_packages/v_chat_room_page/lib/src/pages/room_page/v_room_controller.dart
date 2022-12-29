@@ -2,26 +2,31 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:v_chat_room_page/src/pages/room_page/room_provider.dart';
-import 'package:v_chat_room_page/src/pages/room_page/room_state.dart';
+import 'package:v_chat_room_page/src/pages/states/room_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../widgets/room_item/room_item_controller.dart';
-import 'local_changes_stream.dart';
+import 'room_stream_state.dart';
 
 class VRoomController {
   final bool isTesting;
-  late final LocalStreamChanges _localStreamChanges;
+  late final RoomStreamState _localStreamChanges;
   final roomItemController = RoomItemController();
-  final roomState = RoomState();
+  late final RoomState roomState;
+
   final _roomProvider = RoomProvider();
 
+  ///getters
   List<VRoom> get rooms => roomState.stateRooms;
 
   VRoomController({
     this.isTesting = false,
   }) {
-    _localStreamChanges = LocalStreamChanges(
+    roomState = RoomState(
+      _roomProvider.searchForRoom,
+    );
+    _localStreamChanges = RoomStreamState(
       nativeApi: VChatController.I.nativeApi,
       roomState: roomState,
     );
@@ -75,7 +80,7 @@ class VRoomController {
   }
 
   void dispose() {
-    _localStreamChanges.close();
     roomState.close();
+    _localStreamChanges.close();
   }
 }

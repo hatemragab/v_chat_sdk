@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 
 import '../../v_chat_sdk_core.dart';
 import '../logger/v_logger.dart';
-import 'event_bus.dart';
+import '../utils/event_bus.dart';
 
 class ControllerHelper {
   late final VChatConfig _config;

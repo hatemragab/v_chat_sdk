@@ -118,3 +118,41 @@ mixin VRoomStream {
     _roomStream.cancel();
   }
 }
+
+mixin VSocketStatusStream {
+  late final StreamSubscription<VSocketStatusEvent> _socketStatusStream;
+
+  void initSocketStatusStream(Stream<VSocketStatusEvent> stream) {
+    _socketStatusStream = stream.listen((event) {
+      if (event.isConnected) {
+        onSocketConnected();
+      } else {
+        onSocketDisconnect();
+      }
+    });
+  }
+
+  void closeSocketStatusStream() {
+    _socketStatusStream.cancel();
+  }
+
+  void onSocketConnected();
+
+  void onSocketDisconnect();
+}
+
+mixin VSocketIntervalStream {
+  late final StreamSubscription<VSocketIntervalEvent> _socketStatusStream;
+
+  void initSocketIntervalStream(Stream<VSocketIntervalEvent> stream) {
+    _socketStatusStream = stream.listen((event) {
+      onIntervalFire();
+    });
+  }
+
+  void closeSocketIntervalStream() {
+    _socketStatusStream.cancel();
+  }
+
+  void onIntervalFire();
+}

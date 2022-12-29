@@ -1,25 +1,31 @@
-import 'package:v_chat_room_page/src/pages/room_page/room_state.dart';
+import 'package:v_chat_room_page/src/pages/states/room_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-class LocalStreamChanges with VMessageStream, VRoomStream {
+class RoomStreamState with VMessageStream, VRoomStream {
   final RoomState roomState;
   final VNativeApi nativeApi;
 
-  LocalStreamChanges({
+  RoomStreamState({
     required this.roomState,
     required this.nativeApi,
   }) {
     initMessageStream(nativeApi.local.message.messageStream);
     initRoomStream(nativeApi.local.room.roomStream);
+    // test();
   }
+
+  // test() async {
+  //   await Future.delayed(Duration(seconds: 3));
+  //   onUpdateOnline(VUpdateRoomOnlineEvent(
+  //     roomId: 'rid1',
+  //     model: VOnlineOfflineModel(isOnline: true, peerId: "asd"),
+  //   ));
+  // }
 
   void close() {
     closeRoomStream();
     closeMessageStream();
   }
-
-  @override
-  onNewMsg(VInsertMessageEvent event) {}
 
   /////////////// room events ////////////
   @override
@@ -74,32 +80,37 @@ class LocalStreamChanges with VMessageStream, VRoomStream {
 
   /////////////// message methods//////////
   @override
+  void onNewMsg(VInsertMessageEvent event) {
+    return roomState.onNewMsg(event);
+  }
+
+  @override
   void onDeleteMsg(VDeleteMessageEvent event) {
-    // TODO: implement onDeleteMsg
+    return roomState.onDeleteMessage(event);
   }
 
   @override
   void onDeliverAllMgs(VUpdateMessageDeliverEvent event) {
-    // TODO: implement onDeliverAllMgs
+    return roomState.onDeliverAllMgs(event);
   }
 
   @override
   void onSeenAllMgs(VUpdateMessageSeenEvent event) {
-    // TODO: implement onSeenAllMgs
+    return roomState.onSeenAllMgs(event);
   }
 
   @override
   void onUpdateMsg(VUpdateMessageEvent event) {
-    // TODO: implement onUpdateMsg
+    return roomState.onUpdateMsg(event);
   }
 
   @override
   void onUpdateMsgStatus(VUpdateMessageStatusEvent event) {
-    // TODO: implement onUpdateMsgStatus
+    return roomState.onUpdateMsgStatus(event);
   }
 
   @override
   void onUpdateMsgType(VUpdateMessageTypeEvent event) {
-    // TODO: implement onUpdateMsgType
+    return roomState.onUpdateMsgType(event);
   }
 }

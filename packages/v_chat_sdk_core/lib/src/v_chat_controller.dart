@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
+import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
+import 'package:v_chat_sdk_core/src/service/message_insert_trigger.dart';
+import 'package:v_chat_sdk_core/src/service/re_send_daemon.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
-import 'package:v_chat_sdk_core/src/utils/controller_helper.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../v_chat_sdk_core.dart';
@@ -72,6 +74,8 @@ class VChatController with WidgetsBindingObserver {
     _widgetsBindingInstance?.addObserver(_instance);
     SocketController.instance.connect();
     mediaBaseUrl = AppConstants.getMediaBaseUrl;
+    ReSendDaemon().start();
+    MessageInsertionDaemon.start();
     return _instance;
   }
 

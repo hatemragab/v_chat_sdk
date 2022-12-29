@@ -37,42 +37,52 @@ class _VChatPageState extends State<VChatPage> {
       ),
       body: Container(
         decoration: context.vRoomTheme.scaffoldDecoration,
-        child: ValueListenableBuilder<VPaginationModel<VRoom>>(
-          valueListenable: widget.controller.roomState.roomNotifier,
-          builder: (_, value, __) {
-            return ListView.builder(
-              key: UniqueKey(),
-              cacheExtent: 300,
-              itemBuilder: (context, index) {
-                final room = value.values[index];
-                return StreamBuilder<VRoom>(
-                  stream: widget.controller.roomState.roomStateStream.stream
-                      .skipWhile(
-                    (e) => e.id != room.id,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const VSocketStatusWidget(),
+            ValueListenableBuilder<VPaginationModel<VRoom>>(
+              valueListenable: widget.controller.roomState.roomNotifier,
+              builder: (_, value, __) {
+                return Expanded(
+                  child: ListView.builder(
+                    key: UniqueKey(),
+                    cacheExtent: 300,
+                    itemBuilder: (context, index) {
+                      final room = value.values[index];
+                      return StreamBuilder<VRoom>(
+                        stream: widget
+                            .controller.roomState.roomStateStream.stream
+                            .skipWhile(
+                          (e) => e.id != room.id,
+                        ),
+                        initialData: room,
+                        builder: (context, snapshot) {
+                          return VRoomItem(
+                            room: snapshot.data!,
+                            onRoomItemLongPress: (room) {
+                              if (widget.onRoomItemLongPress != null) {
+                                widget.onRoomItemLongPress!(room);
+                              }
+                              widget.controller
+                                  .onRoomItemLongPress(room, context);
+                            },
+                            onRoomItemPress: (room) {
+                              if (widget.onRoomItemPress != null) {
+                                widget.onRoomItemPress!(room);
+                              }
+                              widget.controller.onRoomItemPress(room, context);
+                            },
+                          );
+                        },
+                      );
+                    },
+                    itemCount: value.values.length,
                   ),
-                  initialData: room,
-                  builder: (context, snapshot) {
-                    return VRoomItem(
-                      room: snapshot.data!,
-                      onRoomItemLongPress: (room) {
-                        if (widget.onRoomItemLongPress != null) {
-                          widget.onRoomItemLongPress!(room);
-                        }
-                        widget.controller.onRoomItemLongPress(room, context);
-                      },
-                      onRoomItemPress: (room) {
-                        if (widget.onRoomItemPress != null) {
-                          widget.onRoomItemPress!(room);
-                        }
-                        widget.controller.onRoomItemPress(room, context);
-                      },
-                    );
-                  },
                 );
               },
-              itemCount: value.values.length,
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

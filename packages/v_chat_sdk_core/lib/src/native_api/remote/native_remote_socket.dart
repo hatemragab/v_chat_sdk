@@ -10,6 +10,7 @@ class NativeRemoteSocketIo {
   final _vChatEvents = EventBusSingleton.instance.vChatEvents;
 
   Socket get socket => SocketController.instance.currentSocket;
+  bool get isConnected => SocketController.instance.currentSocket.connected;
 
   Stream<VSocketStatusEvent> get socketStatusStream =>
       _vChatEvents.on<VSocketStatusEvent>();

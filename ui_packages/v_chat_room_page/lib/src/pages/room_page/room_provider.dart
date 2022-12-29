@@ -20,4 +20,14 @@ class RoomProvider {
   Future<VPaginationModel> getApiRooms(VPaginationModel paginationModel) async {
     return _remoteRoom.getRooms(paginationModel);
   }
+
+  Future<VRoom?> searchForRoom(String roomId) async {
+    final localRoom = await _localRoom.getRoomById(roomId);
+    if (localRoom != null) {
+      return localRoom;
+    }
+    final apiRoom = await _remoteRoom.getRoomById(roomId);
+    await _localRoom.safeInsertRoom(apiRoom);
+    return null;
+  }
 }
