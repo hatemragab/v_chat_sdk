@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/models/app_bare_state_model.dart';
 
-import '../../models/app_bare_state.dart';
 import '../message_items/shared/message_typing_widget.dart';
 
 class VMessageAppBare extends StatelessWidget {
-  final AppBareState state;
+  final MessageAppBarStateModel state;
 
   const VMessageAppBare({
     Key? key,

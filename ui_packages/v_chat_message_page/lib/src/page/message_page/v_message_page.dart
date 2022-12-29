@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
+import 'package:v_chat_message_page/src/models/app_bare_state_model.dart';
+import 'package:v_chat_message_page/src/models/input_state_model.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../models/app_bare_state.dart';
-import '../../models/input_state.dart';
 import '../../v_message.dart';
 import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/app_bare/v_testing_message_app_bare.dart';
@@ -25,7 +25,7 @@ class VMessagePage extends StatefulWidget {
 
   final Function(VBaseMessage message)? onMessageItemPress;
   final Function(String id, VRoomType roomType)? onAppBarTitlePress;
-  final Widget Function(AppBareState state)? appBare;
+  final Widget Function(MessageAppBarStateModel state)? appBare;
   final VRoom vRoom;
 
   ///set api if you want to make users able to pick locations
@@ -53,13 +53,13 @@ class _VMessagePageState extends State<VMessagePage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: ValueListenableBuilder<AppBareState>(
-          valueListenable: controller.appBareState,
+        child: ValueListenableBuilder<MessageAppBarStateModel>(
+          valueListenable: controller.appBarStateController.appBareState,
           builder: (context, value, child) {
             if (controller.isInTesting) {
               return VTestingMessageAppBare(
                 state: value,
-                onTyping: controller.onTyping,
+                onTyping: (p0) {},
               );
             }
             return widget.appBare == null
@@ -105,8 +105,8 @@ class _VMessagePageState extends State<VMessagePage> {
               );
             },
           ),
-          ValueListenableBuilder<InputState>(
-            valueListenable: controller.inputState,
+          ValueListenableBuilder<MessageInputModel>(
+            valueListenable: controller.inputStateController.inputState,
             builder: (_, value, __) {
               return VMessageInputWidget(
                 onSubmitText: controller.onSubmitText,

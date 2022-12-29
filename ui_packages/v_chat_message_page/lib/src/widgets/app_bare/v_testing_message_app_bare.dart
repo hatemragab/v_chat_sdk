@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/models/app_bare_state_model.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../models/app_bare_state.dart';
 import '../message_items/shared/message_typing_widget.dart';
 
 class VTestingMessageAppBare extends StatelessWidget {
-  final AppBareState state;
+  final MessageAppBarStateModel state;
   final Function(VSocketRoomTypingModel) onTyping;
   const VTestingMessageAppBare({
     Key? key,

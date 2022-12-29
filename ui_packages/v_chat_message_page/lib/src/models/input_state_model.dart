@@ -1,10 +1,13 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-class InputState {
+class MessageInputModel {
   VBaseMessage? replyMsg;
   bool isCloseInput;
 
-  InputState({this.replyMsg, this.isCloseInput = false});
+  MessageInputModel({
+    this.replyMsg,
+    required this.isCloseInput,
+  });
 
   @override
   String toString() {

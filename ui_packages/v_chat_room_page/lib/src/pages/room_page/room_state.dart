@@ -49,4 +49,22 @@ class RoomState {
     roomNotifier.dispose();
     roomStateStream.close();
   }
+
+  void blockSingle(String roomId, VSingleBanModel banModel) {}
+
+  void updateOnlineOrOff(String roomId, VOnlineOfflineModel model) {}
+
+  void setTyping(String roomId, VSocketRoomTypingModel typingModel) {}
+
+  void updateName(String roomId, String name) {}
+
+  void updateImage(String roomId, String image) {}
+
+  void addUnReadOne(String roomId) {}
+
+  void resetRoomCounter(String roomId) {}
+
+  void updateMute(String roomId, bool isMuted) {}
+
+  void deleteRoom(String roomId) {}
 }

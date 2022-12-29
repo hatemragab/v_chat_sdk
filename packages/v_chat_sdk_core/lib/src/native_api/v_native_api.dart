@@ -1,8 +1,6 @@
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
-import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_message.dart';
-import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_room.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
 
 import '../../v_chat_sdk_core.dart';
@@ -13,7 +11,10 @@ import 'local/native_local_room.dart';
 
 class VNativeApi {
   final local = _LocalNativeApi();
-  final remote = _RemoteNativeApi();
+  final remote = _RemoteNativeApi(
+    ChannelApiService.init(),
+    MessageApiService.init(),
+  );
 
   VNativeApi._();
 
@@ -53,13 +54,16 @@ class _LocalNativeApi {
 
 class _RemoteNativeApi {
   final remoteSocketIo = NativeRemoteSocketIo();
-  final remoteRoom = NativeRemoteRoom(
-    ChannelApiService.init(),
-  );
+  final ChannelApiService _room;
+  final MessageApiService _nativeRemoteMessage;
+
+  _RemoteNativeApi(this._room, this._nativeRemoteMessage);
+
+  ChannelApiService get remoteRoom => _room;
+
   final remoteAuth = NativeRemoteAuth(
     AuthApiService.init(),
   );
-  final remoteMessage = NativeRemoteMessage(
-    MessageApiService.init(),
-  );
+
+  MessageApiService get remoteMessage => _nativeRemoteMessage;
 }

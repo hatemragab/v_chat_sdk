@@ -23,7 +23,7 @@ class MessageUploaderQueue {
 
   Future<void> _sendToApi(VMessageUploadModel uploadModel) async {
     try {
-      final msg = await _remoteStorage.remoteMessage.apiService.createMessage(
+      final msg = await _remoteStorage.remoteMessage.createMessage(
         uploadModel,
       );
       _onSuccessToSend(msg);
