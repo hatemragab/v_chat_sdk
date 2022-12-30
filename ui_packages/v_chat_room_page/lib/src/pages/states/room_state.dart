@@ -23,7 +23,8 @@ class RoomState {
 
   List<VRoom> get stateRooms => roomNotifier.value.values;
 
-  void updateCacheState(List<VRoom> apiRooms) {
+  void updateCacheState(VPaginationModel<VRoom> paginationModel) {
+    final apiRooms = paginationModel.values;
     for (int i = 0; i < apiRooms.length; i++) {
       final stateRoomIndex = stateRooms.indexOf(apiRooms[i]);
       if (stateRoomIndex != -1) {
@@ -35,7 +36,8 @@ class RoomState {
       }
     }
     //we need to sort
-    roomNotifier.value.values = apiRooms.sortByMsgId();
+    apiRooms.sortByMsgId();
+    roomNotifier.value = paginationModel;
     roomNotifier.notifyListeners();
   }
 

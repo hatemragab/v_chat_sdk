@@ -5,11 +5,12 @@ import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/message_insert_trigger.dart';
 import 'package:v_chat_sdk_core/src/service/re_send_daemon.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
+import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../v_chat_sdk_core.dart';
-import 'native_api/v_native_api.dart';
+import 'models/controller/message_page_config.dart';
 
 /// VChatController instance.
 ///
@@ -42,11 +43,13 @@ class VChatController with WidgetsBindingObserver {
     return _instance;
   }
 
-  late final Auth auth;
+  late final AuthApi authApi;
+  late final RoomApi roomApi;
 
   ///v chat variables
   late final ControllerHelper _helper;
-  late final VChatConfig config;
+  late final VChatConfig vChatConfig;
+  late final VMessagePageConfig vMessagePageConfig;
   bool _isControllerInit = false;
   late final VNativeApi nativeApi;
 
@@ -55,21 +58,27 @@ class VChatController with WidgetsBindingObserver {
   /// It's necessary to initialize before calling [VChatController.I]
   static Future<VChatController> init({
     required VChatConfig vChatConfig,
+    VMessagePageConfig messagePageConfig = const VMessagePageConfig(),
   }) async {
     assert(
       !_instance._isControllerInit,
       'This controller is already initialized',
     );
     _instance._isControllerInit = true;
-    _instance.config = vChatConfig;
+    _instance.vChatConfig = vChatConfig;
+    _instance.vMessagePageConfig = messagePageConfig;
     await VAppPref.init();
     _instance._helper = await ControllerHelper.instance.init(
-      _instance.config,
+      _instance.vChatConfig,
     );
     _instance.nativeApi = await VNativeApi.init();
-    _instance.auth = Auth(
+    _instance.authApi = AuthApi(
       _instance.nativeApi,
-      _instance.config,
+      _instance.vChatConfig,
+    );
+    _instance.roomApi = RoomApi(
+      _instance.nativeApi,
+      _instance.vChatConfig,
     );
     _widgetsBindingInstance?.addObserver(_instance);
     SocketController.instance.connect();

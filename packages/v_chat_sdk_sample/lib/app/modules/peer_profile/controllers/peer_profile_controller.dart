@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/enums.dart';
@@ -25,7 +27,6 @@ class PeerProfileController extends GetxController {
       onLoading: () {
         apiCallStatus.value = ApiCallStatus.loading;
       },
-
       request: () {
         return repository.getId(uuId);
       },
@@ -40,5 +41,20 @@ class PeerProfileController extends GetxController {
     );
   }
 
-  void onStartChat() {}
+  void onStartChat() async {
+    await vSafeApiCall<VRoom>(
+      request: () {
+        return VChatController.I.roomApi.getPeerRoom(peerIdentifier: uuId);
+      },
+      onSuccess: (response) {
+        Get.to(
+          () => VMessagePage(
+            vRoom: response,
+            isInTesting: true,
+          ),
+        );
+        print(response);
+      },
+    );
+  }
 }

@@ -12,7 +12,7 @@ abstract class AppConstants {
   static const dbVersion = 1;
   static const socketInterval = 10; //10sec
   static String get baseServerIp {
-    final uri = VChatController.I.config.baseUrl;
+    final uri = VChatController.I.vChatConfig.baseUrl;
     if (uri.hasPort) {
       return "${uri.scheme}://${uri.host}:${uri.port}";
     }
@@ -20,7 +20,7 @@ abstract class AppConstants {
   }
 
   static int get maxMediaSize {
-    return VChatController.I.config.maxMediaUploadSize;
+    return VChatController.I.vChatConfig.maxMediaUploadSize;
   }
 
   static String get baseUrl {
@@ -32,7 +32,7 @@ abstract class AppConstants {
   }
 
   static String get getMediaBaseUrl {
-    final isS3Supported = VChatController.I.config.s3Supported;
+    final isS3Supported = VChatController.I.vChatConfig.s3Supported;
     if (isS3Supported) {
       return "$baseUrl/s3/?key=";
     }

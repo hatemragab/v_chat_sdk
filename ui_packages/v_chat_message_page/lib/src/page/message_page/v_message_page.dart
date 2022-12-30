@@ -12,24 +12,14 @@ import '../../widgets/input_widgets/stop_typing_widget.dart';
 import '../../widgets/message_items/v_message_item.dart';
 
 class VMessagePage extends StatefulWidget {
+  final bool isInTesting;
+
   const VMessagePage({
     Key? key,
     required this.vRoom,
-    required this.onMentionPress,
-    this.onMessageItemPress,
-    this.appBare,
-    this.googleMapsApiKey,
-    this.onAppBarTitlePress,
+    this.isInTesting = false,
   }) : super(key: key);
-  final Function(String identifier) onMentionPress;
-
-  final Function(VBaseMessage message)? onMessageItemPress;
-  final Function(String id, VRoomType roomType)? onAppBarTitlePress;
-  final Widget Function(MessageAppBarStateModel state)? appBare;
   final VRoom vRoom;
-
-  ///set api if you want to make users able to pick locations
-  final String? googleMapsApiKey;
 
   @override
   State<VMessagePage> createState() => _VMessagePageState();
@@ -37,14 +27,19 @@ class VMessagePage extends StatefulWidget {
 
 class _VMessagePageState extends State<VMessagePage> {
   late final VMessageController controller;
-
+  final _config = VChatController.I.vMessagePageConfig;
   @override
   void initState() {
     super.initState();
     controller = VMessageController(
       vRoom: widget.vRoom,
-      onMentionPress: widget.onMentionPress,
-      isInTesting: true,
+      onMentionPress: (userId) {
+        final method = _config.onMentionPress;
+        if (method != null) {
+          method(context, userId);
+        }
+      },
+      isInTesting: widget.isInTesting,
     );
   }
 
@@ -62,11 +57,15 @@ class _VMessagePageState extends State<VMessagePage> {
                 onTyping: (p0) {},
               );
             }
-            return widget.appBare == null
-                ? VMessageAppBare(
-                    state: value,
-                  )
-                : widget.appBare!(value);
+            return VMessageAppBare(
+              state: value,
+              onTitlePress: (context, id, roomType) {
+                final method = _config.onAppBarTitlePress;
+                if (method != null) {
+                  method(context, id, roomType);
+                }
+              },
+            );
           },
         ),
       ),
@@ -115,7 +114,14 @@ class _VMessagePageState extends State<VMessagePage> {
                 onSubmitFiles: controller.onSubmitFiles,
                 onSubmitLocation: controller.onSubmitLocation,
                 onTypingChange: controller.onTypingChange,
-                googleMapsApiKey: widget.googleMapsApiKey,
+                googleMapsLangKey: "en",
+                maxMediaSize: _config.maxMediaSize,
+                onMentionSearch: (p0) async {
+                  //todo search over users
+                  return <MentionWithPhoto>[];
+                },
+                maxRecordTime: _config.maxRecordTime,
+                googleMapsApiKey: _config.googleMapsApiKey,
                 replyWidget: value.replyMsg == null
                     ? null
                     : ReplyMsgWidget(vBaseMessage: value.replyMsg!),

@@ -14,7 +14,6 @@ class MessageProvider {
 
   Future<List<VBaseMessage>> getFakeApiMessages() async {
     await Future.delayed(const Duration(milliseconds: 300));
-
     return fakeApiMessages
         .map((e) => MessageFactory.createBaseMessage(e))
         .toList();

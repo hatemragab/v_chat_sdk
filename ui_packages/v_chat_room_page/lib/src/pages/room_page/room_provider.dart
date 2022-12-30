@@ -12,16 +12,27 @@ class RoomProvider {
     return [VRoom.fromLocalMap(fakeLocalRooms.first)];
   }
 
+  Future<VPaginationModel<VRoom>> getLocalRooms() async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    return VPaginationModel<VRoom>(
+      values: await _localRoom.getRooms(limit: 200),
+      page: 1,
+      limit: 200,
+    );
+  }
+
   Future<List<VRoom>> getFakeApiRooms() async {
     await Future.delayed(const Duration(milliseconds: 1100));
     return [VRoom.fromMap(fakeApiRooms.first)];
   }
 
-  Future<VPaginationModel> getApiRooms(VPaginationModel paginationModel) async {
-    return _remoteRoom.getRooms(paginationModel);
+  Future<VPaginationModel<VRoom>> getApiRooms(
+    VRoomsDto dto,
+  ) async {
+    return _remoteRoom.getRooms(dto);
   }
 
-  Future<VRoom?> searchForRoom(String roomId) async {
+  Future<VRoom?> getRoomById(String roomId) async {
     final localRoom = await _localRoom.getRoomById(roomId);
     if (localRoom != null) {
       return localRoom;

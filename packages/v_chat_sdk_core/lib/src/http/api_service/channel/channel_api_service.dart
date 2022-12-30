@@ -4,6 +4,7 @@ import 'package:v_chat_sdk_core/src/models/models.dart';
 import 'package:v_chat_sdk_core/src/utils/enums.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../../v_chat_sdk_core.dart';
 import '../../../models/v_room/single_room/single_ban_model.dart';
 import '../../../utils/api_constants.dart';
 import '../../dto/create_broadcast_dto.dart';
@@ -42,8 +43,8 @@ class ChannelApiService {
     return true;
   }
 
-  Future<VPaginationModel> getRooms(VPaginationModel paginationModel) async {
-    final res = await _channelApiService.getRooms(paginationModel.toMap());
+  Future<VPaginationModel<VRoom>> getRooms(VRoomsDto dto) async {
+    final res = await _channelApiService.getRooms(dto.toMap());
     throwIfNotSuccess(res);
     final data = extractDataFromResponse(res);
     return VPaginationModel<VRoom>.fromMap(data);

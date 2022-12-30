@@ -16,7 +16,7 @@ void main() async {
     ),
   );
 
-  await VChatController.I.auth.login(
+  await VChatController.I.authApi.login(
     identifier: "user1@gmail.com",
     deviceLanguage: Locale("en"),
   );

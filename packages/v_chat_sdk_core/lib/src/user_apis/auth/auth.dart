@@ -12,15 +12,15 @@ import '../../service/controller_helper.dart';
 import '../../utils/device_info.dart';
 import '../../utils/event_bus.dart';
 
-class Auth implements AuthEndPoints {
+class AuthApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
   final ControllerHelper _helper = ControllerHelper.instance;
   final VChatConfig _chatConfig;
-  final _log = Logger('Auth');
+  final _log = Logger('user_api.Auth');
 
   NativeRemoteAuth get _remoteAuth => _vNativeApi.remote.remoteAuth;
 
-  Auth(
+  AuthApi(
     this._vNativeApi,
     this._chatConfig,
   );

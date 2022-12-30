@@ -5,8 +5,8 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 ///
 ///chat bubble color can be customized using [color]
 ///chat bubble tail can be customized  using [tail]
-///chat bubble display message can be changed using [text]
-///[text] is the only required parameter
+///chat bubble display message can be changed using [title]
+///[title] is the only required parameter
 ///message sender can be changed using [isSender]
 ///chat bubble [TextStyle] can be customized using [textStyle]
 

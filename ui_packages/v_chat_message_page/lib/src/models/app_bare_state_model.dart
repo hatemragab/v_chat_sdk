@@ -6,6 +6,7 @@ class MessageAppBarStateModel {
   int? memberCount;
   String roomTitle;
   String roomId;
+  String? peerIdentifier;
   VFullUrlModel roomImage;
   VSocketRoomTypingModel typingModel;
   VRoomType roomType;
@@ -16,6 +17,7 @@ class MessageAppBarStateModel {
     this.memberCount,
     required this.roomTitle,
     required this.roomId,
+    required this.peerIdentifier,
     required this.roomImage,
     required this.typingModel,
     required this.roomType,
@@ -30,6 +32,7 @@ class MessageAppBarStateModel {
       roomImage: room.thumbImage,
       roomTitle: room.title,
       roomType: room.roomType,
+      peerIdentifier: room.peerIdentifier,
     );
   }
 

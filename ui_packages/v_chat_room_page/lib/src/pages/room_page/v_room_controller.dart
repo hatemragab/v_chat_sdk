@@ -24,7 +24,7 @@ class VRoomController {
     this.isTesting = false,
   }) {
     roomState = RoomState(
-      _roomProvider.searchForRoom,
+      _roomProvider.getRoomById,
     );
     _localStreamChanges = RoomStreamState(
       nativeApi: VChatController.I.nativeApi,
@@ -34,9 +34,16 @@ class VRoomController {
   }
 
   Future<void> _getRoomsFromLocal() async {
-    await vSafeApiCall<List<VRoom>>(
+    await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
-        return _roomProvider.getFakeLocalRooms();
+        if (isTesting) {
+          return VPaginationModel<VRoom>(
+            values: await _roomProvider.getFakeLocalRooms(),
+            page: 1,
+            limit: 20,
+          );
+        }
+        return _roomProvider.getLocalRooms();
       },
       onSuccess: (response) {
         roomState.updateCacheState(response);
@@ -69,9 +76,18 @@ class VRoomController {
   }
 
   void getRoomsFromApi() async {
-    await vSafeApiCall<List<VRoom>>(
+    await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
-        return _roomProvider.getFakeApiRooms();
+        if (isTesting) {
+          return VPaginationModel(
+            values: await _roomProvider.getFakeApiRooms(),
+            page: 1,
+            limit: 20,
+          );
+        }
+        return _roomProvider.getApiRooms(
+          const VRoomsDto(),
+        );
       },
       onSuccess: (response) {
         roomState.updateCacheState(response);

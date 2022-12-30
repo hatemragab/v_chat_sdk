@@ -5,7 +5,7 @@ import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChatsTabController extends GetxController {
-  final vRoomController = VRoomController();
+  final vRoomController = VRoomController(isTesting: false);
 
   void onCreateGroupOrBroadcast() async {
     final l = ["Group", "Broadcast"];

@@ -32,7 +32,7 @@ class RegisterController extends GetxController {
           loginData.email, loginData.password);
       final userFromFire = await repository.getId(user.uid);
       await VAppPref.setMap(VStorageKeys.myProfile, userFromFire.toMap());
-      await VChatController.I.auth.login(
+      await VChatController.I.authApi.login(
         identifier: userFromFire.id,
         deviceLanguage: const Locale("en"),
       );
@@ -61,7 +61,7 @@ class RegisterController extends GetxController {
       );
       await repository.add(userFromFire);
       await VAppPref.setMap(VStorageKeys.myProfile, userFromFire.toMap());
-      await VChatController.I.auth.register(
+      await VChatController.I.authApi.register(
         identifier: userFromFire.id,
         fullName: userFromFire.userName,
         deviceLanguage: const Locale("en"),

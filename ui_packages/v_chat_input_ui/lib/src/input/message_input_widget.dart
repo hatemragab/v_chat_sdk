@@ -62,6 +62,9 @@ class VMessageInputWidget extends StatefulWidget {
   ///google maps localizations
   final String googleMapsLangKey;
 
+  ///set max upload files size default it 50 mb
+  final int maxMediaSize;
+
   const VMessageInputWidget({
     super.key,
     required this.onSubmitText,
@@ -70,6 +73,7 @@ class VMessageInputWidget extends StatefulWidget {
     required this.onSubmitFiles,
     required this.onSubmitLocation,
     required this.onTypingChange,
+    this.maxMediaSize = 50 * 1024 * 1024,
     this.replyWidget,
     this.mentionItemBuilder,
     this.maxRecordTime = const Duration(minutes: 30),
@@ -325,14 +329,15 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         case VAttachEnumRes.media:
           final files = await VAppPick.getMedia();
           if (files != null) {
-            final resFiles = await _processFilesToSubmit(files);
-            widget.onSubmitMedia(resFiles);
+            final resFiles = await _processMediaToSubmit(files);
+            if (resFiles.isNotEmpty) widget.onSubmitMedia(resFiles);
           }
           break;
         case VAttachEnumRes.files:
           final files = await VAppPick.getFiles();
           if (files != null) {
-            widget.onSubmitFiles(files);
+            final resFiles = _processFilesToSubmit(files);
+            if (resFiles.isNotEmpty) widget.onSubmitFiles(files);
           }
           break;
         case VAttachEnumRes.location:
@@ -382,11 +387,11 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
       context,
     );
     if (entity == null) return;
-    widget.onSubmitMedia(await _processFilesToSubmit([entity]));
+    widget.onSubmitMedia(await _processMediaToSubmit([entity]));
   }
 
   Future<void> _sendWeChatImage(VPlatformFileSource entity) async {
-    widget.onSubmitMedia(await _processFilesToSubmit([entity]));
+    widget.onSubmitMedia(await _processMediaToSubmit([entity]));
   }
 
   void _textEditListener() {
@@ -417,7 +422,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     super.dispose();
   }
 
-  Future<List<VBaseMediaRes>> _processFilesToSubmit(
+  Future<List<VBaseMediaRes>> _processMediaToSubmit(
     List<VPlatformFileSource> files,
   ) async {
     final resFiles = <VBaseMediaRes>[];
@@ -437,6 +442,15 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
           ),
         );
       } else if (sourceFile.isVideo) {
+        if (sourceFile.fileSize > widget.maxMediaSize) {
+          //this file should be ignored
+          ///todo trans
+          VAppAlert.showErrorSnackBar(
+              msg: "Some videos size bigger than allowed size",
+              context: context);
+          continue;
+        }
+
         final videoDuration =
             await _vMediaEditorHelpers.getVideoDurationMill(sourceFile);
         final thumbData =
@@ -453,5 +467,21 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
       }
     }
     return resFiles;
+  }
+
+  List<VPlatformFileSource> _processFilesToSubmit(
+      List<VPlatformFileSource> files) {
+    final res = <VPlatformFileSource>[];
+    for (final sourceFile in files) {
+      if (sourceFile.fileSize > widget.maxMediaSize) {
+        //this file should be ignored
+        ///todo trans
+        VAppAlert.showErrorSnackBar(
+            msg: "File size bigger than allowed size", context: context);
+        continue;
+      }
+    }
+
+    return res;
   }
 }
