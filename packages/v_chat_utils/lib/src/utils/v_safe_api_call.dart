@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../v_chat_utils.dart';
@@ -16,8 +18,8 @@ Future<void> vSafeApiCall<T>({
     }
     final res = await request();
     await onSuccess(res);
-  } catch (err) {
-    print(err);
+    return;
+  } catch (err, stacktrace) {
     if (showSnackError != null) {
       VAppAlert.showErrorSnackBar(
         msg: err.toString(),
@@ -27,9 +29,12 @@ Future<void> vSafeApiCall<T>({
     if (onError != null) {
       onError(err.toString());
     }
+    log(err.toString(), error: err, stackTrace: stacktrace);
+    return;
   } finally {
     if (finallyCallback != null) {
       finallyCallback();
     }
   }
+  return;
 }

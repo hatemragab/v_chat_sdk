@@ -120,7 +120,7 @@ mixin VRoomStream {
 }
 
 mixin VSocketStatusStream {
-  late final StreamSubscription<VSocketStatusEvent> _socketStatusStream;
+  StreamSubscription<VSocketStatusEvent>? _socketStatusStream;
 
   void initSocketStatusStream(Stream<VSocketStatusEvent> stream) {
     _socketStatusStream = stream.listen((event) {
@@ -133,7 +133,7 @@ mixin VSocketStatusStream {
   }
 
   void closeSocketStatusStream() {
-    _socketStatusStream.cancel();
+    _socketStatusStream?.cancel();
   }
 
   void onSocketConnected();

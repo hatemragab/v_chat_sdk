@@ -24,7 +24,7 @@ class ChatsTabView extends GetView<ChatsTabController> {
       onRoomItemPress: (room) {
         context.toPage(VMessagePage(
           vRoom: room,
-          isInTesting: true,
+          isInTesting: false,
         ));
       },
     );

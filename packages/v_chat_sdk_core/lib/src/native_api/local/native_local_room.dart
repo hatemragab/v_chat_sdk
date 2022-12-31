@@ -7,24 +7,22 @@ import '../../local_db/core/imp/room/memory_room_imp.dart';
 import '../../local_db/core/imp/room/sql_room_imp.dart';
 import '../../models/v_room/single_room/single_ban_model.dart';
 import '../../utils/event_bus.dart';
+import 'native_local_message.dart';
 
 class NativeLocalRoom {
   late final BaseLocalRoomRepo _roomRepo;
+  final NativeLocalMessage _localMessage;
   final _emitter = EventBusSingleton.instance.vChatEvents;
 
   Stream<VRoomEvents> get roomStream => _emitter.on<VRoomEvents>();
 
-  NativeLocalRoom(Database database) {
+  NativeLocalRoom(Database database, this._localMessage) {
     if (VPlatforms.isWeb) {
       _roomRepo = MemoryRoomImp();
     } else {
       _roomRepo = SqlRoomImp(database);
     }
   }
-
-  // Future<int> prepareRooms() async {
-  //   return _roomRepo.setAllOffline();
-  // }
 
   Future<List<VRoom>> getRooms({int limit = 300}) async {
     return _roomRepo.getRoomsWithLastMessage(limit: limit);
@@ -38,8 +36,21 @@ class NativeLocalRoom {
     if (await _roomRepo.getOneWithLastMessageByRoomId(room.id) == null) {
       final event = VInsertRoomEvent(roomId: room.id, room: room);
       await _roomRepo.insert(event);
+      await _localMessage.safeInsertMessage(room.lastMessage);
       _emitter.fire(event);
     }
+  }
+
+  Future<int> cacheRooms(List<VRoom> rooms) async {
+    if (rooms.isEmpty) {
+      await _roomRepo.reCreate();
+      return 1;
+    }
+    await _localMessage
+        .cacheRoomMessages(rooms.map((e) => e.lastMessage).toList());
+    return _roomRepo.insertMany(
+      rooms,
+    );
   }
 
   Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) async {
@@ -111,9 +122,4 @@ class NativeLocalRoom {
   Future<void> reCreateRoomTable() {
     return _roomRepo.reCreate();
   }
-
-// Future<int> offAllRooms() async {
-//   await _roomRepo.setAllOffline();
-//   return 1;
-// }
 }

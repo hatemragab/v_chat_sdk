@@ -23,7 +23,7 @@ class _$MessageApi extends MessageApi {
     MultipartFile? file,
     MultipartFile? secondFile,
   ) {
-    final Uri $url = Uri.parse('channel/{roomId}/message/');
+    final Uri $url = Uri.parse('channel/${roomId}/message/');
     final List<PartValue> $parts = <PartValue>[
       PartValueFile<MultipartFile?>(
         'file',
@@ -50,7 +50,7 @@ class _$MessageApi extends MessageApi {
     String roomId,
     Map<String, dynamic> query,
   ) {
-    final Uri $url = Uri.parse('channel/{roomId}/message/');
+    final Uri $url = Uri.parse('channel/${roomId}/message/');
     final Map<String, dynamic> $params = query;
     final Request $request = Request(
       'GET',
@@ -67,7 +67,7 @@ class _$MessageApi extends MessageApi {
     String messageId,
   ) {
     final Uri $url =
-        Uri.parse('channel/{roomId}/message/${messageId}/delete/me');
+        Uri.parse('channel/${roomId}/message/${messageId}/delete/me');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -81,7 +81,7 @@ class _$MessageApi extends MessageApi {
     String roomId,
     String mId,
   ) {
-    final Uri $url = Uri.parse('channel/{roomId}/message/${mId}/delete/all');
+    final Uri $url = Uri.parse('channel/${roomId}/message/${mId}/delete/all');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -96,7 +96,7 @@ class _$MessageApi extends MessageApi {
     String messageId,
   ) {
     final Uri $url =
-        Uri.parse('channel/{roomId}/message/${messageId}/status/summary');
+        Uri.parse('channel/${roomId}/message/${messageId}/status/summary');
     final Request $request = Request(
       'GET',
       $url,
@@ -113,7 +113,7 @@ class _$MessageApi extends MessageApi {
     String type,
   ) {
     final Uri $url =
-        Uri.parse('channel/{roomId}/message/${mId}/status/${type}');
+        Uri.parse('channel/${roomId}/message/${mId}/status/${type}');
     final Map<String, dynamic> $params = query;
     final Request $request = Request(
       'GET',

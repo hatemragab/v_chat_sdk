@@ -70,7 +70,9 @@ class _VMessagePageState extends State<VMessagePage> {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const VSocketStatusWidget(delay: Duration.zero),
           ValueListenableBuilder<List<VBaseMessage>>(
             valueListenable: controller.messageState.stateNotifier,
             builder: (_, value, __) {

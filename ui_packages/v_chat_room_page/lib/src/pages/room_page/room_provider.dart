@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../assets/data/api_rooms.dart';
@@ -29,7 +31,9 @@ class RoomProvider {
   Future<VPaginationModel<VRoom>> getApiRooms(
     VRoomsDto dto,
   ) async {
-    return _remoteRoom.getRooms(dto);
+    final apiModel = await _remoteRoom.getRooms(dto);
+    unawaited(_localRoom.cacheRooms(apiModel.values));
+    return apiModel;
   }
 
   Future<VRoom?> getRoomById(String roomId) async {

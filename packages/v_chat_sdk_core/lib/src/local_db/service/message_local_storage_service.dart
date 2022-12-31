@@ -93,7 +93,10 @@ mixin MessageLocalStorage {
   }
 
   Future<List<VBaseMessage>> getRoomMessages(String roomId) async {
-    return localMessageRepo.getRoomMessages(roomId);
+    return localMessageRepo.getRoomMessages(
+      limit: 100,
+      roomId: roomId,
+    );
   }
 
   Future<List<VBaseMessage>> getUnSendMessages() async {

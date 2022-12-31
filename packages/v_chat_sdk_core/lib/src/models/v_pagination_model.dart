@@ -53,14 +53,14 @@ class VPaginationModel<T> {
     };
   }
 
-  factory VPaginationModel.fromMap(Map<String, dynamic> map) {
-    return VPaginationModel(
-      values: List<T>.from(map['docs'] as List),
-      page: map['page'] as int,
-      limit: map['limit'] as int,
-      nextPage: map['nextPage'] as int?,
-    );
-  }
+  // factory VPaginationModel.fromMap(Map<String, dynamic> map) {
+  //   return VPaginationModel(
+  //     values: List<T>.from(map['docs'] as List),
+  //     page: map['page'] as int,
+  //     limit: map['limit'] as int,
+  //     nextPage: map['nextPage'] as int?,
+  //   );
+  // }
 
   factory VPaginationModel.fromCustomMap({
     required List<T> values,

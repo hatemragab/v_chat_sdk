@@ -12,7 +12,7 @@ import '../../widgets/message_items/v_message_item_controller.dart';
 import '../message_stream_state.dart';
 import 'message_provider.dart';
 
-class VMessageController {
+class VMessageController with VSocketStatusStream {
   final bool isInTesting;
   final Function(String userId) onMentionPress;
   final VRoom vRoom;
@@ -50,16 +50,18 @@ class VMessageController {
       inputStateController: inputStateController,
       currentRoom: vRoom,
     );
+    initSocketStatusStream(
+      VChatController.I.nativeApi.remote.remoteSocketIo.socketStatusStream,
+    );
   }
 
   Future<void> _initLocalMessages() async {
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
         if (isInTesting) {
-          return await _provider.getFakeMessages();
+          return await _provider.getFakeLocalMessages();
         } else {
-          return await VChatController.I.nativeApi.local.message
-              .getRoomMessages(vRoom.id);
+          return _provider.getLocalMessages(roomId: vRoom.id);
         }
       },
       onSuccess: (response) {
@@ -75,10 +77,11 @@ class VMessageController {
         if (isInTesting) {
           return await _provider.getFakeApiMessages();
         } else {
-          return VChatController.I.nativeApi.remote.remoteMessage
-              .getRoomMessages(
+          return _provider.getApiMessages(
             roomId: vRoom.id,
-            dto: const VRoomMessagesDto(),
+            dto: const VRoomMessagesDto(
+              limit: 20,
+            ),
           );
         }
       },
@@ -124,5 +127,14 @@ class VMessageController {
     messageState.close();
     appBarStateController.close();
     inputStateController.close();
+    closeSocketStatusStream();
   }
+
+  @override
+  void onSocketConnected() {
+    getApiMessages();
+  }
+
+  @override
+  void onSocketDisconnect() {}
 }

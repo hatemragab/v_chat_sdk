@@ -8,9 +8,6 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import '../../../v_chat_sdk_core.dart';
 import '../../models/socket/on_deliver_room_messages_model.dart';
 import '../../models/socket/on_enter_room_model.dart';
-import '../../models/v_message/core/message_factory.dart';
-import '../../models/v_room/single_room/my_single_room_info.dart';
-import '../../native_api/v_native_api.dart';
 import '../../utils/event_bus.dart';
 
 class SocketController implements ISocketIoClient {
@@ -23,7 +20,7 @@ class SocketController implements ISocketIoClient {
     _initSocketEvents();
     socketIoClient.socket.onConnect(
       (data) {
-        _log.finer("Socket connected !!");
+        _log.finer("Socket connected successfully");
         vChatEvents.fire(const VSocketStatusEvent(true));
       },
     );

@@ -46,7 +46,7 @@ class _LocalNativeApi {
     final database = await DBProvider.instance.database;
     message = NativeLocalMessage(database);
     await message.prepareMessages();
-    room = NativeLocalRoom(database);
+    room = NativeLocalRoom(database, message);
     apiCache = NativeLocalApiCache(database);
     // await room.prepareRooms();
   }

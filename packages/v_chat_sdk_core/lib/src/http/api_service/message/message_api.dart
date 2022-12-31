@@ -10,10 +10,10 @@ import '../interceptors.dart';
 
 part 'message_api.chopper.dart';
 
-@ChopperApi(baseUrl: 'channel/{roomId}/message')
+@ChopperApi(baseUrl: 'channel')
 abstract class MessageApi extends ChopperService {
   ///create message to channel
-  @Post(path: "/")
+  @Post(path: "/{roomId}/message/")
   @multipart
   Future<Response> createMessage(
     @Path('roomId') String roomId,
@@ -22,31 +22,31 @@ abstract class MessageApi extends ChopperService {
     @PartFile("file") MultipartFile? secondFile,
   );
 
-  @Get(path: "/")
+  @Get(path: "/{roomId}/message/")
   Future<Response> getRoomMessages(
     @Path("roomId") String roomId,
     @QueryMap() Map<String, dynamic> query,
   );
 
-  @Delete(path: "/{messageId}/delete/me")
+  @Delete(path: "/{roomId}/message/{messageId}/delete/me")
   Future<Response> deleteMessageFromMe(
     @Path("roomId") String roomId,
     @Path("messageId") String messageId,
   );
 
-  @Delete(path: "/{messageId}/delete/all")
+  @Delete(path: "/{roomId}/message/{messageId}/delete/all")
   Future<Response> deleteMessageFromAll(
     @Path("roomId") String roomId,
     @Path("messageId") String mId,
   );
 
-  @Get(path: "/{messageId}/status/summary")
+  @Get(path: "/{roomId}/message/{messageId}/status/summary")
   Future<Response> getMessageStatusSummary(
     @Path("roomId") String roomId,
     @Path("messageId") String messageId,
   );
 
-  @Get(path: "/{messageId}/status/{type}", optionalBody: true)
+  @Get(path: "/{roomId}/message/{messageId}/status/{type}", optionalBody: true)
   Future<Response> getMessageStatus(
     @Path("roomId") String roomId,
     @Path("messageId") String mId,
@@ -66,6 +66,7 @@ abstract class MessageApi extends ChopperService {
         _$MessageApi(),
       ],
       converter: const JsonConverter(),
+      //, HttpLoggingInterceptor()
       interceptors: [AuthInterceptor()],
       errorConverter: ErrorInterceptor(),
       client: VPlatforms.isWeb

@@ -92,6 +92,11 @@ class NativeLocalMessage {
   Future<int> updateFullMessage(
     VBaseMessage message,
   ) async {
+    _emitter.fire(VUpdateMessageEvent(
+      roomId: message.roomId,
+      localId: message.localId,
+      messageModel: message,
+    ));
     await _localMessageRepo.updateFullMessage(baseMessage: message);
     return 1;
   }
@@ -116,8 +121,16 @@ class NativeLocalMessage {
     return _localMessageRepo.findByLocalId(localId);
   }
 
-  Future<List<VBaseMessage>> getRoomMessages(String roomId) async {
-    return _localMessageRepo.getRoomMessages(roomId);
+  Future<List<VBaseMessage>> getRoomMessages({
+    required String roomId,
+    String? lastId,
+    int limit = 100,
+  }) async {
+    return _localMessageRepo.getRoomMessages(
+      roomId: roomId,
+      lastId: lastId,
+      limit: limit,
+    );
   }
 
   Future<List<VBaseMessage>> getUnSendMessages() async {

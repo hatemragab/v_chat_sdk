@@ -9,7 +9,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../widgets/room_item/room_item_controller.dart';
 import 'room_stream_state.dart';
 
-class VRoomController {
+class VRoomController with VSocketStatusStream {
   final bool isTesting;
   late final RoomStreamState _localStreamChanges;
   final roomItemController = RoomItemController();
@@ -23,6 +23,9 @@ class VRoomController {
   VRoomController({
     this.isTesting = false,
   }) {
+    initSocketStatusStream(
+      VChatController.I.nativeApi.remote.remoteSocketIo.socketStatusStream,
+    );
     roomState = RoomState(
       _roomProvider.getRoomById,
     );
@@ -98,5 +101,15 @@ class VRoomController {
   void dispose() {
     roomState.close();
     _localStreamChanges.close();
+    closeSocketStatusStream();
   }
+
+  @override
+  void onSocketConnected() {
+    ///todo improve this api call
+    getRoomsFromApi();
+  }
+
+  @override
+  void onSocketDisconnect() {}
 }

@@ -121,9 +121,10 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<List<VBaseMessage>> getRoomMessages(
-    String roomId, {
+  Future<List<VBaseMessage>> getRoomMessages({
+    required String roomId,
     int limit = 100,
+    String? lastId,
   }) async {
     return Future.value(
       _messages

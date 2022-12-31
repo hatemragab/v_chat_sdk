@@ -14,7 +14,9 @@ abstract class BaseLocalMessageRepo {
   Future<int> updateMessagesToSeen(VUpdateMessageSeenEvent event);
 
   Future<int> updateMessagesToDeliver(VUpdateMessageDeliverEvent event);
+
   Future<int> insertMany(List<VBaseMessage> messages);
+
   Future<int> updateFullMessage({
     required VBaseMessage baseMessage,
   });
@@ -36,9 +38,10 @@ abstract class BaseLocalMessageRepo {
     int limit = 150,
   });
 
-  Future<List<VBaseMessage>> getRoomMessages(
-    String roomId, {
-    int limit = 100,
+  Future<List<VBaseMessage>> getRoomMessages({
+    required String roomId,
+    required int limit,
+    String? lastId,
   });
 
   Future<List<VBaseMessage>> getMessagesByStatus({

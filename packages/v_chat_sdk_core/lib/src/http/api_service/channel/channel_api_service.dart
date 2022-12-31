@@ -47,7 +47,10 @@ class ChannelApiService {
     final res = await _channelApiService.getRooms(dto.toMap());
     throwIfNotSuccess(res);
     final data = extractDataFromResponse(res);
-    return VPaginationModel<VRoom>.fromMap(data);
+    return VPaginationModel<VRoom>.fromCustomMap(
+      values: (data['docs'] as List).map((e) => VRoom.fromMap(e)).toList(),
+      map: data,
+    );
   }
 
   Future<bool> deliverRoomMessages(

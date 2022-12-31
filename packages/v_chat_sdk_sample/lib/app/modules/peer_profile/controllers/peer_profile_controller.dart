@@ -50,10 +50,9 @@ class PeerProfileController extends GetxController {
         Get.to(
           () => VMessagePage(
             vRoom: response,
-            isInTesting: true,
+            isInTesting: false,
           ),
         );
-        print(response);
       },
     );
   }
