@@ -10,6 +10,7 @@ class NativeRemoteSocketIo {
   final _vChatEvents = EventBusSingleton.instance.vChatEvents;
 
   Socket get socket => SocketController.instance.currentSocket;
+
   bool get isConnected => SocketController.instance.currentSocket.connected;
 
   Stream<VSocketStatusEvent> get socketStatusStream =>
@@ -18,8 +19,10 @@ class NativeRemoteSocketIo {
   Stream<VSocketIntervalEvent> get socketIntervalStream =>
       _vChatEvents.on<VSocketIntervalEvent>();
 
-  void emitGetMyOnline(List<String> ids) =>
-      SocketController.instance.emitGetMyOnline(jsonEncode(ids));
+  void emitGetMyOnline(List<VOnlineOfflineModel> ids) =>
+      SocketController.instance.emitGetMyOnline(jsonEncode(
+        ids.map((e) => e.toMap()).toList(),
+      ));
 
   void emitUpdateRoomStatus(VSocketRoomTypingModel model) =>
       SocketController.instance.emitUpdateRoomStatus(jsonEncode(model.toMap()));

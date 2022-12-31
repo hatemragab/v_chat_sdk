@@ -13,7 +13,7 @@ class VSingleBanModel {
       : banned = false,
         bannerId = null;
 
-  bool get isMyBanner => AppConstants.myId == bannerId;
+  bool get isMyBanner => VAppConstants.myId == bannerId;
 
   @override
   String toString() {

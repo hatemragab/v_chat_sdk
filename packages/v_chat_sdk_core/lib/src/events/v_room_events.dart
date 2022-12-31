@@ -38,16 +38,38 @@ class VBlockSingleRoomEvent extends VRoomEvents {
   List<Object?> get props => [super.props, banModel];
 }
 
-class VUpdateRoomOnlineEvent extends VRoomEvents {
-  final VOnlineOfflineModel model;
+// class VSocketUpdateOnlineList extends VRoomEvents {
+//   final VOnlineOfflineModel model;
+//
+//   const VSocketUpdateOnlineList({
+//     required super.roomId,
+//     required this.model,
+//   });
+//
+//   @override
+//   List<Object?> get props => [super.props, model];
+// }
 
-  const VUpdateRoomOnlineEvent({
+class VRoomOnlineEvent extends VRoomEvents {
+  const VRoomOnlineEvent({
     required super.roomId,
-    required this.model,
   });
 
   @override
-  List<Object?> get props => [super.props, model];
+  List<Object?> get props => [
+        super.props,
+      ];
+}
+
+class VRoomOfflineEvent extends VRoomEvents {
+  const VRoomOfflineEvent({
+    required super.roomId,
+  });
+
+  @override
+  List<Object?> get props => [
+        super.props,
+      ];
 }
 
 class VUpdateRoomTypingEvent extends VRoomEvents {

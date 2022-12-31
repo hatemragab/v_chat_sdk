@@ -33,8 +33,26 @@ class VMessageAppBare extends StatelessWidget {
             ? MessageTypingWidget(
                 text: state.typingText!,
               )
-            : null,
+            : _getSubTitle(),
       ),
     );
+  }
+
+  Widget? _getSubTitle() {
+    if (state.roomType.isSingleOrOrder) {
+      if (state.isOnline) {
+        return const Text("Online");
+      }
+      if (state.lastSeenAt == null) {
+        return null;
+      } else {
+        return Text(state.lastSeenAt!.toString());
+      }
+    }
+    if (state.memberCount != null) {
+      //todo trans
+      return Text("Members ${state.memberCount!}");
+    }
+    return null;
   }
 }

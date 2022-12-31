@@ -22,10 +22,11 @@ class MessageState {
   void updateCacheState(List<VBaseMessage> apiMessages) {
     final stateMessages = stateNotifier.value;
     final newList = <VBaseMessage>[];
+
+    newList.addAll(apiMessages);
     newList.addAll(
       stateMessages.where((e) => e.messageStatus.isSendingOrError),
     );
-    newList.addAll(apiMessages);
     //we need to sort
     stateNotifier.value = newList.sortById();
   }

@@ -87,7 +87,7 @@ class _VMessagePageState extends State<VMessagePage> {
                     final message = value[index];
                     return StreamBuilder<VBaseMessage>(
                       stream: controller.messageState.messageStateStream.stream
-                          .takeWhile(
+                          .where(
                         (e) => e.localId == message.localId,
                       ),
                       initialData: message,

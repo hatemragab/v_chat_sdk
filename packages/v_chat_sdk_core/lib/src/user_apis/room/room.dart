@@ -10,7 +10,7 @@ class RoomApi {
   final VChatConfig _chatConfig;
   final _log = Logger('user_api.Room');
 
-  ChannelApiService get _channelApiService => _vNativeApi.remote.remoteRoom;
+  ChannelApiService get _channelApiService => _vNativeApi.remote.room;
 
   RoomApi(
     this._vNativeApi,

@@ -58,7 +58,7 @@ class VImageMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          content: AppConstants.thisContentIsImage,
+          content: VAppConstants.thisContentIsImage,
           messageType: MessageType.image,
         );
 

@@ -20,8 +20,8 @@ class AppBarStateController {
     appBareState.notifyListeners();
   }
 
-  void updateOnline(bool isOnline) {
-    appBareState.value.isOnline = isOnline;
+  void updateOnline() {
+    appBareState.value.isOnline = true;
     appBareState.notifyListeners();
   }
 
@@ -47,5 +47,10 @@ class AppBarStateController {
 
   close() {
     appBareState.dispose();
+  }
+
+  void updateOffline() {
+    appBareState.value.isOnline = false;
+    appBareState.notifyListeners();
   }
 }

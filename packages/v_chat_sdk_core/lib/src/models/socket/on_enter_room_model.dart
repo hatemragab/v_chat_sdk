@@ -26,7 +26,7 @@ class VSocketOnRoomSeenModel {
     };
   }
 
-  bool get isMe => AppConstants.myId == userId;
+  bool get isMe => VAppConstants.myId == userId;
 
   factory VSocketOnRoomSeenModel.fromMap(Map<String, dynamic> map) {
     return VSocketOnRoomSeenModel(

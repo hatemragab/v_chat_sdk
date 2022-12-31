@@ -1,7 +1,7 @@
 import 'package:v_chat_room_page/src/pages/states/room_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-class RoomStreamState with VMessageStream, VRoomStream {
+class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
   final RoomState roomState;
   final VNativeApi nativeApi;
 
@@ -12,6 +12,9 @@ class RoomStreamState with VMessageStream, VRoomStream {
     initMessageStream(nativeApi.local.message.messageStream);
     initRoomStream(nativeApi.local.room.roomStream);
     // test();
+    initSocketIntervalStream(
+      nativeApi.remote.remoteSocketIo.socketIntervalStream,
+    );
   }
 
   // test() async {
@@ -25,13 +28,14 @@ class RoomStreamState with VMessageStream, VRoomStream {
   void close() {
     closeRoomStream();
     closeMessageStream();
+    closeSocketIntervalStream();
   }
 
   /////////////// room events ////////////
-  @override
-  void onUpdateOnline(VUpdateRoomOnlineEvent event) {
-    return roomState.updateOnlineOrOff(event.roomId, event.model);
-  }
+  // @override
+  // void onUpdateOnline(VUpdateRoomOnlineEvent event) {
+  //   return roomState.updateOnlineOrOff(event.roomId, event.model);
+  // }
 
   @override
   void onUpdateRoomImage(VUpdateRoomImageEvent event) {
@@ -112,5 +116,31 @@ class RoomStreamState with VMessageStream, VRoomStream {
   @override
   void onUpdateMsgType(VUpdateMessageTypeEvent event) {
     return roomState.onUpdateMsgType(event);
+  }
+
+  @override
+  void onIntervalFire() {
+    final ids = roomState.stateRooms
+        .where((element) => element.roomType.isSingle)
+        .toList();
+    nativeApi.remote.remoteSocketIo.emitGetMyOnline(
+      ids
+          .map((e) => VOnlineOfflineModel(
+                peerId: e.peerId!,
+                isOnline: false,
+                roomId: e.id,
+              ))
+          .toList(),
+    );
+  }
+
+  @override
+  void onRoomOffline(VRoomOfflineEvent event) {
+    return roomState.updateOffline(event.roomId);
+  }
+
+  @override
+  void onRoomOnline(VRoomOnlineEvent event) {
+    return roomState.updateOnline(event.roomId);
   }
 }

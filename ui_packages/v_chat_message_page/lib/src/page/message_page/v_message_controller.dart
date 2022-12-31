@@ -12,7 +12,7 @@ import '../../widgets/message_items/v_message_item_controller.dart';
 import '../message_stream_state.dart';
 import 'message_provider.dart';
 
-class VMessageController with VSocketStatusStream {
+class VMessageController with VSocketStatusStream, VSocketIntervalStream {
   final bool isInTesting;
   final Function(String userId) onMentionPress;
   final VRoom vRoom;
@@ -26,6 +26,7 @@ class VMessageController with VSocketStatusStream {
 
   final itemController = VMessageItemController();
   late final MessageStreamState _localStreamChanges;
+  final _currentUser = VAppConstants.myProfile;
 
   ///Getters
   List<VBaseMessage> get messages => messageState.stateMessages;
@@ -34,6 +35,8 @@ class VMessageController with VSocketStatusStream {
 
   MessageAppBarStateModel get appBareState =>
       appBarStateController.appBareState.value;
+
+  String get roomId => vRoom.id;
 
   VMessageController({
     required this.vRoom,
@@ -53,6 +56,11 @@ class VMessageController with VSocketStatusStream {
     initSocketStatusStream(
       VChatController.I.nativeApi.remote.remoteSocketIo.socketStatusStream,
     );
+    _provider.setSeen(roomId);
+    initSocketIntervalStream(
+      VChatController.I.nativeApi.remote.remoteSocketIo.socketIntervalStream,
+    );
+    _setAppBareState();
   }
 
   Future<void> _initLocalMessages() async {
@@ -120,7 +128,15 @@ class VMessageController with VSocketStatusStream {
 
   void onSubmitLocation(VLocationMessageData data) {}
 
-  void onTypingChange(VRoomTypingEnum typing) {}
+  void onTypingChange(VRoomTypingEnum typing) {
+    final model = VSocketRoomTypingModel(
+      status: typing,
+      roomId: vRoom.id,
+      name: _currentUser.baseUser.fullName,
+      userId: _currentUser.baseUser.vChatId,
+    );
+    _remoteStorage.remoteSocketIo.emitUpdateRoomStatus(model);
+  }
 
   void dispose() {
     _localStreamChanges.close();
@@ -128,13 +144,33 @@ class VMessageController with VSocketStatusStream {
     appBarStateController.close();
     inputStateController.close();
     closeSocketStatusStream();
+    closeSocketIntervalStream();
   }
 
   @override
   void onSocketConnected() {
+    //todo improve the call here
     getApiMessages();
+    _provider.setSeen(roomId);
   }
 
+  bool get isSocketConnected =>
+      VChatController.I.nativeApi.remote.remoteSocketIo.isConnected;
+
   @override
-  void onSocketDisconnect() {}
+  void onIntervalFire() async {
+    if (vRoom.roomType.isSingleOrOrder) {
+      if (!vRoom.isOnline && appBareState.lastSeenAt == null) {
+        final date = await _provider.getLastSeenAt(vRoom.peerId!);
+        appBarStateController.updateLastSeen(date);
+      }
+    }
+  }
+
+  void _setAppBareState() async {
+    if (!vRoom.isOnline) {
+      final date = await _provider.getLastSeenAt(vRoom.peerId!);
+      appBarStateController.updateLastSeen(date);
+    }
+  }
 }

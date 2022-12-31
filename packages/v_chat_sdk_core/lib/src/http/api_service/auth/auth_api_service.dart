@@ -66,7 +66,7 @@ class AuthApiService {
   }) {
     _authApi = AuthApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? AppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUrl,
     );
     return AuthApiService._();
   }

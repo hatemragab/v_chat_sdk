@@ -11,7 +11,7 @@ class VSocketOnDeliverMessagesModel {
     required this.date,
   });
 
-  bool get isMe => AppConstants.myId == userId;
+  bool get isMe => VAppConstants.myId == userId;
 
   DateTime get localDate => DateTime.parse(date).toLocal();
 

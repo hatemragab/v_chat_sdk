@@ -14,7 +14,7 @@ class VMsgCallAtt {
     required this.callerId,
   });
 
-  bool get isMe => AppConstants.myId == callerId;
+  bool get isMe => VAppConstants.myId == callerId;
 
   Map<String, dynamic> toMap() {
     return {

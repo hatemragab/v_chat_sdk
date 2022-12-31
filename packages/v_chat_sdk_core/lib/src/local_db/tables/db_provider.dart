@@ -23,11 +23,11 @@ class DBProvider {
 
   Future<Database> _open() async {
     final String documentsDirectory = await getDatabasesPath();
-    final String path = join(documentsDirectory, AppConstants.dbName);
+    final String path = join(documentsDirectory, VAppConstants.dbName);
 
     return openDatabase(
       path,
-      version: AppConstants.dbVersion,
+      version: VAppConstants.dbVersion,
       onUpgrade: (db, oldVersion, newVersion) async {
         await reCreateTables(db);
       },

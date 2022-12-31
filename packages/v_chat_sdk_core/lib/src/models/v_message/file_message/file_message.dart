@@ -79,7 +79,7 @@ class VFileMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          content: AppConstants.thisContentIsFile,
+          content: VAppConstants.thisContentIsFile,
           messageType: MessageType.file,
         );
 }

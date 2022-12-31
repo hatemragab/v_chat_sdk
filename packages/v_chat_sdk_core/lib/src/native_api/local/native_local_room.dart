@@ -68,14 +68,14 @@ class NativeLocalRoom {
     return 1;
   }
 
-  Future<int> updateRoomOnline(VUpdateRoomOnlineEvent event) async {
-    final roomId = await _roomRepo.getRoomIdByPeerId(event.model.peerId);
-    if (roomId != null) {
-      _emitter.fire(VUpdateRoomOnlineEvent(model: event.model, roomId: roomId));
-      return 1;
-      // return _roomRepo.updateOnline(event);
+  void updateRoomOnline(List<VOnlineOfflineModel> events) {
+    for (var event in events) {
+      _emitter.fire(event);
+      // _emitter.fire(VSocketUpdateOnlineList(
+      //   model: event,
+      //   roomId: event.roomId,
+      // ));
     }
-    return 1;
   }
 
   Future<int> updateRoomName(VUpdateRoomNameEvent event) async {
@@ -97,8 +97,9 @@ class NativeLocalRoom {
   }
 
   Future<int> updateRoomUnreadToZero(
-    VUpdateRoomUnReadCountToZeroEvent event,
+    String roomId,
   ) async {
+    final event = VUpdateRoomUnReadCountToZeroEvent(roomId: roomId);
     _emitter.fire(event);
     return _roomRepo.updateCountToZero(event);
   }

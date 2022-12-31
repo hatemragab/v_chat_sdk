@@ -68,17 +68,7 @@ class SocketService {
   }
 
   void handleOnGetMyOnlineList(List<VOnlineOfflineModel> dataModelList) {
-    for (final e in dataModelList) {
-      unawaited(
-        _localRoom.updateRoomOnline(
-          VUpdateRoomOnlineEvent(
-            ///this value will updated later
-            roomId: '',
-            model: e,
-          ),
-        ),
-      );
-    }
+    return _localRoom.updateRoomOnline(dataModelList);
   }
 
   void handleOnEnterChatRoom(VSocketOnRoomSeenModel model) {

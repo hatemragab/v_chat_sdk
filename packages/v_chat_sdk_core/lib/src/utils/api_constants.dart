@@ -1,10 +1,8 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-abstract class AppConstants {
-  static String mapsApiKey = "mapsApiKeymapsApiKey";
-
-  const AppConstants._();
+abstract class VAppConstants {
+  const VAppConstants._();
 
   static String clintVersion = "2.0.0";
   static const appName = "VChatSdkV2";

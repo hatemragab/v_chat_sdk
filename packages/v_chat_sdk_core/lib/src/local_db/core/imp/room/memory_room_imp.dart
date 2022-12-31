@@ -91,22 +91,6 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateOnline(VUpdateRoomOnlineEvent event) async {
-    final room = getRoomById(event.roomId);
-    if (room == null) return 0;
-    room.isOnline = event.model.isOnline;
-    return Future.value(1);
-  }
-
-  @override
-  Future<int> updateTyping(VUpdateRoomTypingEvent event) async {
-    final room = getRoomById(event.roomId);
-    if (room == null) return 0;
-    room.typingStatus = event.typingModel;
-    return Future.value(1);
-  }
-
-  @override
   Future<int> updateCountToZero(
     VUpdateRoomUnReadCountToZeroEvent event,
   ) async {

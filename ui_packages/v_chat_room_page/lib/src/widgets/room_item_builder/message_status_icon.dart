@@ -23,9 +23,21 @@ class MessageStatusIcon extends StatelessWidget {
     if (!isMeSender) {
       return const SizedBox.shrink();
     }
+    if (isSeen) {
+      return _getBody(themeData.seenIcon);
+    }
+    if (isDeliver) {
+      return _getBody(themeData.deliverIcon);
+    }
+    return _getBody(
+      _getIcon(themeData),
+    );
+  }
+
+  Widget _getBody(Widget icon) {
     return Padding(
       padding: const EdgeInsets.only(right: 3),
-      child: _getIcon(themeData),
+      child: icon,
     );
   }
 

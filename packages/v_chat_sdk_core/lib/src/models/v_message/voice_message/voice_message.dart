@@ -77,7 +77,7 @@ class VVoiceMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          content: AppConstants.thisContentIsVoice,
+          content: VAppConstants.thisContentIsVoice,
           messageType: MessageType.voice,
         );
 }

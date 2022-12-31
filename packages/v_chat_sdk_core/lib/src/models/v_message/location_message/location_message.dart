@@ -64,7 +64,7 @@ class VLocationMessage extends VBaseMessage {
     super.replyTo,
   }) : super.buildMessage(
           messageType: MessageType.location,
-          content: AppConstants.thisContentIsLocation,
+          content: VAppConstants.thisContentIsLocation,
         );
 
   @override

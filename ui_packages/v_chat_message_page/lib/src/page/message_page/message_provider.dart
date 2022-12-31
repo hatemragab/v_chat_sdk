@@ -6,8 +6,12 @@ import '../../assets/data/api_messages.dart';
 import '../../assets/data/local_messages.dart';
 
 class MessageProvider {
-  final _remoteMessage = VChatController.I.nativeApi.remote.remoteMessage;
+  final _remoteMessage = VChatController.I.nativeApi.remote.message;
   final _localMessage = VChatController.I.nativeApi.local.message;
+  final _localRoom = VChatController.I.nativeApi.local.room;
+  final _remoteRoom = VChatController.I.nativeApi.remote.room;
+  final _remoteProfile = VChatController.I.nativeApi.remote.profile;
+  final _socket = VChatController.I.nativeApi.remote.remoteSocketIo;
 
   Future<List<VBaseMessage>> getFakeLocalMessages() async {
     await Future.delayed(const Duration(milliseconds: 100));
@@ -43,5 +47,14 @@ class MessageProvider {
     );
     unawaited(_localMessage.cacheRoomMessages(apiMessages));
     return apiMessages;
+  }
+
+  void setSeen(String roomId) {
+    _socket.emitSeenRoomMessages(roomId);
+    unawaited(_localRoom.updateRoomUnreadToZero(roomId));
+  }
+
+  Future<DateTime> getLastSeenAt(String peerId) async {
+    return _remoteProfile.getUserLastSeenAt(peerId);
   }
 }

@@ -61,7 +61,9 @@ mixin VRoomStream {
 
   void onBlockSingleRoom(VBlockSingleRoomEvent event);
 
-  void onUpdateOnline(VUpdateRoomOnlineEvent event);
+  void onRoomOnline(VRoomOnlineEvent event);
+
+  void onRoomOffline(VRoomOfflineEvent event);
 
   void onUpdateTyping(VUpdateRoomTypingEvent event);
 
@@ -86,9 +88,7 @@ mixin VRoomStream {
         if (event is VBlockSingleRoomEvent) {
           return onBlockSingleRoom(event);
         }
-        if (event is VUpdateRoomOnlineEvent) {
-          return onUpdateOnline(event);
-        }
+
         if (event is VUpdateRoomTypingEvent) {
           return onUpdateTyping(event);
         }
@@ -109,6 +109,12 @@ mixin VRoomStream {
         }
         if (event is VDeleteRoomEvent) {
           return onDeleteRoom(event);
+        }
+        if (event is VRoomOfflineEvent) {
+          return onRoomOffline(event);
+        }
+        if (event is VRoomOnlineEvent) {
+          return onRoomOnline(event);
         }
       },
     );
@@ -138,20 +144,21 @@ mixin VSocketStatusStream {
 
   void onSocketConnected();
 
-  void onSocketDisconnect();
+  void onSocketDisconnect() {}
 }
 
 mixin VSocketIntervalStream {
-  late final StreamSubscription<VSocketIntervalEvent> _socketStatusStream;
+  late final StreamSubscription<VSocketIntervalEvent>
+      _socketIntervalStatusStream;
 
   void initSocketIntervalStream(Stream<VSocketIntervalEvent> stream) {
-    _socketStatusStream = stream.listen((event) {
+    _socketIntervalStatusStream = stream.listen((event) {
       onIntervalFire();
     });
   }
 
   void closeSocketIntervalStream() {
-    _socketStatusStream.cancel();
+    _socketIntervalStatusStream.cancel();
   }
 
   void onIntervalFire();

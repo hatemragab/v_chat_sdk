@@ -66,6 +66,7 @@ extension StrType on VRoomType {
   bool get isGroup => this == VRoomType.g;
 
   bool get isSingle => this == VRoomType.s;
+  bool get isSingleOrOrder => this == VRoomType.s || this == VRoomType.o;
 
   bool get isBroadcast => this == VRoomType.b;
   bool get isCustom => this == VRoomType.o;

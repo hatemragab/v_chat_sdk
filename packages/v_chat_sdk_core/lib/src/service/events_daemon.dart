@@ -5,12 +5,14 @@ import 'package:v_chat_sdk_core/src/models/models.dart';
 
 import '../utils/event_bus.dart';
 
-abstract class MessageInsertionDaemon {
-  static StreamSubscription? _subscription;
+abstract class EventsDaemon {
+  static StreamSubscription? _messageSubscription;
+  static final _emitter = EventBusSingleton.instance.vChatEvents;
 
   static void start() {
-    _subscription = EventBusSingleton.instance.vChatEvents
+    _messageSubscription = _emitter
         .on<VMessageEvents>()
+        .where((element) => element is VInsertMessageEvent)
         .listen((event) {
       if (event is VInsertMessageEvent) {
         _onNewInsert(event.messageModel);
@@ -23,6 +25,6 @@ abstract class MessageInsertionDaemon {
   }
 
   static void close() {
-    _subscription?.cancel();
+    _messageSubscription?.cancel();
   }
 }

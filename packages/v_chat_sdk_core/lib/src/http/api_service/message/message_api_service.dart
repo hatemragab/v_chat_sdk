@@ -114,7 +114,7 @@ class MessageApiService {
   }) {
     _messageApi = MessageApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? AppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUrl,
     );
     return MessageApiService._();
   }

@@ -179,13 +179,13 @@ abstract class VBaseMessage {
 
   @override
   bool operator ==(Object other) =>
-      other is VBaseMessage && localId == other.localId && id == other.id;
+      other is VBaseMessage && localId == other.localId;
 
   @override
-  int get hashCode => localId.hashCode ^ id.hashCode;
+  int get hashCode => localId.hashCode;
 
   bool get isMeSender {
-    return AppConstants.myProfile.baseUser.vChatId == senderId;
+    return VAppConstants.myProfile.baseUser.vChatId == senderId;
   }
 
   ///Some Getters
@@ -210,7 +210,7 @@ abstract class VBaseMessage {
   bool get isContainReply => replyTo != null;
 
   String get getTextTrans {
-    return AppConstants.getMessageBody(this);
+    return VAppConstants.getMessageBody(this);
   }
 
   @override
@@ -230,11 +230,11 @@ abstract class VBaseMessage {
         platform = VPlatforms.currentPlatform,
         createdAt = DateTime.now().toLocal().toIso8601String(),
         updatedAt = DateTime.now().toLocal().toIso8601String(),
-        senderId = AppConstants.myProfile.baseUser.vChatId,
+        senderId = VAppConstants.myProfile.baseUser.vChatId,
         isStared = false,
-        senderName = AppConstants.myProfile.baseUser.fullName,
+        senderName = VAppConstants.myProfile.baseUser.fullName,
         senderImageThumb =
-            AppConstants.myProfile.baseUser.userImages.smallImage,
+            VAppConstants.myProfile.baseUser.userImages.smallImage,
         messageStatus = MessageEmitStatus.sending,
         parentBroadcastId = broadcastId,
         deletedAt = null,
@@ -254,11 +254,11 @@ abstract class VBaseMessage {
         platform = VPlatforms.currentPlatform,
         createdAt = DateTime.now().toLocal().toIso8601String(),
         updatedAt = DateTime.now().toLocal().toIso8601String(),
-        senderId = AppConstants.fakeMyProfile.baseUser.vChatId,
+        senderId = VAppConstants.fakeMyProfile.baseUser.vChatId,
         isStared = false,
-        senderName = AppConstants.fakeMyProfile.baseUser.fullName,
+        senderName = VAppConstants.fakeMyProfile.baseUser.fullName,
         senderImageThumb =
-            AppConstants.fakeMyProfile.baseUser.userImages.smallImage,
+            VAppConstants.fakeMyProfile.baseUser.userImages.smallImage,
         parentBroadcastId = broadcastId,
         deletedAt = null,
         seenAt = null,

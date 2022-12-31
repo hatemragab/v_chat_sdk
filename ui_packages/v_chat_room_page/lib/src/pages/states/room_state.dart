@@ -61,10 +61,18 @@ class RoomState {
 
   void blockSingle(String roomId, VSingleBanModel banModel) {}
 
-  void updateOnlineOrOff(String roomId, VOnlineOfflineModel model) {
+  void updateOnline(String roomId) {
     final room = roomById(roomId);
     if (room != null) {
-      room.isOnline = model.isOnline;
+      room.isOnline = true;
+      roomStateStream.sink.add(room);
+    }
+  }
+
+  void updateOffline(String roomId) {
+    final room = roomById(roomId);
+    if (room != null) {
+      room.isOnline = false;
       roomStateStream.sink.add(room);
     }
   }

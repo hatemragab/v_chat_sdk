@@ -21,7 +21,7 @@ class VMsgInfoAtt {
     return 'MsgInfoAtt{ action: $action, targetName: $targetName, adminName: $adminName,}';
   }
 
-  bool get isMe => AppConstants.myId == targetId;
+  bool get isMe => VAppConstants.myId == targetId;
 
   bool get isDark {
     if (action == MessageInfoType.kick) {

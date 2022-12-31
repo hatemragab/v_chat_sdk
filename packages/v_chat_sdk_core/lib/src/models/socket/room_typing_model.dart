@@ -8,7 +8,7 @@ class VSocketRoomTypingModel {
   final String userId;
   final String name;
 
-  bool get isMe => AppConstants.myId == userId;
+  bool get isMe => VAppConstants.myId == userId;
 
 //<editor-fold desc="Data Methods" defaultstate="collapsed">
 

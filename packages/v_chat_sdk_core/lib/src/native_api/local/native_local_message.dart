@@ -92,12 +92,12 @@ class NativeLocalMessage {
   Future<int> updateFullMessage(
     VBaseMessage message,
   ) async {
+    await _localMessageRepo.updateFullMessage(baseMessage: message);
     _emitter.fire(VUpdateMessageEvent(
       roomId: message.roomId,
       localId: message.localId,
       messageModel: message,
     ));
-    await _localMessageRepo.updateFullMessage(baseMessage: message);
     return 1;
   }
 

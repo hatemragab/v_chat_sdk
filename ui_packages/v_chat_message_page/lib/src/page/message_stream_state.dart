@@ -21,12 +21,12 @@ class MessageStreamState with VMessageStream, VRoomStream {
   }) {
     ///listen to all message
     initMessageStream(
-      nativeApi.local.message.messageStream.takeWhile(
+      nativeApi.local.message.messageStream.where(
         (e) => e.roomId == currentRoom.id,
       ),
     );
     initRoomStream(
-      nativeApi.local.room.roomStream.takeWhile(
+      nativeApi.local.room.roomStream.where(
         (e) => e.roomId == currentRoom.id,
       ),
     );
@@ -43,10 +43,10 @@ class MessageStreamState with VMessageStream, VRoomStream {
   }
 
   /////////////// room events ////////////
-  @override
-  void onUpdateOnline(VUpdateRoomOnlineEvent event) {
-    return appBarStateController.updateOnline(event.model.isOnline);
-  }
+  // @override
+  // void onUpdateOnline(VUpdateRoomOnlineEvent event) {
+  //   return appBarStateController.updateOnline(event.model.isOnline);
+  // }
 
   @override
   void onUpdateRoomImage(VUpdateRoomImageEvent event) {
@@ -115,5 +115,15 @@ class MessageStreamState with VMessageStream, VRoomStream {
   @override
   void onUpdateMsgType(VUpdateMessageTypeEvent event) {
     return messageState.updateMessageType(event.localId, event.messageType);
+  }
+
+  @override
+  void onRoomOffline(VRoomOfflineEvent event) {
+    return appBarStateController.updateOffline();
+  }
+
+  @override
+  void onRoomOnline(VRoomOnlineEvent event) {
+    return appBarStateController.updateOnline();
   }
 }

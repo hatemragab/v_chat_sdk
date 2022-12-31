@@ -58,7 +58,7 @@ class VVideoMessage extends VBaseMessage {
     super.replyTo,
   }) : super.buildMessage(
           messageType: MessageType.video,
-          content: AppConstants.thisContentIsVideo,
+          content: VAppConstants.thisContentIsVideo,
         );
 
   @override

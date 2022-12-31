@@ -61,7 +61,7 @@ class AuthInterceptor implements RequestInterceptor {
     oldHeaders['authorization'] = "Bearer ${access ?? VAppPref.getHashedString(
           key: VStorageKeys.accessToken,
         )}";
-    oldHeaders["clint-version"] = AppConstants.clintVersion;
+    oldHeaders["clint-version"] = VAppConstants.clintVersion;
     return request.copyWith(
       headers: oldHeaders,
     );

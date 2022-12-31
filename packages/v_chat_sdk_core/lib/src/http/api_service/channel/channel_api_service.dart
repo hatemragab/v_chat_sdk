@@ -262,7 +262,7 @@ class ChannelApiService {
   }) {
     _channelApiService = ChannelApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? AppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUrl,
     );
     return ChannelApiService._();
   }

@@ -7,7 +7,7 @@ import '../../assets/data/local_rooms.dart';
 
 class RoomProvider {
   final _localRoom = VChatController.I.nativeApi.local.room;
-  final _remoteRoom = VChatController.I.nativeApi.remote.remoteRoom;
+  final _remoteRoom = VChatController.I.nativeApi.remote.room;
 
   Future<List<VRoom>> getFakeLocalRooms() async {
     await Future.delayed(const Duration(milliseconds: 100));

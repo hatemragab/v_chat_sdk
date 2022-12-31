@@ -19,9 +19,15 @@ class ReSendDaemon with VSocketIntervalStream {
   void onIntervalFire() async {
     final unSendMessages = await _messagesRef.getUnSendMessages();
     for (final e in unSendMessages) {
-      MessageUploaderQueue.instance.addToQueue(
-        await MessageFactory.createUploadMessage(e),
-      );
+      if (e is VTextMessage) {
+        await MessageUploaderQueue.instance.addToQueue(
+          await MessageFactory.createUploadMessage(e),
+        );
+      } else {
+        MessageUploaderQueue.instance.addToQueue(
+          await MessageFactory.createUploadMessage(e),
+        );
+      }
     }
   }
 

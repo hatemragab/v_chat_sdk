@@ -146,7 +146,7 @@ abstract class ChannelApi extends ChopperService {
     String? accessToken,
   }) {
     final client = ChopperClient(
-      baseUrl: AppConstants.baseUri,
+      baseUrl: VAppConstants.baseUri,
       services: [
         _$ChannelApi(),
       ],

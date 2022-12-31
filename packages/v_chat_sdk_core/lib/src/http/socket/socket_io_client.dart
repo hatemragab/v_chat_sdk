@@ -32,14 +32,14 @@ class SocketIoClient implements ISocketIoClient {
     // }
     final access = "Bearer $accessString";
     return io(
-      AppConstants.baseServerIp,
+      VAppConstants.baseServerIp,
       OptionBuilder()
           .setQuery({
             "auth": access,
           })
           .setExtraHeaders({
             'Authorization': access,
-            "clint-version": AppConstants.clintVersion,
+            "clint-version": VAppConstants.clintVersion,
           })
           .setTransports(['websocket'])
           .enableForceNew()

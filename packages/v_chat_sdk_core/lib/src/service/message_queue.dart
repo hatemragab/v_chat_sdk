@@ -19,13 +19,13 @@ class MessageUploaderQueue {
   Future<void> addToQueue(VMessageUploadModel uploadModel) async {
     if (!_uploadQueue.contains(uploadModel)) {
       _uploadQueue.add(uploadModel);
-      _sendToApi(uploadModel);
+      await _sendToApi(uploadModel);
     }
   }
 
   Future<void> _sendToApi(VMessageUploadModel uploadModel) async {
     try {
-      final msg = await _remoteStorage.remoteMessage.createMessage(
+      final msg = await _remoteStorage.message.createMessage(
         uploadModel,
       );
       _onSuccessToSend(msg);

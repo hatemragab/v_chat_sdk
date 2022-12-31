@@ -45,18 +45,18 @@ mixin RoomLocalStorageService {
     return 1;
   }
 
-  Future<int> updateRoomOnline(VUpdateRoomOnlineEvent event) async {
-    final roomId = await localRoomRepo.getRoomIdByPeerId(event.model.peerId);
-    if (roomId != null) {
-      emitter.fire(VUpdateRoomOnlineEvent(
-        roomId: roomId,
-        model: event.model,
-      ));
-      return 1;
-      // return localRoomRepo.updateOnline(event);
-    }
-    return 1;
-  }
+  // Future<int> updateRoomOnline(VSocketUpdateOnlineList event) async {
+  //   final roomId = await localRoomRepo.getRoomIdByPeerId(event.model.peerId);
+  //   if (roomId != null) {
+  //     emitter.fire(VSocketUpdateOnlineList(
+  //       roomId: roomId,
+  //       model: event.model,
+  //     ));
+  //     return 1;
+  //     // return localRoomRepo.updateOnline(event);
+  //   }
+  //   return 1;
+  // }
 
   Future<int> updateRoomName(VUpdateRoomNameEvent event) async {
     emitter.fire(event);
