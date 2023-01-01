@@ -6,7 +6,10 @@ class VLocationMessageData {
   final LatLng latLng;
   final VLinkPreviewData linkPreviewData;
 
-  VLocationMessageData({required this.latLng, required this.linkPreviewData});
+  VLocationMessageData({
+    required this.latLng,
+    required this.linkPreviewData,
+  });
 
 // from json
   VLocationMessageData.fromMap(Map<String, dynamic> json)

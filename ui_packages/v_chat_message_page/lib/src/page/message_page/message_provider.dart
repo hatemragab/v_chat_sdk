@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:v_chat_input_ui/src/models/mention_with_photo.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../assets/data/api_messages.dart';
@@ -56,5 +57,18 @@ class MessageProvider {
 
   Future<DateTime> getLastSeenAt(String peerId) async {
     return _remoteProfile.getUserLastSeenAt(peerId);
+  }
+
+  Future<bool> checkGroupStatus(String roomId) async {
+    return _remoteRoom.getGroupStatus(roomId);
+  }
+
+  Future<List<MentionWithPhoto>> onMentionRequireSearch(String text) async {
+    //todo search
+    return <MentionWithPhoto>[];
+  }
+
+  void emitTypingChanged(VSocketRoomTypingModel model) {
+    return _socket.emitUpdateRoomStatus(model);
   }
 }

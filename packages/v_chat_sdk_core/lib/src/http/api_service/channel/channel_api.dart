@@ -114,6 +114,11 @@ abstract class ChannelApi extends ChopperService {
     @Path("roomId") String roomId,
   );
 
+  @Get(path: "/{roomId}/group/my-status")
+  Future<Response> getMyGroupStatus(
+    @Path("roomId") String roomId,
+  );
+
   ///get getGroupMembers
   @Get(path: "/{roomId}/group/members", optionalBody: true)
   Future<Response> getGroupMembers(

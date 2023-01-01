@@ -49,10 +49,6 @@ class VMessageAppBare extends StatelessWidget {
         return Text(state.lastSeenAt!.toString());
       }
     }
-    if (state.memberCount != null) {
-      //todo trans
-      return Text("Members ${state.memberCount!}");
-    }
     return null;
   }
 }

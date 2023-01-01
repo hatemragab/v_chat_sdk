@@ -297,6 +297,17 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
+  Future<Response<dynamic>> getMyGroupStatus(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/group/my-status');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> getGroupMembers(
     String roomId,
     Map<String, dynamic> query,

@@ -118,10 +118,7 @@ class _VMessagePageState extends State<VMessagePage> {
                 onTypingChange: controller.onTypingChange,
                 googleMapsLangKey: "en",
                 maxMediaSize: _config.maxMediaSize,
-                onMentionSearch: (p0) async {
-                  //todo search over users
-                  return <MentionWithPhoto>[];
-                },
+                onMentionSearch: controller.onMentionRequireSearch,
                 maxRecordTime: _config.maxRecordTime,
                 googleMapsApiKey: _config.googleMapsApiKey,
                 replyWidget: value.replyMsg == null

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_message_page/src/models/app_bare_state_model.dart';
 import 'package:v_chat_message_page/src/models/input_state_model.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_controller.dart';
@@ -76,15 +77,53 @@ class VMessageController {
     _onSubmitSendMessage(localMsg);
   }
 
-  void onMentionRequireSearch(String text) {}
+  Future<List<MentionWithPhoto>> onMentionRequireSearch(String text) async {
+    return _messageProvider.onMentionRequireSearch(text);
+  }
 
-  void onSubmitMedia(List<VBaseMediaRes> files) {}
+  void onSubmitMedia(List<VBaseMediaRes> files) {
+    for (var media in files) {
+      if (media is VMediaImageRes) {
+        final localMsg = VImageMessage.buildMessage(
+          roomId: vRoom.id,
+          data: media.data,
+        );
+        _onSubmitSendMessage(localMsg);
+      } else if (media is VMediaVideoRes) {
+        final localMsg = VVideoMessage.buildMessage(
+          data: media.data,
+          roomId: vRoom.id,
+        );
+        _onSubmitSendMessage(localMsg);
+      }
+    }
+  }
 
-  void onSubmitVoice(VMessageVoiceData data) {}
+  void onSubmitVoice(VMessageVoiceData data) {
+    final localMsg = VVoiceMessage.buildMessage(
+      data: data,
+      roomId: vRoom.id,
+    );
+    _onSubmitSendMessage(localMsg);
+  }
 
-  void onSubmitFiles(List<VPlatformFileSource> files) {}
+  void onSubmitFiles(List<VPlatformFileSource> files) {
+    for (var file in files) {
+      final localMsg = VFileMessage.buildMessage(
+        data: VMessageFileData(fileSource: file),
+        roomId: vRoom.id,
+      );
+      _onSubmitSendMessage(localMsg);
+    }
+  }
 
-  void onSubmitLocation(VLocationMessageData data) {}
+  void onSubmitLocation(VLocationMessageData data) {
+    final localMsg = VLocationMessage.buildMessage(
+      data: data,
+      roomId: vRoom.id,
+    );
+    _onSubmitSendMessage(localMsg);
+  }
 
   void onTypingChange(VRoomTypingEnum typing) {
     final model = VSocketRoomTypingModel(
@@ -93,7 +132,7 @@ class VMessageController {
       name: _currentUser.baseUser.fullName,
       userId: _currentUser.baseUser.vChatId,
     );
-    _remoteStorage.socketIo.emitUpdateRoomStatus(model);
+    _messageProvider.emitTypingChanged(model);
   }
 
   bool get isSocketConnected =>

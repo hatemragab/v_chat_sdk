@@ -22,9 +22,7 @@ class AppBarStateController with VSocketIntervalStream {
     initSocketIntervalStream(
       VChatController.I.nativeApi.remote.socketIo.socketIntervalStream,
     );
-    if (!_vRoom.isOnline) {
-      _updateAppBareState();
-    }
+    _updateAppBareState();
   }
 
   void updateTitle(String title) {
@@ -52,11 +50,6 @@ class AppBarStateController with VSocketIntervalStream {
     appBareState.notifyListeners();
   }
 
-  void updateMemberCount(int count) {
-    appBareState.value.memberCount = count;
-    appBareState.notifyListeners();
-  }
-
   close() {
     appBareState.dispose();
     closeSocketIntervalStream();
@@ -69,21 +62,19 @@ class AppBarStateController with VSocketIntervalStream {
 
   @override
   void onIntervalFire() async {
-    if (_vRoom.roomType.isSingleOrOrder) {
-      if (!_vRoom.isOnline && appBareState.value.lastSeenAt == null) {
-        _updateAppBareState();
-      }
-    }
+    _updateAppBareState();
   }
 
   Future<void> _updateAppBareState() async {
-    await vSafeApiCall<DateTime>(
-      request: () async {
-        return await _messageProvider.getLastSeenAt(_vRoom.peerId!);
-      },
-      onSuccess: (response) {
-        updateLastSeen(response);
-      },
-    );
+    if (!_vRoom.isOnline && _vRoom.roomType.isSingleOrOrder) {
+      await vSafeApiCall<DateTime>(
+        request: () async {
+          return await _messageProvider.getLastSeenAt(_vRoom.peerId!);
+        },
+        onSuccess: (response) {
+          updateLastSeen(response);
+        },
+      );
+    }
   }
 }

@@ -80,10 +80,10 @@ class VRoom {
         isOnline = false,
         blockerId = map['bId'] as String?,
         peerId = map['pId'] as String?,
-        lastMessage = (map['messages'] as List).isEmpty
+        lastMessage = map['lastMessage'] == null
             ? VEmptyMessage()
             : MessageFactory.createBaseMessage(
-                (map['messages'] as List).first as Map<String, dynamic>,
+                map['lastMessage'] as Map<String, dynamic>,
               );
 
   VRoom.fromLocalMap(Map<String, dynamic> map)

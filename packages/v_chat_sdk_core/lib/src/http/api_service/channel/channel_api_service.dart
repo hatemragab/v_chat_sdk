@@ -164,6 +164,12 @@ class ChannelApiService {
     return GroupInfo.fromMap(extractDataFromResponse(res));
   }
 
+  Future<bool> getGroupStatus(String roomId) async {
+    final res = await _channelApiService.getMyGroupStatus(roomId);
+    throwIfNotSuccess(res);
+    return extractDataFromResponse(res)['isMeOut'] as bool;
+  }
+
   Future<bool> leaveGroup(String roomId) async {
     final res = await _channelApiService.leaveGroup(roomId);
     throwIfNotSuccess(res);

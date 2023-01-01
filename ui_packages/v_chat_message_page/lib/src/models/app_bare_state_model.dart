@@ -3,7 +3,6 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MessageAppBarStateModel {
   DateTime? lastSeenAt;
-  int? memberCount;
   String roomTitle;
   String roomId;
   String? peerIdentifier;
@@ -14,7 +13,6 @@ class MessageAppBarStateModel {
 
   MessageAppBarStateModel._({
     this.lastSeenAt,
-    this.memberCount,
     required this.roomTitle,
     required this.roomId,
     required this.peerIdentifier,
