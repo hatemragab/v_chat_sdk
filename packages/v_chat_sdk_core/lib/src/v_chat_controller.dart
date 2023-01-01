@@ -8,7 +8,6 @@ import 'package:v_chat_sdk_core/src/service/re_send_daemon.dart';
 import 'package:v_chat_sdk_core/src/service/socket_status_service.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
-import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_sdk_core/src/utils/event_bus.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
