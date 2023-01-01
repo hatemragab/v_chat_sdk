@@ -21,7 +21,7 @@ class VSocketStatusWidget extends StatefulWidget {
 }
 
 class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
-  final _socket = VChatController.I.nativeApi.remote.remoteSocketIo;
+  final _socket = VChatController.I.nativeApi.remote.socketIo;
   bool show = false;
 
   @override

@@ -21,7 +21,8 @@ void main() async {
     deviceLanguage: Locale("en"),
   );
   runApp(
-    GetMaterialApp(
+    OverlaySupport.global(
+        child: GetMaterialApp(
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
@@ -51,6 +52,6 @@ void main() async {
         ),
       ]),
       darkTheme: ThemeData.dark(),
-    ),
+    )),
   );
 }

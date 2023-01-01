@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MessageStatusIcon extends StatelessWidget {
   final MessageEmitStatus messageStatus;
@@ -18,24 +19,37 @@ class MessageStatusIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeData = context.vMessageTheme;
+    final themeData =
+        context.vMessageTheme.vMessageItemBuilder.messageSendingStatus;
     if (!isMeSender) {
       return const SizedBox.shrink();
     }
-    return Padding(
-      padding: const EdgeInsets.only(right: 3),
-      child: _getIcon(themeData),
+    if (isSeen) {
+      return _getBody(themeData.seenIcon);
+    }
+    if (isDeliver) {
+      return _getBody(themeData.deliverIcon);
+    }
+    return _getBody(
+      _getIcon(themeData),
     );
   }
 
-  Widget _getIcon(themeData) {
+  Widget _getBody(Widget icon) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 3),
+      child: icon,
+    );
+  }
+
+  Widget _getIcon(VMsgStatusTheme themeData) {
     switch (messageStatus) {
       case MessageEmitStatus.serverConfirm:
-        return themeData.vMessageItemBuilder.messageSendingStatus.sendIcon;
+        return themeData.sendIcon;
       case MessageEmitStatus.error:
-        return themeData.vMessageItemBuilder.messageSendingStatus.refreshIcon;
+        return themeData.refreshIcon;
       case MessageEmitStatus.sending:
-        return themeData.vMessageItemBuilder.messageSendingStatus.pendingIcon;
+        return themeData.pendingIcon;
     }
   }
 }

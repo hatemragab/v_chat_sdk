@@ -13,7 +13,7 @@ class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
     initRoomStream(nativeApi.local.room.roomStream);
     // test();
     initSocketIntervalStream(
-      nativeApi.remote.remoteSocketIo.socketIntervalStream,
+      nativeApi.remote.socketIo.socketIntervalStream,
     );
   }
 
@@ -123,7 +123,7 @@ class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
     final ids = roomState.stateRooms
         .where((element) => element.roomType.isSingle)
         .toList();
-    nativeApi.remote.remoteSocketIo.emitGetMyOnline(
+    nativeApi.remote.socketIo.emitGetMyOnline(
       ids
           .map((e) => VOnlineOfflineModel(
                 peerId: e.peerId!,

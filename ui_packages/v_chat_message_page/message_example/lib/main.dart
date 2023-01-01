@@ -21,13 +21,15 @@ void main() async {
   );
 
   runApp(
-    GetMaterialApp(
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      locale: Locale("en"),
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+    OverlaySupport.global(
+      child: GetMaterialApp(
+        title: "Application",
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        locale: Locale("en"),
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+      ),
     ),
   );
 }

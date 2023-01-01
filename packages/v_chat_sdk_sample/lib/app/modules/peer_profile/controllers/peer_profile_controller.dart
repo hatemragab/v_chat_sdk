@@ -34,7 +34,7 @@ class PeerProfileController extends GetxController {
         apiCallStatus.value = ApiCallStatus.success;
         peerData = response;
       },
-      onError: (exception) {
+      onError: (exception, trace) {
         apiCallStatus.value = ApiCallStatus.error;
         print(exception);
       },

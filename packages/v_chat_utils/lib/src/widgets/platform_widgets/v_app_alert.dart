@@ -6,6 +6,8 @@ import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_utils/src/utils/extension.dart';
 
+import '../../../v_chat_utils.dart';
+
 abstract class VAppAlert {
   static ProgressDialog? _progressDialog;
 
@@ -177,6 +179,58 @@ abstract class VAppAlert {
       ),
     );
   }
+
+  static void showOverlaySupport({
+    Duration duration = const Duration(seconds: 5),
+    String? subtitle,
+    required String title,
+    Widget? trailing,
+    TextStyle? textStyle,
+    Widget? leading,
+    Color? background,
+  }) {
+    showSimpleNotification(
+      Text(title, style: textStyle),
+      background: background,
+      autoDismiss: true,
+      trailing: trailing,
+      leading: leading,
+      slideDismissDirection: DismissDirection.horizontal,
+      subtitle: subtitle == null ? null : Text(subtitle),
+      duration: duration,
+    );
+  }
+
+  static void showOverlayWithBarrier({
+    required String title,
+    required String subtitle,
+    Duration duration = const Duration(seconds: 5),
+  }) {
+    showOverlay(
+      (context, t) {
+        return Container(
+          color: Color.lerp(Colors.transparent, Colors.black54, t),
+          child: FractionalTranslation(
+            translation:
+                Offset.lerp(const Offset(0, -1), const Offset(0, 0), t)!,
+            child: Column(
+              children: <Widget>[
+                _MessageNotification(
+                  title: title,
+                  subtitle: subtitle,
+                  onReply: () {
+                    OverlaySupportEntry.of(context)!.dismiss();
+                  },
+                  key: ModalKey(const Object()),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      duration: duration,
+    );
+  }
 }
 
 class ModelSheetItem<T> {
@@ -185,4 +239,37 @@ class ModelSheetItem<T> {
   final IconData? iconData;
 
   ModelSheetItem({required this.title, required this.id, this.iconData});
+}
+
+class _MessageNotification extends StatelessWidget {
+  final VoidCallback onReply;
+
+  final String? subtitle;
+  final String title;
+
+  const _MessageNotification({
+    Key? key,
+    required this.onReply,
+    required this.subtitle,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      child: SafeArea(
+        child: ListTile(
+          title: Text(title),
+          subtitle: subtitle == null ? null : Text(subtitle!),
+          trailing: IconButton(
+            icon: const Icon(Icons.clear),
+            onPressed: () {
+              onReply();
+            },
+          ),
+        ),
+      ),
+    );
+  }
 }

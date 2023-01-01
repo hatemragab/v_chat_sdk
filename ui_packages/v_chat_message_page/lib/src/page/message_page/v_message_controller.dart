@@ -9,15 +9,16 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../widgets/message_items/v_message_item_controller.dart';
-import '../message_stream_state.dart';
 import 'message_provider.dart';
+import 'states/message_stream_state.dart';
 
-class VMessageController with VSocketStatusStream, VSocketIntervalStream {
+class VMessageController {
   final bool isInTesting;
   final Function(String userId) onMentionPress;
   final VRoom vRoom;
-  final _provider = MessageProvider();
-  final messageState = MessageState();
+  final _messageProvider = MessageProvider();
+  late final MessageState messageState;
+
   late final AppBarStateController appBarStateController;
   late final InputStateController inputStateController;
 
@@ -43,9 +44,9 @@ class VMessageController with VSocketStatusStream, VSocketIntervalStream {
     required this.onMentionPress,
     this.isInTesting = false,
   }) {
-    _initLocalMessages();
-    appBarStateController = AppBarStateController(vRoom);
-    inputStateController = InputStateController(vRoom.blockerId != null);
+    messageState = MessageState(vRoom, _messageProvider, isInTesting);
+    appBarStateController = AppBarStateController(vRoom, _messageProvider);
+    inputStateController = InputStateController(vRoom, _messageProvider);
     _localStreamChanges = MessageStreamState(
       nativeApi: VChatController.I.nativeApi,
       messageState: messageState,
@@ -53,50 +54,7 @@ class VMessageController with VSocketStatusStream, VSocketIntervalStream {
       inputStateController: inputStateController,
       currentRoom: vRoom,
     );
-    initSocketStatusStream(
-      VChatController.I.nativeApi.remote.remoteSocketIo.socketStatusStream,
-    );
-    _provider.setSeen(roomId);
-    initSocketIntervalStream(
-      VChatController.I.nativeApi.remote.remoteSocketIo.socketIntervalStream,
-    );
-    _setAppBareState();
-  }
-
-  Future<void> _initLocalMessages() async {
-    await vSafeApiCall<List<VBaseMessage>>(
-      request: () async {
-        if (isInTesting) {
-          return await _provider.getFakeLocalMessages();
-        } else {
-          return _provider.getLocalMessages(roomId: vRoom.id);
-        }
-      },
-      onSuccess: (response) {
-        messageState.updateCacheState(response);
-      },
-    );
-    await getApiMessages();
-  }
-
-  Future<void> getApiMessages() async {
-    await vSafeApiCall<List<VBaseMessage>>(
-      request: () async {
-        if (isInTesting) {
-          return await _provider.getFakeApiMessages();
-        } else {
-          return _provider.getApiMessages(
-            roomId: vRoom.id,
-            dto: const VRoomMessagesDto(
-              limit: 20,
-            ),
-          );
-        }
-      },
-      onSuccess: (response) {
-        messageState.updateCacheState(response);
-      },
-    );
+    _messageProvider.setSeen(roomId);
   }
 
   void onMessageItemPress(VBaseMessage message) {}
@@ -135,42 +93,16 @@ class VMessageController with VSocketStatusStream, VSocketIntervalStream {
       name: _currentUser.baseUser.fullName,
       userId: _currentUser.baseUser.vChatId,
     );
-    _remoteStorage.remoteSocketIo.emitUpdateRoomStatus(model);
+    _remoteStorage.socketIo.emitUpdateRoomStatus(model);
   }
+
+  bool get isSocketConnected =>
+      VChatController.I.nativeApi.remote.socketIo.isConnected;
 
   void dispose() {
     _localStreamChanges.close();
     messageState.close();
     appBarStateController.close();
     inputStateController.close();
-    closeSocketStatusStream();
-    closeSocketIntervalStream();
-  }
-
-  @override
-  void onSocketConnected() {
-    //todo improve the call here
-    getApiMessages();
-    _provider.setSeen(roomId);
-  }
-
-  bool get isSocketConnected =>
-      VChatController.I.nativeApi.remote.remoteSocketIo.isConnected;
-
-  @override
-  void onIntervalFire() async {
-    if (vRoom.roomType.isSingleOrOrder) {
-      if (!vRoom.isOnline && appBareState.lastSeenAt == null) {
-        final date = await _provider.getLastSeenAt(vRoom.peerId!);
-        appBarStateController.updateLastSeen(date);
-      }
-    }
-  }
-
-  void _setAppBareState() async {
-    if (!vRoom.isOnline) {
-      final date = await _provider.getLastSeenAt(vRoom.peerId!);
-      appBarStateController.updateLastSeen(date);
-    }
   }
 }

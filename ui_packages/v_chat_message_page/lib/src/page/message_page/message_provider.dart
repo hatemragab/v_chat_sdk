@@ -11,7 +11,7 @@ class MessageProvider {
   final _localRoom = VChatController.I.nativeApi.local.room;
   final _remoteRoom = VChatController.I.nativeApi.remote.room;
   final _remoteProfile = VChatController.I.nativeApi.remote.profile;
-  final _socket = VChatController.I.nativeApi.remote.remoteSocketIo;
+  final _socket = VChatController.I.nativeApi.remote.socketIo;
 
   Future<List<VBaseMessage>> getFakeLocalMessages() async {
     await Future.delayed(const Duration(milliseconds: 100));

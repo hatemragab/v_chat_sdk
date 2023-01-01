@@ -6,11 +6,28 @@ import 'package:v_chat_message_page/src/core/extentions.dart';
 import 'package:v_chat_sdk_core/src/models/socket/on_deliver_room_messages_model.dart';
 import 'package:v_chat_sdk_core/src/models/socket/on_enter_room_model.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-class MessageState {
+import '../message_provider.dart';
+
+class MessageState with VSocketStatusStream {
+  final VRoom _vRoom;
+  final bool isInTesting;
+  final MessageProvider _messageProvider;
   final stateNotifier = ValueNotifier<List<VBaseMessage>>(
     <VBaseMessage>[],
   );
+
+  MessageState(
+    this._vRoom,
+    this._messageProvider,
+    this.isInTesting,
+  ) {
+    initSocketStatusStream(
+      VChatController.I.nativeApi.remote.socketIo.socketStatusStream,
+    );
+    _initLocalMessages();
+  }
 
   List<VBaseMessage> get stateMessages => stateNotifier.value;
   final messageStateStream = StreamController<VBaseMessage>.broadcast();
@@ -56,6 +73,7 @@ class MessageState {
   void close() {
     messageStateStream.close();
     stateNotifier.dispose();
+    closeSocketStatusStream();
   }
 
   void deleteMessage(String localId) {
@@ -94,5 +112,52 @@ class MessageState {
       stateMessages[i].deliveredAt ??= model.date;
     }
     stateNotifier.notifyListeners();
+  }
+
+  @override
+  void onSocketConnected() {
+    //todo improve the call here
+    getApiMessages();
+    _messageProvider.setSeen(_vRoom.id);
+  }
+
+  Future<void> getApiMessages() async {
+    await vSafeApiCall<List<VBaseMessage>>(
+      request: () async {
+        if (isInTesting) {
+          return await _messageProvider.getFakeApiMessages();
+        } else {
+          return _messageProvider.getApiMessages(
+            roomId: _vRoom.id,
+            dto: const VRoomMessagesDto(
+              limit: 20,
+            ),
+          );
+        }
+      },
+      onSuccess: (response) {
+        updateCacheState(response);
+      },
+    );
+  }
+
+  Future<void> _initLocalMessages() async {
+    await vSafeApiCall<List<VBaseMessage>>(
+      request: () async {
+        if (isInTesting) {
+          return await _messageProvider.getFakeLocalMessages();
+        } else {
+          return _messageProvider.getLocalMessages(roomId: _vRoom.id);
+        }
+      },
+      onSuccess: (response) {
+        updateCacheState(response);
+      },
+    );
+    await getApiMessages();
+  }
+
+  void emitSeenFor(String roomId) {
+    _messageProvider.setSeen(roomId);
   }
 }

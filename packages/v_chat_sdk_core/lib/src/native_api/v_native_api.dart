@@ -55,7 +55,7 @@ class _LocalNativeApi {
 }
 
 class _RemoteNativeApi {
-  final remoteSocketIo = NativeRemoteSocketIo();
+  final socketIo = NativeRemoteSocketIo();
   final ChannelApiService _room;
   final MessageApiService _nativeRemoteMessage;
   final ProfileApiService _nativeProfileApiService;

@@ -57,7 +57,7 @@ mixin VMessageStream {
 mixin VRoomStream {
   late final StreamSubscription<VRoomEvents> _roomStream;
 
-  void onInsertRoom(VInsertRoomEvent event);
+  void onInsertRoom(VInsertRoomEvent event) {}
 
   void onBlockSingleRoom(VBlockSingleRoomEvent event);
 
@@ -71,13 +71,13 @@ mixin VRoomStream {
 
   void onUpdateRoomImage(VUpdateRoomImageEvent event);
 
-  void onAddOneToUnRead(VUpdateRoomUnReadCountByOneEvent event);
+  void onAddOneToUnRead(VUpdateRoomUnReadCountByOneEvent event) {}
 
-  void onResetRoomCounter(VUpdateRoomUnReadCountToZeroEvent event);
+  void onResetRoomCounter(VUpdateRoomUnReadCountToZeroEvent event) {}
 
-  void onChangeMute(VUpdateRoomMuteEvent event);
+  void onChangeMute(VUpdateRoomMuteEvent event) {}
 
-  void onDeleteRoom(VDeleteRoomEvent event);
+  void onDeleteRoom(VDeleteRoomEvent event) {}
 
   void initRoomStream(Stream<VRoomEvents> stream) {
     _roomStream = stream.listen(

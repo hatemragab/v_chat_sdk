@@ -56,39 +56,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppService>(
-      assignId: true,
-      builder: (appService) {
-        return GetMaterialApp(
-          title: "V Chat V2",
-          initialRoute: AppPages.INITIAL,
-          getPages: AppPages.routes,
-          debugShowCheckedModeBanner: false,
-          themeMode: appService.themeMode,
-          initialBinding: LazyInjection(),
-          localizationsDelegates: [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            VChatLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          locale: appService.locale,
-          fallbackLocale: const Locale("en"),
-          theme: FlexThemeData.light(
+    return OverlaySupport.global(
+      child: GetBuilder<AppService>(
+        assignId: true,
+        builder: (appService) {
+          return GetMaterialApp(
+            title: "V Chat V2",
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
+            debugShowCheckedModeBanner: false,
+            themeMode: appService.themeMode,
+            initialBinding: LazyInjection(),
+            localizationsDelegates: [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              VChatLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            locale: appService.locale,
+            fallbackLocale: const Locale("en"),
+            theme: FlexThemeData.light(
+                scheme: FlexScheme.green,
+                useMaterial3: true,
+                appBarElevation: 20,
+                extensions: <ThemeExtension<dynamic>>[]),
+            darkTheme: FlexThemeData.dark(
               scheme: FlexScheme.green,
               useMaterial3: true,
+              extensions: <ThemeExtension<dynamic>>[],
               appBarElevation: 20,
-              extensions: <ThemeExtension<dynamic>>[]),
-          darkTheme: FlexThemeData.dark(
-            scheme: FlexScheme.green,
-            useMaterial3: true,
-            extensions: <ThemeExtension<dynamic>>[],
-            appBarElevation: 20,
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }

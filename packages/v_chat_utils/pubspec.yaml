@@ -36,6 +36,7 @@ dependencies:
   collection: ^1.16.0
   flutter_parsed_text: ^2.2.1
   http_parser: ^4.0.2
+  overlay_support: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

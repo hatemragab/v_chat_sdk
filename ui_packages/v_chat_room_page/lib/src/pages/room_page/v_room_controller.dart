@@ -24,7 +24,7 @@ class VRoomController with VSocketStatusStream {
     this.isTesting = false,
   }) {
     initSocketStatusStream(
-      VChatController.I.nativeApi.remote.remoteSocketIo.socketStatusStream,
+      VChatController.I.nativeApi.remote.socketIo.socketStatusStream,
     );
     roomState = RoomState(
       _roomProvider.getRoomById,

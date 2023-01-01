@@ -6,7 +6,7 @@ import 'online_offline_service.dart';
 class SocketStatusService with VSocketStatusStream {
   SocketStatusService() {
     initSocketStatusStream(
-      VChatController.I.nativeApi.remote.remoteSocketIo.socketStatusStream,
+      VChatController.I.nativeApi.remote.socketIo.socketStatusStream,
     );
   }
 

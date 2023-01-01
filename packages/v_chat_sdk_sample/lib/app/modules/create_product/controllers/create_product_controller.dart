@@ -43,7 +43,7 @@ class CreateProductController extends GetxController {
         VAppAlert.hideLoading();
         Get.back();
       },
-      onError: (exception) {
+      onError: (exception, trace) {
         VAppAlert.hideLoading();
       },
       onLoading: () {

@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../models/input_state_model.dart';
+import '../message_provider.dart';
 
 class InputStateController {
   late final ValueNotifier<MessageInputModel> inputState;
+  final MessageProvider _messageProvider;
+  final VRoom _vRoom;
 
-  InputStateController(bool isChatClosed) {
+  InputStateController(
+    this._vRoom,
+    this._messageProvider,
+  ) {
     inputState = ValueNotifier<MessageInputModel>(
       MessageInputModel(
-        isCloseInput: isChatClosed,
+        isCloseInput: _vRoom.blockerId != null,
       ),
     );
   }

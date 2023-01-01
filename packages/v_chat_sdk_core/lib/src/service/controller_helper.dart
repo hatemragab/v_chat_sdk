@@ -15,6 +15,7 @@ class ControllerHelper {
   ControllerHelper._privateConstructor();
 
   static final instance = ControllerHelper._privateConstructor();
+
   ControllerHelper._();
 
   Future<ControllerHelper> init(
@@ -37,6 +38,9 @@ class ControllerHelper {
         VChatLogger.red(
           'V_CHAT_SDK (LEVEL: ${record.level.name}) (File: ${record.loggerName}) Message:${record.message}',
         );
+      } else if (Level.SHOUT == record.level) {
+        // ignore this log because it represent user api timeout exception
+        //or user don't have internet connection
       } else {
         VChatLogger.blue(
           'V_CHAT_SDK (LEVEL: ${record.level.name}) (File: ${record.loggerName}) Message:${record.message}',

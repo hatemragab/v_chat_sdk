@@ -1,9 +1,9 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import 'message_page/states/app_bar_state_controller.dart';
-import 'message_page/states/input_state_controller.dart';
-import 'message_page/states/message_state.dart';
+import 'app_bar_state_controller.dart';
+import 'input_state_controller.dart';
+import 'message_state.dart';
 
 class MessageStreamState with VMessageStream, VRoomStream {
   final MessageState messageState;
@@ -39,6 +39,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
 
   @override
   void onNewMsg(VInsertMessageEvent event) {
+    messageState.emitSeenFor(event.roomId);
     return messageState.insertMessage(event.messageModel);
   }
 
@@ -64,27 +65,12 @@ class MessageStreamState with VMessageStream, VRoomStream {
   }
 
   @override
-  void onAddOneToUnRead(VUpdateRoomUnReadCountByOneEvent event) {}
-
-  @override
   void onBlockSingleRoom(VBlockSingleRoomEvent event) {
     if (event.banModel.banned) {
       return inputStateController.closeChat();
     }
     return inputStateController.openChat();
   }
-
-  @override
-  void onChangeMute(VUpdateRoomMuteEvent event) {}
-
-  @override
-  void onDeleteRoom(VDeleteRoomEvent event) {}
-
-  @override
-  void onInsertRoom(VInsertRoomEvent event) {}
-
-  @override
-  void onResetRoomCounter(VUpdateRoomUnReadCountToZeroEvent event) {}
 
   /////////////// message methods//////////
   @override

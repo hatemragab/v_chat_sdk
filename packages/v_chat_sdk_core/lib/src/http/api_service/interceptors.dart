@@ -46,6 +46,15 @@ void throwIfNotSuccess(Response res) {
   }
 }
 
+// Future<Response> apiRequestHandler({
+//   required Future<Response> Function() request,
+//   Function(String exception,StackTrace trace)? onInternetError,
+//   Function(String exception,StackTrace trace)? onUserError,
+//   Function(String exception,StackTrace trace)? onServerError,
+// }) async {
+//   try {} catch (err) {}
+// }
+
 Map<String, dynamic> extractDataFromResponse(Response res) {
   return (res.body as Map<String, dynamic>)['data'] as Map<String, dynamic>;
 }

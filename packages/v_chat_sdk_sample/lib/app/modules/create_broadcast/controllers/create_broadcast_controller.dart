@@ -45,7 +45,7 @@ class CreateBroadcastController extends GetxController {
         VAppAlert.hideLoading();
         Get.until((route) => route.settings.name == Routes.HOME);
       },
-      onError: (exception) {
+      onError: (exception, trace) {
         VAppAlert.hideLoading();
       },
     );
