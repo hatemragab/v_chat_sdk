@@ -1,12 +1,13 @@
+import 'package:v_chat_utils/v_chat_utils.dart';
+
 import '../../v_chat_sdk_core.dart';
-import '../utils/event_bus.dart';
 import 'online_offline_service.dart';
 
 class OfflineOnlineEmitterService {
-  final _emitter = EventBusSingleton.instance.vChatEvents;
+  final _emitter = VEventBusSingleton.vEventBus;
 
-  void start(Stream<VOnlineOfflineModel> stream) {
-    stream.listen((e) {
+  void start() {
+    _emitter.on<VOnlineOfflineModel>().listen((e) {
       if (e.isOnline) {
         _handleOnlineEvent(e);
       } else {

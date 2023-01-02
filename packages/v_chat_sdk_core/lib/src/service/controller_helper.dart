@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:logging/logging.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_sdk_core.dart';
-import '../logger/v_logger.dart';
-import '../utils/event_bus.dart';
 
 class ControllerHelper {
   late final VChatConfig _config;
@@ -85,12 +84,14 @@ class ControllerHelper {
     if (!_config.isPushEnable) {
       return null;
     }
-    try {
-      return await _config.pushProvider!.getToken();
-    } catch (err) {
-      _log.warning(err);
+    final token = await _config.pushProvider!.getToken();
+    if (token == null) {
+      _log.warning(
+        "FCM value is null this device will not receive notifications this may be bad network or this device not support google play service",
+      );
     }
-    return null;
+
+    return token;
   }
 
   void _initSocketTimer() {
@@ -98,7 +99,7 @@ class ControllerHelper {
     _timer = Timer.periodic(
       const Duration(seconds: 10),
       (timer) {
-        EventBusSingleton.instance.vChatEvents.fire(VSocketIntervalEvent());
+        VEventBusSingleton.vEventBus.fire(VSocketIntervalEvent());
       },
     );
   }

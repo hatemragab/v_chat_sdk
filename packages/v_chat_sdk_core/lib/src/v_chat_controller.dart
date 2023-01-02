@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/events_daemon.dart';
+import 'package:v_chat_sdk_core/src/service/notification_listener.dart';
 import 'package:v_chat_sdk_core/src/service/offline_online_emitter_service.dart';
 import 'package:v_chat_sdk_core/src/service/re_send_daemon.dart';
 import 'package:v_chat_sdk_core/src/service/socket_status_service.dart';
+import 'package:v_chat_sdk_core/src/service/v_app_lifecycle_state.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
-import 'package:v_chat_sdk_core/src/utils/event_bus.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../v_chat_sdk_core.dart';
@@ -27,10 +27,8 @@ import 'models/controller/message_page_config.dart';
 /// ```dart
 /// final i = VChatController.I;
 /// ```
-class VChatController with WidgetsBindingObserver {
+class VChatController {
   final _log = Logger('VChatController');
-
-  static WidgetsBinding? get _widgetsBindingInstance => WidgetsBinding.instance;
 
   ///singleton
   VChatController._();
@@ -47,6 +45,7 @@ class VChatController with WidgetsBindingObserver {
 
   late final AuthApi authApi;
   late final RoomApi roomApi;
+  final vAppLifecycleState = VAppLifecycleState();
 
   ///v chat variables
   late final ControllerHelper _helper;
@@ -82,34 +81,16 @@ class VChatController with WidgetsBindingObserver {
       _instance.nativeApi,
       _instance.vChatConfig,
     );
-    _widgetsBindingInstance?.addObserver(_instance);
+
     SocketController.instance.connect();
-     _startServices();
+    _startServices();
 
     return _instance;
   }
 
   void dispose() {
     _isControllerInit = false;
-    _widgetsBindingInstance?.removeObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        _log.fine("AppLifecycleState.resumed:");
-        break;
-      case AppLifecycleState.inactive:
-        _log.fine("AppLifecycleState.inactive:");
-        break;
-      case AppLifecycleState.paused:
-        _log.fine("AppLifecycleState.paused:");
-        break;
-      case AppLifecycleState.detached:
-        _log.fine("AppLifecycleState.detached:");
-        break;
-    }
+    vAppLifecycleState.dispose();
   }
 
   ///make sure you already login or already login to v chat
@@ -127,10 +108,9 @@ class VChatController with WidgetsBindingObserver {
 
   static void _startServices() {
     ReSendDaemon().start();
-    EventsDaemon.start();
-    OfflineOnlineEmitterService().start(
-      EventBusSingleton.instance.vChatEvents.on<VOnlineOfflineModel>(),
-    );
+    EventsDaemon().start();
+    OfflineOnlineEmitterService().start();
     SocketStatusService();
+    VNotificationListener();
   }
 }

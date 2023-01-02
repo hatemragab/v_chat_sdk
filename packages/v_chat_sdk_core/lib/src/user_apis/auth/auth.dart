@@ -7,9 +7,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../http/socket/socket_controller.dart';
-import '../../native_api/v_native_api.dart';
 import '../../service/controller_helper.dart';
-import '../../utils/device_info.dart';
 
 class AuthApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
@@ -42,6 +40,9 @@ class AuthApi implements AuthEndPoints {
     );
     final user = await _remoteAuth.login(dto);
     SocketController.instance.connect();
+    if (VChatController.I.vChatConfig.isPushEnable) {
+      VChatController.I.vChatConfig.pushProvider!.askForPermissions();
+    }
     return user;
   }
 
@@ -68,6 +69,9 @@ class AuthApi implements AuthEndPoints {
 
     final user = await _remoteAuth.register(dto);
     SocketController.instance.connect();
+    if (VChatController.I.vChatConfig.isPushEnable) {
+      VChatController.I.vChatConfig.pushProvider!.askForPermissions();
+    }
     return user;
   }
 

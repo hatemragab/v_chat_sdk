@@ -1,6 +1,6 @@
-import 'package:event_bus_plus/event_bus_plus.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-class VSocketStatusEvent extends AppEvent {
+class VSocketStatusEvent extends VAppEvent {
   final bool isConnected;
 
   const VSocketStatusEvent(this.isConnected);

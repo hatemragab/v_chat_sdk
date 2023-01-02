@@ -78,10 +78,11 @@ class MyApp extends StatelessWidget {
             locale: appService.locale,
             fallbackLocale: const Locale("en"),
             theme: FlexThemeData.light(
-                scheme: FlexScheme.green,
-                useMaterial3: true,
-                appBarElevation: 20,
-                extensions: <ThemeExtension<dynamic>>[]),
+              scheme: FlexScheme.green,
+              useMaterial3: true,
+              appBarElevation: 20,
+              extensions: <ThemeExtension<dynamic>>[],
+            ),
             darkTheme: FlexThemeData.dark(
               scheme: FlexScheme.green,
               useMaterial3: true,

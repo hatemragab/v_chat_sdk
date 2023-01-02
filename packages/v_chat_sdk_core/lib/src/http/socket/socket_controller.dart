@@ -4,11 +4,11 @@ import 'package:logging/logging.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../models/socket/on_deliver_room_messages_model.dart';
 import '../../models/socket/on_enter_room_model.dart';
-import '../../utils/event_bus.dart';
 
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
@@ -39,7 +39,7 @@ class SocketController implements ISocketIoClient {
 
   bool get isSocketConnected => socketIoClient.socket.connected;
   final socketIoClient = SocketIoClient();
-  final vChatEvents = EventBusSingleton.instance.vChatEvents;
+  final vChatEvents =VEventBusSingleton.vEventBus;
 
   @override
   void connect() {

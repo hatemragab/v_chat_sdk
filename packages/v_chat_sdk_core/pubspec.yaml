@@ -22,10 +22,9 @@ dependencies:
   mime_type: ^1.0.0
   uuid: ^3.0.7
   file_sizes: ^1.0.6
-  platform_device_id: ^1.0.1
-  device_info_plus: ^8.0.0
+
   socket_io_client: ^2.0.0
-  event_bus_plus: ^0.5.0
+
   latlong2: ^0.8.1
   path: ^1.8.2
   sqflite: ^2.2.0+2

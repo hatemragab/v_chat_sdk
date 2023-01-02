@@ -1,5 +1,6 @@
+import 'package:v_chat_utils/v_chat_utils.dart';
+
 import '../../v_chat_sdk_core.dart';
-import '../utils/event_bus.dart';
 
 ///this class will ensure to resend all failed messages
 class ReSendDaemon with VSocketIntervalStream {
@@ -7,7 +8,7 @@ class ReSendDaemon with VSocketIntervalStream {
 
   ReSendDaemon() {
     initSocketIntervalStream(
-      EventBusSingleton.instance.vChatEvents.on<VSocketIntervalEvent>(),
+      VEventBusSingleton.vEventBus.on<VSocketIntervalEvent>(),
     );
   }
 

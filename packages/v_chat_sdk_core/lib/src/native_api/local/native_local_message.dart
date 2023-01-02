@@ -5,11 +5,10 @@ import '../../../v_chat_sdk_core.dart';
 import '../../local_db/core/abstraction/base_local_message_repo.dart';
 import '../../local_db/core/imp/message/memory_message_imp.dart';
 import '../../local_db/core/imp/message/sql_message_imp.dart';
-import '../../utils/event_bus.dart';
 
 class NativeLocalMessage {
   late BaseLocalMessageRepo _localMessageRepo;
-  final _emitter = EventBusSingleton.instance.vChatEvents;
+  final _emitter = VEventBusSingleton.vEventBus;
 
   Stream<VMessageEvents> get messageStream => _emitter.on<VMessageEvents>();
 

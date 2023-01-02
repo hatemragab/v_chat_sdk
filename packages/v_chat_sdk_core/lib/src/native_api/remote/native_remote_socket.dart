@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../http/socket/socket_controller.dart';
-import '../../utils/event_bus.dart';
 
 class NativeRemoteSocketIo {
-  final _vChatEvents = EventBusSingleton.instance.vChatEvents;
+  final _vChatEvents = VEventBusSingleton.vEventBus;
 
   Socket get socket => SocketController.instance.currentSocket;
 

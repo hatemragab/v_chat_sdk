@@ -9,14 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_sdk_core: ^0.0.2
-  firebase_core: ^2.3.0
-  firebase_messaging: ^14.1.2
+  v_chat_utils: ^0.0.6
+  firebase_core: ^2.4.1
+  firebase_messaging: ^14.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

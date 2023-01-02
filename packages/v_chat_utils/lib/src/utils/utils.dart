@@ -7,3 +7,5 @@ export './extension.dart';
 export './string_utils.dart';
 export './v_async_widgets_builder.dart';
 export './v_safe_api_call.dart';
+export './device_info.dart';
+export './event_bus.dart';

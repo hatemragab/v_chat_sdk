@@ -1,9 +1,8 @@
-import 'package:event_bus_plus/res/app_event.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_sdk_core.dart';
-import '../models/v_room/single_room/single_ban_model.dart';
 
-abstract class VRoomEvents extends AppEvent {
+abstract class VRoomEvents extends VAppEvent {
   final String roomId;
 
   const VRoomEvents({
@@ -37,18 +36,6 @@ class VBlockSingleRoomEvent extends VRoomEvents {
   @override
   List<Object?> get props => [super.props, banModel];
 }
-
-// class VSocketUpdateOnlineList extends VRoomEvents {
-//   final VOnlineOfflineModel model;
-//
-//   const VSocketUpdateOnlineList({
-//     required super.roomId,
-//     required this.model,
-//   });
-//
-//   @override
-//   List<Object?> get props => [super.props, model];
-// }
 
 class VRoomOnlineEvent extends VRoomEvents {
   const VRoomOnlineEvent({

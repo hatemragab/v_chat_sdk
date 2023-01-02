@@ -1,5 +1,7 @@
 enum VLoadMoreStatus { loading, loaded, error, completed }
 
+enum VChatPushService { firebase, onesignal }
+
 enum VChatLoadingState { loading, success, error, ideal, empty }
 
 enum VSupportedFilesType {

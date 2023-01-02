@@ -3,14 +3,13 @@ import 'dart:async';
 import 'package:v_chat_sdk_core/src/events/events.dart';
 import 'package:v_chat_sdk_core/src/models/models.dart';
 import 'package:v_chat_sdk_core/src/v_chat_controller.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../utils/event_bus.dart';
+class EventsDaemon {
+  StreamSubscription? _messageSubscription;
+  final _emitter = VEventBusSingleton.vEventBus;
 
-abstract class EventsDaemon {
-  static StreamSubscription? _messageSubscription;
-  static final _emitter = EventBusSingleton.instance.vChatEvents;
-
-  static void start() {
+  void start() {
     _messageSubscription = _emitter
         .on<VMessageEvents>()
         .where((element) => element is VInsertMessageEvent)
@@ -21,7 +20,7 @@ abstract class EventsDaemon {
     });
   }
 
-  static void _onNewInsert(VBaseMessage message) async {
+  void _onNewInsert(VBaseMessage message) async {
     if (!message.isMeSender) {
       ///deliver this message
       VChatController.I.nativeApi.remote.socketIo.emitDeliverRoomMessages(
@@ -31,7 +30,7 @@ abstract class EventsDaemon {
     //print("onNewInsertonNewInsert $message");
   }
 
-  static void close() {
+  void close() {
     _messageSubscription?.cancel();
   }
 }

@@ -1,4 +1,5 @@
-import '../v_chat_base_exception.dart';
+
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class VChatBaseHttpException extends VChatBaseException {
   final int statusCode;

@@ -2,14 +2,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
-import '../../utils/event_bus.dart';
 import '../core/abstraction/base_local_message_repo.dart';
 import '../core/imp/message/memory_message_imp.dart';
 import '../core/imp/message/sql_message_imp.dart';
 
 mixin MessageLocalStorage {
   late BaseLocalMessageRepo localMessageRepo;
-  final emitter = EventBusSingleton.instance.vChatEvents;
+  final emitter = VEventBusSingleton.vEventBus;
 
   initMessageLocalStorage({
     required Database database,

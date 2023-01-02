@@ -1,5 +1,3 @@
-enum VChatPushService { firebase, onesignal }
-
 enum VChatHttpMethods { get, post, patch, delete }
 
 enum MessageType {

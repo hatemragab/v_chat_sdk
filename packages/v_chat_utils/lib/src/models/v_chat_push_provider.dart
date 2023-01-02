@@ -1,4 +1,4 @@
-import '../../v_chat_sdk_core.dart';
+import '../../v_chat_utils.dart';
 
 abstract class VChatPushProviderBase {
   Future<bool> init();
@@ -6,6 +6,10 @@ abstract class VChatPushProviderBase {
   Future<String?> getToken();
 
   Future<void> deleteToken();
+
+  Future<void> askForPermissions();
+
+  void close();
 
   VChatPushService serviceName();
 }
