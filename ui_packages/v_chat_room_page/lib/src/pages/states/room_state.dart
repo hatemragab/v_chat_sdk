@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_room_page/src/shared/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RoomState {
   final Future<VRoom?> Function(String roomId) getRoom;
@@ -96,7 +95,7 @@ class RoomState {
   void updateImage(String roomId, String image) {
     final room = roomById(roomId);
     if (room != null) {
-      room.thumbImage = VFullUrlModel(image);
+      room.thumbImage = image;
       roomStateStream.sink.add(room);
     }
   }
@@ -196,7 +195,7 @@ class RoomState {
       //we need to request this room !
       //first search in local db
       //if not found then send api request to server
-      await Future.delayed(const Duration(seconds: 1));
+      //await Future.delayed(const Duration(seconds: 1));
       final newRoom = await getRoom(event.roomId);
       if (newRoom != null) {
         insertRoom(newRoom);

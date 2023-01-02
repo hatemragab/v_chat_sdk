@@ -52,6 +52,11 @@ class _LocalNativeApi {
     apiCache = NativeLocalApiCache(database);
     // await room.prepareRooms();
   }
+
+  Future reCreate() async {
+    await message.reCreateMessageTable();
+    await room.reCreateRoomTable();
+  }
 }
 
 class _RemoteNativeApi {

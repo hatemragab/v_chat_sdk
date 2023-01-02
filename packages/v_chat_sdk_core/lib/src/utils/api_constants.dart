@@ -21,21 +21,21 @@ abstract class VAppConstants {
     return VChatController.I.vChatConfig.maxMediaUploadSize;
   }
 
-  static String get baseUrl {
-    return "$baseServerIp/api/v2";
-  }
+  // static String get baseUrl {
+  //   return "$baseServerIp/api/v2";
+  // }
 
   static Uri get baseUri {
     return Uri.parse("$baseServerIp/api/v2");
   }
 
-  static String get getMediaBaseUrl {
-    final isS3Supported = VChatController.I.vChatConfig.s3Supported;
-    if (isS3Supported) {
-      return "$baseUrl/s3/?key=";
-    }
-    return "$baseUrl/public/";
-  }
+  // static String get getMediaBaseUrl {
+  //   final isS3Supported = VChatController.I.vChatConfig.s3Supported;
+  //   if (isS3Supported) {
+  //     return "$baseUrl/s3/?key=";
+  //   }
+  //   return "$baseUrl/public/";
+  // }
 
   static VIdentifierUser get myProfile {
     final map = VAppPref.getMap(VStorageKeys.vMyProfile);

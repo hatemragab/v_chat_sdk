@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/app_service.dart';
 import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
@@ -89,6 +90,7 @@ class SettingsTabController extends GetxController {
     if (res == 1) {
       await VAppPref.clear();
       await AuthRepo.logout();
+      VChatController.I.authApi.logout();
       Get.offAndToNamed(Routes.SPLASH);
     }
   }

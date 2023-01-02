@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChatAvatarImage extends StatelessWidget {
-  final VFullUrlModel imageUrl;
+  final String imageUrl;
   final bool isOnline;
   final String chatTitle;
 
@@ -22,7 +21,7 @@ class ChatAvatarImage extends StatelessWidget {
       statusColor: isOnline ? Colors.green : null,
       name: chatTitle,
       image: CachedNetworkImageProvider(
-        imageUrl.fullUrl,
+        imageUrl,
       ),
     );
   }

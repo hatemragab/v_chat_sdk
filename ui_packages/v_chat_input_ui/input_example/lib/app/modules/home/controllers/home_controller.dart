@@ -14,9 +14,7 @@ class HomeController extends GetxController {
     (i) => MentionWithPhoto(
       id: "$i",
       display: "u$i",
-      photo: VFullUrlModel.fromFullUrl(
-        "https://picsum.photos/600/60$i",
-      ),
+      photo: "https://picsum.photos/600/60$i",
     ),
   );
 

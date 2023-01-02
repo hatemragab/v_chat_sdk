@@ -147,7 +147,7 @@ abstract class ChannelApi extends ChopperService {
   );
 
   static ChannelApi create({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     final client = ChopperClient(

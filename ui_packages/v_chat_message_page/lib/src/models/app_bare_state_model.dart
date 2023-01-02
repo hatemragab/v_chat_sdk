@@ -1,12 +1,11 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MessageAppBarStateModel {
   DateTime? lastSeenAt;
   String roomTitle;
   String roomId;
   String? peerIdentifier;
-  VFullUrlModel roomImage;
+  String roomImage;
   VSocketRoomTypingModel typingModel;
   VRoomType roomType;
   bool isOnline;

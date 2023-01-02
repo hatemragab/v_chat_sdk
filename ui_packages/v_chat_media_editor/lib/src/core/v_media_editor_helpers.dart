@@ -58,7 +58,10 @@ class VMediaEditorHelpers {
       quality: 25,
     );
     if (thumbPath == null) return null;
-    final thumbImageData = await getImageInfo(fileSource: fileSource);
+    final thumbImageData = await getImageInfo(
+        fileSource: VPlatformFileSource.fromPath(
+      filePath: thumbPath,
+    ));
     return VMessageImageData(
       fileSource: VPlatformFileSource.fromPath(filePath: thumbPath),
       width: thumbImageData.image.width,

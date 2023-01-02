@@ -20,7 +20,7 @@ abstract class ProfileApi extends ChopperService {
   );
 
   static ProfileApi create({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     final client = ChopperClient(

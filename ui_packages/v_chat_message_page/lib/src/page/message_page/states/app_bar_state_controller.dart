@@ -35,7 +35,7 @@ class AppBarStateController with VSocketIntervalStream {
     appBareState.notifyListeners();
   }
 
-  void updateImage(VFullUrlModel image) {
+  void updateImage(String image) {
     appBareState.value.roomImage = image;
     appBareState.notifyListeners();
   }

@@ -10,7 +10,6 @@ import '../../http/socket/socket_controller.dart';
 import '../../native_api/v_native_api.dart';
 import '../../service/controller_helper.dart';
 import '../../utils/device_info.dart';
-import '../../utils/event_bus.dart';
 
 class AuthApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
@@ -85,7 +84,6 @@ class AuthApi implements AuthEndPoints {
       await VAppPref.remove(element);
     }
     SocketController.instance.disconnect();
-
-    EventBusSingleton.instance.close();
+    await _vNativeApi.local.reCreate();
   }
 }

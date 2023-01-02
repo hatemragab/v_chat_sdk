@@ -111,12 +111,12 @@ class MessageApiService {
   }
 
   static MessageApiService init({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     _messageApi = MessageApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? VAppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
     return MessageApiService._();
   }

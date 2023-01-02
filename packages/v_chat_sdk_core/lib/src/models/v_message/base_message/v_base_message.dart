@@ -40,7 +40,7 @@ abstract class VBaseMessage {
   /// sender data
   String senderId;
   String senderName;
-  VFullUrlModel senderImageThumb;
+  String senderImageThumb;
 
   ///which pla-from this message send through
   final String platform;
@@ -83,7 +83,7 @@ abstract class VBaseMessage {
       : id = map['_id'] as String,
         senderId = map['sId'] as String,
         senderName = map['sName'] as String,
-        senderImageThumb = VFullUrlModel(map['sImg'] as String),
+        senderImageThumb = map['sImg'] as String,
         platform = map['plm'] as String,
         forwardId = map['forId'] as String?,
         roomId = map['rId'] as String,
@@ -109,8 +109,7 @@ abstract class VBaseMessage {
       : id = map[MessageTable.columnId] as String,
         senderId = map[MessageTable.columnSenderId] as String,
         senderName = map[MessageTable.columnSenderName] as String,
-        senderImageThumb =
-            VFullUrlModel(map[MessageTable.columnSenderImageThumb] as String),
+        senderImageThumb = map[MessageTable.columnSenderImageThumb] as String,
         platform = map[MessageTable.columnPlatform] as String,
         roomId = map[MessageTable.columnRoomId] as String,
         isStared = (map[MessageTable.columnIsStar] as int) == 1,
@@ -140,7 +139,7 @@ abstract class VBaseMessage {
       MessageTable.columnId: id,
       MessageTable.columnSenderId: senderId,
       MessageTable.columnSenderName: senderName,
-      MessageTable.columnSenderImageThumb: senderImageThumb.originalUrl,
+      MessageTable.columnSenderImageThumb: senderImageThumb,
       MessageTable.columnPlatform: platform,
       MessageTable.columnRoomId: roomId,
       MessageTable.columnIsStar: isStared ? 1 : 0,
@@ -269,7 +268,7 @@ abstract class VBaseMessage {
       "_id": id,
       "sId": senderId,
       "sName": senderName,
-      "sImg": senderImageThumb.originalUrl,
+      "sImg": senderImageThumb,
       "plm": platform,
       "mT": messageType.name,
       "rId": roomId,

@@ -25,6 +25,7 @@ class MessageUploaderQueue {
 
   Future<void> _sendToApi(VMessageUploadModel uploadModel) async {
     try {
+      _setSending(uploadModel);
       final msg = await _remoteStorage.message.createMessage(
         uploadModel,
       );
@@ -82,5 +83,15 @@ class MessageUploaderQueue {
 
   void clearQueue() {
     _uploadQueue.clear();
+  }
+
+  void _setSending(VMessageUploadModel uploadModel) async {
+    await _localStorage.updateMessageSendingStatus(
+      VUpdateMessageStatusEvent(
+        roomId: uploadModel.roomId,
+        localId: uploadModel.msgLocalId,
+        emitState: MessageEmitStatus.sending,
+      ),
+    );
   }
 }

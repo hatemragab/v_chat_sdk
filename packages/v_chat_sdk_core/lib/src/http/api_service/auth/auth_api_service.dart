@@ -61,12 +61,12 @@ class AuthApiService {
   }
 
   static AuthApiService init({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     _authApi = AuthApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? VAppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
     return AuthApiService._();
   }

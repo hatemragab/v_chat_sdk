@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
+import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_message_page/src/models/app_bare_state_model.dart';
 import 'package:v_chat_message_page/src/models/input_state_model.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_controller.dart';
@@ -81,8 +83,18 @@ class VMessageController {
     return _messageProvider.onMentionRequireSearch(text);
   }
 
-  void onSubmitMedia(List<VBaseMediaRes> files) {
-    for (var media in files) {
+  void onSubmitMedia(
+    BuildContext context,
+    List<VBaseMediaRes> files,
+  ) async {
+    final fileRes = await context.toPage(VMediaEditorView(
+      files: files.map((e) {
+        return e.getVPlatformFile();
+      }).toList(),
+    )) as List<VBaseMediaRes>?;
+
+    if (fileRes == null) return;
+    for (var media in fileRes) {
       if (media is VMediaImageRes) {
         final localMsg = VImageMessage.buildMessage(
           roomId: vRoom.id,

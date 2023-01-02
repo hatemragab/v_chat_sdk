@@ -1,8 +1,7 @@
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MentionWithPhoto extends MentionData {
-  final VFullUrlModel photo;
+  final String photo;
 
   MentionWithPhoto({
     required super.id,

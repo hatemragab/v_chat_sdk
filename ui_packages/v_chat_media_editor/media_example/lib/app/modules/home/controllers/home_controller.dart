@@ -36,7 +36,7 @@ class HomeController extends GetxController {
       }
       final editedFiles = await Navigator.of(Get.context!).push(
         MaterialPageRoute(
-          builder: ((context) => MediaEditorView(files: mediaFiles)),
+          builder: ((context) => VMediaEditorView(files: mediaFiles)),
         ),
       ) as List<VBaseMediaRes>?;
       if (editedFiles == null) {

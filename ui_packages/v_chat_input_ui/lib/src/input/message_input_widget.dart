@@ -431,7 +431,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         final compressedImage =
             await _vMediaEditorHelpers.compressIoImage(fileSource: sourceFile);
         final imageData = await _vMediaEditorHelpers.getImageInfo(
-            fileSource: compressedImage);
+          fileSource: compressedImage,
+        );
         resFiles.add(
           VMediaImageRes(
             data: VMessageImageData(
@@ -455,6 +456,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
             await _vMediaEditorHelpers.getVideoDurationMill(sourceFile);
         final thumbData =
             await _vMediaEditorHelpers.getVideoThumb(fileSource: sourceFile);
+
         resFiles.add(
           VMediaVideoRes(
             data: VMessageVideoData(
@@ -480,6 +482,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
             msg: "File size bigger than allowed size", context: context);
         continue;
       }
+      res.add(sourceFile);
     }
 
     return res;

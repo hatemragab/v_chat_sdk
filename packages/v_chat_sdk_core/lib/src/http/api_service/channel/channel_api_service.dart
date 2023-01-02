@@ -158,11 +158,11 @@ class ChannelApiService {
     return VRoom.fromMap(extractDataFromResponse(res));
   }
 
-  Future<GroupInfo> getGroupInfo(String roomId) async {
-    final res = await _channelApiService.getMyGroupInfo(roomId);
-    throwIfNotSuccess(res);
-    return GroupInfo.fromMap(extractDataFromResponse(res));
-  }
+  // Future<GroupInfo> getGroupInfo(String roomId) async {
+  //   final res = await _channelApiService.getMyGroupInfo(roomId);
+  //   throwIfNotSuccess(res);
+  //   return GroupInfo.fromMap(extractDataFromResponse(res));
+  // }
 
   Future<bool> getGroupStatus(String roomId) async {
     final res = await _channelApiService.getMyGroupStatus(roomId);
@@ -263,12 +263,12 @@ class ChannelApiService {
   }
 
   static ChannelApiService init({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     _channelApiService = ChannelApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? VAppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
     return ChannelApiService._();
   }

@@ -1,5 +1,3 @@
-import 'package:v_chat_utils/v_chat_utils.dart';
-
 import '../../../v_chat_sdk_core.dart';
 
 class VEmptyMessage extends VBaseMessage {
@@ -8,7 +6,7 @@ class VEmptyMessage extends VBaseMessage {
           id: "EmptyMessage",
           senderId: "EmptyMessage",
           senderName: "EmptyMessage",
-          senderImageThumb: VFullUrlModel("Empty.url", isFullUrl: true),
+          senderImageThumb: "Empty.url",
           platform: "EmptyMessage",
           roomId: "EmptyMessage",
           content: "",

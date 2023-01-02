@@ -17,12 +17,12 @@ class ProfileApiService {
   }
 
   static ProfileApiService init({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     _profileApi = ProfileApi.create(
       accessToken: accessToken,
-      baseUrl: baseUrl ?? VAppConstants.baseUrl,
+      baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
     return ProfileApiService._();
   }

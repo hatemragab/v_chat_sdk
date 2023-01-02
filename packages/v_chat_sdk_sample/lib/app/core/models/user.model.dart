@@ -18,7 +18,6 @@ class UserModel {
   VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
         fileSize: 0,
         url: imageUrl,
-        isFullUrl: true,
       );
 
   @override

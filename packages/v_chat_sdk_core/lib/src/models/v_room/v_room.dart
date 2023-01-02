@@ -1,16 +1,14 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:intl/intl.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
 import '../../local_db/tables/room_table.dart';
-import '../v_message/core/message_factory.dart';
 
 class VRoom {
   final String id;
   String title;
   String enTitle;
-  VFullUrlModel thumbImage;
+  String thumbImage;
   VRoomType roomType;
   bool isArchived;
   int unReadCount;
@@ -47,7 +45,7 @@ class VRoom {
   VRoom.empty()
       : id = "",
         title = "",
-        thumbImage = VFullUrlModel("empty!.png"),
+        thumbImage = "empty!.png",
         isArchived = false,
         roomType = VRoomType.s,
         createdAt = DateTime.now(),
@@ -66,7 +64,7 @@ class VRoom {
   VRoom.fromMap(Map<String, dynamic> map)
       : id = map['rId'] as String,
         title = map['t'] as String,
-        thumbImage = VFullUrlModel(map['img'] as String),
+        thumbImage = map['img'] as String,
         isArchived = map['isA'] as bool,
         roomType = VRoomType.values.byName(map['rT'] as String),
         createdAt = DateTime.parse(map['createdAt'] as String),
@@ -91,7 +89,7 @@ class VRoom {
         roomType =
             VRoomType.values.byName(map[RoomTable.columnRoomType] as String),
         title = map[RoomTable.columnTitle] as String,
-        thumbImage = VFullUrlModel(map[RoomTable.columnThumbImage] as String),
+        thumbImage = map[RoomTable.columnThumbImage] as String,
         isArchived = (map[RoomTable.columnIsArchived] as int) == 1,
         createdAt = DateTime.parse(map[RoomTable.columnCreatedAt] as String),
         enTitle = map[RoomTable.columnEnTitle] as String,
@@ -110,7 +108,7 @@ class VRoom {
     return {
       RoomTable.columnId: id,
       RoomTable.columnTitle: title,
-      RoomTable.columnThumbImage: thumbImage.originalUrl,
+      RoomTable.columnThumbImage: thumbImage,
       RoomTable.columnEnTitle: enTitle,
       RoomTable.columnRoomType: roomType.name,
       RoomTable.columnIsArchived: isArchived ? 1 : 0,
@@ -190,8 +188,7 @@ class VRoom {
       peerIdentifier: null,
       title: "${id == 0 ? "Group" : ""} $id",
       enTitle: "enTitle",
-      thumbImage: VFullUrlModel("https://picsum.photos/300/${id + 299}",
-          isFullUrl: true),
+      thumbImage: "https://picsum.photos/300/${id + 299}",
       isArchived: false,
       roomType: id == 0 ? VRoomType.g : VRoomType.s,
       isMuted: id % 2 == 0,
@@ -212,7 +209,7 @@ class VRoom {
     String? id,
     String? title,
     String? enTitle,
-    VFullUrlModel? thumbImage,
+    String? thumbImage,
     VRoomType? roomType,
     bool? isArchived,
     int? unReadCount,

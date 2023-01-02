@@ -1,9 +1,7 @@
-import 'package:v_chat_utils/v_chat_utils.dart';
-
 class VUserImage {
-  final VFullUrlModel fullImage;
-  final VFullUrlModel chatImage;
-  final VFullUrlModel smallImage;
+  final String fullImage;
+  final String chatImage;
+  final String smallImage;
 
 //<editor-fold desc="Data Methods">
 
@@ -14,17 +12,14 @@ class VUserImage {
   });
 
   VUserImage.fromSingleUrl(String url)
-      : fullImage = VFullUrlModel(url),
-        chatImage = VFullUrlModel(url),
-        smallImage = VFullUrlModel(url);
+      : fullImage = url,
+        chatImage = url,
+        smallImage = url;
 
   VUserImage.fromFakeSingleUrl()
-      : fullImage =
-            VFullUrlModel("https://picsum.photos/300/300", isFullUrl: true),
-        chatImage =
-            VFullUrlModel("https://picsum.photos/300/300", isFullUrl: true),
-        smallImage =
-            VFullUrlModel("https://picsum.photos/300/300", isFullUrl: true);
+      : fullImage = "https://picsum.photos/300/300",
+        chatImage = "https://picsum.photos/300/300",
+        smallImage = "https://picsum.photos/300/300";
 
   @override
   String toString() {
@@ -37,17 +32,17 @@ class VUserImage {
 
   Map<String, dynamic> toMap() {
     return {
-      'fullImage': fullImage.originalUrl,
-      'chatImage': chatImage.originalUrl,
-      'smallImage': smallImage.originalUrl,
+      'fullImage': fullImage,
+      'chatImage': chatImage,
+      'smallImage': smallImage,
     };
   }
 
   factory VUserImage.fromMap(Map<String, dynamic> map) {
     return VUserImage(
-      fullImage: VFullUrlModel(map['fullImage'] as String),
-      chatImage: VFullUrlModel(map['chatImage'] as String),
-      smallImage: VFullUrlModel(map['smallImage'] as String),
+      fullImage: map['fullImage'] as String,
+      chatImage: map['chatImage'] as String,
+      smallImage: map['smallImage'] as String,
     );
   }
 

@@ -28,6 +28,7 @@ class VMessagePage extends StatefulWidget {
 class _VMessagePageState extends State<VMessagePage> {
   late final VMessageController controller;
   final _config = VChatController.I.vMessagePageConfig;
+
   @override
   void initState() {
     super.initState();
@@ -111,7 +112,8 @@ class _VMessagePageState extends State<VMessagePage> {
             builder: (_, value, __) {
               return VMessageInputWidget(
                 onSubmitText: controller.onSubmitText,
-                onSubmitMedia: controller.onSubmitMedia,
+                onSubmitMedia: (files) =>
+                    controller.onSubmitMedia(context, files),
                 onSubmitVoice: controller.onSubmitVoice,
                 onSubmitFiles: controller.onSubmitFiles,
                 onSubmitLocation: controller.onSubmitLocation,

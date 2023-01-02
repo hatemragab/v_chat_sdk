@@ -61,8 +61,10 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
 
   void _delay() async {
     await Future.delayed(widget.delay);
-    setState(() {
-      show = true;
-    });
+    if (mounted) {
+      setState(() {
+        show = true;
+      });
+    }
   }
 }

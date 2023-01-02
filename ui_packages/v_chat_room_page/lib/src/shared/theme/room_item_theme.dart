@@ -14,7 +14,7 @@ class VChatItemBuilder {
   });
 
   final Widget Function(String title) getChatTitle;
-  final Widget Function(VFullUrlModel urlModel, String chatTitle, bool isOnline)
+  final Widget Function(String urlModel, String chatTitle, bool isOnline)
       getChatAvatar;
   final VMsgStatusTheme lastMessageStatus;
   final Widget muteIcon;

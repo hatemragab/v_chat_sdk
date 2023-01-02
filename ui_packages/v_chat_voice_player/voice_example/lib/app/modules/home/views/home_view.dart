@@ -27,7 +27,6 @@ class HomeViewState extends State<HomeView> {
         id: "$i",
         dataSource: VPlatformFileSource.fromUrl(
           url: "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
-          isFullUrl: true,
         ),
       ),
     ));
@@ -77,7 +76,6 @@ class HomeViewState extends State<HomeView> {
                     dataSource: VPlatformFileSource.fromUrl(
                       url:
                           "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
-                      isFullUrl: true,
                     )),
               );
               setState(() {});

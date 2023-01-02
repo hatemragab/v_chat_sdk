@@ -57,7 +57,7 @@ abstract class MessageApi extends ChopperService {
   );
 
   static MessageApi create({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     final client = ChopperClient(

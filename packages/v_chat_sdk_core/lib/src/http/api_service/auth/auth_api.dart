@@ -26,7 +26,7 @@ abstract class AuthApi extends ChopperService {
   Future<Response> logout();
 
   static AuthApi create({
-    String? baseUrl,
+    Uri? baseUrl,
     String? accessToken,
   }) {
     final client = ChopperClient(

@@ -69,7 +69,6 @@ class VMessageImageData {
     return VMessageImageData(
       fileSource: VPlatformFileSource.fromUrl(
         url: "https://picsum.photos/$width/$high",
-        isFullUrl: true,
       ),
       width: width,
       height: high,

@@ -84,8 +84,7 @@ class VChatController with WidgetsBindingObserver {
     );
     _widgetsBindingInstance?.addObserver(_instance);
     SocketController.instance.connect();
-    mediaBaseUrl = VAppConstants.getMediaBaseUrl;
-    _startServices();
+     _startServices();
 
     return _instance;
   }

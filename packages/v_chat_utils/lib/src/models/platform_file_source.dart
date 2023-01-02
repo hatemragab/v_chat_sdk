@@ -4,13 +4,12 @@ import 'dart:typed_data';
 import 'package:file_sizes/file_sizes.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:path/path.dart';
-import 'package:v_chat_utils/src/models/v_full_url_model.dart';
 
 import '../utils/enums.dart';
 
 class VPlatformFileSource {
   String name;
-  VFullUrlModel? url;
+  String? url;
   String? filePath;
   List<int>? bytes;
   String? mimeType;
@@ -36,6 +35,11 @@ class VPlatformFileSource {
   bool get isNotUrl => isFromBytes || isFromPath;
 
   String get readableSize => FileSize.getSize(fileSize);
+
+  String get getUrlPath {
+    final uri = Uri.parse(url!);
+    return "${uri.scheme}://${uri.host}${uri.path}";
+  }
 
   List<int> get getBytes {
     if (bytes != null) {
@@ -68,25 +72,15 @@ class VPlatformFileSource {
 
   VPlatformFileSource.fromUrl({
     this.fileSize = 0,
-    required String url,
-    bool isFullUrl = false,
-  })  : url = VFullUrlModel(url, isFullUrl: isFullUrl),
-        name = basename(url) {
-    mimeType = getMimeType;
-  }
-
-  VPlatformFileSource.fromVUrl({
-    this.fileSize = 0,
-    required VFullUrlModel vFullUrlModel,
-  })  : url = vFullUrlModel,
-        name = basename(vFullUrlModel.fullUrl) {
+    required String this.url,
+  }) : name = basename(url) {
     mimeType = getMimeType;
   }
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'url': url == null ? null : url!.originalUrl,
+      'url': url == null ? null : url!,
       'filePath': filePath,
       'bytes': bytes,
       'mimeType': getMimeType,
@@ -124,7 +118,7 @@ class VPlatformFileSource {
     }
     return VPlatformFileSource._(
       name: map['name'] as String,
-      url: map['url'] == null ? null : VFullUrlModel(map['url'] as String),
+      url: map['url'] == null ? null : map['url'] as String,
       filePath: map['filePath'] as String?,
       bytes: map['bytes'] as List<int>?,
       // bytes: (map['bytes'] as List?) ==null?null:(map['bytes'] as List).map((e) => null) ,

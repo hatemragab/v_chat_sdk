@@ -1,5 +1,4 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import 'app_bar_state_controller.dart';
 import 'input_state_controller.dart';
@@ -51,7 +50,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
 
   @override
   void onUpdateRoomImage(VUpdateRoomImageEvent event) {
-    return appBarStateController.updateImage(VFullUrlModel(event.image));
+    return appBarStateController.updateImage(event.image);
   }
 
   @override

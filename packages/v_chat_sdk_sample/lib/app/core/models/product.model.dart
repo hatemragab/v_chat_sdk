@@ -25,7 +25,6 @@ class ProductModel {
   VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
         fileSize: 0,
         url: imageUrl,
-        isFullUrl: true,
       );
 
   Map<String, dynamic> toMap() {

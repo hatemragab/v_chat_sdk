@@ -8,7 +8,6 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  mediaBaseUrl = "http://10.0.2.2:3000";
   await VChatController.init(
     vChatConfig: VChatConfig(
       passwordHashKey: "YOUR STRONG PASSWORD HASH KEY!",

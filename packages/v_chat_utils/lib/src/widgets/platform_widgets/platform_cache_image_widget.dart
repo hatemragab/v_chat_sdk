@@ -26,6 +26,7 @@ class VPlatformCacheImageWidget extends StatefulWidget {
 
 class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
   var imageKey = UniqueKey();
+
   @override
   Widget build(BuildContext context) {
     if (widget.source.bytes != null) {
@@ -44,14 +45,14 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
         fit: widget.fit,
       );
     }
-
     return CachedNetworkImage(
       key: imageKey,
       height: widget.size == null ? null : widget.size!.height,
       width: widget.size == null ? null : widget.size!.width,
       fit: widget.fit,
-      matchTextDirection: true,
-      imageUrl: widget.source.url!.fullUrl,
+      cacheKey: widget.source.getUrlPath,
+      imageUrl: widget.source.url!,
+      useOldImageOnUrlChange: true,
       placeholder: (context, url) =>
           const CupertinoActivityIndicator.partiallyRevealed(),
       errorWidget: (context, url, error) => InkWell(

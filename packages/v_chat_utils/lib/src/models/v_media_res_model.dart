@@ -4,6 +4,8 @@ abstract class VBaseMediaRes {
   bool isSelected = false;
   final String id;
 
+  VPlatformFileSource getVPlatformFile();
+
   VBaseMediaRes({
     required this.id,
   });
@@ -29,6 +31,9 @@ class VMediaImageRes extends VBaseMediaRes {
   String toString() {
     return 'MediaEditorImage{data: $data }';
   }
+
+  @override
+  VPlatformFileSource getVPlatformFile() => data.fileSource;
 }
 
 class VMediaVideoRes extends VBaseMediaRes {
@@ -40,6 +45,9 @@ class VMediaVideoRes extends VBaseMediaRes {
   }) : super(id: id ?? DateTime.now().microsecondsSinceEpoch.toString());
 
   @override
+  VPlatformFileSource getVPlatformFile() => data.fileSource;
+
+  @override
   String toString() {
     return 'MediaEditorVideo{data $data}';
   }
@@ -47,6 +55,9 @@ class VMediaVideoRes extends VBaseMediaRes {
 
 class VMediaFileRes extends VBaseMediaRes {
   VPlatformFileSource data;
+
+  @override
+  VPlatformFileSource getVPlatformFile() => data;
 
   VMediaFileRes({
     String? id,

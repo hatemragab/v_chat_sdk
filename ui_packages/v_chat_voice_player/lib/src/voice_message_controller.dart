@@ -130,7 +130,7 @@ class VVoiceMessageController extends MyTicker {
       throw "isBytes should not call here !";
     }
     final p = await cache.DefaultCacheManager().getSingleFile(
-      audioSrc.url!.fullUrl,
+      audioSrc.url!,
     );
     return p.path;
   }
@@ -179,7 +179,7 @@ class VVoiceMessageController extends MyTicker {
     }
     if (isUrl) {
       await _player.setAudioSource(
-        AudioSource.uri(Uri.parse(audioSrc.url!.fullUrl)),
+        AudioSource.uri(Uri.parse(audioSrc.url!)),
         initialPosition: currentDuration,
       );
     }
@@ -310,7 +310,7 @@ class VVoiceMessageController extends MyTicker {
     try {
       if (isUrl) {
         final maxDuration = await jsAudio.AudioPlayer()
-            .setAudioSource(AudioSource.uri(Uri.parse(audioSrc.url!.fullUrl)));
+            .setAudioSource(AudioSource.uri(Uri.parse(audioSrc.url!)));
         if (maxDuration != null) {
           this.maxDuration = maxDuration;
           animController.duration = maxDuration;

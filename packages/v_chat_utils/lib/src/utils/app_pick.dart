@@ -158,4 +158,8 @@ abstract class VAppPick {
     final f = (await entity.file)!;
     return VPlatformFileSource.fromPath(filePath: f.path);
   }
+
+  static Future clearPickerCache() async {
+    await FilePicker.platform.clearTemporaryFiles();
+  }
 }

@@ -53,8 +53,8 @@ class _VChatPageState extends State<VChatPage> {
                       return StreamBuilder<VRoom>(
                         stream: widget
                             .controller.roomState.roomStateStream.stream
-                            .skipWhile(
-                          (e) => e.id != room.id,
+                            .where(
+                          (e) => e.id == room.id,
                         ),
                         initialData: room,
                         builder: (context, snapshot) {
@@ -86,11 +86,5 @@ class _VChatPageState extends State<VChatPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
   }
 }

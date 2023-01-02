@@ -7,21 +7,21 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../core/core.dart';
 import 'media_editor_controller.dart';
 
-class MediaEditorView extends StatefulWidget {
+class VMediaEditorView extends StatefulWidget {
   final List<VPlatformFileSource> files;
   final VMediaEditorConfig config;
 
-  const MediaEditorView({
+  const VMediaEditorView({
     super.key,
     required this.files,
     this.config = const VMediaEditorConfig(),
   });
 
   @override
-  State<MediaEditorView> createState() => _MediaEditorViewState();
+  State<VMediaEditorView> createState() => _VMediaEditorViewState();
 }
 
-class _MediaEditorViewState extends State<MediaEditorView> {
+class _VMediaEditorViewState extends State<VMediaEditorView> {
   late final MediaEditorController controller;
 
   @override

@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../v_chat_utils.dart';
-
 class VCircleAvatar extends StatelessWidget {
   final int radius;
-  final VFullUrlModel fullUrl;
+  final String fullUrl;
 
   const VCircleAvatar({
     Key? key,
@@ -20,7 +18,7 @@ class VCircleAvatar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       radius: double.tryParse(radius.toString()),
       backgroundImage: CachedNetworkImageProvider(
-        fullUrl.fullUrl,
+        fullUrl,
       ),
     );
   }
