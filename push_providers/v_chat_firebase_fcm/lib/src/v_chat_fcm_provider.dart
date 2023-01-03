@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,6 +10,12 @@ class VChatFcmProver extends VChatPushProviderBase {
   StreamSubscription? _onNewMessage;
   StreamSubscription? _onMsgClicked;
   final _vEventBusSingleton = VEventBusSingleton.vEventBus;
+  final _eventsStream = StreamController<VNotificationModel>();
+
+  VChatFcmProver({
+    super.enableForegroundNotification,
+    super.vPushConfig = const VPushConfig(channelName: "channelName"),
+  });
 
   @override
   Future<void> deleteToken() async {
@@ -80,32 +87,46 @@ class VChatFcmProver extends VChatPushProviderBase {
       },
     );
     _onNewMessage = FirebaseMessaging.onMessage.listen((remoteMsg) {
-      final msg = _getMessageMap(remoteMsg);
-      if (msg != null) {
-        _vEventBusSingleton.fire(VOnNewNotifications(msg));
+      final String? fromVChat = remoteMsg.data['fromVChat'];
+      final String? message = remoteMsg.data['vMessage'];
+      if (fromVChat != null && message != null) {
+        _eventsStream.add(
+          VNotificationModel(
+            actionRes: VNotificationActionRes.push,
+            message: jsonDecode(message),
+          ),
+        );
       }
     });
-    _onMsgClicked = FirebaseMessaging.onMessageOpenedApp.listen((remoteMsg) {
-      final msg = _getMessageMap(remoteMsg);
-      if (msg != null) {
-        _vEventBusSingleton.fire(VOnNotificationsClickedEvent(msg));
+    _onMsgClicked =
+        FirebaseMessaging.onMessageOpenedApp.listen((remoteMsg) async {
+      final String? fromVChat = remoteMsg.data['fromVChat'];
+      final String? message = remoteMsg.data['vMessage'];
+      if (fromVChat != null && message != null) {
+        _eventsStream.add(
+          VNotificationModel(
+            actionRes: VNotificationActionRes.click,
+            message: jsonDecode(message),
+          ),
+        );
       }
     });
   }
 
   void _checkIfAppOpenFromNotification() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
     final remoteMsg = await FirebaseMessaging.instance.getInitialMessage();
-    if (remoteMsg != null) {
-      final msg = _getMessageMap(remoteMsg);
-      if (msg != null) {
-        _vEventBusSingleton.fire(VOnNotificationsClickedEvent(msg));
-      }
+    if (remoteMsg == null) return;
+    final String? fromVChat = remoteMsg.data['fromVChat'];
+    final String? message = remoteMsg.data['vMessage'];
+    if (fromVChat != null && message != null) {
+      _eventsStream.add(
+        VNotificationModel(
+          actionRes: VNotificationActionRes.click,
+          message: jsonDecode(message),
+        ),
+      );
     }
-  }
-
-  Map<String, dynamic>? _getMessageMap(RemoteMessage remoteMessage) {
-    return {};
   }
 
   @override
@@ -114,4 +135,7 @@ class VChatFcmProver extends VChatPushProviderBase {
     _onNewMessage?.cancel();
     _onMsgClicked?.cancel();
   }
+
+  @override
+  Stream<VNotificationModel> eventsStream() => _eventsStream.stream;
 }

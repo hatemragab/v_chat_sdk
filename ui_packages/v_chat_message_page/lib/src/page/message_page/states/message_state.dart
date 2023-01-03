@@ -24,7 +24,7 @@ class MessageState with VSocketStatusStream {
     this.isInTesting,
   ) {
     initSocketStatusStream(
-      VChatController.I.nativeApi.remote.socketIo.socketStatusStream,
+      VChatController.I.nativeApi.streams.socketStatusStream,
     );
     _initLocalMessages();
   }

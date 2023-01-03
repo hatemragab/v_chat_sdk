@@ -36,7 +36,7 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
       return const SizedBox.shrink();
     }
     return StreamBuilder<VSocketStatusEvent>(
-      stream: _socket.socketStatusStream,
+      stream: VChatController.I.nativeApi.streams.socketStatusStream,
       initialData: VSocketStatusEvent(_socket.isConnected),
       builder: (context, snapshot) {
         if (!snapshot.data!.isConnected) {

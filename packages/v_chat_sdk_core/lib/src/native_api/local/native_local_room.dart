@@ -12,8 +12,6 @@ class NativeLocalRoom {
   final NativeLocalMessage _localMessage;
   final _emitter = VEventBusSingleton.vEventBus;
 
-  Stream<VRoomEvents> get roomStream => _emitter.on<VRoomEvents>();
-
   NativeLocalRoom(Database database, this._localMessage) {
     if (VPlatforms.isWeb) {
       _roomRepo = MemoryRoomImp();

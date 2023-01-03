@@ -20,12 +20,12 @@ class MessageStreamState with VMessageStream, VRoomStream {
   }) {
     ///listen to all message
     initMessageStream(
-      nativeApi.local.message.messageStream.where(
+      nativeApi.streams.messageStream.where(
         (e) => e.roomId == currentRoom.id,
       ),
     );
     initRoomStream(
-      nativeApi.local.room.roomStream.where(
+      nativeApi.streams.roomStream.where(
         (e) => e.roomId == currentRoom.id,
       ),
     );

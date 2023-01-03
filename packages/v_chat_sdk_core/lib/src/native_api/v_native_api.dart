@@ -2,6 +2,7 @@ import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
+import 'package:v_chat_sdk_core/src/native_api/streams/v_streams.dart';
 
 import '../../v_chat_sdk_core.dart';
 import '../http/api_service/profile/profile_api_service.dart';
@@ -17,6 +18,7 @@ class VNativeApi {
     MessageApiService.init(),
     ProfileApiService.init(),
   );
+  final streams = VStreams();
 
   VNativeApi._();
 

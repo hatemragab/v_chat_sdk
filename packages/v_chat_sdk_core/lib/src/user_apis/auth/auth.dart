@@ -84,6 +84,11 @@ class AuthApi implements AuthEndPoints {
     } catch (err) {
       _log.warning(err);
     }
+    try {
+      await _vNativeApi.remote.profile.deleteFcm();
+    } catch (err) {
+      _log.warning(err);
+    }
     for (var element in VStorageKeys.values) {
       await VAppPref.remove(element);
     }

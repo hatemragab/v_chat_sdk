@@ -17,6 +17,75 @@ class _$ProfileApi extends ProfileApi {
   final definitionType = ProfileApi;
 
   @override
+  Future<Response<dynamic>> updateImage(MultipartFile file) {
+    final Uri $url = Uri.parse('profile/image');
+    final List<PartValue> $parts = <PartValue>[
+      PartValueFile<MultipartFile>(
+        'file',
+        file,
+      )
+    ];
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      parts: $parts,
+      multipart: true,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateLang(Map<String, dynamic> body) {
+    final Uri $url = Uri.parse('profile/lang');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateUserName(Map<String, dynamic> body) {
+    final Uri $url = Uri.parse('profile/name');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> addFcm(Map<String, dynamic> body) {
+    final Uri $url = Uri.parse('profile/fcm');
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteFcm() {
+    final Uri $url = Uri.parse('profile/fcm');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> getLastSeenAt(String peerId) {
     final Uri $url = Uri.parse('profile/users/${peerId}/last-seen');
     final Request $request = Request(

@@ -1,3 +1,4 @@
+export './current_room.dart';
 export './socket/room_typing_model.dart';
 export './v_message/v_message.dart';
 export './v_pagination_model.dart';

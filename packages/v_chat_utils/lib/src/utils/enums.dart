@@ -4,6 +4,8 @@ enum VChatPushService { firebase, onesignal }
 
 enum VChatLoadingState { loading, success, error, ideal, empty }
 
+enum VNotificationActionRes { click, push }
+
 enum VSupportedFilesType {
   image,
   file,

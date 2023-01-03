@@ -20,7 +20,7 @@ class AppBarStateController with VSocketIntervalStream {
       ),
     );
     initSocketIntervalStream(
-      VChatController.I.nativeApi.remote.socketIo.socketIntervalStream,
+      VChatController.I.nativeApi.streams.socketIntervalStream,
     );
     _updateAppBareState();
   }

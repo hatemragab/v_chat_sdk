@@ -30,7 +30,9 @@ void main() async {
     vChatConfig: VChatConfig(
       passwordHashKey: "YOUR STRONG PASSWORD HASH KEY!",
       baseUrl: _getBaseUrl(),
-      pushProvider: VChatFcmProver(),
+      pushProvider: VChatFcmProver(
+        enableForegroundNotification: true,
+      ),
     ),
   );
   final appService = Get.put<AppService>(AppService());

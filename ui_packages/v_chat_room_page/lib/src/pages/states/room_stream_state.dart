@@ -9,11 +9,11 @@ class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
     required this.roomState,
     required this.nativeApi,
   }) {
-    initMessageStream(nativeApi.local.message.messageStream);
-    initRoomStream(nativeApi.local.room.roomStream);
+    initMessageStream(nativeApi.streams.messageStream);
+    initRoomStream(nativeApi.streams.roomStream);
     // test();
     initSocketIntervalStream(
-      nativeApi.remote.socketIo.socketIntervalStream,
+      nativeApi.streams.socketIntervalStream,
     );
   }
 

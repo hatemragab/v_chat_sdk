@@ -117,6 +117,9 @@ class VChatController {
     EventsDaemon().start();
     OfflineOnlineEmitterService().start();
     SocketStatusService();
-    VNotificationListener();
+    VNotificationListener(
+      _instance.nativeApi,
+      _instance.vChatConfig,
+    );
   }
 }

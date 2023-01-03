@@ -1,16 +1,17 @@
 import '../../v_chat_utils.dart';
 
 class VOnNotificationsClickedEvent extends VAppEvent {
-  final Map<String, dynamic> message;
+  final Object message;
+  final Object room;
 
-  const VOnNotificationsClickedEvent(this.message);
+  const VOnNotificationsClickedEvent(this.message, this.room);
 
   @override
   List<Object?> get props => [message];
 }
 
 class VOnNewNotifications extends VAppEvent {
-  final Map<String, dynamic> message;
+  final Object message;
 
   const VOnNewNotifications(this.message);
 

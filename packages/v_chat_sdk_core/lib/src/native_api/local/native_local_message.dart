@@ -9,9 +9,6 @@ import '../../local_db/core/imp/message/sql_message_imp.dart';
 class NativeLocalMessage {
   late BaseLocalMessageRepo _localMessageRepo;
   final _emitter = VEventBusSingleton.vEventBus;
-
-  Stream<VMessageEvents> get messageStream => _emitter.on<VMessageEvents>();
-
   NativeLocalMessage(Database database) {
     if (VPlatforms.isWeb) {
       _localMessageRepo = MemoryMessageImp();

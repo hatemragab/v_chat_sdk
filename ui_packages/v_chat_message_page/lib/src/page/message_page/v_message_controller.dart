@@ -58,6 +58,7 @@ class VMessageController {
       currentRoom: vRoom,
     );
     _messageProvider.setSeen(roomId);
+    VRoomTracker.instance.addToOpenRoom(roomId: roomId);
   }
 
   void onMessageItemPress(VBaseMessage message) {}
@@ -155,5 +156,6 @@ class VMessageController {
     messageState.close();
     appBarStateController.close();
     inputStateController.close();
+    VRoomTracker.instance.closeOpenedRoom(roomId);
   }
 }
