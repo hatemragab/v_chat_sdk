@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
@@ -43,6 +44,7 @@ class VChatController {
     return _instance;
   }
 
+  BuildContext? navContext;
   late final AuthApi authApi;
   late final RoomApi roomApi;
   final vAppLifecycleState = VAppLifecycleState();
@@ -86,6 +88,10 @@ class VChatController {
     _startServices();
 
     return _instance;
+  }
+
+  void setNavContext(BuildContext context) {
+    navContext = context;
   }
 
   void dispose() {

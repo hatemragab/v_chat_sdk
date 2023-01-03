@@ -36,17 +36,18 @@ class VChatFcmProver extends VChatPushProviderBase {
     try {
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
-        final status =
-            (await FirebaseMessaging.instance.getNotificationSettings())
-                .authorizationStatus;
-        if (status == AuthorizationStatus.authorized) {
-          _initStreams();
-          _checkIfAppOpenFromNotification();
-        }
-        return true;
-      } else {
-        return false;
       }
+      final status =
+          (await FirebaseMessaging.instance.getNotificationSettings())
+              .authorizationStatus;
+      if (status == AuthorizationStatus.authorized) {
+        _initStreams();
+        _checkIfAppOpenFromNotification();
+      }
+      if (Firebase.apps.isEmpty) {
+        return true;
+      }
+      return false;
     } catch (err) {
       //
     }
@@ -79,21 +80,33 @@ class VChatFcmProver extends VChatPushProviderBase {
       },
     );
     _onNewMessage = FirebaseMessaging.onMessage.listen((remoteMsg) {
-      _checkIfMessageFromVChat(remoteMsg);
+      final msg = _getMessageMap(remoteMsg);
+      if (msg != null) {
+        _vEventBusSingleton.fire(VOnNewNotifications(msg));
+      }
     });
     _onMsgClicked = FirebaseMessaging.onMessageOpenedApp.listen((remoteMsg) {
-      _checkIfMessageFromVChat(remoteMsg);
+      final msg = _getMessageMap(remoteMsg);
+      if (msg != null) {
+        _vEventBusSingleton.fire(VOnNotificationsClickedEvent(msg));
+      }
     });
   }
 
   void _checkIfAppOpenFromNotification() async {
+    await Future.delayed(const Duration(seconds: 2));
     final remoteMsg = await FirebaseMessaging.instance.getInitialMessage();
     if (remoteMsg != null) {
-      _checkIfMessageFromVChat(remoteMsg);
+      final msg = _getMessageMap(remoteMsg);
+      if (msg != null) {
+        _vEventBusSingleton.fire(VOnNotificationsClickedEvent(msg));
+      }
     }
   }
 
-  _checkIfMessageFromVChat(RemoteMessage remoteMessage) {}
+  Map<String, dynamic>? _getMessageMap(RemoteMessage remoteMessage) {
+    return {};
+  }
 
   @override
   void close() {

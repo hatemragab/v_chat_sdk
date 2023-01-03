@@ -1,0 +1,1 @@
+- v chat receive share will make your app support share from other apps
