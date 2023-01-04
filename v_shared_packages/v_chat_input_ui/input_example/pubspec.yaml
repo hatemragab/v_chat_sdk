@@ -1,0 +1,28 @@
+name: input_example
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  v_chat_utils: ^0.0.3
+  v_chat_sdk_core: ^0.0.3
+  textless:
+  v_chat_input_ui:
+    path: ../
+#  v_chat_sdk_core:
+#    path: ../../../packages/v_chat_sdk_core
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+

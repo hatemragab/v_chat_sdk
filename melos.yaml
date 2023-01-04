@@ -2,9 +2,10 @@ name: v_chat_sdk
 repository: https://github.com/hatemragab/v_chat_sdk
 
 packages:
-  - packages/**
-  - ui_packages/**
+  - core_packages/**
+  - v_ui_packages/**
   - push_providers/**
+  - v_shared_packages/**
 
 command:
   bootstrap:
