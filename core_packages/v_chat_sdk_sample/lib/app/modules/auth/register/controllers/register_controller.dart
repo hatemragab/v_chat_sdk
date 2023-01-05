@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:animated_login/src/models/login_data.dart';
 import 'package:animated_login/src/models/signup_data.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
@@ -17,6 +19,8 @@ class RegisterController extends GetxController {
   RegisterController(this.repository);
 
   VPlatformFileSource? userImage;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   void getImage() async {
     final userImage = await VAppPick.getCroppedImage();
@@ -24,6 +28,15 @@ class RegisterController extends GetxController {
       this.userImage = userImage;
     }
     update();
+  }
+
+  @override
+  onInit() {
+    super.onInit();
+    if (kDebugMode) {
+      emailController.text = "user1@gmail.com";
+      passwordController.text = "12345678";
+    }
   }
 
   Future<String?> onLogin(LoginData loginData) async {

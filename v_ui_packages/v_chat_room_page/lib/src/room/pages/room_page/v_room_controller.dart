@@ -54,7 +54,7 @@ class VRoomController with VSocketStatusStream {
         roomState.updateCacheState(response);
       },
     );
-    getRoomsFromApi();
+    //await getRoomsFromApi();
   }
 
   void onRoomItemLongPress(VRoom room, BuildContext context) async {
@@ -74,7 +74,7 @@ class VRoomController with VSocketStatusStream {
     }
   }
 
-  void getRoomsFromApi() async {
+  Future getRoomsFromApi() async {
     await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
         if (isTesting) {
@@ -103,13 +103,12 @@ class VRoomController with VSocketStatusStream {
   @override
   void onSocketConnected() {
     ///todo improve this api call
-    getRoomsFromApi();
+    // getRoomsFromApi();
   }
 
-  onRoomItemPress(VRoom vRoom, BuildContext context) {
+  void onRoomItemPress(VRoom vRoom, BuildContext context) {
     context.toPage(VMessagePage(
       vRoom: vRoom,
-      forwardCallback: () async {},
     ));
   }
 

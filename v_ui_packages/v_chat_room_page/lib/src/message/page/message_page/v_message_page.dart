@@ -16,12 +16,10 @@ import '../../widgets/message_items/widgets/date_divider_item.dart';
 
 class VMessagePage extends StatefulWidget {
   final bool isInTesting;
-  final Future<List<String>?> Function() forwardCallback;
 
   const VMessagePage({
     Key? key,
     required this.vRoom,
-    required this.forwardCallback,
     this.isInTesting = false,
   }) : super(key: key);
   final VRoom vRoom;
@@ -82,10 +80,11 @@ class _VMessagePageState extends State<VMessagePage> {
                     return Scrollbar(
                       interactive: true,
                       thickness: 5,
+                      key: UniqueKey(),
                       controller: controller.autoScrollTagController,
                       child: ListView.separated(
                         controller: controller.autoScrollTagController,
-                        key: UniqueKey(),
+                        key: const PageStorageKey("VListViewItems"),
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 10,
                         ),
@@ -103,7 +102,7 @@ class _VMessagePageState extends State<VMessagePage> {
                             builder: (context, snapshot) {
                               return AutoScrollTag(
                                 controller: controller.autoScrollTagController,
-                                key: ValueKey(index),
+                                key: ValueKey(message.localId),
                                 index: index,
                                 highlightColor: context.isDark
                                     ? Colors.white.withOpacity(0.2)
@@ -111,8 +110,14 @@ class _VMessagePageState extends State<VMessagePage> {
                                 child: VMessageItem(
                                   itemController: controller.itemController,
                                   message: snapshot.data!,
+                                  voiceController: controller.voiceControllers
+                                      .getVoiceController(
+                                    snapshot.data!,
+                                  ),
                                   room: controller.vRoom,
                                   onSwipe: controller.setReply,
+                                  onHighlightMessage:
+                                      controller.onHighlightMessage,
                                   onMentionPress: controller.onMentionPress,
                                 ),
                               );

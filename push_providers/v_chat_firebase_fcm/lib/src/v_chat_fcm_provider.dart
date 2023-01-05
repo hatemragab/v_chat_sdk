@@ -49,7 +49,6 @@ class VChatFcmProver extends VChatPushProviderBase {
               .authorizationStatus;
       if (status == AuthorizationStatus.authorized) {
         _initStreams();
-        _checkIfAppOpenFromNotification();
       }
       if (Firebase.apps.isEmpty) {
         return true;
@@ -113,20 +112,15 @@ class VChatFcmProver extends VChatPushProviderBase {
     });
   }
 
-  void _checkIfAppOpenFromNotification() async {
-    await Future.delayed(const Duration(seconds: 3));
+  Future<Map<String, dynamic>?> _checkIfAppOpenFromNotification() async {
     final remoteMsg = await FirebaseMessaging.instance.getInitialMessage();
-    if (remoteMsg == null) return;
+    if (remoteMsg == null) return null;
     final String? fromVChat = remoteMsg.data['fromVChat'];
     final String? message = remoteMsg.data['vMessage'];
     if (fromVChat != null && message != null) {
-      _eventsStream.add(
-        VNotificationModel(
-          actionRes: VNotificationActionRes.click,
-          message: jsonDecode(message),
-        ),
-      );
+      return jsonDecode(message);
     }
+    return null;
   }
 
   @override
@@ -138,4 +132,9 @@ class VChatFcmProver extends VChatPushProviderBase {
 
   @override
   Stream<VNotificationModel> eventsStream() => _eventsStream.stream;
+
+  @override
+  Future<Map<String, dynamic>?> getOpenAppNotification() {
+    return _checkIfAppOpenFromNotification();
+  }
 }

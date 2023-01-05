@@ -31,8 +31,10 @@ class AppBarStateController with VSocketIntervalStream {
   }
 
   void updateOnline() {
-    appBareState.value.isOnline = true;
-    appBareState.notifyListeners();
+    if (!_vRoom.isThereBlock) {
+      appBareState.value.isOnline = true;
+      appBareState.notifyListeners();
+    }
   }
 
   void updateImage(String image) {
@@ -50,13 +52,14 @@ class AppBarStateController with VSocketIntervalStream {
     appBareState.notifyListeners();
   }
 
-  close() {
+  void close() {
     appBareState.dispose();
     closeSocketIntervalStream();
   }
 
   void updateOffline() {
     appBareState.value.isOnline = false;
+    // appBareState.value.lastSeenAt = null;
     appBareState.notifyListeners();
   }
 
@@ -68,7 +71,8 @@ class AppBarStateController with VSocketIntervalStream {
   Future<void> _updateAppBareState() async {
     if (!_vRoom.isOnline &&
         _vRoom.roomType.isSingleOrOrder &&
-        _vRoom.blockerId == null) {
+        _vRoom.blockerId == null &&
+        appBareState.value.lastSeenAt == null) {
       await vSafeApiCall<DateTime>(
         request: () async {
           return await _messageProvider.getLastSeenAt(_vRoom.peerId!);

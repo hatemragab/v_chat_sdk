@@ -7,6 +7,7 @@ import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/states/app_bar_state_controller.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/states/input_state_controller.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/states/message_state.dart';
+import 'package:v_chat_room_page/src/message/page/message_page/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -35,6 +36,8 @@ class VMessageController {
   final itemController = VMessageItemController();
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
+
+  final voiceControllers = VVoicePlayerController();
 
   ///Getters
   List<VBaseMessage> get messages => messageState.stateMessages;
@@ -158,12 +161,15 @@ class VMessageController {
     messageState.close();
     appBarStateController.close();
     inputStateController.close();
+    voiceControllers.close();
     autoScrollTagController.dispose();
     VRoomTracker.instance.closeOpenedRoom(roomId);
   }
 
-  setReply(VBaseMessage p1) {
-    inputStateController.setReply(p1);
+  void setReply(VBaseMessage p1) {
+    if (p1.messageStatus.isServerConfirm) {
+      inputStateController.setReply(p1);
+    }
   }
 
   void dismissReply() {
@@ -178,15 +184,17 @@ class VMessageController {
     );
   }
 
-  Future<void> scrollToIndex(int i) {
-    return autoScrollTagController.scrollToIndex(
+  Future<void> onHighlightMessage(VBaseMessage message) async {
+    final i = messages.indexOf(message);
+    if (i == -1) {
+      //todo improvements load the messages until this message index
+      return;
+    }
+    autoScrollTagController.scrollToIndex(
       i,
       preferPosition: AutoScrollPosition.end,
       duration: const Duration(milliseconds: 500),
     );
-  }
-
-  void highlight(int i) {
     autoScrollTagController.highlight(i);
   }
 }

@@ -15,6 +15,7 @@ class ImageMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstraintImage(
       data: message.data,
+      borderRadius: BorderRadius.circular(15),
     );
   }
 }

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
   int tabIndex = 0;
@@ -24,16 +26,15 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    VChatController.I.listenToOpenFromNotification();
     vOnNotificationsClickedStream = VChatController
         .I.nativeApi.streams.vOnNotificationsClickedStream
         .listen(
       (event) {
         final room = event.room as VRoom;
-        if (!VRoomTracker.instance.isRoomOpen(room.id)) {
-          // Get.context!.toPage(VMessagePage(
-          //   vRoom: room,
-          // ));
-        }
+        Get.context!.toPage(VMessagePage(
+          vRoom: room,
+        ));
       },
     );
   }

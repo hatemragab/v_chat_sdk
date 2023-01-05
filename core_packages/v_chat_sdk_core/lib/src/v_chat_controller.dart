@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
@@ -35,6 +34,7 @@ class VChatController {
   VChatController._();
 
   static final _instance = VChatController._();
+  static late final VNotificationListener _vNotificationListener;
 
   static VChatController get I {
     assert(
@@ -44,7 +44,6 @@ class VChatController {
     return _instance;
   }
 
-  BuildContext? navContext;
   late final AuthApi authApi;
   late final RoomApi roomApi;
   final vAppLifecycleState = VAppLifecycleState();
@@ -90,8 +89,8 @@ class VChatController {
     return _instance;
   }
 
-  void setNavContext(BuildContext context) {
-    navContext = context;
+  void listenToOpenFromNotification() async {
+    _vNotificationListener.getOpenAppNotification();
   }
 
   void dispose() {
@@ -112,16 +111,14 @@ class VChatController {
     return true;
   }
 
-  void listenOnNotificationsClicks(BuildContext context) {
-    navContext = context;
-  }
+  void listenOnNotificationsClicks() {}
 
   static void _startServices() {
     ReSendDaemon().start();
     EventsDaemon().start();
     OfflineOnlineEmitterService().start();
     SocketStatusService();
-    VNotificationListener(
+    _vNotificationListener = VNotificationListener(
       _instance.nativeApi,
       _instance.vChatConfig,
     );

@@ -31,7 +31,8 @@ class VMessageItemBuilder {
   factory VMessageItemBuilder.dark() {
     return VMessageItemBuilder._(
       messageSendingStatus: const VMsgStatusTheme.dark(),
-      holderColor: (isMeSender) => isMeSender ? Colors.indigo : Colors.black26,
+      holderColor: (isMeSender) =>
+          isMeSender ? Colors.indigo : Color(0xff515156),
       directionalItemDecoration: const BoxDecoration(color: Colors.green),
       directionalItemConstraints: (context) => BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * .80,

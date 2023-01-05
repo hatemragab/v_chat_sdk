@@ -5,6 +5,7 @@ import 'package:v_chat_room_page/src/message/widgets/message_items/shared/center
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/direction_item_holder.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_broadcast_icon.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_time_widget.dart';
+import 'package:v_chat_room_page/src/message/widgets/message_items/shared/reply_item_widget.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/all_deleted_item.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/call_message_item.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/custom_message_item.dart';
@@ -16,21 +17,27 @@ import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/text_
 import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/video_message_item.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/voice_message_item.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 import '../../../room/widgets/room_item_builder/message_status_icon.dart';
+import '../../core/types.dart';
 
 class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
   final VRoom room;
-  final Function(VBaseMessage) onSwipe;
+  final VMessageCallback onSwipe;
+  final VVoiceMessageController? voiceController;
+  final VMessageCallback onHighlightMessage;
   final VMessageItemController itemController;
   final Function(String userId) onMentionPress;
 
   const VMessageItem({
     Key? key,
     required this.room,
+    this.voiceController,
     required this.message,
     required this.onSwipe,
+    required this.onHighlightMessage,
     required this.itemController,
     required this.onMentionPress,
   }) : super(key: key);
@@ -57,14 +64,21 @@ class VMessageItem extends StatelessWidget {
         );
       },
       child: SwipeTo(
+        key: UniqueKey(),
         onRightSwipe: () {
           onSwipe(message);
         },
         child: DirectionItemHolder(
           isMeSender: message.isMeSender,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: message.isMeSender
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
             children: [
+              ReplyItemWidget(
+                rToMessage: message.replyTo,
+                onHighlightMessage: onHighlightMessage,
+              ),
               _getChild(message),
               const SizedBox(
                 height: 5,
@@ -118,6 +132,7 @@ class VMessageItem extends StatelessWidget {
       case MessageType.voice:
         return VoiceMessageItem(
           message: message as VVoiceMessage,
+          voiceController: voiceController!,
         );
       case MessageType.location:
         return LocationMessageItem(

@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import '../../../shared/theme/theme.dart';
 import '../../widgets/room_item_builder/chat_avatar_image.dart';
 
+typedef VChatImageBuilderWidget = Widget Function({
+  required String imageUrl,
+  required String chatTitle,
+  required bool isOnline,
+  required int size,
+});
+
 class VChatItemBuilder {
   VChatItemBuilder._({
     required this.getChatTitle,
@@ -14,8 +21,7 @@ class VChatItemBuilder {
   });
 
   final Widget Function(String title) getChatTitle;
-  final Widget Function(String urlModel, String chatTitle, bool isOnline)
-      getChatAvatar;
+  final VChatImageBuilderWidget getChatAvatar;
   final VMsgStatusTheme lastMessageStatus;
   final Widget muteIcon;
   final TextStyle seenLastMessageTextStyle;
@@ -30,11 +36,19 @@ class VChatItemBuilder {
           overflow: TextOverflow.ellipsis,
         );
       },
-      getChatAvatar: (urlModel, chatTitle, isOnline) => ChatAvatarImage(
-        imageUrl: urlModel,
-        isOnline: isOnline,
-        chatTitle: chatTitle,
-      ),
+      getChatAvatar: ({
+        required chatTitle,
+        required imageUrl,
+        required isOnline,
+        required size,
+      }) {
+        return ChatAvatarImage(
+          imageUrl: imageUrl,
+          isOnline: isOnline,
+          size: size,
+          chatTitle: chatTitle,
+        );
+      },
       muteIcon: const Icon(Icons.notifications_off),
       unSeenLastMessageTextStyle: const TextStyle(
         overflow: TextOverflow.ellipsis,
@@ -57,11 +71,19 @@ class VChatItemBuilder {
           overflow: TextOverflow.ellipsis,
         );
       },
-      getChatAvatar: (urlModel, chatTitle, isOnline) => ChatAvatarImage(
-        imageUrl: urlModel,
-        isOnline: isOnline,
-        chatTitle: chatTitle,
-      ),
+      getChatAvatar: ({
+        required chatTitle,
+        required imageUrl,
+        required isOnline,
+        required size,
+      }) {
+        return ChatAvatarImage(
+          imageUrl: imageUrl,
+          isOnline: isOnline,
+          size: size,
+          chatTitle: chatTitle,
+        );
+      },
       unSeenLastMessageTextStyle: const TextStyle(
         overflow: TextOverflow.ellipsis,
         fontWeight: FontWeight.w500,

@@ -3,7 +3,15 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ConstraintImage extends StatelessWidget {
   final VMessageImageData data;
-  const ConstraintImage({Key? key, required this.data}) : super(key: key);
+  final BorderRadius? borderRadius;
+  final BoxFit? fit;
+
+  const ConstraintImage({
+    Key? key,
+    required this.data,
+    this.borderRadius,
+    this.fit = BoxFit.contain,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +26,8 @@ class ConstraintImage extends StatelessWidget {
         aspectRatio: data.width / data.height,
         child: VPlatformCacheImageWidget(
           source: data.fileSource,
-          fit: BoxFit.contain,
+          borderRadius: borderRadius,
+          fit: fit,
         ),
       ),
     );

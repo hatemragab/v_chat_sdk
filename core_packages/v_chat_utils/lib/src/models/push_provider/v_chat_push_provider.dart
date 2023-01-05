@@ -17,6 +17,8 @@ abstract class VChatPushProviderBase {
 
   Future<void> askForPermissions();
 
+  Future<Map<String, dynamic>?> getOpenAppNotification();
+
   void close();
 
   VChatPushService serviceName();

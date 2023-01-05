@@ -25,7 +25,7 @@ class MessageAppBarStateModel {
     return MessageAppBarStateModel._(
       roomId: room.id,
       typingModel: room.typingStatus,
-      isOnline: room.isOnline,
+      isOnline: room.isThereBlock ? false : room.isOnline,
       roomImage: room.thumbImage,
       roomTitle: room.title,
       roomType: room.roomType,

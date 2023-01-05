@@ -43,7 +43,7 @@ class BubbleSpecialOne extends StatelessWidget {
     return Align(
       alignment: alignment,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
         child: CustomPaint(
           painter: SpecialChatBubbleOne(
             color: color,
@@ -56,7 +56,9 @@ class BubbleSpecialOne extends StatelessWidget {
                   ? MediaQuery.of(context).size.width * .75
                   : MediaQuery.of(context).size.width * .55,
             ),
-            margin: const EdgeInsets.fromLTRB(14, 7, 14, 7),
+            margin: isSender
+                ? const EdgeInsets.fromLTRB(4, 7, 14, 2)
+                : const EdgeInsets.fromLTRB(14, 7, 6, 2),
             // margin: isSender
             //     ? stateTick
             //         ? const EdgeInsets.fromLTRB(7, 7, 14, 7)

@@ -28,7 +28,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
     this.containerDecoration = const BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.all(
-        Radius.circular(20),
+        Radius.circular(15),
       ),
     ),
     this.cameraIcon = const Icon(
@@ -84,7 +84,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
     this.containerDecoration = const BoxDecoration(
       color: Color(0xf7232121),
       borderRadius: BorderRadius.all(
-        Radius.circular(20),
+        Radius.circular(15),
       ),
     ),
     this.cameraIcon = const Icon(

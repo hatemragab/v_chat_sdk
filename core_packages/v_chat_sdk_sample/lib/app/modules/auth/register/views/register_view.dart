@@ -47,6 +47,8 @@ class RegisterView extends GetView<RegisterController> {
           length: 8,
         ),
         changeLangDefaultOnPressed: () async {},
+        emailController: controller.emailController,
+        passwordController: controller.passwordController,
         languageOptions: const [LanguageOption(code: "en", value: "en")],
         selectedLanguage: const LanguageOption(code: "en", value: "en"),
         initialMode: AuthMode.login,

@@ -11,12 +11,14 @@ class VPlatformCacheImageWidget extends StatefulWidget {
   final VPlatformFileSource source;
   final Size? size;
   final BoxFit? fit;
+  final BorderRadius? borderRadius;
 
   const VPlatformCacheImageWidget({
     super.key,
     required this.source,
     this.size,
     this.fit,
+    this.borderRadius,
   });
 
   @override
@@ -29,6 +31,16 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.borderRadius != null) {
+      return ClipRRect(
+        borderRadius: widget.borderRadius!,
+        child: _getImage(),
+      );
+    }
+    return _getImage();
+  }
+
+  Widget _getImage() {
     if (widget.source.bytes != null) {
       return Image.memory(
         Uint8List.fromList(widget.source.bytes!),

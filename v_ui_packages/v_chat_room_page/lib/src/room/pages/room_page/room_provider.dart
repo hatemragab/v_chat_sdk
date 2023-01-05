@@ -15,7 +15,6 @@ class RoomProvider {
   }
 
   Future<VPaginationModel<VRoom>> getLocalRooms() async {
-    await Future.delayed(const Duration(milliseconds: 100));
     return VPaginationModel<VRoom>(
       values: await _localRoom.getRooms(limit: 200),
       page: 1,
