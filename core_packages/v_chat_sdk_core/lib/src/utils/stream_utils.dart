@@ -59,7 +59,7 @@ mixin VRoomStream {
 
   void onInsertRoom(VInsertRoomEvent event) {}
 
-  void onBlockSingleRoom(VBlockSingleRoomEvent event);
+  void onBlockRoom(VBlockRoomEvent event);
 
   void onRoomOnline(VRoomOnlineEvent event);
 
@@ -85,8 +85,8 @@ mixin VRoomStream {
         if (event is VInsertRoomEvent) {
           return onInsertRoom(event);
         }
-        if (event is VBlockSingleRoomEvent) {
-          return onBlockSingleRoom(event);
+        if (event is VBlockRoomEvent) {
+          return onBlockRoom(event);
         }
 
         if (event is VUpdateRoomTypingEvent) {

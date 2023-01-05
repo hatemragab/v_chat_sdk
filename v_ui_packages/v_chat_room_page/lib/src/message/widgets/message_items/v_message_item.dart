@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swipe_to/swipe_to.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/v_message_item_controller.dart';
+import 'package:v_chat_room_page/src/message/widgets/message_items/shared/center_item_holder.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/direction_item_holder.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_broadcast_icon.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_time_widget.dart';
@@ -20,6 +22,7 @@ import '../../../room/widgets/room_item_builder/message_status_icon.dart';
 class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
   final VRoom room;
+  final Function(VBaseMessage) onSwipe;
   final VMessageItemController itemController;
   final Function(String userId) onMentionPress;
 
@@ -27,6 +30,7 @@ class VMessageItem extends StatelessWidget {
     Key? key,
     required this.room,
     required this.message,
+    required this.onSwipe,
     required this.itemController,
     required this.onMentionPress,
   }) : super(key: key);
@@ -36,9 +40,15 @@ class VMessageItem extends StatelessWidget {
     //we have date divider holder
     //we have normal holder
     //we have info holder
+
+    if (message.messageType.isCenter) {
+      return CenterItemHolder(
+        child: Text(message.getTextTrans),
+      );
+    }
     return InkWell(
       onLongPress: () {
-        itemController.onMessageItemLongPress(context, message, room);
+        itemController.onMessageItemLongPress(context, message, room, onSwipe);
       },
       onTap: () {
         itemController.onMessageItemPress(
@@ -46,33 +56,38 @@ class VMessageItem extends StatelessWidget {
           message,
         );
       },
-      child: DirectionItemHolder(
-        isMeSender: message.isMeSender,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            _getChild(message),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MessageBroadcastWidget(
-                  isFromBroadcast: message.isFromBroadcast,
-                ),
-                MessageTimeWidget(
-                  dateTime: message.createdAtDate,
-                ),
-                MessageStatusIcon(
-                  isDeliver: message.deliveredAt != null,
-                  isSeen: message.seenAt != null,
-                  isMeSender: message.isMeSender,
-                  messageStatus: message.messageStatus,
-                ),
-              ],
-            )
-          ],
+      child: SwipeTo(
+        onRightSwipe: () {
+          onSwipe(message);
+        },
+        child: DirectionItemHolder(
+          isMeSender: message.isMeSender,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _getChild(message),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MessageBroadcastWidget(
+                    isFromBroadcast: message.isFromBroadcast,
+                  ),
+                  MessageTimeWidget(
+                    dateTime: message.createdAtDate,
+                  ),
+                  MessageStatusIcon(
+                    isDeliver: message.deliveredAt != null,
+                    isSeen: message.seenAt != null,
+                    isMeSender: message.isMeSender,
+                    messageStatus: message.messageStatus,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

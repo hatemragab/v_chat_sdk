@@ -14,27 +14,28 @@ class VMessageItemController {
     BuildContext context,
     VBaseMessage message,
     VRoom room,
+    Function(VBaseMessage p1) onSwipe,
   ) async {
     FocusScope.of(context).unfocus();
-    final items = <ModelSheetItem<MessageItemClickRes>>[];
+    final items = <ModelSheetItem<VMessageItemClickRes>>[];
     if (message.messageStatus.isServerConfirm) {
       items.add(
         ModelSheetItem(
-          id: MessageItemClickRes.forward,
+          id: VMessageItemClickRes.forward,
           title: "Forward",
           iconData: Icons.forward,
         ),
       );
       items.add(
         ModelSheetItem(
-          id: MessageItemClickRes.reply,
+          id: VMessageItemClickRes.reply,
           title: "Reply",
           iconData: Icons.replay,
         ),
       );
       items.add(
         ModelSheetItem(
-          id: MessageItemClickRes.share,
+          id: VMessageItemClickRes.share,
           title: "Share",
           iconData: Icons.share,
         ),
@@ -42,7 +43,7 @@ class VMessageItemController {
       if (message.isMeSender) {
         items.add(
           ModelSheetItem(
-            id: MessageItemClickRes.info,
+            id: VMessageItemClickRes.info,
             title: "Info",
             iconData: Icons.info,
           ),
@@ -51,7 +52,7 @@ class VMessageItemController {
     }
     items.add(
       ModelSheetItem(
-        id: MessageItemClickRes.delete,
+        id: VMessageItemClickRes.delete,
         title: "Delete",
         iconData: Icons.delete,
       ),
@@ -59,7 +60,7 @@ class VMessageItemController {
     if (message.messageType.isText) {
       items.add(
         ModelSheetItem(
-            id: MessageItemClickRes.copy, title: "Copy", iconData: Icons.copy),
+            id: VMessageItemClickRes.copy, title: "Copy", iconData: Icons.copy),
       );
     }
     final res = await VAppAlert.showModalSheet(
@@ -67,23 +68,23 @@ class VMessageItemController {
       context: context,
     );
     if (res == null) return;
-    switch (res.id as MessageItemClickRes) {
-      case MessageItemClickRes.forward:
+    switch (res.id as VMessageItemClickRes) {
+      case VMessageItemClickRes.forward:
         _handleForward(context, message.roomId);
         break;
-      case MessageItemClickRes.reply:
-        _handleReply(context, message);
+      case VMessageItemClickRes.reply:
+        onSwipe(message);
         break;
-      case MessageItemClickRes.share:
+      case VMessageItemClickRes.share:
         _handleShare(context, message);
         break;
-      case MessageItemClickRes.info:
+      case VMessageItemClickRes.info:
         _handleInfo(context, message, room);
         break;
-      case MessageItemClickRes.delete:
+      case VMessageItemClickRes.delete:
         _handleDelete(context, message);
         break;
-      case MessageItemClickRes.copy:
+      case VMessageItemClickRes.copy:
         _handleCopy(context, message);
         break;
     }
@@ -108,8 +109,6 @@ class VMessageItemController {
       ),
     );
   }
-
-  void _handleReply(BuildContext context, VBaseMessage message) {}
 
   void _handleShare(BuildContext context, VBaseMessage message) {}
 

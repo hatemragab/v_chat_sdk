@@ -71,14 +71,12 @@ class RoomProvider {
   }
 
   Future<bool> block(String roomId) async {
-    await _remoteRoom.deleteRoom(roomId);
-    await _localRoom.deleteRoom(roomId);
+    await _remoteRoom.closeChat(roomId);
     return true;
   }
 
   Future<bool> unBlock(String roomId) async {
-    // await _remoteRoom.(roomId);
-    await _localRoom.deleteRoom(roomId);
+    await _remoteRoom.closeChat(roomId);
     return true;
   }
 }

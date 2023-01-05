@@ -10,23 +10,33 @@ class RoomItemController {
   RoomItemController(this._provider);
 
   Future openForSingle(VRoom room, BuildContext context) async {
+    final l = [
+      ModelSheetItem(
+        title: room.isMuted ? "Un mute" : "Mute",
+        id: room.isMuted ? 2 : 1,
+      ),
+      ModelSheetItem(
+        title: "Delete",
+        id: 4,
+      ),
+    ];
+    if (room.isThereBlock && room.isMeBlocker) {
+      l.add(ModelSheetItem(
+        title: "Un block",
+        id: 10,
+      ));
+    }
+    if (!room.isThereBlock) {
+      l.add(ModelSheetItem(
+        title: "Block",
+        id: 3,
+      ));
+    }
     final res = await VAppAlert.showModalSheet(
-      content: [
-        ModelSheetItem(
-          title: room.isMuted ? "Un mute" : "Mute",
-          id: room.isMuted ? 2 : 1,
-        ),
-        ModelSheetItem(
-          title: room.isMeBlocker ? "Un block" : "Block",
-          id: room.isMeBlocker ? 10 : 3,
-        ),
-        ModelSheetItem(
-          title: "Delete",
-          id: 4,
-        ),
-      ],
+      content: l,
       context: context,
     );
+
     if (res == null) return;
     if (res.id == 1) {
       await _mute(context, room);
@@ -35,10 +45,10 @@ class RoomItemController {
       await _unMute(context, room);
     }
     if (res.id == 3) {
-      await _block(context);
+      await _block(context, room);
     }
     if (res.id == 10) {
-      await _unBlock(context);
+      await _unBlock(context, room);
     }
     if (res.id == 4) {
       await _delete(context, room);
@@ -134,7 +144,7 @@ class RoomItemController {
     );
   }
 
-  Future _block(BuildContext context) async {
+  Future _block(BuildContext context, VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
       title: "Block this user?",
@@ -143,7 +153,7 @@ class RoomItemController {
     if (res != 1) return;
     await vSafeApiCall(
       request: () async {
-        await Future.delayed(const Duration(seconds: 2));
+        await _provider.block(room.id);
       },
       onSuccess: (response) {
         VAppAlert.showSuccessSnackBar(msg: "User blocked", context: context);
@@ -151,10 +161,10 @@ class RoomItemController {
     );
   }
 
-  Future _unBlock(BuildContext context) async {
+  Future _unBlock(BuildContext context, VRoom room) async {
     await vSafeApiCall(
       request: () async {
-        await Future.delayed(const Duration(seconds: 2));
+        await _provider.block(room.id);
       },
       onSuccess: (response) {
         VAppAlert.showSuccessSnackBar(msg: "User un blocked", context: context);

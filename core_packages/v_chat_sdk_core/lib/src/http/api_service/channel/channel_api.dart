@@ -15,11 +15,15 @@ abstract class ChannelApi extends ChopperService {
   @Post(path: "/peer-room/{identifier}")
   Future<Response> getPeerRoom(@Path() String identifier);
 
-  @Get(path: "/{roomId}/single/my-info")
-  Future<Response> getMySingleRoomInfo(
+  // @Get(path: "/{roomId}/single/my-info")
+  // Future<Response> getMySingleRoomInfo(
+  //   @Path("roomId") String roomId,
+  // );
+
+  @Post(path: "/{roomId}/close")
+  Future<Response> closeChat(
     @Path("roomId") String roomId,
   );
-
   @Get(path: "/{roomId}")
   Future<Response> getRoomById(@Path() String roomId);
 

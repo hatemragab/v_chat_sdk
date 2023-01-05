@@ -6,7 +6,10 @@ import '../../../models/input_state_model.dart';
 import '../message_provider.dart';
 
 class InputStateController {
-  late final ValueNotifier<MessageInputModel> inputState;
+  late final ValueNotifier<MessageInputModel> _inputState;
+
+  ValueNotifier<MessageInputModel> get inputState => _inputState;
+
   final MessageProvider _messageProvider;
   final VRoom _vRoom;
 
@@ -14,7 +17,7 @@ class InputStateController {
     this._vRoom,
     this._messageProvider,
   ) {
-    inputState = ValueNotifier<MessageInputModel>(
+    _inputState = ValueNotifier<MessageInputModel>(
       MessageInputModel(
         isCloseInput: _vRoom.blockerId != null,
       ),

@@ -56,7 +56,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateBlockSingleRoom(VBlockSingleRoomEvent event) {
+  Future<int> updateBlockRoom(VBlockRoomEvent event) {
     return _database.update(
       _table,
       {

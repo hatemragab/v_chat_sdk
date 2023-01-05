@@ -5,7 +5,6 @@ import 'package:v_chat_sdk_core/src/utils/enums.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_sdk_core.dart';
-import '../../../models/v_room/single_room/single_ban_model.dart';
 import '../../../utils/api_constants.dart';
 import '../../dto/create_broadcast_dto.dart';
 import 'channel_api.dart';
@@ -25,6 +24,11 @@ class ChannelApiService {
     final res = await _channelApiService.getRoomById(roomId);
     throwIfNotSuccess(res);
     return VRoom.fromMap(extractDataFromResponse(res));
+  }
+
+  Future<void> closeChat(String roomId) async {
+    final res = await _channelApiService.closeChat(roomId);
+    throwIfNotSuccess(res);
   }
 
   Future<bool> changeRoomNotification(
@@ -201,17 +205,17 @@ class ChannelApiService {
     return (res.body as Map<String, dynamic>)['data'] as String;
   }
 
-  Future<VSingleBanModel> getMySingleRoomInfo(
-    String roomId,
-  ) async {
-    final res = await _channelApiService.getMySingleRoomInfo(
-      roomId,
-    );
-    throwIfNotSuccess(res);
-    return VSingleBanModel.fromMap(
-      extractDataFromResponse(res),
-    );
-  }
+  // Future<VSingleBanModel> getMySingleRoomInfo(
+  //   String roomId,
+  // ) async {
+  //   final res = await _channelApiService.getMySingleRoomInfo(
+  //     roomId,
+  //   );
+  //   throwIfNotSuccess(res);
+  //   return VSingleBanModel.fromMap(
+  //     extractDataFromResponse(res),
+  //   );
+  // }
 
   // Future<List<GroupMember>> getGroupMembers(
   //     String roomId,

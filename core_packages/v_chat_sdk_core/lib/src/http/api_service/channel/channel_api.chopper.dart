@@ -28,10 +28,10 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
-  Future<Response<dynamic>> getMySingleRoomInfo(String roomId) {
-    final Uri $url = Uri.parse('channel/${roomId}/single/my-info');
+  Future<Response<dynamic>> closeChat(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/close');
     final Request $request = Request(
-      'GET',
+      'POST',
       $url,
       client.baseUrl,
     );

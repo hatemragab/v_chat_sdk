@@ -48,7 +48,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateBlockSingleRoom(VBlockSingleRoomEvent event) async {
+  Future<int> updateBlockRoom(VBlockRoomEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.blockerId = event.banModel.bannerId;

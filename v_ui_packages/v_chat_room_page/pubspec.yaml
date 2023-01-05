@@ -28,6 +28,8 @@ dependencies:
   v_chat_media_editor: ^0.0.4
   auto_direction: ^0.0.6
   intl: ^0.17.0
+  swipe_to: ^1.0.2
+  scroll_to_index: ^3.0.1
 
 
 dev_dependencies:

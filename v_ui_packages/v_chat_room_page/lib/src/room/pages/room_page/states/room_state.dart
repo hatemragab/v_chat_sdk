@@ -58,7 +58,13 @@ class RoomState {
   VRoom? roomById(String roomId) =>
       stateRooms.firstWhereOrNull((e) => e.id == roomId);
 
-  void blockSingle(String roomId, VSingleBanModel banModel) {}
+  void blockRoom(String roomId, OnBanUserChatModel banModel) {
+    final room = roomById(roomId);
+    if (room != null) {
+      room.blockerId = banModel.bannerId;
+      // roomStateStream.sink.add(room);
+    }
+  }
 
   void updateOnline(String roomId) {
     final room = roomById(roomId);

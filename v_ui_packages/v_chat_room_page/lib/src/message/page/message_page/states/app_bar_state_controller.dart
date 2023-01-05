@@ -66,7 +66,9 @@ class AppBarStateController with VSocketIntervalStream {
   }
 
   Future<void> _updateAppBareState() async {
-    if (!_vRoom.isOnline && _vRoom.roomType.isSingleOrOrder) {
+    if (!_vRoom.isOnline &&
+        _vRoom.roomType.isSingleOrOrder &&
+        _vRoom.blockerId == null) {
       await vSafeApiCall<DateTime>(
         request: () async {
           return await _messageProvider.getLastSeenAt(_vRoom.peerId!);

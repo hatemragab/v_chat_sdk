@@ -1,1 +1,1 @@
-enum MessageItemClickRes { forward, reply, share, info, delete, copy }
+enum VMessageItemClickRes { forward, reply, share, info, delete, copy }

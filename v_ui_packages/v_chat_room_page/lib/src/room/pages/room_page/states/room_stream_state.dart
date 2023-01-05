@@ -58,8 +58,8 @@ class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
   }
 
   @override
-  void onBlockSingleRoom(VBlockSingleRoomEvent event) {
-    return roomState.blockSingle(event.roomId, event.banModel);
+  void onBlockRoom(VBlockRoomEvent event) {
+    return roomState.blockRoom(event.roomId, event.banModel);
   }
 
   @override

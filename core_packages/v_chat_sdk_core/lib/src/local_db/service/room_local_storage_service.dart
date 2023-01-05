@@ -37,8 +37,10 @@ mixin RoomLocalStorageService {
   }
 
   Future<int> updateRoomSingleBlock(
-      VSingleBanModel block, String roomId) async {
-    final event = VBlockSingleRoomEvent(banModel: block, roomId: roomId);
+    OnBanUserChatModel block,
+    String roomId,
+  ) async {
+    final event = VBlockRoomEvent(banModel: block, roomId: roomId);
     emitter.fire(event);
     return 1;
   }

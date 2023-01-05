@@ -30,6 +30,9 @@ extension MessageTypeExt on MessageType {
   bool get isText => this == MessageType.text;
 
   bool get isAllDeleted => this == MessageType.allDeleted;
+
+  bool get isCenter =>
+      this == MessageType.allDeleted || this == MessageType.info;
 }
 
 enum NotificationType {

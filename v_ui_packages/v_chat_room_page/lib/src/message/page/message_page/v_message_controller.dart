@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/states/app_bar_state_controller.dart';
@@ -27,7 +28,10 @@ class VMessageController {
 
   final _localStorage = VChatController.I.nativeApi.local;
   final _remoteStorage = VChatController.I.nativeApi.remote;
-
+  final autoScrollTagController = AutoScrollController(
+    axis: Axis.vertical,
+    suggestedRowHeight: 200,
+  );
   final itemController = VMessageItemController();
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
@@ -60,8 +64,6 @@ class VMessageController {
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
   }
-
-  void onMessageItemPress(VBaseMessage message) {}
 
   Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
     localMsg.replyTo = inputState.replyMsg;
@@ -156,6 +158,35 @@ class VMessageController {
     messageState.close();
     appBarStateController.close();
     inputStateController.close();
+    autoScrollTagController.dispose();
     VRoomTracker.instance.closeOpenedRoom(roomId);
+  }
+
+  setReply(VBaseMessage p1) {
+    inputStateController.setReply(p1);
+  }
+
+  void dismissReply() {
+    inputStateController.dismissReply();
+  }
+
+  void scrollDown() {
+    autoScrollTagController.animateTo(
+      0.0,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  Future<void> scrollToIndex(int i) {
+    return autoScrollTagController.scrollToIndex(
+      i,
+      preferPosition: AutoScrollPosition.end,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
+
+  void highlight(int i) {
+    autoScrollTagController.highlight(i);
   }
 }

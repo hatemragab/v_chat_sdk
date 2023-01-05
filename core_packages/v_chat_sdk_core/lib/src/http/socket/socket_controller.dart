@@ -7,6 +7,7 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
+import '../../models/socket/on_ban_user_chat.dart';
 import '../../models/socket/on_deliver_room_messages_model.dart';
 import '../../models/socket/on_enter_room_model.dart';
 
@@ -39,7 +40,7 @@ class SocketController implements ISocketIoClient {
 
   bool get isSocketConnected => socketIoClient.socket.connected;
   final socketIoClient = SocketIoClient();
-  final vChatEvents =VEventBusSingleton.vEventBus;
+  final vChatEvents = VEventBusSingleton.vEventBus;
 
   @override
   void connect() {
@@ -96,11 +97,10 @@ class SocketController implements ISocketIoClient {
       );
       await _socketService.handleOnRoomTypingChanged(x);
     });
-    _socket.on(SocketEvents.v1OnBanUserChat.name, (dynamic data) async {
+    _socket.on(SocketEvents.v1OnBanUserChat.name, (dynamic json) async {
       final data = jsonDecode(json.toString()) as Map<String, dynamic>;
-      final mySingleRoomInfo = VMySingleRoomInfo.fromMap(data);
-      await _socketService.handleOnSingleRoomBan(
-          mySingleRoomInfo, data['roomId'] as String);
+      final ban = OnBanUserChatModel.fromMap(data);
+      await _socketService.handleOnRoomBan(ban);
     });
 
     _socket.on(

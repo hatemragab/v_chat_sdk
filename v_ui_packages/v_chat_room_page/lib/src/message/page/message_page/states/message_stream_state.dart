@@ -64,7 +64,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
   }
 
   @override
-  void onBlockSingleRoom(VBlockSingleRoomEvent event) {
+  void onBlockRoom(VBlockRoomEvent event) {
     if (event.banModel.banned) {
       return inputStateController.closeChat();
     }

@@ -4,12 +4,10 @@ import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/models/socket/on_deliver_room_messages_model.dart';
 import 'package:v_chat_sdk_core/src/models/socket/on_enter_room_model.dart';
-import 'package:v_chat_sdk_core/src/models/v_room/single_room/my_single_room_info.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
-import '../../local_db/core/imp/api_cache/api_cache_keys.dart';
-import '../../models/api_cache_model.dart';
+import '../../models/socket/on_ban_user_chat.dart';
 import '../../native_api/local/native_local_cache.dart';
 import '../../native_api/local/native_local_message.dart';
 import '../../native_api/local/native_local_room.dart';
@@ -101,19 +99,8 @@ class SocketService {
     }
   }
 
-  Future<void> handleOnSingleRoomBan(
-    VMySingleRoomInfo mySingleRoomInfo,
-    String roomId,
-  ) async {
-    final apiCache = ApiCacheModel(
-      endPoint: ApiCacheKeys.mySingleInfo + roomId,
-      value: mySingleRoomInfo.toMap(),
-    );
-    await _localRoom.updateRoomSingleBlock(
-      mySingleRoomInfo.ban,
-      roomId,
-    );
-    await _apiCache.insertToApiCache(apiCache);
+  Future<void> handleOnRoomBan(OnBanUserChatModel ban) async {
+    await _localRoom.updateRoomBlock(ban);
   }
 
   Future<void> updateMessageType(VBaseMessage msg) async {

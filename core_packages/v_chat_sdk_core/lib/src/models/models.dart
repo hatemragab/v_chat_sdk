@@ -1,4 +1,5 @@
 export './current_room.dart';
+export './socket/on_ban_user_chat.dart';
 export './socket/on_deliver_room_messages_model.dart';
 export './socket/on_enter_room_model.dart';
 export './socket/room_typing_model.dart';

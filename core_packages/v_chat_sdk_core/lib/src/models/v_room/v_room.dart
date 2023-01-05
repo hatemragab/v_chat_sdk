@@ -175,8 +175,12 @@ class VRoom {
   }
 
   bool get isRoomUnread => unReadCount != 0;
+  bool get isThereBlock => blockerId != null;
 
-  bool get isMeBlocker => VAppConstants.myProfile.baseUser.vChatId == blockerId;
+  bool get isMeBlocker {
+    if (blockerId == null) return false;
+    return VAppConstants.myProfile.baseUser.vChatId == blockerId;
+  }
 
   String get lastMessageTimeString =>
       DateFormat.jm().format(lastMessage.createdAtDate);

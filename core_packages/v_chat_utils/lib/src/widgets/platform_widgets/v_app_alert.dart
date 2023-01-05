@@ -155,10 +155,9 @@ abstract class VAppAlert {
     required BuildContext context,
   }) {
     context.showSnackBar(
-      const SnackBar(
-        //todo fix trans
-        content: Text("Success"),
-        duration: Duration(
+      SnackBar(
+        content: Text(msg),
+        duration: const Duration(
           seconds: 3,
         ),
       ),
@@ -171,7 +170,6 @@ abstract class VAppAlert {
   }) {
     context.showSnackBar(
       SnackBar(
-        //todo fix trans
         content: Text(msg),
         duration: const Duration(
           seconds: 5,
