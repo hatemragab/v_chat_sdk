@@ -23,21 +23,21 @@ class VMessageItemController {
         ModelSheetItem(
           id: VMessageItemClickRes.forward,
           title: "Forward",
-          iconData: Icons.forward,
+          iconData: Icon(Icons.forward),
         ),
       );
       items.add(
         ModelSheetItem(
           id: VMessageItemClickRes.reply,
           title: "Reply",
-          iconData: Icons.replay,
+          iconData: Icon(Icons.replay),
         ),
       );
       items.add(
         ModelSheetItem(
           id: VMessageItemClickRes.share,
           title: "Share",
-          iconData: Icons.share,
+          iconData: Icon(Icons.share),
         ),
       );
       if (message.isMeSender) {
@@ -45,7 +45,7 @@ class VMessageItemController {
           ModelSheetItem(
             id: VMessageItemClickRes.info,
             title: "Info",
-            iconData: Icons.info,
+            iconData: Icon(Icons.info),
           ),
         );
       }
@@ -54,13 +54,18 @@ class VMessageItemController {
       ModelSheetItem(
         id: VMessageItemClickRes.delete,
         title: "Delete",
-        iconData: Icons.delete,
+        iconData: Icon(
+          Icons.delete,
+          color: Colors.red,
+        ),
       ),
     );
     if (message.messageType.isText) {
       items.add(
         ModelSheetItem(
-            id: VMessageItemClickRes.copy, title: "Copy", iconData: Icons.copy),
+            id: VMessageItemClickRes.copy,
+            title: "Copy",
+            iconData: Icon(Icons.copy)),
       );
     }
     final res = await VAppAlert.showModalSheet(

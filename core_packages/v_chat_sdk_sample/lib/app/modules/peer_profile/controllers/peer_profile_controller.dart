@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -46,12 +47,12 @@ class PeerProfileController extends GetxController {
         return VChatController.I.roomApi.getPeerRoom(peerIdentifier: uuId);
       },
       onSuccess: (response) {
-        // Get.to(
-        //   () => VMessagePage(
-        //     vRoom: response,
-        //     isInTesting: false,
-        //   ),
-        // );
+        Get.to(
+          () => VMessagePage(
+            vRoom: response,
+            isInTesting: false,
+          ),
+        );
       },
     );
   }

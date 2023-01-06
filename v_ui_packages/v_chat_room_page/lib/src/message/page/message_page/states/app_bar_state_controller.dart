@@ -5,20 +5,17 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../../models/app_bare_state_model.dart';
 import '../message_provider.dart';
 
-class AppBarStateController with VSocketIntervalStream {
-  late final ValueNotifier<MessageAppBarStateModel> appBareState;
+class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
+    with VSocketIntervalStream {
   final MessageProvider _messageProvider;
   final VRoom _vRoom;
 
   AppBarStateController(
     this._vRoom,
     this._messageProvider,
-  ) {
-    appBareState = ValueNotifier<MessageAppBarStateModel>(
-      MessageAppBarStateModel.fromVRoom(
-        _vRoom,
-      ),
-    );
+  ) : super(MessageAppBarStateModel.fromVRoom(
+          _vRoom,
+        )) {
     initSocketIntervalStream(
       VChatController.I.nativeApi.streams.socketIntervalStream,
     );
@@ -26,41 +23,41 @@ class AppBarStateController with VSocketIntervalStream {
   }
 
   void updateTitle(String title) {
-    appBareState.value.roomTitle = title;
-    appBareState.notifyListeners();
+    value.roomTitle = title;
+    notifyListeners();
   }
 
   void updateOnline() {
     if (!_vRoom.isThereBlock) {
-      appBareState.value.isOnline = true;
-      appBareState.notifyListeners();
+      value.isOnline = true;
+      notifyListeners();
     }
   }
 
   void updateImage(String image) {
-    appBareState.value.roomImage = image;
-    appBareState.notifyListeners();
+    value.roomImage = image;
+    notifyListeners();
   }
 
   void updateTyping(VSocketRoomTypingModel typingModel) {
-    appBareState.value.typingModel = typingModel;
-    appBareState.notifyListeners();
+    value.typingModel = typingModel;
+    notifyListeners();
   }
 
   void updateLastSeen(DateTime lastSeenAt) {
-    appBareState.value.lastSeenAt = lastSeenAt;
-    appBareState.notifyListeners();
+    value.lastSeenAt = lastSeenAt;
+    notifyListeners();
   }
 
   void close() {
-    appBareState.dispose();
+    dispose();
     closeSocketIntervalStream();
   }
 
   void updateOffline() {
-    appBareState.value.isOnline = false;
+    value.isOnline = false;
     // appBareState.value.lastSeenAt = null;
-    appBareState.notifyListeners();
+    notifyListeners();
   }
 
   @override
@@ -72,7 +69,7 @@ class AppBarStateController with VSocketIntervalStream {
     if (!_vRoom.isOnline &&
         _vRoom.roomType.isSingleOrOrder &&
         _vRoom.blockerId == null &&
-        appBareState.value.lastSeenAt == null) {
+        value.lastSeenAt == null) {
       await vSafeApiCall<DateTime>(
         request: () async {
           return await _messageProvider.getLastSeenAt(_vRoom.peerId!);

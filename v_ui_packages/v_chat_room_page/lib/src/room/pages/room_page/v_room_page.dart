@@ -42,7 +42,7 @@ class _VChatPageState extends State<VChatPage> {
           children: [
             const VSocketStatusWidget(),
             ValueListenableBuilder<VPaginationModel<VRoom>>(
-              valueListenable: widget.controller.roomState.roomNotifier,
+              valueListenable: widget.controller.roomState,
               builder: (_, value, __) {
                 return Expanded(
                   child: ListView.builder(

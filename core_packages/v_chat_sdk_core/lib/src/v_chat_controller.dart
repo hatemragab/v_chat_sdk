@@ -60,7 +60,7 @@ class VChatController {
   /// It's necessary to initialize before calling [VChatController.I]
   static Future<VChatController> init({
     required VChatConfig vChatConfig,
-    VMessagePageConfig messagePageConfig = const VMessagePageConfig(),
+    VMessagePageConfig vMessagePageConfig = const VMessagePageConfig(),
   }) async {
     assert(
       !_instance._isControllerInit,
@@ -68,7 +68,7 @@ class VChatController {
     );
     _instance._isControllerInit = true;
     _instance.vChatConfig = vChatConfig;
-    _instance.vMessagePageConfig = messagePageConfig;
+    _instance.vMessagePageConfig = vMessagePageConfig;
     await VAppPref.init();
     _instance._helper = await ControllerHelper.instance.init(
       _instance.vChatConfig,

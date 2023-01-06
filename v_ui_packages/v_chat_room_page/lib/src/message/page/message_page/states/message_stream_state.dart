@@ -5,7 +5,7 @@ import 'input_state_controller.dart';
 import 'message_state.dart';
 
 class MessageStreamState with VMessageStream, VRoomStream {
-  final MessageState messageState;
+  final MessageStateController messageState;
   final AppBarStateController appBarStateController;
   final InputStateController inputStateController;
   final VNativeApi nativeApi;

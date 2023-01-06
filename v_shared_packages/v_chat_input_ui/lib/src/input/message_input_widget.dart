@@ -308,16 +308,16 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         ModelSheetItem<VAttachEnumRes>(
           title: language.media,
           id: VAttachEnumRes.media,
-          iconData: Icons.image,
+          iconData: const Icon(Icons.image),
         ),
         ModelSheetItem<VAttachEnumRes>(
             title: language.files,
             id: VAttachEnumRes.files,
-            iconData: Icons.attach_file),
+            iconData: const Icon(Icons.attach_file)),
         if (widget.googleMapsApiKey != null)
           ModelSheetItem<VAttachEnumRes>(
             title: language.location,
-            iconData: Icons.location_on_outlined,
+            iconData: const Icon(Icons.location_on_outlined),
             id: VAttachEnumRes.location,
           ),
       ], context: context, title: language.shareMediaAndLocation);

@@ -42,6 +42,7 @@ void main() async {
 }
 
 Uri _getBaseUrl() {
+  return Uri.parse("http://192.168.1.4:3000");
   if (kDebugMode) {
     if (kIsWeb || VPlatforms.isIOS) {
       return Uri.parse("http://localhost:3000");

@@ -5,45 +5,54 @@ import 'package:flutter/cupertino.dart';
 import 'package:v_chat_room_page/src/room/shared/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-class RoomState {
+class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
   final Future<VRoom?> Function(String roomId) getRoom;
 
-  RoomState(this.getRoom);
+  RoomState(this.getRoom)
+      : super(VPaginationModel<VRoom>(
+          values: <VRoom>[],
+          limit: 20,
+          page: 1,
+          nextPage: null,
+        ));
 
   final roomStateStream = StreamController<VRoom>.broadcast();
-  final roomNotifier = ValueNotifier<VPaginationModel<VRoom>>(
-    VPaginationModel<VRoom>(
-      values: <VRoom>[],
-      limit: 20,
-      page: 1,
-      nextPage: null,
-    ),
-  );
 
-  List<VRoom> get stateRooms => roomNotifier.value.values;
+  List<VRoom> get stateRooms => value.values;
 
   void updateCacheState(VPaginationModel<VRoom> paginationModel) {
+    final newStateList = [...value.values];
     final apiRooms = paginationModel.values;
-    for (int i = 0; i < apiRooms.length; i++) {
-      final stateRoomIndex = stateRooms.indexOf(apiRooms[i]);
-      if (stateRoomIndex != -1) {
+    for (int apiIndex = 0; apiIndex < apiRooms.length; apiIndex++) {
+      final stateIndex = newStateList.indexOf(apiRooms[apiIndex]);
+      if (stateIndex != -1) {
         //api room exists in local rooms we need to check if
         //local room contains sending message
-        if (stateRooms[i].lastMessage.messageStatus.isSendingOrError) {
-          apiRooms[i].lastMessage = stateRooms[i].lastMessage;
+
+        if (newStateList[stateIndex]
+            .lastMessage
+            .messageStatus
+            .isSendingOrError) {
+          final stateLastMsg = newStateList[stateIndex].lastMessage;
+          newStateList[stateIndex] = apiRooms[apiIndex];
+          newStateList[stateIndex].lastMessage = stateLastMsg;
+        } else {
+          newStateList[stateIndex] = apiRooms[apiIndex];
         }
+      } else {
+        newStateList.insert(0, apiRooms[apiIndex]);
       }
     }
     //we need to sort
-    apiRooms.sortByMsgId();
-    roomNotifier.value = paginationModel;
-    roomNotifier.notifyListeners();
+    newStateList.sortByMsgId();
+    value.values = newStateList;
+    notifyListeners();
   }
 
   void insertRoom(VRoom room) {
     if (!stateRooms.contains(room)) {
-      roomNotifier.value.values.insert(0, room);
-      roomNotifier.notifyListeners();
+      value.values.insert(0, room);
+      notifyListeners();
     } else {
       print(
           "-------------you are try to insert message which already exist!-----------");
@@ -51,7 +60,7 @@ class RoomState {
   }
 
   void close() {
-    roomNotifier.dispose();
+    dispose();
     roomStateStream.close();
   }
 
@@ -196,7 +205,7 @@ class RoomState {
     if (room != null) {
       room.lastMessage = event.messageModel;
       stateRooms.sortByMsgId();
-      roomNotifier.notifyListeners();
+      notifyListeners();
     } else {
       //we need to request this room !
       //first search in local db
@@ -207,5 +216,10 @@ class RoomState {
         insertRoom(newRoom);
       }
     }
+  }
+
+  void insertAll(VPaginationModel<VRoom> response) {
+    value.values = response.values;
+    notifyListeners();
   }
 }

@@ -22,7 +22,7 @@ class VMessageController {
   final Function(String userId) onMentionPress;
   final VRoom vRoom;
   final _messageProvider = MessageProvider();
-  late final MessageState messageState;
+  late final MessageStateController messageState;
 
   late final AppBarStateController appBarStateController;
   late final InputStateController inputStateController;
@@ -44,8 +44,7 @@ class VMessageController {
 
   MessageInputModel get inputState => inputStateController.inputState.value;
 
-  MessageAppBarStateModel get appBareState =>
-      appBarStateController.appBareState.value;
+  MessageAppBarStateModel get appBareState => appBarStateController.value;
 
   String get roomId => vRoom.id;
 
@@ -54,7 +53,7 @@ class VMessageController {
     required this.onMentionPress,
     this.isInTesting = false,
   }) {
-    messageState = MessageState(vRoom, _messageProvider, isInTesting);
+    messageState = MessageStateController(vRoom, _messageProvider, isInTesting);
     appBarStateController = AppBarStateController(vRoom, _messageProvider);
     inputStateController = InputStateController(vRoom, _messageProvider);
     _localStreamChanges = MessageStreamState(

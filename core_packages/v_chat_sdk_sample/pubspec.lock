@@ -1036,6 +1036,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.5"
+  map_launcher:
+    dependency: transitive
+    description:
+      name: map_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:

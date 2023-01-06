@@ -49,13 +49,14 @@ class VMessageAppBare extends StatelessWidget {
             : _getSubTitle(),
       ),
       actions: [
+        _getCallIcon(),
         PopupMenuButton(
           onSelected: (value) {
             if (value == 'Search') {
               //focusNode.requestFocus();
               // controller.toggleSearchMode();
               // onSearchClicked();
-            } else if (value == 'view') {
+            } else if (value == 'media') {
               //onViewContactClicked();
             }
           },
@@ -76,17 +77,17 @@ class VMessageAppBare extends StatelessWidget {
               ),
             ),
             PopupMenuItem(
-              value: "view",
+              value: "media",
               child: Row(
                 children: [
                   Icon(
-                    Icons.person,
+                    Icons.image,
                     color: context.isDark ? Colors.white : Colors.black,
                   ),
                   const SizedBox(
                     width: 5,
                   ),
-                  Text("Settings"),
+                  Text("Media"),
                 ],
               ),
             ),
@@ -108,5 +109,12 @@ class VMessageAppBare extends StatelessWidget {
       }
     }
     return null;
+  }
+
+  Widget _getCallIcon() {
+    if (state.roomType.isSingleOrOrder) {
+      return Icon(Icons.call);
+    }
+    return SizedBox();
   }
 }

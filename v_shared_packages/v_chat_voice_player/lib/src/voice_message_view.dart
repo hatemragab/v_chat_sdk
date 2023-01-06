@@ -109,66 +109,69 @@ class VVoiceMessageView extends StatelessWidget {
                 const SizedBox(
                   width: 5,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 30,
-                      width: controller.noiseWidth,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Noises(
-                            rList: controller.randoms,
-                            activeSliderColor: activeSliderColor,
-                          ),
-                          AnimatedBuilder(
-                            animation: CurvedAnimation(
-                              parent: controller.animController,
-                              curve: Curves.ease,
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 30,
+                        width: controller.noiseWidth,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Noises(
+                              rList: controller.randoms,
+                              activeSliderColor: activeSliderColor,
                             ),
-                            builder: (BuildContext context, Widget? child) {
-                              //print("controller.animController.value is ${controller.animController.value}");
-                              return Positioned(
-                                left: controller.animController.value,
-                                child: Container(
-                                  width: controller.noiseWidth,
-                                  height: 6.w(),
-                                  color: notActiveSliderColor ??
-                                      backgroundColor.withOpacity(.4),
-                                ),
-                              );
-                            },
-                          ),
-                          Opacity(
-                            opacity: .0,
-                            child: Container(
-                              width: controller.noiseWidth,
-                              color: Colors.amber.withOpacity(1),
-                              child: Theme(
-                                data: newTHeme,
-                                child: Slider(
-                                  value: controller.currentMillSeconds,
-                                  max: controller.maxMillSeconds,
-                                  onChangeStart: controller.onChangeSliderStart,
-                                  onChanged: controller.onChanging,
-                                  onChangeEnd: (value) {
-                                    controller.onSeek(
-                                      Duration(milliseconds: value.toInt()),
-                                    );
-                                  },
+                            AnimatedBuilder(
+                              animation: CurvedAnimation(
+                                parent: controller.animController,
+                                curve: Curves.ease,
+                              ),
+                              builder: (BuildContext context, Widget? child) {
+                                //print("controller.animController.value is ${controller.animController.value}");
+                                return Positioned(
+                                  left: controller.animController.value,
+                                  child: Container(
+                                    width: controller.noiseWidth,
+                                    height: 6.w(),
+                                    color: notActiveSliderColor ??
+                                        backgroundColor.withOpacity(.4),
+                                  ),
+                                );
+                              },
+                            ),
+                            Opacity(
+                              opacity: .0,
+                              child: Container(
+                                width: controller.noiseWidth,
+                                color: Colors.amber.withOpacity(1),
+                                child: Theme(
+                                  data: newTHeme,
+                                  child: Slider(
+                                    value: controller.currentMillSeconds,
+                                    max: controller.maxMillSeconds,
+                                    onChangeStart:
+                                        controller.onChangeSliderStart,
+                                    onChanged: controller.onChanging,
+                                    onChangeEnd: (value) {
+                                      controller.onSeek(
+                                        Duration(milliseconds: value.toInt()),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Text(
-                      controller.remindingTime,
-                      style: counterTextStyle,
-                    ),
-                  ],
+                      Text(
+                        controller.remindingTime,
+                        style: counterTextStyle,
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   width: 5,

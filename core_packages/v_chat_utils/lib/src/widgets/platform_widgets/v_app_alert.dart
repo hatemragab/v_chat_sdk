@@ -143,7 +143,7 @@ abstract class VAppAlert {
       actions: content
           .map((e) => SheetAction<ModelSheetItem>(
                 label: e.title,
-                icon: e.iconData,
+                icon: e.iconData == null ? null : e.iconData!.icon,
                 key: e,
               ))
           .toList(),
@@ -234,9 +234,13 @@ abstract class VAppAlert {
 class ModelSheetItem<T> {
   final T id;
   final String title;
-  final IconData? iconData;
+  final Icon? iconData;
 
-  ModelSheetItem({required this.title, required this.id, this.iconData});
+  ModelSheetItem({
+    required this.title,
+    required this.id,
+    this.iconData,
+  });
 }
 
 class _MessageNotification extends StatelessWidget {

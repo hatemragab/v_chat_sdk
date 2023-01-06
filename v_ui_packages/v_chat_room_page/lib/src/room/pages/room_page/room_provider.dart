@@ -78,4 +78,8 @@ class RoomProvider {
     await _remoteRoom.closeChat(roomId);
     return true;
   }
+
+  Future groupLeave(String roomId) async {
+    return await _remoteRoom.leaveGroup(roomId);
+  }
 }

@@ -8,34 +8,36 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../message_provider.dart';
 
-class MessageState with VSocketStatusStream {
+class MessageStateController extends ValueNotifier<List<VBaseMessage>>
+    with VSocketStatusStream {
   final VRoom _vRoom;
   final bool isInTesting;
   final MessageProvider _messageProvider;
-  final stateNotifier = ValueNotifier<List<VBaseMessage>>(
-    <VBaseMessage>[],
-  );
 
-  MessageState(
+  MessageStateController(
     this._vRoom,
     this._messageProvider,
     this.isInTesting,
-  ) {
+  ) : super(<VBaseMessage>[]) {
     initSocketStatusStream(
       VChatController.I.nativeApi.streams.socketStatusStream,
     );
     _initLocalMessages();
   }
 
-  List<VBaseMessage> get stateMessages => stateNotifier.value;
+  List<VBaseMessage> get stateMessages => value;
   final messageStateStream = StreamController<VBaseMessage>.broadcast();
 
   bool get isMessagesEmpty => stateMessages.isEmpty;
 
   String get lastMessageId => stateMessages.last.id;
 
+  void insertAll(List<VBaseMessage> messages) {
+    value = messages.sortById();
+  }
+
   void updateCacheState(List<VBaseMessage> apiMessages) {
-    final stateMessages = stateNotifier.value;
+    final stateMessages = value;
     final newList = <VBaseMessage>[];
 
     newList.addAll(apiMessages);
@@ -43,13 +45,13 @@ class MessageState with VSocketStatusStream {
       stateMessages.where((e) => e.messageStatus.isSendingOrError),
     );
     //we need to sort
-    stateNotifier.value = newList.sortById();
+    value = newList.sortById();
   }
 
   void insertMessage(VBaseMessage messageModel) {
     if (!stateMessages.contains(messageModel)) {
-      stateNotifier.value.insert(0, messageModel);
-      stateNotifier.notifyListeners();
+      value.insert(0, messageModel);
+      notifyListeners();
     } else {
       print(
           "-------------you are try to insert message which already exist!-----------");
@@ -60,7 +62,7 @@ class MessageState with VSocketStatusStream {
     final msgIndex = stateMessages.indexOf(messageModel);
     if (msgIndex != -1) {
       //full update
-      stateNotifier.value[msgIndex] = messageModel;
+      value[msgIndex] = messageModel;
       messageStateStream.sink.add(messageModel);
     } else {
       print(
@@ -70,31 +72,31 @@ class MessageState with VSocketStatusStream {
 
   void close() {
     messageStateStream.close();
-    stateNotifier.dispose();
+    dispose();
     closeSocketStatusStream();
   }
 
   void deleteMessage(String localId) {
-    stateNotifier.value.removeWhere((e) => e.localId == localId);
-    stateNotifier.notifyListeners();
+    value.removeWhere((e) => e.localId == localId);
+    notifyListeners();
   }
 
   void updateMessageType(String localId, MessageType messageType) {
-    stateNotifier.value
+    value
         .firstWhereOrNull(
           (e) => e.localId == localId,
         )
         ?.messageType = messageType;
-    stateNotifier.notifyListeners();
+    notifyListeners();
   }
 
   void updateMessageStatus(String localId, MessageEmitStatus emitState) {
-    stateNotifier.value
+    value
         .firstWhereOrNull(
           (e) => e.localId == localId,
         )
         ?.messageStatus = emitState;
-    stateNotifier.notifyListeners();
+    notifyListeners();
   }
 
   void seenAll(VSocketOnRoomSeenModel model) {
@@ -102,14 +104,14 @@ class MessageState with VSocketStatusStream {
       stateMessages[i].seenAt ??= model.date;
       stateMessages[i].deliveredAt ??= model.date;
     }
-    stateNotifier.notifyListeners();
+    notifyListeners();
   }
 
   void deliverAll(VSocketOnDeliverMessagesModel model) {
     for (int i = 0; i < stateMessages.length; i++) {
       stateMessages[i].deliveredAt ??= model.date;
     }
-    stateNotifier.notifyListeners();
+    notifyListeners();
   }
 
   @override
@@ -149,7 +151,7 @@ class MessageState with VSocketStatusStream {
         }
       },
       onSuccess: (response) {
-        updateCacheState(response);
+        insertAll(response);
       },
     );
     await getApiMessages();

@@ -53,7 +53,7 @@ class _VMessagePageState extends State<VMessagePage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ValueListenableBuilder<MessageAppBarStateModel>(
-          valueListenable: controller.appBarStateController.appBareState,
+          valueListenable: controller.appBarStateController,
           builder: (context, value, child) {
             return VMessageAppBare(
               state: value,
@@ -75,7 +75,7 @@ class _VMessagePageState extends State<VMessagePage> {
             child: Stack(
               children: [
                 ValueListenableBuilder<List<VBaseMessage>>(
-                  valueListenable: controller.messageState.stateNotifier,
+                  valueListenable: controller.messageState,
                   builder: (_, value, __) {
                     return Scrollbar(
                       interactive: true,

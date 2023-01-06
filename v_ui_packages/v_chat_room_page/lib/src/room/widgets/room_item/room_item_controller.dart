@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -7,30 +8,94 @@ import '../../pages/room_page/room_provider.dart';
 class RoomItemController {
   final RoomProvider _provider;
 
+  ModelSheetItem<VRoomItemClickRes> _muteItem(BuildContext context) {
+    return ModelSheetItem(
+      title: "Mute",
+      id: VRoomItemClickRes.mute,
+      iconData: const Icon(
+        Icons.notifications_off,
+      ),
+    );
+  }
+
+  ModelSheetItem<VRoomItemClickRes> _unMuteItem(BuildContext context) {
+    return ModelSheetItem(
+      title: "Un mute",
+      id: VRoomItemClickRes.unMute,
+      iconData: const Icon(
+        Icons.notifications,
+      ),
+    );
+  }
+
+  ModelSheetItem<VRoomItemClickRes> _deleteItem(BuildContext context) {
+    return ModelSheetItem(
+      title: "Delete",
+      iconData: const Icon(Icons.delete),
+      id: VRoomItemClickRes.delete,
+    );
+  }
+
+  ModelSheetItem<VRoomItemClickRes> _reportItem(BuildContext context) {
+    return ModelSheetItem(
+      title: "Report",
+      id: VRoomItemClickRes.report,
+      iconData: const Icon(
+        Icons.report_gmailerrorred,
+        color: Colors.red,
+      ),
+    );
+  }
+
+  ModelSheetItem<VRoomItemClickRes> _unBlockItem(BuildContext context) {
+    return ModelSheetItem(
+      title: "Un block",
+      id: VRoomItemClickRes.unBlock,
+      iconData: const Icon(
+        Icons.security,
+        color: Colors.red,
+      ),
+    );
+  }
+
+  ModelSheetItem<VRoomItemClickRes> _blockItem(BuildContext context) {
+    return ModelSheetItem(
+      title: "Block",
+      id: VRoomItemClickRes.block,
+      iconData: const Icon(
+        Icons.block,
+        color: Colors.red,
+      ),
+    );
+  }
+
+  ModelSheetItem<VRoomItemClickRes> _leaveItem(
+    BuildContext context,
+  ) {
+    return ModelSheetItem(
+      title: "Leave",
+      id: VRoomItemClickRes.leave,
+      iconData: const Icon(
+        Icons.exit_to_app,
+        color: Colors.red,
+      ),
+    );
+  }
+
   RoomItemController(this._provider);
 
   Future openForSingle(VRoom room, BuildContext context) async {
-    final l = [
-      ModelSheetItem(
-        title: room.isMuted ? "Un mute" : "Mute",
-        id: room.isMuted ? 2 : 1,
-      ),
-      ModelSheetItem(
-        title: "Delete",
-        id: 4,
-      ),
+    final l = <ModelSheetItem>[
+      if (room.isMuted) _unMuteItem(context) else _muteItem(context),
+      _deleteItem(context),
+      _reportItem(context),
     ];
+
     if (room.isThereBlock && room.isMeBlocker) {
-      l.add(ModelSheetItem(
-        title: "Un block",
-        id: 10,
-      ));
+      l.add(_unBlockItem(context));
     }
     if (!room.isThereBlock) {
-      l.add(ModelSheetItem(
-        title: "Block",
-        id: 3,
-      ));
+      l.add(_blockItem(context));
     }
     final res = await VAppAlert.showModalSheet(
       content: l,
@@ -38,71 +103,57 @@ class RoomItemController {
     );
 
     if (res == null) return;
-    if (res.id == 1) {
-      await _mute(context, room);
-    }
-    if (res.id == 2) {
-      await _unMute(context, room);
-    }
-    if (res.id == 3) {
-      await _block(context, room);
-    }
-    if (res.id == 10) {
-      await _unBlock(context, room);
-    }
-    if (res.id == 4) {
-      await _delete(context, room);
+    _process(res.id, room, context);
+  }
+
+  Future _process(Object res, VRoom room, BuildContext context) async {
+    switch (res as VRoomItemClickRes) {
+      case VRoomItemClickRes.mute:
+        await _mute(context, room);
+        break;
+      case VRoomItemClickRes.unMute:
+        await _unMute(context, room);
+        break;
+      case VRoomItemClickRes.delete:
+        await _delete(context, room);
+        break;
+      case VRoomItemClickRes.block:
+        await _block(context, room);
+        break;
+      case VRoomItemClickRes.unBlock:
+        await _unBlock(context, room);
+        break;
+      case VRoomItemClickRes.report:
+        //todo support
+        break;
+      case VRoomItemClickRes.leave:
+        _groupLeave(context, room);
+        break;
     }
   }
 
   Future openForGroup(VRoom room, BuildContext context) async {
     final res = await VAppAlert.showModalSheet(
       content: [
-        ModelSheetItem(
-          title: room.isMuted ? "Un mute" : "Mute",
-          id: room.isMuted ? 2 : 1,
-        ),
-        ModelSheetItem(
-          title: "Leave",
-          id: 3,
-        ),
-        ModelSheetItem(
-          title: "Delete",
-          id: 4,
-        ),
+        if (room.isMuted) _unMuteItem(context) else _muteItem(context),
+        _leaveItem(context),
+        _deleteItem(context),
       ],
       context: context,
     );
     if (res == null) return;
-    if (res.id == 1) {
-      await _mute(context, room);
-    }
-    if (res.id == 2) {
-      await _unMute(context, room);
-    }
-    if (res.id == 3) {
-      await _groupLeave(context);
-    }
-    if (res.id == 4) {
-      await _delete(context, room);
-    }
+    _process(res.id, room, context);
   }
 
   Future openForBroadcast(VRoom room, BuildContext context) async {
     final res = await VAppAlert.showModalSheet(
       content: [
-        ModelSheetItem(
-          title: "Delete",
-          id: 4,
-        ),
+        _deleteItem(context),
       ],
       context: context,
     );
     if (res == null) return;
-
-    if (res.id == 4) {
-      await _delete(context, room);
-    }
+    _process(res.id, room, context);
   }
 
   Future _mute(BuildContext context, VRoom room) async {
@@ -111,7 +162,7 @@ class RoomItemController {
         await _provider.mute(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showSuccessSnackBar(msg: "Chat muted", context: context);
+        VAppAlert.showOverlaySupport(title: "Chat muted");
       },
     );
   }
@@ -122,7 +173,7 @@ class RoomItemController {
         await _provider.unMute(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showSuccessSnackBar(msg: "Chat un muted", context: context);
+        VAppAlert.showOverlaySupport(title: "Chat un muted");
       },
     );
   }
@@ -139,7 +190,7 @@ class RoomItemController {
         await _provider.deleteRoom(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showSuccessSnackBar(msg: "Chat deleted", context: context);
+        VAppAlert.showOverlaySupport(title: "Chat deleted");
       },
     );
   }
@@ -156,7 +207,7 @@ class RoomItemController {
         await _provider.block(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showSuccessSnackBar(msg: "User blocked", context: context);
+        VAppAlert.showOverlaySupport(title: "User blocked");
       },
     );
   }
@@ -167,12 +218,12 @@ class RoomItemController {
         await _provider.block(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showSuccessSnackBar(msg: "User un blocked", context: context);
+        VAppAlert.showOverlaySupport(title: "User un blocked");
       },
     );
   }
 
-  Future _groupLeave(BuildContext context) async {
+  Future _groupLeave(BuildContext context, VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
       title: "Are you sure to leave?",
@@ -181,10 +232,10 @@ class RoomItemController {
     if (res != 1) return;
     await vSafeApiCall(
       request: () async {
-        await Future.delayed(const Duration(seconds: 2));
+        await _provider.groupLeave(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showSuccessSnackBar(msg: "Group left", context: context);
+        VAppAlert.showOverlaySupport(title: "Group left");
       },
     );
   }

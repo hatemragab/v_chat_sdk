@@ -51,10 +51,10 @@ class VRoomController with VSocketStatusStream {
         return _roomProvider.getLocalRooms();
       },
       onSuccess: (response) {
-        roomState.updateCacheState(response);
+        roomState.insertAll(response);
       },
     );
-    //await getRoomsFromApi();
+    await getRoomsFromApi();
   }
 
   void onRoomItemLongPress(VRoom room, BuildContext context) async {
