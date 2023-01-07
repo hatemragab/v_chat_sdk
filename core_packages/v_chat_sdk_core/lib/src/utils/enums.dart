@@ -14,7 +14,6 @@ enum MessageType {
 }
 
 extension MessageTypeExt on MessageType {
-  bool get isMiddle => this == MessageType.info;
   bool get isImage => this == MessageType.image;
 
   bool get isInfo => this == MessageType.info;
@@ -31,8 +30,7 @@ extension MessageTypeExt on MessageType {
 
   bool get isAllDeleted => this == MessageType.allDeleted;
 
-  bool get isCenter =>
-      this == MessageType.allDeleted || this == MessageType.info;
+  bool get isCenter => this == MessageType.info;
 }
 
 enum NotificationType {

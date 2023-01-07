@@ -30,11 +30,11 @@ class MessageProvider {
 
   Future<List<VBaseMessage>> getLocalMessages({
     required String roomId,
-    String? lastId,
+    required VRoomMessagesDto filter,
   }) async {
     return _localMessage.getRoomMessages(
       roomId: roomId,
-      lastId: lastId,
+      filter: filter,
     );
   }
 
@@ -70,5 +70,18 @@ class MessageProvider {
 
   void emitTypingChanged(VSocketRoomTypingModel model) {
     return _socket.emitUpdateRoomStatus(model);
+  }
+
+  Future<List<VBaseMessage>> search(String roomId, String text) {
+    return _localMessage.searchMessage(text, roomId);
+  }
+
+  Future deleteMessageFromAll(String roomId, String mId) async {
+    return _remoteMessage.deleteMessageFromAll(roomId, mId);
+  }
+
+  Future deleteMessageFromMe(VBaseMessage msg) async {
+    await _localMessage.deleteMessageByLocalId(msg);
+    return _remoteMessage.deleteMessageFromMe(msg.roomId, msg.id);
   }
 }

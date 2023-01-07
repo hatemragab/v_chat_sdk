@@ -107,7 +107,7 @@ class SocketController implements ISocketIoClient {
       SocketEvents.v1OnDeleteMessageFromAll.name,
       (dynamic data) async {
         final msg = MessageFactory.createBaseMessage(
-          jsonDecode(json.toString()) as Map<String, dynamic>,
+          jsonDecode(data.toString()) as Map<String, dynamic>,
         );
         await _socketService.updateMessageType(msg);
       },

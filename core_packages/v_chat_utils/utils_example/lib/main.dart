@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import 'list_view_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await VAppPref.init(hasKey: "dfgdfklkeggereteth");
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: ListViewPage(),
     );
   }
 }

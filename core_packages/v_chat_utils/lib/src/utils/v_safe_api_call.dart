@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../v_chat_utils.dart';
 
-Future<void> vSafeApiCall<T>({
+Future<T?> vSafeApiCall<T>({
   Function()? onLoading,
   required Future<T> Function() request,
   required Function(T response) onSuccess,
@@ -23,7 +23,7 @@ Future<void> vSafeApiCall<T>({
     }
     final res = await request();
     await onSuccess(res);
-    return;
+    return res;
   } on SocketException catch (err, stacktrace) {
     _showError(err, showToastError);
     if (onError != null) {
@@ -40,13 +40,12 @@ Future<void> vSafeApiCall<T>({
       onError(err.toString(), stacktrace);
     }
     log("", error: err, stackTrace: stacktrace, level: 1000);
-    return;
   } finally {
     if (finallyCallback != null) {
       finallyCallback();
     }
   }
-  return;
+  return null;
 }
 
 void _showError(Object err, bool isAllow) {

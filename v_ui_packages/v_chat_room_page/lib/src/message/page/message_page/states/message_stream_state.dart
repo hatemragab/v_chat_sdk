@@ -2,7 +2,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import 'app_bar_state_controller.dart';
 import 'input_state_controller.dart';
-import 'message_state.dart';
+import 'message_state_controller.dart';
 
 class MessageStreamState with VMessageStream, VRoomStream {
   final MessageStateController messageState;

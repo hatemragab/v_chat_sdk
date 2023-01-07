@@ -8,13 +8,18 @@ import '../message_items/shared/message_typing_widget.dart';
 
 class VMessageAppBare extends StatelessWidget {
   final MessageAppBarStateModel state;
-  final Function(BuildContext context, String id, VRoomType roomType)
-      onTitlePress;
+  final Function(
+    BuildContext context,
+    String id,
+    VRoomType roomType,
+  ) onTitlePress;
+  final VoidCallback onSearch;
 
   const VMessageAppBare({
     Key? key,
     required this.state,
     required this.onTitlePress,
+    required this.onSearch,
   }) : super(key: key);
 
   @override
@@ -53,6 +58,7 @@ class VMessageAppBare extends StatelessWidget {
         PopupMenuButton(
           onSelected: (value) {
             if (value == 'Search') {
+              onSearch();
               //focusNode.requestFocus();
               // controller.toggleSearchMode();
               // onSearchClicked();
@@ -72,7 +78,7 @@ class VMessageAppBare extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text("Search"),
+                  const Text("Search"),
                 ],
               ),
             ),
@@ -87,7 +93,7 @@ class VMessageAppBare extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text("Media"),
+                  const Text("Media"),
                 ],
               ),
             ),
@@ -113,8 +119,8 @@ class VMessageAppBare extends StatelessWidget {
 
   Widget _getCallIcon() {
     if (state.roomType.isSingleOrOrder) {
-      return Icon(Icons.call);
+      return const Icon(Icons.call);
     }
-    return SizedBox();
+    return const SizedBox();
   }
 }

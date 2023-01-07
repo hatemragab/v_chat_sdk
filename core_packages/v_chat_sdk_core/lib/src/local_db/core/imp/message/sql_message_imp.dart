@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../../../../../v_chat_sdk_core.dart';
-import '../../../../models/socket/on_deliver_room_messages_model.dart';
 import '../../../tables/message_table.dart';
 import '../../abstraction/base_local_message_repo.dart';
 
@@ -128,7 +127,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   @override
   Future<List<VBaseMessage>> getMessagesByStatus({
     required MessageEmitStatus status,
-    int limit = 50,
+    int limit = 90,
   }) async {
     final maps = await _database.query(
       _table,
@@ -149,6 +148,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
       _table,
       where: "${MessageTable.columnCreatedAt} <? AND $_roomId =?",
       whereArgs: [createdAt, roomId],
+      orderBy: "${MessageTable.columnCreatedAt} DESC",
       limit: 1,
     );
     if (maps.isEmpty) return null;
@@ -158,14 +158,22 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   @override
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
-    int limit = 100,
-    String? lastId,
+    required VRoomMessagesDto filter,
   }) async {
+    StringBuffer where = StringBuffer();
+    if (filter.lastId != null) {
+      where.write("AND ${MessageTable.columnId} < '${filter.lastId}'");
+    }
+    if (filter.between != null) {
+      where.write(
+        "AND ${MessageTable.columnId} BETWEEN '${filter.between!.targetId}' AND '${filter.between!.lastId}' ",
+      );
+    }
     final maps = await _database.query(
       _table,
       orderBy: "${MessageTable.columnId} DESC",
-      limit: limit,
-      where: "$_roomId =?",
+      limit: filter.limit,
+      where: "$_roomId =? ${where.toString()}",
       whereArgs: [roomId],
     );
     return maps.map((e) => MessageFactory.createBaseMessage(e)).toList();

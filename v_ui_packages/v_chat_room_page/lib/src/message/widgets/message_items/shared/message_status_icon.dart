@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_room_page/src/message/core/types.dart';
 import 'package:v_chat_room_page/src/message/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../../v_chat_room_page.dart';
 
 class MessageStatusIcon extends StatelessWidget {
-  final MessageEmitStatus messageStatus;
+  final VBaseMessage vBaseMessage;
   final bool isMeSender;
+  final VMessageCallback? onReSend;
   final bool isSeen;
   final bool isDeliver;
 
   const MessageStatusIcon({
     Key? key,
     required this.isMeSender,
-    required this.messageStatus,
+    required this.vBaseMessage,
     required this.isDeliver,
+    this.onReSend,
     required this.isSeen,
   }) : super(key: key);
 
@@ -44,11 +47,18 @@ class MessageStatusIcon extends StatelessWidget {
   }
 
   Widget _getIcon(VMsgStatusTheme themeData) {
-    switch (messageStatus) {
+    switch (vBaseMessage.messageStatus) {
       case MessageEmitStatus.serverConfirm:
         return themeData.sendIcon;
       case MessageEmitStatus.error:
-        return themeData.refreshIcon;
+        return InkWell(
+          onTap: () {
+            if (onReSend != null) {
+              onReSend!(vBaseMessage);
+            }
+          },
+          child: themeData.refreshIcon,
+        );
       case MessageEmitStatus.sending:
         return themeData.pendingIcon;
     }

@@ -80,4 +80,14 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
       );
     }
   }
+
+  void onOpenSearch() {
+    value.isSearching = true;
+    notifyListeners();
+  }
+
+  void onCloseSearch() {
+    value.isSearching = false;
+    notifyListeners();
+  }
 }

@@ -127,19 +127,18 @@ class NativeLocalMessage {
 
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
-    String? lastId,
-    int limit = 100,
+    required VRoomMessagesDto filter,
   }) async {
     return _localMessageRepo.getRoomMessages(
       roomId: roomId,
-      lastId: lastId,
-      limit: limit,
+      filter: filter,
     );
   }
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return _localMessageRepo.getMessagesByStatus(
-        status: MessageEmitStatus.error);
+      status: MessageEmitStatus.error,
+    );
   }
 
   Future<List<VBaseMessage>> searchMessage(

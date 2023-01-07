@@ -379,6 +379,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     }
     final entity = await VAppPick.pickFromWeAssetCamera(
       (p0, p1) {
+        context.pop();
         _sendWeChatImage(VPlatformFileSource.fromPath(
           filePath: p0.path,
         ));

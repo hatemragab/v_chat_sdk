@@ -195,8 +195,14 @@ class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
   void onUpdateMsgType(VUpdateMessageTypeEvent event) {
     final room = roomById(event.roomId);
     if (room != null && room.lastMessage.localId == event.localId) {
-      room.lastMessage.messageType = event.messageType;
-      roomStateStream.sink.add(room);
+      if (event.messageType.isAllDeleted) {
+        room.lastMessage.messageType = event.messageType;
+        final deletedMessage = VAllDeletedMessage.fromRemoteMap(
+          room.lastMessage.toRemoteMap(),
+        );
+        room.lastMessage = deletedMessage;
+        roomStateStream.sink.add(room);
+      }
     }
   }
 

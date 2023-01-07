@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
+import 'package:v_chat_room_page/src/shared/widgets/v_search_app_bare.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -55,8 +56,15 @@ class _VMessagePageState extends State<VMessagePage> {
         child: ValueListenableBuilder<MessageAppBarStateModel>(
           valueListenable: controller.appBarStateController,
           builder: (context, value, child) {
+            if (value.isSearching) {
+              return VSearchAppBare(
+                onClose: controller.onCloseSearch,
+                onSearch: controller.onSearch,
+              );
+            }
             return VMessageAppBare(
               state: value,
+              onSearch: controller.onOpenSearch,
               onTitlePress: (context, id, roomType) {
                 final method = _config.onAppBarTitlePress;
                 if (method != null) {
@@ -80,72 +88,82 @@ class _VMessagePageState extends State<VMessagePage> {
                     return Scrollbar(
                       interactive: true,
                       thickness: 5,
-                      key: UniqueKey(),
                       controller: controller.autoScrollTagController,
                       child: ListView.separated(
                         controller: controller.autoScrollTagController,
-                        key: const PageStorageKey("VListViewItems"),
+                        // key: const PageStorageKey("VListViewItems"),
                         separatorBuilder: (context, index) => const SizedBox(
-                          height: 10,
+                          height: 8,
                         ),
                         cacheExtent: 300,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          final message = value[index];
-                          final msgItem = StreamBuilder<VBaseMessage>(
-                            stream: controller
-                                .messageState.messageStateStream.stream
-                                .where(
-                              (e) => e.localId == message.localId,
-                            ),
-                            initialData: message,
-                            builder: (context, snapshot) {
-                              return AutoScrollTag(
-                                controller: controller.autoScrollTagController,
-                                key: ValueKey(message.localId),
-                                index: index,
-                                highlightColor: context.isDark
-                                    ? Colors.white.withOpacity(0.2)
-                                    : Colors.black.withOpacity(0.2),
-                                child: VMessageItem(
-                                  itemController: controller.itemController,
-                                  message: snapshot.data!,
-                                  voiceController: controller.voiceControllers
-                                      .getVoiceController(
-                                    snapshot.data!,
-                                  ),
-                                  room: controller.vRoom,
-                                  onSwipe: controller.setReply,
-                                  onHighlightMessage:
-                                      controller.onHighlightMessage,
-                                  onMentionPress: controller.onMentionPress,
+                          return Builder(
+                            key: UniqueKey(),
+                            builder: (context) {
+                              final message = value[index];
+                              final msgItem = StreamBuilder<VBaseMessage>(
+                                stream: controller
+                                    .messageState.messageStateStream.stream
+                                    .where(
+                                  (e) => e.localId == message.localId,
                                 ),
+                                initialData: message,
+                                builder: (context, snapshot) {
+                                  return AutoScrollTag(
+                                    key: UniqueKey(),
+                                    controller:
+                                        controller.autoScrollTagController,
+                                    //  key: ObjectKey(index),
+                                    index: index,
+                                    highlightColor: context.isDark
+                                        ? Colors.white.withOpacity(0.2)
+                                        : Colors.black.withOpacity(0.2),
+
+                                    child: VMessageItem(
+                                      itemController: controller.itemController,
+                                      message: snapshot.data!,
+                                      voiceController: controller
+                                          .voiceControllers
+                                          .getVoiceController(
+                                        snapshot.data!,
+                                      ),
+                                      room: controller.vRoom,
+                                      onSwipe: controller.setReply,
+                                      onHighlightMessage:
+                                          controller.onHighlightMessage,
+                                      onMentionPress: controller.onMentionPress,
+                                      onReSend: controller.onReSend,
+                                    ),
+                                  );
+                                },
                               );
+
+                              final isTopMessage =
+                                  _isTopMessage(value.length, index);
+                              final dividerDate = _getDateDiff(
+                                bigDate: message.createdAtDate,
+                                smallDate: isTopMessage
+                                    ? value[index].createdAtDate
+                                    : value[index + 1].createdAtDate,
+                              );
+                              if (dividerDate != null || isTopMessage) {
+                                //set date divider
+                                return Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    DateDividerItem(
+                                      dateTime:
+                                          dividerDate ?? message.createdAtDate,
+                                    ),
+                                    msgItem,
+                                  ],
+                                );
+                              }
+                              return msgItem;
                             },
                           );
-
-                          final isTopMessage =
-                              _isTopMessage(value.length, index);
-                          final dividerDate = _getDateDiff(
-                            bigDate: message.createdAtDate,
-                            smallDate: isTopMessage
-                                ? value[index].createdAtDate
-                                : value[index + 1].createdAtDate,
-                          );
-                          if (dividerDate != null || isTopMessage) {
-                            //set date divider
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                DateDividerItem(
-                                  dateTime:
-                                      dividerDate ?? message.createdAtDate,
-                                ),
-                                msgItem,
-                              ],
-                            );
-                          }
-                          return msgItem;
                         },
                         itemCount: value.length,
                         reverse: true,
@@ -165,8 +183,9 @@ class _VMessagePageState extends State<VMessagePage> {
             ),
           ),
           ValueListenableBuilder<MessageInputModel>(
-            valueListenable: controller.inputStateController.inputState,
+            valueListenable: controller.inputStateController,
             builder: (_, value, __) {
+              if (value.isHidden) return const SizedBox.shrink();
               return VMessageInputWidget(
                 onSubmitText: controller.onSubmitText,
                 onSubmitMedia: (files) =>

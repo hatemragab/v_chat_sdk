@@ -5,9 +5,64 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../core/enums.dart';
+import 'message_provider.dart';
 
 //todo trans
 class VMessageItemController {
+  final MessageProvider _messageProvider;
+
+  ModelSheetItem<VMessageItemClickRes> _deleteItem(BuildContext context) {
+    return ModelSheetItem(
+      id: VMessageItemClickRes.delete,
+      title: "Delete",
+      iconData: const Icon(
+        Icons.delete,
+        color: Colors.red,
+      ),
+    );
+  }
+
+  ModelSheetItem<VMessageItemClickRes> _copyItem(BuildContext context) {
+    return ModelSheetItem(
+        id: VMessageItemClickRes.copy,
+        title: "Copy",
+        iconData: const Icon(Icons.copy));
+  }
+
+  ModelSheetItem<VMessageItemClickRes> _infoItem(BuildContext context) {
+    return ModelSheetItem(
+      id: VMessageItemClickRes.info,
+      title: "Info",
+      iconData: const Icon(Icons.info),
+    );
+  }
+
+  ModelSheetItem<VMessageItemClickRes> _shareItem(BuildContext context) {
+    return ModelSheetItem(
+      id: VMessageItemClickRes.share,
+      title: "Share",
+      iconData: const Icon(Icons.share),
+    );
+  }
+
+  ModelSheetItem<VMessageItemClickRes> _forwardItem(BuildContext context) {
+    return ModelSheetItem(
+      id: VMessageItemClickRes.forward,
+      title: "Forward",
+      iconData: const Icon(Icons.forward),
+    );
+  }
+
+  ModelSheetItem<VMessageItemClickRes> _replyItem(BuildContext context) {
+    return ModelSheetItem(
+      id: VMessageItemClickRes.reply,
+      title: "Reply",
+      iconData: const Icon(Icons.replay),
+    );
+  }
+
+  VMessageItemController(this._messageProvider);
+
   void onMessageItemPress(BuildContext context, VBaseMessage message) async {}
 
   void onMessageItemLongPress(
@@ -19,55 +74,26 @@ class VMessageItemController {
     FocusScope.of(context).unfocus();
     final items = <ModelSheetItem<VMessageItemClickRes>>[];
     if (message.messageStatus.isServerConfirm) {
-      items.add(
-        ModelSheetItem(
-          id: VMessageItemClickRes.forward,
-          title: "Forward",
-          iconData: Icon(Icons.forward),
-        ),
-      );
-      items.add(
-        ModelSheetItem(
-          id: VMessageItemClickRes.reply,
-          title: "Reply",
-          iconData: Icon(Icons.replay),
-        ),
-      );
-      items.add(
-        ModelSheetItem(
-          id: VMessageItemClickRes.share,
-          title: "Share",
-          iconData: Icon(Icons.share),
-        ),
-      );
+      items.add(_forwardItem(context));
+      items.add(_replyItem(context));
+      items.add(_shareItem(context));
       if (message.isMeSender) {
-        items.add(
-          ModelSheetItem(
-            id: VMessageItemClickRes.info,
-            title: "Info",
-            iconData: Icon(Icons.info),
-          ),
-        );
+        items.add(_infoItem(context));
       }
     }
     items.add(
-      ModelSheetItem(
-        id: VMessageItemClickRes.delete,
-        title: "Delete",
-        iconData: Icon(
-          Icons.delete,
-          color: Colors.red,
-        ),
-      ),
+      _deleteItem(context),
     );
     if (message.messageType.isText) {
-      items.add(
-        ModelSheetItem(
-            id: VMessageItemClickRes.copy,
-            title: "Copy",
-            iconData: Icon(Icons.copy)),
-      );
+      items.add(_copyItem(context));
     }
+
+    if (message.messageType.isAllDeleted) {
+      items.clear();
+      //solution
+      items.add(_deleteItem(context));
+    }
+
     final res = await VAppAlert.showModalSheet(
       content: items,
       context: context,
@@ -125,7 +151,37 @@ class VMessageItemController {
     ));
   }
 
-  void _handleDelete(BuildContext context, VBaseMessage message) {}
+  void _handleDelete(BuildContext context, VBaseMessage message) async {
+    final l = <ModelSheetItem>[];
+    if (message.isMeSender && !message.messageType.isAllDeleted) {
+      l.add(ModelSheetItem(title: 'Delete from all', id: 1));
+    }
+    l.add(ModelSheetItem(title: 'Delete from me', id: 2));
+    final res = await VAppAlert.showModalSheet(
+      content: l,
+      context: context,
+    );
+    if (res == null) return;
+    if (res.id == 1) {
+      await vSafeApiCall(
+        request: () async {
+          return _messageProvider.deleteMessageFromAll(
+            message.roomId,
+            message.id,
+          );
+        },
+        onSuccess: (response) {},
+      );
+    }
+    if (res.id == 2) {
+      await vSafeApiCall(
+        request: () async {
+          return _messageProvider.deleteMessageFromMe(message);
+        },
+        onSuccess: (response) {},
+      );
+    }
+  }
 
   void _handleCopy(BuildContext context, VBaseMessage message) {}
 }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_room_page/src/room/shared/shared.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../../../message/widgets/message_items/shared/message_status_icon.dart';
 import '../room_item_builder/chat_last_msg_time.dart';
 import '../room_item_builder/chat_mute_widget.dart';
 import '../room_item_builder/chat_title.dart';
 import '../room_item_builder/chat_typing_widget.dart';
 import '../room_item_builder/chat_un_read_counter.dart';
-import '../room_item_builder/message_status_icon.dart';
 import '../room_item_builder/room_item_msg.dart';
 
 class VRoomItem extends StatelessWidget {
@@ -82,12 +82,12 @@ class VRoomItem extends StatelessWidget {
                                       room.lastMessage.deliveredAt != null,
                                   isSeen: room.lastMessage.seenAt != null,
                                   isMeSender: room.lastMessage.isMeSender,
-                                  messageStatus: room.lastMessage.messageStatus,
+                                  vBaseMessage: room.lastMessage,
                                 ),
                                 //grey
                                 Flexible(
                                   child: RoomItemMsg(
-                                    msg: room.lastMessage.getTextTrans,
+                                    message: room.lastMessage,
                                     isBold: false,
                                   ),
                                 )
@@ -98,16 +98,16 @@ class VRoomItem extends StatelessWidget {
                           //bold
                           Flexible(
                             child: RoomItemMsg(
-                              msg: room.lastMessage.getTextTrans,
                               isBold: true,
+                              message: room.lastMessage,
                             ),
                           )
                         else
                           //normal gray
                           Flexible(
                             child: RoomItemMsg(
-                              msg: room.lastMessage.getTextTrans,
                               isBold: false,
+                              message: room.lastMessage,
                             ),
                           ),
                         Row(

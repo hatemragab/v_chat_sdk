@@ -9,6 +9,7 @@ class MessageAppBarStateModel {
   VSocketRoomTypingModel typingModel;
   VRoomType roomType;
   bool isOnline;
+  bool isSearching;
 
   MessageAppBarStateModel._({
     this.lastSeenAt,
@@ -19,6 +20,7 @@ class MessageAppBarStateModel {
     required this.typingModel,
     required this.roomType,
     required this.isOnline,
+    required this.isSearching,
   });
 
   factory MessageAppBarStateModel.fromVRoom(VRoom room) {
@@ -29,6 +31,7 @@ class MessageAppBarStateModel {
       roomImage: room.thumbImage,
       roomTitle: room.title,
       roomType: room.roomType,
+      isSearching: false,
       peerIdentifier: room.peerIdentifier,
     );
   }

@@ -22,7 +22,7 @@ class FileMessageItem extends StatelessWidget {
             VDownloaderService.instance.addToQueue(message);
           },
           child: const Icon(
-            Icons.download_for_offline_outlined,
+            Icons.download_outlined,
             size: 44,
           ),
         ),

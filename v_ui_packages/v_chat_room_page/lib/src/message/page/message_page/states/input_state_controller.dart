@@ -5,50 +5,43 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../../models/input_state_model.dart';
 import '../message_provider.dart';
 
-class InputStateController {
-  late final ValueNotifier<MessageInputModel> _inputState;
-
-  ValueNotifier<MessageInputModel> get inputState => _inputState;
-
+class InputStateController extends ValueNotifier<MessageInputModel> {
   final MessageProvider _messageProvider;
   final VRoom _vRoom;
 
   InputStateController(
     this._vRoom,
     this._messageProvider,
-  ) {
-    _inputState = ValueNotifier<MessageInputModel>(
-      MessageInputModel(
-        isCloseInput: _vRoom.blockerId != null,
-      ),
-    );
+  ) : super(MessageInputModel(
+          isCloseInput: _vRoom.blockerId != null,
+        )) {
     if (_vRoom.roomType.isGroup) {
       _checkStatus(_vRoom.id);
     }
   }
 
   void dismissReply() {
-    inputState.value.replyMsg = null;
-    inputState.notifyListeners();
+    value.replyMsg = null;
+    notifyListeners();
   }
 
   void setReply(VBaseMessage baseMessage) {
-    inputState.value.replyMsg = baseMessage;
-    inputState.notifyListeners();
+    value.replyMsg = baseMessage;
+    notifyListeners();
   }
 
   void closeChat() {
-    inputState.value.isCloseInput = true;
-    inputState.notifyListeners();
+    value.isCloseInput = true;
+    notifyListeners();
   }
 
   void openChat() {
-    inputState.value.isCloseInput = false;
-    inputState.notifyListeners();
+    value.isCloseInput = false;
+    notifyListeners();
   }
 
   void close() {
-    inputState.dispose();
+    dispose();
   }
 
   void _checkStatus(String roomId) async {
@@ -60,5 +53,15 @@ class InputStateController {
         closeChat();
       },
     );
+  }
+
+  void hide() {
+    value.isHidden = true;
+    notifyListeners();
+  }
+
+  void unHide() {
+    value.isHidden = false;
+    notifyListeners();
   }
 }

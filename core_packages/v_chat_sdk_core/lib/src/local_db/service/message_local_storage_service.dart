@@ -29,21 +29,20 @@ mixin MessageLocalStorage {
   }
 
   Future<int> deleteMessageByLocalId(
-    VBaseMessage msg,
+    VBaseMessage message,
   ) async {
     final event = VDeleteMessageEvent(
-      localId: msg.localId,
-      roomId: msg.roomId,
+      localId: message.localId,
+      roomId: message.roomId,
     );
-    final message = await localMessageRepo.findByLocalId(event.localId);
     final beforeMsg = await localMessageRepo.findOneMessageBeforeThis(
-      message!.createdAt,
+      message.id,
       message.roomId,
     );
     await localMessageRepo.delete(event);
     emitter.fire(VDeleteMessageEvent(
-      localId: msg.localId,
-      roomId: msg.roomId,
+      localId: message.localId,
+      roomId: message.roomId,
       upMessage: beforeMsg,
     ));
     return 1;
@@ -91,12 +90,15 @@ mixin MessageLocalStorage {
     return localMessageRepo.findByLocalId(localId);
   }
 
-  Future<List<VBaseMessage>> getRoomMessages(String roomId) async {
-    return localMessageRepo.getRoomMessages(
-      limit: 100,
-      roomId: roomId,
-    );
-  }
+  // Future<List<VBaseMessage>> getRoomMessages({
+  //   required String roomId,
+  //   VMessageLocalFilterDto filterDto = const VMessageLocalFilterDto.init(),
+  // }) async {
+  //   return localMessageRepo.getRoomMessages(
+  //     filter: filterDto,
+  //     roomId: roomId,
+  //   );
+  // }
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return localMessageRepo.getMessagesByStatus(

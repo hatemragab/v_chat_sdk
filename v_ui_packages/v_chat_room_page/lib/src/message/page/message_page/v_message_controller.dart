@@ -6,7 +6,7 @@ import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/states/app_bar_state_controller.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/states/input_state_controller.dart';
-import 'package:v_chat_room_page/src/message/page/message_page/states/message_state.dart';
+import 'package:v_chat_room_page/src/message/page/message_page/states/message_state_controller.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -33,7 +33,8 @@ class VMessageController {
     axis: Axis.vertical,
     suggestedRowHeight: 200,
   );
-  final itemController = VMessageItemController();
+  late final VMessageItemController itemController;
+
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
 
@@ -42,7 +43,7 @@ class VMessageController {
   ///Getters
   List<VBaseMessage> get messages => messageState.stateMessages;
 
-  MessageInputModel get inputState => inputStateController.inputState.value;
+  MessageInputModel get inputState => inputStateController.value;
 
   MessageAppBarStateModel get appBareState => appBarStateController.value;
 
@@ -53,7 +54,12 @@ class VMessageController {
     required this.onMentionPress,
     this.isInTesting = false,
   }) {
-    messageState = MessageStateController(vRoom, _messageProvider, isInTesting);
+    messageState = MessageStateController(
+      vRoom,
+      _messageProvider,
+      isInTesting,
+      autoScrollTagController,
+    );
     appBarStateController = AppBarStateController(vRoom, _messageProvider);
     inputStateController = InputStateController(vRoom, _messageProvider);
     _localStreamChanges = MessageStreamState(
@@ -63,6 +69,7 @@ class VMessageController {
       inputStateController: inputStateController,
       currentRoom: vRoom,
     );
+    itemController = VMessageItemController(_messageProvider);
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
   }
@@ -186,14 +193,43 @@ class VMessageController {
   Future<void> onHighlightMessage(VBaseMessage message) async {
     final i = messages.indexOf(message);
     if (i == -1) {
-      //todo improvements load the messages until this message index
-      return;
+      final x = await messageState.loadMoreMessages();
+      if (x == null || x.isEmpty) {
+        return;
+      }
+      onHighlightMessage(message);
+    } else {
+      _highlightTo(i);
     }
+  }
+
+  _highlightTo(int index) {
     autoScrollTagController.scrollToIndex(
-      i,
+      index,
       preferPosition: AutoScrollPosition.end,
       duration: const Duration(milliseconds: 500),
     );
-    autoScrollTagController.highlight(i);
+    autoScrollTagController.highlight(index);
+  }
+
+  void onReSend(VBaseMessage message) async {
+    MessageUploaderQueue.instance.addToQueue(
+      await MessageFactory.createUploadMessage(message),
+    );
+  }
+
+  void onOpenSearch() {
+    inputStateController.hide();
+    appBarStateController.onOpenSearch();
+  }
+
+  void onCloseSearch() {
+    inputStateController.unHide();
+    appBarStateController.onCloseSearch();
+    messageState.onCloseSearch();
+  }
+
+  void onSearch(String value) async {
+    messageState.onSearch(value);
   }
 }

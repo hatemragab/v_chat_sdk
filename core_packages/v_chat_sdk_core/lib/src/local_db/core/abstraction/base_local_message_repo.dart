@@ -40,8 +40,7 @@ abstract class BaseLocalMessageRepo {
 
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
-    required int limit,
-    String? lastId,
+    required VRoomMessagesDto filter,
   });
 
   Future<List<VBaseMessage>> getMessagesByStatus({

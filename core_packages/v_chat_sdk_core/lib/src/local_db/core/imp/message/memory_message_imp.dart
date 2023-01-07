@@ -124,15 +124,14 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   @override
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
-    int limit = 100,
-    String? lastId,
+    required VRoomMessagesDto filter,
   }) async {
     return Future.value(
       _messages
           .where((e) => e.roomId == roomId)
           .toList()
           .sortById()
-          .take(limit)
+          .take(filter.limit)
           .toList(),
     );
   }

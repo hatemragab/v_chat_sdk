@@ -4,6 +4,7 @@ import 'package:v_chat_room_page/src/message/page/message_page/v_message_item_co
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/center_item_holder.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/direction_item_holder.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_broadcast_icon.dart';
+import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_status_icon.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_time_widget.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/reply_item_widget.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/all_deleted_item.dart';
@@ -19,7 +20,6 @@ import 'package:v_chat_room_page/src/message/widgets/message_items/widgets/voice
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
-import '../../../room/widgets/room_item_builder/message_status_icon.dart';
 import '../../core/types.dart';
 
 class VMessageItem extends StatelessWidget {
@@ -28,6 +28,7 @@ class VMessageItem extends StatelessWidget {
   final VMessageCallback onSwipe;
   final VVoiceMessageController? voiceController;
   final VMessageCallback onHighlightMessage;
+  final VMessageCallback onReSend;
   final VMessageItemController itemController;
   final Function(String userId) onMentionPress;
 
@@ -37,6 +38,7 @@ class VMessageItem extends StatelessWidget {
     this.voiceController,
     required this.message,
     required this.onSwipe,
+    required this.onReSend,
     required this.onHighlightMessage,
     required this.itemController,
     required this.onMentionPress,
@@ -47,7 +49,7 @@ class VMessageItem extends StatelessWidget {
     //we have date divider holder
     //we have normal holder
     //we have info holder
-
+    if (message.isDeleted) return const SizedBox.shrink();
     if (message.messageType.isCenter) {
       return CenterItemHolder(
         child: Text(message.getTextTrans),
@@ -76,7 +78,8 @@ class VMessageItem extends StatelessWidget {
                 : CrossAxisAlignment.start,
             children: [
               ReplyItemWidget(
-                rToMessage: message.replyTo,
+                rToMessage:
+                    message.messageType.isAllDeleted ? null : message.replyTo,
                 onHighlightMessage: onHighlightMessage,
               ),
               _getChild(message),
@@ -96,7 +99,8 @@ class VMessageItem extends StatelessWidget {
                     isDeliver: message.deliveredAt != null,
                     isSeen: message.seenAt != null,
                     isMeSender: message.isMeSender,
-                    messageStatus: message.messageStatus,
+                    vBaseMessage: message,
+                    onReSend: onReSend,
                   ),
                 ],
               )
@@ -109,6 +113,10 @@ class VMessageItem extends StatelessWidget {
 
   Widget _getChild(VBaseMessage message) {
     switch (message.messageType) {
+      case MessageType.allDeleted:
+        return AllDeletedItem(
+          message: message as VAllDeletedMessage,
+        );
       case MessageType.text:
         return TextMessageItem(
           message: message as VTextMessage,
@@ -138,10 +146,7 @@ class VMessageItem extends StatelessWidget {
         return LocationMessageItem(
           message: message as VLocationMessage,
         );
-      case MessageType.allDeleted:
-        return AllDeletedItem(
-          message: message as VAllDeletedMessage,
-        );
+
       case MessageType.call:
         return CallMessageItem(
           message: message as VCallMessage,
