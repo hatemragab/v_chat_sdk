@@ -6,7 +6,7 @@ import '../../../../shared/widgets/text_parser_widget.dart';
 class TextMessageItem extends StatelessWidget {
   final VTextMessage message;
   final Function(String email) onEmailPress;
-  final Function(String userId) onMentionPress;
+  final Function(BuildContext context, String userId) onMentionPress;
   final Function(String phone) onPhonePress;
   final Function(String link) onLinkPress;
 
@@ -28,7 +28,7 @@ class TextMessageItem extends StatelessWidget {
       onEmailPress: onEmailPress,
       onLinkPress: onLinkPress,
       onPhonePress: onPhonePress,
-      onMentionPress: onMentionPress,
+      onMentionPress: (userId) => onMentionPress(context, userId),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
+import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -34,6 +35,7 @@ void main() async {
         enableForegroundNotification: true,
       ),
     ),
+    vNavigator: messageDefaultNavigator,
   );
   final appService = Get.put<AppService>(AppService());
   setAppTheme(appService);

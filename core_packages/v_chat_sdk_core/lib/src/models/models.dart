@@ -1,4 +1,4 @@
-export './controller/message_page_config.dart';
+export './controller/config.dart';
 export './current_room.dart';
 export './socket/on_ban_user_chat.dart';
 export './socket/on_deliver_room_messages_model.dart';

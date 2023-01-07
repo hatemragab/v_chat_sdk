@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../../core/v_downloader_seevice.dart';
-
 class FileMessageItem extends StatelessWidget {
   final VFileMessage message;
 
@@ -17,14 +15,9 @@ class FileMessageItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        InkWell(
-          onTap: () {
-            VDownloaderService.instance.addToQueue(message);
-          },
-          child: const Icon(
-            Icons.download_outlined,
-            size: 44,
-          ),
+        const Icon(
+          Icons.download_outlined,
+          size: 44,
         ),
         Expanded(
           child: ListTile(

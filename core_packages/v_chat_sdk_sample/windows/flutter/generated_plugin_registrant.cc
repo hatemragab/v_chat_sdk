@@ -9,6 +9,7 @@
 #include <app_links/app_links_plugin_c_api.h>
 #include <dynamic_color/dynamic_color_plugin_c_api.h>
 #include <emoji_picker_flutter/emoji_picker_flutter_plugin_c_api.h>
+#include <file_saver/file_saver_plugin.h>
 #include <flutter_platform_alert/flutter_platform_alert_plugin.h>
 #include <flutter_secure_storage_windows/flutter_secure_storage_windows_plugin.h>
 #include <geolocator_windows/geolocator_windows.h>
@@ -26,6 +27,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("DynamicColorPluginCApi"));
   EmojiPickerFlutterPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("EmojiPickerFlutterPluginCApi"));
+  FileSaverPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FileSaverPlugin"));
   FlutterPlatformAlertPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterPlatformAlertPlugin"));
   FlutterSecureStorageWindowsPluginRegisterWithRegistrar(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as t;
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -14,12 +15,14 @@ class VMessageAppBare extends StatelessWidget {
     VRoomType roomType,
   ) onTitlePress;
   final VoidCallback onSearch;
+  final VoidCallback onViewMedia;
 
   const VMessageAppBare({
     Key? key,
     required this.state,
     required this.onTitlePress,
     required this.onSearch,
+    required this.onViewMedia,
   }) : super(key: key);
 
   @override
@@ -63,7 +66,7 @@ class VMessageAppBare extends StatelessWidget {
               // controller.toggleSearchMode();
               // onSearchClicked();
             } else if (value == 'media') {
-              //onViewContactClicked();
+              onViewMedia();
             }
           },
           itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
@@ -106,12 +109,16 @@ class VMessageAppBare extends StatelessWidget {
   Widget? _getSubTitle() {
     if (state.roomType.isSingleOrOrder) {
       if (state.isOnline) {
+        //todo trans
         return const Text("Online");
       }
       if (state.lastSeenAt == null) {
         return null;
       } else {
-        return Text(state.lastSeenAt!.toString());
+        //todo trans
+        return Text(
+          t.format(state.lastSeenAt!.toLocal()),
+        );
       }
     }
     return null;

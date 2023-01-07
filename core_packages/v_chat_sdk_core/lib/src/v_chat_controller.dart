@@ -1,6 +1,5 @@
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
-import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/events_daemon.dart';
 import 'package:v_chat_sdk_core/src/service/notification_listener.dart';
 import 'package:v_chat_sdk_core/src/service/offline_online_emitter_service.dart';
@@ -48,9 +47,8 @@ class VChatController {
   late final RoomApi roomApi;
   final vAppLifecycleState = VAppLifecycleState();
 
-  ///v chat variables
-  late final ControllerHelper _helper;
   late final VChatConfig vChatConfig;
+  late final VNavigator vNavigator;
   late final VMessagePageConfig vMessagePageConfig;
   bool _isControllerInit = false;
   late final VNativeApi nativeApi;
@@ -60,6 +58,7 @@ class VChatController {
   /// It's necessary to initialize before calling [VChatController.I]
   static Future<VChatController> init({
     required VChatConfig vChatConfig,
+    required VNavigator vNavigator,
     VMessagePageConfig vMessagePageConfig = const VMessagePageConfig(),
   }) async {
     assert(
@@ -68,11 +67,9 @@ class VChatController {
     );
     _instance._isControllerInit = true;
     _instance.vChatConfig = vChatConfig;
+    _instance.vNavigator = vNavigator;
     _instance.vMessagePageConfig = vMessagePageConfig;
     await VAppPref.init();
-    _instance._helper = await ControllerHelper.instance.init(
-      _instance.vChatConfig,
-    );
     _instance.nativeApi = await VNativeApi.init();
     _instance.authApi = AuthApi(
       _instance.nativeApi,
@@ -110,8 +107,6 @@ class VChatController {
     SocketController.instance.connect();
     return true;
   }
-
-  void listenOnNotificationsClicks() {}
 
   static void _startServices() {
     ReSendDaemon().start();

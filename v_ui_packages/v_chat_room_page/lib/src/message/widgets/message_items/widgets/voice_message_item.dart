@@ -5,7 +5,7 @@ import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 class VoiceMessageItem extends StatelessWidget {
   final VVoiceMessage message;
-  final VVoiceMessageController voiceController;
+  final VVoiceMessageController? Function(VBaseMessage message) voiceController;
 
   const VoiceMessageItem({
     Key? key,
@@ -16,7 +16,7 @@ class VoiceMessageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VVoiceMessageView(
-      controller: voiceController,
+      controller: voiceController(message)!,
       backgroundColor: context.vMessageTheme.vMessageItemBuilder
           .holderColor(message.isMeSender),
       activeSliderColor: Colors.white,

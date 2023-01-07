@@ -39,12 +39,6 @@ class _VMessagePageState extends State<VMessagePage> {
     controller = VMessageController(
       vRoom: widget.vRoom,
       context: context,
-      onMentionPress: (userId) {
-        final method = _config.onMentionPress;
-        if (method != null) {
-          method(context, userId);
-        }
-      },
       isInTesting: widget.isInTesting,
     );
   }
@@ -66,6 +60,7 @@ class _VMessagePageState extends State<VMessagePage> {
             return VMessageAppBare(
               state: value,
               onSearch: controller.onOpenSearch,
+              onViewMedia: () => controller.onViewMedia(context, value.roomId),
               onTitlePress: (context, id, roomType) {
                 final method = _config.onAppBarTitlePress;
                 if (method != null) {
@@ -111,29 +106,31 @@ class _VMessagePageState extends State<VMessagePage> {
                                 ),
                                 initialData: message,
                                 builder: (context, snapshot) {
+                                  if (message.isDeleted) {
+                                    return const SizedBox.shrink();
+                                  }
                                   return AutoScrollTag(
                                     key: UniqueKey(),
                                     controller:
                                         controller.autoScrollTagController,
-                                    //  key: ObjectKey(index),
                                     index: index,
                                     highlightColor: context.isDark
                                         ? Colors.white.withOpacity(0.2)
                                         : Colors.black.withOpacity(0.2),
-
                                     child: VMessageItem(
                                       itemController: controller.itemController,
                                       message: snapshot.data!,
-                                      voiceController: controller
-                                          .voiceControllers
-                                          .getVoiceController(
-                                        snapshot.data!,
-                                      ),
+                                      voiceController: (message) {
+                                        if (message is VVoiceMessage) {
+                                          return controller.voiceControllers
+                                              .getVoiceController(message);
+                                        }
+                                        return null;
+                                      },
                                       room: controller.vRoom,
                                       onSwipe: controller.setReply,
                                       onHighlightMessage:
                                           controller.onHighlightMessage,
-                                      onMentionPress: controller.onMentionPress,
                                       onReSend: controller.onReSend,
                                     ),
                                   );

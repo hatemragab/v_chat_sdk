@@ -27,22 +27,20 @@ class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
   final VRoom room;
   final VMessageCallback onSwipe;
-  final VVoiceMessageController? voiceController;
+  final VVoiceMessageController? Function(VBaseMessage message) voiceController;
   final VMessageCallback onHighlightMessage;
   final VMessageCallback onReSend;
   final VMessageItemController itemController;
-  final Function(String userId) onMentionPress;
 
   const VMessageItem({
     Key? key,
     required this.room,
-    this.voiceController,
+    required this.voiceController,
     required this.message,
     required this.onSwipe,
     required this.onReSend,
     required this.onHighlightMessage,
     required this.itemController,
-    required this.onMentionPress,
   }) : super(key: key);
 
   @override
@@ -50,7 +48,7 @@ class VMessageItem extends StatelessWidget {
     //we have date divider holder
     //we have normal holder
     //we have info holder
-    if (message.isDeleted) return const SizedBox.shrink();
+
     if (message.messageType.isCenter) {
       return CenterItemHolder(
         child: Text(message.getTextTrans),
@@ -125,7 +123,12 @@ class VMessageItem extends StatelessWidget {
           message: message as VTextMessage,
           onLinkPress: itemController.onLinkPress,
           onEmailPress: itemController.onEmailPress,
-          onMentionPress: onMentionPress,
+          onMentionPress: (context, userId) {
+            final method = VChatController.I.vMessagePageConfig.onMentionPress;
+            if (method != null) {
+              method(context, userId);
+            }
+          },
           onPhonePress: itemController.onPhonePress,
         );
       case MessageType.image:
@@ -143,7 +146,7 @@ class VMessageItem extends StatelessWidget {
       case MessageType.voice:
         return VoiceMessageItem(
           message: message as VVoiceMessage,
-          voiceController: voiceController!,
+          voiceController: voiceController,
         );
       case MessageType.location:
         return LocationMessageItem(

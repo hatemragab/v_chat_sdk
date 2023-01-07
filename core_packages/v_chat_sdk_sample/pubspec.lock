@@ -414,6 +414,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.4"
+  file_saver:
+    dependency: transitive
+    description:
+      name: file_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   file_sizes:
     dependency: "direct main"
     description:
@@ -903,6 +910,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.13"
+  image_gallery_saver:
+    dependency: transitive
+    description:
+      name: image_gallery_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -1232,6 +1246,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.1+1"
+  photo_view:
+    dependency: transitive
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0"
   place_picker:
     dependency: transitive
     description:
@@ -1796,7 +1817,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.8"
+    version: "2.4.10"
   video_player_android:
     dependency: transitive
     description:

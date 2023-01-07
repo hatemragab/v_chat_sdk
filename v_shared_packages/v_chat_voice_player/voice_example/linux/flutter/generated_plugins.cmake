@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
+  file_saver
   platform_device_id_linux
   url_launcher_linux
 )

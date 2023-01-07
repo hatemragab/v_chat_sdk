@@ -4,19 +4,19 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import '../../../../v_chat_room_page.dart';
 import 'choose_room_controller.dart';
 
-class ChooseRoomsPage extends StatefulWidget {
-  final String currentRoomId;
+class VChooseRoomsPage extends StatefulWidget {
+  final String? currentRoomId;
 
-  const ChooseRoomsPage({
+  const VChooseRoomsPage({
     Key? key,
     required this.currentRoomId,
   }) : super(key: key);
 
   @override
-  State<ChooseRoomsPage> createState() => _ChooseRoomsPageState();
+  State<VChooseRoomsPage> createState() => _VChooseRoomsPageState();
 }
 
-class _ChooseRoomsPageState extends State<ChooseRoomsPage> {
+class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
   late final ChooseRoomsController controller;
 
   @override

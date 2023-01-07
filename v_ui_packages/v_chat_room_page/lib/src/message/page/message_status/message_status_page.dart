@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_room_page/src/message/page/message_status/message_status_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-class MessageStatusPage extends StatefulWidget {
+class VMessageStatusPage extends StatefulWidget {
   final VBaseMessage message;
-  final VRoomType roomType;
+  final VRoom room;
 
-  const MessageStatusPage({
+  const VMessageStatusPage({
     Key? key,
     required this.message,
-    required this.roomType,
+    required this.room,
   }) : super(key: key);
 
   @override
-  State<MessageStatusPage> createState() => _MessageStatusPageState();
+  State<VMessageStatusPage> createState() => _VMessageStatusPageState();
 }
 
-class _MessageStatusPageState extends State<MessageStatusPage> {
+class _VMessageStatusPageState extends State<VMessageStatusPage> {
   late final MessageStatusController controller;
 
   @override

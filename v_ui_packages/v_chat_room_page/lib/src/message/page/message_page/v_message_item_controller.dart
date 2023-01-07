@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:v_chat_room_page/src/message/page/message_status/message_status_page.dart';
-import 'package:v_chat_room_page/src/room/pages/choose_rooms/choose_rooms_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../core/enums.dart';
+import '../../core/v_downloader_seevice.dart';
 import 'message_provider.dart';
 
 //todo trans
@@ -70,7 +69,19 @@ class VMessageItemController {
     );
   }
 
-  void onMessageItemPress(VBaseMessage message) async {}
+  void onMessageItemPress(VBaseMessage message) async {
+    if (message is VImageMessage) {
+      context.toPage(VImageViewer(
+        platformFileSource: message.data.fileSource,
+        appName: VAppConstants.appName,
+        //todo trans
+        successfullyDownloaded: "successfully Downloaded",
+      ));
+    }
+    if (message is VFileMessage) {
+      VDownloaderService.instance.addToQueue(message);
+    }
+  }
 
   void onMessageItemLongPress(
     VBaseMessage message,
@@ -140,11 +151,8 @@ class VMessageItemController {
   }
 
   void _handleForward(VBaseMessage baseMessage) async {
-    final ids = await context.toPage(
-      ChooseRoomsPage(
-        currentRoomId: baseMessage.roomId,
-      ),
-    ) as List<String>?;
+    final ids = await VChatController.I.vNavigator
+        .toForwardPage(context, baseMessage.roomId);
     if (ids != null) {
       for (final roomId in ids) {
         VBaseMessage? message;
@@ -248,10 +256,11 @@ class VMessageItemController {
 
   void _handleInfo(VBaseMessage message, VRoom room) {
     FocusScope.of(context).unfocus();
-    context.toPage(MessageStatusPage(
-      message: message,
-      roomType: room.roomType,
-    ));
+    VChatController.I.vNavigator.toMessageInfo(
+      context,
+      room,
+      message,
+    );
   }
 
   void _handleDelete(VBaseMessage message) async {

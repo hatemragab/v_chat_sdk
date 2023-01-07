@@ -4,28 +4,32 @@ import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 class VVoicePlayerController {
   final _voiceControllers = <VVoiceMessageController>[];
+  final String? Function(String localId) onVoiceNeedToPlayNext;
 
-  VVoiceMessageController? getVoiceController(VBaseMessage voiceMessage) {
-    if (voiceMessage is VVoiceMessage) {
-      final c = _voiceControllers
-          .firstWhereOrNull((e) => e.id == voiceMessage.localId);
-      if (c != null) {
-        return c;
-      }
-      final controller = VVoiceMessageController(
-        id: voiceMessage.localId,
-        audioSrc: voiceMessage.data.fileSource,
-        onComplete: (String id) {
-          //todo play the next voice
-        },
-        maxDuration: voiceMessage.data.durationObj,
-        onPause: (String id) {},
-        onPlaying: _onPlaying,
-      );
-      _voiceControllers.add(controller);
-      return controller;
-    }
-    return null;
+  VVoicePlayerController(this.onVoiceNeedToPlayNext);
+
+  VVoiceMessageController? getById(String id) =>
+      _voiceControllers.firstWhereOrNull((e) => e.id == id);
+
+  VVoiceMessageController getVoiceController(VVoiceMessage voiceMessage) {
+    final oldController = getById(voiceMessage.localId);
+
+    if (oldController != null) return oldController;
+
+    final controller = VVoiceMessageController(
+      id: voiceMessage.localId,
+      audioSrc: voiceMessage.data.fileSource,
+      onComplete: (String localId) {
+        final nextId = onVoiceNeedToPlayNext(localId);
+        if (nextId != null) {
+          getById(nextId)?.initAndPlay();
+        }
+      },
+      maxDuration: voiceMessage.data.durationObj,
+      onPlaying: _onPlaying,
+    );
+    _voiceControllers.add(controller);
+    return controller;
   }
 
   void _onPlaying(String id) {
@@ -38,7 +42,7 @@ class VVoicePlayerController {
 
   void close() {
     for (final c in _voiceControllers) {
-      c.pausePlaying();
+      c.dispose();
     }
   }
 }

@@ -13,13 +13,13 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../models/app_bare_state_model.dart';
 import '../../models/input_state_model.dart';
+import '../chat_media/chat_media_page.dart';
 import 'message_provider.dart';
 import 'states/message_stream_state.dart';
 import 'v_message_item_controller.dart';
 
 class VMessageController {
   final bool isInTesting;
-  final Function(String userId) onMentionPress;
   final VRoom vRoom;
   final _messageProvider = MessageProvider();
   late final MessageStateController messageState;
@@ -38,7 +38,7 @@ class VMessageController {
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
 
-  final voiceControllers = VVoicePlayerController();
+  final voiceControllers = VVoicePlayerController((localId) => null);
 
   ///Getters
   List<VBaseMessage> get messages => messageState.stateMessages;
@@ -51,7 +51,6 @@ class VMessageController {
 
   VMessageController(
       {required this.vRoom,
-      required this.onMentionPress,
       this.isInTesting = false,
       required BuildContext context}) {
     messageState = MessageStateController(
@@ -232,5 +231,13 @@ class VMessageController {
 
   void onSearch(String value) async {
     messageState.onSearch(value);
+  }
+
+  void onViewMedia(BuildContext context, String roomId) {
+    context.toPage(
+      ChatMediaPage(
+        roomId: roomId,
+      ),
+    );
   }
 }

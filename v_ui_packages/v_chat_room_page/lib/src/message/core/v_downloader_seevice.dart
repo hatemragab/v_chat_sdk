@@ -14,5 +14,10 @@ class VDownloaderService {
     }
   }
 
-  void _startDownload() async {}
+  void _startDownload() async {
+    // VFileUtils.safeToPublicPath(
+    //   fileAttachment: fileAttachment,
+    //   appName: appName,
+    // );
+  }
 }

@@ -7,7 +7,6 @@ import 'package:v_chat_room_page/src/room/pages/room_page/states/room_stream_sta
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../message/page/message_page/v_message_page.dart';
 import '../../widgets/room_item/room_item_controller.dart';
 
 class VRoomController with VSocketStatusStream {
@@ -106,10 +105,8 @@ class VRoomController with VSocketStatusStream {
     // getRoomsFromApi();
   }
 
-  void onRoomItemPress(int index, BuildContext context) {
-    context.toPage(VMessagePage(
-      vRoom: rooms[index],
-    ));
+  void onRoomItemPress(VRoom room, BuildContext context) {
+    VChatController.I.vNavigator.toMessagePage(context, room);
   }
 
   Future<bool> onLoadMore() {

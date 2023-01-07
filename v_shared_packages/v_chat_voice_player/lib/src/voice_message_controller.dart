@@ -17,9 +17,9 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   final VPlatformFileSource audioSrc;
   late Duration maxDuration;
   Duration _currentDuration = Duration.zero;
-  final Function(String id) onComplete;
-  final Function(String id) onPlaying;
-  final Function(String id) onPause;
+  final Function(String id)? onComplete;
+  final Function(String id)? onPlaying;
+  final Function(String id)? onPause;
   final double noiseWidth = 50.5.w();
   final String id;
   late AnimationController animController;
@@ -60,9 +60,9 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     required this.id,
     required this.audioSrc,
     this.maxDuration = const Duration(days: 1),
-    required this.onComplete,
-    required this.onPause,
-    required this.onPlaying,
+    this.onComplete,
+    this.onPause,
+    this.onPlaying,
   }) : super(null) {
     _setRandoms();
     animController = AnimationController(
@@ -86,7 +86,9 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
         await _setMaxDurationForIo(path);
         await _startPlayingForIo(path);
       }
-      onPlaying(id);
+      if (onPlaying != null) {
+        onPlaying!(id);
+      }
     } catch (err) {
       _playStatus = PlayStatus.downloadError;
       _updateUi();
@@ -124,7 +126,9 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
         _playStatus = PlayStatus.init;
         animController.reset();
         _updateUi();
-        onComplete(id);
+        if (onComplete != null) {
+          onComplete!(id);
+        }
       }
     });
   }
@@ -184,7 +188,9 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     _player.pause();
     _playStatus = PlayStatus.pause;
     _updateUi();
-    onPause(id);
+    if (onPause != null) {
+      onPause!(id);
+    }
   }
 
   void _listenToPlayerState() {

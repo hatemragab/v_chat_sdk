@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
   int tabIndex = 0;
@@ -32,9 +30,7 @@ class HomeController extends GetxController {
         .listen(
       (event) {
         final room = event.room as VRoom;
-        Get.context!.toPage(VMessagePage(
-          vRoom: room,
-        ));
+        VChatController.I.vNavigator.toMessagePage(Get.context!, room);
       },
     );
   }

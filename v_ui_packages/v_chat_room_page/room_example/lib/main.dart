@@ -8,12 +8,12 @@ import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await VChatController.init(
-    vChatConfig: VChatConfig(
-      passwordHashKey: "YOUR STRONG PASSWORD HASH KEY!",
-      baseUrl: Uri.parse("http://10.0.2.2:3000"),
-    ),
-  );
+  // await VChatController.init(
+  //   vChatConfig: VChatConfig(
+  //     passwordHashKey: "YOUR STRONG PASSWORD HASH KEY!",
+  //     baseUrl: Uri.parse("http://10.0.2.2:3000"),
+  //   ),
+  // );
 
   await VChatController.I.authApi.login(
     identifier: "user1@gmail.com",

@@ -3,7 +3,7 @@ description: core package for v chat sdk witch use socket.io with node js and mo
 version: 0.0.3
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
-repository: https://github.com/hatemragab/v_chat_sdk
+repository: https://github.com/hatemragab/v_chat_sdk/tree/v2/core_packages/v_chat_sdk_core
 
 environment:
   sdk: '>=2.17.0 <3.0.0'

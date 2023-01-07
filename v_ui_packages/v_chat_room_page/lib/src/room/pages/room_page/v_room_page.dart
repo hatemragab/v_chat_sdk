@@ -70,7 +70,7 @@ class _VChatPageState extends State<VChatPage> {
                               onRoomItemLongPress: (room) => widget.controller
                                   .onRoomItemLongPress(room, context),
                               onRoomItemPress: (room) => widget.controller
-                                  .onRoomItemPress(index, context),
+                                  .onRoomItemPress(room, context),
                             );
                           },
                         );
