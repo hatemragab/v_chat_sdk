@@ -13,7 +13,7 @@ class VVoiceMessage extends VBaseMessage {
   VVoiceMessage({
     required super.id,
     required super.senderId,
-    required super.messageStatus,
+    required super.emitStatus,
     required super.senderName,
     required super.senderImageThumb,
     required super.platform,

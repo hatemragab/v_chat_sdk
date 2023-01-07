@@ -1,8 +1,8 @@
-import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state.dart';
+import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
-  final RoomState roomState;
+  final RoomStateController roomState;
   final VNativeApi nativeApi;
 
   RoomStreamState({
@@ -85,7 +85,7 @@ class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
   /////////////// message methods//////////
   @override
   void onNewMsg(VInsertMessageEvent event) {
-    return roomState.onNewMsg(event);
+    return roomState.onNewMessage(event);
   }
 
   @override

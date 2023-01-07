@@ -14,7 +14,7 @@ class VImageMessage extends VBaseMessage {
     required super.id,
     required super.senderId,
     required super.senderName,
-    required super.messageStatus,
+    required super.emitStatus,
     required super.senderImageThumb,
     required super.platform,
     required super.roomId,
@@ -92,6 +92,6 @@ class VImageMessage extends VBaseMessage {
         super.buildFakeMessage(
           content: "Fake this is fake image message",
           messageType: MessageType.image,
-          messageStatus: MessageEmitStatus.serverConfirm,
+          emitStatus: MessageEmitStatus.serverConfirm,
         );
 }

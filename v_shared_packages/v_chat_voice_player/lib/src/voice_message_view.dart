@@ -48,7 +48,7 @@ class VVoiceMessageView extends StatelessWidget {
       color: backgroundColor,
       child: SafeArea(
         child: ValueListenableBuilder(
-          valueListenable: controller.updater,
+          valueListenable: controller,
           builder: (context, value, child) {
             return Row(
               //crossAxisAlignment: CrossAxisAlignment.start,

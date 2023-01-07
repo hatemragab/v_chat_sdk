@@ -12,9 +12,7 @@ class InputStateController extends ValueNotifier<MessageInputModel> {
   InputStateController(
     this._vRoom,
     this._messageProvider,
-  ) : super(MessageInputModel(
-          isCloseInput: _vRoom.blockerId != null,
-        )) {
+  ) : super(MessageInputModel(isCloseInput: _vRoom.blockerId != null)) {
     if (_vRoom.roomType.isGroup) {
       _checkStatus(_vRoom.id);
     }
@@ -45,12 +43,14 @@ class InputStateController extends ValueNotifier<MessageInputModel> {
   }
 
   void _checkStatus(String roomId) async {
-    await vSafeApiCall<bool>(
+    final x = await vSafeApiCall<bool>(
       request: () async {
         return await _messageProvider.checkGroupStatus(roomId);
       },
       onSuccess: (isMeOut) {
-        closeChat();
+        if (isMeOut) {
+          closeChat();
+        }
       },
     );
   }

@@ -18,9 +18,11 @@ class VChatItemBuilder {
     required this.unSeenLastMessageTextStyle,
     required this.seenLastMessageTextStyle,
     required this.getChatAvatar,
+    required this.selectedRoomColor,
   });
 
   final Widget Function(String title) getChatTitle;
+  final Color selectedRoomColor;
   final VChatImageBuilderWidget getChatAvatar;
   final VMsgStatusTheme lastMessageStatus;
   final Widget muteIcon;
@@ -50,6 +52,7 @@ class VChatItemBuilder {
         );
       },
       muteIcon: const Icon(Icons.notifications_off),
+      selectedRoomColor: Colors.black.withOpacity(.2),
       unSeenLastMessageTextStyle: const TextStyle(
         overflow: TextOverflow.ellipsis,
         fontWeight: FontWeight.w500,
@@ -64,6 +67,7 @@ class VChatItemBuilder {
   factory VChatItemBuilder.dark() {
     return VChatItemBuilder._(
       muteIcon: const Icon(Icons.notifications_off),
+      selectedRoomColor: Colors.white.withOpacity(.2),
       getChatTitle: (title) {
         return Text(
           title,

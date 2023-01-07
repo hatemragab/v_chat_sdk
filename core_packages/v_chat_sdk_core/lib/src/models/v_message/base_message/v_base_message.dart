@@ -24,7 +24,7 @@ abstract class VBaseMessage {
     required this.localId,
     required this.createdAt,
     required this.updatedAt,
-    required this.messageStatus,
+    required this.emitStatus,
     required this.replyTo,
     required this.seenAt,
     required this.deliveredAt,
@@ -51,7 +51,7 @@ abstract class VBaseMessage {
   MessageType messageType;
 
   ///serverConfirm,error,sending
-  MessageEmitStatus messageStatus;
+  MessageEmitStatus emitStatus;
 
   /// only will have value if this message reply to another
   VBaseMessage? replyTo;
@@ -101,7 +101,7 @@ abstract class VBaseMessage {
         parentBroadcastId = map['pBId'] as String?,
         localId = map['lId'] as String,
         createdAt = map['createdAt'] as String,
-        messageStatus = MessageEmitStatus.serverConfirm,
+        emitStatus = MessageEmitStatus.serverConfirm,
         updatedAt = map['updatedAt'] as String;
 
   /// from local
@@ -129,7 +129,7 @@ abstract class VBaseMessage {
         localId = map[MessageTable.columnLocalId] as String,
         createdAt = map[MessageTable.columnCreatedAt] as String,
         updatedAt = map[MessageTable.columnUpdatedAt] as String,
-        messageStatus = MessageEmitStatus.values
+        emitStatus = MessageEmitStatus.values
             .byName(map[MessageTable.columnMessageEmitStatus] as String),
         messageType = MessageType.values
             .byName(map[MessageTable.columnMessageType] as String);
@@ -151,7 +151,7 @@ abstract class VBaseMessage {
       MessageTable.columnDeliveredAt: deliveredAt,
       MessageTable.columnForwardId: forwardId,
       MessageTable.columnAllDeletedAt: deletedAt,
-      MessageTable.columnMessageEmitStatus: messageStatus.name,
+      MessageTable.columnMessageEmitStatus: emitStatus.name,
       MessageTable.columnParentBroadcastId: parentBroadcastId,
       MessageTable.columnLocalId: localId,
       MessageTable.columnCreatedAt: createdAt,
@@ -214,7 +214,7 @@ abstract class VBaseMessage {
 
   @override
   String toString() {
-    return 'BaseMessage{id: $id, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, platform: $platform, roomId: $roomId, content: $content, messageType: $messageType, messageStatus: $messageStatus, replyTo: $replyTo, seenAt: $seenAt, deliveredAt: $deliveredAt, forwardId: $forwardId, deletedAt: $deletedAt, parentBroadcastId: $parentBroadcastId,  localId: $localId, createdAt: $createdAt, updatedAt: $updatedAt, isDeleted: $isDeleted, isStared: $isStared}';
+    return 'BaseMessage{id: $id, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, platform: $platform, roomId: $roomId, content: $content, messageType: $messageType, messageStatus: $emitStatus, replyTo: $replyTo, seenAt: $seenAt, deliveredAt: $deliveredAt, forwardId: $forwardId, deletedAt: $deletedAt, parentBroadcastId: $parentBroadcastId,  localId: $localId, createdAt: $createdAt, updatedAt: $updatedAt, isDeleted: $isDeleted, isStared: $isStared}';
   }
 
   VBaseMessage.buildMessage({
@@ -234,7 +234,7 @@ abstract class VBaseMessage {
         senderName = VAppConstants.myProfile.baseUser.fullName,
         senderImageThumb =
             VAppConstants.myProfile.baseUser.userImages.smallImage,
-        messageStatus = MessageEmitStatus.sending,
+        emitStatus = MessageEmitStatus.sending,
         parentBroadcastId = broadcastId,
         deletedAt = null,
         seenAt = null,
@@ -243,7 +243,7 @@ abstract class VBaseMessage {
   VBaseMessage.buildFakeMessage({
     required this.content,
     required this.messageType,
-    required this.messageStatus,
+    required this.emitStatus,
     this.forwardId,
     String? broadcastId,
     this.replyTo,

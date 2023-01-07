@@ -31,6 +31,9 @@ dependencies:
   intl: ^0.17.0
   swipe_to: ^1.0.2
   scroll_to_index: ^3.0.1
+  flutter_cache_manager: ^3.3.0
+  share_plus: ^6.0.1
+  loadmore: ^2.0.1
 
 
 dev_dependencies:

@@ -61,7 +61,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     final newList = <VBaseMessage>[];
     newList.addAll(apiMessages);
     newList.addAll(
-      stateMessages.where((e) => e.messageStatus.isSendingOrError),
+      stateMessages.where((e) => e.emitStatus.isSendingOrError),
     );
     //we need to sort
     value = newList.sortById();
@@ -128,7 +128,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   void updateMessageStatus(String localId, MessageEmitStatus emitState) {
     final index = _indexByLocalId(localId);
     if (index != -1) {
-      value[index].messageStatus = emitState;
+      value[index].emitStatus = emitState;
       messageStateStream.add(value[index]);
     }
   }

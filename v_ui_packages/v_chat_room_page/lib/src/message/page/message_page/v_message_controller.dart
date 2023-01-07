@@ -174,7 +174,7 @@ class VMessageController {
   }
 
   void setReply(VBaseMessage p1) {
-    if (p1.messageStatus.isServerConfirm) {
+    if (p1.emitStatus.isServerConfirm) {
       inputStateController.setReply(p1);
     }
   }

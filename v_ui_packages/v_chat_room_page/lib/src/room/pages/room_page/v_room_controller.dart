@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
-import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state.dart';
+import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state_controller.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/states/room_stream_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -14,7 +14,7 @@ class VRoomController with VSocketStatusStream {
   final bool isTesting;
   late final RoomStreamState _localStreamChanges;
   late final RoomItemController roomItemController;
-  late final RoomState roomState;
+  late final RoomStateController roomState;
 
   final _roomProvider = RoomProvider();
 
@@ -28,8 +28,8 @@ class VRoomController with VSocketStatusStream {
     initSocketStatusStream(
       VChatController.I.nativeApi.streams.socketStatusStream,
     );
-    roomState = RoomState(
-      _roomProvider.getRoomById,
+    roomState = RoomStateController(
+      _roomProvider,
     );
     _localStreamChanges = RoomStreamState(
       nativeApi: VChatController.I.nativeApi,
@@ -106,12 +106,17 @@ class VRoomController with VSocketStatusStream {
     // getRoomsFromApi();
   }
 
-  void onRoomItemPress(VRoom vRoom, BuildContext context) {
+  void onRoomItemPress(int index, BuildContext context) {
     context.toPage(VMessagePage(
-      vRoom: vRoom,
+      vRoom: rooms[index],
     ));
   }
 
-// @override
-// void onSocketDisconnect() {}
+  Future<bool> onLoadMore() {
+    return roomState.onLoadMore();
+  }
+
+  bool getIsFinishLoadMore() {
+    return roomState.isFinishLoadMore;
+  }
 }

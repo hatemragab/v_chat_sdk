@@ -3,6 +3,7 @@ import 'package:swipe_to/swipe_to.dart';
 import 'package:v_chat_room_page/src/message/page/message_page/v_message_item_controller.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/center_item_holder.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/direction_item_holder.dart';
+import 'package:v_chat_room_page/src/message/widgets/message_items/shared/forward_ttem_widget.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_broadcast_icon.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_status_icon.dart';
 import 'package:v_chat_room_page/src/message/widgets/message_items/shared/message_time_widget.dart';
@@ -76,6 +77,9 @@ class VMessageItem extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
+              ForwardItemWidget(
+                isFroward: message.isForward,
+              ),
               ReplyItemWidget(
                 rToMessage:
                     message.messageType.isAllDeleted ? null : message.replyTo,

@@ -18,7 +18,7 @@ class VFileMessage extends VBaseMessage {
     required super.platform,
     required super.roomId,
     required super.content,
-    required super.messageStatus,
+    required super.emitStatus,
     required super.messageType,
     required super.localId,
     required super.createdAt,

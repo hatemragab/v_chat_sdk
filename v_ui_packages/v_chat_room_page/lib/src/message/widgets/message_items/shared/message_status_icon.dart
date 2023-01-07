@@ -47,7 +47,7 @@ class MessageStatusIcon extends StatelessWidget {
   }
 
   Widget _getIcon(VMsgStatusTheme themeData) {
-    switch (vBaseMessage.messageStatus) {
+    switch (vBaseMessage.emitStatus) {
       case MessageEmitStatus.serverConfirm:
         return themeData.sendIcon;
       case MessageEmitStatus.error:

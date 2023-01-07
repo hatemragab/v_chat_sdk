@@ -27,25 +27,28 @@ class _ChooseRoomsPageState extends State<ChooseRoomsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //todo trans
-        title: const Text("Choose Rooms"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.send),
-        onPressed: () => controller.onDone(context),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ValueListenableBuilder<List<VRoom>>(
-            valueListenable: controller,
-            builder: (_, value, __) {
-              return ListView.builder(
+    return ValueListenableBuilder<List<VSelectRoom>>(
+        valueListenable: controller,
+        builder: (_, value, __) {
+          return Scaffold(
+            appBar: AppBar(
+              //todo trans
+              title: const Text("Choose Rooms"),
+            ),
+            floatingActionButton: controller.isThereSelection
+                ? null
+                : FloatingActionButton(
+                    child: const Icon(Icons.send),
+                    onPressed: () => controller.onDone(context),
+                  ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
                 cacheExtent: 300,
                 itemBuilder: (context, index) {
                   return VRoomItem(
-                    room: value[index],
+                    isSelected: value[index].isSelected,
+                    room: value[index].vRoom,
                     onRoomItemLongPress: (room) =>
                         controller.onRoomItemPress(room, context),
                     onRoomItemPress: (room) =>
@@ -53,10 +56,10 @@ class _ChooseRoomsPageState extends State<ChooseRoomsPage> {
                   );
                 },
                 itemCount: value.length,
-              );
-            }),
-      ),
-    );
+              ),
+            ),
+          );
+        });
   }
 
   @override

@@ -1,4 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:v_chat_room_page/src/message/page/message_status/message_status_page.dart';
 import 'package:v_chat_room_page/src/room/pages/choose_rooms/choose_rooms_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -11,6 +16,7 @@ import 'message_provider.dart';
 class VMessageItemController {
   final MessageProvider _messageProvider;
   final BuildContext context;
+  final _localStorage = VChatController.I.nativeApi.local;
 
   VMessageItemController(this._messageProvider, this.context);
 
@@ -73,7 +79,7 @@ class VMessageItemController {
   ) async {
     FocusScope.of(context).unfocus();
     final items = <ModelSheetItem<VMessageItemClickRes>>[];
-    if (message.messageStatus.isServerConfirm) {
+    if (message.emitStatus.isServerConfirm) {
       items.add(_forwardItem());
       items.add(_replyItem());
       items.add(_shareItem());
@@ -101,7 +107,7 @@ class VMessageItemController {
     if (res == null) return;
     switch (res.id as VMessageItemClickRes) {
       case VMessageItemClickRes.forward:
-        _handleForward(message.roomId);
+        _handleForward(message);
         break;
       case VMessageItemClickRes.reply:
         onSwipe(message);
@@ -133,15 +139,112 @@ class VMessageItemController {
     await VStringUtils.lunchLink(phone);
   }
 
-  void _handleForward(String roomId) async {
-    final res = await context.toPage(
+  void _handleForward(VBaseMessage baseMessage) async {
+    final ids = await context.toPage(
       ChooseRoomsPage(
-        currentRoomId: roomId,
+        currentRoomId: baseMessage.roomId,
       ),
-    );
+    ) as List<String>?;
+    if (ids != null) {
+      for (final roomId in ids) {
+        VBaseMessage? message;
+        switch (baseMessage.messageType) {
+          case MessageType.text:
+            message = VTextMessage.buildMessage(
+              content: baseMessage.content,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.image:
+            message = VImageMessage.buildMessage(
+              data: (baseMessage as VImageMessage).data,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.file:
+            message = VFileMessage.buildMessage(
+              data: (baseMessage as VFileMessage).data,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.video:
+            message = VVideoMessage.buildMessage(
+              data: (baseMessage as VVideoMessage).data,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.voice:
+            message = VVoiceMessage.buildMessage(
+              data: (baseMessage as VVoiceMessage).data,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.location:
+            message = VLocationMessage.buildMessage(
+              data: (baseMessage as VLocationMessage).data,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.allDeleted:
+            // TODO: Handle this case.
+            break;
+          case MessageType.call:
+            // TODO: Handle this case.
+            break;
+          case MessageType.custom:
+            message = VCustomMessage.buildMessage(
+              data: (baseMessage as VCustomMessage).data,
+              content: baseMessage.content,
+              roomId: roomId,
+              forwardId: baseMessage.localId,
+            );
+            break;
+          case MessageType.info:
+            // TODO: Handle this case.
+            break;
+        }
+        if (message != null) {
+          await _localStorage.message.insertMessage(message);
+          MessageUploaderQueue.instance.addToQueue(
+            await MessageFactory.createForwardUploadMessage(message),
+          );
+        }
+      }
+    }
   }
 
-  void _handleShare(VBaseMessage message) {}
+  void _handleShare(VBaseMessage message) async {
+    if (message.emitStatus.isServerConfirm) {
+      if (message is VTextMessage) {
+        await Share.share(message.content);
+        return;
+      }
+      if (message is VLocationMessage) {
+        await Share.share(message.data.linkPreviewData.link.toString());
+        return;
+      }
+      late final VPlatformFileSource pFile;
+      if (message is VImageMessage) {
+        pFile = message.data.fileSource;
+      } else if (message is VVoiceMessage) {
+        pFile = message.data.fileSource;
+      } else if (message is VFileMessage) {
+        pFile = message.data.fileSource;
+      } else if (message is VVideoMessage) {
+        pFile = message.data.fileSource;
+      }
+      final file = await DefaultCacheManager().getSingleFile(
+        pFile.url!,
+      );
+      await Share.shareXFiles([XFile(file.path)]);
+    }
+  }
 
   void _handleInfo(VBaseMessage message, VRoom room) {
     FocusScope.of(context).unfocus();
@@ -155,7 +258,7 @@ class VMessageItemController {
     final l = <ModelSheetItem>[];
     if (message.isMeSender &&
         !message.messageType.isAllDeleted &&
-        message.messageStatus.isServerConfirm) {
+        message.emitStatus.isServerConfirm) {
       l.add(ModelSheetItem(title: 'Delete from all', id: 1));
     }
     l.add(ModelSheetItem(title: 'Delete from me', id: 2));
@@ -185,5 +288,12 @@ class VMessageItemController {
     }
   }
 
-  void _handleCopy(VBaseMessage message) {}
+  void _handleCopy(VBaseMessage message) async {
+    //todo fix get real time if there mention
+    await Clipboard.setData(
+      ClipboardData(
+        text: message.getTextTrans,
+      ),
+    );
+  }
 }

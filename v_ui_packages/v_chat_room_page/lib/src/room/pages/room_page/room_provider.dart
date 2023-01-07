@@ -28,10 +28,11 @@ class RoomProvider {
   }
 
   Future<VPaginationModel<VRoom>> getApiRooms(
-    VRoomsDto dto,
-  ) async {
+    VRoomsDto dto, {
+    bool deleteOnEmpty = true,
+  }) async {
     final apiModel = await _remoteRoom.getRooms(dto);
-    unawaited(_localRoom.cacheRooms(apiModel.values));
+    unawaited(_localRoom.cacheRooms(apiModel.values, deleteOnEmpty));
     return apiModel;
   }
 

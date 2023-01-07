@@ -38,16 +38,18 @@ class NativeLocalRoom {
     }
   }
 
-  Future<int> cacheRooms(List<VRoom> rooms) async {
-    if (rooms.isEmpty) {
+  Future<int> cacheRooms(
+    List<VRoom> rooms,
+    bool deleteOnEmpty,
+  ) async {
+    if (rooms.isEmpty && deleteOnEmpty) {
       await _roomRepo.reCreate();
+      await _localMessage.reCreateMessageTable();
       return 1;
     }
     await _localMessage
         .cacheRoomMessages(rooms.map((e) => e.lastMessage).toList());
-    return _roomRepo.insertMany(
-      rooms,
-    );
+    return _roomRepo.insertMany(rooms);
   }
 
   Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) async {

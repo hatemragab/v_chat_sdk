@@ -13,31 +13,10 @@ import 'helpers/bytes_custom_source.dart';
 import 'helpers/play_status.dart';
 import 'helpers/utils.dart';
 
-// abstract class AudioSrc {
-// }
-//
-// class FileSrc extends AudioSrc {
-//   final String path;
-//
-//   FileSrc(this.path);
-// }
-//
-// class UrlSrc extends AudioSrc {
-//   final String url;
-//
-//   UrlSrc(this.url);
-// }
-//
-// class BytesSrc extends AudioSrc {
-//   final List<int> bytes;
-//
-//   BytesSrc(this.bytes);
-// }
-
-class VVoiceMessageController extends MyTicker {
+class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   final VPlatformFileSource audioSrc;
   late Duration maxDuration;
-  Duration currentDuration = Duration.zero;
+  Duration _currentDuration = Duration.zero;
   final Function(String id) onComplete;
   final Function(String id) onPlaying;
   final Function(String id) onPause;
@@ -46,35 +25,34 @@ class VVoiceMessageController extends MyTicker {
   late AnimationController animController;
   final AudioPlayer _player = AudioPlayer();
 
-  PlayStatus playStatus = PlayStatus.init;
-  PlaySpeed speed = PlaySpeed.x1;
-  ValueNotifier updater = ValueNotifier(null);
+  PlayStatus _playStatus = PlayStatus.init;
+  PlaySpeed _speed = PlaySpeed.x1;
   final randoms = <double>[];
-  StreamSubscription? positionStream;
-  StreamSubscription? playerStateStream;
+  StreamSubscription? _positionStream;
+  StreamSubscription? _playerStateStream;
 
-  bool isSeeking = false;
+  bool _isSeeking = false;
 
   ///state
-  bool get isPlaying => playStatus == PlayStatus.playing;
+  bool get isPlaying => _playStatus == PlayStatus.playing;
 
-  bool get isInit => playStatus == PlayStatus.init;
+  bool get isInit => _playStatus == PlayStatus.init;
 
-  bool get isDownloading => playStatus == PlayStatus.downloading;
+  bool get isDownloading => _playStatus == PlayStatus.downloading;
 
-  bool get isDownloadError => playStatus == PlayStatus.downloadError;
+  bool get isDownloadError => _playStatus == PlayStatus.downloadError;
 
-  bool get isStop => playStatus == PlayStatus.stop;
+  bool get isStop => _playStatus == PlayStatus.stop;
 
   double get currentMillSeconds {
-    final c = currentDuration.inMilliseconds.toDouble();
+    final c = _currentDuration.inMilliseconds.toDouble();
     if (c >= maxMillSeconds) {
       return maxMillSeconds;
     }
     return c;
   }
 
-  bool get isPause => playStatus == PlayStatus.pause;
+  bool get isPause => _playStatus == PlayStatus.pause;
 
   double get maxMillSeconds => maxDuration.inMilliseconds.toDouble();
 
@@ -85,7 +63,7 @@ class VVoiceMessageController extends MyTicker {
     required this.onComplete,
     required this.onPause,
     required this.onPlaying,
-  }) {
+  }) : super(null) {
     _setRandoms();
     animController = AnimationController(
       vsync: this,
@@ -97,20 +75,20 @@ class VVoiceMessageController extends MyTicker {
   }
 
   Future initAndPlay() async {
-    playStatus = PlayStatus.downloading;
+    _playStatus = PlayStatus.downloading;
     _updateUi();
     try {
       if (kIsWeb) {
-        await setMaxDurationForJs();
+        await _setMaxDurationForJs();
         await startPlayingForJs();
       } else {
         final path = await _getFileFromCache();
-        await setMaxDurationForIo(path);
-        await startPlayingForIo(path);
+        await _setMaxDurationForIo(path);
+        await _startPlayingForIo(path);
       }
       onPlaying(id);
     } catch (err) {
-      playStatus = PlayStatus.downloadError;
+      _playStatus = PlayStatus.downloadError;
       _updateUi();
       rethrow;
     }
@@ -127,24 +105,23 @@ class VVoiceMessageController extends MyTicker {
       return audioSrc.filePath!;
     }
     if (isBytes) {
-      throw "isBytes should not call here !";
+      throw "bytes file not supported for play voice";
     }
-    final p = await cache.DefaultCacheManager().getSingleFile(
-      audioSrc.url!,
-    );
+    final p = await cache.DefaultCacheManager()
+        .getSingleFile(audioSrc.url!, key: audioSrc.getUrlPath);
     return p.path;
   }
 
   void _listenToRemindingTime() {
-    positionStream = _player.positionStream.listen((Duration p) async {
-      currentDuration = p;
+    _positionStream = _player.positionStream.listen((Duration p) async {
+      _currentDuration = p;
       final value = (noiseWidth * currentMillSeconds) / maxMillSeconds;
       animController.value = value;
       _updateUi();
       if (p.inMilliseconds >= maxMillSeconds) {
         await _player.stop();
-        currentDuration = Duration.zero;
-        playStatus = PlayStatus.init;
+        _currentDuration = Duration.zero;
+        _playStatus = PlayStatus.init;
         animController.reset();
         _updateUi();
         onComplete(id);
@@ -153,63 +130,65 @@ class VVoiceMessageController extends MyTicker {
   }
 
   void _updateUi() {
-    updater.notifyListeners();
+    notifyListeners();
   }
 
-  Future stopPlaying() async {
+  Future _stopPlaying() async {
     _player.pause();
-    playStatus = PlayStatus.stop;
+    _playStatus = PlayStatus.stop;
   }
 
-  Future startPlayingForIo(String path) async {
+  Future _startPlayingForIo(String path) async {
     await _player.setAudioSource(
       AudioSource.uri(Uri.file(path)),
-      initialPosition: currentDuration,
+      initialPosition: _currentDuration,
     );
     _player.play();
-    _player.setSpeed(speed.getSpeed);
+    _player.setSpeed(_speed.getSpeed);
   }
 
   Future startPlayingForJs() async {
     if (isBytes) {
       await _player.setAudioSource(
         BytesCustomSource(audioSrc.bytes!),
-        initialPosition: currentDuration,
+        initialPosition: _currentDuration,
       );
     }
     if (isUrl) {
       await _player.setAudioSource(
         AudioSource.uri(Uri.parse(audioSrc.url!)),
-        initialPosition: currentDuration,
+        initialPosition: _currentDuration,
       );
     }
     _player.play();
-    _player.setSpeed(speed.getSpeed);
+    _player.setSpeed(_speed.getSpeed);
   }
 
+  @override
   Future<void> dispose() async {
     await _player.dispose();
-    positionStream?.cancel();
-    playerStateStream?.cancel();
+    _positionStream?.cancel();
+    _playerStateStream?.cancel();
     animController.dispose();
+    super.dispose();
   }
 
   void onSeek(Duration duration) {
-    isSeeking = false;
-    currentDuration = duration;
+    _isSeeking = false;
+    _currentDuration = duration;
     _updateUi();
     _player.seek(duration);
   }
 
   void pausePlaying() {
     _player.pause();
-    playStatus = PlayStatus.pause;
+    _playStatus = PlayStatus.pause;
     _updateUi();
     onPause(id);
   }
 
   void _listenToPlayerState() {
-    playerStateStream = _player.playerStateStream.listen((event) async {
+    _playerStateStream = _player.playerStateStream.listen((event) async {
       if (event.processingState == ProcessingState.completed) {
         // await _player.stop();
         // currentDuration = Duration.zero;
@@ -218,14 +197,14 @@ class VVoiceMessageController extends MyTicker {
         // _updateUi();
         // onComplete(id);
       } else if (event.playing) {
-        playStatus = PlayStatus.playing;
+        _playStatus = PlayStatus.playing;
         _updateUi();
       }
     });
   }
 
   String get playSpeedStr {
-    switch (speed) {
+    switch (_speed) {
       case PlaySpeed.x1:
         return "1.00x";
       case PlaySpeed.x1_25:
@@ -240,29 +219,29 @@ class VVoiceMessageController extends MyTicker {
   }
 
   void changeSpeed() async {
-    switch (speed) {
+    switch (_speed) {
       case PlaySpeed.x1:
-        speed = PlaySpeed.x1_25;
+        _speed = PlaySpeed.x1_25;
         break;
       case PlaySpeed.x1_25:
-        speed = PlaySpeed.x1_5;
+        _speed = PlaySpeed.x1_5;
         break;
       case PlaySpeed.x1_5:
-        speed = PlaySpeed.x1_75;
+        _speed = PlaySpeed.x1_75;
         break;
       case PlaySpeed.x1_75:
-        speed = PlaySpeed.x2;
+        _speed = PlaySpeed.x2;
         break;
       case PlaySpeed.x2:
-        speed = PlaySpeed.x1;
+        _speed = PlaySpeed.x1;
         break;
     }
-    await _player.setSpeed(speed.getSpeed);
+    await _player.setSpeed(_speed.getSpeed);
     _updateUi();
   }
 
   void onChangeSliderStart(double value) {
-    isSeeking = true;
+    _isSeeking = true;
     pausePlaying();
   }
 
@@ -273,26 +252,26 @@ class VVoiceMessageController extends MyTicker {
   }
 
   void onChanging(double d) {
-    currentDuration = Duration(milliseconds: d.toInt());
+    _currentDuration = Duration(milliseconds: d.toInt());
     final value = (noiseWidth * d) / maxMillSeconds;
     animController.value = value;
     _updateUi();
   }
 
   String get remindingTime {
-    if (currentDuration == Duration.zero) {
+    if (_currentDuration == Duration.zero) {
       return maxDuration.getStringTime;
     }
-    if (isSeeking) {
-      return currentDuration.getStringTime;
+    if (_isSeeking) {
+      return _currentDuration.getStringTime;
     }
     if (isPause || isInit) {
       return maxDuration.getStringTime;
     }
-    return currentDuration.getStringTime;
+    return _currentDuration.getStringTime;
   }
 
-  Future setMaxDurationForIo(String path) async {
+  Future _setMaxDurationForIo(String path) async {
     try {
       final maxDuration = await jsAudio.AudioPlayer().setFilePath(path);
       if (maxDuration != null) {
@@ -306,7 +285,7 @@ class VVoiceMessageController extends MyTicker {
     }
   }
 
-  Future setMaxDurationForJs() async {
+  Future _setMaxDurationForJs() async {
     try {
       if (isUrl) {
         final maxDuration = await jsAudio.AudioPlayer()
@@ -333,9 +312,7 @@ class VVoiceMessageController extends MyTicker {
       }
     }
   }
-}
 
-class MyTicker extends TickerProvider {
   @override
   Ticker createTicker(TickerCallback onTick) {
     return Ticker(onTick);

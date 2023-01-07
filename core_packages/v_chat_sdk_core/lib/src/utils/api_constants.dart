@@ -67,6 +67,7 @@ abstract class VAppConstants {
       VAppPref.getStringOrNull(VStorageKeys.appLanguage) ?? "en";
 
   static String getMessageBody(VBaseMessage m) {
+    //todo trans
     return m.content;
     //
     //   if (m.isInfo) {

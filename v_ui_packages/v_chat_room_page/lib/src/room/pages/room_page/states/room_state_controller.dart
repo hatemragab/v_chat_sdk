@@ -2,21 +2,26 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/shared/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
-  final Future<VRoom?> Function(String roomId) getRoom;
+class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
+  final RoomProvider _roomProvider;
+  bool isFinishLoadMore = false;
 
-  RoomState(this.getRoom)
-      : super(VPaginationModel<VRoom>(
-          values: <VRoom>[],
-          limit: 20,
-          page: 1,
-          nextPage: null,
-        ));
+  RoomStateController(this._roomProvider)
+      : super(
+          VPaginationModel<VRoom>(
+            values: <VRoom>[],
+            limit: 20,
+            page: 1,
+            nextPage: null,
+          ),
+        );
 
-  final roomStateStream = StreamController<VRoom>.broadcast();
+  final roomStateStream = StreamController<VRoom>.broadcast(sync: true);
 
   List<VRoom> get stateRooms => value.values;
 
@@ -28,11 +33,7 @@ class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
       if (stateIndex != -1) {
         //api room exists in local rooms we need to check if
         //local room contains sending message
-
-        if (newStateList[stateIndex]
-            .lastMessage
-            .messageStatus
-            .isSendingOrError) {
+        if (newStateList[stateIndex].lastMessage.emitStatus.isSendingOrError) {
           final stateLastMsg = newStateList[stateIndex].lastMessage;
           newStateList[stateIndex] = apiRooms[apiIndex];
           newStateList[stateIndex].lastMessage = stateLastMsg;
@@ -187,7 +188,7 @@ class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
   void onUpdateMsgStatus(VUpdateMessageStatusEvent event) {
     final room = roomById(event.roomId);
     if (room != null && room.lastMessage.localId == event.localId) {
-      room.lastMessage.messageStatus = event.emitState;
+      room.lastMessage.emitStatus = event.emitState;
       roomStateStream.sink.add(room);
     }
   }
@@ -206,7 +207,7 @@ class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void onNewMsg(VInsertMessageEvent event) async {
+  void onNewMessage(VInsertMessageEvent event) async {
     final room = roomById(event.roomId);
     if (room != null) {
       room.lastMessage = event.messageModel;
@@ -217,7 +218,8 @@ class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
       //first search in local db
       //if not found then send api request to server
       await Future.delayed(const Duration(seconds: 3));
-      final newRoom = await getRoom(event.roomId);
+
+      final newRoom = await _roomProvider.getRoomById(event.roomId);
       if (newRoom != null) {
         insertRoom(newRoom);
       }
@@ -227,5 +229,33 @@ class RoomState extends ValueNotifier<VPaginationModel<VRoom>> {
   void insertAll(VPaginationModel<VRoom> response) {
     value.values = response.values;
     notifyListeners();
+  }
+
+  Future<bool> onLoadMore() async {
+    ++value.page;
+    final res = await vSafeApiCall<VPaginationModel<VRoom>>(
+      request: () async {
+        return _roomProvider.getApiRooms(
+          VRoomsDto(page: value.page, limit: 20),
+          deleteOnEmpty: false,
+        );
+      },
+      onSuccess: (response) {
+        if (response.values.isEmpty) {
+          isFinishLoadMore = true;
+        }
+        for (var e in value.values) {
+          if (!value.values.contains(e)) {
+            value.values.add(e);
+          }
+        }
+        value.values.sortByMsgId();
+        notifyListeners();
+      },
+    );
+    if (res == null || res.values.isEmpty) {
+      return false;
+    }
+    return true;
   }
 }

@@ -61,12 +61,12 @@ class MessageUploaderQueue {
     final VBaseMessage? baseMessage =
         await _localStorage.getMessageByLocalId(uploadModel.msgLocalId);
     if (baseMessage != null) {
-      baseMessage.messageStatus = MessageEmitStatus.error;
+      baseMessage.emitStatus = MessageEmitStatus.error;
       await _localStorage.updateMessageSendingStatus(
         VUpdateMessageStatusEvent(
           roomId: baseMessage.roomId,
           localId: baseMessage.localId,
-          emitState: baseMessage.messageStatus,
+          emitState: baseMessage.emitStatus,
         ),
       );
     }

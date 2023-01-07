@@ -64,7 +64,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessageStatus(VUpdateMessageStatusEvent event) async {
     final msg = await findByLocalId(event.localId);
     if (msg == null) return 0;
-    msg.messageStatus = event.emitState;
+    msg.emitStatus = event.emitState;
     return Future.value(1);
   }
 
@@ -109,7 +109,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
     int limit = 50,
   }) {
     return Future.value(
-      _messages.where((e) => e.messageStatus == status).take(limit).toList(),
+      _messages.where((e) => e.emitStatus == status).take(limit).toList(),
     );
   }
 

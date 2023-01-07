@@ -149,12 +149,6 @@ class VRoom {
     return false;
   }
 
-  // bool get isSingle => roomType == RoomType.s;
-  //
-  // bool get isGroup => roomType == RoomType.g;
-  //
-  // bool get isBroadcast => roomType == RoomType.b;
-
   String? get roomTypingText {
     final current = this;
     if (roomType.isSingle) {

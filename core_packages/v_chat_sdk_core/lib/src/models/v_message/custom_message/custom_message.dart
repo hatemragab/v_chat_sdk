@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
 import '../base_message/v_base_message.dart';
 import 'custom_msg_att.dart';
@@ -11,7 +12,7 @@ class VCustomMessage extends VBaseMessage {
     required super.id,
     required super.senderId,
     required super.senderName,
-    required super.messageStatus,
+    required super.emitStatus,
     required super.senderImageThumb,
     required super.platform,
     required super.roomId,
@@ -29,7 +30,16 @@ class VCustomMessage extends VBaseMessage {
     required super.isStared,
     required this.data,
   });
-
+  VCustomMessage.buildMessage({
+    required super.roomId,
+    required this.data,
+    super.forwardId,
+    required super.content,
+    super.broadcastId,
+    super.replyTo,
+  }) : super.buildMessage(
+          messageType: MessageType.custom,
+        );
   VCustomMessage.fromRemoteMap(super.map)
       : data = VCustomMsgAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();

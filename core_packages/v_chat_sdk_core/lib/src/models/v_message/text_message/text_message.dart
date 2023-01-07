@@ -8,7 +8,7 @@ class VTextMessage extends VBaseMessage {
     required super.senderId,
     required super.senderName,
     required super.senderImageThumb,
-    required super.messageStatus,
+    required super.emitStatus,
     required super.platform,
     required super.roomId,
     required super.content,
@@ -41,7 +41,7 @@ class VTextMessage extends VBaseMessage {
   }) : super.buildFakeMessage(
           content: randomString(index * 25),
           messageType: MessageType.text,
-          messageStatus: messageStatus,
+          emitStatus: messageStatus,
         );
 
   VTextMessage.fromLocalMap(super.map) : super.fromLocalMap();

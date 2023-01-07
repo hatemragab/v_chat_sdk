@@ -13,12 +13,14 @@ import '../room_item_builder/room_item_msg.dart';
 class VRoomItem extends StatelessWidget {
   final VRoom room;
   final Function(VRoom room) onRoomItemPress;
+  final bool isSelected;
   final Function(VRoom room) onRoomItemLongPress;
 
   const VRoomItem({
     required this.room,
     super.key,
     required this.onRoomItemPress,
+    this.isSelected = false,
     required this.onRoomItemLongPress,
   });
 
@@ -33,96 +35,96 @@ class VRoomItem extends StatelessWidget {
       onLongPress: () {
         onRoomItemLongPress(room);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(5),
-        child: SizedBox(
-          height: 65,
-          width: 65,
-          child: Row(
-            children: [
-              theme.vChatItemBuilder.getChatAvatar(
-                imageUrl: room.thumbImage,
-                chatTitle: room.title,
-                isOnline: room.isThereBlock ? false : room.isOnline,
-                size: 60,
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-              Flexible(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+      child: Container(
+        height: 65,
+        width: 65,
+        decoration: BoxDecoration(
+          color: isSelected ? theme.vChatItemBuilder.selectedRoomColor : null,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            theme.vChatItemBuilder.getChatAvatar(
+              imageUrl: room.thumbImage,
+              chatTitle: room.title,
+              isOnline: room.isThereBlock ? false : room.isOnline,
+              size: 60,
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: ChatTitle(title: room.title),
+                      ),
+                      ChatLastMsgTime(
+                        lastMessageTimeString: room.lastMessageTimeString,
+                      )
+                    ],
+                  ),
+                  const SizedBox.shrink(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (room.roomTypingText != null)
+                        ChatTypingWidget(
+                          text: room.roomTypingText!,
+                        )
+                      else if (room.lastMessage.isMeSender)
                         Flexible(
-                          child: ChatTitle(title: room.title),
-                        ),
-                        ChatLastMsgTime(
-                          lastMessageTimeString: room.lastMessageTimeString,
-                        )
-                      ],
-                    ),
-                    const SizedBox.shrink(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (room.roomTypingText != null)
-                          ChatTypingWidget(
-                            text: room.roomTypingText!,
-                          )
-                        else if (room.lastMessage.isMeSender)
-                          Flexible(
-                            child: Row(
-                              children: [
-                                //status
-                                MessageStatusIcon(
-                                  isDeliver:
-                                      room.lastMessage.deliveredAt != null,
-                                  isSeen: room.lastMessage.seenAt != null,
-                                  isMeSender: room.lastMessage.isMeSender,
-                                  vBaseMessage: room.lastMessage,
+                          child: Row(
+                            children: [
+                              //status
+                              MessageStatusIcon(
+                                isDeliver: room.lastMessage.deliveredAt != null,
+                                isSeen: room.lastMessage.seenAt != null,
+                                isMeSender: room.lastMessage.isMeSender,
+                                vBaseMessage: room.lastMessage,
+                              ),
+                              //grey
+                              Flexible(
+                                child: RoomItemMsg(
+                                  message: room.lastMessage,
+                                  isBold: false,
                                 ),
-                                //grey
-                                Flexible(
-                                  child: RoomItemMsg(
-                                    message: room.lastMessage,
-                                    isBold: false,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        else if (room.isRoomUnread)
-                          //bold
-                          Flexible(
-                            child: RoomItemMsg(
-                              isBold: true,
-                              message: room.lastMessage,
-                            ),
-                          )
-                        else
-                          //normal gray
-                          Flexible(
-                            child: RoomItemMsg(
-                              isBold: false,
-                              message: room.lastMessage,
-                            ),
+                              )
+                            ],
                           ),
-                        Row(
-                          children: [
-                            ChatMuteWidget(isMuted: room.isMuted),
-                            ChatUnReadWidget(unReadCount: room.unReadCount),
-                          ],
                         )
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                      else if (room.isRoomUnread)
+                        //bold
+                        Flexible(
+                          child: RoomItemMsg(
+                            isBold: true,
+                            message: room.lastMessage,
+                          ),
+                        )
+                      else
+                        //normal gray
+                        Flexible(
+                          child: RoomItemMsg(
+                            isBold: false,
+                            message: room.lastMessage,
+                          ),
+                        ),
+                      Row(
+                        children: [
+                          ChatMuteWidget(isMuted: room.isMuted),
+                          ChatUnReadWidget(unReadCount: room.unReadCount),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
