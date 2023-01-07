@@ -12,6 +12,7 @@ import '../message_provider.dart';
 class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     with VSocketStatusStream {
   final VRoom _vRoom;
+  final BuildContext context;
   final bool isInTesting;
   final MessageProvider _messageProvider;
   final ScrollController scrollController;
@@ -21,6 +22,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     this._vRoom,
     this._messageProvider,
     this.isInTesting,
+    this.context,
     this.scrollController,
   ) : super(<VBaseMessage>[]) {
     initSocketStatusStream(

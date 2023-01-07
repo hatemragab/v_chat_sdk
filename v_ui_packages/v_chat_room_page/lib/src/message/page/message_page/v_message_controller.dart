@@ -49,15 +49,16 @@ class VMessageController {
 
   String get roomId => vRoom.id;
 
-  VMessageController({
-    required this.vRoom,
-    required this.onMentionPress,
-    this.isInTesting = false,
-  }) {
+  VMessageController(
+      {required this.vRoom,
+      required this.onMentionPress,
+      this.isInTesting = false,
+      required BuildContext context}) {
     messageState = MessageStateController(
       vRoom,
       _messageProvider,
       isInTesting,
+      context,
       autoScrollTagController,
     );
     appBarStateController = AppBarStateController(vRoom, _messageProvider);
@@ -69,7 +70,7 @@ class VMessageController {
       inputStateController: inputStateController,
       currentRoom: vRoom,
     );
-    itemController = VMessageItemController(_messageProvider);
+    itemController = VMessageItemController(_messageProvider, context);
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
   }

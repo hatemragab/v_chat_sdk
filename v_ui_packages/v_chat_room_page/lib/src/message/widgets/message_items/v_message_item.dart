@@ -57,11 +57,10 @@ class VMessageItem extends StatelessWidget {
     }
     return InkWell(
       onLongPress: () {
-        itemController.onMessageItemLongPress(context, message, room, onSwipe);
+        itemController.onMessageItemLongPress(message, room, onSwipe);
       },
       onTap: () {
         itemController.onMessageItemPress(
-          context,
           message,
         );
       },

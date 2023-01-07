@@ -10,8 +10,11 @@ import 'message_provider.dart';
 //todo trans
 class VMessageItemController {
   final MessageProvider _messageProvider;
+  final BuildContext context;
 
-  ModelSheetItem<VMessageItemClickRes> _deleteItem(BuildContext context) {
+  VMessageItemController(this._messageProvider, this.context);
+
+  ModelSheetItem<VMessageItemClickRes> _deleteItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.delete,
       title: "Delete",
@@ -22,14 +25,14 @@ class VMessageItemController {
     );
   }
 
-  ModelSheetItem<VMessageItemClickRes> _copyItem(BuildContext context) {
+  ModelSheetItem<VMessageItemClickRes> _copyItem() {
     return ModelSheetItem(
         id: VMessageItemClickRes.copy,
         title: "Copy",
         iconData: const Icon(Icons.copy));
   }
 
-  ModelSheetItem<VMessageItemClickRes> _infoItem(BuildContext context) {
+  ModelSheetItem<VMessageItemClickRes> _infoItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.info,
       title: "Info",
@@ -37,7 +40,7 @@ class VMessageItemController {
     );
   }
 
-  ModelSheetItem<VMessageItemClickRes> _shareItem(BuildContext context) {
+  ModelSheetItem<VMessageItemClickRes> _shareItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.share,
       title: "Share",
@@ -45,7 +48,7 @@ class VMessageItemController {
     );
   }
 
-  ModelSheetItem<VMessageItemClickRes> _forwardItem(BuildContext context) {
+  ModelSheetItem<VMessageItemClickRes> _forwardItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.forward,
       title: "Forward",
@@ -53,7 +56,7 @@ class VMessageItemController {
     );
   }
 
-  ModelSheetItem<VMessageItemClickRes> _replyItem(BuildContext context) {
+  ModelSheetItem<VMessageItemClickRes> _replyItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.reply,
       title: "Reply",
@@ -61,12 +64,9 @@ class VMessageItemController {
     );
   }
 
-  VMessageItemController(this._messageProvider);
-
-  void onMessageItemPress(BuildContext context, VBaseMessage message) async {}
+  void onMessageItemPress(VBaseMessage message) async {}
 
   void onMessageItemLongPress(
-    BuildContext context,
     VBaseMessage message,
     VRoom room,
     Function(VBaseMessage p1) onSwipe,
@@ -74,24 +74,24 @@ class VMessageItemController {
     FocusScope.of(context).unfocus();
     final items = <ModelSheetItem<VMessageItemClickRes>>[];
     if (message.messageStatus.isServerConfirm) {
-      items.add(_forwardItem(context));
-      items.add(_replyItem(context));
-      items.add(_shareItem(context));
+      items.add(_forwardItem());
+      items.add(_replyItem());
+      items.add(_shareItem());
       if (message.isMeSender) {
-        items.add(_infoItem(context));
+        items.add(_infoItem());
       }
     }
     items.add(
-      _deleteItem(context),
+      _deleteItem(),
     );
     if (message.messageType.isText) {
-      items.add(_copyItem(context));
+      items.add(_copyItem());
     }
 
     if (message.messageType.isAllDeleted) {
       items.clear();
       //solution
-      items.add(_deleteItem(context));
+      items.add(_deleteItem());
     }
 
     final res = await VAppAlert.showModalSheet(
@@ -101,22 +101,22 @@ class VMessageItemController {
     if (res == null) return;
     switch (res.id as VMessageItemClickRes) {
       case VMessageItemClickRes.forward:
-        _handleForward(context, message.roomId);
+        _handleForward(message.roomId);
         break;
       case VMessageItemClickRes.reply:
         onSwipe(message);
         break;
       case VMessageItemClickRes.share:
-        _handleShare(context, message);
+        _handleShare(message);
         break;
       case VMessageItemClickRes.info:
-        _handleInfo(context, message, room);
+        _handleInfo(message, room);
         break;
       case VMessageItemClickRes.delete:
-        _handleDelete(context, message);
+        _handleDelete(message);
         break;
       case VMessageItemClickRes.copy:
-        _handleCopy(context, message);
+        _handleCopy(message);
         break;
     }
   }
@@ -133,7 +133,7 @@ class VMessageItemController {
     await VStringUtils.lunchLink(phone);
   }
 
-  void _handleForward(BuildContext context, String roomId) async {
+  void _handleForward(String roomId) async {
     final res = await context.toPage(
       ChooseRoomsPage(
         currentRoomId: roomId,
@@ -141,9 +141,9 @@ class VMessageItemController {
     );
   }
 
-  void _handleShare(BuildContext context, VBaseMessage message) {}
+  void _handleShare(VBaseMessage message) {}
 
-  void _handleInfo(BuildContext context, VBaseMessage message, VRoom room) {
+  void _handleInfo(VBaseMessage message, VRoom room) {
     FocusScope.of(context).unfocus();
     context.toPage(MessageStatusPage(
       message: message,
@@ -151,9 +151,11 @@ class VMessageItemController {
     ));
   }
 
-  void _handleDelete(BuildContext context, VBaseMessage message) async {
+  void _handleDelete(VBaseMessage message) async {
     final l = <ModelSheetItem>[];
-    if (message.isMeSender && !message.messageType.isAllDeleted) {
+    if (message.isMeSender &&
+        !message.messageType.isAllDeleted &&
+        message.messageStatus.isServerConfirm) {
       l.add(ModelSheetItem(title: 'Delete from all', id: 1));
     }
     l.add(ModelSheetItem(title: 'Delete from me', id: 2));
@@ -183,5 +185,5 @@ class VMessageItemController {
     }
   }
 
-  void _handleCopy(BuildContext context, VBaseMessage message) {}
+  void _handleCopy(VBaseMessage message) {}
 }

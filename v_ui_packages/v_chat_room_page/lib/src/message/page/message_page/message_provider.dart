@@ -81,7 +81,9 @@ class MessageProvider {
   }
 
   Future deleteMessageFromMe(VBaseMessage msg) async {
-    await _localMessage.deleteMessageByLocalId(msg);
+    if (msg.messageStatus.isServerConfirm) {
+      await _localMessage.deleteMessageByLocalId(msg);
+    }
     return _remoteMessage.deleteMessageFromMe(msg.roomId, msg.id);
   }
 }

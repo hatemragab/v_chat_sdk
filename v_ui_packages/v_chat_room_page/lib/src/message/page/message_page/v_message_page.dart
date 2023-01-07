@@ -38,6 +38,7 @@ class _VMessagePageState extends State<VMessagePage> {
     super.initState();
     controller = VMessageController(
       vRoom: widget.vRoom,
+      context: context,
       onMentionPress: (userId) {
         final method = _config.onMentionPress;
         if (method != null) {
