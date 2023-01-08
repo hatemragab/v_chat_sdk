@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const double _iconSize = 19.0;
+
 class VMsgStatusTheme {
   final Widget pendingIcon;
   final Widget sendIcon;
@@ -14,8 +16,6 @@ class VMsgStatusTheme {
     required this.seenIcon,
     required this.refreshIcon,
   });
-
-  static const double _iconSize = 19.0;
 
   const VMsgStatusTheme.light({
     this.pendingIcon = const Icon(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:v_chat_voice_player/src/helpers/theme_builder.dart';
 import 'package:v_chat_voice_player/src/voice_message_controller.dart';
 
 import 'helpers/utils.dart';
@@ -34,8 +35,7 @@ class VVoiceMessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = circlesColor;
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     final newTHeme = theme.copyWith(
       sliderTheme: SliderThemeData(
         trackShape: CustomTrackShape(),
@@ -45,164 +45,121 @@ class VVoiceMessageView extends StatelessWidget {
     );
 
     return ColoredBox(
-      color: backgroundColor,
-      child: SafeArea(
-        child: ValueListenableBuilder(
-          valueListenable: controller,
-          builder: (context, value, child) {
-            return Row(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+      color: context.vVoiceMessageTheme.backgroundColor,
+      child: ValueListenableBuilder(
+        valueListenable: controller,
+        builder: (context, value, child) {
+          return Row(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 5,
+              ),
+              if (controller.isDownloading)
                 const SizedBox(
-                  width: 5,
+                  height: 38,
+                  width: 38,
+                  child: CupertinoActivityIndicator(),
+                )
+              else if (controller.isPlaying)
+                InkWell(
+                  onTap: controller.pausePlaying,
+                  child: context.vVoiceMessageTheme.playIcon,
+                )
+              else if (controller.isDownloadError)
+                InkWell(
+                  onTap: controller.initAndPlay,
+                  child: context.vVoiceMessageTheme.errorIcon,
+                )
+              else
+                InkWell(
+                  onTap: controller.initAndPlay,
+                  child: context.vVoiceMessageTheme.playIcon,
                 ),
-                if (controller.isDownloading)
-                  const SizedBox(
-                    height: 38,
-                    width: 38,
-                    child: CupertinoActivityIndicator(),
-                  )
-                else if (controller.isPlaying)
-                  InkWell(
-                    onTap: controller.pausePlaying,
-                    child: Container(
-                      height: 38,
-                      width: 38,
-                      decoration:
-                          BoxDecoration(color: color, shape: BoxShape.circle),
-                      child: const Icon(
-                        Icons.pause_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                else if (controller.isDownloadError)
-                  InkWell(
-                    onTap: controller.initAndPlay,
-                    child: Container(
-                      height: 38,
-                      width: 38,
-                      decoration:
-                          BoxDecoration(color: color, shape: BoxShape.circle),
-                      child: const Icon(
-                        Icons.refresh,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                else
-                  InkWell(
-                    onTap: controller.initAndPlay,
-                    child: Container(
-                      height: 38,
-                      width: 38,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.play_arrow_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        width: controller.noiseWidth,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Noises(
-                              rList: controller.randoms,
-                              activeSliderColor: activeSliderColor,
+              const SizedBox(
+                width: 5,
+              ),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                      width: controller.noiseWidth,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Noises(
+                            rList: controller.randoms,
+                            activeSliderColor: activeSliderColor,
+                          ),
+                          AnimatedBuilder(
+                            animation: CurvedAnimation(
+                              parent: controller.animController,
+                              curve: Curves.ease,
                             ),
-                            AnimatedBuilder(
-                              animation: CurvedAnimation(
-                                parent: controller.animController,
-                                curve: Curves.ease,
-                              ),
-                              builder: (BuildContext context, Widget? child) {
-                                //print("controller.animController.value is ${controller.animController.value}");
-                                return Positioned(
-                                  left: controller.animController.value,
-                                  child: Container(
-                                    width: controller.noiseWidth,
-                                    height: 6.w(),
-                                    color: notActiveSliderColor ??
-                                        backgroundColor.withOpacity(.4),
-                                  ),
-                                );
-                              },
-                            ),
-                            Opacity(
-                              opacity: .0,
-                              child: Container(
-                                width: controller.noiseWidth,
-                                color: Colors.amber.withOpacity(1),
-                                child: Theme(
-                                  data: newTHeme,
-                                  child: Slider(
-                                    value: controller.currentMillSeconds,
-                                    max: controller.maxMillSeconds,
-                                    onChangeStart:
-                                        controller.onChangeSliderStart,
-                                    onChanged: controller.onChanging,
-                                    onChangeEnd: (value) {
-                                      controller.onSeek(
-                                        Duration(milliseconds: value.toInt()),
-                                      );
-                                    },
-                                  ),
+                            builder: (BuildContext context, Widget? child) {
+                              return Positioned(
+                                left: controller.animController.value,
+                                child: Container(
+                                  width: controller.noiseWidth,
+                                  height: 6.w(),
+                                  color: notActiveSliderColor ??
+                                      backgroundColor.withOpacity(.4),
+                                ),
+                              );
+                            },
+                          ),
+                          Opacity(
+                            opacity: .0,
+                            child: Container(
+                              width: controller.noiseWidth,
+                              color: Colors.amber.withOpacity(1),
+                              child: Theme(
+                                data: newTHeme,
+                                child: Slider(
+                                  value: controller.currentMillSeconds,
+                                  max: controller.maxMillSeconds,
+                                  onChangeStart: controller.onChangeSliderStart,
+                                  onChanged: controller.onChanging,
+                                  onChangeEnd: (value) {
+                                    controller.onSeek(
+                                      Duration(milliseconds: value.toInt()),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Text(
-                        controller.remindingTime,
-                        style: counterTextStyle,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Transform.translate(
-                  offset: const Offset(0, -7),
-                  child: InkWell(
-                    onTap: controller.changeSpeed,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 3,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        controller.playSpeedStr,
-                        style: circlesTextStyle,
+                          ),
+                        ],
                       ),
                     ),
+                    Text(
+                      controller.remindingTime,
+                      style: counterTextStyle,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Transform.translate(
+                offset: const Offset(0, -7),
+                child: InkWell(
+                  onTap: controller.changeSpeed,
+                  child: context.vVoiceMessageTheme.speedBuilder(
+                    context,
+                    controller.playSpeedStr,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            );
-          },
-        ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

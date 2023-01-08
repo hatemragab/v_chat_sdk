@@ -137,11 +137,6 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     notifyListeners();
   }
 
-  Future _stopPlaying() async {
-    _player.pause();
-    _playStatus = PlayStatus.stop;
-  }
-
   Future _startPlayingForIo(String path) async {
     await _player.setAudioSource(
       AudioSource.uri(Uri.file(path)),

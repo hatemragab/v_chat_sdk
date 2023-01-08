@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
@@ -17,8 +16,7 @@ class VoiceMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return VVoiceMessageView(
       controller: voiceController(message)!,
-      backgroundColor: context.vMessageTheme.vMessageItemBuilder
-          .holderColor(message.isMeSender),
+      backgroundColor: Colors.transparent,
       activeSliderColor: Colors.white,
     );
   }
