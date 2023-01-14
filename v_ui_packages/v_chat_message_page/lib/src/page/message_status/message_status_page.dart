@@ -30,7 +30,7 @@ class _VMessageStatusPageState extends State<VMessageStatusPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Message info"),
+        title: const Text("Message info"),
       ),
     );
   }

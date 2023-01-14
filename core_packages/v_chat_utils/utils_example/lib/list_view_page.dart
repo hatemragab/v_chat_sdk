@@ -27,7 +27,7 @@ class ListViewPageState extends State<ListViewPage> {
         itemBuilder: (context, index) => ListTile(
           title: Text(l[index].toString()),
         ),
-        separatorBuilder: (context, index) => Divider(),
+        separatorBuilder: (context, index) => const Divider(),
         itemCount: l.length,
         reverse: true,
       ),

@@ -17,7 +17,7 @@ void main() async {
 
   await VChatController.I.authApi.login(
     identifier: "user1@gmail.com",
-    deviceLanguage: Locale("en"),
+    deviceLanguage: const Locale("en"),
   );
   runApp(
     OverlaySupport.global(

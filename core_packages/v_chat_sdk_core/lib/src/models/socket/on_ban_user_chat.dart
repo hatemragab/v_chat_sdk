@@ -25,11 +25,7 @@ class OnBanUserChatModel {
 
   @override
   String toString() {
-    return 'OnBanUserChat{' +
-        ' banned: $banned,' +
-        ' bannerId: $bannerId,' +
-        ' roomId: $roomId,' +
-        '}';
+    return 'OnBanUserChat{ banned: $banned, bannerId: $bannerId, roomId: $roomId,}';
   }
 
   OnBanUserChatModel copyWith({
@@ -46,9 +42,9 @@ class OnBanUserChatModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'banned': this.banned,
-      'bannerId': this.bannerId,
-      'roomId': this.roomId,
+      'banned': banned,
+      'bannerId': bannerId,
+      'roomId': roomId,
     };
   }
 

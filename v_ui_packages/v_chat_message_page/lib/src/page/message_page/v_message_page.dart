@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/src/widgets/v_search_app_bare.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../models/app_bare_state_model.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -90,7 +89,7 @@ class VideoMessageItem extends StatelessWidget {
       source: message.data.thumbImage!.fileSource,
       borderRadius: BorderRadius.circular(15),
       fit: BoxFit.cover,
-      size: Size(400, 400),
+      size: const Size(400, 400),
     );
   }
 }

@@ -30,11 +30,11 @@ class HomeView extends GetView<HomeController> {
                 ),
                 PopupMenuItem(
                   onTap: () => controller.setReplyPress(isText: true),
-                  child: Text("Reply be text msg"),
+                  child: const Text("Reply be text msg"),
                 ),
                 PopupMenuItem(
                   onTap: () => controller.setReplyPress(isText: false),
-                  child: Text("Reply be image msg"),
+                  child: const Text("Reply be image msg"),
                 ),
               ];
             },

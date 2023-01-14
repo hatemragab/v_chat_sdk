@@ -27,7 +27,7 @@ class _ChatMediaPageState extends State<ChatMediaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("chat media"),
+        title: const Text("chat media"),
       ),
     );
   }

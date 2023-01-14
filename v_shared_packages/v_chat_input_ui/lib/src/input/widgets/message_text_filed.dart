@@ -1,4 +1,3 @@
-import 'package:auto_direction/auto_direction.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_input_ui/src/models/v_input_theme.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';

@@ -40,7 +40,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   }) {
     return VMessageTheme._(
       vMessageItemBuilder: vMessageItemBuilder ?? this.vMessageItemBuilder,
-      scaffoldDecoration: scaffoldDDecoration ?? this.scaffoldDecoration,
+      scaffoldDecoration: scaffoldDDecoration ?? scaffoldDecoration,
     );
   }
 }

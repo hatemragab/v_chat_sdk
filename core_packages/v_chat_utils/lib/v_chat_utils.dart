@@ -5,6 +5,8 @@ export 'package:build_context/build_context.dart';
 export 'package:collection/collection.dart';
 export 'package:event_bus_plus/event_bus_plus.dart';
 export 'package:intl/intl.dart';
+export 'package:mime/mime.dart' hide extensionFromMime;
+export 'package:mime_type/mime_type.dart';
 export 'package:overlay_support/overlay_support.dart';
 export 'package:phosphor_flutter/phosphor_flutter.dart';
 export 'package:textless/textless.dart';

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
-import 'package:mime_type/mime_type.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';

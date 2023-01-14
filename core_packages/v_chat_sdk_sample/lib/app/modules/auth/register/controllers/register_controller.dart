@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:animated_login/src/models/login_data.dart';
 import 'package:animated_login/src/models/signup_data.dart';

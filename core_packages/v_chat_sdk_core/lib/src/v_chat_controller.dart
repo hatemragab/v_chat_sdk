@@ -11,7 +11,6 @@ import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../v_chat_sdk_core.dart';
-import 'models/controller/message_page_config.dart';
 
 /// VChatController instance.
 ///

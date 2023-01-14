@@ -1,8 +1,6 @@
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_sdk_core.dart';
-import '../models/socket/on_deliver_room_messages_model.dart';
-import '../models/socket/on_enter_room_model.dart';
 
 abstract class VMessageEvents extends VAppEvent {
   final String roomId;

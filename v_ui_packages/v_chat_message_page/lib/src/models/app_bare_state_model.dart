@@ -12,7 +12,6 @@ class MessageAppBarStateModel {
   bool isSearching;
 
   MessageAppBarStateModel._({
-    this.lastSeenAt,
     required this.roomTitle,
     required this.roomId,
     required this.peerIdentifier,

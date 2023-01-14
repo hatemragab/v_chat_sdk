@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';
-import '../base_message/v_base_message.dart';
-import 'custom_msg_att.dart';
 
 class VCustomMessage extends VBaseMessage {
   final VCustomMsgAtt data;

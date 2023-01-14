@@ -7,9 +7,6 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_sdk_core.dart';
-import '../../models/socket/on_ban_user_chat.dart';
-import '../../models/socket/on_deliver_room_messages_model.dart';
-import '../../models/socket/on_enter_room_model.dart';
 
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');

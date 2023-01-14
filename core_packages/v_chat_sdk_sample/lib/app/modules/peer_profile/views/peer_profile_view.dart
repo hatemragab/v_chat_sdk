@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/widgets/async_widgets_builder.dart';

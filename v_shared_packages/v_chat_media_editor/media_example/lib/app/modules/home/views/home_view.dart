@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/home_controller.dart';

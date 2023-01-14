@@ -1,5 +1,3 @@
-import 'package:v_chat_sdk_core/src/models/v_message/call_message/call_message.dart';
-import 'package:v_chat_sdk_core/src/models/v_message/custom_message/custom_message.dart';
 
 import '../../../../v_chat_sdk_core.dart';
 import '../../../local_db/tables/message_table.dart';

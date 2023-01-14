@@ -1,5 +1,4 @@
 import '../../../../v_chat_sdk_core.dart';
-import '../../../utils/api_constants.dart';
 
 class VMsgInfoAtt {
   final MessageInfoType action;

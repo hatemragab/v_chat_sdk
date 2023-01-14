@@ -15,7 +15,7 @@ void main() async {
 
   await VChatController.I.authApi.login(
     identifier: "user1@gmail.com",
-    deviceLanguage: Locale("en"),
+    deviceLanguage: const Locale("en"),
   );
 
   runApp(
@@ -23,7 +23,7 @@ void main() async {
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      locale: Locale("en"),
+      locale: const Locale("en"),
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
     ),

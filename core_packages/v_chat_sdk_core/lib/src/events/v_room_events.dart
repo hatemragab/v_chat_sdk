@@ -1,7 +1,6 @@
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_sdk_core.dart';
-import '../models/socket/on_ban_user_chat.dart';
 
 abstract class VRoomEvents extends VAppEvent {
   final String roomId;

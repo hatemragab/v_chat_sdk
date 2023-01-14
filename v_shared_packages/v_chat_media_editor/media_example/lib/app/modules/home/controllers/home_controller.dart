@@ -10,7 +10,6 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class HomeController extends GetxController {
   final files = <VPlatformFileSource>[].obs;
   final proccessedData = <VBaseMediaRes>[].obs;
-  final _x = VMediaEditorHelpers();
 
   void onGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -69,7 +68,7 @@ class ReplyItemWidget extends StatelessWidget {
       return VPlatformCacheImageWidget(
         source: msg.data.fileSource,
         borderRadius: BorderRadius.circular(9),
-        size: Size(40, 40),
+        size: const Size(40, 40),
       );
     }
     return const SizedBox.shrink();
