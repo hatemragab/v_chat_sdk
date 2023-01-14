@@ -30,7 +30,8 @@ class HomeController extends GetxController {
         .listen(
       (event) {
         final room = event.room as VRoom;
-        VChatController.I.vNavigator.toMessagePage(Get.context!, room);
+        VChatController.I.vNavigator.messageNavigator
+            .toMessagePage(Get.context!, room);
       },
     );
   }

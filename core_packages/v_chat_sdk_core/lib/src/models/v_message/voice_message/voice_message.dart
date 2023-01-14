@@ -22,6 +22,7 @@ class VVoiceMessage extends VBaseMessage {
     required super.messageType,
     required super.localId,
     required super.createdAt,
+    required super.isEncrypted,
     required super.updatedAt,
     required super.replyTo,
     required super.seenAt,
@@ -77,6 +78,7 @@ class VVoiceMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
+          isEncrypted: false,
           content: VAppConstants.thisContentIsVoice,
           messageType: MessageType.voice,
         );

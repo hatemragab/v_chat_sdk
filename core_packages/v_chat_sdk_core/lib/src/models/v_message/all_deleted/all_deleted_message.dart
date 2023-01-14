@@ -14,6 +14,7 @@ class VAllDeletedMessage extends VBaseMessage {
     required super.localId,
     required super.createdAt,
     required super.updatedAt,
+    required super.isEncrypted,
     required super.replyTo,
     required super.seenAt,
     required super.deliveredAt,

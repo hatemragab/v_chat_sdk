@@ -22,7 +22,7 @@ dependencies:
   mime_type: ^1.0.0
   uuid: ^3.0.7
   file_sizes: ^1.0.6
-
+  crypto: ^3.0.2
   socket_io_client: ^2.0.0
 
   latlong2: ^0.8.1

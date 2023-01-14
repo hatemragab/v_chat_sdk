@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/src/room/shared/shared.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../../message/widgets/message_items/shared/message_status_icon.dart';
 import '../room_item_builder/chat_last_msg_time.dart';
 import '../room_item_builder/chat_mute_widget.dart';
 import '../room_item_builder/chat_title.dart';

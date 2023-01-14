@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/src/room/shared/shared.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
-import '../../../shared/widgets/text_parser_widget.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RoomItemMsg extends StatelessWidget {
   final bool isBold;

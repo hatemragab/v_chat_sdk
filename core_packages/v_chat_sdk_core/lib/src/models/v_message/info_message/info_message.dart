@@ -12,6 +12,7 @@ class VInfoMessage extends VBaseMessage {
     required super.senderId,
     required super.senderName,
     required super.emitStatus,
+    required super.isEncrypted,
     required super.senderImageThumb,
     required super.platform,
     required super.roomId,

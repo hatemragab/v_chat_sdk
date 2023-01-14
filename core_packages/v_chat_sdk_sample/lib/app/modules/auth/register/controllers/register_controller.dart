@@ -42,7 +42,9 @@ class RegisterController extends GetxController {
   Future<String?> onLogin(LoginData loginData) async {
     try {
       final user = await AuthRepo.loginWithEmailAndPassword(
-          loginData.email, loginData.password);
+        loginData.email,
+        loginData.password,
+      );
       final userFromFire = await repository.getId(user.uid);
       await VAppPref.setMap(VStorageKeys.myProfile, userFromFire.toMap());
       await VChatController.I.authApi.login(

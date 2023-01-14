@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_sdk_core.dart';
 
 class ControllerHelper {
-  late final VChatConfig _config;
+  final VChatConfig _config = VChatController.I.vChatConfig;
   final _log = Logger('ControllerHelper');
   Timer? _timer;
 
@@ -20,11 +22,18 @@ class ControllerHelper {
   Future<ControllerHelper> init(
     final VChatConfig config,
   ) async {
-    _config = config;
     _initLogger(config.enableLog);
     await _initPushService(config.pushProvider);
     _initSocketTimer();
     return ControllerHelper._();
+  }
+
+  String _getHashedPassword(String identifier) {
+    return sha512
+        .convert(
+          utf8.encode("${_config.encryptHashKey}_$identifier"),
+        )
+        .toString();
   }
 
   void _initLogger(bool enableLog) {
@@ -77,7 +86,7 @@ class ControllerHelper {
   }
 
   Future<String> getPasswordFromIdentifier(String identifier) async {
-    return identifier;
+    return _getHashedPassword(identifier);
   }
 
   Future<String?> getFcmToken() async {

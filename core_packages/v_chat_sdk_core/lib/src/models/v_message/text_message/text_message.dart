@@ -9,6 +9,7 @@ class VTextMessage extends VBaseMessage {
     required super.senderName,
     required super.senderImageThumb,
     required super.emitStatus,
+    required super.isEncrypted,
     required super.platform,
     required super.roomId,
     required super.content,
@@ -27,6 +28,7 @@ class VTextMessage extends VBaseMessage {
 
   VTextMessage.buildMessage({
     required super.content,
+    required super.isEncrypted,
     required super.roomId,
     super.forwardId,
     super.broadcastId,

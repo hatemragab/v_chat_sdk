@@ -14,6 +14,7 @@ class VImageMessage extends VBaseMessage {
     required super.id,
     required super.senderId,
     required super.senderName,
+    required super.isEncrypted,
     required super.emitStatus,
     required super.senderImageThumb,
     required super.platform,
@@ -58,6 +59,7 @@ class VImageMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
+          isEncrypted: false,
           content: VAppConstants.thisContentIsImage,
           messageType: MessageType.image,
         );

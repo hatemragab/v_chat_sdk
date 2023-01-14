@@ -35,6 +35,7 @@ dependencies:
     sdk: flutter
   v_chat_sdk_core: ^0.0.2
   v_chat_utils: ^0.0.3
+  v_chat_message_page: ^0.0.1
   v_chat_firebase_fcm: ^0.0.1
   v_chat_room_page: ^0.0.1
   animated_login: ^1.5.5

@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.13"
+  auto_direction:
+    dependency: transitive
+    description:
+      name: auto_direction
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6"
   boolean_selector:
     dependency: transitive
     description:
@@ -286,6 +293,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_audio_waveforms:
+    dependency: transitive
+    description:
+      name: flutter_audio_waveforms
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1+7"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -414,7 +428,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.0"
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -597,6 +611,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.0"
+  phosphor_flutter:
+    dependency: transitive
+    description:
+      name: phosphor_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.0"
   photo_manager:
     dependency: transitive
     description:
@@ -854,6 +875,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.6.6"
+  timeago:
+    dependency: transitive
+    description:
+      name: timeago
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.0"
   typed_data:
     dependency: transitive
     description:

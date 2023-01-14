@@ -1,10 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart' as adaptive_dialog;
-import 'package:build_context/build_context.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
-import 'package:textless/textless.dart';
-import 'package:v_chat_utils/src/utils/extension.dart';
 
 import '../../../v_chat_utils.dart';
 

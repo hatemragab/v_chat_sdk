@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 
-import '../../../shared/theme/theme.dart';
 import '../../widgets/room_item_builder/chat_avatar_image.dart';
 
 typedef VChatImageBuilderWidget = Widget Function({

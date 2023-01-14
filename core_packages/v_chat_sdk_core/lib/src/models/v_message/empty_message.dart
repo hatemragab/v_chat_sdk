@@ -7,6 +7,7 @@ class VEmptyMessage extends VBaseMessage {
           senderId: "EmptyMessage",
           senderName: "EmptyMessage",
           senderImageThumb: "Empty.url",
+          isEncrypted: false,
           platform: "EmptyMessage",
           roomId: "EmptyMessage",
           content: "",

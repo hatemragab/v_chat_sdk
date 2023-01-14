@@ -13,6 +13,7 @@ class VCustomMessage extends VBaseMessage {
     required super.senderId,
     required super.senderName,
     required super.emitStatus,
+    required super.isEncrypted,
     required super.senderImageThumb,
     required super.platform,
     required super.roomId,
@@ -32,6 +33,7 @@ class VCustomMessage extends VBaseMessage {
   });
   VCustomMessage.buildMessage({
     required super.roomId,
+    required super.isEncrypted,
     required this.data,
     super.forwardId,
     required super.content,

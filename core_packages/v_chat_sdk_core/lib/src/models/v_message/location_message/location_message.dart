@@ -12,6 +12,7 @@ class VLocationMessage extends VBaseMessage {
 
   VLocationMessage({
     required super.id,
+    required super.isEncrypted,
     required super.senderId,
     required super.emitStatus,
     required super.senderName,
@@ -63,6 +64,7 @@ class VLocationMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
+          isEncrypted: false,
           messageType: MessageType.location,
           content: VAppConstants.thisContentIsLocation,
         );

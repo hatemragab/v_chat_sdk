@@ -7,6 +7,7 @@ abstract class VAppConstants {
   static String clintVersion = "2.0.0";
   static const appName = "VChatSdkV2";
   static const dbName = "VChatSdkV2.db";
+  static const apiVersion = "v2";
   static const dbVersion = 1;
   static const socketInterval = 10; //10sec
   static String get baseServerIp {
@@ -26,7 +27,7 @@ abstract class VAppConstants {
   // }
 
   static Uri get baseUri {
-    return Uri.parse("$baseServerIp/api/v2");
+    return Uri.parse("$baseServerIp/api/$apiVersion");
   }
 
   // static String get getMediaBaseUrl {

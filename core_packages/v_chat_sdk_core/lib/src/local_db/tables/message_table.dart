@@ -18,6 +18,7 @@ abstract class MessageTable {
   static const columnDeliveredAt = '${tableName}delivered_at';
   static const columnForwardId = '${tableName}forward_l_id';
   static const columnIsStar = '${tableName}is_star';
+  static const columnIsEncrypted = '${tableName}is_encrypted';
   static const columnCreatedAt = '${tableName}created_at';
   static const columnUpdatedAt = '${tableName}updated_at';
   static const columnPlatform = '${tableName}platform';
@@ -54,6 +55,7 @@ abstract class MessageTable {
             $columnDeliveredAt   TEXT,
             $columnForwardId   TEXT,
             $columnIsStar   INTEGER,
+            $columnIsEncrypted   INTEGER,
             $columnCreatedAt   TEXT,
             $columnUpdatedAt   TEXT,
             $columnMessageEmitStatus   TEXT,

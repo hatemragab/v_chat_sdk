@@ -106,7 +106,7 @@ class VRoomController with VSocketStatusStream {
   }
 
   void onRoomItemPress(VRoom room, BuildContext context) {
-    VChatController.I.vNavigator.toMessagePage(context, room);
+    VChatController.I.vNavigator.messageNavigator.toMessagePage(context, room);
   }
 
   Future<bool> onLoadMore() {

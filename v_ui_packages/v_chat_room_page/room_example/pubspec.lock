@@ -316,6 +316,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.4"
+  file_saver:
+    dependency: transitive
+    description:
+      name: file_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   file_sizes:
     dependency: transitive
     description:
@@ -335,6 +342,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  flutter_audio_waveforms:
+    dependency: transitive
+    description:
+      name: flutter_audio_waveforms
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1+7"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -560,6 +574,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.13"
+  image_gallery_saver:
+    dependency: transitive
+    description:
+      name: image_gallery_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.1"
   intersperse:
     dependency: transitive
     description:
@@ -616,6 +637,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  loadmore:
+    dependency: transitive
+    description:
+      name: loadmore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   logger:
     dependency: transitive
     description:
@@ -637,6 +665,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.5"
+  map_launcher:
+    dependency: transitive
+    description:
+      name: map_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:
@@ -819,6 +854,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.2"
+  photo_view:
+    dependency: transitive
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0"
   place_picker:
     dependency: transitive
     description:
@@ -973,6 +1015,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.7"
+  scroll_to_index:
+    dependency: transitive
+    description:
+      name: scroll_to_index
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+  share_plus:
+    dependency: transitive
+    description:
+      name: share_plus
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.3.0"
+  share_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: share_plus_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.2.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -1111,6 +1174,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  swipe_to:
+    dependency: transitive
+    description:
+      name: swipe_to
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   synchronized:
     dependency: transitive
     description:
@@ -1237,6 +1307,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  v_chat_message_page:
+    dependency: "direct overridden"
+    description:
+      path: "../../v_chat_message_page"
+      relative: true
+    source: path
+    version: "0.0.1"
   v_chat_room_page:
     dependency: "direct main"
     description:

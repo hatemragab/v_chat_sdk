@@ -15,6 +15,7 @@ class VVideoMessage extends VBaseMessage {
     required super.senderId,
     required super.emitStatus,
     required super.senderName,
+    required super.isEncrypted,
     required super.senderImageThumb,
     required super.platform,
     required super.roomId,
@@ -57,6 +58,7 @@ class VVideoMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
+          isEncrypted: false,
           messageType: MessageType.video,
           content: VAppConstants.thisContentIsVideo,
         );

@@ -46,7 +46,7 @@ class PeerProfileController extends GetxController {
         return VChatController.I.roomApi.getPeerRoom(peerIdentifier: uuId);
       },
       onSuccess: (response) {
-        VChatController.I.vNavigator.toMessagePage(
+        VChatController.I.vNavigator.messageNavigator.toMessagePage(
           Get.context!,
           response,
         );

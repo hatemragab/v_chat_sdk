@@ -1,0 +1,1 @@
+- v chat message page ui render

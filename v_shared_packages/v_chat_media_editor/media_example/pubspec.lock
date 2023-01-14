@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
+  auto_direction:
+    dependency: transitive
+    description:
+      name: auto_direction
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6"
   boolean_selector:
     dependency: transitive
     description:
@@ -260,6 +267,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.4"
+  file_saver:
+    dependency: transitive
+    description:
+      name: file_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   file_sizes:
     dependency: transitive
     description:
@@ -401,6 +415,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.13"
+  image_gallery_saver:
+    dependency: transitive
+    description:
+      name: image_gallery_saver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.1"
   intersperse:
     dependency: transitive
     description:
@@ -414,7 +435,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.0"
+    version: "0.17.0"
   js:
     dependency: transitive
     description:
@@ -625,6 +646,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.2"
+  photo_view:
+    dependency: transitive
+    description:
+      name: photo_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0"
   platform:
     dependency: transitive
     description:
@@ -861,6 +889,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.6.6"
+  timeago:
+    dependency: transitive
+    description:
+      name: timeago
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.0"
   typed_data:
     dependency: transitive
     description:

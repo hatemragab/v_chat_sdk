@@ -14,23 +14,13 @@ dependencies:
     sdk: flutter
   v_chat_utils: ^0.0.6
   v_chat_sdk_core: ^0.0.3
-  phosphor_flutter: ^1.4.0
-  textless: ^6.6.6
-  helpers: ^1.1.4
-  uuid: ^3.0.5
   cached_network_image: ^3.2.3
-  build_context: ^3.0.0
   flutter_advanced_avatar: ^1.1.0
-  timeago: ^3.3.0
-  collection: ^1.16.0
   v_chat_voice_player: ^0.0.4
   v_chat_input_ui: ^0.0.5
+  v_chat_message_page: ^0.0.1
   v_chat_media_editor: ^0.0.4
-  auto_direction: ^0.0.6
   map_launcher: ^2.4.0
-  intl: ^0.17.0
-  swipe_to: ^1.0.2
-  scroll_to_index: ^3.0.1
   flutter_cache_manager: ^3.3.0
   share_plus: ^6.0.1
   loadmore: ^2.0.1

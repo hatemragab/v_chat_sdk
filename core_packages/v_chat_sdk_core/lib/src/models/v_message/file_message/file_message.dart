@@ -21,6 +21,7 @@ class VFileMessage extends VBaseMessage {
     required super.emitStatus,
     required super.messageType,
     required super.localId,
+    required super.isEncrypted,
     required super.createdAt,
     required super.updatedAt,
     required super.replyTo,
@@ -74,6 +75,7 @@ class VFileMessage extends VBaseMessage {
 
   VFileMessage.buildMessage({
     required super.roomId,
+    required super.isEncrypted,
     required this.data,
     super.forwardId,
     super.broadcastId,

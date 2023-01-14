@@ -49,7 +49,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   }) async {
     final maps = await _database.query(
       _table,
-      where: "$_roomId =? AND ${MessageTable.columnContent} LIKE '$text%'",
+      where: "$_roomId =? AND ${MessageTable.columnContent} LIKE '%$text%'",
       whereArgs: [roomId],
       orderBy: "${MessageTable.columnCreatedAt} DESC",
       limit: limit,

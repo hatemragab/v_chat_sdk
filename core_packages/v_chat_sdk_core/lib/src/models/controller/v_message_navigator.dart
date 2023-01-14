@@ -12,24 +12,41 @@ typedef VMediaViewerFunction = Function(
   VPlatformFileSource source,
 );
 
-class VNavigator {
+class VRoomNavigator {
+  final Future<List<String>?> Function(
+    BuildContext context,
+    String? currentRoomId,
+  ) toForwardPage;
+
+  VRoomNavigator({
+    required this.toForwardPage,
+  });
+}
+
+class VMessageNavigator {
   final VInfoMessageRouteFunction toMessageInfo;
   final VMediaViewerFunction toImageViewer;
   final Function(
     BuildContext context,
     VRoom vRoom,
   ) toMessagePage;
-  final Future<List<String>?> Function(
-    BuildContext context,
-    String? currentRoomId,
-  ) toForwardPage;
+
   final VMediaViewerFunction toVideoPlayer;
 
-  const VNavigator({
+  const VMessageNavigator({
     required this.toMessagePage,
     required this.toMessageInfo,
     required this.toImageViewer,
     required this.toVideoPlayer,
-    required this.toForwardPage,
+  });
+}
+
+class VNavigator {
+  final VRoomNavigator roomNavigator;
+  final VMessageNavigator messageNavigator;
+
+  const VNavigator({
+    required this.roomNavigator,
+    required this.messageNavigator,
   });
 }

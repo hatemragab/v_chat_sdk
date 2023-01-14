@@ -32,6 +32,7 @@ abstract class VBaseMessage {
     required this.deletedAt,
     required this.parentBroadcastId,
     required this.isStared,
+    required this.isEncrypted,
   });
 
   ///id will be changed if message get from remote
@@ -74,6 +75,7 @@ abstract class VBaseMessage {
   ///when the message was send
   String createdAt;
   final String updatedAt;
+  final bool isEncrypted;
 
   /// is user intent to delete this message
   bool isDeleted = false;
@@ -85,6 +87,7 @@ abstract class VBaseMessage {
         senderName = map['sName'] as String,
         senderImageThumb = map['sImg'] as String,
         platform = map['plm'] as String,
+        isEncrypted = map['isEncrypted'] as bool,
         forwardId = map['forId'] as String?,
         roomId = map['rId'] as String,
         isStared = map['isStared'] == null ? false : map['isStared'] as bool,
@@ -112,6 +115,7 @@ abstract class VBaseMessage {
         senderImageThumb = map[MessageTable.columnSenderImageThumb] as String,
         platform = map[MessageTable.columnPlatform] as String,
         roomId = map[MessageTable.columnRoomId] as String,
+        isEncrypted = (map[MessageTable.columnIsEncrypted] as int) == 1,
         isStared = (map[MessageTable.columnIsStar] as int) == 1,
         content = map[MessageTable.columnContent] as String,
         seenAt = map[MessageTable.columnSeenAt] as String?,
@@ -143,6 +147,7 @@ abstract class VBaseMessage {
       MessageTable.columnPlatform: platform,
       MessageTable.columnRoomId: roomId,
       MessageTable.columnIsStar: isStared ? 1 : 0,
+      MessageTable.columnIsEncrypted: isEncrypted ? 1 : 0,
       MessageTable.columnContent: content,
       MessageTable.columnMessageType: messageType.name,
       MessageTable.columnReplyTo:
@@ -164,11 +169,9 @@ abstract class VBaseMessage {
     return [
       PartValue('content', content),
       PartValue('localId', localId),
+      PartValue('isEncrypted', isEncrypted),
       PartValue('forwardLocalId', forwardId),
-      PartValue(
-        'messageType',
-        messageType.name,
-      ),
+      PartValue('messageType', messageType.name),
       PartValue(
         'replyToLocalId',
         replyTo == null || isForward ? null : replyTo!.localId,
@@ -221,6 +224,7 @@ abstract class VBaseMessage {
     required this.content,
     required this.roomId,
     required this.messageType,
+    required this.isEncrypted,
     this.forwardId,
     String? broadcastId,
     this.replyTo,
@@ -250,6 +254,7 @@ abstract class VBaseMessage {
   })  : id = ObjectId().hexString,
         localId = const Uuid().v4(),
         roomId = "roomId $content",
+        isEncrypted = false,
         platform = VPlatforms.currentPlatform,
         createdAt = DateTime.now().toLocal().toIso8601String(),
         updatedAt = DateTime.now().toLocal().toIso8601String(),
@@ -274,6 +279,7 @@ abstract class VBaseMessage {
       "rId": roomId,
       "c": content,
       "isStared": isStared,
+      "isEncrypted": isEncrypted,
       "sAt": seenAt,
       "rTo": replyTo == null ? null : (replyTo!).toRemoteMap(),
       "lId": localId,
