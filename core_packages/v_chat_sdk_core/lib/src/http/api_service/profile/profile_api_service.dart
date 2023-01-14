@@ -1,8 +1,7 @@
+import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../v_chat_sdk_core.dart';
-import '../interceptors.dart';
 
 class ProfileApiService {
   static late final ProfileApi _profileApi;
@@ -45,7 +44,7 @@ class ProfileApiService {
   ) async {
     final res = await _profileApi.getLastSeenAt(peerId);
     throwIfNotSuccess(res);
-    return DateTime.parse(res.body['data']);
+    return DateTime.parse((res.body as Map<String, dynamic>)['data'] as String);
   }
 
   static ProfileApiService init({

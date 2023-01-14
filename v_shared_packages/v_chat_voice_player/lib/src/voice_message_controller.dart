@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart' as cache;
-import 'package:just_audio/just_audio.dart' as jsAudio;
+import 'package:just_audio/just_audio.dart' as js_audio;
 import 'package:just_audio/just_audio.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -274,7 +274,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
 
   Future _setMaxDurationForIo(String path) async {
     try {
-      final maxDuration = await jsAudio.AudioPlayer().setFilePath(path);
+      final maxDuration = await js_audio.AudioPlayer().setFilePath(path);
       if (maxDuration != null) {
         this.maxDuration = maxDuration;
         animController.duration = maxDuration;
@@ -289,7 +289,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   Future _setMaxDurationForJs() async {
     try {
       if (isUrl) {
-        final maxDuration = await jsAudio.AudioPlayer()
+        final maxDuration = await js_audio.AudioPlayer()
             .setAudioSource(AudioSource.uri(Uri.parse(audioSrc.url!)));
         if (maxDuration != null) {
           this.maxDuration = maxDuration;
@@ -297,7 +297,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
         }
       }
       if (isBytes) {
-        final maxDuration = await jsAudio.AudioPlayer().setAudioSource(
+        final maxDuration = await js_audio.AudioPlayer().setAudioSource(
           BytesCustomSource(audioSrc.bytes!),
         );
         if (maxDuration != null) {

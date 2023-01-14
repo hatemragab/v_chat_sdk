@@ -13,7 +13,16 @@ class DeviceInfoHelper {
 
   Future<Map<String, dynamic>> getDeviceMapInfo() async {
     final deviceInfo = await deviceInfoPlugin.deviceInfo;
-    return deviceInfo.data;
+    final data = deviceInfo.data;
+    final newMap = <String, dynamic>{};
+    data.forEach((key, value) {
+      if (value is Enum) {
+        newMap[key] = value.name;
+      } else {
+        newMap[key] = value.toString();
+      }
+    });
+    return newMap;
   }
 
   Future<bool> isRealDevice() async {

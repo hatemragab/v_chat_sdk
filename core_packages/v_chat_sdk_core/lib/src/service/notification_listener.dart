@@ -1,6 +1,5 @@
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../v_chat_sdk_core.dart';
 
 class VNotificationListener {
   final VNativeApi nativeApi;
@@ -50,7 +49,7 @@ class VNotificationListener {
     return VChatController.I.nativeApi.local.room.getRoomById(roomId);
   }
 
-  void getOpenAppNotification() async {
+  Future<void> getOpenAppNotification() async {
     if (vChatConfig.isPushEnable) {
       final msgMap = await vChatConfig.pushProvider!.getOpenAppNotification();
       if (msgMap != null) {

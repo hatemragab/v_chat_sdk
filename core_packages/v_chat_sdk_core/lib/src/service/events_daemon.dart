@@ -20,7 +20,7 @@ class EventsDaemon {
     });
   }
 
-  void _onNewInsert(VBaseMessage message) async {
+  Future<void> _onNewInsert(VBaseMessage message) async {
     if (!message.isMeSender) {
       ///deliver this message
       VChatController.I.nativeApi.remote.socketIo.emitDeliverRoomMessages(

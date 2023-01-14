@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:v_chat_message_page/src/core/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -71,8 +72,10 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
       value.insert(0, messageModel);
       notifyListeners();
     } else {
-      print(
-          "-------------you are try to insert message which already exist!-----------");
+      if (kDebugMode) {
+        print(
+            "-------------you are try to insert message which already exist!-----------");
+      }
     }
   }
 
@@ -83,8 +86,10 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
       value[msgIndex] = messageModel;
       messageStateStream.sink.add(messageModel);
     } else {
-      print(
-          "----------------you are try to update message which Not exist!--------------");
+      if (kDebugMode) {
+        print(
+            "----------------you are try to update message which Not exist!--------------");
+      }
     }
   }
 

@@ -1,7 +1,6 @@
-import 'package:collection/collection.dart';
-
-import '../../../../../v_chat_sdk_core.dart';
-import '../../abstraction/base_local_room_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_room_repo.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MemoryRoomImp extends BaseLocalRoomRepo {
   final _rooms = <VRoom>[];
@@ -107,7 +106,6 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
     );
   }
 
-  @override
   Future<int> setAllOffline() async {
     for (final element in _rooms) {
       element.isOnline = false;

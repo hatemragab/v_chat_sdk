@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'default_localizations.dart';
+import 'package:v_chat_sdk_core/src/i10n/default_localizations.dart';
 
 const kDefaultLocale = Locale('en');
 
@@ -33,7 +33,7 @@ class VChatLocalizations<T extends VChatLocalizationLabels> {
 
   static VChatLocalizationDelegate
       withDefaultOverrides<T extends VChatLocalizationLabels>(
-          T overrides, Locale locale) {
+          T overrides, Locale locale,) {
     return VChatLocalizationDelegate<T>(overrides, locale);
   }
 

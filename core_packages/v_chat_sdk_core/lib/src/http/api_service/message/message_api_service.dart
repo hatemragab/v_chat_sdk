@@ -3,11 +3,10 @@ import 'dart:io';
 
 import 'package:chopper/chopper.dart';
 import 'package:logging/logging.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/message/message_api.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../v_chat_sdk_core.dart';
-import '../interceptors.dart';
-import 'message_api.dart';
 
 class MessageApiService {
   static late final MessageApi _messageApi;
@@ -29,7 +28,7 @@ class MessageApiService {
     return docs
         .map((e) => MessageFactory.createBaseMessage(
               e as Map<String, dynamic>,
-            ))
+            ),)
         .toList();
   }
 

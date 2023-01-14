@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:chopper/chopper.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -11,7 +9,6 @@ class VChatRegisterDto {
   String? pushKey;
   final String platform;
   final String password;
-  final Map<String, dynamic> deviceInfo;
   final VPlatformFileSource? image;
 
 //<editor-fold desc="Data Methods">
@@ -24,7 +21,6 @@ class VChatRegisterDto {
     this.pushKey,
     required this.platform,
     required this.password,
-    required this.deviceInfo,
     this.image,
   });
 
@@ -34,7 +30,6 @@ class VChatRegisterDto {
       PartValue('fullName', fullName),
       PartValue('deviceId', deviceId),
       PartValue('password', password),
-      PartValue('deviceInfo', jsonEncode(deviceInfo)),
       PartValue('language', language),
       PartValue('pushKey', pushKey),
       PartValue('platform', platform),

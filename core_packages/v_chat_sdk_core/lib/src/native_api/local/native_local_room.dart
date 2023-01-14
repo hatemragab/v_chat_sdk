@@ -1,11 +1,10 @@
 import 'package:sqflite/sqlite_api.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_room_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/room/memory_room_imp.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/room/sql_room_imp.dart';
+import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../../local_db/core/abstraction/base_local_room_repo.dart';
-import '../../local_db/core/imp/room/memory_room_imp.dart';
-import '../../local_db/core/imp/room/sql_room_imp.dart';
-import 'native_local_message.dart';
 
 class NativeLocalRoom {
   late final BaseLocalRoomRepo _roomRepo;
@@ -38,9 +37,9 @@ class NativeLocalRoom {
   }
 
   Future<int> cacheRooms(
-    List<VRoom> rooms,
-    bool deleteOnEmpty,
-  ) async {
+    List<VRoom> rooms, {
+    required bool deleteOnEmpty,
+  }) async {
     if (rooms.isEmpty && deleteOnEmpty) {
       await _roomRepo.reCreate();
       await _localMessage.reCreateMessageTable();
@@ -67,7 +66,7 @@ class NativeLocalRoom {
   }
 
   void updateRoomOnline(List<VOnlineOfflineModel> events) {
-    for (var event in events) {
+    for (final event in events) {
       _emitter.fire(event);
       // _emitter.fire(VSocketUpdateOnlineList(
       //   model: event,

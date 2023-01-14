@@ -1,4 +1,4 @@
-import '../../../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 abstract class BaseLocalRoomRepo {
   Future<int> insert(VInsertRoomEvent event);

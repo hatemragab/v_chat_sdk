@@ -1,9 +1,8 @@
+import 'package:v_chat_sdk_core/src/http/api_service/auth/auth_api.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
+import 'package:v_chat_sdk_core/src/utils/http_helper.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../v_chat_sdk_core.dart';
-import '../../../utils/http_helper.dart';
-import '../interceptors.dart';
-import 'auth_api.dart';
 
 class AuthApiService {
   AuthApiService._();
@@ -15,12 +14,12 @@ class AuthApiService {
     final response = await _authApi.login(body);
     throwIfNotSuccess(response);
     final myUser = VIdentifierUser.fromMap(
-      response.body['data']['user'] as Map<String, dynamic>,
+      extractDataFromResponse(response)['user'] as Map<String, dynamic>,
     );
     await Future.wait([
       VAppPref.setHashedString(
         VStorageKeys.accessToken,
-        response.body['data']['accessToken'].toString(),
+        extractDataFromResponse(response)['accessToken'].toString(),
       ),
       VAppPref.setString(
         VStorageKeys.appLanguage,
@@ -43,12 +42,12 @@ class AuthApiService {
     );
     throwIfNotSuccess(response);
     final myUser = VIdentifierUser.fromMap(
-      response.body['data']['user'] as Map<String, dynamic>,
+      extractDataFromResponse(response)['user'] as Map<String, dynamic>,
     );
     await Future.wait([
       VAppPref.setHashedString(
         VStorageKeys.accessToken,
-        response.body['data']['accessToken'].toString(),
+        extractDataFromResponse(response)['accessToken'].toString(),
       ),
       VAppPref.setString(
         VStorageKeys.appLanguage,

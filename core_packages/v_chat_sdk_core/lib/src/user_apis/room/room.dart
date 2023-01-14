@@ -1,8 +1,7 @@
 import 'package:logging/logging.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../../http/api_service/channel/channel_api_service.dart';
-import '../../service/controller_helper.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
+import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class RoomApi {
   final VNativeApi _vNativeApi;

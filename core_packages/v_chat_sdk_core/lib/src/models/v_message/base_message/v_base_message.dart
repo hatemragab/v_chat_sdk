@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:objectid/objectid.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../v_chat_sdk_core.dart';
-import '../../../local_db/tables/message_table.dart';
 
 abstract class VBaseMessage {
   VBaseMessage({
@@ -86,7 +85,7 @@ abstract class VBaseMessage {
         isEncrypted = map['isEncrypted'] as bool,
         forwardId = map['forId'] as String?,
         roomId = map['rId'] as String,
-        isStared = map['isStared'] == null ? false : map['isStared'] as bool,
+        isStared = (map['isStared'] as bool?) ?? false,
         content = map['c'] as String,
         messageType = MessageType.values.byName(map['mT'] as String),
         replyTo = map['rTo'] == null

@@ -1,7 +1,6 @@
+import 'package:v_chat_sdk_core/src/service/online_offline_service.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../v_chat_sdk_core.dart';
-import 'online_offline_service.dart';
 
 class OfflineOnlineEmitterService {
   final _emitter = VEventBusSingleton.vEventBus;

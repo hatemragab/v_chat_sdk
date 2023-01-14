@@ -1,7 +1,6 @@
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_message_repo.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../../v_chat_sdk_core.dart';
-import '../../abstraction/base_local_message_repo.dart';
 
 extension CSortById on List<VBaseMessage> {
   List<VBaseMessage> sortById() {
@@ -33,7 +32,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
     final old = await findByLocalId(event.localId);
     if (old != null) {
       throw VChatDartException(
-          exception: "message already exist $old in web db");
+          exception: "message already exist $old in web db",);
     }
     _messages.add(event.messageModel);
     return Future.value(1);

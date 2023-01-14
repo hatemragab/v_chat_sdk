@@ -70,12 +70,6 @@ abstract class AuthRepo {
             auth.FacebookAuthProvider.credential(token.token));
     // User? user = await getCurrentUser(authResult.user?.uid ?? '');
     List<String> fullName = (userData['name'] as String).split(' ');
-    String firstName = '';
-    String lastName = '';
-    if (fullName.isNotEmpty) {
-      firstName = fullName.first;
-      lastName = fullName.skip(1).join(' ');
-    }
   }
 
   static Future<User> signUpWithEmailAndPassword({
@@ -128,8 +122,6 @@ abstract class AuthRepo {
     String? lastName = 'User',
     Uint8List? imageData,
   }) async {
-    auth.UserCredential userCredential =
-        await auth.FirebaseAuth.instance.signInWithCredential(credential);
     // User? user = await getCurrentUser(userCredential.user?.uid ?? '');
     // if (user != null) {
     //   return user;

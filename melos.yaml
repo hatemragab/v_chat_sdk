@@ -25,3 +25,6 @@ scripts:
   fix:
     run: melos exec -c 1 -- \
       dart fix --apply
+  add:
+    run: melos exec -c 1 -- \
+      flutter pub add flutter_lints --dev

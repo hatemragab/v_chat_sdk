@@ -43,7 +43,7 @@ class InputStateController extends ValueNotifier<MessageInputModel> {
   }
 
   void _checkStatus(String roomId) async {
-    final x = await vSafeApiCall<bool>(
+    await vSafeApiCall<bool>(
       request: () async {
         return await _messageProvider.checkGroupStatus(roomId);
       },

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/shared/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -54,8 +54,10 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
       value.values.insert(0, room);
       notifyListeners();
     } else {
-      print(
-          "-------------you are try to insert message which already exist!-----------");
+      if (kDebugMode) {
+        print(
+            "-------------you are try to insert message which already exist!-----------");
+      }
     }
   }
 

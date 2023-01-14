@@ -1,11 +1,10 @@
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/api_cache_table.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
-
-import '../../utils/api_constants.dart';
-import 'api_cache_table.dart';
-import 'message_table.dart';
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 
 class DBProvider {
   DBProvider._();

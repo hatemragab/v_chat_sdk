@@ -32,7 +32,10 @@ class RoomProvider {
     bool deleteOnEmpty = true,
   }) async {
     final apiModel = await _remoteRoom.getRooms(dto);
-    unawaited(_localRoom.cacheRooms(apiModel.values, deleteOnEmpty));
+    unawaited(_localRoom.cacheRooms(
+      apiModel.values,
+      deleteOnEmpty: deleteOnEmpty,
+    ));
     return apiModel;
   }
 

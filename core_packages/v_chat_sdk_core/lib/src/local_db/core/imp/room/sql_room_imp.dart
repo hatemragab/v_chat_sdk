@@ -1,10 +1,9 @@
 import 'package:diacritic/diacritic.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../../../../../v_chat_sdk_core.dart';
-import '../../../tables/message_table.dart';
-import '../../../tables/room_table.dart';
-import '../../abstraction/base_local_room_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_room_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class SqlRoomImp extends BaseLocalRoomRepo {
   final Database _database;

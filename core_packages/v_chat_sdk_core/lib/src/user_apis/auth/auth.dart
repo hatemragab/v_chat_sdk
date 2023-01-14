@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/abstraction/abstraction.dart';
+import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
+import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../../http/socket/socket_controller.dart';
-import '../../service/controller_helper.dart';
 
 class AuthApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
@@ -33,7 +32,6 @@ class AuthApi implements AuthEndPoints {
       identifier: identifier,
       platform: VPlatforms.currentPlatform,
       deviceId: await deviceHelper.getId(),
-      deviceInfo: await deviceHelper.getDeviceMapInfo(),
       language: deviceLanguage.languageCode,
       pushKey: await _helper.getFcmToken(),
       password: await _helper.getPasswordFromIdentifier(identifier),
@@ -62,7 +60,6 @@ class AuthApi implements AuthEndPoints {
       language: deviceLanguage.languageCode,
       platform: VPlatforms.currentPlatform,
       password: await _helper.getPasswordFromIdentifier(identifier),
-      deviceInfo: await deviceHelper.getDeviceMapInfo(),
       pushKey: await _helper.getFcmToken(),
       image: image,
     );
@@ -89,7 +86,7 @@ class AuthApi implements AuthEndPoints {
     } catch (err) {
       _log.warning(err);
     }
-    for (var element in VStorageKeys.values) {
+    for (final element in VStorageKeys.values) {
       await VAppPref.remove(element);
     }
     SocketController.instance.disconnect();

@@ -1,6 +1,5 @@
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../v_chat_sdk_core.dart';
 
 ///this class will ensure to resend all failed messages
 class ReSendDaemon with VSocketIntervalStream {
@@ -17,7 +16,7 @@ class ReSendDaemon with VSocketIntervalStream {
   }
 
   @override
-  void onIntervalFire() async {
+  Future<void> onIntervalFire() async {
     final unSendMessages = await _messagesRef.getUnSendMessages();
     for (final e in unSendMessages) {
       if (e is VTextMessage) {

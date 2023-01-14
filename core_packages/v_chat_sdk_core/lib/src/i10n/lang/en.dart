@@ -1,4 +1,4 @@
-import '../default_localizations.dart';
+import 'package:v_chat_sdk_core/src/i10n/default_localizations.dart';
 
 class EnLocalizations extends VChatLocalizationLabels {
   @override

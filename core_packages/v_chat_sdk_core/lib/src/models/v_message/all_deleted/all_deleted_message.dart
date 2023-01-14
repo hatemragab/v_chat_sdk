@@ -1,4 +1,4 @@
-import '../base_message/v_base_message.dart';
+import 'package:v_chat_sdk_core/src/models/v_message/base_message/v_base_message.dart';
 
 class VAllDeletedMessage extends VBaseMessage {
   VAllDeletedMessage({

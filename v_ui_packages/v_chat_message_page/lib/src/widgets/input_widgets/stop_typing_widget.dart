@@ -5,8 +5,6 @@ class StopTypingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text("BANNNNED"),
-    );
+    return const Text("BANNNNED");
   }
 }

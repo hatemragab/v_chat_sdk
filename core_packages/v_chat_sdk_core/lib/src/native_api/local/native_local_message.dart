@@ -1,10 +1,9 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_message_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/message/memory_message_imp.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/message/sql_message_imp.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../../local_db/core/abstraction/base_local_message_repo.dart';
-import '../../local_db/core/imp/message/memory_message_imp.dart';
-import '../../local_db/core/imp/message/sql_message_imp.dart';
 
 class NativeLocalMessage {
   late BaseLocalMessageRepo _localMessageRepo;
@@ -101,7 +100,7 @@ class NativeLocalMessage {
       roomId: message.roomId,
       localId: message.localId,
       messageModel: message,
-    ));
+    ),);
     return 1;
   }
 

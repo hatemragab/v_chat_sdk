@@ -36,7 +36,7 @@ dependencies:
   collection: ^1.16.0
   platform_device_id: ^1.0.1
   device_info_plus: ^8.0.0
-  flutter_parsed_text: ^2.2.1
+
   http_parser: ^4.0.2
   overlay_support: ^2.1.0
   event_bus_plus: ^0.6.1
@@ -52,9 +52,10 @@ dependencies:
   auto_direction: ^0.0.6
   intl: ^0.17.0
 dev_dependencies:
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  lints: ^2.0.1
 
 
 

@@ -1,14 +1,13 @@
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api_service.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/db_provider.dart';
+import 'package:v_chat_sdk_core/src/native_api/local/native_local_cache.dart';
+import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
+import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
-
-import '../../v_chat_sdk_core.dart';
-import '../http/api_service/profile/profile_api_service.dart';
-import '../local_db/tables/db_provider.dart';
-import 'local/native_local_cache.dart';
-import 'local/native_local_message.dart';
-import 'local/native_local_room.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VNativeApi {
   final local = _LocalNativeApi();

@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../v_chat_sdk_core.dart';
-import '../../../local_db/tables/message_table.dart';
 
 class VVoiceMessage extends VBaseMessage {
   final VMessageVoiceData data;

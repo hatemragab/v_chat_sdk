@@ -82,7 +82,9 @@ class RoomItemController {
     );
   }
 
-  RoomItemController(this._provider);
+  RoomItemController(
+    this._provider,
+  );
 
   Future openForSingle(VRoom room, BuildContext context) async {
     final l = <ModelSheetItem>[

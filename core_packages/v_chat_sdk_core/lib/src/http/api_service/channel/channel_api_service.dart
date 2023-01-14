@@ -1,8 +1,7 @@
+import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../../v_chat_sdk_core.dart';
-import 'channel_api.dart';
 
 class ChannelApiService {
   static late final ChannelApi _channelApiService;
@@ -47,7 +46,9 @@ class ChannelApiService {
     throwIfNotSuccess(res);
     final data = extractDataFromResponse(res);
     return VPaginationModel<VRoom>.fromCustomMap(
-      values: (data['docs'] as List).map((e) => VRoom.fromMap(e)).toList(),
+      values: (data['docs'] as List)
+          .map((e) => VRoom.fromMap(e as Map<String, dynamic>))
+          .toList(),
       map: data,
     );
   }

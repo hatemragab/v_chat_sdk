@@ -53,7 +53,7 @@ abstract class VAppConstants {
 
   static VIdentifierUser get fakeMyProfile {
     return VIdentifierUser(
-        identifier: "FAKE identifier", baseUser: VBaseUser.fromFakeData());
+        identifier: "FAKE identifier", baseUser: VBaseUser.fromFakeData(),);
   }
 
   static String get myId {

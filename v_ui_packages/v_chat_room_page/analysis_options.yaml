@@ -1,5 +1,25 @@
 include: package:flutter_lints/flutter.yaml
 
+
+# You might want to exclude auto-generated files from dart analysis
+analyzer:
+  exclude:
+    - room_example/**
+    - ./room_example
+    - '**.g.dart'
+
+
+# You can customize the lint rules set to your own liking. A list of all rules
+# can be found at https://dart-lang.github.io/linter/lints/options/options.html
 linter:
   rules:
-    use_build_context_synchronously: false
+  # Util classes are awesome!
+  # avoid_classes_with_only_static_members: false
+
+  # Make constructors the first thing in every class
+  # sort_constructors_first: true
+
+  # Choose wisely, but you don't have to
+  # prefer_double_quotes: true
+  # prefer_single_quotes: true
+

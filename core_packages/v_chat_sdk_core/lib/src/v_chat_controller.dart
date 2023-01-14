@@ -8,9 +8,8 @@ import 'package:v_chat_sdk_core/src/service/socket_status_service.dart';
 import 'package:v_chat_sdk_core/src/service/v_app_lifecycle_state.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../v_chat_sdk_core.dart';
 
 /// VChatController instance.
 ///
@@ -85,7 +84,7 @@ class VChatController {
     return _instance;
   }
 
-  void listenToOpenFromNotification() async {
+  Future<void> listenToOpenFromNotification() async {
     _vNotificationListener.getOpenAppNotification();
   }
 

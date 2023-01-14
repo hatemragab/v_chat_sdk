@@ -3,9 +3,8 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../v_chat_sdk_core.dart';
 
 class ControllerHelper {
   final VChatConfig _config = VChatController.I.vChatConfig;
@@ -20,7 +19,7 @@ class ControllerHelper {
   ControllerHelper._();
 
   Future<ControllerHelper> init(
-    final VChatConfig config,
+    VChatConfig config,
   ) async {
     _initLogger(config.enableLog);
     await _initPushService(config.pushProvider);
@@ -63,7 +62,8 @@ class ControllerHelper {
         final initRes = await pushProvider.init();
         if (initRes) {
           _log.fine(
-              "init the sdk with ${pushProvider.serviceName()} done successfully through V_CHAT_SDK");
+            "init the sdk with ${pushProvider.serviceName()} done successfully through V_CHAT_SDK",
+          );
         } else {
           _log.fine(
             "init the sdk with ${pushProvider.serviceName()} done successfully From your side",

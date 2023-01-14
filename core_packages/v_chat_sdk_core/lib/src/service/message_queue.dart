@@ -86,7 +86,7 @@ class MessageUploaderQueue {
     _uploadQueue.clear();
   }
 
-  void _setSending(VMessageUploadModel uploadModel) async {
+  Future<void> _setSending(VMessageUploadModel uploadModel) async {
     await _localStorage.updateMessageSendingStatus(
       VUpdateMessageStatusEvent(
         roomId: uploadModel.roomId,

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VMessagePageConfig {
   ///set api if you want to make users able to pick locations

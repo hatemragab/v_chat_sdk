@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:socket_io_client/socket_io_client.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../../http/socket/socket_controller.dart';
+import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class NativeRemoteSocketIo {
   Socket get socket => SocketController.instance.currentSocket;
@@ -13,7 +12,7 @@ class NativeRemoteSocketIo {
   void emitGetMyOnline(List<VOnlineOfflineModel> ids) =>
       SocketController.instance.emitGetMyOnline(jsonEncode(
         ids.map((e) => e.toMap()).toList(),
-      ));
+      ),);
 
   void emitUpdateRoomStatus(VSocketRoomTypingModel model) =>
       SocketController.instance.emitUpdateRoomStatus(jsonEncode(model.toMap()));

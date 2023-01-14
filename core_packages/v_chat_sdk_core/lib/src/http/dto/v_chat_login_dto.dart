@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class VChatLoginDto {
   final String identifier;
   final String deviceId;
@@ -7,7 +5,6 @@ class VChatLoginDto {
   String? pushKey;
   final String platform;
   final String password;
-  final Map<String, dynamic> deviceInfo;
 
   VChatLoginDto({
     required this.identifier,
@@ -15,7 +12,6 @@ class VChatLoginDto {
     required this.language,
     required this.platform,
     required this.password,
-    required this.deviceInfo,
     this.pushKey,
   });
 
@@ -26,7 +22,6 @@ class VChatLoginDto {
       "language": language,
       "pushKey": pushKey,
       "password": password,
-      "deviceInfo": jsonEncode(deviceInfo),
       "platform": platform,
     };
   }

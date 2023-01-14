@@ -4,9 +4,8 @@ import 'package:logging/logging.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../v_chat_sdk_core.dart';
 
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
@@ -19,15 +18,15 @@ class SocketController implements ISocketIoClient {
     socketIoClient.socket.onConnect(
       (data) {
         _log.finer("Socket connected successfully");
-        vChatEvents.fire(const VSocketStatusEvent(true));
+        vChatEvents.fire(const VSocketStatusEvent(isConnected: true));
       },
     );
     _socket.onError((data) {
       _log.warning("_socket.onError:$data");
-      vChatEvents.fire(const VSocketStatusEvent(false));
+      vChatEvents.fire(const VSocketStatusEvent(isConnected: false));
     });
     socketIoClient.socket.onDisconnect((data) {
-      vChatEvents.fire(const VSocketStatusEvent(false));
+      vChatEvents.fire(const VSocketStatusEvent(isConnected: false));
     });
   }
 

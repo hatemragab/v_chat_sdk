@@ -1,16 +1,15 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_message_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/message/memory_message_imp.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/message/sql_message_imp.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../core/abstraction/base_local_message_repo.dart';
-import '../core/imp/message/memory_message_imp.dart';
-import '../core/imp/message/sql_message_imp.dart';
 
 mixin MessageLocalStorage {
   late BaseLocalMessageRepo localMessageRepo;
   final emitter = VEventBusSingleton.vEventBus;
 
-  initMessageLocalStorage({
+  void initMessageLocalStorage({
     required Database database,
   }) {
     if (VPlatforms.isWeb) {
@@ -40,11 +39,13 @@ mixin MessageLocalStorage {
       message.roomId,
     );
     await localMessageRepo.delete(event);
-    emitter.fire(VDeleteMessageEvent(
-      localId: message.localId,
-      roomId: message.roomId,
-      upMessage: beforeMsg,
-    ));
+    emitter.fire(
+      VDeleteMessageEvent(
+        localId: message.localId,
+        roomId: message.roomId,
+        upMessage: beforeMsg,
+      ),
+    );
     return 1;
   }
 
@@ -62,11 +63,13 @@ mixin MessageLocalStorage {
     await localMessageRepo.updateFullMessage(
       baseMessage: message,
     );
-    emitter.fire(VUpdateMessageEvent(
-      roomId: message.roomId,
-      localId: message.localId,
-      messageModel: message,
-    ));
+    emitter.fire(
+      VUpdateMessageEvent(
+        roomId: message.roomId,
+        localId: message.localId,
+        messageModel: message,
+      ),
+    );
     return 1;
   }
 
@@ -102,7 +105,8 @@ mixin MessageLocalStorage {
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return localMessageRepo.getMessagesByStatus(
-        status: MessageEmitStatus.error);
+      status: MessageEmitStatus.error,
+    );
   }
 
   Future<List<VBaseMessage>> searchMessage(

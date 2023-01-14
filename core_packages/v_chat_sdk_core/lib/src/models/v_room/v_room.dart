@@ -1,8 +1,7 @@
 import 'package:diacritic/diacritic.dart';
-import 'package:intl/intl.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../../local_db/tables/room_table.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VRoom {
   final String id;
@@ -188,13 +187,12 @@ class VRoom {
       thumbImage: "https://picsum.photos/300/${id + 299}",
       isArchived: false,
       roomType: id == 0 ? VRoomType.g : VRoomType.s,
-      isMuted: id % 2 == 0,
-      unReadCount: id % 2 == 0 ? 0 : id,
+      isMuted: id.isOdd,
+      unReadCount: id.isOdd ? 0 : id,
       lastMessage: VTextMessage.buildFakeMessage(index: id),
       createdAt: DateTime.now(),
-      isOnline: id % 2 == 0,
+      isOnline: id.isOdd,
       peerId: "peerId",
-      blockerId: null,
       typingStatus: id == 0
           ? VSocketRoomTypingModel.typing
           : VSocketRoomTypingModel.offline,

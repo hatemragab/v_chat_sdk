@@ -1,6 +1,6 @@
 import 'package:random_string/random_string.dart';
 
-import '../../../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VTextMessage extends VBaseMessage {
   VTextMessage({

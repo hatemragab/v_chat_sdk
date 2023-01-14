@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../../../local_db/tables/message_table.dart';
-import '../base_message/v_base_message.dart';
-import 'msg_call_att.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/src/models/v_message/base_message/v_base_message.dart';
+import 'package:v_chat_sdk_core/src/models/v_message/call_message/msg_call_att.dart';
 
 class VCallMessage extends VBaseMessage {
   final VMsgCallAtt data;

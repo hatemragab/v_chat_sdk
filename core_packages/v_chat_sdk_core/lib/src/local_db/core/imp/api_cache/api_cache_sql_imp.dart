@@ -1,8 +1,7 @@
 import 'package:sqflite/sqflite.dart';
-
-import '../../../../models/api_cache_model.dart';
-import '../../../tables/api_cache_table.dart';
-import '../../abstraction/base_local_api_cache_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_api_cache_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/api_cache_table.dart';
+import 'package:v_chat_sdk_core/src/models/api_cache_model.dart';
 
 class ApiCacheSqlImp extends BaseLocalApiCacheRepo {
   final Database _database;

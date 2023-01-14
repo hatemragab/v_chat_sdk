@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VSocketStatusWidget extends StatefulWidget {
   final BoxDecoration decoration;
@@ -9,12 +8,12 @@ class VSocketStatusWidget extends StatefulWidget {
   final Duration delay;
 
   const VSocketStatusWidget({
-    Key? key,
+    super.key,
     this.decoration = const BoxDecoration(color: Colors.red),
     this.padding = const EdgeInsets.all(8),
     this.connectingString = "Connecting...",
     this.delay = const Duration(seconds: 5),
-  }) : super(key: key);
+  });
 
   @override
   State<VSocketStatusWidget> createState() => _VSocketStatusWidgetState();
@@ -37,7 +36,7 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
     }
     return StreamBuilder<VSocketStatusEvent>(
       stream: VChatController.I.nativeApi.streams.socketStatusStream,
-      initialData: VSocketStatusEvent(_socket.isConnected),
+      initialData: VSocketStatusEvent(isConnected: _socket.isConnected),
       builder: (context, snapshot) {
         if (!snapshot.data!.isConnected) {
           return Container(
@@ -59,7 +58,7 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
     );
   }
 
-  void _delay() async {
+  Future<void> _delay() async {
     await Future.delayed(widget.delay);
     if (mounted) {
       setState(() {

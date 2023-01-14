@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:chopper/chopper.dart';
 import 'package:http/http.dart' hide Response, Request;
 import 'package:http/io_client.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../utils/api_constants.dart';
-import '../interceptors.dart';
 
 part 'channel_api.chopper.dart';
 
@@ -49,7 +48,7 @@ abstract class ChannelApi extends ChopperService {
   @Post(path: "/broadcast")
   @multipart
   Future<Response> createBroadcast(
-      @PartMap() List<PartValue> body, @PartFile("file") MultipartFile? file);
+      @PartMap() List<PartValue> body, @PartFile("file") MultipartFile? file,);
 
   @Patch(path: "/{roomId}/broadcast/title")
   Future<Response> updateBroadcastTitle(

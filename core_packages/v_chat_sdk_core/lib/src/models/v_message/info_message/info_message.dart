@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import '../../../local_db/tables/message_table.dart';
-import '../base_message/v_base_message.dart';
-import 'msg_info_att.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/src/models/v_message/base_message/v_base_message.dart';
+import 'package:v_chat_sdk_core/src/models/v_message/info_message/msg_info_att.dart';
 
 class VInfoMessage extends VBaseMessage {
   final VMsgInfoAtt data;

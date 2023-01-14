@@ -1,5 +1,5 @@
-import 'lang/ar.dart';
-import 'lang/en.dart';
+import 'package:v_chat_sdk_core/src/i10n/lang/ar.dart';
+import 'package:v_chat_sdk_core/src/i10n/lang/en.dart';
 
 abstract class VChatLocalizationLabels {
   const VChatLocalizationLabels();

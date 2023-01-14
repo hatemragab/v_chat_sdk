@@ -1,16 +1,15 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_room_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/room/memory_room_imp.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/imp/room/sql_room_imp.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../../v_chat_sdk_core.dart';
-import '../core/abstraction/base_local_room_repo.dart';
-import '../core/imp/room/memory_room_imp.dart';
-import '../core/imp/room/sql_room_imp.dart';
 
 mixin RoomLocalStorageService {
   late BaseLocalRoomRepo localRoomRepo;
   final emitter = VEventBusSingleton.vEventBus;
 
-  initRoomLocalStorage({
+ void initRoomLocalStorage({
     required Database database,
   }) {
     if (VPlatforms.isWeb) {

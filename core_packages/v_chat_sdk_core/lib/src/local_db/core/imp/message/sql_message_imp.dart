@@ -1,8 +1,7 @@
 import 'package:sqflite/sqflite.dart';
-
-import '../../../../../v_chat_sdk_core.dart';
-import '../../../tables/message_table.dart';
-import '../../abstraction/base_local_message_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_message_repo.dart';
+import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class SqlMessageImp extends BaseLocalMessageRepo {
   final Database _database;
@@ -160,7 +159,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     required String roomId,
     required VRoomMessagesDto filter,
   }) async {
-    StringBuffer where = StringBuffer();
+    final StringBuffer where = StringBuffer();
     if (filter.lastId != null) {
       where.write("AND ${MessageTable.columnId} < '${filter.lastId}'");
     }

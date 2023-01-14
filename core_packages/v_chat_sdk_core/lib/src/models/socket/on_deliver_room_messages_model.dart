@@ -1,4 +1,4 @@
-import '../../utils/api_constants.dart';
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 
 class VSocketOnDeliverMessagesModel {
   final String roomId;

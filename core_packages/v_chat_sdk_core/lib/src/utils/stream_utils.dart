@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 mixin VMessageStream {
   late final StreamSubscription<VMessageEvents> _messagesStream;

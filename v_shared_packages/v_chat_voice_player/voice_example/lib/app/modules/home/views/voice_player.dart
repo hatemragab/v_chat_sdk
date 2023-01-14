@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -84,7 +85,9 @@ class VoicePlayerState extends State<VoicePlayer> {
       id: "1",
       onPlaying: (id) {},
       onComplete: (id) {
-        print("On onComplete called ! $id");
+        if (kDebugMode) {
+          print("On onComplete called ! $id");
+        }
       },
       onPause: (id) {},
     );

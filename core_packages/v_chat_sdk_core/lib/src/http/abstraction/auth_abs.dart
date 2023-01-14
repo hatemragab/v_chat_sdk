@@ -1,8 +1,7 @@
 import 'dart:ui';
 
+import 'package:v_chat_sdk_core/src/models/v_user/v_base_user.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../models/v_user/v_base_user.dart';
 
 abstract class AuthEndPoints {
   Future<VIdentifierUser> login({
