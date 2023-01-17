@@ -24,3 +24,7 @@
 
 - support assets in v platform file
 - new v image picker widget
+
+## 0.1.0+5
+
+- new loading alert

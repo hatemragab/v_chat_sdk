@@ -14,15 +14,25 @@ class ListViewPageState extends State<ListViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            VImagePicker(
-              onDone: (file) {},
-              size: 100,
-              initImage: VPlatformFileSource.fromAssets(assetsPath: "assets/logo.png"),
-            )
-          ],
-        ));
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          VImagePicker(
+            onDone: (file) {},
+            size: 100,
+            initImage:
+                VPlatformFileSource.fromAssets(assetsPath: "assets/logo.png"),
+          ),
+          TextButton(
+            onPressed: () async {
+              VAppAlert.showLoading(context: context);
+              await Future.delayed(Duration(seconds: 5));
+              Navigator.pop(context);
+            },
+            child: Text("show loading alert"),
+          )
+        ],
+      ),
+    );
   }
 }

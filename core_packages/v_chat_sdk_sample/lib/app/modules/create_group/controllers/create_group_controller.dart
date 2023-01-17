@@ -43,11 +43,11 @@ class CreateGroupController extends GetxController {
         // V CHAT REQUEST
       },
       onSuccess: (response) {
-        VAppAlert.hideLoading();
+        Get.back();
         Get.until((route) => route.settings.name == Routes.HOME);
       },
       onError: (exception, trace) {
-        VAppAlert.hideLoading();
+        Get.back();
       },
     );
   }

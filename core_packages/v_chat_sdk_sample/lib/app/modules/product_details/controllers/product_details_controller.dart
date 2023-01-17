@@ -43,7 +43,7 @@ class ProductDetailsController extends GetxController {
           ));
         },
         onSuccess: (response) {
-          VAppAlert.hideLoading();
+          Get.back();
           Get.toNamed(Routes.MY_ORDERS);
         },
       );

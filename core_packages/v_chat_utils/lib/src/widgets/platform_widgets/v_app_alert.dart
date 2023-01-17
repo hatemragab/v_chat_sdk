@@ -1,60 +1,54 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart' as adaptive_dialog;
 import 'package:flutter/material.dart';
-import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
 import '../../../v_chat_utils.dart';
 
 abstract class VAppAlert {
-  static ProgressDialog? _progressDialog;
-
-  static Future showLoading(
-      {String message = "Please wait ...",
-      bool isDismissible = false,
-      required BuildContext context}) async {
-    _progressDialog = ProgressDialog(
-      context,
-      type: ProgressDialogType.normal,
-      isDismissible: isDismissible,
-    );
-    _progressDialog!.style(
-      message: message,
-      progressTextStyle:
-          TextStyle(color: context.isDark ? Colors.white : Colors.black),
-      backgroundColor: context.isDark ? const Color(0x331F1E1E) : Colors.white,
-      borderRadius: 10.0,
-      maxProgress: 100,
-      progressWidget: Container(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: Row(
-            children: const [
-              CircularProgressIndicator.adaptive(),
-            ],
+  static Future showLoading({
+    String message = "Please wait ...",
+    bool isDismissible = false,
+    required BuildContext context,
+  }) async {
+    showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return WillPopScope(
+          onWillPop: () async {
+            return isDismissible;
+          },
+          child: Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                content: Row(
+                  children: [
+                    const CircularProgressIndicator.adaptive(),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    message.text
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-      messageTextStyle: context.isDark
-          ? const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-          : const TextStyle(color: Colors.black12, fontWeight: FontWeight.bold),
-      elevation: 10.0,
-      insetAnimCurve: Curves.easeInOut,
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 250),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return const SizedBox.shrink();
+      },
     );
-    await _progressDialog!.show();
   }
 
-  static updateProgress(String message) {
-    _progressDialog!.update(message: message);
-  }
 
-  static Future hideLoading() async {
-    if (_progressDialog == null) {
-      return;
-    }
-    await _progressDialog!.hide();
-  }
+
 
   static Future<void> showOkAlertDialog({
     required BuildContext context,

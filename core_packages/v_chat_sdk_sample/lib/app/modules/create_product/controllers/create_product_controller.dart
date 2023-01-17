@@ -40,11 +40,11 @@ class CreateProductController extends GetxController {
     }
     await vSafeApiCall(
       onSuccess: (response) {
-        VAppAlert.hideLoading();
+        Get.back();
         Get.back();
       },
       onError: (exception, trace) {
-        VAppAlert.hideLoading();
+        Get.back();
       },
       onLoading: () {
         VAppAlert.showLoading(context: Get.context!);

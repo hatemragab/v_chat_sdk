@@ -34,7 +34,7 @@ Future<T?> vSafeApiCall<T>({
     }
   } catch (err, stacktrace) {
     _showError(err, showToastError);
-    if (onError != null && !ignoreTimeoutAndNoInternet) {
+    if (onError != null) {
       onError(err.toString(), stacktrace);
     }
     log("", error: err, stackTrace: stacktrace, level: 1000);

@@ -40,7 +40,7 @@ class EditProfileController extends GetxController {
     }
     await repository.edit(user.toMap(), user.id);
     await VAppPref.setMap(VStorageKeys.vMyProfile.name, user.toMap());
-    VAppAlert.hideLoading();
+    Get.back();
     AuthRepo.isAuth.refresh();
     VAppAlert.showSuccessSnackBar(
         msg: "Update successfully", context: Get.context!);

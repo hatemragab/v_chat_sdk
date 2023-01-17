@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      darkTheme: ThemeData.dark(),
       home: const ListViewPage(),
     );
   }
