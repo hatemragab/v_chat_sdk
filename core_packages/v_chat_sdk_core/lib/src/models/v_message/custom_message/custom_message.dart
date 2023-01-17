@@ -4,7 +4,7 @@ import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VCustomMessage extends VBaseMessage {
-  final VCustomMsgAtt data;
+  final VCustomMsgData data;
 
   VCustomMessage({
     required super.id,
@@ -41,11 +41,11 @@ class VCustomMessage extends VBaseMessage {
           messageType: MessageType.custom,
         );
   VCustomMessage.fromRemoteMap(super.map)
-      : data = VCustomMsgAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      : data = VCustomMsgData.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();
 
   VCustomMessage.fromLocalMap(super.map)
-      : data = VCustomMsgAtt.fromMap(
+      : data = VCustomMsgData.fromMap(
           jsonDecode(map[MessageTable.columnAttachment] as String)
               as Map<String, dynamic>,
         ),

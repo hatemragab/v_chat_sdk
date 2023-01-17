@@ -10,6 +10,7 @@ import '../utils/enums.dart';
 class VPlatformFileSource {
   String name;
   String? url;
+  String? assetsPath;
   String? filePath;
   List<int>? bytes;
   String? mimeType;
@@ -19,6 +20,7 @@ class VPlatformFileSource {
     required this.name,
     this.url,
     this.filePath,
+    this.assetsPath,
     this.bytes,
     required this.fileSize,
     this.mimeType,
@@ -27,6 +29,8 @@ class VPlatformFileSource {
   String? get getMimeType => mime(name);
 
   bool get isFromPath => filePath != null;
+
+  bool get isFromAssets => assetsPath != null;
 
   bool get isFromBytes => bytes != null;
 
@@ -77,11 +81,19 @@ class VPlatformFileSource {
     mimeType = getMimeType;
   }
 
+  VPlatformFileSource.fromAssets({
+    this.fileSize = 0,
+    required String this.assetsPath,
+  }) : name = basename(assetsPath) {
+    mimeType = getMimeType;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'url': url == null ? null : url!,
       'filePath': filePath,
+      'assetsPath': assetsPath,
       'bytes': bytes,
       'mimeType': getMimeType,
       'fileSize': fileSize,
@@ -90,7 +102,7 @@ class VPlatformFileSource {
 
   @override
   String toString() {
-    return 'PlatformFileSource{name: $name, url:$url filePath: $filePath, mimeType: $mimeType, size: $fileSize bytes ${bytes?.length}';
+    return 'PlatformFileSource{name: $name, url:$url filePath: $filePath, mimeType: $mimeType, assetsPath: $assetsPath, size: $fileSize bytes ${bytes?.length}';
   }
 
   VSupportedFilesType get getMediaType {

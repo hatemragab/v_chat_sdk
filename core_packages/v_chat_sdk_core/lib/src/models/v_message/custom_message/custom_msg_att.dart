@@ -1,9 +1,9 @@
-class VCustomMsgAtt {
+class VCustomMsgData {
   final Map<String, dynamic> data;
 
 //<editor-fold desc="Data Methods">
 
-  VCustomMsgAtt({
+  VCustomMsgData({
     required this.data,
   });
 
@@ -18,8 +18,8 @@ class VCustomMsgAtt {
     };
   }
 
-  factory VCustomMsgAtt.fromMap(Map<String, dynamic> map) {
-    return VCustomMsgAtt(
+  factory VCustomMsgData.fromMap(Map<String, dynamic> map) {
+    return VCustomMsgData(
       data: map['data'] as Map<String, dynamic>,
     );
   }

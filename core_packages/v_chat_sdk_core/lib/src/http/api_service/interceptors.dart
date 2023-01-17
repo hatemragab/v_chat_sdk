@@ -66,7 +66,7 @@ class AuthInterceptor implements RequestInterceptor {
   FutureOr<Request> onRequest(Request request) {
     final oldHeaders = Map.of(request.headers);
     oldHeaders['authorization'] = "Bearer ${access ?? VAppPref.getHashedString(
-          key: VStorageKeys.accessToken,
+          key: VStorageKeys.vAccessToken.name,
         )}";
     oldHeaders["clint-version"] = VAppConstants.clintVersion;
     return request.copyWith(

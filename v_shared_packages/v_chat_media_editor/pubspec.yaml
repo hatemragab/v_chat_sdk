@@ -1,6 +1,6 @@
 name: v_chat_media_editor
 description: v chat media editor package
-version: 0.0.4
+version: 0.1.0
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/v2/v_shared_packages/v_chat_media_editor
@@ -12,16 +12,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.0.5
+  v_chat_utils: ^0.1.0
   permission_handler: ^10.2.0
   flutter_painter_v2: ^2.0.0
   video_player: ^2.4.7
   image_cropping: ^0.0.13
   image: ^3.2.2
   image_cropper: ^3.0.0
-  #  video_editor: ^1.4.3
-  mime_type: ^1.0.0
-  mime: ^1.0.2
+
   path: ^1.8.1
   video_thumbnail: ^0.5.2
   chewie: ^1.3.4
@@ -30,8 +28,6 @@ dependencies:
   helpers: ^1.1.4
   flutter_cache_manager: ^3.3.0
   cross_file: ^0.3.3+2
-  phosphor_flutter: ^1.4.0
-  uuid: ^3.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

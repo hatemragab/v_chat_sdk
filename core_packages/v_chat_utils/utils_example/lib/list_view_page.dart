@@ -1,36 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ListViewPage extends StatefulWidget {
   const ListViewPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return ListViewPageState();
   }
 }
 
 class ListViewPageState extends State<ListViewPage> {
-  final l = List.generate(20, (index) => "$index");
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          l.insert(0, "element ${DateTime.now()}");
-          setState(() {});
-        },
-      ),
-      appBar: AppBar(),
-      body: ListView.separated(
-        itemBuilder: (context, index) => ListTile(
-          title: Text(l[index].toString()),
-        ),
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: l.length,
-        reverse: true,
-      ),
-    );
+        appBar: AppBar(),
+        body: Column(
+          children: [
+            VImagePicker(
+              onDone: (file) {},
+              size: 100,
+              initImage: VPlatformFileSource.fromAssets(assetsPath: "assets/logo.png"),
+            )
+          ],
+        ));
   }
 }

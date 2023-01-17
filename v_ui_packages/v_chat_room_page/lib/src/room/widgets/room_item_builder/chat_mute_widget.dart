@@ -10,6 +10,6 @@ class ChatMuteWidget extends StatelessWidget {
     final vRoomTheme = context.vRoomTheme;
 
     if (!isMuted) return const SizedBox.shrink();
-    return vRoomTheme.vChatItemBuilder.muteIcon;
+    return vRoomTheme.muteIcon;
   }
 }

@@ -15,7 +15,7 @@ class DirectionItemHolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isRtl = context.isRtl;
-    return context.vMessageTheme.vMessageItemBuilder.messageBubble(
+    return context.vMessageTheme.messageItemHolder(
       context,
       isMeSender,
       child,

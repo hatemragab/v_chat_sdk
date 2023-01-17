@@ -95,7 +95,12 @@ class MyApp extends StatelessWidget {
             darkTheme: FlexThemeData.dark(
               scheme: FlexScheme.green,
               useMaterial3: true,
-              extensions: <ThemeExtension<dynamic>>[],
+              extensions: <ThemeExtension<dynamic>>[
+                VMessageTheme.dark().copyWith(
+                  messageItemHolderColor: (context, isMeSender, isDarkMode) =>
+                      Colors.red,
+                )
+              ],
               appBarElevation: 20,
             ),
           );
@@ -106,7 +111,7 @@ class MyApp extends StatelessWidget {
 }
 
 void setAppTheme(AppService appService) {
-  final theme = VAppPref.getStringOrNull(VStorageKeys.appTheme);
+  final theme = VAppPref.getStringOrNullKey(VStorageKeys.vAppTheme.name);
   if (theme != null) {
     if (theme == ThemeMode.light.name) {
       appService.setTheme(ThemeMode.light);

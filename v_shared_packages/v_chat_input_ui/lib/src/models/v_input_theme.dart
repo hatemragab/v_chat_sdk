@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VInputTheme extends ThemeExtension<VInputTheme> {
   final BoxDecoration containerDecoration;

@@ -22,8 +22,7 @@ class MessageStatusIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeData =
-        context.vMessageTheme.vMessageItemBuilder.messageSendingStatus;
+    final themeData = context.vMessageTheme.messageSendingStatus;
     if (!isMeSender) {
       return const SizedBox.shrink();
     }

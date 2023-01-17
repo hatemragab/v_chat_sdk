@@ -49,8 +49,8 @@ class SettingsTabController extends GetxController {
       context: Get.context!,
     );
     if (res != null) {
-      await VAppPref.setString(
-        VStorageKeys.appTheme,
+      await VAppPref.setStringKey(
+        VStorageKeys.vAppTheme.name,
         res.mode.name,
       );
       appService.setTheme(res.mode);

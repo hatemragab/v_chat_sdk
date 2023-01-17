@@ -23,7 +23,7 @@ class ReplyMsgWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               getTitle().text.maxLine(1),
-              vBaseMessage.getTextTrans.cap.maxLine(2).overflowEllipsis,
+              vBaseMessage.getMessageText.cap.maxLine(2).overflowEllipsis,
             ],
           ),
         ),

@@ -87,7 +87,7 @@ class AuthApi implements AuthEndPoints {
       _log.warning(err);
     }
     for (final element in VStorageKeys.values) {
-      await VAppPref.remove(element);
+      await VAppPref.removeKey(element.name);
     }
     SocketController.instance.disconnect();
     await _vNativeApi.local.reCreate();

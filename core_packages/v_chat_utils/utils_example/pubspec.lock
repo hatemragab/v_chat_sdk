@@ -307,13 +307,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  flutter_parsed_text:
-    dependency: transitive
-    description:
-      name: flutter_parsed_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -909,7 +902,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.6"
+    version: "0.1.0"
   vector_math:
     dependency: transitive
     description:

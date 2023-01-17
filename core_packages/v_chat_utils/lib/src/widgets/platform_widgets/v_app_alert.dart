@@ -19,9 +19,9 @@ abstract class VAppAlert {
     );
     _progressDialog!.style(
       message: message,
-      backgroundColor: context.isDark
-          ? const Color(0xff39393d).withOpacity(.9)
-          : Colors.white,
+      progressTextStyle:
+          TextStyle(color: context.isDark ? Colors.white : Colors.black),
+      backgroundColor: context.isDark ? const Color(0x331F1E1E) : Colors.white,
       borderRadius: 10.0,
       maxProgress: 100,
       progressWidget: Container(

@@ -147,6 +147,22 @@ class VVoiceThemeBuilder extends ThemeExtension<VVoiceThemeBuilder> {
     }
     return this;
   }
+
+  VVoiceThemeBuilder copyWith({
+    Color? backgroundColor,
+    Widget? playIcon,
+    Widget? pauseIcon,
+    Widget? errorIcon,
+    Function(BuildContext context, String speed)? speedBuilder,
+  }) {
+    return VVoiceThemeBuilder._(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      playIcon: playIcon ?? this.playIcon,
+      pauseIcon: pauseIcon ?? this.pauseIcon,
+      errorIcon: errorIcon ?? this.errorIcon,
+      speedBuilder: speedBuilder ?? this.speedBuilder,
+    );
+  }
 }
 
 extension VVoiceThemeBuilderExt on BuildContext {

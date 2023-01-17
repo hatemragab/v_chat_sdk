@@ -4,7 +4,6 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:uuid/uuid.dart' as u;
 import 'package:v_chat_input_ui/src/recorder/recorders.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -29,7 +28,7 @@ class RecordWidgetState extends State<RecordWidget> {
 
   //todo get from user this value
   int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
-  final uuid = const u.Uuid();
+  final uuid = const Uuid();
   AppRecorder? recorder;
 
   @override

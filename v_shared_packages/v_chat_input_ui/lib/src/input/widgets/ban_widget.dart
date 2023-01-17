@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class BanWidget extends StatelessWidget {
   final bool isMy;

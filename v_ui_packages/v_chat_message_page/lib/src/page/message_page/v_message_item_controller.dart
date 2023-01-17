@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -8,7 +6,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../core/enums.dart';
-import '../../core/v_downloader_seevice.dart';
+import '../../core/v_downloader_service.dart';
 import 'message_provider.dart';
 
 //todo trans
@@ -138,18 +136,6 @@ class VMessageItemController {
     }
   }
 
-  Future onLinkPress(String link) async {
-    await VStringUtils.lunchLink(link);
-  }
-
-  Future onEmailPress(String email) async {
-    await VStringUtils.lunchLink(email);
-  }
-
-  Future onPhonePress(String phone) async {
-    await VStringUtils.lunchLink(phone);
-  }
-
   void _handleForward(VBaseMessage baseMessage) async {
     final ids = await VChatController.I.vNavigator.roomNavigator
         .toForwardPage(context, baseMessage.roomId);
@@ -159,7 +145,7 @@ class VMessageItemController {
         switch (baseMessage.messageType) {
           case MessageType.text:
             message = VTextMessage.buildMessage(
-              content: baseMessage.content,
+              content: baseMessage.realContent,
               roomId: roomId,
               forwardId: baseMessage.localId,
               isEncrypted: baseMessage.isEncrypted,
@@ -208,7 +194,7 @@ class VMessageItemController {
           case MessageType.custom:
             message = VCustomMessage.buildMessage(
               data: (baseMessage as VCustomMessage).data,
-              content: baseMessage.content,
+              content: baseMessage.realContent,
               isEncrypted: baseMessage.isEncrypted,
               roomId: roomId,
               forwardId: baseMessage.localId,
@@ -230,7 +216,7 @@ class VMessageItemController {
   void _handleShare(VBaseMessage message) async {
     if (message.emitStatus.isServerConfirm) {
       if (message is VTextMessage) {
-        await Share.share(message.content);
+        await Share.share(message.realContent);
         return;
       }
       if (message is VLocationMessage) {
@@ -301,7 +287,7 @@ class VMessageItemController {
     //todo fix get real time if there mention
     await Clipboard.setData(
       ClipboardData(
-        text: message.getTextTrans,
+        text: message.getMessageText,
       ),
     );
   }

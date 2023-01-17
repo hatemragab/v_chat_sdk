@@ -43,7 +43,7 @@ class ReplyItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getTitle().text,
-                  rToMessage!.getTextTrans.cap.maxLine(2).overflowEllipsis,
+                  rToMessage!.getMessageText.cap.maxLine(2).overflowEllipsis,
                 ],
               ),
             ),

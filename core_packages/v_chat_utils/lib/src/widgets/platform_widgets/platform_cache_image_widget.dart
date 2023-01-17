@@ -41,7 +41,15 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
   }
 
   Widget _getImage() {
-    if (widget.source.bytes != null) {
+    if (widget.source.isFromAssets) {
+      return Image.asset(
+        widget.source.assetsPath!,
+        width: widget.size == null ? null : widget.size!.width,
+        fit: widget.fit,
+        height: widget.size == null ? null : widget.size!.height,
+      );
+    }
+    if (widget.source.isFromBytes) {
       return Image.memory(
         Uint8List.fromList(widget.source.bytes!),
         width: widget.size == null ? null : widget.size!.width,

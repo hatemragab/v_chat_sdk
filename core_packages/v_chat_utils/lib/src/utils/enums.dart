@@ -15,18 +15,16 @@ enum VSupportedFilesType {
 enum VRoomTypingEnum { stop, typing, recording }
 
 enum VStorageKeys {
-  accessToken,
-  isFirstRun,
-  appMetaData,
-  appLanguage,
-  clintVersion,
+  vAccessToken,
+  vIsFirstRun,
+  vAppMetaData,
+  vAppLanguage,
+  vClintVersion,
   vMyProfile,
-  appTheme,
-  lastAppliedUpdate,
-  lastSuccessFetchRoomsTime,
-  isLogin,
-  isDev,
-  myProfile
+  vAppTheme,
+  vLastAppliedUpdate,
+  vLastSuccessFetchRoomsTime,
+  vIsLogin,
 }
 
 enum VAttachEnumRes { media, files, location }

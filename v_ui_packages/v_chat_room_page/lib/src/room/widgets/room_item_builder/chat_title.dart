@@ -14,6 +14,6 @@ class ChatTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return context.vRoomTheme.vChatItemBuilder.getChatTitle(title);
+    return context.vRoomTheme.getChatTitle(title);
   }
 }

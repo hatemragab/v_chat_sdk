@@ -9,7 +9,6 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 ///[title] is the only required parameter
 ///message sender can be changed using [isSender]
 ///chat bubble [TextStyle] can be customized using [textStyle]
-
 class BubbleSpecialOne extends StatelessWidget {
   final bool isSender;
   final Widget child;
@@ -75,7 +74,6 @@ class BubbleSpecialOne extends StatelessWidget {
 ///custom painter use to create the shape of the chat bubble
 ///
 /// [color],[alignment] and [tail] can be changed
-
 class SpecialChatBubbleOne extends CustomPainter {
   final Color color;
   final AlignmentDirectional alignmentDirectional;

@@ -8,8 +8,8 @@ import '../../v_chat_utils.dart';
 abstract class VAppPick {
   static bool isPicking = false;
 
-  static Future<VPlatformFileSource?> getCroppedImage() async {
-    final img = await getImage();
+  static Future<VPlatformFileSource?> getCroppedImage({bool isFromCamera = false}) async {
+    final img = await getImage(isFromCamera: isFromCamera);
     if (img != null) {
       if (VPlatforms.isMobile) {
         final croppedFile = await ImageCropper().cropImage(
@@ -49,7 +49,7 @@ abstract class VAppPick {
   }
 
   static Future<VPlatformFileSource?> getImage({
-    bool fromCamera = false,
+    bool isFromCamera = false,
   }) async {
     isPicking = true;
     final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(

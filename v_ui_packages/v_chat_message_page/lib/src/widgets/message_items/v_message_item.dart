@@ -4,7 +4,6 @@ import 'package:v_chat_message_page/src/widgets/message_items/shared/center_item
 import 'package:v_chat_message_page/src/widgets/message_items/shared/direction_item_holder.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/forward_ttem_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_broadcast_icon.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/shared/message_status_icon.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_time_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/reply_item_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/all_deleted_item.dart';
@@ -17,7 +16,9 @@ import 'package:v_chat_message_page/src/widgets/message_items/widgets/location_m
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/text_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/video_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/voice_message_item.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 import '../../core/types.dart';
@@ -51,7 +52,7 @@ class VMessageItem extends StatelessWidget {
 
     if (message.messageType.isCenter) {
       return CenterItemHolder(
-        child: Text(message.getTextTrans),
+        child: Text(message.getMessageText),
       );
     }
     return InkWell(
@@ -83,7 +84,7 @@ class VMessageItem extends StatelessWidget {
                     message.messageType.isAllDeleted ? null : message.replyTo,
                 onHighlightMessage: onHighlightMessage,
               ),
-              _getChild(message),
+              _getChild(message, context),
               const SizedBox(
                 height: 5,
               ),
@@ -112,7 +113,7 @@ class VMessageItem extends StatelessWidget {
     );
   }
 
-  Widget _getChild(VBaseMessage message) {
+  Widget _getChild(VBaseMessage message, BuildContext context) {
     switch (message.messageType) {
       case MessageType.allDeleted:
         return AllDeletedItem(
@@ -120,17 +121,28 @@ class VMessageItem extends StatelessWidget {
         );
       case MessageType.text:
         return TextMessageItem(
-          message: message as VTextMessage,
-          onLinkPress: itemController.onLinkPress,
-          onEmailPress: itemController.onEmailPress,
+          message: (message as VTextMessage).realContent,
+          textStyle: context.vMessageTheme.textItemStyle(
+            context,
+            message.isMeSender,
+          ),
+          onLinkPress: (link) async {
+            await VStringUtils.lunchLink(link);
+          },
+          onEmailPress: (email) async {
+            await VStringUtils.lunchLink(email);
+          },
           onMentionPress: (context, userId) {
             final method = VChatController.I.vMessagePageConfig.onMentionPress;
             if (method != null) {
               method(context, userId);
             }
           },
-          onPhonePress: itemController.onPhonePress,
+          onPhonePress: (phone) async {
+            await VStringUtils.lunchLink(phone);
+          },
         );
+
       case MessageType.image:
         return ImageMessageItem(
           message: message as VImageMessage,

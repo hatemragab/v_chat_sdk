@@ -32,7 +32,8 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
     final old = await findByLocalId(event.localId);
     if (old != null) {
       throw VChatDartException(
-          exception: "message already exist $old in web db",);
+        exception: "message already exist $old in web db",
+      );
     }
     _messages.add(event.messageModel);
     return Future.value(1);
@@ -49,7 +50,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
           .where(
             (e) =>
                 e.roomId == roomId &&
-                e.content.toLowerCase().startsWith(text.toLowerCase()),
+                e.realContent.toLowerCase().startsWith(text.toLowerCase()),
           )
           .toList()
           .sortById()

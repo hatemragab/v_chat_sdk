@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums.dart';
 
+
 abstract class VAppPref {
   static SharedPreferences? _instance;
 
@@ -20,17 +21,8 @@ abstract class VAppPref {
     _hashKey = hasKey;
   }
 
-  static String? getStringOrNull(VStorageKeys key) =>
-      instance.getString(key.name);
 
   static String? getStringOrNullKey(String key) => instance.getString(key);
-
-  static Future<void> setString(
-    VStorageKeys key,
-    String value,
-  ) {
-    return instance.setString(key.name, value);
-  }
 
   static Future<void> setStringKey(
     String key,
@@ -40,7 +32,7 @@ abstract class VAppPref {
   }
 
   static Future<void> setHashedString(
-    VStorageKeys sKey,
+      String sKey,
     String value,
   ) {
     final plainText = value;
@@ -49,18 +41,18 @@ abstract class VAppPref {
     final iv = IV.fromLength(16);
     final encrypter = Encrypter(AES(key));
     final encrypted = encrypter.encrypt(plainText, iv: iv);
-    return instance.setString(sKey.name, encrypted.base64);
+    return instance.setString(sKey, encrypted.base64);
   }
 
   static String? getHashedString({
-    required VStorageKeys key,
+    required String key,
     SharedPreferences? preferences,
   }) {
     late String? plainText;
     if (preferences != null) {
-      plainText = preferences.getString(key.name);
+      plainText = preferences.getString(key);
     } else {
-      plainText = instance.getString(key.name);
+      plainText = instance.getString(key);
     }
 
     if (plainText == null) return null;
@@ -71,15 +63,15 @@ abstract class VAppPref {
   }
 
   static bool isLogin() {
-    return getBool(VStorageKeys.isLogin);
+    return getBool(VStorageKeys.vIsLogin.name);
   }
 
   static Future<void> setLogOut() {
-    return remove(VStorageKeys.isLogin);
+    return removeKey(VStorageKeys.vIsLogin.name);
   }
 
   static Future<void> setLogin() async {
-    return setBool(VStorageKeys.isLogin, true);
+    return setBool(VStorageKeys.vIsLogin.name, true);
   }
 
   static int? getIntOrNull(
@@ -87,16 +79,10 @@ abstract class VAppPref {
   ) =>
       instance.getInt(key);
 
-  static int getInt(
-    String key, [
-    int defult = 0,
-  ]) =>
-      getIntOrNull(key) ?? defult;
-
   static bool getBool(
-    VStorageKeys key,
+      String key,
   ) =>
-      instance.getBool(key.name) ?? false;
+      instance.getBool(key) ?? false;
 
   static Future<void> setInt(
     String key,
@@ -105,16 +91,16 @@ abstract class VAppPref {
       instance.setInt(key, value);
 
   static Future<void> setBool(
-    VStorageKeys key,
+      String key,
     // ignore: avoid_positional_boolean_parameters
     bool value,
   ) =>
-      instance.setBool(key.name, value);
+      instance.setBool(key, value);
 
   static Map<String, dynamic>? getMap(
-    VStorageKeys key,
+      String key,
   ) {
-    final data = getStringOrNull(key);
+    final data = getStringOrNullKey(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
   }
 
@@ -126,10 +112,10 @@ abstract class VAppPref {
   }
 
   static Future<void> setMap(
-    VStorageKeys key,
+      String key,
     Map<String, dynamic> map,
   ) =>
-      setString(key, jsonEncode(map));
+      setStringKey(key, jsonEncode(map));
 
   static Future<void> setMapApiCache(
     String key,
@@ -139,10 +125,6 @@ abstract class VAppPref {
 
   static Future<void> clear() => instance.clear();
 
-  static Future<void> remove(
-    VStorageKeys key,
-  ) =>
-      instance.remove(key.name);
 
   static Future<void> removeKey(
     String key,

@@ -1,7 +1,7 @@
 import 'package:v_chat_sdk_core/src/http/api_service/auth/auth_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
-import 'package:v_chat_sdk_core/src/utils/http_helper.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/src/utils/http_helper.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class AuthApiService {
@@ -18,14 +18,14 @@ class AuthApiService {
     );
     await Future.wait([
       VAppPref.setHashedString(
-        VStorageKeys.accessToken,
+        VStorageKeys.vAccessToken.name,
         extractDataFromResponse(response)['accessToken'].toString(),
       ),
-      VAppPref.setString(
-        VStorageKeys.appLanguage,
+      VAppPref.setStringKey(
+        VStorageKeys.vAppLanguage.name,
         dto.language,
       ),
-      VAppPref.setMap(VStorageKeys.vMyProfile, myUser.toMap())
+      VAppPref.setMap(VStorageKeys.vMyProfile.name, myUser.toMap())
     ]);
     return myUser;
   }
@@ -46,14 +46,14 @@ class AuthApiService {
     );
     await Future.wait([
       VAppPref.setHashedString(
-        VStorageKeys.accessToken,
+        VStorageKeys.vAccessToken.name,
         extractDataFromResponse(response)['accessToken'].toString(),
       ),
-      VAppPref.setString(
-        VStorageKeys.appLanguage,
+      VAppPref.setStringKey(
+        VStorageKeys.vAppLanguage.name,
         dto.language,
       ),
-      VAppPref.setMap(VStorageKeys.vMyProfile, myUser.toMap())
+      VAppPref.setMap(VStorageKeys.vMyProfile.name, myUser.toMap())
     ]);
     return myUser;
   }

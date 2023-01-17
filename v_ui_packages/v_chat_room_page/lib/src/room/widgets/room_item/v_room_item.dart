@@ -39,12 +39,12 @@ class VRoomItem extends StatelessWidget {
         height: 65,
         width: 65,
         decoration: BoxDecoration(
-          color: isSelected ? theme.vChatItemBuilder.selectedRoomColor : null,
+          color: isSelected ? theme.selectedRoomColor : null,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           children: [
-            theme.vChatItemBuilder.getChatAvatar(
+            theme.getChatAvatar(
               imageUrl: room.thumbImage,
               chatTitle: room.title,
               isOnline: room.isThereBlock ? false : room.isOnline,

@@ -34,7 +34,7 @@ class VNotificationListener {
           if (!isRoomOpen) {
             VAppAlert.showOverlaySupport(
               title: message.senderName,
-              subtitle: message.getTextTrans,
+              subtitle: message.getMessageText,
             );
           }
         }

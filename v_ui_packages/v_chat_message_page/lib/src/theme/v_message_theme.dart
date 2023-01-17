@@ -1,27 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/theme/theme_types.dart';
 
-import 'message_item_theme.dart';
+import '../../v_chat_message_page.dart';
 
 class VMessageTheme extends ThemeExtension<VMessageTheme> {
-  final VMessageItemBuilder vMessageItemBuilder;
   final BoxDecoration scaffoldDecoration;
+  final ItemHolderTypeDef messageItemHolder;
+  final IteMHolderColorTypeDef messageItemHolderColor;
+  final VMsgStatusTheme messageSendingStatus;
+  final TextTypeDef textItemStyle;
+  final DateDividerTypeDef dateDividerWidget;
 
   VMessageTheme._({
-    required this.vMessageItemBuilder,
     required this.scaffoldDecoration,
+    required this.messageSendingStatus,
+    required this.messageItemHolder,
+    required this.textItemStyle,
+    required this.dateDividerWidget,
+    required this.messageItemHolderColor,
   });
 
   factory VMessageTheme.light() {
     return VMessageTheme._(
-      vMessageItemBuilder: VMessageItemBuilder.light(),
       scaffoldDecoration: const BoxDecoration(),
+      messageSendingStatus: const VMsgStatusTheme.light(),
+      textItemStyle: getTextWidget,
+      dateDividerWidget: getDateDividerWidget,
+      messageItemHolderColor: getMessageItemHolderColor,
+      messageItemHolder: getMessageItemHolder,
     );
   }
 
   factory VMessageTheme.dark() {
     return VMessageTheme._(
-      vMessageItemBuilder: VMessageItemBuilder.dark(),
       scaffoldDecoration: const BoxDecoration(),
+      messageSendingStatus: const VMsgStatusTheme.dark(),
+      textItemStyle: getTextWidget,
+      dateDividerWidget: getDateDividerWidget,
+      messageItemHolderColor: getMessageItemHolderColor,
+      messageItemHolder: getMessageItemHolder,
     );
   }
 
@@ -35,12 +52,21 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   }
 
   VMessageTheme copyWith({
-    VMessageItemBuilder? vMessageItemBuilder,
-    BoxDecoration? scaffoldDDecoration,
+    BoxDecoration? scaffoldDecoration,
+    ItemHolderTypeDef? messageItemHolder,
+    IteMHolderColorTypeDef? messageItemHolderColor,
+    VMsgStatusTheme? messageSendingStatus,
+    TextTypeDef? textItemStyle,
+    DateDividerTypeDef? dateDividerWidget,
   }) {
     return VMessageTheme._(
-      vMessageItemBuilder: vMessageItemBuilder ?? this.vMessageItemBuilder,
-      scaffoldDecoration: scaffoldDDecoration ?? scaffoldDecoration,
+      scaffoldDecoration: scaffoldDecoration ?? this.scaffoldDecoration,
+      messageItemHolder: messageItemHolder ?? this.messageItemHolder,
+      messageItemHolderColor:
+          messageItemHolderColor ?? this.messageItemHolderColor,
+      messageSendingStatus: messageSendingStatus ?? this.messageSendingStatus,
+      textItemStyle: textItemStyle ?? this.textItemStyle,
+      dateDividerWidget: dateDividerWidget ?? this.dateDividerWidget,
     );
   }
 }

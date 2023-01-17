@@ -39,7 +39,7 @@ abstract class VAppConstants {
   // }
 
   static VIdentifierUser get myProfile {
-    final map = VAppPref.getMap(VStorageKeys.vMyProfile);
+    final map = VAppPref.getMap(VStorageKeys.vMyProfile.name);
     if (map == null) {
       throw VChatDartException(
         exception:
@@ -53,7 +53,9 @@ abstract class VAppConstants {
 
   static VIdentifierUser get fakeMyProfile {
     return VIdentifierUser(
-        identifier: "FAKE identifier", baseUser: VBaseUser.fromFakeData(),);
+      identifier: "FAKE identifier",
+      baseUser: VBaseUser.fromFakeData(),
+    );
   }
 
   static String get myId {
@@ -65,11 +67,11 @@ abstract class VAppConstants {
   }
 
   static String get sdkLanguage =>
-      VAppPref.getStringOrNull(VStorageKeys.appLanguage) ?? "en";
+      VAppPref.getStringOrNullKey(VStorageKeys.vAppLanguage.name) ?? "en";
 
   static String getMessageBody(VBaseMessage m) {
     //todo trans
-    return m.content;
+    return m.realContent;
     //
     //   if (m.isInfo) {
     //     final MsgInfoAtt infoAtt = (m as InfoMessage).infoAtt;
