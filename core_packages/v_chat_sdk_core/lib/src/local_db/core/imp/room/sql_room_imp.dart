@@ -231,4 +231,15 @@ class SqlRoomImp extends BaseLocalRoomRepo {
     );
     return maps.isEmpty ? null : VRoom.fromLocalMap(maps.first);
   }
+
+  @override
+  Future<bool> isRoomExist(String roomId) async {
+    final maps = await _database.query(
+      _table,
+      where: "$_id =?",
+      whereArgs: [roomId],
+      limit: 1,
+    );
+    return maps.isNotEmpty;
+  }
 }

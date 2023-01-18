@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/edit_profile_controller.dart';
@@ -15,58 +14,55 @@ class EditProfileView extends GetView<EditProfileController> {
         title: const Text('Edit Profile'),
         centerTitle: true,
       ),
-      body: Obx(() {
-        AuthRepo.isAuth.value;
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Stack(
-                  children: [
-                    SizedBox(
-                      height: 130,
-                      width: 130,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: VPlatformCacheImageWidget(
-                          source: controller.userImage,
-                          fit: BoxFit.cover,
-                        ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 130,
+                    width: 130,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: VPlatformCacheImageWidget(
+                        source: controller.userImage,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    Positioned(
-                      right: 0,
-                      bottom: 2,
-                      child: FloatingActionButton(
-                        mini: true,
-                        onPressed: controller.onCameraClick,
-                        child: const Icon(
-                          Icons.camera_alt,
-                        ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 2,
+                    child: FloatingActionButton(
+                      mini: true,
+                      onPressed: controller.onCameraClick,
+                      child: const Icon(
+                        Icons.camera_alt,
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  controller: controller.nameController,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: controller.onSave,
-                  child: const Text("Update"),
-                )
-              ],
-            ),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: controller.nameController,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: controller.onSave,
+                child: const Text("Update"),
+              )
+            ],
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

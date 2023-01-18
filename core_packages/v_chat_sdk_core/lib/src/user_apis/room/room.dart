@@ -1,3 +1,4 @@
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
@@ -20,5 +21,17 @@ class RoomApi {
     required String peerIdentifier,
   }) async {
     return _channelApiService.getPeerRoom(peerIdentifier);
+  }
+
+  Future openChatWith(BuildContext buildContext, String identifier) async {
+    final localRoom = await _vNativeApi.local.room.getRoomByPeerId(identifier);
+    if (localRoom != null) {
+      VChatController.I.vNavigator.messageNavigator
+          .toMessagePage(buildContext, localRoom);
+    } else {
+      final apiRoom = await _vNativeApi.remote.room.getPeerRoom(identifier);
+      VChatController.I.vNavigator.messageNavigator
+          .toMessagePage(buildContext, apiRoom);
+    }
   }
 }

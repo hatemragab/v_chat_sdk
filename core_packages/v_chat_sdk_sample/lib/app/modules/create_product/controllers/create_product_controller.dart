@@ -50,17 +50,17 @@ class CreateProductController extends GetxController {
         VAppAlert.showLoading(context: Get.context!);
       },
       request: () async {
-        final imgUrl = await CloudFireUpload.uploadFile(productImage!, user.id);
-        final product = ProductModel(
-          productId: "${DateTime.now().microsecondsSinceEpoch}-${user.id}",
-          price: int.parse(priceController.text),
-          userModel: user,
-          desc: descController.text,
-          createdAt: DateTime.now().toUtc(),
-          imageUrl: imgUrl,
-          title: nameController.text,
-        );
-        await repository.add(product);
+        // final imgUrl = await CloudFireUpload.uploadFile(productImage!, user.id);
+        // final product = ProductModel(
+        //   productId: "${DateTime.now().microsecondsSinceEpoch}-${user.id}",
+        //   price: int.parse(priceController.text),
+        //   userModel: user,
+        //   desc: descController.text,
+        //   createdAt: DateTime.now().toUtc(),
+        //   imageUrl: imgUrl,
+        //   title: nameController.text,
+        // );
+        // await repository.add(product);
       },
     );
   }

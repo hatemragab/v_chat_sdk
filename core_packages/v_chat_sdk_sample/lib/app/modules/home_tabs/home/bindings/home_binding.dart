@@ -10,7 +10,7 @@ class HomeBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<UsersTabController>(
-      UsersTabController(Get.find()),
+      UsersTabController( ),
     );
     Get.put<ChatsTabController>(
       ChatsTabController(),

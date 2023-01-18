@@ -8,6 +8,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class EventsDaemon {
   StreamSubscription? _messageSubscription;
   final _emitter = VEventBusSingleton.vEventBus;
+  final _nativeAPi = VChatController.I.nativeApi;
 
   void start() {
     _messageSubscription = _emitter
@@ -23,11 +24,17 @@ class EventsDaemon {
   Future<void> _onNewInsert(VBaseMessage message) async {
     if (!message.isMeSender) {
       ///deliver this message
-      VChatController.I.nativeApi.remote.socketIo.emitDeliverRoomMessages(
+      _nativeAPi.remote.socketIo.emitDeliverRoomMessages(
         message.roomId,
       );
     }
-    //print("onNewInsertonNewInsert $message");
+    final messageRoom = await _nativeAPi.local.room.isRoomExist(message.roomId);
+    if (!messageRoom) {
+      // we need to request it
+      await Future.delayed(const Duration(seconds: 3));
+      final apiRoom = await _nativeAPi.remote.room.getRoomById(message.roomId);
+      await _nativeAPi.local.room.safeInsertRoom(apiRoom);
+    }
   }
 
   void close() {

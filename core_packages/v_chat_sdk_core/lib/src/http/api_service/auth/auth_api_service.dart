@@ -7,11 +7,11 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class AuthApiService {
   AuthApiService._();
 
-  static late final AuthApi _authApi;
+  static     AuthApi? _authApi;
 
   Future<VIdentifierUser> login(VChatLoginDto dto) async {
     final body = dto.toMap();
-    final response = await _authApi.login(body);
+    final response = await _authApi!.login(body);
     throwIfNotSuccess(response);
     final myUser = VIdentifierUser.fromMap(
       extractDataFromResponse(response)['user'] as Map<String, dynamic>,
@@ -32,7 +32,7 @@ class AuthApiService {
 
   Future<VIdentifierUser> register(VChatRegisterDto dto) async {
     final body = dto.toListOfPartValue();
-    final response = await _authApi.register(
+    final response = await _authApi!.register(
       body,
       dto.image == null
           ? null
@@ -62,7 +62,7 @@ class AuthApiService {
     Uri? baseUrl,
     String? accessToken,
   }) {
-    _authApi = AuthApi.create(
+    _authApi ??= AuthApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
@@ -70,7 +70,7 @@ class AuthApiService {
   }
 
   Future<bool> logout() async {
-    final response = await _authApi.logout();
+    final response = await _authApi!.logout();
     throwIfNotSuccess(response);
     return true;
   }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:logging/logging.dart';
@@ -9,14 +10,16 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
-  final _nativeApi = VNativeApi.I;
   late final SocketService _socketService;
-
+  final Completer<void> socketCompleter = Completer<void>();
   SocketController._() {
     _socketService = SocketService(socketIoClient);
     _initSocketEvents();
     socketIoClient.socket.onConnect(
       (data) {
+        if (!socketCompleter.isCompleted) {
+          socketCompleter.complete();
+        }
         _log.finer("Socket connected successfully");
         vChatEvents.fire(const VSocketStatusEvent(isConnected: true));
       },

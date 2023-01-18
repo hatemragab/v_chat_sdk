@@ -38,7 +38,10 @@ abstract class ProfileApi extends ChopperService {
   Future<Response> getLastSeenAt(
     @Path("peerId") String peerId,
   );
-
+  @Get(path: "/users")
+  Future<Response> appUsers(
+      @QueryMap() Map<String, dynamic> query,
+      );
   static ProfileApi create({
     Uri? baseUrl,
     String? accessToken,

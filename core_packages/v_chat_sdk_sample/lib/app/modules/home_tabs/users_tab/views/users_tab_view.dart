@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
@@ -23,69 +22,36 @@ class UsersTabView extends GetView<UsersTabController> {
         title: const Text('All Users'),
         centerTitle: true,
       ),
-      body: FirestorePagination(
-        isLive: true,
-        viewType: ViewType.list,
-        limit: 30,
-        query: FirebaseFirestore.instance
-            .collection('users')
-            .orderBy("createdAt", descending: true),
-        itemBuilder: (context, documentSnapshot, index) {
-          final user = UserModel.fromMap(
-              documentSnapshot.data() as Map<String, dynamic>);
-          if (user.id == AppAuth.getMyModel.id) {
-            return const SizedBox();
-          }
-          return ListTile(
-            onTap: () => Get.toNamed(
-              Routes.PEER_PROFILE,
-              arguments: user.id,
-            ),
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: VPlatformCacheImageWidget(
-                source: user.imgAsPlatformSource,
-                size: const Size(60, 60),
-                fit: BoxFit.cover,
-              ),
-            ),
-            title: Text(user.userName),
-            subtitle: Text(user.createdAt.toIso8601String()),
+      body: GetBuilder<UsersTabController>(
+        assignId: true,
+        builder: (logic) {
+          return VAsyncWidgetsBuilder(
+            loadingState: logic.loadingState,
+            emptyWidget: () => SizedBox(),
+            errorWidget: () => SizedBox(),
+            loadingWidget: () => SizedBox(),
+            onRefresh: logic.getData,
+            successWidget: () {
+              return ListView.builder(
+                padding: const EdgeInsets.all(5),
+                itemBuilder: (context, index) {
+                  final item = logic.data[index];
+                  return ListTile(
+                    onTap: () => logic.onItemPress(item),
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    leading: VCircleAvatar(
+                      fullUrl: item.baseUser.userImages.chatImage,
+                    ),
+                    title: item.baseUser.fullName.text,
+                  );
+                },
+                itemCount: logic.data.length,
+              );
+            },
           );
         },
       ),
-      // body: StreamBuilder<List<UserModel>>(
-      //   stream: controller.repository.getStreamAll(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState != ConnectionState.active) {
-      //       return const Center(
-      //         child: CircularProgressIndicator.adaptive(),
-      //       );
-      //     }
-      //     if (snapshot.data == null || snapshot.data!.isEmpty) {
-      //       return const Text("No users yet");
-      //     }
-      //     final users = snapshot.data!;
-      //     return ListView.builder(
-      //       padding: const EdgeInsets.only(top: 5),
-      //       itemBuilder: (context, index) {
-      //         return ListTile(
-      //           leading: ClipRRect(
-      //             borderRadius: BorderRadius.circular(50),
-      //             child: PlatformCacheImageWidget(
-      //               source: users[index].imgAsPlatformSource,
-      //               size: const Size(60, 60),
-      //               fit: BoxFit.cover,
-      //             ),
-      //           ),
-      //           title: Text(users[index].userName),
-      //           subtitle: Text(users[index].createdAt.toIso8601String()),
-      //         );
-      //       },
-      //       itemCount: users.length,
-      //     );
-      //   },
-      // ),
     );
   }
 }

@@ -50,7 +50,8 @@ class MessageProvider {
     return apiMessages;
   }
 
-  void setSeen(String roomId) {
+  void setSeen(String roomId) async {
+    await _socket.socketCompleter.future;
     _socket.emitSeenRoomMessages(roomId);
     unawaited(_localRoom.updateRoomUnreadToZero(roomId));
   }

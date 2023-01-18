@@ -50,10 +50,11 @@ class VMessageController {
 
   String get roomId => vRoom.id;
 
-  VMessageController(
-      {required this.vRoom,
-      this.isInTesting = false,
-      required BuildContext context}) {
+  VMessageController({
+    required this.vRoom,
+    this.isInTesting = false,
+    required BuildContext context,
+  }) {
     messageState = MessageStateController(
       vRoom,
       _messageProvider,

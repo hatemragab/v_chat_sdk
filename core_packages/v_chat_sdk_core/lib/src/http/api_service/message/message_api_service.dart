@@ -9,7 +9,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MessageApiService {
-  static late final MessageApi _messageApi;
+  static MessageApi? _messageApi;
   final _log = Logger('MessageApiService');
 
   MessageApiService._();
@@ -18,7 +18,7 @@ class MessageApiService {
     required String roomId,
     required VRoomMessagesDto dto,
   }) async {
-    final res = await _messageApi.getRoomMessages(
+    final res = await _messageApi!.getRoomMessages(
       roomId,
       dto.toMap(),
     );
@@ -26,9 +26,11 @@ class MessageApiService {
     final data = extractDataFromResponse(res);
     final docs = data['docs'] as List;
     return docs
-        .map((e) => MessageFactory.createBaseMessage(
-              e as Map<String, dynamic>,
-            ),)
+        .map(
+          (e) => MessageFactory.createBaseMessage(
+            e as Map<String, dynamic>,
+          ),
+        )
         .toList();
   }
 
@@ -36,7 +38,7 @@ class MessageApiService {
     String roomId,
     String messageId,
   ) async {
-    final res = await _messageApi.deleteMessageFromMe(roomId, messageId);
+    final res = await _messageApi!.deleteMessageFromMe(roomId, messageId);
     throwIfNotSuccess(res);
     return true;
   }
@@ -45,7 +47,7 @@ class MessageApiService {
     String roomId,
     String messageId,
   ) async {
-    final res = await _messageApi.getMessageStatusSummary(
+    final res = await _messageApi!.getMessageStatusSummary(
       roomId,
       messageId,
     );
@@ -59,7 +61,7 @@ class MessageApiService {
     String roomId,
     String mId,
   ) async {
-    final res = await _messageApi.deleteMessageFromAll(roomId, mId);
+    final res = await _messageApi!.deleteMessageFromAll(roomId, mId);
     throwIfNotSuccess(res);
     return true;
   }
@@ -69,7 +71,7 @@ class MessageApiService {
   ) async {
     late Response res;
     try {
-      res = await _messageApi.createMessage(
+      res = await _messageApi!.createMessage(
         messageModel.roomId,
         messageModel.body,
         messageModel.file1,
@@ -91,7 +93,7 @@ class MessageApiService {
     Map<String, Object> pagination, {
     required bool isSeen,
   }) async {
-    final Response res = await _messageApi.getMessageStatus(
+    final Response res = await _messageApi!.getMessageStatus(
       roomId,
       messageId,
       pagination,
@@ -111,7 +113,7 @@ class MessageApiService {
     Uri? baseUrl,
     String? accessToken,
   }) {
-    _messageApi = MessageApi.create(
+    _messageApi ??= MessageApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );

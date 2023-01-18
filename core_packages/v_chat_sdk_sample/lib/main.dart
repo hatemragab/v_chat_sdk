@@ -23,11 +23,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await Supabase.initialize(
-    url: "https://qtkcgcmeqyyvhzvjebvr.supabase.co",
-    anonKey:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0a2NnY21lcXl5dmh6dmplYnZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzA1OTcyODgsImV4cCI6MTk4NjE3MzI4OH0.yaEOvgShEGTbv4ryYgeGZwK5oR1XOKNQOgs8R_xhq0E",
-  );
   await VChatController.init(
     vChatConfig: VChatConfig(
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",

@@ -25,11 +25,10 @@ abstract class BaseLocalRoomRepo {
 
   Future<void> reCreate();
 
-  // Future<int> setAllOffline();
-
   Future<VRoom?> getOneByPeerId(String roomId);
 
   Future<String?> getRoomIdByPeerId(String peerId);
+  Future<bool> isRoomExist(String roomId);
 
   Future<VRoom?> getOneWithLastMessageByRoomId(String roomId);
 

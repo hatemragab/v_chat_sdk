@@ -95,4 +95,17 @@ class _$ProfileApi extends ProfileApi {
     );
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> appUsers(Map<String, dynamic> query) {
+    final Uri $url = Uri.parse('profile/users');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
 }

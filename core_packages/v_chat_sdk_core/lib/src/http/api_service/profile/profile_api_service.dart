@@ -4,12 +4,12 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ProfileApiService {
-  static late final ProfileApi _profileApi;
+  static ProfileApi? _profileApi;
 
   ProfileApiService._();
 
   Future<bool> addFcm(String fcm) async {
-    final res = await _profileApi.addFcm(
+    final res = await _profileApi!.addFcm(
       {'pushKey': fcm},
     );
     throwIfNotSuccess(res);
@@ -17,13 +17,13 @@ class ProfileApiService {
   }
 
   Future<bool> deleteFcm() async {
-    final res = await _profileApi.deleteFcm();
+    final res = await _profileApi!.deleteFcm();
     throwIfNotSuccess(res);
     return true;
   }
 
   Future<bool> updateImage(VPlatformFileSource img) async {
-    final res = await _profileApi.updateImage(
+    final res = await _profileApi!.updateImage(
       await VPlatforms.getMultipartFile(
         source: img,
       ),
@@ -33,7 +33,7 @@ class ProfileApiService {
   }
 
   Future<bool> updateUserName(String fullName) async {
-    final res = await _profileApi.updateUserName({"fullName": fullName});
+    final res = await _profileApi!.updateUserName({"fullName": fullName});
     throwIfNotSuccess(res);
 
     return true;
@@ -42,16 +42,26 @@ class ProfileApiService {
   Future<DateTime> getUserLastSeenAt(
     String peerId,
   ) async {
-    final res = await _profileApi.getLastSeenAt(peerId);
+    final res = await _profileApi!.getLastSeenAt(peerId);
     throwIfNotSuccess(res);
     return DateTime.parse((res.body as Map<String, dynamic>)['data'] as String);
+  }
+
+  Future<List<VIdentifierUser>> appUsers(Map<String, dynamic> dto) async {
+    final res = await _profileApi!.appUsers(dto);
+    throwIfNotSuccess(res);
+    return (extractDataFromResponse(res)['docs'] as List)
+        .map(
+          (e) => VIdentifierUser.fromMap(e as Map<String, dynamic>),
+        )
+        .toList();
   }
 
   static ProfileApiService init({
     Uri? baseUrl,
     String? accessToken,
   }) {
-    _profileApi = ProfileApi.create(
+    _profileApi ??= ProfileApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );

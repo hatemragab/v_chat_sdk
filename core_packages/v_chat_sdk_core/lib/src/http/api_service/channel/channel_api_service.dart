@@ -4,31 +4,31 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChannelApiService {
-  static late final ChannelApi _channelApiService;
+  static  ChannelApi? _channelApiService;
 
   ChannelApiService._();
 
   Future<VRoom> getPeerRoom(String peerId) async {
-    final res = await _channelApiService.getPeerRoom(peerId);
+    final res = await _channelApiService!.getPeerRoom(peerId);
     throwIfNotSuccess(res);
     return VRoom.fromMap(extractDataFromResponse(res));
   }
 
   Future<VRoom> getRoomById(String roomId) async {
-    final res = await _channelApiService.getRoomById(roomId);
+    final res = await _channelApiService!.getRoomById(roomId);
     throwIfNotSuccess(res);
     return VRoom.fromMap(extractDataFromResponse(res));
   }
 
   Future<void> closeChat(String roomId) async {
-    final res = await _channelApiService.closeChat(roomId);
+    final res = await _channelApiService!.closeChat(roomId);
     throwIfNotSuccess(res);
   }
 
   Future<bool> changeRoomNotification(
     String roomId,
   ) async {
-    final res = await _channelApiService.changeRoomNotification(roomId);
+    final res = await _channelApiService!.changeRoomNotification(roomId);
     throwIfNotSuccess(res);
     return true;
   }
@@ -36,13 +36,13 @@ class ChannelApiService {
   Future<bool> deleteRoom(
     String roomId,
   ) async {
-    final res = await _channelApiService.deleteRoom(roomId);
+    final res = await _channelApiService!.deleteRoom(roomId);
     throwIfNotSuccess(res);
     return true;
   }
 
   Future<VPaginationModel<VRoom>> getRooms(VRoomsDto dto) async {
-    final res = await _channelApiService.getRooms(dto.toMap());
+    final res = await _channelApiService!.getRooms(dto.toMap());
     throwIfNotSuccess(res);
     final data = extractDataFromResponse(res);
     return VPaginationModel<VRoom>.fromCustomMap(
@@ -56,7 +56,7 @@ class ChannelApiService {
   Future<bool> deliverRoomMessages(
     String roomId,
   ) async {
-    final res = await _channelApiService.deliverRoomMessages(roomId);
+    final res = await _channelApiService!.deliverRoomMessages(roomId);
     throwIfNotSuccess(res);
     return true;
   }
@@ -64,7 +64,7 @@ class ChannelApiService {
   Future<VRoom> createBroadcast(
     CreateBroadcastDto dto,
   ) async {
-    final res = await _channelApiService.createBroadcast(
+    final res = await _channelApiService!.createBroadcast(
       dto.toListOfPartValue(),
       dto.platformImage == null
           ? null
@@ -79,7 +79,7 @@ class ChannelApiService {
   }
 
   Future<VMyBroadcastInfo> getBroadcastInfo(String roomId) async {
-    final res = await _channelApiService.getMyBroadcastInfo(roomId);
+    final res = await _channelApiService!.getMyBroadcastInfo(roomId);
     throwIfNotSuccess(res);
     return VMyBroadcastInfo.fromMap(extractDataFromResponse(res));
   }
@@ -88,7 +88,7 @@ class ChannelApiService {
     String roomId,
     String title,
   ) async {
-    final res = await _channelApiService.updateBroadcastTitle(roomId, {
+    final res = await _channelApiService!.updateBroadcastTitle(roomId, {
       "title": title,
     });
     throwIfNotSuccess(res);
@@ -99,7 +99,7 @@ class ChannelApiService {
     String roomId,
     VPlatformFileSource file,
   ) async {
-    final res = await _channelApiService.updateBroadcastImage(
+    final res = await _channelApiService!.updateBroadcastImage(
       roomId,
       await VPlatforms.getMultipartFile(
         source: file,
@@ -123,7 +123,7 @@ class ChannelApiService {
     String roomId,
     List<String> body,
   ) async {
-    final res = await _channelApiService.addParticipantsToBroadcast(
+    final res = await _channelApiService!.addParticipantsToBroadcast(
       roomId,
       {"ids": body},
     );
@@ -135,7 +135,7 @@ class ChannelApiService {
     String roomId,
     String peerId,
   ) async {
-    final res = await _channelApiService.kickBroadcastUser(
+    final res = await _channelApiService!.kickBroadcastUser(
       roomId,
       peerId,
     );
@@ -146,7 +146,7 @@ class ChannelApiService {
   Future<VRoom> createGroup(
     CreateGroupDto dto,
   ) async {
-    final res = await _channelApiService.createGroup(
+    final res = await _channelApiService!.createGroup(
       dto.toListOfPartValue(),
       dto.platformImage == null
           ? null
@@ -165,13 +165,13 @@ class ChannelApiService {
   // }
 
   Future<bool> getGroupStatus(String roomId) async {
-    final res = await _channelApiService.getMyGroupStatus(roomId);
+    final res = await _channelApiService!.getMyGroupStatus(roomId);
     throwIfNotSuccess(res);
     return extractDataFromResponse(res)['isMeOut'] as bool;
   }
 
   Future<bool> leaveGroup(String roomId) async {
-    final res = await _channelApiService.leaveGroup(roomId);
+    final res = await _channelApiService!.leaveGroup(roomId);
     throwIfNotSuccess(res);
     return true;
   }
@@ -180,7 +180,7 @@ class ChannelApiService {
     String roomId,
     String title,
   ) async {
-    final res = await _channelApiService.updateGroupTitle(roomId, {
+    final res = await _channelApiService!.updateGroupTitle(roomId, {
       "title": title,
     });
     throwIfNotSuccess(res);
@@ -191,7 +191,7 @@ class ChannelApiService {
     String roomId,
     VPlatformFileSource file,
   ) async {
-    final res = await _channelApiService.updateGroupImage(
+    final res = await _channelApiService!.updateGroupImage(
       roomId,
       await VPlatforms.getMultipartFile(
         source: file,
@@ -231,7 +231,7 @@ class ChannelApiService {
     List<String> ids,
   ) async {
     final res =
-        await _channelApiService.addParticipantsToGroup(roomId, {"ids": ids});
+        await _channelApiService!.addParticipantsToGroup(roomId, {"ids": ids});
     throwIfNotSuccess(res);
     return true;
   }
@@ -241,7 +241,7 @@ class ChannelApiService {
     String peerId,
     GroupMemberRole role,
   ) async {
-    final res = await _channelApiService.changeUserGroupRole(
+    final res = await _channelApiService!.changeUserGroupRole(
       roomId,
       peerId,
       role.name,
@@ -254,7 +254,7 @@ class ChannelApiService {
     String roomId,
     String peerId,
   ) async {
-    final res = await _channelApiService.kickGroupUser(
+    final res = await _channelApiService!.kickGroupUser(
       roomId,
       peerId,
     );
@@ -266,7 +266,7 @@ class ChannelApiService {
     Uri? baseUrl,
     String? accessToken,
   }) {
-    _channelApiService = ChannelApi.create(
+    _channelApiService ??= ChannelApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );

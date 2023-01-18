@@ -23,17 +23,20 @@ class NativeLocalRoom {
     return _roomRepo.getRoomsWithLastMessage(limit: limit);
   }
 
-  Future<VRoom?> getRoomById(String id) {
+  Future<VRoom?> getOneWithLastMessageByRoomId(String id) {
     return _roomRepo.getOneWithLastMessageByRoomId(id);
   }
 
+  Future<bool> isRoomExist(String id) {
+    return _roomRepo.isRoomExist(id);
+  }
+
   Future<void> safeInsertRoom(VRoom room) async {
-    if (await _roomRepo.getOneWithLastMessageByRoomId(room.id) == null) {
-      final event = VInsertRoomEvent(roomId: room.id, room: room);
-      await _roomRepo.insert(event);
-      await _localMessage.safeInsertMessage(room.lastMessage);
-      _emitter.fire(event);
-    }
+    if (await _roomRepo.isRoomExist(room.id)) return;
+    final event = VInsertRoomEvent(roomId: room.id, room: room);
+    await _roomRepo.insert(event);
+    await _localMessage.safeInsertMessage(room.lastMessage);
+    _emitter.fire(event);
   }
 
   Future<int> cacheRooms(

@@ -39,14 +39,8 @@ class RoomProvider {
     return apiModel;
   }
 
-  Future<VRoom?> getRoomById(String roomId) async {
-    final localRoom = await _localRoom.getRoomById(roomId);
-    if (localRoom != null) {
-      return localRoom;
-    }
-    final apiRoom = await _remoteRoom.getRoomById(roomId);
-    await _localRoom.safeInsertRoom(apiRoom);
-    return null;
+  Future<VRoom?> getLocalRoomById(String roomId) async {
+    return _localRoom.getOneWithLastMessageByRoomId(roomId);
   }
 
   Future<bool> mute(String roomId) async {

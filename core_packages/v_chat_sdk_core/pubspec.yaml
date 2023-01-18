@@ -1,6 +1,6 @@
 name: v_chat_sdk_core
-description: core package for v chat sdk witch use socket.io with node js and mongo db
-version: 0.1.0+3
+description: core package for v chat sdk witch use socket.io with node js and mongodb db
+version: 0.1.0+5
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/v2/core_packages/v_chat_sdk_core
@@ -8,7 +8,12 @@ repository: https://github.com/hatemragab/v_chat_sdk/tree/v2/core_packages/v_cha
 environment:
   sdk: '>=2.17.0 <3.0.0'
   flutter: ">=1.17.0"
-
+platforms:
+  android:
+  ios:
+  web:
+  windows:
+  mac:
 dependencies:
   flutter:
     sdk: flutter
@@ -33,7 +38,7 @@ dependencies:
   random_string: ^2.3.1
   flutter_localizations:
     sdk: flutter
-  v_chat_utils: ^0.1.0
+  v_chat_utils: ^0.1.0+5
 dev_dependencies:
   flutter_test:
     sdk: flutter

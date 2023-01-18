@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/modules/auth/authenticate.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../../core/enums.dart';
 
 class SplashController extends GetxController {
   @override
@@ -12,13 +13,11 @@ class SplashController extends GetxController {
 
   void checkUser() async {
     await Future.delayed(const Duration(seconds: 1));
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
+    final myUser = VAppPref.getMap(SStorageKeys.myProfile.name);
+    if (myUser == null) {
       // Go to login
-      AuthRepo.isAuth.value = false;
       Get.offAndToNamed(Routes.REGISTER);
     } else {
-      AuthRepo.isAuth.value = true;
       Get.offAndToNamed(Routes.HOME);
     }
   }

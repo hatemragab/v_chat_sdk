@@ -215,14 +215,9 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
       stateRooms.sortByMsgId();
       notifyListeners();
     } else {
-      //we need to request this room !
-      //first search in local db
-      //if not found then send api request to server
-      await Future.delayed(const Duration(seconds: 3));
-
-      final newRoom = await _roomProvider.getRoomById(event.roomId);
-      if (newRoom != null) {
-        insertRoom(newRoom);
+      final localRoom = await _roomProvider.getLocalRoomById(event.roomId);
+      if (localRoom != null) {
+        insertRoom(localRoom);
       }
     }
   }

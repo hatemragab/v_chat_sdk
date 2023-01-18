@@ -1,11 +1,47 @@
 import 'package:get/get.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/repository/user.repository.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class UsersTabController extends GetxController {
-  final UserRepository repository;
+import '../../../../core/user_filter_dto.dart';
 
-  UsersTabController(this.repository);
+class UsersTabController extends GetxController {
+  VChatLoadingState loadingState = VChatLoadingState.ideal;
+  final _data = <VIdentifierUser>[];
+
+  List<VIdentifierUser> get data => _data;
+  final _filterDto = UserFilterDto(
+    limit: 30,
+    page: 1,
+  );
+
+  @override
+  void onInit() {
+    super.onInit();
+    getData();
+  }
+
+  Future<void> getData() async {
+    await vSafeApiCall<List<VIdentifierUser>>(
+      onLoading: () async {
+
+      },
+      onError: (exception, trace) {
+
+      },
+      request: () async {
+        return await VChatController.I.nativeApi.remote.profile
+            .appUsers(_filterDto.toMap());
+      },
+      onSuccess: (response) {
+        loadingState = VChatLoadingState.success;
+        data.addAll(response);
+        update();
+      },
+      ignoreTimeoutAndNoInternet: false,
+      showToastError: true,
+    );
+  }
 
   void onCreateGroupOrBroadcast() async {
     final res = await VAppAlert.showAskListDialog(
@@ -14,5 +50,9 @@ class UsersTabController extends GetxController {
       content: ["Group", "Broadcast"],
     );
     print(res);
+  }
+
+  Future onItemPress(VIdentifierUser item) async {
+    await VChatController.I.roomApi.openChatWith(Get.context!, item.identifier);
   }
 }

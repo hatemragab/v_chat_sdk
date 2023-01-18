@@ -28,20 +28,18 @@ class _VChatPageState extends State<VChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: widget.floatingActionButton,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: widget.appBar ??
-            AppBar(
-              title: const Text("Rooms"),
-              centerTitle: true,
+      appBar: widget.appBar == null
+          ? null
+          : PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: widget.appBar!,
             ),
-      ),
       body: Container(
         decoration: context.vRoomTheme.scaffoldDecoration,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VSocketStatusWidget(),
+            const VSocketStatusWidget(padding: EdgeInsets.all(5)),
             ValueListenableBuilder<VPaginationModel<VRoom>>(
               valueListenable: widget.controller.roomState,
               builder: (_, value, __) {
