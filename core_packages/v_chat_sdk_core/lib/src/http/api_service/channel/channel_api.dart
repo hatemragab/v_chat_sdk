@@ -48,7 +48,9 @@ abstract class ChannelApi extends ChopperService {
   @Post(path: "/broadcast")
   @multipart
   Future<Response> createBroadcast(
-      @PartMap() List<PartValue> body, @PartFile("file") MultipartFile? file,);
+    @PartMap() List<PartValue> body,
+    @PartFile("file") MultipartFile? file,
+  );
 
   @Patch(path: "/{roomId}/broadcast/title")
   Future<Response> updateBroadcastTitle(

@@ -1,14 +1,14 @@
-class UserFilterDto{
-    int limit;
-    int page;
-    String? fullName;
+class UserFilterDto {
+  int limit;
+  int page;
+  String? fullName;
 
 //<editor-fold desc="Data Methods">
 
-    UserFilterDto({
+  UserFilterDto({
     required this.limit,
     required this.page,
-      this.fullName,
+    this.fullName,
   });
 
   @override

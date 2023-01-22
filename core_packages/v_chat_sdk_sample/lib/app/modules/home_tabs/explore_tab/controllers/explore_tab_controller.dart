@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 class ExploreTabController extends GetxController {

@@ -46,7 +46,8 @@ class VNotificationListener {
   }
 
   Future<VRoom?> _getRoom(String roomId) async {
-    return VChatController.I.nativeApi.local.room.getOneWithLastMessageByRoomId(roomId);
+    return VChatController.I.nativeApi.local.room
+        .getOneWithLastMessageByRoomId(roomId);
   }
 
   Future<void> getOpenAppNotification() async {

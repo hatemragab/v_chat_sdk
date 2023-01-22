@@ -1,4 +1,3 @@
-
 enum SStorageKeys {
   myProfile,
   accessToken,
@@ -7,6 +6,7 @@ enum SStorageKeys {
   appLang,
   clintVersion,
 }
+
 enum ApiCallStatus {
   loading,
   success,

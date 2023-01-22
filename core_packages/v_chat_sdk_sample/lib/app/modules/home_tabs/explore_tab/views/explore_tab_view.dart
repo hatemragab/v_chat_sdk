@@ -1,9 +1,6 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../../routes/app_pages.dart';
 import '../controllers/explore_tab_controller.dart';
 
 class ExploreTabView extends GetView<ExploreTabController> {

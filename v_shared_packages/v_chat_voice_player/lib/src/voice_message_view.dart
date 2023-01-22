@@ -45,7 +45,7 @@ class VVoiceMessageView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-       // color: context.vVoiceMessageTheme.backgroundColor,
+        // color: context.vVoiceMessageTheme.backgroundColor,
       ),
       child: ValueListenableBuilder(
         valueListenable: controller,
@@ -113,7 +113,7 @@ class VVoiceMessageView extends StatelessWidget {
                           ),
                           Opacity(
                             opacity: .0,
-                            child: Container(
+                            child: SizedBox(
                               width: controller.noiseWidth,
                               //color: Colors.amber.withOpacity(1),
                               child: Theme(

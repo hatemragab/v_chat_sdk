@@ -32,8 +32,6 @@ abstract class VFileUtils {
     }
   }
 
-
-
   static Future<String> downloadFileForWeb(
     VPlatformFileSource fileAttachment,
   ) async {

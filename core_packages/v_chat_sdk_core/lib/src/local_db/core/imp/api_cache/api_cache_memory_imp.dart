@@ -2,7 +2,7 @@ import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_api_cac
 import 'package:v_chat_sdk_core/src/models/api_cache_model.dart';
 
 class ApiCacheMemoryImp extends BaseLocalApiCacheRepo {
-  final _apiCaches = <Map<String, Object?>>[];
+  // final _apiCaches = <Map<String, Object?>>[];
 
   @override
   Future<ApiCacheModel?> getOneByEndPoint(String endpoint) {

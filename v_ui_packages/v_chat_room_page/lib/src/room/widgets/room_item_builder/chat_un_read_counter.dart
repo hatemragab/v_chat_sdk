@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
- import '../../shared/colored_circle_container.dart';
+import '../../shared/colored_circle_container.dart';
 
 class ChatUnReadWidget extends StatelessWidget {
   final int unReadCount;

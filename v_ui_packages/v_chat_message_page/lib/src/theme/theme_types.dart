@@ -141,5 +141,8 @@ TextStyle getTextWidget(
   BuildContext context,
   bool isMeSender,
 ) {
-  return Theme.of(context).textTheme.bodyText1!.merge(const TextStyle(fontSize: 17));
+  return Theme.of(context)
+      .textTheme
+      .bodyText1!
+      .merge(const TextStyle(fontSize: 17));
 }

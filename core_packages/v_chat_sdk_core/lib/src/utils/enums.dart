@@ -1,4 +1,4 @@
-enum VChatHttpMethods { get, post, patch, delete,put }
+enum VChatHttpMethods { get, post, patch, delete, put }
 
 enum MessageType {
   text,

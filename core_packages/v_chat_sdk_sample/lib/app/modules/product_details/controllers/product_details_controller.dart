@@ -1,8 +1,4 @@
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/models/order.model.dart';
-import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
-import 'package:v_chat_sdk_sample/app/core/repository/order.repository.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 

@@ -1,12 +1,11 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
-import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class RoomApi {
   final VNativeApi _vNativeApi;
-  final ControllerHelper _helper = ControllerHelper.instance;
+  // final ControllerHelper _helper = ControllerHelper.instance;
   final VChatConfig _chatConfig;
   final _log = Logger('user_api.Room');
 

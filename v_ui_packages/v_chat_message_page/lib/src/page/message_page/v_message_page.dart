@@ -11,7 +11,6 @@ import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/arrow_down.dart';
 import '../../widgets/input_widgets/ban_widget.dart';
 import '../../widgets/input_widgets/reply_msg_widget.dart';
-import '../../widgets/input_widgets/stop_typing_widget.dart';
 import '../../widgets/message_items/v_message_item.dart';
 
 typedef X = Widget Function(
@@ -52,7 +51,6 @@ class _VMessagePageState extends State<VMessagePage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: context.vMessageTheme.scaffoldDecoration,
-
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: PreferredSize(
@@ -210,7 +208,6 @@ class _VMessagePageState extends State<VMessagePage> {
                   onMentionSearch: controller.onMentionRequireSearch,
                   maxRecordTime: _config.maxRecordTime,
                   googleMapsApiKey: _config.googleMapsApiKey,
-
                   replyWidget: value.replyMsg == null
                       ? null
                       : ReplyMsgWidget(

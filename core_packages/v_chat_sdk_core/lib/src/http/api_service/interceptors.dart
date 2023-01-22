@@ -44,7 +44,6 @@ void throwIfNotSuccess(Response res) {
   }
 }
 
-
 Map<String, dynamic> extractDataFromResponse(Response res) {
   return (res.body as Map<String, dynamic>)['data'] as Map<String, dynamic>;
 }

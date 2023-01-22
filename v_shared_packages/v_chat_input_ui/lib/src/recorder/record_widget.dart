@@ -141,8 +141,7 @@ class RecordWidgetState extends State<RecordWidget> {
                 Expanded(
                   child: AudioWaveforms(
                     size: Size(MediaQuery.of(context).size.width, 35.0),
-                    recorderController:
-                    (recorder as MobileRecorder).recorder,
+                    recorderController: (recorder as MobileRecorder).recorder,
                   ),
                 )
               else

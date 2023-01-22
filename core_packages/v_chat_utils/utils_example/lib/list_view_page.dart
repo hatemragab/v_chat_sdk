@@ -26,10 +26,10 @@ class ListViewPageState extends State<ListViewPage> {
           TextButton(
             onPressed: () async {
               VAppAlert.showLoading(context: context);
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               Navigator.pop(context);
             },
-            child: Text("show loading alert"),
+            child: const Text("show loading alert"),
           )
         ],
       ),

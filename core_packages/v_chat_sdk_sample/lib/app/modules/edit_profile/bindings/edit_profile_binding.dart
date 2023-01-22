@@ -6,7 +6,7 @@ class EditProfileBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<EditProfileController>(
-      EditProfileController( ),
+      EditProfileController(),
     );
   }
 }

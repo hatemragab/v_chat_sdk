@@ -6,7 +6,7 @@ class MyOrdersBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<MyOrdersController>(
-      MyOrdersController( ),
+      MyOrdersController(),
     );
   }
 }

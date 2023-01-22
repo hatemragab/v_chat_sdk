@@ -8,9 +8,6 @@ class VRoomController with VSocketStatusStream {
 
   final _roomProvider = RoomProvider();
 
-  ///getters
-  List<VRoom> get _rooms => _roomState.stateRooms;
-
   VRoomController({
     this.isTesting = false,
   }) {

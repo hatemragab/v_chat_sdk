@@ -47,7 +47,7 @@ Future<T?> vSafeApiCall<T>({
 }
 
 void _showError(Object err, bool isAllow) {
-   if (isAllow) {
+  if (isAllow) {
     VAppAlert.showOverlaySupport(
       title: "Connection error",
       // subtitle: err.toString(),

@@ -1,9 +1,4 @@
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/repository/order.repository.dart';
-import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
-import 'package:v_chat_sdk_sample/app/core/repository/user.repository.dart';
-
-import 'clould/cloud_firestore_api.dart';
 
 class LazyInjection extends Bindings {
   @override

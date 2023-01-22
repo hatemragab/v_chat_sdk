@@ -4,14 +4,15 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/enums.dart';
 import '../../../core/models/user.model.dart';
-import '../../../core/repository/user.repository.dart';
 
 class PeerProfileController extends GetxController {
   final String uuId;
   // final UserRepository repository;
   late UserModel peerData;
 
-  PeerProfileController(this.uuId, );
+  PeerProfileController(
+    this.uuId,
+  );
 
   final apiCallStatus = ApiCallStatus.holding.obs;
 

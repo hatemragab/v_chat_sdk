@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums.dart';
 
-
 abstract class VAppPref {
   static SharedPreferences? _instance;
 
@@ -21,7 +20,6 @@ abstract class VAppPref {
     _hashKey = hasKey;
   }
 
-
   static String? getStringOrNullKey(String key) => instance.getString(key);
 
   static Future<void> setStringKey(
@@ -32,7 +30,7 @@ abstract class VAppPref {
   }
 
   static Future<void> setHashedString(
-      String sKey,
+    String sKey,
     String value,
   ) {
     final plainText = value;
@@ -80,7 +78,7 @@ abstract class VAppPref {
       instance.getInt(key);
 
   static bool getBool(
-      String key,
+    String key,
   ) =>
       instance.getBool(key) ?? false;
 
@@ -91,14 +89,14 @@ abstract class VAppPref {
       instance.setInt(key, value);
 
   static Future<void> setBool(
-      String key,
+    String key,
     // ignore: avoid_positional_boolean_parameters
     bool value,
   ) =>
       instance.setBool(key, value);
 
   static Map<String, dynamic>? getMap(
-      String key,
+    String key,
   ) {
     final data = getStringOrNullKey(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
@@ -112,7 +110,7 @@ abstract class VAppPref {
   }
 
   static Future<void> setMap(
-      String key,
+    String key,
     Map<String, dynamic> map,
   ) =>
       setStringKey(key, jsonEncode(map));
@@ -124,7 +122,6 @@ abstract class VAppPref {
       instance.setString(key, jsonEncode(map));
 
   static Future<void> clear() => instance.clear();
-
 
   static Future<void> removeKey(
     String key,

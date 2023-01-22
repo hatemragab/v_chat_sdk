@@ -9,7 +9,7 @@ mixin RoomLocalStorageService {
   late BaseLocalRoomRepo localRoomRepo;
   final emitter = VEventBusSingleton.vEventBus;
 
- void initRoomLocalStorage({
+  void initRoomLocalStorage({
     required Database database,
   }) {
     if (VPlatforms.isWeb) {

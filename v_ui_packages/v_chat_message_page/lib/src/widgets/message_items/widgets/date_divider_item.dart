@@ -21,7 +21,11 @@ class DateDividerItem extends StatelessWidget {
                 color: Colors.green,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: DateFormat("yyyy-MM-dd").format(dateTime).toString().text.color(Colors.black87),
+              child: DateFormat("yyyy-MM-dd")
+                  .format(dateTime)
+                  .toString()
+                  .text
+                  .color(Colors.black87),
             ),
           ),
         ],

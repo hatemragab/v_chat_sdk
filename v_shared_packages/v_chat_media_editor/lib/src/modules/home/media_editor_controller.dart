@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../core/core.dart';
 import '../pinter/image_pinter_view.dart';
-import '../video_player/views/video_player_view.dart';
 
 class MediaEditorController extends ValueNotifier {
   MediaEditorController(this.platformFiles, this.config) : super(null) {
@@ -141,8 +138,8 @@ class MediaEditorController extends ValueNotifier {
     if (item is VMediaVideoRes) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => VideoPlayerView(
-            messageVideoData: item.data,
+          builder: (context) => VVideoPlayer(
+            platformFileSource: item.data.fileSource,
           ),
         ),
       );
@@ -158,6 +155,7 @@ class MediaEditorController extends ValueNotifier {
       _updateScreen();
     }
   }
+
   Future<void> onSubmitData(BuildContext context) async {
     isCompressing = true;
     _updateScreen();
@@ -176,11 +174,10 @@ class MediaEditorController extends ValueNotifier {
         f.data.height = data.image.height;
       } else if (f is VMediaVideoRes) {
         f.data.duration =
-        await VFileUtils.getVideoDurationMill(f.data.fileSource);
+            await VFileUtils.getVideoDurationMill(f.data.fileSource);
       }
     }
     context.pop(mediaFiles);
     //await VideoCompress.deleteAllCache();
   }
-
 }

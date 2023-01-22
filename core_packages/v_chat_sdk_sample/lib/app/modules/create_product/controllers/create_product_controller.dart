@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/clould/cloud_fire_upload.dart';
-import 'package:v_chat_sdk_sample/app/core/models/product.model.dart';
-import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/utils/app_auth.dart';

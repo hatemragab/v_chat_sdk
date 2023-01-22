@@ -91,15 +91,15 @@ class _RemoteNativeApi {
     headers["clint-version"] = VAppConstants.clintVersion;
     switch (method) {
       case VChatHttpMethods.get:
-        return http.get(uri,headers: headers);
+        return http.get(uri, headers: headers);
       case VChatHttpMethods.post:
-        return http.post(uri, body: body,headers: headers);
+        return http.post(uri, body: body, headers: headers);
       case VChatHttpMethods.patch:
-        return http.patch(uri, body: body,headers: headers);
+        return http.patch(uri, body: body, headers: headers);
       case VChatHttpMethods.delete:
-        return http.delete(uri, body: body,headers: headers);
+        return http.delete(uri, body: body, headers: headers);
       case VChatHttpMethods.put:
-        return http.put(uri, body: body,headers: headers);
+        return http.put(uri, body: body, headers: headers);
     }
   }
 

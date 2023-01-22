@@ -21,7 +21,6 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 import '../../core/types.dart';
-import '../../page/message_page/v_message_item_controller.dart';
 
 class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
@@ -50,7 +49,7 @@ class VMessageItem extends StatelessWidget {
       !message.messageType.isVoice &&
       onTap != null;
 
-  bool get isAllowLongTap =>   onLongTap != null;
+  bool get isAllowLongTap => onLongTap != null;
 
   @override
   Widget build(BuildContext context) {

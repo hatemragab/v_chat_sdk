@@ -20,7 +20,6 @@ class VPlatformFileSource {
     required this.name,
     this.url,
     this.filePath,
-    this.assetsPath,
     this.bytes,
     required this.fileSize,
     this.mimeType,

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:chopper/chopper.dart';
-import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -10,7 +9,6 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class MessageApiService {
   static MessageApi? _messageApi;
-  final _log = Logger('MessageApiService');
 
   MessageApiService._();
 

@@ -1,9 +1,7 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/utils/app_auth.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/models/user.model.dart';
 import '../controllers/choose_members_controller.dart';
 
 class ChooseMembersView extends GetView<ChooseMembersController> {

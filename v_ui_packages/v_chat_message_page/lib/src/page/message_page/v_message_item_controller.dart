@@ -91,9 +91,8 @@ class VMessageItemController {
       );
       final url = await VDownloaderService.instance.addToQueue(message);
       context.pop();
-      final result = await OpenFile.open(url);
+      await OpenFile.open(url);
       VAppAlert.showOverlaySupport(title: "File has been saved");
-
     }
     if (message is VLocationMessage) {
       await VStringUtils.lunchMap(

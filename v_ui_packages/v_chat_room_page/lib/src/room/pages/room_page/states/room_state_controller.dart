@@ -266,7 +266,8 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         notifyListeners();
         break;
       case VRoomType.b:
-        value.values = value.values.where((e) => e.roomType.isBroadcast).toList();
+        value.values =
+            value.values.where((e) => e.roomType.isBroadcast).toList();
         notifyListeners();
         break;
       case VRoomType.o:

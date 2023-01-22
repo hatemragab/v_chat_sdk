@@ -84,7 +84,7 @@ class HorizontalMediaItem extends StatelessWidget {
     }
     return Container(
       color: Colors.black,
-      child:   const Icon(
+      child: const Icon(
         PhosphorIcons.file,
         color: Colors.white,
       ),

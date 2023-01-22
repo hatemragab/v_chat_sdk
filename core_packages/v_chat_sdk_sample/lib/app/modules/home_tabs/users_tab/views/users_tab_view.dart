@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
-import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../../core/utils/app_auth.dart';
 import '../controllers/users_tab_controller.dart';
 
 class UsersTabView extends GetView<UsersTabController> {

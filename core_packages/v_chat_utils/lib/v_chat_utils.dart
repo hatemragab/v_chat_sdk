@@ -1,6 +1,5 @@
 library v_chat_utils;
 
-
 export 'package:build_context/build_context.dart';
 export 'package:collection/collection.dart';
 export 'package:event_bus_plus/event_bus_plus.dart';

@@ -96,11 +96,13 @@ class NativeLocalMessage {
     VBaseMessage message,
   ) async {
     await _localMessageRepo.updateFullMessage(baseMessage: message);
-    _emitter.fire(VUpdateMessageEvent(
-      roomId: message.roomId,
-      localId: message.localId,
-      messageModel: message,
-    ),);
+    _emitter.fire(
+      VUpdateMessageEvent(
+        roomId: message.roomId,
+        localId: message.localId,
+        messageModel: message,
+      ),
+    );
     return 1;
   }
 

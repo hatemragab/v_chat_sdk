@@ -24,7 +24,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    VChatController.I.listenToOpenFromNotification();
     vOnNotificationsClickedStream = VChatController
         .I.nativeApi.streams.vOnNotificationsClickedStream
         .listen(

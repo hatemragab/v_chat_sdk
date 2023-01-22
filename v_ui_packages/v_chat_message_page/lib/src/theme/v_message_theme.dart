@@ -22,9 +22,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
 
   factory VMessageTheme.light() {
     return VMessageTheme._(
-      scaffoldDecoration: const BoxDecoration(
-        color: Color(0xffeee4e4)
-      ),
+      scaffoldDecoration: const BoxDecoration(color: Color(0xffeee4e4)),
       messageSendingStatus: const VMsgStatusTheme.light(),
       textItemStyle: getTextWidget,
       dateDividerWidget: getDateDividerWidget,

@@ -166,7 +166,7 @@ abstract class VAppPick {
   }
 
   static Future<VPlatformFileSource?> croppedImage({
-  required  VPlatformFileSource file,
+    required VPlatformFileSource file,
     List<CropAspectRatioPreset>? aspectRatioPresets,
   }) async {
     if (!file.isContentImage) return null;

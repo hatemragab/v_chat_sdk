@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../../../../core/repository/user.repository.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterBinding extends Bindings {

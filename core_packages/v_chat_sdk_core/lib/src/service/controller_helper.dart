@@ -7,7 +7,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ControllerHelper {
-  final  _config = VChatController.I.vChatConfig;
+  final _config = VChatController.I.vChatConfig;
   final _log = Logger('ControllerHelper');
   Timer? _timer;
 
@@ -18,8 +18,7 @@ class ControllerHelper {
 
   ControllerHelper._();
 
-  Future<ControllerHelper> init(
-  ) async {
+  Future<ControllerHelper> init() async {
     _initLogger(_config.enableLog);
     await _initPushService(_config.pushProvider);
     _initSocketTimer();
@@ -111,6 +110,4 @@ class ControllerHelper {
       },
     );
   }
-
-
 }

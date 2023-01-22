@@ -40,8 +40,8 @@ abstract class ProfileApi extends ChopperService {
   );
   @Get(path: "/users")
   Future<Response> appUsers(
-      @QueryMap() Map<String, dynamic> query,
-      );
+    @QueryMap() Map<String, dynamic> query,
+  );
   static ProfileApi create({
     Uri? baseUrl,
     String? accessToken,

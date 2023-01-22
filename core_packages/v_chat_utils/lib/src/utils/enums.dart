@@ -12,7 +12,6 @@ enum VSupportedFilesType {
   video,
 }
 
-
 enum VRoomTypingEnum { stop, typing, recording }
 
 enum VStorageKeys {

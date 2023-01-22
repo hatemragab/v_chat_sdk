@@ -33,7 +33,9 @@ class VChatLocalizations<T extends VChatLocalizationLabels> {
 
   static VChatLocalizationDelegate
       withDefaultOverrides<T extends VChatLocalizationLabels>(
-          T overrides, Locale locale,) {
+    T overrides,
+    Locale locale,
+  ) {
     return VChatLocalizationDelegate<T>(overrides, locale);
   }
 

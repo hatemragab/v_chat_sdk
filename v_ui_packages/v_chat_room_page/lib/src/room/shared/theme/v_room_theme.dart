@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-
 typedef VChatImageBuilderWidget = Widget Function({
   required String imageUrl,
   required String chatTitle,
@@ -33,9 +32,7 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
 
   factory VRoomTheme.light() {
     return VRoomTheme._(
-      scaffoldDecoration: const BoxDecoration(
-          color: Color(0xffeee4e4)
-      ),
+      scaffoldDecoration: const BoxDecoration(color: Color(0xffeee4e4)),
       getChatTitle: (title) {
         return Text(
           title,
