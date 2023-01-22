@@ -7,7 +7,7 @@ class ProductDetailsBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<ProductDetailsController>(
-      ProductDetailsController(Get.arguments as ProductModel, Get.find()),
+      ProductDetailsController(),
     );
   }
 }

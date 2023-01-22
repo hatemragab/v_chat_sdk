@@ -1,3 +1,4 @@
+import 'package:http/http.dart' as http;
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api_service.dart';
@@ -8,6 +9,7 @@ import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VNativeApi {
   final local = _LocalNativeApi();
@@ -76,6 +78,30 @@ class _RemoteNativeApi {
   final remoteAuth = NativeRemoteAuth(
     AuthApiService.init(),
   );
+
+  Future<http.Response> nativeHttp(
+    Uri uri, {
+    required VChatHttpMethods method,
+    required Map<String, dynamic>? body,
+    Map<String, String> headers = const {},
+  }) async {
+    headers['authorization'] = "Bearer ${VAppPref.getHashedString(
+      key: VStorageKeys.vAccessToken.name,
+    )}";
+    headers["clint-version"] = VAppConstants.clintVersion;
+    switch (method) {
+      case VChatHttpMethods.get:
+        return http.get(uri,headers: headers);
+      case VChatHttpMethods.post:
+        return http.post(uri, body: body,headers: headers);
+      case VChatHttpMethods.patch:
+        return http.patch(uri, body: body,headers: headers);
+      case VChatHttpMethods.delete:
+        return http.delete(uri, body: body,headers: headers);
+      case VChatHttpMethods.put:
+        return http.put(uri, body: body,headers: headers);
+    }
+  }
 
   MessageApiService get message => _nativeRemoteMessage;
 

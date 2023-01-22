@@ -7,13 +7,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-import '../../../../core/repository/user.repository.dart';
-
 class RegisterController extends GetxController {
-  final UserRepository repository;
-
-  RegisterController(this.repository);
-
   VPlatformFileSource? userImage;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

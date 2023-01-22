@@ -4,11 +4,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class HorzMediaItem extends StatelessWidget {
+class HorizontalMediaItem extends StatelessWidget {
   final VBaseMediaRes mediaFile;
   final bool isLoading;
 
-  const HorzMediaItem({
+  const HorizontalMediaItem({
     super.key,
     required this.mediaFile,
     required this.isLoading,
@@ -84,6 +84,10 @@ class HorzMediaItem extends StatelessWidget {
     }
     return Container(
       color: Colors.black,
+      child:   const Icon(
+        PhosphorIcons.file,
+        color: Colors.white,
+      ),
     );
   }
 }

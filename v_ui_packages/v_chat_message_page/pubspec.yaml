@@ -1,6 +1,6 @@
 name: v_chat_message_page
 description: v chat sdk message page ui
-version: 0.1.0+5
+version: 0.1.0+6
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk
@@ -13,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   v_chat_utils: ^0.1.0+5
-  v_chat_sdk_core: ^0.1.0+3
+  v_chat_sdk_core: ^0.1.0+6
   v_chat_voice_player: ^0.1.0+2
   v_chat_input_ui: ^0.1.0
   v_chat_media_editor: ^0.1.0
@@ -22,17 +22,20 @@ dependencies:
   share_plus: ^6.3.0
   scroll_to_index: ^3.0.1
   flutter_parsed_text: ^2.2.1
+  open_file_plus: ^3.3.0
   flutter_cache_manager: ^3.3.0
+  meta: ^1.8.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^2.0.0
   lints: ^2.0.1
 
 
 flutter:
-#  assets:
-#    - assets/
-#    - assets/data/
+platforms:
+  android:
+  ios:
+  web:
+  windows:
+  macos:
 

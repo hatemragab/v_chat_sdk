@@ -4,7 +4,6 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
@@ -81,23 +80,8 @@ class MyApp extends StatelessWidget {
             supportedLocales: S.delegate.supportedLocales,
             locale: appService.locale,
             fallbackLocale: const Locale("en"),
-            theme: FlexThemeData.light(
-              scheme: FlexScheme.green,
-              useMaterial3: true,
-              appBarElevation: 20,
-              extensions: <ThemeExtension<dynamic>>[],
-            ),
-            darkTheme: FlexThemeData.dark(
-              scheme: FlexScheme.green,
-              useMaterial3: true,
-              extensions: <ThemeExtension<dynamic>>[
-                VMessageTheme.dark().copyWith(
-                  messageItemHolderColor: (context, isMeSender, isDarkMode) =>
-                      Colors.red,
-                )
-              ],
-              appBarElevation: 20,
-            ),
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
           );
         },
       ),

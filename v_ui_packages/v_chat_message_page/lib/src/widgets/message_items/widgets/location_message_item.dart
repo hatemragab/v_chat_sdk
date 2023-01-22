@@ -13,41 +13,26 @@ class LocationMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        if (VPlatforms.isMobile) {
-          await MapLauncher.showMarker(
-            mapType: VPlatforms.isIOS ? MapType.apple : MapType.google,
-            coords: Coords(
-              message.data.latLng.latitude,
-              message.data.latLng.longitude,
-            ),
-            title: message.data.linkPreviewData.title.toString(),
-            description: message.data.linkPreviewData.desc.toString(),
-          );
-        }
-      },
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.location_on_outlined,
-            size: 44,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(
+          PhosphorIcons.mapPin,
+          size: 44,
+        ),
+        Expanded(
+          child: ListTile(
+            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+            dense: true,
+            title: message.data.linkPreviewData.title.toString().text,
+            subtitle: message.data.linkPreviewData.desc
+                .toString()
+                .text
+                .maxLine(2)
+                .overflowEllipsis,
           ),
-          Expanded(
-            child: ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              dense: true,
-              title: message.data.linkPreviewData.title.toString().text,
-              subtitle: message.data.linkPreviewData.desc
-                  .toString()
-                  .text
-                  .maxLine(2)
-                  .overflowEllipsis,
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }

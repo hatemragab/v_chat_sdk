@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-class ChatAvatarImage extends StatelessWidget {
+class VChatAvatarImage extends StatelessWidget {
   final String imageUrl;
   final bool isOnline;
   final String chatTitle;
   final int size;
 
-  const ChatAvatarImage({
+  const VChatAvatarImage({
     Key? key,
     required this.imageUrl,
     required this.isOnline,
@@ -21,9 +22,12 @@ class ChatAvatarImage extends StatelessWidget {
     return AdvancedAvatar(
       size: size.toDouble(),
       statusColor: isOnline ? Colors.green : null,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+      foregroundDecoration:
+          BoxDecoration(borderRadius: BorderRadius.circular(100)),
       name: chatTitle,
-      image: CachedNetworkImageProvider(
-        imageUrl,
+      child: VCircleAvatar(
+        fullUrl: imageUrl,
       ),
     );
   }

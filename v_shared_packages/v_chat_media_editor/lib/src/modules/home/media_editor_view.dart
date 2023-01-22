@@ -33,7 +33,7 @@ class _VMediaEditorViewState extends State<VMediaEditorView> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: controller.updater,
+      valueListenable: controller,
       builder: (context, value, child) {
         return Scaffold(
           floatingActionButton: controller.isLoading
@@ -91,7 +91,7 @@ class _VMediaEditorViewState extends State<VMediaEditorView> {
                         onTap: () {
                           controller.changeImageIndex(index);
                         },
-                        child: HorzMediaItem(
+                        child: HorizontalMediaItem(
                           mediaFile: controller.mediaFiles[index],
                           isLoading: controller.isLoading,
                         ),

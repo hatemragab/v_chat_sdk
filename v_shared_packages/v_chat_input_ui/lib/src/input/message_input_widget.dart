@@ -7,7 +7,6 @@ import 'package:v_chat_input_ui/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_record_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_send_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_text_filed.dart';
-import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -47,11 +46,17 @@ class VMessageInputWidget extends StatefulWidget {
   /// widget to render if user select to reply
   final Widget? replyWidget;
 
+  /// should be true in web to let user directly start chat
+  final bool autofocus;
+
   /// widget to render if the chat has been closed my be this user leave group or has banned!
   final Widget? stopChatWidget;
 
   /// set max timeout for recording
   final Duration maxRecordTime;
+
+  ///set text filed focusNode
+  final FocusNode? focusNode;
 
   ///if not provided the the user cant see the option of send location
   final String? googleMapsApiKey;
@@ -75,6 +80,8 @@ class VMessageInputWidget extends StatefulWidget {
     required this.onTypingChange,
     this.maxMediaSize = 50 * 1024 * 1024,
     this.replyWidget,
+    this.autofocus = false,
+    this.focusNode,
     this.mentionItemBuilder,
     this.maxRecordTime = const Duration(minutes: 30),
     this.onAttachIconPress,
@@ -94,8 +101,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   String _text = "";
   VRoomTypingEnum _typingType = VRoomTypingEnum.stop;
   final _textEditingController = VChatTextMentionController();
-  final _focusNode = FocusNode();
-  final _vMediaEditorHelpers = VMediaEditorHelpers();
+  FocusNode _focusNode = FocusNode();
 
   bool get _isRecording => _typingType == VRoomTypingEnum.recording;
 
@@ -109,6 +115,9 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   @override
   void initState() {
     super.initState();
+    if (widget.focusNode != null) {
+      _focusNode = widget.focusNode!;
+    }
     _textEditingController.addListener(_textEditListener);
     _textEditingController.onSearch = (String? value) async {
       _mentionsWithPhoto.clear();
@@ -220,6 +229,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                           )
                         else
                           MessageTextFiled(
+                            autofocus: widget.autofocus,
                             focusNode: _focusNode,
                             hint: widget.language.textFieldHint,
                             isTyping: _typingType == VRoomTypingEnum.typing,
@@ -308,16 +318,16 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         ModelSheetItem<VAttachEnumRes>(
           title: language.media,
           id: VAttachEnumRes.media,
-          iconData: const Icon(Icons.image),
+          iconData: const Icon(PhosphorIcons.image),
         ),
         ModelSheetItem<VAttachEnumRes>(
             title: language.files,
             id: VAttachEnumRes.files,
-            iconData: const Icon(Icons.attach_file)),
+            iconData: const Icon(PhosphorIcons.file)),
         if (widget.googleMapsApiKey != null)
           ModelSheetItem<VAttachEnumRes>(
             title: language.location,
-            iconData: const Icon(Icons.location_on_outlined),
+            iconData: const Icon(PhosphorIcons.mapPin),
             id: VAttachEnumRes.location,
           ),
       ], context: context, title: language.shareMediaAndLocation);
@@ -378,14 +388,14 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
       if (!x) return;
     }
     final entity = await VAppPick.pickFromWeAssetCamera(
-      (p0, p1) {
+      onXFileCaptured: (p0, p1) {
         context.pop();
         _sendWeChatImage(VPlatformFileSource.fromPath(
           filePath: p0.path,
         ));
         return true;
       },
-      context,
+      context: context,
     );
     if (entity == null) return;
     widget.onSubmitMedia(await _processMediaToSubmit([entity]));
@@ -428,10 +438,10 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   ) async {
     final resFiles = <VBaseMediaRes>[];
     for (final sourceFile in files) {
-      if (sourceFile.isImage) {
+      if (sourceFile.isContentImage) {
         final compressedImage =
-            await _vMediaEditorHelpers.compressIoImage(fileSource: sourceFile);
-        final imageData = await _vMediaEditorHelpers.getImageInfo(
+            await VFileUtils.compressImage(fileSource: sourceFile);
+        final imageData = await VFileUtils.getImageInfo(
           fileSource: compressedImage,
         );
         resFiles.add(
@@ -443,7 +453,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
             ),
           ),
         );
-      } else if (sourceFile.isVideo) {
+      } else if (sourceFile.isContentVideo) {
         if (sourceFile.fileSize > widget.maxMediaSize) {
           //this file should be ignored
           ///todo trans
@@ -453,10 +463,9 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
           continue;
         }
 
-        final videoDuration =
-            await _vMediaEditorHelpers.getVideoDurationMill(sourceFile);
+        final videoDuration = await VFileUtils.getVideoDurationMill(sourceFile);
         final thumbData =
-            await _vMediaEditorHelpers.getVideoThumb(fileSource: sourceFile);
+            await VFileUtils.getVideoThumb(fileSource: sourceFile);
 
         resFiles.add(
           VMediaVideoRes(

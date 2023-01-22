@@ -13,9 +13,23 @@ void main() async {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: ThemeData.light().copyWith(
-        extensions: [VInputTheme.light(cameraIcon: const Icon(Icons.camera))],
+        extensions: [
+          VInputTheme.light(cameraIcon: const Icon(Icons.camera)),
+        ],
       ),
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.dark().copyWith(
+        extensions: [
+          VInputTheme.dark(
+            cameraIcon: const Icon(
+              Icons.camera,
+              color: Colors.green,
+            ),
+            containerDecoration: BoxDecoration(color: Colors.black54),
+            recordBtn: Icon(Icons.ac_unit),
+            sendBtn: Icon(Icons.search),
+          ),
+        ],
+      ),
     ),
   );
 }

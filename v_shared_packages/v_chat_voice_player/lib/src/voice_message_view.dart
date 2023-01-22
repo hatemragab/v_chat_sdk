@@ -8,7 +8,6 @@ import 'widgets/noises.dart';
 
 class VVoiceMessageView extends StatelessWidget {
   final VVoiceMessageController controller;
-  final Color backgroundColor;
   final Color circlesColor;
   final Color activeSliderColor;
   final Color? notActiveSliderColor;
@@ -18,7 +17,6 @@ class VVoiceMessageView extends StatelessWidget {
   const VVoiceMessageView({
     Key? key,
     required this.controller,
-    this.backgroundColor = Colors.white,
     this.activeSliderColor = Colors.red,
     this.notActiveSliderColor,
     this.circlesColor = Colors.red,
@@ -44,8 +42,11 @@ class VVoiceMessageView extends StatelessWidget {
       ),
     );
 
-    return ColoredBox(
-      color: context.vVoiceMessageTheme.backgroundColor,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(13),
+       // color: context.vVoiceMessageTheme.backgroundColor,
+      ),
       child: ValueListenableBuilder(
         valueListenable: controller,
         builder: (context, value, child) {
@@ -64,7 +65,7 @@ class VVoiceMessageView extends StatelessWidget {
               else if (controller.isPlaying)
                 InkWell(
                   onTap: controller.pausePlaying,
-                  child: context.vVoiceMessageTheme.playIcon,
+                  child: context.vVoiceMessageTheme.pauseIcon,
                 )
               else if (controller.isDownloadError)
                 InkWell(
@@ -105,7 +106,7 @@ class VVoiceMessageView extends StatelessWidget {
                                   width: controller.noiseWidth,
                                   height: 6.w(),
                                   color: notActiveSliderColor ??
-                                      backgroundColor.withOpacity(.4),
+                                      activeSliderColor.withOpacity(.4),
                                 ),
                               );
                             },
@@ -114,7 +115,7 @@ class VVoiceMessageView extends StatelessWidget {
                             opacity: .0,
                             child: Container(
                               width: controller.noiseWidth,
-                              color: Colors.amber.withOpacity(1),
+                              //color: Colors.amber.withOpacity(1),
                               child: Theme(
                                 data: newTHeme,
                                 child: Slider(

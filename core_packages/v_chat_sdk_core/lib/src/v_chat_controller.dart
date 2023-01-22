@@ -1,4 +1,5 @@
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/events_daemon.dart';
@@ -30,7 +31,6 @@ class VChatController {
 
   ///singleton
   VChatController._();
-
   static final _instance = VChatController._();
   static late final VNotificationListener _vNotificationListener;
 
@@ -44,6 +44,7 @@ class VChatController {
 
   late final AuthApi authApi;
   late final RoomApi roomApi;
+  @internal
   final vAppLifecycleState = VAppLifecycleState();
 
   late final VChatConfig vChatConfig;
@@ -84,7 +85,7 @@ class VChatController {
 
     return _instance;
   }
-
+  @internal
   Future<void> listenToOpenFromNotification() async {
     _vNotificationListener.getOpenAppNotification();
   }

@@ -162,6 +162,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   Future<void> _getApiMessages(
     VRoomMessagesDto dto,
   ) async {
+    await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
         if (isInTesting) {

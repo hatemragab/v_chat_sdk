@@ -31,12 +31,13 @@ class VMessageAppBare extends StatelessWidget {
       elevation: 1,
       title: ListTile(
         contentPadding: EdgeInsets.zero,
-        // leading: context.vRoomTheme.vChatItemBuilder.getChatAvatar(
-        //   imageUrl: state.roomImage,
-        //   chatTitle: state.roomTitle,
-        //   isOnline: state.isOnline,
-        //   size: 44,
-        // ),
+        leading: VChatAvatarImage(
+          imageUrl: state.roomImage,
+          chatTitle: state.roomTitle,
+          isOnline: state.isOnline,
+          size: 40,
+        ),
+        horizontalTitleGap: 12,
         minLeadingWidth: 0,
         onTap: () {
           onTitlePress(
@@ -45,9 +46,7 @@ class VMessageAppBare extends StatelessWidget {
             state.roomType,
           );
         },
-        title: Text(
-          state.roomTitle,
-        ),
+        title: state.roomTitle.text.bold,
         subtitle: state.typingText != null
             ? MessageTypingWidget(
                 text: state.typingText!,

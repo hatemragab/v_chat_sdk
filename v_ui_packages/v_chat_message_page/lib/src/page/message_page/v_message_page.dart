@@ -9,6 +9,7 @@ import '../../models/input_state_model.dart';
 import '../../v_message.dart';
 import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/arrow_down.dart';
+import '../../widgets/input_widgets/ban_widget.dart';
 import '../../widgets/input_widgets/reply_msg_widget.dart';
 import '../../widgets/input_widgets/stop_typing_widget.dart';
 import '../../widgets/message_items/v_message_item.dart';
@@ -51,7 +52,9 @@ class _VMessagePageState extends State<VMessagePage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: context.vMessageTheme.scaffoldDecoration,
+
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: ValueListenableBuilder<MessageAppBarStateModel>(
@@ -125,8 +128,8 @@ class _VMessagePageState extends State<VMessagePage> {
                                           ? Colors.white.withOpacity(0.2)
                                           : Colors.black.withOpacity(0.2),
                                       child: VMessageItem(
-                                        itemController:
-                                            controller.itemController,
+                                        onTap: controller.onMessageTap,
+                                        onLongTap: controller.onMessageLongTap,
                                         message: snapshot.data!,
                                         voiceController: (message) {
                                           if (message is VVoiceMessage) {
@@ -194,6 +197,8 @@ class _VMessagePageState extends State<VMessagePage> {
                 if (value.isHidden) return const SizedBox.shrink();
                 return VMessageInputWidget(
                   onSubmitText: controller.onSubmitText,
+                  autofocus: !VPlatforms.isMobile,
+                  focusNode: controller.focusNode,
                   onSubmitMedia: (files) =>
                       controller.onSubmitMedia(context, files),
                   onSubmitVoice: controller.onSubmitVoice,
@@ -205,14 +210,19 @@ class _VMessagePageState extends State<VMessagePage> {
                   onMentionSearch: controller.onMentionRequireSearch,
                   maxRecordTime: _config.maxRecordTime,
                   googleMapsApiKey: _config.googleMapsApiKey,
+
                   replyWidget: value.replyMsg == null
                       ? null
                       : ReplyMsgWidget(
                           vBaseMessage: value.replyMsg!,
                           onDismiss: controller.dismissReply,
                         ),
-                  stopChatWidget:
-                      value.isCloseInput ? const StopTypingWidget() : null,
+                  stopChatWidget: value.isCloseInput
+                      ? BanWidget(
+                          isMy: false,
+                          onUnBan: () {},
+                        )
+                      : null,
                 );
               },
             )

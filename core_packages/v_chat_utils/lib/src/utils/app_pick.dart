@@ -8,7 +8,8 @@ import '../../v_chat_utils.dart';
 abstract class VAppPick {
   static bool isPicking = false;
 
-  static Future<VPlatformFileSource?> getCroppedImage({bool isFromCamera = false}) async {
+  static Future<VPlatformFileSource?> getCroppedImage(
+      {bool isFromCamera = false}) async {
     final img = await getImage(isFromCamera: isFromCamera);
     if (img != null) {
       if (VPlatforms.isMobile) {
@@ -137,18 +138,19 @@ abstract class VAppPick {
     }).toList();
   }
 
-  static Future<VPlatformFileSource?> pickFromWeAssetCamera(
-    XFileCapturedCallback on,
-    BuildContext context,
-  ) async {
+  static Future<VPlatformFileSource?> pickFromWeAssetCamera({
+    XFileCapturedCallback? onXFileCaptured,
+    required BuildContext context,
+    int videoSeconds = 45,
+  }) async {
     final AssetEntity? entity = await CameraPicker.pickFromCamera(
       context,
       pickerConfig: CameraPickerConfig(
         enableRecording: true,
         enableTapRecording: true,
-        maximumRecordingDuration: const Duration(seconds: 45),
+        maximumRecordingDuration: Duration(seconds: videoSeconds),
         textDelegate: const EnglishCameraPickerTextDelegate(),
-        onXFileCaptured: on,
+        onXFileCaptured: onXFileCaptured,
         shouldAutoPreviewVideo: true,
       ),
     );
@@ -161,5 +163,41 @@ abstract class VAppPick {
 
   static Future clearPickerCache() async {
     await FilePicker.platform.clearTemporaryFiles();
+  }
+
+  static Future<VPlatformFileSource?> croppedImage({
+  required  VPlatformFileSource file,
+    List<CropAspectRatioPreset>? aspectRatioPresets,
+  }) async {
+    if (!file.isContentImage) return null;
+    final CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: file.filePath!,
+      aspectRatioPresets: aspectRatioPresets ??
+          [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio16x9
+          ],
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+      ],
+    );
+    if (croppedFile != null) {
+      return VPlatformFileSource.fromPath(
+        filePath: croppedFile.path,
+      );
+    }
+    return null;
   }
 }

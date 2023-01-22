@@ -24,13 +24,8 @@ class FileItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  iconSize: 30,
+                BackButton(
                   onPressed: onCloseClicked,
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
                 ),
                 Row(
                   children: [
@@ -51,12 +46,33 @@ class FileItem extends StatelessWidget {
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.center,
-          child: Text(
-            file.data.name.toString(),
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w800),
+        Expanded(
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8), color: Colors.green),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    PhosphorIcons.file,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    file.data.name.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         )
       ],

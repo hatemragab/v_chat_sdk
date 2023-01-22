@@ -16,8 +16,8 @@ class FileMessageItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Icon(
-          Icons.download_outlined,
-          size: 44,
+          PhosphorIcons.fileArrowDown,
+          size: 40,
         ),
         Expanded(
           child: ListTile(

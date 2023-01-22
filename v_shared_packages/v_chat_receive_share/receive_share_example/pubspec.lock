@@ -56,14 +56,7 @@ packages:
       name: audio_waveforms
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
-  auto_direction:
-    dependency: transitive
-    description:
-      name: auto_direction
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.6"
+    version: "1.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -252,7 +245,7 @@ packages:
       name: emoji_picker_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "1.5.2"
   encrypt:
     dependency: transitive
     description:
@@ -315,7 +308,7 @@ packages:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.4"
+    version: "5.2.5"
   file_saver:
     dependency: transitive
     description:
@@ -497,13 +490,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
-  helpers:
-    dependency: transitive
-    description:
-      name: helpers
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   html:
     dependency: transitive
     description:
@@ -538,7 +524,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.0"
+    version: "4.0.10"
   image_cropper:
     dependency: transitive
     description:
@@ -560,13 +546,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.3"
-  image_cropping:
-    dependency: transitive
-    description:
-      name: image_cropping
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.13"
   image_gallery_saver:
     dependency: transitive
     description:
@@ -692,7 +671,7 @@ packages:
       name: mime
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   mime_type:
     dependency: transitive
     description:
@@ -931,13 +910,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
-  progress_dialog_null_safe:
-    dependency: transitive
-    description:
-      name: progress_dialog_null_safe
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.7"
   provider:
     dependency: transitive
     description:
@@ -1063,7 +1035,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.15"
+    version: "2.0.17"
   shared_preferences_android:
     dependency: transitive
     description:
@@ -1071,13 +1043,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.14"
-  shared_preferences_ios:
+  shared_preferences_foundation:
     dependency: transitive
     description:
-      name: shared_preferences_ios
+      name: shared_preferences_foundation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -1085,13 +1057,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  shared_preferences_macos:
-    dependency: transitive
-    description:
-      name: shared_preferences_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.4"
   shared_preferences_platform_interface:
     dependency: transitive
     description:
@@ -1250,7 +1215,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.7"
+    version: "6.1.8"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1313,14 +1278,14 @@ packages:
       path: "../../v_chat_input_ui"
       relative: true
     source: path
-    version: "0.0.5"
+    version: "0.1.0"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../v_chat_media_editor"
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.1.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1334,7 +1299,7 @@ packages:
       path: "../../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.1.0+6"
   v_chat_receive_share:
     dependency: "direct main"
     description:
@@ -1348,28 +1313,28 @@ packages:
       path: "../../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.1.0+6"
   v_chat_sdk_core:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.0.3"
+    version: "0.1.0+6"
   v_chat_utils:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.0.6"
+    version: "0.1.0+5"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../v_chat_voice_player"
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.1.0+2"
   vector_math:
     dependency: transitive
     description:
@@ -1383,7 +1348,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.10"
+    version: "2.5.1"
   video_player_android:
     dependency: transitive
     description:
@@ -1460,7 +1425,7 @@ packages:
       name: wechat_camera_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.6.5"
+    version: "3.7.0"
   win32:
     dependency: transitive
     description:

@@ -6,7 +6,7 @@ class PeerProfileBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<PeerProfileController>(
-      PeerProfileController(Get.arguments as String, Get.find()),
+      PeerProfileController(Get.arguments as String, ),
     );
   }
 }

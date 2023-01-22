@@ -254,4 +254,25 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
     return true;
   }
+
+  void sortRoomsBy(VRoomType type) {
+    switch (type) {
+      case VRoomType.s:
+        value.values = value.values.where((e) => e.roomType.isSingle).toList();
+        notifyListeners();
+        break;
+      case VRoomType.g:
+        value.values = value.values.where((e) => e.roomType.isGroup).toList();
+        notifyListeners();
+        break;
+      case VRoomType.b:
+        value.values = value.values.where((e) => e.roomType.isBroadcast).toList();
+        notifyListeners();
+        break;
+      case VRoomType.o:
+        value.values = value.values.where((e) => e.roomType.isOrder).toList();
+        notifyListeners();
+        break;
+    }
+  }
 }

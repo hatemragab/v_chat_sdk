@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:open_file_plus/open_file_plus.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -76,8 +77,31 @@ class VMessageItemController {
         successfullyDownloaded: "successfully Downloaded",
       ));
     }
+    if (message is VVideoMessage) {
+      context.toPage(VVideoPlayer(
+        platformFileSource: message.data.fileSource,
+      ));
+    }
     if (message is VFileMessage) {
-      VDownloaderService.instance.addToQueue(message);
+      VAppAlert.showLoading(
+        context: context,
+        isDismissible: true,
+        //todo trans
+        message: "Downloading...",
+      );
+      final url = await VDownloaderService.instance.addToQueue(message);
+      context.pop();
+      final result = await OpenFile.open(url);
+      VAppAlert.showOverlaySupport(title: "File has been saved");
+
+    }
+    if (message is VLocationMessage) {
+      await VStringUtils.lunchMap(
+        latitude: message.data.latLng.latitude,
+        longitude: message.data.latLng.longitude,
+        title: message.data.linkPreviewData.title ?? '',
+        description: message.data.linkPreviewData.desc,
+      );
     }
   }
 
@@ -102,7 +126,6 @@ class VMessageItemController {
     if (message.messageType.isText) {
       items.add(_copyItem());
     }
-
     if (message.messageType.isAllDeleted) {
       items.clear();
       //solution

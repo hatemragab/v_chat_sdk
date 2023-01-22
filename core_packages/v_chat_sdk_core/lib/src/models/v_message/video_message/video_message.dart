@@ -45,10 +45,6 @@ class VVideoMessage extends VBaseMessage {
         ),
         super.fromLocalMap();
 
-  // @override
-  // Map<String, dynamic> toRemoteMap() {
-  //   return {...super.toRemoteMap(), 'msgAtt': fileUrlAttachment.toMap()};
-  // }
   VVideoMessage.buildMessage({
     required super.roomId,
     required this.data,

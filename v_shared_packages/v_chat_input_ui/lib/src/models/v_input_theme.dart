@@ -8,6 +8,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
   final Widget cameraIcon;
   final Widget fileIcon;
   final Widget emojiIcon;
+  final Widget trashIcon;
 
   Widget? recordBtn;
   Widget? sendBtn;
@@ -20,6 +21,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
     required this.sendBtn,
     required this.textFieldTextStyle,
     required this.emojiIcon,
+    required this.trashIcon,
     required this.fileIcon,
     required this.cameraIcon,
   });
@@ -35,6 +37,11 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
       PhosphorIcons.camera,
       size: 26,
       color: Colors.green,
+    ),
+    this.trashIcon = const Icon(
+      PhosphorIcons.trash,
+      color: Colors.redAccent,
+      size: 30,
     ),
     this.fileIcon = const Icon(
       PhosphorIcons.paperclip,
@@ -86,6 +93,11 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
       borderRadius: BorderRadius.all(
         Radius.circular(15),
       ),
+    ),
+    this.trashIcon = const Icon(
+      PhosphorIcons.trash,
+      color: Colors.redAccent,
+      size: 30,
     ),
     this.cameraIcon = const Icon(
       PhosphorIcons.camera,
@@ -153,6 +165,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
     Widget? emojiIcon,
     Widget? recordBtn,
     Widget? sendBtn,
+    Widget? trashIcon,
     TextStyle? textFieldTextStyle,
   }) {
     return VInputTheme._(
@@ -160,6 +173,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
       textFieldDecoration: textFieldDecoration ?? this.textFieldDecoration,
       cameraIcon: cameraIcon ?? this.cameraIcon,
       fileIcon: fileIcon ?? this.fileIcon,
+      trashIcon: trashIcon ?? this.trashIcon,
       emojiIcon: emojiIcon ?? this.emojiIcon,
       recordBtn: recordBtn ?? this.recordBtn,
       sendBtn: sendBtn ?? this.sendBtn,

@@ -142,7 +142,7 @@ mixin VSocketStatusStream {
     _socketStatusStream?.cancel();
   }
 
-  void onSocketConnected();
+  void onSocketConnected(){}
 
   void onSocketDisconnect() {}
 }

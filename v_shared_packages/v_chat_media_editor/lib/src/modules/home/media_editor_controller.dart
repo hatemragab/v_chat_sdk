@@ -1,23 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_cropping/image_cropping.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
-
 import '../../core/core.dart';
 import '../pinter/image_pinter_view.dart';
 import '../video_player/views/video_player_view.dart';
 
-class MediaEditorController {
-  MediaEditorController(this.platformFiles, this.config) {
+class MediaEditorController extends ValueNotifier {
+  MediaEditorController(this.platformFiles, this.config) : super(null) {
     _init();
   }
-  final _vMediaEditorHelpers = VMediaEditorHelpers();
 
   final List<VPlatformFileSource> platformFiles;
   final mediaFiles = <VBaseMediaRes>[];
@@ -26,7 +19,6 @@ class MediaEditorController {
   bool isCompressing = false;
 
   int currentImageIndex = 0;
-  ValueNotifier updater = ValueNotifier(null);
 
   final pageController = PageController();
 
@@ -43,35 +35,9 @@ class MediaEditorController {
   }
 
   Future<void> onCrop(VMediaImageRes item, BuildContext context) async {
-    if (item.data.isFromPath) {
-      final path = await _ioImageCropper(item.data.fileSource.filePath!);
-      if (path != null) {
-        item.data.fileSource.filePath = path;
-      }
-      _updateScreen();
-      return;
-    }
-    final croppedBytes = await ImageCropping.cropImage(
-      context: context,
-      imageBytes: Uint8List.fromList(item.data.fileSource.bytes!),
-      onImageStartLoading: () {},
-      onImageEndLoading: () {},
-      //selectedImageRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-      visibleOtherAspectRatios: true,
-      squareBorderWidth: 2,
-      squareCircleColor: Colors.black,
-      defaultTextColor: Colors.orange,
-      selectedTextColor: Colors.black,
-      colorForWhiteSpace: Colors.grey,
-      encodingQuality: 80,
-      outputImageFormat: OutputImageFormat.jpg,
-      workerPath: 'crop_worker.js',
-      onImageDoneListener: (x) {},
-    );
-    if (croppedBytes != null) {
-      item.data.fileSource.bytes = croppedBytes;
-      _updateScreen();
-    }
+    final res = await VAppPick.croppedImage(file: item.data.fileSource);
+    item.data.fileSource = res!;
+    _updateScreen();
   }
 
   Future onStartEditVideo(
@@ -126,7 +92,7 @@ class MediaEditorController {
   }
 
   void _updateScreen() {
-    updater.notifyListeners();
+    notifyListeners();
   }
 
   Future _init() async {
@@ -164,40 +130,11 @@ class MediaEditorController {
   }
 
   Future<VMessageImageData?> _getThumb(String path) async {
-    final thumbPath = await VideoThumbnail.thumbnailFile(
-      video: path,
-      maxWidth: 600,
-      // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
-      quality: 25,
+    return VFileUtils.getVideoThumb(
+      fileSource: VPlatformFileSource.fromPath(
+        filePath: path,
+      ),
     );
-    if (thumbPath == null) return null;
-    final thumbImageData = await _vMediaEditorHelpers.getImageInfo(
-      fileSource: VPlatformFileSource.fromPath(filePath: thumbPath),
-    );
-
-    return VMessageImageData(
-      fileSource: VPlatformFileSource.fromPath(filePath: thumbPath),
-      width: thumbImageData.image.width,
-      height: thumbImageData.image.height,
-    );
-  }
-
-  Future<File> _compressIoImage(String path) async {
-    File compressedFile = File(path);
-    if (compressedFile.lengthSync() > 1500 * 1000) {
-      // compress only images bigger than 1500 kb
-      compressedFile = await FlutterNativeImage.compressImage(
-        path,
-        quality: 50,
-        //targetWidth: 700,
-        // targetHeight: (properties.height! * 700 / properties.width!).round(),
-      );
-    }
-    return compressedFile;
-  }
-
-  Future<List<int>> _compressJsImage(List<int> bytes) async {
-    return bytes;
   }
 
   void onPlayVideo(VBaseMediaRes item, BuildContext context) {
@@ -214,68 +151,36 @@ class MediaEditorController {
 
   Future<void> startCompressImagesIfNeed() async {
     for (final f in mediaFiles) {
-      if (f is VMediaImageRes && f.data.fileSource.filePath != null) {
-        f.data.fileSource.filePath =
-            (await _compressIoImage(f.data.fileSource.filePath!)).path;
-      } else if (f is VMediaImageRes && f.data.fileSource.bytes != null) {
-        f.data.fileSource.bytes =
-            await _compressJsImage(f.data.fileSource.bytes!);
+      if (f is VMediaImageRes) {
+        f.data.fileSource =
+            (await VFileUtils.compressImage(fileSource: f.data.fileSource));
       }
+      _updateScreen();
     }
-    _updateScreen();
   }
-
   Future<void> onSubmitData(BuildContext context) async {
     isCompressing = true;
     _updateScreen();
     for (final f in mediaFiles) {
       if (f is VMediaImageRes && f.data.isFromPath) {
-        final data = await _vMediaEditorHelpers.getImageInfo(
+        final data = await VFileUtils.getImageInfo(
           fileSource: f.data.fileSource,
         );
         f.data.width = data.image.width;
         f.data.height = data.image.height;
       } else if (f is VMediaImageRes && f.data.isFromBytes) {
-        final data = await _vMediaEditorHelpers.getImageInfo(
+        final data = await VFileUtils.getImageInfo(
           fileSource: f.data.fileSource,
         );
         f.data.width = data.image.width;
         f.data.height = data.image.height;
       } else if (f is VMediaVideoRes) {
         f.data.duration =
-            await _vMediaEditorHelpers.getVideoDurationMill(f.data.fileSource);
+        await VFileUtils.getVideoDurationMill(f.data.fileSource);
       }
     }
     context.pop(mediaFiles);
     //await VideoCompress.deleteAllCache();
   }
 
-  Future<String?> _ioImageCropper(String path) async {
-    final CroppedFile? croppedFile = await ImageCropper().cropImage(
-      sourcePath: path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-        CropAspectRatioPreset.ratio3x2,
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio4x3,
-        CropAspectRatioPreset.ratio16x9
-      ],
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: Colors.deepOrange,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false,
-        ),
-        IOSUiSettings(
-          title: 'Cropper',
-        ),
-      ],
-    );
-    if (croppedFile != null) {
-      return croppedFile.path;
-    }
-    return null;
-  }
 }

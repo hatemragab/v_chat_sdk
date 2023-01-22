@@ -7,10 +7,10 @@ import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ProductDetailsController extends GetxController {
-  final ProductModel productModel;
-  final OrderRepository orderRepository;
+  // final ProductModel productModel;
+  // final OrderRepository orderRepository;
 
-  ProductDetailsController(this.productModel, this.orderRepository);
+  // ProductDetailsController(this.productModel, this.orderRepository);
 
   void startChat() async {
     final res = await VAppAlert.showAskYesNoDialog(
@@ -35,12 +35,12 @@ class ProductDetailsController extends GetxController {
           VAppAlert.showLoading(context: Get.context!);
         },
         request: () async {
-          return await orderRepository.add(OrderModel(
-            id: "${DateTime.now().microsecondsSinceEpoch}",
-            productModel: productModel,
-            userId: AppAuth.getMyModel.id,
-            createdAt: DateTime.now().toUtc(),
-          ));
+          // return await orderRepository.add(OrderModel(
+          //   id: "${DateTime.now().microsecondsSinceEpoch}",
+          //   productModel: productModel,
+          //   userId: AppAuth.getMyModel.id,
+          //   createdAt: DateTime.now().toUtc(),
+          // ));
         },
         onSuccess: (response) {
           Get.back();

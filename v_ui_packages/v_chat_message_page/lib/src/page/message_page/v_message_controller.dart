@@ -28,13 +28,13 @@ class VMessageController {
   late final InputStateController inputStateController;
 
   final _localStorage = VChatController.I.nativeApi.local;
-  final _remoteStorage = VChatController.I.nativeApi.remote;
+  // final _remoteStorage = VChatController.I.nativeApi.remote;
   final autoScrollTagController = AutoScrollController(
     axis: Axis.vertical,
     suggestedRowHeight: 200,
   );
   final _vConfig = VChatController.I.vChatConfig;
-  late final VMessageItemController itemController;
+  late final VMessageItemController _itemController;
 
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
@@ -71,10 +71,12 @@ class VMessageController {
       inputStateController: inputStateController,
       currentRoom: vRoom,
     );
-    itemController = VMessageItemController(_messageProvider, context);
+    _itemController = VMessageItemController(_messageProvider, context);
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
   }
+
+  final focusNode = FocusNode();
 
   Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
     localMsg.replyTo = inputState.replyMsg;
@@ -92,6 +94,7 @@ class VMessageController {
       isEncrypted: isEnable,
       roomId: vRoom.id,
     );
+    scrollDown();
     _onSubmitSendMessage(localMsg);
   }
 
@@ -178,6 +181,7 @@ class VMessageController {
   }
 
   void setReply(VBaseMessage p1) {
+    focusNode.requestFocus();
     if (p1.emitStatus.isServerConfirm) {
       inputStateController.setReply(p1);
     }
@@ -243,6 +247,20 @@ class VMessageController {
       ChatMediaPage(
         roomId: roomId,
       ),
+    );
+  }
+
+  void onMessageLongTap(VBaseMessage message) {
+    return _itemController.onMessageItemLongPress(
+      message,
+      vRoom,
+      setReply,
+    );
+  }
+
+  void onMessageTap(VBaseMessage message) async {
+    return _itemController.onMessageItemPress(
+      message,
     );
   }
 }

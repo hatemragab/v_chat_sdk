@@ -6,7 +6,7 @@ class CreateProductBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<CreateProductController>(
-      CreateProductController(Get.find()),
+      CreateProductController( ),
     );
   }
 }

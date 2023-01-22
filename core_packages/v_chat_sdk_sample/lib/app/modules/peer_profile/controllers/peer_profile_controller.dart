@@ -8,10 +8,10 @@ import '../../../core/repository/user.repository.dart';
 
 class PeerProfileController extends GetxController {
   final String uuId;
-  final UserRepository repository;
+  // final UserRepository repository;
   late UserModel peerData;
 
-  PeerProfileController(this.uuId, this.repository);
+  PeerProfileController(this.uuId, );
 
   final apiCallStatus = ApiCallStatus.holding.obs;
 
@@ -22,22 +22,22 @@ class PeerProfileController extends GetxController {
   }
 
   Future getUser() async {
-    await vSafeApiCall<UserModel>(
-      onLoading: () {
-        apiCallStatus.value = ApiCallStatus.loading;
-      },
-      request: () {
-        return repository.getId(uuId);
-      },
-      onSuccess: (response) {
-        apiCallStatus.value = ApiCallStatus.success;
-        peerData = response;
-      },
-      onError: (exception, trace) {
-        apiCallStatus.value = ApiCallStatus.error;
-        print(exception);
-      },
-    );
+    // await vSafeApiCall<UserModel>(
+    //   onLoading: () {
+    //     apiCallStatus.value = ApiCallStatus.loading;
+    //   },
+    //   request: () {
+    //     // return repository.getId(uuId);
+    //   },
+    //   onSuccess: (response) {
+    //     apiCallStatus.value = ApiCallStatus.success;
+    //     peerData = response;
+    //   },
+    //   onError: (exception, trace) {
+    //     apiCallStatus.value = ApiCallStatus.error;
+    //     print(exception);
+    //   },
+    // );
   }
 
   void onStartChat() async {

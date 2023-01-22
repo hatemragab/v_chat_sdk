@@ -1,1 +1,2 @@
-v chat fcm implementations
+- v chat fcm implementations
+- use this package if you want to implement push notifications through firebase fcm

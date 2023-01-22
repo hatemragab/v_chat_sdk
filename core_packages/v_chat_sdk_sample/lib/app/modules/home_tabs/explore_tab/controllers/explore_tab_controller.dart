@@ -3,9 +3,9 @@ import 'package:v_chat_sdk_sample/app/core/repository/product.repository.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 class ExploreTabController extends GetxController {
-  final ProductRepository repository;
+  // final ProductRepository repository;
 
-  ExploreTabController(this.repository);
+  // ExploreTabController(this.repository);
 
   void onCreateProduct() {
     Get.toNamed(Routes.CREATE_PRODUCT);

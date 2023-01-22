@@ -8,14 +8,14 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../../core/utils/app_auth.dart';
 
 class CreateProductController extends GetxController {
-  final ProductRepository repository;
+  // final ProductRepository repository;
   final user = AppAuth.getMyModel;
   VPlatformFileSource? productImage;
   final nameController = TextEditingController();
   final descController = TextEditingController();
   final priceController = TextEditingController();
 
-  CreateProductController(this.repository);
+  // CreateProductController(this.repository);
 
   Future create() async {
     if (nameController.text.isEmpty) {

@@ -16,7 +16,6 @@ class VideoMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
-      //fit: StackFit.expand,
       children: [
         getBackground(context),
         Row(

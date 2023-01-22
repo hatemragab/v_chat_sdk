@@ -1,6 +1,4 @@
-# melos_managed_dependency_overrides: v_chat_media_editor,v_chat_utils
+# melos_managed_dependency_overrides: v_chat_utils
 dependency_overrides:
-  v_chat_media_editor:
-    path: ../v_chat_media_editor
   v_chat_utils:
     path: ../../core_packages/v_chat_utils

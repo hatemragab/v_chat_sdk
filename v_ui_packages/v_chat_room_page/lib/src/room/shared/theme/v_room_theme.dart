@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../widgets/room_item_builder/chat_avatar_image.dart';
 
 typedef VChatImageBuilderWidget = Widget Function({
   required String imageUrl,
@@ -33,7 +33,9 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
 
   factory VRoomTheme.light() {
     return VRoomTheme._(
-      scaffoldDecoration: const BoxDecoration(),
+      scaffoldDecoration: const BoxDecoration(
+          color: Color(0xffeee4e4)
+      ),
       getChatTitle: (title) {
         return Text(
           title,
@@ -47,7 +49,7 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
         required isOnline,
         required size,
       }) {
-        return ChatAvatarImage(
+        return VChatAvatarImage(
           imageUrl: imageUrl,
           isOnline: isOnline,
           size: size,
@@ -85,7 +87,7 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
         required isOnline,
         required size,
       }) {
-        return ChatAvatarImage(
+        return VChatAvatarImage(
           imageUrl: imageUrl,
           isOnline: isOnline,
           size: size,

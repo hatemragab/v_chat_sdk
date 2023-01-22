@@ -1,4 +1,4 @@
-enum VChatHttpMethods { get, post, patch, delete }
+enum VChatHttpMethods { get, post, patch, delete,put }
 
 enum MessageType {
   text,
@@ -68,7 +68,7 @@ extension StrType on VRoomType {
   bool get isSingleOrOrder => this == VRoomType.s || this == VRoomType.o;
 
   bool get isBroadcast => this == VRoomType.b;
-  bool get isCustom => this == VRoomType.o;
+  bool get isOrder => this == VRoomType.o;
 }
 
 enum MessageEmitStatus {

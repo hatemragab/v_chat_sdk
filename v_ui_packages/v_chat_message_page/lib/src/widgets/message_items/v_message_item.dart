@@ -11,7 +11,6 @@ import 'package:v_chat_message_page/src/widgets/message_items/widgets/call_messa
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/custom_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/file_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/image_message_item.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/widgets/info_message.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/location_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/text_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/video_message_item.dart';
@@ -28,21 +27,30 @@ class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
   final VRoom room;
   final VMessageCallback onSwipe;
+  final VMessageCallback? onTap;
+  final VMessageCallback? onLongTap;
   final VVoiceMessageController? Function(VBaseMessage message) voiceController;
   final VMessageCallback onHighlightMessage;
   final VMessageCallback onReSend;
-  final VMessageItemController itemController;
 
   const VMessageItem({
     Key? key,
     required this.room,
+    this.onLongTap,
+    this.onTap,
     required this.voiceController,
     required this.message,
     required this.onSwipe,
     required this.onReSend,
     required this.onHighlightMessage,
-    required this.itemController,
   }) : super(key: key);
+
+  bool get isAllowOnTap =>
+      !message.messageType.isAllDeleted &&
+      !message.messageType.isVoice &&
+      onTap != null;
+
+  bool get isAllowLongTap =>   onLongTap != null;
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +64,16 @@ class VMessageItem extends StatelessWidget {
       );
     }
     return InkWell(
-      onLongPress: () {
-        itemController.onMessageItemLongPress(message, room, onSwipe);
-      },
-      onTap: () {
-        itemController.onMessageItemPress(
-          message,
-        );
-      },
+      onLongPress: isAllowLongTap
+          ? () {
+              onLongTap!(message);
+            }
+          : null,
+      onTap: isAllowOnTap
+          ? () {
+              onTap!(message);
+            }
+          : null,
       child: SwipeTo(
         key: UniqueKey(),
         onRightSwipe: () {
@@ -174,9 +184,7 @@ class VMessageItem extends StatelessWidget {
           message: message as VCustomMessage,
         );
       case MessageType.info:
-        return InfoMessageItem(
-          message: message as VInfoMessage,
-        );
+        throw "MessageType.info should not render her it center render!";
     }
   }
 }

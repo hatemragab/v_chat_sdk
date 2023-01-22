@@ -8,6 +8,7 @@ class ChatsTabController extends GetxController {
   final vRoomController = VRoomController(isTesting: false);
 
   void onCreateGroupOrBroadcast() async {
+
     final l = ["Group", "Broadcast"];
     final res = await VAppAlert.showAskListDialog(
       context: Get.context!,

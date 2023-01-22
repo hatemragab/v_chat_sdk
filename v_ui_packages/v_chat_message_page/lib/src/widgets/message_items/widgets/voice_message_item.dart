@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 class VoiceMessageItem extends StatelessWidget {
@@ -12,12 +14,17 @@ class VoiceMessageItem extends StatelessWidget {
     required this.voiceController,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return VVoiceMessageView(
       controller: voiceController(message)!,
-      backgroundColor: Colors.transparent,
-      activeSliderColor: Colors.white,
+      notActiveSliderColor:context.vMessageTheme.messageItemHolderColor(
+        context,
+        message.isMeSender,
+        context.isDark,
+      ).withOpacity(.3),
+      activeSliderColor:context.isDark?Colors.green: Colors.red,
     );
   }
 }

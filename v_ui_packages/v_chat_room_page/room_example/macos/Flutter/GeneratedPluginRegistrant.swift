@@ -19,7 +19,7 @@ import platform_device_id
 import platform_device_id_macos
 import record_macos
 import share_plus
-import shared_preferences_macos
+import shared_preferences_foundation
 import sqflite
 import sqlite3_flutter_libs
 import url_launcher_macos

@@ -7,6 +7,7 @@ class MessageTextFiled extends StatefulWidget {
   final VChatTextMentionController textEditingController;
   final FocusNode focusNode;
   final bool isTyping;
+  final bool autofocus;
   final String hint;
   final VoidCallback onShowEmoji;
   final VoidCallback onCameraPress;
@@ -21,6 +22,7 @@ class MessageTextFiled extends StatefulWidget {
     required this.onCameraPress,
     required this.onAttachFilePress,
     required this.isTyping,
+    required this.autofocus,
     required this.hint,
     required this.onSubmit,
   });
@@ -52,6 +54,7 @@ class _MessageTextFiledState extends State<MessageTextFiled> {
                 textCapitalization: TextCapitalization.sentences,
                 controller: widget.textEditingController,
                 focusNode: widget.focusNode,
+                autofocus: widget.autofocus,
                 maxLines: 5,
                 onChanged: (value) {
                   setState(() {

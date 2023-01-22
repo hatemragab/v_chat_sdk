@@ -118,11 +118,11 @@ class VPlatformFileSource {
     return VSupportedFilesType.file;
   }
 
-  bool get isFile => getMediaType == VSupportedFilesType.file;
+  bool get isContentFile => getMediaType == VSupportedFilesType.file;
 
-  bool get isVideo => getMediaType == VSupportedFilesType.video;
+  bool get isContentVideo => getMediaType == VSupportedFilesType.video;
 
-  bool get isImage => getMediaType == VSupportedFilesType.image;
+  bool get isContentImage => getMediaType == VSupportedFilesType.image;
 
   factory VPlatformFileSource.fromMap(Map<String, dynamic> map) {
     if (map['filePath'] == null && map['bytes'] == null && map['url'] == null) {

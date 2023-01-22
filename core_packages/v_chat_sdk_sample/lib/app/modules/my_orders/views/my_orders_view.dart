@@ -1,9 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
  import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/models/order.model.dart';
-import 'package:v_chat_sdk_sample/app/core/widgets/app_btn.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/my_orders_controller.dart';
 

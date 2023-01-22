@@ -18,9 +18,10 @@ class DateDividerItem extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 1),
               decoration: BoxDecoration(
-                  color: Colors.blueGrey,
-                  borderRadius: BorderRadius.circular(5)),
-              child: DateFormat("yyyy-MM-dd").format(dateTime).toString().text,
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: DateFormat("yyyy-MM-dd").format(dateTime).toString().text.color(Colors.black87),
             ),
           ),
         ],

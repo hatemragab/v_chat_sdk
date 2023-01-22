@@ -6,5 +6,6 @@ class HomeController extends GetxController {
   final roomController = VRoomController(isTesting: true);
   void onRoomLongTap(VRoom room) {}
 
-  void onRoomTap(VRoom room) {}
+  void onRoomTap(VRoom room) {
+  }
 }

@@ -9,9 +9,9 @@ class EditProfileController extends GetxController {
   final user = AppAuth.getMyModel;
   late VPlatformFileSource userImage;
   final nameController = TextEditingController();
-  final UserRepository repository;
+  // final UserRepository repository;
 
-  EditProfileController(this.repository);
+  // EditProfileController(this.repository);
 
   @override
   void onInit() {
@@ -31,7 +31,7 @@ class EditProfileController extends GetxController {
     VAppAlert.showLoading(context: Get.context!);
     final name = nameController.text.toString();
     user.userName = name;
-    await repository.edit(user.toMap(), user.id);
+    // await repository.edit(user.toMap(), user.id);
     await VAppPref.setMap(VStorageKeys.vMyProfile.name, user.toMap());
     Get.back();
     VAppAlert.showSuccessSnackBar(

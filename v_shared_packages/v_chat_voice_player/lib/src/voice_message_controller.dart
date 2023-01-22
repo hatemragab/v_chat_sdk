@@ -94,6 +94,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
       _updateUi();
       rethrow;
     }
+    _updateUi();
   }
 
   bool get isFile => audioSrc.isFromPath;
