@@ -14,9 +14,15 @@ class EventsDaemon {
     _messageSubscription = _emitter
         .on<VMessageEvents>()
         .where((element) => element is VInsertMessageEvent)
-        .listen((event) {
+        .listen((event) async {
       if (event is VInsertMessageEvent) {
-        _onNewInsert(event.messageModel);
+        await _onNewInsert(event.messageModel);
+        if (VPlatforms.isWeb && !event.messageModel.isMeSender) {
+          ///we need to push notification event to the events
+          _emitter.fire(VOnNewNotifications(
+            message: event.messageModel,
+          ));
+        }
       }
     });
   }

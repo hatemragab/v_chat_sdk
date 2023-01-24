@@ -54,7 +54,7 @@ typedef TextTypeDef = TextStyle Function(
   bool isMeSender,
 );
 
-typedef IteMHolderColorTypeDef = Color Function(
+typedef ItemHolderColorTypeDef = Color Function(
   BuildContext context,
   bool isMeSender,
   bool isDarkMode,
@@ -88,7 +88,7 @@ Widget getDateDividerWidget(BuildContext context, DateTime dateTime) {
 const _darkMeSenderColor = Colors.indigo;
 const _darkReceiverColor = Color(0xff515156);
 
-const _lightReceiverColor = Color(0x0ff1eaea);
+const _lightReceiverColor = Color(0xffffffff);
 const _lightMySenderColor = Color(0xff96f3aa);
 
 Widget getMessageItemHolder(

@@ -27,12 +27,16 @@ class VLinkPreviewData {
     return 'LinkPreviewData{image: $image, title: $title, desc: $desc, link: $link}';
   }
 
-  factory VLinkPreviewData.fromMap(Map<String, dynamic> map) {
+  factory VLinkPreviewData.fromMap(
+    Map<String, dynamic> map, {
+    String? baseUrl,
+  }) {
     return VLinkPreviewData(
       image: map['image'] == null
           ? null
           : VMessageImageData.fromMap(
               map['image'] as Map<String, dynamic>,
+              baseUrl: baseUrl,
             ),
       title: map['title'] as String?,
       desc: map['desc'] as String?,

@@ -55,7 +55,7 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'uid': id,
+      '_id': id,
       'userName': userName,
       'createdAt': createdAt.toIso8601String(),
       'imageUrl': imageUrl,
@@ -64,7 +64,7 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['uid'] as String,
+      id: map['_id'] as String,
       userName: map['userName'] as String,
       createdAt: DateTime.parse(map['createdAt']),
       imageUrl: map['imageUrl'] as String,

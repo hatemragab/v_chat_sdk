@@ -1,8 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:eraser/eraser.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:http/http.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VChatFcmProver extends VChatPushProviderBase {
@@ -10,16 +15,17 @@ class VChatFcmProver extends VChatPushProviderBase {
   StreamSubscription? _onNewMessage;
   StreamSubscription? _onMsgClicked;
   final _vEventBusSingleton = VEventBusSingleton.vEventBus;
-  final _eventsStream = StreamController<VNotificationModel>();
 
   VChatFcmProver({
     super.enableForegroundNotification,
-    super.vPushConfig = const VPushConfig(channelName: "channelName"),
+    super.vPushConfig =
+        const VLocalNotificationPushConfig(channelName: "channelName"),
   });
 
   @override
   Future<void> deleteToken() async {
     try {
+      await cleanAll();
       _onTokenRefresh?.cancel();
       await FirebaseMessaging.instance.deleteToken();
     } catch (err) {
@@ -41,6 +47,7 @@ class VChatFcmProver extends VChatPushProviderBase {
   @override
   Future<bool> init() async {
     try {
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }
@@ -89,36 +96,44 @@ class VChatFcmProver extends VChatPushProviderBase {
       final String? fromVChat = remoteMsg.data['fromVChat'];
       final String? message = remoteMsg.data['vMessage'];
       if (fromVChat != null && message != null) {
-        _eventsStream.add(
-          VNotificationModel(
-            actionRes: VNotificationActionRes.push,
-            message: jsonDecode(message),
-          ),
+        final msg = MessageFactory.createBaseMessage(
+          jsonDecode(message),
         );
+        if (msg.isMeSender) return;
+        _vEventBusSingleton.fire(VOnNewNotifications(
+          message: msg,
+        ));
       }
     });
     _onMsgClicked =
         FirebaseMessaging.onMessageOpenedApp.listen((remoteMsg) async {
       final String? fromVChat = remoteMsg.data['fromVChat'];
       final String? message = remoteMsg.data['vMessage'];
+
       if (fromVChat != null && message != null) {
-        _eventsStream.add(
-          VNotificationModel(
-            actionRes: VNotificationActionRes.click,
-            message: jsonDecode(message),
-          ),
+        final msg = MessageFactory.createBaseMessage(
+          jsonDecode(message),
         );
+        final room = await _getRoom(msg.roomId);
+        if (room == null) return;
+        _vEventBusSingleton
+            .fire(VOnNotificationsClickedEvent(message: msg, room: room));
       }
     });
   }
 
-  Future<Map<String, dynamic>?> _checkIfAppOpenFromNotification() async {
+  Future<VRoom?> _getRoom(String roomId) async {
+    return VChatController.I.nativeApi.local.room
+        .getOneWithLastMessageByRoomId(roomId);
+  }
+
+  Future<VBaseMessage?> _checkIfAppOpenFromNotification() async {
     final remoteMsg = await FirebaseMessaging.instance.getInitialMessage();
     if (remoteMsg == null) return null;
     final String? fromVChat = remoteMsg.data['fromVChat'];
     final String? message = remoteMsg.data['vMessage'];
     if (fromVChat != null && message != null) {
-      return jsonDecode(message);
+      return MessageFactory.createBaseMessage(jsonDecode(message));
     }
     return null;
   }
@@ -131,10 +146,57 @@ class VChatFcmProver extends VChatPushProviderBase {
   }
 
   @override
-  Stream<VNotificationModel> eventsStream() => _eventsStream.stream;
-
-  @override
-  Future<Map<String, dynamic>?> getOpenAppNotification() {
+  Future<VBaseMessage?> getOpenAppNotification() {
     return _checkIfAppOpenFromNotification();
   }
+
+  @override
+  Future<void> cleanAll({int? notificationId}) async {
+    await Eraser.clearAllAppNotifications();
+    FlutterAppBadger.removeBadge();
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (await FlutterAppBadger.isAppBadgeSupported()) {
+    FlutterAppBadger.updateBadgeCount(1);
+  }
+  final roomId = message.data['roomId'] as String?;
+  await VAppPref.init();
+  if (roomId != null) {
+    // final msg = MessageFactory.createBaseMessage(
+    //   jsonDecode(message.data['message'].toString()) as Map<String, dynamic>,
+    // );
+    final token = VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name);
+    if (token != null) {
+      if (kDebugMode) {
+        final res = await patch(
+          Uri.parse("${VAppConstants.emulatorBaseUrl}/channel/$roomId/deliver"),
+          headers: {
+            'authorization': "Bearer $token",
+            "clint-version": VAppConstants.clintVersion,
+            "Accept-Language": "en"
+          },
+        );
+        if (res.statusCode != 200) {
+          throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
+        }
+        return;
+      }
+      final res = await patch(
+        Uri.parse(
+            "${VAppConstants.baseUri.toString()}/channel/$roomId/deliver"),
+        headers: {
+          'authorization': "Bearer $token",
+          "clint-version": VAppConstants.clintVersion,
+          "Accept-Language": "en"
+        },
+      );
+      if (res.statusCode != 200) {
+        throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
+      }
+    }
+  }
+  return Future<void>.value();
 }

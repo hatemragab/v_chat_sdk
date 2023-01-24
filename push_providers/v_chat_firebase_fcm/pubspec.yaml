@@ -13,8 +13,12 @@ dependencies:
   flutter:
     sdk: flutter
   v_chat_utils: ^0.2.0
+  v_chat_sdk_core: ^0.2.0
   firebase_core: ^2.4.1
   firebase_messaging: ^14.2.1
+  eraser: ^2.0.1
+  flutter_app_badger: ^1.5.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_lints: ^2.0.1

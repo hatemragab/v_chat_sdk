@@ -28,3 +28,6 @@
 ## 0.1.0+5
 
 - new loading alert
+- ## 0.2.0+1
+
+- add base url for the VPlatfromFileSource to let user add custom prefix to the url only

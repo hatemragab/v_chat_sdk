@@ -195,7 +195,7 @@ abstract class VAppAlert {
     showOverlay(
       (context, t) {
         return Container(
-          color: Color.lerp(Colors.transparent, Colors.black54, t),
+          color: Colors.grey,
           child: FractionalTranslation(
             translation:
                 Offset.lerp(const Offset(0, -1), const Offset(0, 0), t)!,
@@ -247,13 +247,14 @@ class _MessageNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey,
       margin: const EdgeInsets.symmetric(horizontal: 4),
       child: SafeArea(
         child: ListTile(
           title: Text(title),
           subtitle: subtitle == null ? null : Text(subtitle!),
           trailing: IconButton(
-            icon: const Icon(Icons.clear),
+            icon: const Icon(Icons.clear,color: Colors.black,),
             onPressed: () {
               onReply();
             },

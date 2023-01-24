@@ -36,14 +36,18 @@ class VMessageVideoData {
     };
   }
 
-  factory VMessageVideoData.fromMap(Map<String, dynamic> map) {
+  factory VMessageVideoData.fromMap(
+    Map<String, dynamic> map, {
+    String? baseUrl,
+  }) {
     return VMessageVideoData(
-      fileSource: VPlatformFileSource.fromMap(map),
+      fileSource: VPlatformFileSource.fromMap(map, baseUrl: baseUrl),
       duration: map['duration'] == null ? 0 : map['duration'] as int,
       thumbImage: map['thumbImage'] == null
           ? null
           : VMessageImageData.fromMap(
               map['thumbImage'] as Map<String, dynamic>,
+              baseUrl: baseUrl,
             ),
     );
   }

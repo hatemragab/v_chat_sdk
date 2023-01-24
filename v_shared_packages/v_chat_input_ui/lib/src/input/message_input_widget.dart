@@ -140,9 +140,10 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     };
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
-        setState(() {
-          _isEmojiShowing = false;
-        });
+        _isEmojiShowing = false;
+        if (mounted) {
+          setState(() {});
+        }
       }
     });
     if (!VPlatforms.isMobile) {
@@ -428,7 +429,6 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     if (_typingType != VRoomTypingEnum.stop) {
       widget.onTypingChange(VRoomTypingEnum.stop);
     }
-    _focusNode.dispose();
     _textEditingController.dispose();
     super.dispose();
   }

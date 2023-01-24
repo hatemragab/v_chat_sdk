@@ -33,7 +33,7 @@ class AuthApi implements AuthEndPoints {
       platform: VPlatforms.currentPlatform,
       deviceId: await deviceHelper.getId(),
       language: deviceLanguage.languageCode,
-      pushKey: await _helper.getFcmToken(),
+      pushKey: await _helper.getPushToken(),
       password: await _helper.getPasswordFromIdentifier(identifier),
     );
     final user = await _remoteAuth.login(dto);
@@ -60,7 +60,7 @@ class AuthApi implements AuthEndPoints {
       language: deviceLanguage.languageCode,
       platform: VPlatforms.currentPlatform,
       password: await _helper.getPasswordFromIdentifier(identifier),
-      pushKey: await _helper.getFcmToken(),
+      pushKey: await _helper.getPushToken(),
       image: image,
     );
 

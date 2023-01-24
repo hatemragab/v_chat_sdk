@@ -7,7 +7,6 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 class HomeController extends GetxController {
   int tabIndex = 0;
   final pageController = PageController();
-  StreamSubscription? vOnNotificationsClickedStream;
 
   void updateIndex(int i) {
     tabIndex = i;
@@ -21,23 +20,5 @@ class HomeController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    vOnNotificationsClickedStream = VChatController
-        .I.nativeApi.streams.vOnNotificationsClickedStream
-        .listen(
-      (event) {
-        final room = event.room as VRoom;
-        VChatController.I.vNavigator.messageNavigator
-            .toMessagePage(Get.context!, room);
-      },
-    );
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-    vOnNotificationsClickedStream?.cancel();
-  }
 }

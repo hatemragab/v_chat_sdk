@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/chats_tab/views/chats_tab_view.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/explore_tab/views/explore_tab_view.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/settings_tab/views/settings_tab_view.dart';
@@ -8,8 +9,22 @@ import 'package:v_chat_sdk_sample/app/modules/home_tabs/users_tab/views/users_ta
 
 import '../controllers/home_controller.dart';
 
-class HomeView extends GetView<HomeController> {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  late final HomeController controller;
+
+  @override
+  void initState() {
+    controller = Get.find<HomeController>();
+    super.initState();
+    VChatController.I.navigationContext = context;
+  }
 
   @override
   Widget build(BuildContext context) {

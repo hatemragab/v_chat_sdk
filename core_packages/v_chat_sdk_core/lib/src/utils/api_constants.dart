@@ -7,6 +7,7 @@ abstract class VAppConstants {
   static String clintVersion = "2.0.0";
   static const appName = "VChatSdkV2";
   static const dbName = "VChatSdkV2.db";
+  static const oneSignalAppId = "609f7bcb-96ae-4a9c-a96f-f1005c26a2dc";
   static const apiVersion = "v2";
   static const dbVersion = 1;
   static const socketInterval = 10; //10sec
@@ -17,6 +18,8 @@ abstract class VAppConstants {
     }
     return "${uri.scheme}://${uri.host}";
   }
+
+  static String emulatorBaseUrl = "http://10.0.2.2:3001/api/$apiVersion";
 
   static int get maxMediaSize {
     return VChatController.I.vChatConfig.maxMediaUploadSize;

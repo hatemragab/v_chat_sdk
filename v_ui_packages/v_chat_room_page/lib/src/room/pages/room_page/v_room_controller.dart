@@ -107,4 +107,9 @@ class VRoomController with VSocketStatusStream {
   bool _getIsFinishLoadMore() {
     return _roomState.isFinishLoadMore;
   }
+  @override
+  void onSocketConnected() {
+    super.onSocketConnected();
+    _getRoomsFromLocal();
+  }
 }

@@ -6,7 +6,7 @@ import '../../v_chat_message_page.dart';
 class VMessageTheme extends ThemeExtension<VMessageTheme> {
   final BoxDecoration scaffoldDecoration;
   final ItemHolderTypeDef messageItemHolder;
-  final IteMHolderColorTypeDef messageItemHolderColor;
+  final ItemHolderColorTypeDef messageItemHolderColor;
   final VMsgStatusTheme messageSendingStatus;
   final TextTypeDef textItemStyle;
   final DateDividerTypeDef dateDividerWidget;
@@ -54,7 +54,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   VMessageTheme copyWith({
     BoxDecoration? scaffoldDecoration,
     ItemHolderTypeDef? messageItemHolder,
-    IteMHolderColorTypeDef? messageItemHolderColor,
+    ItemHolderColorTypeDef? messageItemHolderColor,
     VMsgStatusTheme? messageSendingStatus,
     TextTypeDef? textItemStyle,
     DateDividerTypeDef? dateDividerWidget,

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../push_provider/v_chat_push_provider.dart';
 
 class VChatConfig {
   final VChatPushProviderBase? pushProvider;

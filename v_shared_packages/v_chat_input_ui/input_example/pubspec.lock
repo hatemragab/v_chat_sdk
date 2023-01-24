@@ -503,7 +503,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.10"
+    version: "4.0.11"
   image_cropper:
     dependency: transitive
     description:
@@ -588,6 +588,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.5"
+  map_launcher:
+    dependency: transitive
+    description:
+      name: map_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:
@@ -1005,14 +1012,14 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.2"
+    version: "2.2.3"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0+2"
+    version: "2.4.1"
   sqlite3_flutter_libs:
     dependency: transitive
     description:
@@ -1166,7 +1173,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.2.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1180,14 +1187,14 @@ packages:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.1.0+6"
+    version: "0.2.0"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.1.0+5"
+    version: "0.2.0"
   vector_math:
     dependency: transitive
     description:

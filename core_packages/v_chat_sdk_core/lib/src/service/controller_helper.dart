@@ -87,7 +87,7 @@ class ControllerHelper {
     return _getHashedPassword(identifier);
   }
 
-  Future<String?> getFcmToken() async {
+  Future<String?> getPushToken() async {
     if (!_config.isPushEnable) {
       return null;
     }

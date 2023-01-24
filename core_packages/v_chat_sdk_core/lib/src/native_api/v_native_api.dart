@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:http/http.dart' as http;
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
@@ -45,6 +47,8 @@ class _LocalNativeApi {
   late final NativeLocalMessage message;
   late final NativeLocalRoom room;
   late final NativeLocalApiCache apiCache;
+
+  Completer<void> get dbCompleter => DBProvider.instance.dbCompleter;
 
   Future init() async {
     final database = await DBProvider.instance.database;

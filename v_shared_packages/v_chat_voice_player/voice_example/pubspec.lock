@@ -293,13 +293,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  flutter_audio_waveforms:
-    dependency: transitive
-    description:
-      name: flutter_audio_waveforms
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.1+7"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -379,7 +372,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.10"
+    version: "4.0.11"
   image_cropper:
     dependency: transitive
     description:
@@ -435,7 +428,7 @@ packages:
       name: just_audio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.30"
+    version: "0.9.31"
   just_audio_platform_interface:
     dependency: transitive
     description:
@@ -478,6 +471,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.5"
+  map_launcher:
+    dependency: transitive
+    description:
+      name: map_launcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:
@@ -944,14 +944,14 @@ packages:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.1.0+5"
+    version: "0.2.0"
   v_chat_voice_player:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.1.0+2"
+    version: "0.2.0"
   vector_math:
     dependency: transitive
     description:

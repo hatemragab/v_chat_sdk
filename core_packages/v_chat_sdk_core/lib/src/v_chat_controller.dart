@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
@@ -31,6 +32,7 @@ class VChatController {
 
   ///singleton
   VChatController._();
+
   static final _instance = VChatController._();
   static late final VNotificationListener _vNotificationListener;
 
@@ -52,6 +54,7 @@ class VChatController {
   late final VMessagePageConfig vMessagePageConfig;
   bool _isControllerInit = false;
   late final VNativeApi nativeApi;
+  BuildContext? navigationContext;
 
   /// Initialize the [VChatController] instance.
   ///
@@ -86,9 +89,8 @@ class VChatController {
     return _instance;
   }
 
-  @internal
-  Future<void> listenToOpenFromNotification() async {
-    _vNotificationListener.getOpenAppNotification();
+  void setContext(BuildContext context) {
+    _instance.navigationContext = context;
   }
 
   void dispose() {
@@ -118,6 +120,7 @@ class VChatController {
     _vNotificationListener = VNotificationListener(
       _instance.nativeApi,
       _instance.vChatConfig,
+      _instance.vNavigator,
     );
   }
 }

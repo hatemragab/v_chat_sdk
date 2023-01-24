@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:file_sizes/file_sizes.dart';
+import 'package:meta/meta.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:path/path.dart';
 
@@ -9,21 +9,31 @@ import '../utils/enums.dart';
 
 class VPlatformFileSource {
   String name;
-  String? url;
+  @internal
+  String? userUrl;
   String? assetsPath;
   String? filePath;
   List<int>? bytes;
   String? mimeType;
   int fileSize;
+  @internal
+  String? baseUrl;
 
   VPlatformFileSource._({
     required this.name,
-    this.url,
+    this.userUrl,
     this.filePath,
     this.bytes,
+    this.baseUrl,
     required this.fileSize,
     this.mimeType,
   });
+
+  String? get url {
+    if (userUrl == null) return null;
+    if (baseUrl == null) return userUrl;
+    return baseUrl! + userUrl!;
+  }
 
   String? get getMimeType => mime(name);
 
@@ -75,8 +85,10 @@ class VPlatformFileSource {
 
   VPlatformFileSource.fromUrl({
     this.fileSize = 0,
-    required String this.url,
+    required String url,
+    this.baseUrl,
   }) : name = basename(url) {
+    userUrl = url;
     mimeType = getMimeType;
   }
 
@@ -90,7 +102,7 @@ class VPlatformFileSource {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'url': url == null ? null : url!,
+      'url': userUrl,
       'filePath': filePath,
       'assetsPath': assetsPath,
       'bytes': bytes,
@@ -101,7 +113,7 @@ class VPlatformFileSource {
 
   @override
   String toString() {
-    return 'PlatformFileSource{name: $name, url:$url filePath: $filePath, mimeType: $mimeType, assetsPath: $assetsPath, size: $fileSize bytes ${bytes?.length}';
+    return 'PlatformFileSource{name: $name, url:$url _baseUrl:$baseUrl filePath: $filePath, mimeType: $mimeType, assetsPath: $assetsPath, size: $fileSize bytes ${bytes?.length}';
   }
 
   VSupportedFilesType get getMediaType {
@@ -123,14 +135,18 @@ class VPlatformFileSource {
 
   bool get isContentImage => getMediaType == VSupportedFilesType.image;
 
-  factory VPlatformFileSource.fromMap(Map<String, dynamic> map) {
+  factory VPlatformFileSource.fromMap(
+    Map<String, dynamic> map, {
+    String? baseUrl,
+  }) {
     if (map['filePath'] == null && map['bytes'] == null && map['url'] == null) {
       throw "PlatformFileSource.fromMap at lest filePath or bytes or url not null $map";
     }
     return VPlatformFileSource._(
       name: map['name'] as String,
-      url: map['url'] == null ? null : map['url'] as String,
+      userUrl: map['url'] == null ? null : map['url'] as String,
       filePath: map['filePath'] as String?,
+      baseUrl: baseUrl,
       bytes: map['bytes'] as List<int>?,
       // bytes: (map['bytes'] as List?) ==null?null:(map['bytes'] as List).map((e) => null) ,
       mimeType: map['mimeType'] as String?,

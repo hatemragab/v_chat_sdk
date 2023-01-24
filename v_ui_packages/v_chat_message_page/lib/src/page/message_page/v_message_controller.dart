@@ -28,6 +28,7 @@ class VMessageController {
   late final InputStateController inputStateController;
 
   final _localStorage = VChatController.I.nativeApi.local;
+
   // final _remoteStorage = VChatController.I.nativeApi.remote;
   final autoScrollTagController = AutoScrollController(
     axis: Axis.vertical,
@@ -35,7 +36,7 @@ class VMessageController {
   );
   final _vConfig = VChatController.I.vChatConfig;
   late final VMessageItemController _itemController;
-
+  final focusNode = FocusNode();
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
 
@@ -74,9 +75,8 @@ class VMessageController {
     _itemController = VMessageItemController(_messageProvider, context);
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
+    _removeAllNotifications();
   }
-
-  final focusNode = FocusNode();
 
   Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
     localMsg.replyTo = inputState.replyMsg;
@@ -113,6 +113,7 @@ class VMessageController {
     )) as List<VBaseMediaRes>?;
 
     if (fileRes == null) return;
+
     for (var media in fileRes) {
       if (media is VMediaImageRes) {
         final localMsg = VImageMessage.buildMessage(
@@ -128,6 +129,7 @@ class VMessageController {
         _onSubmitSendMessage(localMsg);
       }
     }
+    scrollDown();
   }
 
   void onSubmitVoice(VMessageVoiceData data) {
@@ -136,6 +138,7 @@ class VMessageController {
       roomId: vRoom.id,
     );
     _onSubmitSendMessage(localMsg);
+    scrollDown();
   }
 
   void onSubmitFiles(List<VPlatformFileSource> files) {
@@ -146,6 +149,7 @@ class VMessageController {
         isEncrypted: false,
       );
       _onSubmitSendMessage(localMsg);
+      scrollDown();
     }
   }
 
@@ -155,6 +159,7 @@ class VMessageController {
       roomId: vRoom.id,
     );
     _onSubmitSendMessage(localMsg);
+    scrollDown();
   }
 
   void onTypingChange(VRoomTypingEnum typing) {
@@ -176,6 +181,7 @@ class VMessageController {
     appBarStateController.close();
     inputStateController.close();
     voiceControllers.close();
+    focusNode.dispose();
     autoScrollTagController.dispose();
     VRoomTracker.instance.closeOpenedRoom(roomId);
   }
@@ -262,5 +268,11 @@ class VMessageController {
     return _itemController.onMessageItemPress(
       message,
     );
+  }
+
+  void _removeAllNotifications() async {
+    if (VChatController.I.vChatConfig.isPushEnable) {
+      await VChatController.I.vChatConfig.pushProvider!.cleanAll();
+    }
   }
 }

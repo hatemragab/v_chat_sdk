@@ -1,5 +1,6 @@
 export './controller/config.dart';
 export './current_room.dart';
+export './push_provider/push.dart';
 export './socket/on_ban_user_chat.dart';
 export './socket/on_deliver_room_messages_model.dart';
 export './socket/on_enter_room_model.dart';

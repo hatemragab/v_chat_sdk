@@ -154,7 +154,6 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
 
   @override
   void onSocketConnected() {
-    //todo improve the call here
     _getApiMessages(_initFilterDto);
     _messageProvider.setSeen(_vRoom.id);
   }

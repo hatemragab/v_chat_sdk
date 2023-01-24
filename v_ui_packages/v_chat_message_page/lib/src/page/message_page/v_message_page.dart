@@ -189,39 +189,42 @@ class _VMessagePageState extends State<VMessagePage> {
                 ],
               ),
             ),
-            ValueListenableBuilder<MessageInputModel>(
-              valueListenable: controller.inputStateController,
-              builder: (_, value, __) {
-                if (value.isHidden) return const SizedBox.shrink();
-                return VMessageInputWidget(
-                  onSubmitText: controller.onSubmitText,
-                  autofocus: !VPlatforms.isMobile,
-                  focusNode: controller.focusNode,
-                  onSubmitMedia: (files) =>
-                      controller.onSubmitMedia(context, files),
-                  onSubmitVoice: controller.onSubmitVoice,
-                  onSubmitFiles: controller.onSubmitFiles,
-                  onSubmitLocation: controller.onSubmitLocation,
-                  onTypingChange: controller.onTypingChange,
-                  googleMapsLangKey: "en",
-                  maxMediaSize: _config.maxMediaSize,
-                  onMentionSearch: controller.onMentionRequireSearch,
-                  maxRecordTime: _config.maxRecordTime,
-                  googleMapsApiKey: _config.googleMapsApiKey,
-                  replyWidget: value.replyMsg == null
-                      ? null
-                      : ReplyMsgWidget(
-                          vBaseMessage: value.replyMsg!,
-                          onDismiss: controller.dismissReply,
-                        ),
-                  stopChatWidget: value.isCloseInput
-                      ? BanWidget(
-                          isMy: false,
-                          onUnBan: () {},
-                        )
-                      : null,
-                );
-              },
+            const SizedBox(height: 5,),
+            SafeArea(
+              child: ValueListenableBuilder<MessageInputModel>(
+                valueListenable: controller.inputStateController,
+                builder: (_, value, __) {
+                  if (value.isHidden) return const SizedBox.shrink();
+                  return VMessageInputWidget(
+                    onSubmitText: controller.onSubmitText,
+                    autofocus: !VPlatforms.isMobile,
+                    focusNode: controller.focusNode,
+                    onSubmitMedia: (files) =>
+                        controller.onSubmitMedia(context, files),
+                    onSubmitVoice: controller.onSubmitVoice,
+                    onSubmitFiles: controller.onSubmitFiles,
+                    onSubmitLocation: controller.onSubmitLocation,
+                    onTypingChange: controller.onTypingChange,
+                    googleMapsLangKey: "en",
+                    maxMediaSize: _config.maxMediaSize,
+                    onMentionSearch: controller.onMentionRequireSearch,
+                    maxRecordTime: _config.maxRecordTime,
+                    googleMapsApiKey: _config.googleMapsApiKey,
+                    replyWidget: value.replyMsg == null
+                        ? null
+                        : ReplyMsgWidget(
+                            vBaseMessage: value.replyMsg!,
+                            onDismiss: controller.dismissReply,
+                          ),
+                    stopChatWidget: value.isCloseInput
+                        ? BanWidget(
+                            isMy: false,
+                            onUnBan: () {},
+                          )
+                        : null,
+                  );
+                },
+              ),
             )
           ],
         ),

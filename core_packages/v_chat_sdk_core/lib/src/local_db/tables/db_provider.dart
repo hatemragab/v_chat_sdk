@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:logging/logging.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,7 +11,8 @@ import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 class DBProvider {
   DBProvider._();
 
-  static final DBProvider instance = DBProvider._();
+  final Completer<void> dbCompleter = Completer<void>();
+  static final instance = DBProvider._();
   final log = Logger('DBProvider SQL');
   Database? _database;
 
@@ -42,6 +45,7 @@ class DBProvider {
         log.fine("All tables Created !!");
       },
       onOpen: (db) async {
+        dbCompleter.complete();
         // await NewRoomTable.recreateTable(db);
         // await NewMessageTable.recreateTable(db);
         //
