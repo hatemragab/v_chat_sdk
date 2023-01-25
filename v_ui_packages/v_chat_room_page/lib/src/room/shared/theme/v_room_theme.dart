@@ -110,6 +110,7 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
     return this;
   }
 
+  @override
   VRoomTheme copyWith({
     BoxDecoration? scaffoldDecoration,
     Widget Function(String title)? getChatTitle,

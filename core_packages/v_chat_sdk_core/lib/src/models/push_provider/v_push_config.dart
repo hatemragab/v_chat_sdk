@@ -4,5 +4,4 @@ class VLocalNotificationPushConfig {
   const VLocalNotificationPushConfig({
     required this.channelName,
   });
-
 }

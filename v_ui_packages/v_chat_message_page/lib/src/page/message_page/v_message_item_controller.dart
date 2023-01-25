@@ -29,6 +29,16 @@ class VMessageItemController {
     );
   }
 
+  ModelSheetItem<VMessageItemClickRes> _downloadItem() {
+    return ModelSheetItem(
+      id: VMessageItemClickRes.download,
+      title: "Download",
+      iconData: const Icon(
+        Icons.download,
+      ),
+    );
+  }
+
   ModelSheetItem<VMessageItemClickRes> _copyItem() {
     return ModelSheetItem(
         id: VMessageItemClickRes.copy,
@@ -70,29 +80,19 @@ class VMessageItemController {
 
   void onMessageItemPress(VBaseMessage message) async {
     if (message is VImageMessage) {
-      context.toPage(VImageViewer(
-        platformFileSource: message.data.fileSource,
-        appName: VAppConstants.appName,
-        //todo trans
-        successfullyDownloaded: "successfully Downloaded",
-      ));
+      VChatController.I.vNavigator.messageNavigator.toImageViewer(
+        context,
+        message.data.fileSource,
+      );
     }
     if (message is VVideoMessage) {
-      context.toPage(VVideoPlayer(
-        platformFileSource: message.data.fileSource,
-      ));
+      VChatController.I.vNavigator.messageNavigator.toVideoPlayer(
+        context,
+        message.data.fileSource,
+      );
     }
     if (message is VFileMessage) {
-      VAppAlert.showLoading(
-        context: context,
-        isDismissible: true,
-        //todo trans
-        message: "Downloading...",
-      );
-      final url = await VDownloaderService.instance.addToQueue(message);
-      context.pop();
-      await OpenFile.open(url);
-      VAppAlert.showOverlaySupport(title: "File has been saved");
+      _handleDownload(message);
     }
     if (message is VLocationMessage) {
       await VStringUtils.lunchMap(
@@ -117,6 +117,12 @@ class VMessageItemController {
       items.add(_shareItem());
       if (message.isMeSender) {
         items.add(_infoItem());
+      }
+      if (message.messageType.isFile) {
+        items.add(_downloadItem());
+      }
+      if (message.messageType.isVoice) {
+        items.add(_downloadItem());
       }
     }
     items.add(
@@ -154,6 +160,9 @@ class VMessageItemController {
         break;
       case VMessageItemClickRes.copy:
         _handleCopy(message);
+        break;
+      case VMessageItemClickRes.download:
+        _handleDownload(message);
         break;
     }
   }
@@ -312,5 +321,18 @@ class VMessageItemController {
         text: message.getMessageText,
       ),
     );
+  }
+
+  void _handleDownload(VBaseMessage message) async {
+    VAppAlert.showLoading(
+      context: context,
+      isDismissible: true,
+      //todo trans
+      message: "Downloading...",
+    );
+    final url = await VDownloaderService.instance.addToQueue(message);
+    context.pop();
+    await OpenFile.open(url);
+    VAppAlert.showOverlaySupport(title: "File has been saved $url");
   }
 }

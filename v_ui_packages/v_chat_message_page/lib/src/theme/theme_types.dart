@@ -143,6 +143,6 @@ TextStyle getTextWidget(
 ) {
   return Theme.of(context)
       .textTheme
-      .bodyText1!
+      .bodyLarge!
       .merge(const TextStyle(fontSize: 17));
 }

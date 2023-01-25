@@ -10,9 +10,13 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VChatOneSignalProver extends VChatPushProviderBase {
   final _vEventBusSingleton = VEventBusSingleton.vEventBus;
+  final String appId;
+  final OSLogLevel logLevel;
 
   VChatOneSignalProver({
     super.enableForegroundNotification,
+    required this.appId,
+    this.logLevel = OSLogLevel.none,
     super.vPushConfig =
         const VLocalNotificationPushConfig(channelName: "channelName"),
   });
@@ -21,7 +25,7 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   Future<void> deleteToken() async {
     try {
       cleanAll();
-      await OneSignal.shared.disablePush(true);
+      await OneSignal.shared.disablePush(false);
     } catch (err) {
       //
     }
@@ -33,7 +37,9 @@ class VChatOneSignalProver extends VChatPushProviderBase {
     try {
       final state = await OneSignal.shared.getDeviceState();
       if (state == null) {
-        print("OneSignal.shared.getDeviceState() is null!");
+        if (kDebugMode) {
+          print("OneSignal.shared.getDeviceState() is null!");
+        }
         return null;
       }
       return state.userId;
@@ -55,9 +61,9 @@ class VChatOneSignalProver extends VChatPushProviderBase {
       if (kReleaseMode) {
         await OneSignal.shared.setLogLevel(OSLogLevel.none, OSLogLevel.none);
       } else {
-        await OneSignal.shared.setLogLevel(OSLogLevel.none, OSLogLevel.none);
+        await OneSignal.shared.setLogLevel(logLevel, logLevel);
       }
-      await OneSignal.shared.setAppId(VAppConstants.oneSignalAppId);
+      await OneSignal.shared.setAppId(appId);
       final status = await _getIsAllow();
       if (status) {
         _initStreams();

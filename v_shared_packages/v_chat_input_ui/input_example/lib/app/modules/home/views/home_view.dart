@@ -90,17 +90,4 @@ class HomeView extends GetView<HomeController> {
       ),
     );
   }
-
-  Widget _getBanWidget() {
-    return const Text("BANNNED");
-  }
-
-  Widget _getReplyWidget(Object value) {
-    if (value is VTextMessage) {
-      return const Text("VTextMessage");
-    } else if (value is VImageMessage) {
-      return const Text("V Image msg");
-    }
-    throw UnimplementedError();
-  }
 }

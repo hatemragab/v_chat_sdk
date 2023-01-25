@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class HomeController extends GetxController {
   int tabIndex = 0;
@@ -19,6 +16,4 @@ class HomeController extends GetxController {
     tabIndex = i;
     update();
   }
-
-
 }

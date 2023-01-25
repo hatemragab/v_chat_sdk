@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/events_daemon.dart';
@@ -32,9 +31,7 @@ class VChatController {
 
   ///singleton
   VChatController._();
-
   static final _instance = VChatController._();
-  static late final VNotificationListener _vNotificationListener;
 
   static VChatController get I {
     assert(
@@ -46,9 +43,6 @@ class VChatController {
 
   late final AuthApi authApi;
   late final RoomApi roomApi;
-  @internal
-  final vAppLifecycleState = VAppLifecycleState();
-
   late final VChatConfig vChatConfig;
   late final VNavigator vNavigator;
   late final VMessagePageConfig vMessagePageConfig;
@@ -80,9 +74,8 @@ class VChatController {
     );
     _instance.roomApi = RoomApi(
       _instance.nativeApi,
-      _instance.vChatConfig,
     );
-    ControllerHelper.instance.init();
+    await ControllerHelper.instance.init();
     SocketController.instance.connect();
     _startServices();
 
@@ -95,7 +88,6 @@ class VChatController {
 
   void dispose() {
     _isControllerInit = false;
-    vAppLifecycleState.dispose();
   }
 
   ///make sure you already login or already login to v chat
@@ -113,11 +105,12 @@ class VChatController {
   }
 
   static void _startServices() {
+    VAppLifecycleState();
     ReSendDaemon().start();
     EventsDaemon().start();
     OfflineOnlineEmitterService().start();
     SocketStatusService();
-    _vNotificationListener = VNotificationListener(
+    VNotificationListener(
       _instance.nativeApi,
       _instance.vChatConfig,
       _instance.vNavigator,

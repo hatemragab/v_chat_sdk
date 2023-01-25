@@ -254,7 +254,10 @@ class _MessageNotification extends StatelessWidget {
           title: Text(title),
           subtitle: subtitle == null ? null : Text(subtitle!),
           trailing: IconButton(
-            icon: const Icon(Icons.clear,color: Colors.black,),
+            icon: const Icon(
+              Icons.clear,
+              color: Colors.black,
+            ),
             onPressed: () {
               onReply();
             },

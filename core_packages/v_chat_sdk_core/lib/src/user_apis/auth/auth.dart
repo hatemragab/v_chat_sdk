@@ -39,7 +39,8 @@ class AuthApi implements AuthEndPoints {
     final user = await _remoteAuth.login(dto);
     SocketController.instance.connect();
     if (VChatController.I.vChatConfig.isPushEnable) {
-      VChatController.I.vChatConfig.pushProvider!.askForPermissions();
+      VChatController.I.vChatConfig.currentPushProviderService!
+          .askForPermissions();
     }
     return user;
   }
@@ -67,7 +68,8 @@ class AuthApi implements AuthEndPoints {
     final user = await _remoteAuth.register(dto);
     SocketController.instance.connect();
     if (VChatController.I.vChatConfig.isPushEnable) {
-      VChatController.I.vChatConfig.pushProvider!.askForPermissions();
+      VChatController.I.vChatConfig.currentPushProviderService!
+          .askForPermissions();
     }
     return user;
   }
@@ -77,7 +79,7 @@ class AuthApi implements AuthEndPoints {
   Future<void> logout() async {
     try {
       await _remoteAuth.logout();
-      await _chatConfig.pushProvider?.deleteToken();
+      await _chatConfig.currentPushProviderService?.deleteToken();
     } catch (err) {
       _log.warning(err);
     }

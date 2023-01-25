@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 
-import '../push_provider/v_chat_push_provider.dart';
+import 'package:v_chat_sdk_core/src/models/push_provider/v_chat_push_provider.dart';
 
 class VChatConfig {
-  final VChatPushProviderBase? pushProvider;
+  final VChatPushProviderBase? fcmPushProvider;
+  final VChatPushProviderBase? oneSignalPushProvider;
   final bool enableLog;
   final bool enableMessageEncryption;
   final int maxMediaUploadSize;
@@ -12,8 +13,9 @@ class VChatConfig {
   final String encryptHashKey;
   final Uri baseUrl;
 
-  const VChatConfig({
-    this.pushProvider,
+  VChatConfig({
+    this.fcmPushProvider,
+    this.oneSignalPushProvider,
     required this.encryptHashKey,
     required this.baseUrl,
     this.enableLog = kDebugMode,
@@ -23,5 +25,13 @@ class VChatConfig {
     this.maxMediaUploadSize = 50 * 1000 * 1000, //50 mb
   });
 
-  bool get isPushEnable => pushProvider != null;
+  bool get isPushEnable =>
+      fcmPushProvider != null || oneSignalPushProvider != null;
+
+  VChatPushProviderBase? currentPushProviderService;
+
+  Future cleanNotifications() async {
+    if (!isPushEnable) return;
+    await currentPushProviderService!.cleanAll();
+  }
 }

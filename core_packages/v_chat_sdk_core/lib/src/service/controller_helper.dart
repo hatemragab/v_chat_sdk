@@ -20,7 +20,10 @@ class ControllerHelper {
 
   Future<ControllerHelper> init() async {
     _initLogger(_config.enableLog);
-    await _initPushService(_config.pushProvider);
+    await _initPushService(
+      _config.fcmPushProvider,
+      _config.oneSignalPushProvider,
+    );
     _initSocketTimer();
     return ControllerHelper._();
   }
@@ -54,31 +57,50 @@ class ControllerHelper {
     });
   }
 
-  Future<void> _initPushService(VChatPushProviderBase? pushProvider) async {
-    if (pushProvider != null) {
-      try {
-        final initRes = await pushProvider.init();
-        if (initRes) {
-          _log.fine(
-            "init the sdk with ${pushProvider.serviceName()} done successfully through V_CHAT_SDK",
-          );
-        } else {
-          _log.fine(
-            "init the sdk with ${pushProvider.serviceName()} done successfully From your side",
-          );
-        }
-      } catch (err) {
-        if (pushProvider.serviceName() == VChatPushService.firebase) {
-          _log.warning(
-            "cant init your push service ${pushProvider.serviceName()} this device may be not support google play service or not internet connection",
-          );
-        } else {
-          _log.warning(
-            "cant init your push service ${pushProvider.serviceName()} no internet connection ",
-          );
-        }
+  Future<void> _initPushService(
+    VChatPushProviderBase? fcm,
+    VChatPushProviderBase? onesignal,
+  ) async {
+    if (fcm != null && onesignal != null) {
+      ///first try to init fcm
+      final fcmInit = await fcm.init();
+      _config.currentPushProviderService = fcm;
+      if (!fcmInit) {
+        ///we need to enable onesignal here
+        await onesignal.init();
+        _config.currentPushProviderService = onesignal;
+        _log.fine(
+          "init the sdk with OneSignal done successfully through V_CHAT_SDK",
+        );
+      } else {
+        _log.fine(
+          "init the sdk with fcm done successfully through V_CHAT_SDK",
+        );
       }
-    } else {
+      return;
+    }
+    if (fcm != null) {
+      final fcmInit = await fcm.init();
+      if (!fcmInit) {
+        _log.shout(
+          "init the sdk with fcm didn't this may be user internet connection or device not support google play service please use onesignal",
+        );
+        return;
+      }
+      _log.fine(
+        "init the sdk with fcm done successfully through V_CHAT_SDK",
+      );
+      return;
+    }
+    if (onesignal != null) {
+      await onesignal.init();
+      _config.currentPushProviderService = onesignal;
+      _log.fine(
+        "init the sdk with OneSignal done successfully through V_CHAT_SDK",
+      );
+      return;
+    }
+    if (fcm == null && onesignal == null) {
       _log.fine("init the sdk without push notification service!");
     }
   }
@@ -91,7 +113,7 @@ class ControllerHelper {
     if (!_config.isPushEnable) {
       return null;
     }
-    final token = await _config.pushProvider!.getToken();
+    final token = await _config.currentPushProviderService!.getToken();
     if (token == null) {
       _log.warning(
         "FCM value is null this device will not receive notifications this may be bad network or this device not support google play service",

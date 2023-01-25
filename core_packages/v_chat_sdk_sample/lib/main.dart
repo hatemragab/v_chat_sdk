@@ -26,8 +26,12 @@ void main() async {
     vChatConfig: VChatConfig(
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
-      pushProvider: VChatOneSignalProver(
+      fcmPushProvider: VChatFcmProver(
         enableForegroundNotification: true,
+      ),
+      oneSignalPushProvider: VChatOneSignalProver(
+        enableForegroundNotification: true,
+        appId: VAppConstants.oneSignalAppId,
       ),
     ),
     vNavigator: VNavigator(
@@ -81,7 +85,10 @@ class MyApp extends StatelessWidget {
             supportedLocales: S.delegate.supportedLocales,
             locale: appService.locale,
             fallbackLocale: const Locale("en"),
-            theme: ThemeData.light(),
+            theme: ThemeData(
+              useMaterial3: true,
+              colorSchemeSeed: Colors.green,
+            ),
             darkTheme: ThemeData.dark(),
           );
         },

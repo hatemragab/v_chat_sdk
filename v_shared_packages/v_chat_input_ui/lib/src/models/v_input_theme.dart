@@ -157,6 +157,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
     return this;
   }
 
+  @override
   VInputTheme copyWith({
     BoxDecoration? containerDecoration,
     InputDecoration? textFieldDecoration,

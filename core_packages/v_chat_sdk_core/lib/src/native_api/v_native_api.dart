@@ -14,8 +14,8 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VNativeApi {
-  final local = _LocalNativeApi();
-  final remote = _RemoteNativeApi(
+  final local = VLocalNativeApi();
+  final remote = VRemoteNativeApi(
     ChannelApiService.init(),
     MessageApiService.init(),
     ProfileApiService.init(),
@@ -39,24 +39,25 @@ class VNativeApi {
     );
     _instance._isControllerInit = true;
     await _instance.local.init();
+    await _instance.local.dbCompleter.future;
     return _instance;
   }
 }
 
-class _LocalNativeApi {
+class VLocalNativeApi {
   late final NativeLocalMessage message;
   late final NativeLocalRoom room;
   late final NativeLocalApiCache apiCache;
 
   Completer<void> get dbCompleter => DBProvider.instance.dbCompleter;
 
-  Future init() async {
+  Future<VLocalNativeApi> init() async {
     final database = await DBProvider.instance.database;
     message = NativeLocalMessage(database);
     await message.prepareMessages();
     room = NativeLocalRoom(database, message);
     apiCache = NativeLocalApiCache(database);
-    // await room.prepareRooms();
+    return this;
   }
 
   Future reCreate() async {
@@ -65,13 +66,13 @@ class _LocalNativeApi {
   }
 }
 
-class _RemoteNativeApi {
+class VRemoteNativeApi {
   final socketIo = NativeRemoteSocketIo();
   final ChannelApiService _room;
   final MessageApiService _nativeRemoteMessage;
   final ProfileApiService _nativeProfileApiService;
 
-  _RemoteNativeApi(
+  VRemoteNativeApi(
     this._room,
     this._nativeRemoteMessage,
     this._nativeProfileApiService,

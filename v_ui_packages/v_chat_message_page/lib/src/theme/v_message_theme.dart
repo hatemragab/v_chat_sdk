@@ -51,6 +51,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
     return this;
   }
 
+  @override
   VMessageTheme copyWith({
     BoxDecoration? scaffoldDecoration,
     ItemHolderTypeDef? messageItemHolder,

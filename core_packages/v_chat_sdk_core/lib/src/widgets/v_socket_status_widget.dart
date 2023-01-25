@@ -10,7 +10,7 @@ class VSocketStatusWidget extends StatefulWidget {
   const VSocketStatusWidget({
     super.key,
     this.decoration = const BoxDecoration(color: Colors.red),
-    this.padding = const EdgeInsets.all(8),
+    this.padding = const EdgeInsets.all(5),
     this.connectingString = "Connecting...",
     this.delay = const Duration(seconds: 5),
   });
@@ -36,7 +36,9 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
     }
     return StreamBuilder<VSocketStatusEvent>(
       stream: VChatController.I.nativeApi.streams.socketStatusStream,
-      initialData: VSocketStatusEvent(isConnected: _socket.isConnected),
+      initialData: VSocketStatusEvent(
+        isConnected: _socket.isConnected,
+      ),
       builder: (context, snapshot) {
         if (!snapshot.data!.isConnected) {
           return Container(
@@ -48,6 +50,7 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
             ),

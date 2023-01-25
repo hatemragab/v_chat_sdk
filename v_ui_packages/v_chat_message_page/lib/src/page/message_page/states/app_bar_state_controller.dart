@@ -54,9 +54,18 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
     closeSocketIntervalStream();
   }
 
-  void updateOffline() {
+  void updateOffline() async {
+    if (value.isOnline) {
+      await vSafeApiCall<DateTime>(
+        request: () async {
+          return await _messageProvider.getLastSeenAt(_vRoom.peerId!);
+        },
+        onSuccess: (response) {
+          updateLastSeen(response);
+        },
+      );
+    }
     value.isOnline = false;
-    // appBareState.value.lastSeenAt = null;
     notifyListeners();
   }
 

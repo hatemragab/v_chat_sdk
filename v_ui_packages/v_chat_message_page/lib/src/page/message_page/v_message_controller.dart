@@ -271,8 +271,6 @@ class VMessageController {
   }
 
   void _removeAllNotifications() async {
-    if (VChatController.I.vChatConfig.isPushEnable) {
-      await VChatController.I.vChatConfig.pushProvider!.cleanAll();
-    }
+    await VChatController.I.vChatConfig.cleanNotifications();
   }
 }

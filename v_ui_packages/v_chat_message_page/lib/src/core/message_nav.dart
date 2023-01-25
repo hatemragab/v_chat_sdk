@@ -10,18 +10,21 @@ final messageDefaultNavigator = VMessageNavigator(
   },
   toVideoPlayer: (context, source) {
     context.toPage(
-      VImageViewer(
+      VVideoPlayer(
         platformFileSource: source,
         appName: VAppConstants.appName,
         //todo trans
-        successfullyDownloaded: "successfullyDownloaded",
+        successfullyDownloaded: "successfully Downloaded",
       ),
     );
   },
   toImageViewer: (context, source) {
     context.toPage(
-      VVideoPlayer(
+      VImageViewer(
         platformFileSource: source,
+        appName: VAppConstants.appName,
+        //todo trans
+        successfullyDownloaded: "successfully Downloaded",
       ),
     );
   },

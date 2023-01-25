@@ -1,6 +1,6 @@
 part of 'v_room_page.dart';
 
-class VRoomController with VSocketStatusStream {
+class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
   final bool isTesting;
   late final RoomStreamState _localStreamChanges;
   late final RoomItemController _roomItemController;
@@ -15,6 +15,7 @@ class VRoomController with VSocketStatusStream {
     initSocketStatusStream(
       VChatController.I.nativeApi.streams.socketStatusStream,
     );
+    initVAppLifeCycleStreamStream();
     _roomState = RoomStateController(
       _roomProvider,
     );
@@ -94,6 +95,7 @@ class VRoomController with VSocketStatusStream {
     _roomState.close();
     _localStreamChanges.close();
     closeSocketStatusStream();
+    closeVAppLifeCycleStreamStream();
   }
 
   void _onRoomItemPress(VRoom room, BuildContext context) {
@@ -107,6 +109,7 @@ class VRoomController with VSocketStatusStream {
   bool _getIsFinishLoadMore() {
     return _roomState.isFinishLoadMore;
   }
+
   @override
   void onSocketConnected() {
     super.onSocketConnected();

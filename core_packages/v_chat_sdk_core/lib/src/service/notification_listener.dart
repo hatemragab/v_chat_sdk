@@ -18,8 +18,8 @@ class VNotificationListener {
   }
 
   void _init() {
-    if (vChatConfig.pushProvider == null) return;
-    if (vChatConfig.pushProvider!.enableForegroundNotification) {
+    if (!vChatConfig.isPushEnable) return;
+    if (vChatConfig.currentPushProviderService!.enableForegroundNotification) {
       nativeApi.streams.vOnNewNotificationStream.listen((event) {
         final message = event.message;
         final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
@@ -60,7 +60,8 @@ class VNotificationListener {
   Future<void> _getOpenAppNotification() async {
     await Future.delayed(const Duration(seconds: 3));
     await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
-    final message = await vChatConfig.pushProvider!.getOpenAppNotification();
+    final message =
+        await vChatConfig.currentPushProviderService!.getOpenAppNotification();
     if (message == null) return;
     final room = await _getRoom(message.roomId);
     final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);

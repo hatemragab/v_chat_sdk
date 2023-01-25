@@ -19,9 +19,11 @@ class EventsDaemon {
         await _onNewInsert(event.messageModel);
         if (VPlatforms.isWeb && !event.messageModel.isMeSender) {
           ///we need to push notification event to the events
-          _emitter.fire(VOnNewNotifications(
-            message: event.messageModel,
-          ));
+          _emitter.fire(
+            VOnNewNotifications(
+              message: event.messageModel,
+            ),
+          );
         }
       }
     });

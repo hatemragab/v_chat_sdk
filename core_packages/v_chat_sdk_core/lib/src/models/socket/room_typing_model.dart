@@ -102,5 +102,4 @@ class VSocketRoomTypingModel {
   }
 
 //</editor-fold>
-
 }

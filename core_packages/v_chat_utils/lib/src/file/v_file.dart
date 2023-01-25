@@ -54,7 +54,7 @@ abstract class VFileUtils {
       if (!file.existsSync()) {
         file.createSync();
       } else {
-        file.path;
+        return file.path;
       }
       final res = await vSafeApiCall<Uint8List>(
         request: () async {

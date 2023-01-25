@@ -45,11 +45,12 @@ class VMessageVoiceData {
     };
   }
 
-  factory VMessageVoiceData.fromMap(Map<String, dynamic> map, {
+  factory VMessageVoiceData.fromMap(
+    Map<String, dynamic> map, {
     String? baseUrl,
   }) {
     return VMessageVoiceData(
-      fileSource: VPlatformFileSource.fromMap(map,baseUrl: baseUrl),
+      fileSource: VPlatformFileSource.fromMap(map, baseUrl: baseUrl),
       duration: map['duration'] as int,
     );
   }

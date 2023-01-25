@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 mixin VMessageStream {
   late final StreamSubscription<VMessageEvents> _messagesStream;
@@ -123,6 +124,29 @@ mixin VRoomStream {
   void closeRoomStream() {
     _roomStream.cancel();
   }
+}
+
+mixin VVAppLifeCycleStream {
+  StreamSubscription<VAppLifeCycle>? _vAppLifeCycleStream;
+
+  void initVAppLifeCycleStreamStream() {
+    _vAppLifeCycleStream =
+        VEventBusSingleton.vEventBus.on<VAppLifeCycle>().listen((event) {
+      if (event.isGoBackground) {
+        onGoToBackground();
+      } else {
+        onGoToFront();
+      }
+    });
+  }
+
+  void closeVAppLifeCycleStreamStream() {
+    _vAppLifeCycleStream?.cancel();
+  }
+
+  void onGoToBackground() {}
+
+  void onGoToFront() {}
 }
 
 mixin VSocketStatusStream {

@@ -140,6 +140,8 @@ class MediaEditorController extends ValueNotifier {
         MaterialPageRoute(
           builder: (context) => VVideoPlayer(
             platformFileSource: item.data.fileSource,
+            appName: "media_editor",
+            successfullyDownloaded: "successfullyDownloaded",
           ),
         ),
       );

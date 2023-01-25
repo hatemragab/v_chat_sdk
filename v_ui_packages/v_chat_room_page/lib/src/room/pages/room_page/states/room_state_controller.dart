@@ -52,13 +52,16 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   void insertRoom(VRoom room) {
     if (!stateRooms.contains(room)) {
       value.values.insert(0, room);
-      notifyListeners();
     } else {
+      if (room.isDeleted) {
+        room.isDeleted = false;
+      }
       if (kDebugMode) {
         print(
             "-------------you are try to insert message which already exist!-----------");
       }
     }
+    notifyListeners();
   }
 
   void close() {
@@ -211,6 +214,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   void onNewMessage(VInsertMessageEvent event) async {
     final room = roomById(event.roomId);
     if (room != null) {
+      room.isDeleted = false;
       room.lastMessage = event.messageModel;
       stateRooms.sortByMsgId();
       notifyListeners();

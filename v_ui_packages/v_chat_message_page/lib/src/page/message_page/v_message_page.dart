@@ -82,7 +82,9 @@ class _VMessagePageState extends State<VMessagePage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VSocketStatusWidget(delay: Duration.zero),
+            const VSocketStatusWidget(
+              delay: Duration.zero,
+            ),
             Expanded(
               child: Stack(
                 children: [
@@ -189,7 +191,9 @@ class _VMessagePageState extends State<VMessagePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(
+              height: 5,
+            ),
             SafeArea(
               child: ValueListenableBuilder<MessageInputModel>(
                 valueListenable: controller.inputStateController,

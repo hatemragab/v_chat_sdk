@@ -148,6 +148,7 @@ class VVoiceThemeBuilder extends ThemeExtension<VVoiceThemeBuilder> {
     return this;
   }
 
+  @override
   VVoiceThemeBuilder copyWith({
     Color? backgroundColor,
     Widget? playIcon,

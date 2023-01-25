@@ -1,16 +1,20 @@
 import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/src/models/models.dart';
-import 'package:v_chat_utils/src/widgets/platform_widgets/conditional_builder.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../v_chat_utils.dart';
 
 class VVideoPlayer extends StatefulWidget {
   final VPlatformFileSource platformFileSource;
+  final String appName;
+  final String successfullyDownloaded;
 
   const VVideoPlayer({
     Key? key,
     required this.platformFileSource,
+    required this.appName,
+    required this.successfullyDownloaded,
   }) : super(key: key);
 
   @override
@@ -38,13 +42,32 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
   @override
   Widget build(BuildContext context) {
     if (!widget.platformFileSource.isContentVideo) {
-      return Text("the file must be video ${widget.platformFileSource}");
+      return Material(
+          child: Text("the file must be video ${widget.platformFileSource}"));
     }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
+      floatingActionButton: widget.platformFileSource.isFromUrl
+          ? FloatingActionButton(
+              child: const Icon(Icons.save_alt),
+              onPressed: () async {
+                VAppAlert.showLoading(context: context);
+                final url = await VFileUtils.saveFileToPublicPath(
+                  fileAttachment: widget.platformFileSource,
+                  appName: widget.appName,
+                );
+                context.pop();
+                VAppAlert.showSuccessSnackBar(
+                  msg: "${widget.successfullyDownloaded}to $url",
+                  context: context,
+                );
+              },
+            )
+          : null,
       body: SafeArea(
         child: Center(
           child: VConditionalBuilder(

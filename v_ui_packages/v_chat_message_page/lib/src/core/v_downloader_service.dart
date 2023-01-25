@@ -12,6 +12,8 @@ class VDownloaderService {
     if (message is VFileMessage) {
       return _startDownload(message.data.fileSource);
       // _downloadQueue.removeWhere((e) => e.localId == message.localId);
+    } else if (message is VVoiceMessage) {
+      return _startDownload(message.data.fileSource);
     }
     // if (!_downloadQueue.contains(message)) {
     //   _downloadQueue.add(message);

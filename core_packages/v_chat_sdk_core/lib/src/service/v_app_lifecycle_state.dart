@@ -1,23 +1,22 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
-import 'package:logging/logging.dart';
+import 'package:v_chat_sdk_core/src/events/app_life_cycle.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class VAppLifecycleState with WidgetsBindingObserver {
+class VAppLifecycleState {
   static bool isAppActive = false;
-
-  static WidgetsBinding? get _widgetsBindingInstance => WidgetsBinding.instance;
-  final _log = Logger('VAppLifecycleState');
+  // final _log = Logger('VAppLifecycleState');
   Timer? _timer;
 
   VAppLifecycleState() {
-    _widgetsBindingInstance?.addObserver(this);
     FGBGEvents.stream.listen((event) {
       switch (event) {
         case FGBGType.foreground:
+          _timer?.cancel();
+          VEventBusSingleton.vEventBus
+              .fire(const VAppLifeCycle(isGoBackground: false));
 
           ///start connect
           if (!SocketController.instance.isSocketConnected) {
@@ -32,33 +31,15 @@ class VAppLifecycleState with WidgetsBindingObserver {
           }
           _timer?.cancel();
           _timer = Timer(const Duration(seconds: 5), () {
+            VEventBusSingleton.vEventBus.fire(
+              const VAppLifeCycle(
+                isGoBackground: true,
+              ),
+            );
             SocketController.instance.disconnect();
           });
           break;
       }
     });
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // switch (state) {
-    //   case AppLifecycleState.resumed:
-    //     isAppActive = true;
-    //     _log.fine("AppLifecycleState.resumed:");
-    //     break;
-    //   case AppLifecycleState.inactive:
-    //     isAppActive = false;
-    //     _log.fine("AppLifecycleState.inactive:");
-    //     break;
-    //   case AppLifecycleState.paused:
-    //     // _log.fine("AppLifecycleState.paused:");
-    //     break;
-    //   case AppLifecycleState.detached:
-    //     break;
-    // }
-  }
-
-  void dispose() {
-    _widgetsBindingInstance?.removeObserver(this);
   }
 }

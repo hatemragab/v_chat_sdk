@@ -27,12 +27,14 @@ class _VImageViewerState extends State<VImageViewer> {
   @override
   Widget build(BuildContext context) {
     if (!widget.platformFileSource.isContentImage) {
-      return Text("the file must be image ${widget.platformFileSource}");
+      return Material(
+          child: Text("the file must be image ${widget.platformFileSource}"));
     }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: PhotoView(
         imageProvider: _getImageProvider(),
@@ -42,12 +44,13 @@ class _VImageViewerState extends State<VImageViewer> {
               child: const Icon(Icons.save_alt),
               onPressed: () async {
                 VAppAlert.showLoading(context: context);
-                await VFileUtils.saveFileToPublicPath(
+                final url = await VFileUtils.saveFileToPublicPath(
                   fileAttachment: widget.platformFileSource,
                   appName: widget.appName,
                 );
+                context.pop();
                 VAppAlert.showSuccessSnackBar(
-                  msg: widget.successfullyDownloaded,
+                  msg: "${widget.successfullyDownloaded}in $url",
                   context: context,
                 );
               },
@@ -63,6 +66,9 @@ class _VImageViewerState extends State<VImageViewer> {
     if (widget.platformFileSource.isFromBytes) {
       return MemoryImage(Uint8List.fromList(widget.platformFileSource.bytes!));
     }
-    return CachedNetworkImageProvider(widget.platformFileSource.url!);
+    return CachedNetworkImageProvider(
+      widget.platformFileSource.url!,
+      cacheKey: widget.platformFileSource.getUrlPath,
+    );
   }
 }

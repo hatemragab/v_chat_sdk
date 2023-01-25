@@ -57,10 +57,7 @@ class VChatFcmProver extends VChatPushProviderBase {
       if (status == AuthorizationStatus.authorized) {
         _initStreams();
       }
-      if (Firebase.apps.isEmpty) {
-        return true;
-      }
-      return false;
+      return true;
     } catch (err) {
       //
     }
@@ -162,41 +159,59 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (await FlutterAppBadger.isAppBadgeSupported()) {
     FlutterAppBadger.updateBadgeCount(1);
   }
-  final roomId = message.data['roomId'] as String?;
   await VAppPref.init();
-  if (roomId != null) {
-    // final msg = MessageFactory.createBaseMessage(
-    //   jsonDecode(message.data['message'].toString()) as Map<String, dynamic>,
-    // );
-    final token = VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name);
-    if (token != null) {
+  final String? fromVChat = message.data['fromVChat'];
+  final String? vMessage = message.data['vMessage'];
+  if (fromVChat == null || vMessage == null) return Future<void>.value();
+  final msg = MessageFactory.createBaseMessage(
+    jsonDecode(vMessage) as Map<String, dynamic>,
+  );
+  final token = VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name);
+  if (token != null) {
+    try {
+      await _setDeliverForThisRoom(msg.roomId, token);
+    } catch (err) {
       if (kDebugMode) {
-        final res = await patch(
-          Uri.parse("${VAppConstants.emulatorBaseUrl}/channel/$roomId/deliver"),
-          headers: {
-            'authorization': "Bearer $token",
-            "clint-version": VAppConstants.clintVersion,
-            "Accept-Language": "en"
-          },
-        );
-        if (res.statusCode != 200) {
-          throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
-        }
-        return;
-      }
-      final res = await patch(
-        Uri.parse(
-            "${VAppConstants.baseUri.toString()}/channel/$roomId/deliver"),
-        headers: {
-          'authorization': "Bearer $token",
-          "clint-version": VAppConstants.clintVersion,
-          "Accept-Language": "en"
-        },
-      );
-      if (res.statusCode != 200) {
-        throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
+        print(err);
       }
     }
   }
+  final x = VLocalNativeApi();
+  await x.init();
+  final insertRes = await x.message.safeInsertMessage(msg);
+  if (insertRes == 1) {
+    await x.room.updateRoomUnreadCountAddOne(msg.roomId);
+  }
   return Future<void>.value();
+}
+
+@pragma('vm:entry-point')
+Future _setDeliverForThisRoom(String roomId, String token) async {
+  if (kDebugMode) {
+    final res = await patch(
+      Uri.parse(
+        "${VAppConstants.emulatorBaseUrl}/channel/$roomId/deliver",
+      ),
+      headers: {
+        'authorization': "Bearer $token",
+        "clint-version": VAppConstants.clintVersion,
+        "Accept-Language": "en"
+      },
+    );
+    if (res.statusCode != 200) {
+      throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
+    }
+  } else {
+    final res = await patch(
+      Uri.parse("${VAppConstants.baseUri.toString()}/channel/$roomId/deliver"),
+      headers: {
+        'authorization': "Bearer $token",
+        "clint-version": VAppConstants.clintVersion,
+        "Accept-Language": "en"
+      },
+    );
+    if (res.statusCode != 200) {
+      throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
+    }
+  }
 }
