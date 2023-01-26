@@ -51,10 +51,15 @@ class ImageItem extends StatelessWidget {
                     ),
                     IconButton(
                       iconSize: 30,
-                      onPressed: () => onCrop(image),
-                      icon: const Icon(
+                      onPressed: () {
+                        if (VPlatforms.isWeb) {
+                          return;
+                        }
+                        onCrop(image);
+                      },
+                      icon: Icon(
                         PhosphorIcons.crop,
-                        color: Colors.white,
+                        color: VPlatforms.isWeb ? Colors.grey : Colors.white,
                       ),
                     ),
                     const SizedBox(
@@ -62,10 +67,15 @@ class ImageItem extends StatelessWidget {
                     ),
                     IconButton(
                       iconSize: 30,
-                      onPressed: () => onStartDraw(image),
-                      icon: const Icon(
+                      onPressed: () {
+                        if (VPlatforms.isWeb) {
+                          return;
+                        }
+                        onStartDraw(image);
+                      },
+                      icon: Icon(
                         Icons.edit,
-                        color: Colors.white,
+                        color: VPlatforms.isWeb ? Colors.grey : Colors.white,
                       ),
                     ),
                   ],

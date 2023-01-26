@@ -12,15 +12,17 @@ import '../room_item_builder/room_item_msg.dart';
 
 class VRoomItem extends StatelessWidget {
   final VRoom room;
+  final bool isIconOnly;
   final Function(VRoom room) onRoomItemPress;
-  final bool isSelected;
+
   final Function(VRoom room) onRoomItemLongPress;
 
   const VRoomItem({
     required this.room,
     super.key,
     required this.onRoomItemPress,
-    this.isSelected = false,
+    this.isIconOnly = true,
+
     required this.onRoomItemLongPress,
   });
 
@@ -38,94 +40,103 @@ class VRoomItem extends StatelessWidget {
       child: Container(
         height: 65,
         width: 65,
+        alignment: AlignmentDirectional.topStart,
         decoration: BoxDecoration(
-          color: isSelected ? theme.selectedRoomColor : null,
+          color: room.isSelected ? theme.selectedRoomColor : null,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
-          children: [
-            theme.getChatAvatar(
-              imageUrl: room.thumbImage,
-              chatTitle: room.title,
-              isOnline: room.isThereBlock ? false : room.isOnline,
-              size: 60,
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: isIconOnly
+            ? theme.getChatAvatar(
+                imageUrl: room.thumbImage,
+                chatTitle: room.title,
+                isOnline: room.isThereBlock ? false : room.isOnline,
+                size: 60,
+              )
+            : Row(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: ChatTitle(title: room.title),
-                      ),
-                      ChatLastMsgTime(
-                        lastMessageTimeString: room.lastMessageTimeString,
-                      )
-                    ],
+                  theme.getChatAvatar(
+                    imageUrl: room.thumbImage,
+                    chatTitle: room.title,
+                    isOnline: room.isThereBlock ? false : room.isOnline,
+                    size: 60,
                   ),
-                  const SizedBox.shrink(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (room.roomTypingText != null)
-                        ChatTypingWidget(
-                          text: room.roomTypingText!,
-                        )
-                      else if (room.lastMessage.isMeSender)
-                        Flexible(
-                          child: Row(
-                            children: [
-                              //status
-                              MessageStatusIcon(
-                                isDeliver: room.lastMessage.deliveredAt != null,
-                                isSeen: room.lastMessage.seenAt != null,
-                                isMeSender: room.lastMessage.isMeSender,
-                                vBaseMessage: room.lastMessage,
-                              ),
-                              //grey
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: ChatTitle(title: room.title),
+                            ),
+                            ChatLastMsgTime(
+                              lastMessageTimeString: room.lastMessageTimeString,
+                            )
+                          ],
+                        ),
+                        const SizedBox.shrink(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (room.roomTypingText != null)
+                              ChatTypingWidget(
+                                text: room.roomTypingText!,
+                              )
+                            else if (room.lastMessage.isMeSender)
                               Flexible(
-                                child: RoomItemMsg(
-                                  message: room.lastMessage,
-                                  isBold: false,
+                                child: Row(
+                                  children: [
+                                    //status
+                                    MessageStatusIcon(
+                                      isDeliver:
+                                          room.lastMessage.deliveredAt != null,
+                                      isSeen: room.lastMessage.seenAt != null,
+                                      isMeSender: room.lastMessage.isMeSender,
+                                      vBaseMessage: room.lastMessage,
+                                    ),
+                                    //grey
+                                    Flexible(
+                                      child: RoomItemMsg(
+                                        message: room.lastMessage,
+                                        isBold: false,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               )
-                            ],
-                          ),
-                        )
-                      else if (room.isRoomUnread)
-                        //bold
-                        Flexible(
-                          child: RoomItemMsg(
-                            isBold: true,
-                            message: room.lastMessage,
-                          ),
-                        )
-                      else
-                        //normal gray
-                        Flexible(
-                          child: RoomItemMsg(
-                            isBold: false,
-                            message: room.lastMessage,
-                          ),
+                            else if (room.isRoomUnread)
+                              //bold
+                              Flexible(
+                                child: RoomItemMsg(
+                                  isBold: true,
+                                  message: room.lastMessage,
+                                ),
+                              )
+                            else
+                              //normal gray
+                              Flexible(
+                                child: RoomItemMsg(
+                                  isBold: false,
+                                  message: room.lastMessage,
+                                ),
+                              ),
+                            Row(
+                              children: [
+                                ChatMuteWidget(isMuted: room.isMuted),
+                                ChatUnReadWidget(unReadCount: room.unReadCount),
+                              ],
+                            )
+                          ],
                         ),
-                      Row(
-                        children: [
-                          ChatMuteWidget(isMuted: room.isMuted),
-                          ChatUnReadWidget(unReadCount: room.unReadCount),
-                        ],
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }

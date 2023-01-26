@@ -13,7 +13,7 @@ class ImageMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstraintImage(
+    return VConstraintImage(
       data: message.data,
       borderRadius: BorderRadius.circular(15),
     );

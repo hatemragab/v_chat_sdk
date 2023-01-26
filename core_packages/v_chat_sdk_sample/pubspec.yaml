@@ -22,11 +22,11 @@ dependencies:
   get: 4.6.5
   flutter: 
     sdk: flutter
-  v_chat_sdk_core: ^0.2.0
-  v_chat_utils: ^0.2.0+4
-  v_chat_message_page: ^0.2.0
-  v_chat_firebase_fcm: ^0.1.0
-  v_chat_room_page: ^0.2.0
+  v_chat_sdk_core: ^0.2.1
+  v_chat_utils: ^0.2.1
+  v_chat_message_page: ^0.2.1
+  v_chat_firebase_fcm: ^0.2.1
+  v_chat_room_page: ^0.2.1
   animated_login: ^1.6.1
   shimmer: ^2.0.0
   fluttertoast: ^8.1.2
@@ -35,7 +35,7 @@ dependencies:
   http_parser: ^4.0.2
   flutter_localizations:
     sdk: flutter
-  v_chat_one_signal: ^0.0.1
+  v_chat_one_signal: ^0.2.1
 dev_dependencies:
   flutter_test: 
     sdk: flutter

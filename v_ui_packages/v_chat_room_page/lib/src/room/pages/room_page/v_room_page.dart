@@ -10,22 +10,26 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import '../../widgets/room_item/room_item_controller.dart';
 import 'package:loadmore/loadmore.dart';
 import '../../../../v_chat_room_page.dart';
+
 part './v_room_controller.dart';
 
 class VChatPage extends StatefulWidget {
   const VChatPage({
     Key? key,
     required this.controller,
-    //this.onRoomItemLongPress,
     this.floatingActionButton,
     this.appBar,
+    this.onRoomItemPress,
+    this.useIconForRoomItem = false,
   }) : super(key: key);
   final VRoomController controller;
+  final Function(VRoom room)? onRoomItemPress;
 
   // final Function(VRoom room) onRoomItemPress;
   // final Function(VRoom room)? onRoomItemLongPress;
   final Widget? appBar;
   final Widget? floatingActionButton;
+  final bool useIconForRoomItem;
 
   @override
   State<VChatPage> createState() => _VChatPageState();
@@ -34,18 +38,17 @@ class VChatPage extends StatefulWidget {
 class _VChatPageState extends State<VChatPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: context.vRoomTheme.scaffoldDecoration,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        floatingActionButton: widget.floatingActionButton,
-        appBar: widget.appBar == null
-            ? null
-            : PreferredSize(
-                preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: widget.appBar!,
-              ),
-        body: Column(
+    return Scaffold(
+      floatingActionButton: widget.floatingActionButton,
+      appBar: widget.appBar == null
+          ? null
+          : PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: widget.appBar!,
+            ),
+      body: Container(
+        decoration: context.vRoomTheme.scaffoldDecoration,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const VSocketStatusWidget(padding: EdgeInsets.all(5)),
@@ -73,11 +76,18 @@ class _VChatPageState extends State<VChatPage> {
                           initialData: room,
                           builder: (context, snapshot) {
                             return VRoomItem(
+                              isIconOnly: widget.useIconForRoomItem,
                               room: snapshot.data!,
                               onRoomItemLongPress: (room) => widget.controller
                                   ._onRoomItemLongPress(room, context),
-                              onRoomItemPress: (room) => widget.controller
-                                  ._onRoomItemPress(room, context),
+                              onRoomItemPress: (room) {
+                                if (widget.onRoomItemPress == null) {
+                                  widget.controller
+                                      ._onRoomItemPress(room, context);
+                                } else {
+                                  widget.onRoomItemPress!(room);
+                                }
+                              },
                             );
                           },
                         );

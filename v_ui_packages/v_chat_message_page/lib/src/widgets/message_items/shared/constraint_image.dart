@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class ConstraintImage extends StatelessWidget {
+class VConstraintImage extends StatelessWidget {
   final VMessageImageData data;
   final BorderRadius? borderRadius;
   final BoxFit? fit;
 
-  const ConstraintImage({
+  const VConstraintImage({
     Key? key,
     required this.data,
     this.borderRadius,

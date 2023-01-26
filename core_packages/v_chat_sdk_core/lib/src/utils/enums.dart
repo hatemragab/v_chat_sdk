@@ -59,6 +59,10 @@ enum CallStatus {
 
 enum SocketStateType { connected, connecting }
 
+///s is single room (one to one chat)
+///g is group chat
+///b is broadcast chat
+///o order room!
 enum VRoomType { s, g, b, o }
 
 extension StrType on VRoomType {

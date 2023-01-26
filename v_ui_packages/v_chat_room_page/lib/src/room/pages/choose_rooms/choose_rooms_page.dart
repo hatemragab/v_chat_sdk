@@ -47,7 +47,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
                 cacheExtent: 300,
                 itemBuilder: (context, index) {
                   return VRoomItem(
-                    isSelected: value[index].isSelected,
+
                     room: value[index].vRoom,
                     onRoomItemLongPress: (room) =>
                         controller.onRoomItemPress(room, context),

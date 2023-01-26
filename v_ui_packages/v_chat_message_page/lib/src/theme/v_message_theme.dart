@@ -6,6 +6,7 @@ import '../../v_chat_message_page.dart';
 class VMessageTheme extends ThemeExtension<VMessageTheme> {
   final BoxDecoration scaffoldDecoration;
   final ItemHolderTypeDef messageItemHolder;
+  final CustomMessageItemTypeDef customMessageItem;
   final ItemHolderColorTypeDef messageItemHolderColor;
   final VMsgStatusTheme messageSendingStatus;
   final TextTypeDef textItemStyle;
@@ -14,6 +15,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   VMessageTheme._({
     required this.scaffoldDecoration,
     required this.messageSendingStatus,
+    required this.customMessageItem,
     required this.messageItemHolder,
     required this.textItemStyle,
     required this.dateDividerWidget,
@@ -25,6 +27,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
       scaffoldDecoration: const BoxDecoration(color: Color(0xffeee4e4)),
       messageSendingStatus: const VMsgStatusTheme.light(),
       textItemStyle: getTextWidget,
+      customMessageItem:  (context, isMeSender, data) => const SizedBox(),
       dateDividerWidget: getDateDividerWidget,
       messageItemHolderColor: getMessageItemHolderColor,
       messageItemHolder: getMessageItemHolder,
@@ -36,6 +39,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
       scaffoldDecoration: const BoxDecoration(),
       messageSendingStatus: const VMsgStatusTheme.dark(),
       textItemStyle: getTextWidget,
+      customMessageItem:  (context, isMeSender, data) => const SizedBox(),
       dateDividerWidget: getDateDividerWidget,
       messageItemHolderColor: getMessageItemHolderColor,
       messageItemHolder: getMessageItemHolder,
@@ -58,11 +62,13 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
     ItemHolderColorTypeDef? messageItemHolderColor,
     VMsgStatusTheme? messageSendingStatus,
     TextTypeDef? textItemStyle,
+    CustomMessageItemTypeDef? customMessageItem,
     DateDividerTypeDef? dateDividerWidget,
   }) {
     return VMessageTheme._(
       scaffoldDecoration: scaffoldDecoration ?? this.scaffoldDecoration,
       messageItemHolder: messageItemHolder ?? this.messageItemHolder,
+      customMessageItem: customMessageItem ?? this.customMessageItem,
       messageItemHolderColor:
           messageItemHolderColor ?? this.messageItemHolderColor,
       messageSendingStatus: messageSendingStatus ?? this.messageSendingStatus,

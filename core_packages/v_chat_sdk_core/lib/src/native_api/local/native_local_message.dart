@@ -9,11 +9,11 @@ class NativeLocalMessage {
   late BaseLocalMessageRepo _localMessageRepo;
   final _emitter = VEventBusSingleton.vEventBus;
 
-  NativeLocalMessage(Database database) {
+  NativeLocalMessage(Database? database) {
     if (VPlatforms.isWeb) {
       _localMessageRepo = MemoryMessageImp();
     } else {
-      _localMessageRepo = SqlMessageImp(database);
+      _localMessageRepo = SqlMessageImp(database!);
     }
   }
 

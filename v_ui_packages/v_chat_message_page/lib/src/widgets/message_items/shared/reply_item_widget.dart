@@ -23,7 +23,7 @@ class ReplyItemWidget extends StatelessWidget {
       margin: const EdgeInsets.all(1),
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: const Color(0xffe7d8d8),
+        color:context.isDark?Colors.black38: const Color(0xffe7d8d8),
         borderRadius: BorderRadius.circular(7),
       ),
       child: InkWell(
@@ -43,7 +43,7 @@ class ReplyItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getTitle().text.color(Colors.black54),
+                  getTitle().text.color(Colors.green),
                   rToMessage!.getMessageText.cap.maxLine(2).overflowEllipsis,
                 ],
               ),

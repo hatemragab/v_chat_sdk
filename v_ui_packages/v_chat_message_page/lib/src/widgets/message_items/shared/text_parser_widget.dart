@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VTextParserWidget extends StatelessWidget {
   final Function(String email)? onEmailPress;
@@ -47,14 +48,12 @@ class VTextParserWidget extends StatelessWidget {
               required String pattern,
             }) {
               final map = <String, String>{};
-              final RegExp customRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
-              final match = customRegExp.firstMatch(str);
+              final match = VStringUtils.vMentionRegExp.firstMatch(str);
               map['display'] = match!.group(1)!;
               return map;
             },
             onTap: (url) {
-              final customRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
-              final match = customRegExp.firstMatch(url)!;
+              final match = VStringUtils.vMentionRegExp.firstMatch(url)!;
               final userId = match.group(2);
               if (onMentionPress != null && userId != null) {
                 onMentionPress!(userId);

@@ -41,6 +41,7 @@ class RegisterController extends GetxController {
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
       print(err);
+      rethrow;
       return err.toString();
     }
     return null;

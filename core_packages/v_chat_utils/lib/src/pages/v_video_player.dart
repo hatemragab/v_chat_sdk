@@ -55,7 +55,10 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
           ? FloatingActionButton(
               child: const Icon(Icons.save_alt),
               onPressed: () async {
-                VAppAlert.showLoading(context: context);
+                VAppAlert.showLoading(
+                  context: context,
+                  isDismissible: true,
+                );
                 final url = await VFileUtils.saveFileToPublicPath(
                   fileAttachment: widget.platformFileSource,
                   appName: widget.appName,

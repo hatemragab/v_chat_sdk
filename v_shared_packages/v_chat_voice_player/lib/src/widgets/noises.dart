@@ -5,8 +5,11 @@ class Noises extends StatelessWidget {
   final List<double> rList;
   final Color activeSliderColor;
 
-  const Noises({Key? key, required this.rList, required this.activeSliderColor})
-      : super(key: key);
+  const Noises({
+    Key? key,
+    required this.rList,
+    required this.activeSliderColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +21,8 @@ class Noises extends StatelessWidget {
 
   Widget _singleNoise(double height) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: .2.w()),
-      width: .6.w(),
+    //  margin: EdgeInsets.symmetric(horizontal: 2),
+      width: 3,
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(1000),

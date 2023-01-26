@@ -64,9 +64,9 @@ class MessageProvider {
     return _remoteRoom.getGroupStatus(roomId);
   }
 
-  Future<List<MentionWithPhoto>> onMentionRequireSearch(String text) async {
+  Future<List<VMentionWithPhoto>> onMentionRequireSearch(String text) async {
     //todo search
-    return <MentionWithPhoto>[];
+    return <VMentionWithPhoto>[];
   }
 
   void emitTypingChanged(VSocketRoomTypingModel model) {

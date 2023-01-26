@@ -9,7 +9,6 @@ import 'package:file_saver/file_saver.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../../v_chat_utils.dart';
 
 abstract class VFileUtils {
@@ -32,14 +31,17 @@ abstract class VFileUtils {
     }
   }
 
-  static Future<String> downloadFileForWeb(
-    VPlatformFileSource fileAttachment,
+  static Future<String> _downloadFileForWeb(
+    VPlatformFileSource fileSource,
   ) async {
-    final bytes = (await http.get(Uri.parse(fileAttachment.url!))).bodyBytes;
+    final bytes = (await http.get(
+      Uri.parse(fileSource.url!),
+    ))
+        .bodyBytes;
     return await FileSaver.instance.saveFile(
-      fileAttachment.name,
+      fileSource.name,
       bytes,
-      fileAttachment.mimeType!,
+      fileSource.mimeType.toString(),
     );
   }
 
@@ -71,7 +73,7 @@ abstract class VFileUtils {
       if (res == null) throw ("Error while download file");
       return newFilePath;
     }
-    return downloadFileForWeb(fileAttachment);
+    return _downloadFileForWeb(fileAttachment);
   }
 
   static Future<VMessageImageData?> getVideoThumb(

@@ -56,7 +56,7 @@ class VChatController {
   static Future<VChatController> init({
     required VChatConfig vChatConfig,
     required VNavigator vNavigator,
-    VMessagePageConfig vMessagePageConfig = const VMessagePageConfig(),
+    required  VMessagePageConfig vMessagePageConfig  ,
   }) async {
     assert(
       !_instance._isControllerInit,
@@ -78,7 +78,6 @@ class VChatController {
     await ControllerHelper.instance.init();
     SocketController.instance.connect();
     _startServices();
-
     return _instance;
   }
 

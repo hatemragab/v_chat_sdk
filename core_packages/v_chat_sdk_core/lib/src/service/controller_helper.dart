@@ -61,6 +61,7 @@ class ControllerHelper {
     VChatPushProviderBase? fcm,
     VChatPushProviderBase? onesignal,
   ) async {
+    if (VPlatforms.isWeb || VPlatforms.isDeskTop) return;
     if (fcm != null && onesignal != null) {
       ///first try to init fcm
       final fcmInit = await fcm.init();
@@ -110,7 +111,7 @@ class ControllerHelper {
   }
 
   Future<String?> getPushToken() async {
-    if (!_config.isPushEnable) {
+    if (!_config.isPushEnable||VPlatforms.isWeb) {
       return null;
     }
     final token = await _config.currentPushProviderService!.getToken();

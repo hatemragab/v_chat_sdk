@@ -8,11 +8,11 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class NativeLocalApiCache {
   late final BaseLocalApiCacheRepo _apiCacheRepo;
 
-  NativeLocalApiCache(Database database) {
+  NativeLocalApiCache(Database? database) {
     if (VPlatforms.isWeb) {
       _apiCacheRepo = ApiCacheMemoryImp();
     } else {
-      _apiCacheRepo = ApiCacheSqlImp(database);
+      _apiCacheRepo = ApiCacheSqlImp(database!);
     }
   }
 

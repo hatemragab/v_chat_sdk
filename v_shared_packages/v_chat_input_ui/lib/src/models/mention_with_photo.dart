@@ -1,9 +1,9 @@
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
 
-class MentionWithPhoto extends MentionData {
+class VMentionWithPhoto extends MentionData {
   final String photo;
 
-  MentionWithPhoto({
+  VMentionWithPhoto({
     required super.id,
     required super.display,
     required this.photo,

@@ -53,6 +53,10 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
     await _getRoomsFromApi();
   }
 
+  void setRoomSelected(String roomId) {
+    _roomState.setRoomSelected(roomId);
+  }
+
   void _onRoomItemLongPress(VRoom room, BuildContext context) async {
     switch (room.roomType) {
       case VRoomType.s:

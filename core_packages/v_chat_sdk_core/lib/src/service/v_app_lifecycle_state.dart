@@ -7,10 +7,12 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VAppLifecycleState {
   static bool isAppActive = false;
+
   // final _log = Logger('VAppLifecycleState');
   Timer? _timer;
 
   VAppLifecycleState() {
+    if (VPlatforms.isWeb) return;
     FGBGEvents.stream.listen((event) {
       switch (event) {
         case FGBGType.foreground:

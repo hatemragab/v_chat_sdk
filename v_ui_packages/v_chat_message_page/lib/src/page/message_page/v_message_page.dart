@@ -49,37 +49,36 @@ class _VMessagePageState extends State<VMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: context.vMessageTheme.scaffoldDecoration,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: ValueListenableBuilder<MessageAppBarStateModel>(
-            valueListenable: controller.appBarStateController,
-            builder: (context, value, child) {
-              if (value.isSearching) {
-                return VSearchAppBare(
-                  onClose: controller.onCloseSearch,
-                  onSearch: controller.onSearch,
-                );
-              }
-              return VMessageAppBare(
-                state: value,
-                onSearch: controller.onOpenSearch,
-                onViewMedia: () =>
-                    controller.onViewMedia(context, value.roomId),
-                onTitlePress: (context, id, roomType) {
-                  final method = _config.onAppBarTitlePress;
-                  if (method != null) {
-                    method(context, id, roomType);
-                  }
-                },
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: ValueListenableBuilder<MessageAppBarStateModel>(
+          valueListenable: controller.appBarStateController,
+          builder: (context, value, child) {
+            if (value.isSearching) {
+              return VSearchAppBare(
+                onClose: controller.onCloseSearch,
+                onSearch: controller.onSearch,
               );
-            },
-          ),
+            }
+            return VMessageAppBare(
+              state: value,
+              onSearch: controller.onOpenSearch,
+              onViewMedia: () =>
+                  controller.onViewMedia(context, value.roomId),
+              onTitlePress: (context, id, roomType) {
+                final method = _config.onAppBarTitlePress;
+                if (method != null) {
+                  method(context, id, roomType);
+                }
+              },
+            );
+          },
         ),
-        body: Column(
+      ),
+      body: Container(
+        decoration: context.vMessageTheme.scaffoldDecoration,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const VSocketStatusWidget(
@@ -211,7 +210,7 @@ class _VMessagePageState extends State<VMessagePage> {
                     onTypingChange: controller.onTypingChange,
                     googleMapsLangKey: "en",
                     maxMediaSize: _config.maxMediaSize,
-                    onMentionSearch: controller.onMentionRequireSearch,
+                    onMentionSearch:(query) =>  controller.onMentionRequireSearch(context,query),
                     maxRecordTime: _config.maxRecordTime,
                     googleMapsApiKey: _config.googleMapsApiKey,
                     replyWidget: value.replyMsg == null

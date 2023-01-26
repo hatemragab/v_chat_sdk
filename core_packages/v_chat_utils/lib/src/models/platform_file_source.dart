@@ -6,6 +6,7 @@ import 'package:mime_type/mime_type.dart';
 import 'package:path/path.dart';
 
 import '../utils/enums.dart';
+import 'package:path/path.dart' as p;
 
 class VPlatformFileSource {
   String name;
@@ -42,6 +43,10 @@ class VPlatformFileSource {
   bool get isFromAssets => assetsPath != null;
 
   bool get isFromBytes => bytes != null;
+
+  String get extension {
+    return p.extension(name);
+  }
 
   bool get isFromUrl => url != null;
 

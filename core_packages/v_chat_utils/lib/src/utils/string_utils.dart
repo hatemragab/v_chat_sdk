@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../v_chat_utils.dart';
 
 abstract class VStringUtils {
+  static final RegExp vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
   static Future<bool> lunchLink(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {

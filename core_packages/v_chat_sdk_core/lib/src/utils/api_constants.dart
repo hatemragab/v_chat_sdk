@@ -21,9 +21,7 @@ abstract class VAppConstants {
 
   static String emulatorBaseUrl = "http://10.0.2.2:3001/api/$apiVersion";
 
-  static int get maxMediaSize {
-    return VChatController.I.vChatConfig.maxMediaUploadSize;
-  }
+
 
   // static String get baseUrl {
   //   return "$baseServerIp/api/v2";

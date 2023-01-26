@@ -8,8 +8,7 @@ import 'package:v_chat_message_page/src/widgets/message_items/shared/message_tim
 import 'package:v_chat_message_page/src/widgets/message_items/shared/reply_item_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/all_deleted_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/call_message_item.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/widgets/custom_message_item.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/widgets/file_message_item.dart';
+ import 'package:v_chat_message_page/src/widgets/message_items/widgets/file_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/image_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/location_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/text_message_item.dart';
@@ -59,7 +58,7 @@ class VMessageItem extends StatelessWidget {
 
     if (message.messageType.isCenter) {
       return CenterItemHolder(
-        child: Text(message.getMessageText),
+        child: message.getMessageText.text.italic.medium,
       );
     }
     return InkWell(
@@ -179,9 +178,12 @@ class VMessageItem extends StatelessWidget {
           message: message as VCallMessage,
         );
       case MessageType.custom:
-        return CustomMessageItem(
-          message: message as VCustomMessage,
+        return context.vMessageTheme.customMessageItem(
+          context,
+          message.isMeSender,
+          (message as VCustomMessage).data.data,
         );
+
       case MessageType.info:
         throw "MessageType.info should not render her it center render!";
     }

@@ -18,7 +18,7 @@ class VNotificationListener {
   }
 
   void _init() {
-    if (!vChatConfig.isPushEnable) return;
+    if (!vChatConfig.isPushEnable || VPlatforms.isWeb) return;
     if (vChatConfig.currentPushProviderService!.enableForegroundNotification) {
       nativeApi.streams.vOnNewNotificationStream.listen((event) {
         final message = event.message;

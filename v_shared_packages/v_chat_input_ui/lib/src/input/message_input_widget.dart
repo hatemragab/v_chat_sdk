@@ -38,10 +38,10 @@ class VMessageInputWidget extends StatefulWidget {
   final Future<VAttachEnumRes?> Function()? onAttachIconPress;
 
   ///callback if you want to implement custom mention item builder
-  final Widget Function(MentionWithPhoto)? mentionItemBuilder;
+  final Widget Function(VMentionModel)? mentionItemBuilder;
 
   ///callback when user start add '@' or '@...' if text is empty that means the user just start type '@'
-  final Future<List<MentionWithPhoto>> Function(String)? onMentionSearch;
+  final Future<List<VMentionModel>> Function(String)? onMentionSearch;
 
   /// widget to render if user select to reply
   final Widget? replyWidget;
@@ -110,7 +110,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   bool get _isSendBottomEnable => _isTyping || _isRecording;
   final _recordStateKey = GlobalKey<RecordWidgetState>();
   bool _showMentionList = false;
-  final _mentionsWithPhoto = <MentionWithPhoto>[];
+  final _mentionsWithPhoto = <VMentionModel>[];
 
   @override
   void initState() {
@@ -189,7 +189,13 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                                   return InkWell(
                                     onTap: () {
                                       _textEditingController.addMention(
-                                          _mentionsWithPhoto[index]);
+                                        MentionData(
+                                          id: _mentionsWithPhoto[index]
+                                              .identifier,
+                                          display:
+                                              _mentionsWithPhoto[index].name,
+                                        ),
+                                      );
                                     },
                                     child: widget.mentionItemBuilder!(
                                       _mentionsWithPhoto[index],
@@ -198,17 +204,22 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                                 }
                                 return ListTile(
                                   leading: VCircleAvatar(
-                                    fullUrl: _mentionsWithPhoto[index].photo,
+                                    fullUrl: _mentionsWithPhoto[index].image,
                                     radius: 20,
                                   ),
                                   dense: false,
                                   contentPadding: EdgeInsets.zero,
                                   onTap: () {
                                     _textEditingController
-                                        .addMention(_mentionsWithPhoto[index]);
+                                        .addMention(MentionData(
+                                      id: _mentionsWithPhoto[index]
+                                          .identifier,
+                                      display:
+                                      _mentionsWithPhoto[index].name,
+                                    ));
                                   },
                                   title:
-                                      Text(_mentionsWithPhoto[index].display),
+                                      Text(_mentionsWithPhoto[index].name),
                                 );
                               },
                               itemCount: _mentionsWithPhoto.length,

@@ -1,6 +1,15 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+class VTotalUnReadCount extends VAppEvent{
+  final int count;
+
+  const VTotalUnReadCount(this.count);
+
+  @override
+  List<Object?> get props => [count];
+}
+
 abstract class VRoomEvents extends VAppEvent {
   final String roomId;
 
@@ -11,10 +20,6 @@ abstract class VRoomEvents extends VAppEvent {
   @override
   List<Object?> get props => [roomId];
 }
-
-// class VRequestRoomEvent extends VRoomEvents {
-//   const VRequestRoomEvent({required super.roomId});
-// }
 
 class VInsertRoomEvent extends VRoomEvents {
   final VRoom room;

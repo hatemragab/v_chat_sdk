@@ -7,6 +7,7 @@ import 'package:v_chat_sdk_core/src/local_db/tables/api_cache_table.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class DBProvider {
   DBProvider._();
@@ -16,7 +17,11 @@ class DBProvider {
   final log = Logger('DBProvider SQL');
   Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
+    if (VPlatforms.isWeb) {
+      dbCompleter.complete();
+      return null;
+    }
     if (_database != null) return _database!;
     // if _database is null we instantiate it
     _database = await _open();

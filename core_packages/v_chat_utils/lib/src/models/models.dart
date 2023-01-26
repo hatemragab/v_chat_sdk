@@ -8,3 +8,4 @@ export './v_app_event.dart';
 export './v_chat_base_exception.dart';
 export './v_location_message_data.dart';
 export './v_media_res_model.dart';
+export './v_mention_model.dart';

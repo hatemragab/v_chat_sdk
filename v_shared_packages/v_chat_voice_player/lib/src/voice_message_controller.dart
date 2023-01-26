@@ -248,7 +248,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   }
 
   void _setRandoms() {
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 30; i++) {
       randoms.add(5.74.w() * Random().nextDouble() + .26.w());
     }
   }

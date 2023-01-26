@@ -315,15 +315,30 @@ class VMessageItemController {
   }
 
   void _handleCopy(VBaseMessage message) async {
-    //todo fix get real time if there mention
+    final readyToCopy = StringBuffer();
+    final txt = message.getMessageText;
+    final words = txt.split(" ");
+    for (final element in words) {
+      final match = VStringUtils.vMentionRegExp.firstMatch(element);
+      if (match != null) {
+        final matchTxt = match.group(1)!;
+        readyToCopy.write("${matchTxt.replaceFirst("@", "")} ");
+      } else {
+        readyToCopy.write("$element ");
+      }
+    }
     await Clipboard.setData(
       ClipboardData(
-        text: message.getMessageText,
+        text: readyToCopy.toString(),
       ),
     );
   }
 
   void _handleDownload(VBaseMessage message) async {
+    if (!message.emitStatus.isServerConfirm) {
+      return;
+    }
+
     VAppAlert.showLoading(
       context: context,
       isDismissible: true,

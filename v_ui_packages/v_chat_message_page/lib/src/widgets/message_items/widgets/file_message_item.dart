@@ -12,22 +12,27 @@ class FileMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Icon(
-          PhosphorIcons.fileArrowDown,
-          size: 40,
-        ),
-        Expanded(
-          child: ListTile(
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-            dense: true,
-            title: message.data.fileSource.name.text,
-            subtitle: message.data.fileSource.readableSize.text,
+    return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 400,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(
+            PhosphorIcons.fileArrowDown,
+            size: 40,
           ),
-        )
-      ],
+          Expanded(
+            child: ListTile(
+              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              dense: true,
+              title: message.data.fileSource.name.text,
+              subtitle: message.data.fileSource.readableSize.text,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

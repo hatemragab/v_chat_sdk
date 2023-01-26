@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,33 @@ void main() async {
     vNavigator: VNavigator(
       roomNavigator: roomDefaultNavigator,
       messageNavigator: messageDefaultNavigator,
+    ),
+    vMessagePageConfig: VMessagePageConfig(
+      onMentionRequireSearch: (context, roomType, query) async {
+        if (roomType == VRoomType.g) {
+          ///enable mentions only for group chat
+          return [
+            VMentionModel(
+              identifier: "identifier",
+              name: "name",
+              image:
+                  "https://super-up-dev.s3.eu-west-3.amazonaws.com/default_user_image.png",
+            ),
+            VMentionModel(
+              identifier: "identifier2",
+              name: "name2",
+              image:
+              "https://super-up-dev.s3.eu-west-3.amazonaws.com/default_user_image.png",
+            ),
+          ];
+        }
+
+        ///this mean stop mention!
+        return [];
+      },
+      onMentionPress: (context, id) {
+        print("id");
+      },
     ),
   );
   final appService = Get.put<AppService>(AppService());
@@ -126,3 +154,4 @@ Future<void> setAppLanguage(AppService appService) async {
     await AppLocalization.updateLanguageCode(languageCode);
   }
 }
+

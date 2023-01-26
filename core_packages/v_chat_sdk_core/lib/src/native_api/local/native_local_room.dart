@@ -11,11 +11,11 @@ class NativeLocalRoom {
   final NativeLocalMessage _localMessage;
   final _emitter = VEventBusSingleton.vEventBus;
 
-  NativeLocalRoom(Database database, this._localMessage) {
+  NativeLocalRoom(Database? database, this._localMessage) {
     if (VPlatforms.isWeb) {
       _roomRepo = MemoryRoomImp();
     } else {
-      _roomRepo = SqlRoomImp(database);
+      _roomRepo = SqlRoomImp(database!);
     }
   }
 

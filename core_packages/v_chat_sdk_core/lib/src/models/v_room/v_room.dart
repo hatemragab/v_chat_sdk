@@ -21,6 +21,7 @@ class VRoom {
   final String? peerId;
   final String? peerIdentifier;
   String? blockerId;
+  bool isSelected = false;
 
   VRoom({
     required this.id,
@@ -168,6 +169,7 @@ class VRoom {
   }
 
   bool get isRoomUnread => unReadCount != 0;
+
   bool get isThereBlock => blockerId != null;
 
   bool get isMeBlocker {

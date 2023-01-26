@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
         child: PageView(
           controller: controller.pageController,
           onPageChanged: controller.onPageChanged,
-          children: const <Widget>[
+          children:   <Widget>[
             ExploreTabView(),
             UsersTabView(),
             ChatsTabView(),

@@ -98,8 +98,15 @@ class VMessageController {
     _onSubmitSendMessage(localMsg);
   }
 
-  Future<List<MentionWithPhoto>> onMentionRequireSearch(String text) async {
-    return _messageProvider.onMentionRequireSearch(text);
+  Future<List<VMentionModel>> onMentionRequireSearch(
+    BuildContext context,
+    String query,
+  ) async {
+    return VChatController.I.vMessagePageConfig.onMentionRequireSearch(
+      context,
+      vRoom.roomType,
+      query,
+    );
   }
 
   void onSubmitMedia(

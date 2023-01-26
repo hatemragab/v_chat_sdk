@@ -16,16 +16,22 @@ class VoiceMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VVoiceMessageView(
-      controller: voiceController(message)!,
-      notActiveSliderColor: context.vMessageTheme
-          .messageItemHolderColor(
-            context,
-            message.isMeSender,
-            context.isDark,
-          )
-          .withOpacity(.3),
-      activeSliderColor: context.isDark ? Colors.green : Colors.red,
+
+    return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 400,
+      ),
+      child: VVoiceMessageView(
+        controller: voiceController(message)!,
+        notActiveSliderColor: context.vMessageTheme
+            .messageItemHolderColor(
+              context,
+              message.isMeSender,
+              context.isDark,
+            )
+            .withOpacity(.3),
+        activeSliderColor: context.isDark ? Colors.green : Colors.red,
+      ),
     );
   }
 }

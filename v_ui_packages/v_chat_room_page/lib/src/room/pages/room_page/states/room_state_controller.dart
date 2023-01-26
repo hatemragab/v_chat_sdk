@@ -280,4 +280,19 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         break;
     }
   }
+
+  void setRoomSelected(String roomId) {
+    //first un select
+    for (int i = 0; i < value.values.length; i++) {
+      if (value.values[i].isSelected) {
+        value.values[i].isSelected = false;
+        roomStateStream.sink.add(value.values[i]);
+      }
+    }
+    final room = roomById(roomId);
+    if (room != null) {
+      room.isSelected = true;
+      roomStateStream.sink.add(room);
+    }
+  }
 }
