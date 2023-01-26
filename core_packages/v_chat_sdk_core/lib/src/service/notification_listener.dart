@@ -18,7 +18,20 @@ class VNotificationListener {
   }
 
   void _init() {
-    if (!vChatConfig.isPushEnable || VPlatforms.isWeb) return;
+    if (!vChatConfig.isPushEnable) return;
+    if (VPlatforms.isWeb) {
+      nativeApi.streams.vOnNewNotificationStream.listen((event) {
+        final message = event.message;
+        final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
+        if (!isRoomOpen && !message.isMeSender) {
+          VAppAlert.showOverlaySupport(
+            title: message.senderName,
+            subtitle: message.getMessageText,
+          );
+        }
+      });
+      return;
+    }
     if (vChatConfig.currentPushProviderService!.enableForegroundNotification) {
       nativeApi.streams.vOnNewNotificationStream.listen((event) {
         final message = event.message;
