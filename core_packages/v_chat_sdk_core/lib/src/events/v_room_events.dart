@@ -1,7 +1,7 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class VTotalUnReadCount extends VAppEvent{
+class VTotalUnReadCount extends VAppEvent {
   final int count;
 
   const VTotalUnReadCount(this.count);

@@ -23,7 +23,6 @@ class VChatConfig {
     this.enableMessageEncryption = false,
     this.maxGroupMembers = 512,
     this.maxBroadcastMembers = 512,
-
   });
 
   bool get isPushEnable =>

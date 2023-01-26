@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../controllers/chats_tab_controller.dart';

@@ -38,7 +38,7 @@ class AuthApi implements AuthEndPoints {
     );
     final user = await _remoteAuth.login(dto);
     SocketController.instance.connect();
-    if (VChatController.I.vChatConfig.isPushEnable&& !VPlatforms.isWeb) {
+    if (VChatController.I.vChatConfig.isPushEnable && !VPlatforms.isWeb) {
       VChatController.I.vChatConfig.currentPushProviderService!
           .askForPermissions();
     }

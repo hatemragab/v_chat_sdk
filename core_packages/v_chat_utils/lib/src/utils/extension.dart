@@ -10,5 +10,11 @@ extension MediaQueryExt2 on BuildContext {
         ),
       );
 
+  Future<T?> toPageAndRemoveAll<T>(Widget page) {
+    return Navigator.of(this).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => page),
+        (Route<dynamic> route) => false);
+  }
+
   bool get isRtl => Directionality.of(this).name.toLowerCase() == "rtl";
 }

@@ -16,7 +16,6 @@ class VoiceMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       constraints: const BoxConstraints(
         maxWidth: 400,

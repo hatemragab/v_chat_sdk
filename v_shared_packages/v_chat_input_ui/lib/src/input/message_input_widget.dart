@@ -212,14 +212,11 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                                   onTap: () {
                                     _textEditingController
                                         .addMention(MentionData(
-                                      id: _mentionsWithPhoto[index]
-                                          .identifier,
-                                      display:
-                                      _mentionsWithPhoto[index].name,
+                                      id: _mentionsWithPhoto[index].identifier,
+                                      display: _mentionsWithPhoto[index].name,
                                     ));
                                   },
-                                  title:
-                                      Text(_mentionsWithPhoto[index].name),
+                                  title: Text(_mentionsWithPhoto[index].name),
                                 );
                               },
                               itemCount: _mentionsWithPhoto.length,

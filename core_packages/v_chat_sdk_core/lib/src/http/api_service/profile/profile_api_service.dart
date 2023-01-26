@@ -3,10 +3,10 @@ import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class ProfileApiService {
+class VProfileApiService {
   static ProfileApi? _profileApi;
 
-  ProfileApiService._();
+  VProfileApiService._();
 
   Future<bool> addFcm(String fcm) async {
     final res = await _profileApi!.addFcm(
@@ -57,7 +57,7 @@ class ProfileApiService {
         .toList();
   }
 
-  static ProfileApiService init({
+  static VProfileApiService init({
     Uri? baseUrl,
     String? accessToken,
   }) {
@@ -65,6 +65,6 @@ class ProfileApiService {
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
-    return ProfileApiService._();
+    return VProfileApiService._();
   }
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_controller.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/input_state_controller.dart';

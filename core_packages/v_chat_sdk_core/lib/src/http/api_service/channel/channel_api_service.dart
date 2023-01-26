@@ -3,10 +3,10 @@ import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class ChannelApiService {
+class VChannelApiService {
   static ChannelApi? _channelApiService;
 
-  ChannelApiService._();
+  VChannelApiService._();
 
   Future<VRoom> getPeerRoom(String peerId) async {
     final res = await _channelApiService!.getPeerRoom(peerId);
@@ -262,7 +262,7 @@ class ChannelApiService {
     return true;
   }
 
-  static ChannelApiService init({
+  static VChannelApiService init({
     Uri? baseUrl,
     String? accessToken,
   }) {
@@ -270,6 +270,6 @@ class ChannelApiService {
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
-    return ChannelApiService._();
+    return VChannelApiService._();
   }
 }

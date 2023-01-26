@@ -10,3 +10,5 @@
 - support compress images
  ## 0.0.5
 - fix markup text
+## 0.3.0
+- add web support

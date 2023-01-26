@@ -5,8 +5,10 @@ class VOnNotificationsClickedEvent extends VAppEvent {
   final VBaseMessage message;
   final VRoom room;
 
-  const VOnNotificationsClickedEvent(
-      {required this.message, required this.room});
+  const VOnNotificationsClickedEvent({
+    required this.message,
+    required this.room,
+  });
 
   @override
   List<Object?> get props => [message];

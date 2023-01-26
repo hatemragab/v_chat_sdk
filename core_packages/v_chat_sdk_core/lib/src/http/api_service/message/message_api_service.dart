@@ -7,10 +7,10 @@ import 'package:v_chat_sdk_core/src/http/api_service/message/message_api.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class MessageApiService {
+class VMessageApiService {
   static MessageApi? _messageApi;
 
-  MessageApiService._();
+  VMessageApiService._();
 
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
@@ -107,7 +107,7 @@ class MessageApiService {
     return [];
   }
 
-  static MessageApiService init({
+  static VMessageApiService init({
     Uri? baseUrl,
     String? accessToken,
   }) {
@@ -115,6 +115,6 @@ class MessageApiService {
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
-    return MessageApiService._();
+    return VMessageApiService._();
   }
 }

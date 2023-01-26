@@ -104,7 +104,7 @@ class MediaEditorController extends ValueNotifier {
         );
         mediaFiles.add(mImage);
       } else if (f.getMediaType == VSupportedFilesType.video) {
-          VMessageImageData? thumb;
+        VMessageImageData? thumb;
         if (f.filePath != null) {
           thumb = await _getThumb(f.filePath!);
         }

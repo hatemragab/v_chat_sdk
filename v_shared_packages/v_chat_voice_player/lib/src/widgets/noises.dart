@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../helpers/utils.dart';
 
 class Noises extends StatelessWidget {
   final List<double> rList;
@@ -21,7 +20,7 @@ class Noises extends StatelessWidget {
 
   Widget _singleNoise(double height) {
     return Container(
-    //  margin: EdgeInsets.symmetric(horizontal: 2),
+      //  margin: EdgeInsets.symmetric(horizontal: 2),
       width: 3,
       height: height,
       decoration: BoxDecoration(

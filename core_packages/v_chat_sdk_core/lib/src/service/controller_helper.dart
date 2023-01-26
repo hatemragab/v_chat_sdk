@@ -111,7 +111,7 @@ class ControllerHelper {
   }
 
   Future<String?> getPushToken() async {
-    if (!_config.isPushEnable||VPlatforms.isWeb) {
+    if (!_config.isPushEnable || VPlatforms.isWeb) {
       return null;
     }
     final token = await _config.currentPushProviderService!.getToken();

@@ -22,7 +22,6 @@ class VRoomItem extends StatelessWidget {
     super.key,
     required this.onRoomItemPress,
     this.isIconOnly = true,
-
     required this.onRoomItemLongPress,
   });
 

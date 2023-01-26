@@ -3,8 +3,8 @@ import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class AuthApiService {
-  AuthApiService._();
+class VAuthApiService {
+  VAuthApiService._();
 
   static AuthApi? _authApi;
 
@@ -57,7 +57,7 @@ class AuthApiService {
     return myUser;
   }
 
-  static AuthApiService init({
+  static VAuthApiService init({
     Uri? baseUrl,
     String? accessToken,
   }) {
@@ -65,7 +65,7 @@ class AuthApiService {
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,
     );
-    return AuthApiService._();
+    return VAuthApiService._();
   }
 
   Future<bool> logout() async {

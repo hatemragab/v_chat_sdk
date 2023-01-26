@@ -16,9 +16,9 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class VNativeApi {
   final local = VLocalNativeApi();
   final remote = VRemoteNativeApi(
-    ChannelApiService.init(),
-    MessageApiService.init(),
-    ProfileApiService.init(),
+    VChannelApiService.init(),
+    VMessageApiService.init(),
+    VProfileApiService.init(),
   );
   final streams = VStreams();
 
@@ -68,9 +68,9 @@ class VLocalNativeApi {
 
 class VRemoteNativeApi {
   final socketIo = NativeRemoteSocketIo();
-  final ChannelApiService _room;
-  final MessageApiService _nativeRemoteMessage;
-  final ProfileApiService _nativeProfileApiService;
+  final VChannelApiService _room;
+  final VMessageApiService _nativeRemoteMessage;
+  final VProfileApiService _nativeProfileApiService;
 
   VRemoteNativeApi(
     this._room,
@@ -78,10 +78,10 @@ class VRemoteNativeApi {
     this._nativeProfileApiService,
   );
 
-  ChannelApiService get room => _room;
+  VChannelApiService get room => _room;
 
   final remoteAuth = NativeRemoteAuth(
-    AuthApiService.init(),
+    VAuthApiService.init(),
   );
 
   Future<http.Response> nativeHttp(
@@ -108,7 +108,7 @@ class VRemoteNativeApi {
     }
   }
 
-  MessageApiService get message => _nativeRemoteMessage;
+  VMessageApiService get message => _nativeRemoteMessage;
 
-  ProfileApiService get profile => _nativeProfileApiService;
+  VProfileApiService get profile => _nativeProfileApiService;
 }

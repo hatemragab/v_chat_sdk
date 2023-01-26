@@ -1,7 +1,7 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class NativeRemoteAuth {
-  final AuthApiService _authApiService;
+  final VAuthApiService _authApiService;
 
   NativeRemoteAuth(this._authApiService);
 

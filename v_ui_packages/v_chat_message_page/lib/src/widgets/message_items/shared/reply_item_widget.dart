@@ -23,7 +23,7 @@ class ReplyItemWidget extends StatelessWidget {
       margin: const EdgeInsets.all(1),
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color:context.isDark?Colors.black38: const Color(0xffe7d8d8),
+        color: context.isDark ? Colors.black38 : const Color(0xffe7d8d8),
         borderRadius: BorderRadius.circular(7),
       ),
       child: InkWell(

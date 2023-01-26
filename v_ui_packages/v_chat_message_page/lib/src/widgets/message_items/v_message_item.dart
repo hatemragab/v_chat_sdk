@@ -8,7 +8,7 @@ import 'package:v_chat_message_page/src/widgets/message_items/shared/message_tim
 import 'package:v_chat_message_page/src/widgets/message_items/shared/reply_item_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/all_deleted_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/call_message_item.dart';
- import 'package:v_chat_message_page/src/widgets/message_items/widgets/file_message_item.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/widgets/file_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/image_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/location_message_item.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/text_message_item.dart';
@@ -142,9 +142,7 @@ class VMessageItem extends StatelessWidget {
           },
           onMentionPress: (context, userId) {
             final method = VChatController.I.vMessagePageConfig.onMentionPress;
-            if (method != null) {
-              method(context, userId);
-            }
+            method(context, userId);
           },
           onPhonePress: (phone) async {
             await VStringUtils.lunchLink(phone);

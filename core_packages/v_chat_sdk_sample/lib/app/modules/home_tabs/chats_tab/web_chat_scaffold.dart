@@ -3,13 +3,14 @@ import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 final vWebChatNavigation = VWebChatNavigation();
+
 class VWebChatNavigation {
   final key = GlobalKey<NavigatorState>();
 
   Route createAnimatedRoute(
-      Widget page, {
-        TransitionType transitionType = TransitionType.noAnimation,
-      }) {
+    Widget page, {
+    TransitionType transitionType = TransitionType.noAnimation,
+  }) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -19,7 +20,7 @@ class VWebChatNavigation {
             const end = Offset.zero;
             const curve = Curves.ease;
             var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
             return SlideTransition(
               position: animation.drive(tween),
               child: child,
@@ -46,6 +47,7 @@ class VWebChatNavigation {
     return null;
   }
 }
+
 class IdleRoute extends StatelessWidget {
   static const route = '/idle';
 
@@ -63,7 +65,9 @@ class IdleRoute extends StatelessWidget {
     );
   }
 }
+
 enum TransitionType { slide, noAnimation }
+
 class ChatRoute extends StatelessWidget {
   const ChatRoute({
     Key? key,

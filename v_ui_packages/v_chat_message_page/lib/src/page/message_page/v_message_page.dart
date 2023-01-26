@@ -64,8 +64,7 @@ class _VMessagePageState extends State<VMessagePage> {
             return VMessageAppBare(
               state: value,
               onSearch: controller.onOpenSearch,
-              onViewMedia: () =>
-                  controller.onViewMedia(context, value.roomId),
+              onViewMedia: () => controller.onViewMedia(context, value.roomId),
               onTitlePress: (context, id, roomType) {
                 final method = _config.onAppBarTitlePress;
                 if (method != null) {
@@ -210,7 +209,8 @@ class _VMessagePageState extends State<VMessagePage> {
                     onTypingChange: controller.onTypingChange,
                     googleMapsLangKey: "en",
                     maxMediaSize: _config.maxMediaSize,
-                    onMentionSearch:(query) =>  controller.onMentionRequireSearch(context,query),
+                    onMentionSearch: (query) =>
+                        controller.onMentionRequireSearch(context, query),
                     maxRecordTime: _config.maxRecordTime,
                     googleMapsApiKey: _config.googleMapsApiKey,
                     replyWidget: value.replyMsg == null

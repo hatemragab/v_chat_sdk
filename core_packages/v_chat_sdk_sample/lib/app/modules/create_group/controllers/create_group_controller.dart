@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/utils/app_auth.dart';
 import '../../../routes/app_pages.dart';
 
 class CreateGroupController extends GetxController {

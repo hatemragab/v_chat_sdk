@@ -40,7 +40,8 @@ class ChooseMembersView extends GetView<ChooseMembersController> {
                             color: Colors.green.withOpacity(.5),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: users[index].baseUser.fullName.text.alignCenter,
+                          child:
+                              users[index].baseUser.fullName.text.alignCenter,
                         ),
                       ),
                       scrollDirection: Axis.horizontal,

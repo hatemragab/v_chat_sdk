@@ -72,10 +72,10 @@ typedef ItemHolderTypeDef = Widget Function(
 );
 
 typedef CustomMessageItemTypeDef = Widget Function(
-    BuildContext context,
-    bool isMeSender,
-    Map<String, dynamic> data,
-    );
+  BuildContext context,
+  bool isMeSender,
+  Map<String, dynamic> data,
+);
 typedef DateDividerTypeDef = Widget Function(
   BuildContext context,
   DateTime child,

@@ -56,7 +56,7 @@ class VChatController {
   static Future<VChatController> init({
     required VChatConfig vChatConfig,
     required VNavigator vNavigator,
-    required  VMessagePageConfig vMessagePageConfig  ,
+    required VMessagePageConfig vMessagePageConfig,
   }) async {
     assert(
       !_instance._isControllerInit,

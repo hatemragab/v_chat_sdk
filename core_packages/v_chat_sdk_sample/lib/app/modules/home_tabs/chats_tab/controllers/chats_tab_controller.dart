@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -19,7 +18,7 @@ class ChatsTabController extends GetxController {
     if (res == l[0]) {
       final users =
           await Get.toNamed(Routes.CHOOSE_MEMBERS) as List<VIdentifierUser>?;
-      print("------- ?  "+users.toString());
+      print("------- ?  " + users.toString());
       if (users != null) {
         Get.toNamed(Routes.CREATE_GROUP, arguments: users);
       }
