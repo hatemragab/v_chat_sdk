@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../v_chat_utils.dart';
+
 class VSearchAppBare extends StatefulWidget {
   final VoidCallback onClose;
   final int delay;
@@ -38,7 +40,8 @@ class _VSearchAppBareState extends State<VSearchAppBare> {
         minLeadingWidth: 0,
         title: TextField(
           autofocus: widget.requestFocus,
-          decoration: const InputDecoration(hintText: "Search..."),
+          decoration:
+              InputDecoration(hintText: VTrans.of(context).labels.search),
           onChanged: onSearchChanged,
           onSubmitted: (t) {
             widget.onSearch(t);

@@ -20,10 +20,12 @@ class VChatPage extends StatefulWidget {
     this.floatingActionButton,
     this.appBar,
     this.onRoomItemPress,
+    required this.context,
     this.useIconForRoomItem = false,
   }) : super(key: key);
   final VRoomController controller;
   final Function(VRoom room)? onRoomItemPress;
+  final BuildContext context;
 
   // final Function(VRoom room) onRoomItemPress;
   // final Function(VRoom room)? onRoomItemLongPress;
@@ -36,6 +38,12 @@ class VChatPage extends StatefulWidget {
 }
 
 class _VChatPageState extends State<VChatPage> {
+  @override
+  void initState() {
+    widget.controller._init(widget.context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

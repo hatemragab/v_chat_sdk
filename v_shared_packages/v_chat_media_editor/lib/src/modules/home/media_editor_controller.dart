@@ -141,7 +141,6 @@ class MediaEditorController extends ValueNotifier {
           builder: (context) => VVideoPlayer(
             platformFileSource: item.data.fileSource,
             appName: "media_editor",
-            successfullyDownloaded: "successfullyDownloaded",
           ),
         ),
       );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class MessageAppBarStateModel {
@@ -35,11 +36,11 @@ class MessageAppBarStateModel {
     );
   }
 
-  String? get typingText {
+  String? typingText(BuildContext context) {
     if (roomType.isGroup) {
-      return typingModel.inGroupText;
+      return typingModel.inGroupText(context);
     } else if (roomType.isSingle) {
-      return typingModel.inSingleText;
+      return typingModel.inSingleText(context);
     }
     return null;
   }

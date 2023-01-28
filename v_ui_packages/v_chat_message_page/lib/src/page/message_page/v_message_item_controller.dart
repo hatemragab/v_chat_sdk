@@ -10,7 +10,6 @@ import '../../core/enums.dart';
 import '../../core/v_downloader_service.dart';
 import 'message_provider.dart';
 
-//todo trans
 class VMessageItemController {
   final MessageProvider _messageProvider;
   final BuildContext context;
@@ -21,7 +20,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _deleteItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.delete,
-      title: "Delete",
+      title: VTrans.of(context).labels.delete,
       iconData: const Icon(
         Icons.delete,
         color: Colors.red,
@@ -32,7 +31,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _downloadItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.download,
-      title: "Download",
+      title: VTrans.of(context).labels.download,
       iconData: const Icon(
         Icons.download,
       ),
@@ -42,14 +41,14 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _copyItem() {
     return ModelSheetItem(
         id: VMessageItemClickRes.copy,
-        title: "Copy",
+        title: VTrans.of(context).labels.copy,
         iconData: const Icon(Icons.copy));
   }
 
   ModelSheetItem<VMessageItemClickRes> _infoItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.info,
-      title: "Info",
+      title: VTrans.of(context).labels.info,
       iconData: const Icon(Icons.info),
     );
   }
@@ -57,7 +56,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _shareItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.share,
-      title: "Share",
+      title: VTrans.of(context).labels.share,
       iconData: const Icon(Icons.share),
     );
   }
@@ -65,7 +64,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _forwardItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.forward,
-      title: "Forward",
+      title: VTrans.of(context).labels.forward,
       iconData: const Icon(Icons.forward),
     );
   }
@@ -73,7 +72,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _replyItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.reply,
-      title: "Reply",
+      title: VTrans.of(context).labels.reply,
       iconData: const Icon(Icons.replay),
     );
   }
@@ -285,9 +284,11 @@ class VMessageItemController {
     if (message.isMeSender &&
         !message.messageType.isAllDeleted &&
         message.emitStatus.isServerConfirm) {
-      l.add(ModelSheetItem(title: 'Delete from all', id: 1));
+      l.add(ModelSheetItem(
+          title: VTrans.of(context).labels.deleteFromAll, id: 1));
     }
-    l.add(ModelSheetItem(title: 'Delete from me', id: 2));
+
+    l.add(ModelSheetItem(title: VTrans.of(context).labels.deleteFromMe, id: 2));
     final res = await VAppAlert.showModalSheet(
       content: l,
       context: context,
@@ -315,21 +316,9 @@ class VMessageItemController {
   }
 
   void _handleCopy(VBaseMessage message) async {
-    final readyToCopy = StringBuffer();
-    final txt = message.getMessageText;
-    final words = txt.split(" ");
-    for (final element in words) {
-      final match = VStringUtils.vMentionRegExp.firstMatch(element);
-      if (match != null) {
-        final matchTxt = match.group(1)!;
-        readyToCopy.write("${matchTxt.replaceFirst("@", "")} ");
-      } else {
-        readyToCopy.write("$element ");
-      }
-    }
     await Clipboard.setData(
       ClipboardData(
-        text: readyToCopy.toString(),
+        text: message.realContentMentionParsed,
       ),
     );
   }
@@ -342,12 +331,13 @@ class VMessageItemController {
     VAppAlert.showLoading(
       context: context,
       isDismissible: true,
-      //todo trans
-      message: "Downloading...",
+      message: VTrans.of(context).labels.downloading,
     );
     final url = await VDownloaderService.instance.addToQueue(message);
     context.pop();
     await OpenFile.open(url);
-    VAppAlert.showOverlaySupport(title: "File has been saved $url");
+
+    VAppAlert.showOverlaySupport(
+        title: VTrans.of(context).labels.fileHasBeenSavedTo + url);
   }
 }

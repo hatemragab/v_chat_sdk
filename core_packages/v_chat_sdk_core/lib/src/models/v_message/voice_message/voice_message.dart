@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -77,7 +78,7 @@ class VVoiceMessage extends VBaseMessage {
     super.replyTo,
   }) : super.buildMessage(
           isEncrypted: false,
-          content: VAppConstants.thisContentIsVoice,
+          content: VMessageConstants.thisContentIsVoice,
           messageType: MessageType.voice,
         );
 }

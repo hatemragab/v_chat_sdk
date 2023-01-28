@@ -35,59 +35,62 @@ class VTextParserWidget extends StatelessWidget {
     const blueTheme = TextStyle(color: Colors.blue);
     return IgnorePointer(
       ignoring: !enableTabs,
-      child: ParsedText(
+      child: AutoDirection(
         text: text,
-        maxLines: maxLines,
-        style: textStyle,
-        parse: [
-          MatchText(
-            pattern: r"\[(@[^:]+):([^\]]+)\]",
-            style: blueTheme,
-            renderText: ({
-              required String str,
-              required String pattern,
-            }) {
-              final map = <String, String>{};
-              final match = VStringUtils.vMentionRegExp.firstMatch(str);
-              map['display'] = match!.group(1)!;
-              return map;
-            },
-            onTap: (url) {
-              final match = VStringUtils.vMentionRegExp.firstMatch(url)!;
-              final userId = match.group(2);
-              if (onMentionPress != null && userId != null) {
-                onMentionPress!(userId);
-              }
-            },
-          ),
-          if (onEmailPress != null)
+        child: ParsedText(
+          text: text,
+          maxLines: maxLines,
+          style: textStyle,
+          parse: [
             MatchText(
-              type: ParsedType.EMAIL,
+              pattern: r"\[(@[^:]+):([^\]]+)\]",
               style: blueTheme,
+              renderText: ({
+                required String str,
+                required String pattern,
+              }) {
+                final map = <String, String>{};
+                final match = VStringUtils.vMentionRegExp.firstMatch(str);
+                map['display'] = match!.group(1)!;
+                return map;
+              },
               onTap: (url) {
-                onEmailPress!(url);
+                final match = VStringUtils.vMentionRegExp.firstMatch(url)!;
+                final userId = match.group(2);
+                if (onMentionPress != null && userId != null) {
+                  onMentionPress!(userId);
+                }
               },
             ),
-          if (onPhonePress != null)
-            MatchText(
-                type: ParsedType.PHONE,
+            if (onEmailPress != null)
+              MatchText(
+                type: ParsedType.EMAIL,
                 style: blueTheme,
                 onTap: (url) {
-                  onPhonePress!(url);
-                }),
-          if (onLinkPress != null)
-            MatchText(
-              type: ParsedType.URL,
-              style: blueTheme,
-              onTap: (url) {
-                String fullUrl = url;
-                if (!fullUrl.contains("https") || !fullUrl.contains("http")) {
-                  fullUrl = "https://$url";
-                }
-                onLinkPress!(fullUrl);
-              },
-            ),
-        ],
+                  onEmailPress!(url);
+                },
+              ),
+            if (onPhonePress != null)
+              MatchText(
+                  type: ParsedType.PHONE,
+                  style: blueTheme,
+                  onTap: (url) {
+                    onPhonePress!(url);
+                  }),
+            if (onLinkPress != null)
+              MatchText(
+                type: ParsedType.URL,
+                style: blueTheme,
+                onTap: (url) {
+                  String fullUrl = url;
+                  if (!fullUrl.contains("https") || !fullUrl.contains("http")) {
+                    fullUrl = "https://$url";
+                  }
+                  onLinkPress!(fullUrl);
+                },
+              ),
+          ],
+        ),
       ),
     );
   }

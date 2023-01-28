@@ -18,14 +18,14 @@ class RoomItemMsg extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.vRoomTheme;
     if (message.messageType.isAllDeleted) {
-      return "Message has been deleted".text.italic;
+      return VTrans.of(context).labels.messageHasBeenDeleted.text.italic;
     }
     if (message.isDeleted) {
-      return message.getMessageText.text.lineThrough;
+      return message.getMessageText(context).text.lineThrough;
     }
     if (isBold) {
       return VTextParserWidget(
-        text: message.getMessageText,
+        text: message.getMessageText(context),
         enableTabs: false,
         onMentionPress: (userId) {},
         maxLines: 1,
@@ -33,7 +33,7 @@ class RoomItemMsg extends StatelessWidget {
       );
     }
     return VTextParserWidget(
-      text: message.getMessageText,
+      text: message.getMessageText(context),
       enableTabs: false,
       onMentionPress: (userId) {},
       maxLines: 1,

@@ -4,6 +4,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:objectid/objectid.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -190,7 +191,14 @@ abstract class VBaseMessage {
 
   ///Some Getters
   bool get isForward => forwardId != null;
+
   String get realContent => content;
+
+  String get realContentMentionParsed =>
+      VStringUtils.parseVMentions(realContent);
+
+  String get realContentMentionParsedWithAt =>
+      VStringUtils.parseVMentions(realContent, withOutAt: false);
 
   String get lastMessageTimeString =>
       DateFormat.jm().format(DateTime.parse(createdAt).toLocal());
@@ -210,8 +218,8 @@ abstract class VBaseMessage {
 
   bool get isContainReply => replyTo != null;
 
-  String get getMessageText {
-    return VAppConstants.getMessageBody(this);
+  String getMessageText(BuildContext context) {
+    return VMessageConstants.getMessageBody(this, context);
   }
 
   @override

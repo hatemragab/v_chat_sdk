@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_room_page.dart';
 import 'choose_room_controller.dart';
@@ -32,8 +33,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
         builder: (_, value, __) {
           return Scaffold(
             appBar: AppBar(
-              //todo trans
-              title: const Text("Choose Rooms"),
+              title: Text(VTrans.of(context).labels.chooseRooms),
             ),
             floatingActionButton: controller.isThereSelection
                 ? null
@@ -48,6 +48,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
                 itemBuilder: (context, index) {
                   return VRoomItem(
                     room: value[index].vRoom,
+                    isIconOnly: false,
                     onRoomItemLongPress: (room) =>
                         controller.onRoomItemPress(room, context),
                     onRoomItemPress: (room) =>

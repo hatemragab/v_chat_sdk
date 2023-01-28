@@ -14,11 +14,8 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   final OSLogLevel logLevel;
 
   VChatOneSignalProver({
-    super.enableForegroundNotification,
     required this.appId,
     this.logLevel = OSLogLevel.none,
-    super.vPushConfig =
-        const VLocalNotificationPushConfig(channelName: "channelName"),
   });
 
   @override

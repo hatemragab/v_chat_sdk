@@ -3,6 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+typedef UserActionType = Function(
+  BuildContext context,
+  String id,
+  VRoomType roomType,
+);
+
 class VMessagePageConfig {
   ///set api if you want to make users able to pick locations
   final String? googleMapsApiKey;
@@ -15,11 +21,9 @@ class VMessagePageConfig {
 
   ///call back when user click the app bar title in single room the id will be the user identifier
   ///so you can open the peer page on other rooms it will be the room id its important to deal with this room apis later
-  final Function(
-    BuildContext context,
-    String id,
-    VRoomType roomType,
-  )? onAppBarTitlePress;
+  final UserActionType? onAppBarTitlePress;
+
+  final UserActionType? onReportUserPress;
 
   final Future<List<VMentionModel>> Function(
     BuildContext context,
@@ -27,11 +31,24 @@ class VMessagePageConfig {
     String query,
   ) onMentionRequireSearch;
 
+  final Function(
+    BuildContext context,
+    String peerIdentifer,
+  )? onUserBlockAnother;
+
+  final Function(
+    BuildContext context,
+    String peerIdentifer,
+  )? onUserUnBlockAnother;
+
   ///set max upload files size default it 50 mb
   final int maxMediaSize;
 
   const VMessagePageConfig({
     this.googleMapsApiKey,
+    this.onReportUserPress,
+    this.onUserBlockAnother,
+    this.onUserUnBlockAnother,
     required this.onMentionPress,
     required this.onMentionRequireSearch,
     this.maxRecordTime = const Duration(minutes: 30),

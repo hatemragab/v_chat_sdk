@@ -200,6 +200,14 @@ class _VMessagePageState extends State<VMessagePage> {
                   return VMessageInputWidget(
                     onSubmitText: controller.onSubmitText,
                     autofocus: !VPlatforms.isMobile,
+                    language: VInputLanguage(
+                      files: VTrans.of(context).labels.shareFiles,
+                      location: VTrans.of(context).labels.shareLocation,
+                      media: VTrans.of(context).labels.media,
+                      shareMediaAndLocation:
+                          VTrans.of(context).labels.shareMediaAndLocation,
+                      textFieldHint: VTrans.of(context).labels.typeYourMessage,
+                    ),
                     focusNode: controller.focusNode,
                     onSubmitMedia: (files) =>
                         controller.onSubmitMedia(context, files),
@@ -207,7 +215,7 @@ class _VMessagePageState extends State<VMessagePage> {
                     onSubmitFiles: controller.onSubmitFiles,
                     onSubmitLocation: controller.onSubmitLocation,
                     onTypingChange: controller.onTypingChange,
-                    googleMapsLangKey: "en",
+                    googleMapsLangKey: VAppConstants.sdkLanguage,
                     maxMediaSize: _config.maxMediaSize,
                     onMentionSearch: (query) =>
                         controller.onMentionRequireSearch(context, query),

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 abstract class VChatLogger {
-  static String name = "V_CHAT_SDK";
+  static String name = "V_CHAT_SDK_V2";
 
   static void red(String text) {
     if (kDebugMode) {

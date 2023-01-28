@@ -8,13 +8,11 @@ import '../../v_chat_utils.dart';
 class VVideoPlayer extends StatefulWidget {
   final VPlatformFileSource platformFileSource;
   final String appName;
-  final String successfullyDownloaded;
 
   const VVideoPlayer({
     Key? key,
     required this.platformFileSource,
     required this.appName,
-    required this.successfullyDownloaded,
   }) : super(key: key);
 
   @override
@@ -65,7 +63,7 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
                 );
                 context.pop();
                 VAppAlert.showSuccessSnackBar(
-                  msg: "${widget.successfullyDownloaded}to $url",
+                  msg: VTrans.of(context).labels.successfullyDownloadedIn + url,
                   context: context,
                 );
               },

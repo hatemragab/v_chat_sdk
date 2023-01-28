@@ -4,8 +4,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../../v_chat_utils.dart';
-
 Future<T?> vSafeApiCall<T>({
   Function()? onLoading,
   required Future<T> Function() request,
@@ -13,7 +11,6 @@ Future<T?> vSafeApiCall<T>({
   VoidCallback? finallyCallback,
   bool ignoreTimeoutAndNoInternet = true,
   Function(String exception, StackTrace trace)? onError,
-  bool showToastError = false,
 }) async {
   try {
     if (onLoading != null) {
@@ -23,17 +20,19 @@ Future<T?> vSafeApiCall<T>({
     await onSuccess(res);
     return res;
   } on SocketException catch (err, stacktrace) {
-    _showError(err, showToastError);
+    //_showError(err, showToastError);
     if (onError != null) {
       onError(err.toString(), stacktrace);
     }
+    log("", error: err, stackTrace: stacktrace, level: 1000);
   } on TimeoutException catch (err, stacktrace) {
-    _showError(err, showToastError);
+    // _showError(err, showToastError);
     if (onError != null && !ignoreTimeoutAndNoInternet) {
       onError(err.toString(), stacktrace);
     }
+    log("", error: err, stackTrace: stacktrace, level: 1000);
   } catch (err, stacktrace) {
-    _showError(err, showToastError);
+    // _showError(err, showToastError);
     if (onError != null) {
       onError(err.toString(), stacktrace);
     }
@@ -46,17 +45,16 @@ Future<T?> vSafeApiCall<T>({
   return null;
 }
 
-void _showError(Object err, bool isAllow) {
-  if (isAllow) {
-    VAppAlert.showOverlaySupport(
-      title: "Connection error",
-      // subtitle: err.toString(),
-      textStyle: const TextStyle(color: Colors.white),
-      background: Colors.red,
-    );
-    // VAppAlert.showErrorSnackBar(
-    //   msg: err.toString(),
-    //   context: context,
-    // );
-  }
-}
+// void _showError(Object err, bool isAllow) {
+//   if (isAllow) {
+//     VAppAlert.showOverlaySupport(
+//       title: "Connection error",
+//       textStyle: const TextStyle(color: Colors.white),
+//       background: Colors.red,
+//     );
+//     // VAppAlert.showErrorSnackBar(
+//     //   msg: err.toString(),
+//     //   context: context,
+//     // );
+//   }
+// }

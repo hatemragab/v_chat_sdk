@@ -1,7 +1,6 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/chats_tab/views/chats_tab_view.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/explore_tab/views/explore_tab_view.dart';
 import 'package:v_chat_sdk_sample/app/modules/home_tabs/settings_tab/views/settings_tab_view.dart';
@@ -23,7 +22,6 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     controller = Get.find<HomeController>();
     super.initState();
-    VChatController.I.navigationContext = context;
   }
 
   @override

@@ -1,7 +1,7 @@
 class VLocalNotificationPushConfig {
-  final String channelName;
+  final String? channelName;
 
   const VLocalNotificationPushConfig({
-    required this.channelName,
+    this.channelName = "vchatsdk_channel",
   });
 }

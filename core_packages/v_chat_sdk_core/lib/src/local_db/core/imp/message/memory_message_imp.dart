@@ -70,8 +70,11 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   @override
   Future<int> updateMessageType(VUpdateMessageTypeEvent event) async {
     final msg = await findByLocalId(event.localId);
+
     if (msg == null) return 0;
-    msg.messageType = event.messageType;
+    final i = _messages.indexOf(msg);
+    _messages[i].messageType = event.messageType;
+    print("updateMessageTypeupdateMessageType $event");
     return Future.value(1);
   }
 
@@ -125,6 +128,9 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
     required String roomId,
     required VRoomMessagesDto filter,
   }) async {
+    if (filter.lastId != null) {
+      return Future.value([]);
+    }
     return Future.value(
       _messages
           .where((e) => e.roomId == roomId)
@@ -157,11 +163,16 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
 
   @override
   Future<int> insertMany(List<VBaseMessage> messages) {
-    for (final msg in messages) {
-      if (!_messages.contains(msg)) {
-        _messages.add(msg);
-      }
+    if (messages.isEmpty) {
+      return Future.value(1);
     }
+    _messages.removeWhere((e) => e.roomId == messages.first.roomId);
+    // for (final msg in messages) {
+    //   if (!_messages.contains(msg)) {
+    //     _messages.add(msg);
+    //   }
+    // }
+    _messages.addAll(messages);
     return Future.value(1);
   }
 

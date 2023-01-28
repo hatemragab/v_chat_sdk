@@ -43,8 +43,10 @@ class ReplyItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getTitle().text.color(Colors.green),
-                  rToMessage!.getMessageText.cap.maxLine(2).overflowEllipsis,
+                  getTitle(context).text.color(Colors.green),
+                  rToMessage!.realContentMentionParsedWithAt.cap
+                      .maxLine(2)
+                      .overflowEllipsis,
                 ],
               ),
             ),
@@ -55,10 +57,9 @@ class ReplyItemWidget extends StatelessWidget {
     );
   }
 
-  String getTitle() {
+  String getTitle(BuildContext context) {
     if (rToMessage!.isMeSender) {
-      //todo trans
-      return "replied to your self";
+      return VTrans.labelsOf(context).repliedToYourSelf;
     }
     return rToMessage!.senderName;
   }

@@ -1,4 +1,5 @@
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -149,13 +150,13 @@ class VRoom {
     return false;
   }
 
-  String? get roomTypingText {
+  String? roomTypingText(BuildContext context) {
     final current = this;
     if (roomType.isSingle) {
-      return current.typingStatus.inSingleText;
+      return current.typingStatus.inSingleText(context);
     }
     if (roomType.isGroup) {
-      return current.typingStatus.inGroupText;
+      return current.typingStatus.inGroupText(context);
     }
     return null;
   }

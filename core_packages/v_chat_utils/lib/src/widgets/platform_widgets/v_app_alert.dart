@@ -6,11 +6,11 @@ import '../../../v_chat_utils.dart';
 
 abstract class VAppAlert {
   static Future showLoading({
-    String message = "Please wait ...",
+    String? message,
     bool isDismissible = false,
     required BuildContext context,
   }) async {
-    showGeneralDialog(
+    return showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
         return WillPopScope(
@@ -22,6 +22,11 @@ abstract class VAppAlert {
             child: Opacity(
               opacity: a1.value,
               child: AlertDialog(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 content: Row(
                   children: [
@@ -29,7 +34,9 @@ abstract class VAppAlert {
                     const SizedBox(
                       width: 25,
                     ),
-                    message.text
+                    message == null
+                        ? VTrans.of(context).labels.pleaseWait.text
+                        : message.text
                   ],
                 ),
               ),
@@ -51,13 +58,12 @@ abstract class VAppAlert {
     required BuildContext context,
     required String title,
     required String content,
-    String okLabel = "Ok",
   }) async {
     await adaptive_dialog.showOkAlertDialog(
       context: context,
       title: title,
       message: content,
-      okLabel: okLabel,
+      okLabel: VTrans.of(context).labels.ok,
     );
     return;
   }
@@ -66,15 +72,13 @@ abstract class VAppAlert {
     required BuildContext context,
     required String title,
     required String content,
-    String okLabel = "Ok",
-    String cancelLabel = "Cancel",
   }) async {
     final x = await adaptive_dialog.showOkCancelAlertDialog(
       context: context,
       title: title,
       message: content,
-      cancelLabel: cancelLabel,
-      okLabel: okLabel,
+      cancelLabel: VTrans.of(context).labels.cancel,
+      okLabel: VTrans.of(context).labels.ok,
     );
     if (x == OkCancelResult.ok) {
       return 1;
@@ -109,8 +113,7 @@ abstract class VAppAlert {
               onPressed: () {
                 Navigator.pop(context);
               },
-              //todo fix trans
-              child: "Cancel".text,
+              child: VTrans.of(context).labels.cancel.text,
             ),
           ],
         );
@@ -126,7 +129,7 @@ abstract class VAppAlert {
     return await adaptive_dialog.showModalActionSheet<ModelSheetItem?>(
       context: context,
       title: title,
-      cancelLabel: "Cancel",
+      cancelLabel: VTrans.of(context).labels.cancel,
       isDismissible: true,
       actions: content
           .map((e) => SheetAction<ModelSheetItem>(

@@ -31,6 +31,7 @@ class VChatController {
 
   ///singleton
   VChatController._();
+
   static final _instance = VChatController._();
 
   static VChatController get I {
@@ -48,7 +49,8 @@ class VChatController {
   late final VMessagePageConfig vMessagePageConfig;
   bool _isControllerInit = false;
   late final VNativeApi nativeApi;
-  BuildContext? navigationContext;
+
+  late final GlobalKey<NavigatorState> navigatorKey;
 
   /// Initialize the [VChatController] instance.
   ///
@@ -56,6 +58,7 @@ class VChatController {
   static Future<VChatController> init({
     required VChatConfig vChatConfig,
     required VNavigator vNavigator,
+    required GlobalKey<NavigatorState> navigatorKey,
     required VMessagePageConfig vMessagePageConfig,
   }) async {
     assert(
@@ -64,6 +67,7 @@ class VChatController {
     );
     _instance._isControllerInit = true;
     _instance.vChatConfig = vChatConfig;
+    _instance.navigatorKey = navigatorKey;
     _instance.vNavigator = vNavigator;
     _instance.vMessagePageConfig = vMessagePageConfig;
     await VAppPref.init();
@@ -81,9 +85,7 @@ class VChatController {
     return _instance;
   }
 
-  void setContext(BuildContext context) {
-    _instance.navigationContext = context;
-  }
+  BuildContext get navigationContext => navigatorKey.currentContext!;
 
   void dispose() {
     _isControllerInit = false;

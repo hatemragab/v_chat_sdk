@@ -12,6 +12,6 @@ class AllDeletedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return "Message has been deleted".text.italic;
+    return VTrans.of(context).labels.messageHasBeenDeleted.text.italic;
   }
 }

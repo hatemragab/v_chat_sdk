@@ -26,7 +26,7 @@ class ForwardItemWidget extends StatelessWidget {
           const SizedBox(
             width: 6,
           ),
-          "Forwarded".cap.color(Colors.grey)
+          VTrans.of(context).labels.forwarded.cap.color(Colors.grey)
         ],
       ),
     );

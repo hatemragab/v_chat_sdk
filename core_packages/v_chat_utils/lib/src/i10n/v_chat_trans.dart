@@ -1,20 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:v_chat_sdk_core/src/i10n/default_localizations.dart';
+import '../../v_chat_utils.dart';
 
 const kDefaultLocale = Locale('en');
 
-class VChatLocalizations<T extends VChatLocalizationLabels> {
+class VTrans<T extends VChatLocalizationLabels> {
   final Locale locale;
   final T labels;
 
-  const VChatLocalizations(this.locale, this.labels);
+  const VTrans(this.locale, this.labels);
 
-  static VChatLocalizations of(BuildContext context) {
-    final l = Localizations.of<VChatLocalizations>(
+  static VTrans of(BuildContext context) {
+    final l = Localizations.of<VTrans>(
       context,
-      VChatLocalizations,
+      VTrans,
     );
 
     if (l != null) {
@@ -22,11 +22,11 @@ class VChatLocalizations<T extends VChatLocalizationLabels> {
     }
 
     final defaultLocalizations = localizations[kDefaultLocale.languageCode]!;
-    return VChatLocalizations(kDefaultLocale, defaultLocalizations);
+    return VTrans(kDefaultLocale, defaultLocalizations);
   }
 
   static VChatLocalizationLabels labelsOf(BuildContext context) {
-    return VChatLocalizations.of(context).labels;
+    return VTrans.of(context).labels;
   }
 
   static VChatLocalizationDelegate delegate = const VChatLocalizationDelegate();
@@ -49,7 +49,7 @@ class VChatLocalizations<T extends VChatLocalizationLabels> {
 }
 
 class VChatLocalizationDelegate<T extends VChatLocalizationLabels>
-    extends LocalizationsDelegate<VChatLocalizations> {
+    extends LocalizationsDelegate<VTrans> {
   final T? overrides;
   final Locale? locale;
   final bool _forceSupportAllLocales;
@@ -66,23 +66,23 @@ class VChatLocalizationDelegate<T extends VChatLocalizationLabels>
       return this.locale!.languageCode == locale.languageCode;
     }
     return _forceSupportAllLocales ||
-        localizations.keys.contains(locale.languageCode);
+        localizations.keys.contains(
+          locale.languageCode,
+        );
   }
 
   @override
-  Future<VChatLocalizations> load(Locale locale) {
-    final l = VChatLocalizations(
+  Future<VTrans> load(Locale locale) {
+    final l = VTrans(
       locale,
       overrides ?? localizations[locale.languageCode]!,
     );
-
-    return SynchronousFuture<VChatLocalizations>(l);
+    return SynchronousFuture<VTrans>(l);
   }
 
   @override
   bool shouldReload(
-    covariant LocalizationsDelegate<VChatLocalizations> old,
-  ) {
-    return false;
-  }
+    covariant LocalizationsDelegate<VTrans> old,
+  ) =>
+      false;
 }

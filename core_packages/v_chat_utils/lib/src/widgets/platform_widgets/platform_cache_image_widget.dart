@@ -72,7 +72,6 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
       fit: widget.fit,
       cacheKey: widget.source.getUrlPath,
       imageUrl: widget.source.url!,
-      useOldImageOnUrlChange: true,
       placeholder: (context, url) =>
           const CupertinoActivityIndicator.partiallyRevealed(),
       errorWidget: (context, url, error) => InkWell(

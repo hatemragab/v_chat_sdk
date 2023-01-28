@@ -13,7 +13,7 @@ export 'package:timeago/timeago.dart';
 export 'package:uuid/uuid.dart';
 export 'package:file_sizes/file_sizes.dart';
 export 'package:shared_preferences/shared_preferences.dart';
-
+export './src/i10n/i10n.dart';
 export './src/file/file.dart';
 export './src/logger/v_logger.dart';
 export './src/models/models.dart';

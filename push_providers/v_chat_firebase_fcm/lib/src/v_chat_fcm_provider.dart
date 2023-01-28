@@ -16,12 +16,6 @@ class VChatFcmProver extends VChatPushProviderBase {
   StreamSubscription? _onMsgClicked;
   final _vEventBusSingleton = VEventBusSingleton.vEventBus;
 
-  VChatFcmProver({
-    super.enableForegroundNotification,
-    super.vPushConfig =
-        const VLocalNotificationPushConfig(channelName: "channelName"),
-  });
-
   @override
   Future<void> deleteToken() async {
     try {
@@ -47,7 +41,8 @@ class VChatFcmProver extends VChatPushProviderBase {
   @override
   Future<bool> init() async {
     try {
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(
+          vFirebaseMessagingBackgroundHandler);
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }
@@ -155,7 +150,7 @@ class VChatFcmProver extends VChatPushProviderBase {
 }
 
 @pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (await FlutterAppBadger.isAppBadgeSupported()) {
     FlutterAppBadger.updateBadgeCount(1);
   }
@@ -185,7 +180,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   return Future<void>.value();
 }
 
-@pragma('vm:entry-point')
 Future _setDeliverForThisRoom(String roomId, String token) async {
   if (kDebugMode) {
     final res = await patch(
@@ -211,6 +205,8 @@ Future _setDeliverForThisRoom(String roomId, String token) async {
       },
     );
     if (res.statusCode != 200) {
+      print(res.body);
+      print(res.statusCode);
       throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
     }
   }

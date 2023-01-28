@@ -13,8 +13,6 @@ final messageDefaultNavigator = VMessageNavigator(
       VVideoPlayer(
         platformFileSource: source,
         appName: VAppConstants.appName,
-        //todo trans
-        successfullyDownloaded: "successfully Downloaded",
       ),
     );
   },
@@ -23,8 +21,6 @@ final messageDefaultNavigator = VMessageNavigator(
       VImageViewer(
         platformFileSource: source,
         appName: VAppConstants.appName,
-        //todo trans
-        successfullyDownloaded: "successfully Downloaded",
       ),
     );
   },

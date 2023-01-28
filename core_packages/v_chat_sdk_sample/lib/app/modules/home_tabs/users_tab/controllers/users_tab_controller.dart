@@ -23,7 +23,9 @@ class UsersTabController extends GetxController {
   Future<void> getData() async {
     await vSafeApiCall<List<VIdentifierUser>>(
       onLoading: () async {},
-      onError: (exception, trace) {},
+      onError: (exception, trace) {
+        VAppAlert.showOverlaySupport(title: exception);
+      },
       request: () async {
         return await VChatController.I.nativeApi.remote.profile
             .appUsers(_filterDto.toMap());
@@ -34,7 +36,6 @@ class UsersTabController extends GetxController {
         update();
       },
       ignoreTimeoutAndNoInternet: false,
-      showToastError: true,
     );
   }
 

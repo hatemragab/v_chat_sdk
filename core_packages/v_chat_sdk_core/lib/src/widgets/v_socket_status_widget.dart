@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VSocketStatusWidget extends StatefulWidget {
   final BoxDecoration decoration;
   final EdgeInsets padding;
-  final String connectingString;
+
   final Duration delay;
 
   const VSocketStatusWidget({
     super.key,
     this.decoration = const BoxDecoration(color: Colors.red),
     this.padding = const EdgeInsets.all(5),
-    this.connectingString = "Connecting...",
     this.delay = const Duration(seconds: 5),
   });
 
@@ -46,7 +46,7 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
             child: Padding(
               padding: widget.padding,
               child: Text(
-                widget.connectingString,
+                VTrans.of(context).labels.connecting,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,

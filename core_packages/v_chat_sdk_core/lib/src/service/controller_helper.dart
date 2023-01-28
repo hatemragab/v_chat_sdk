@@ -21,10 +21,11 @@ class ControllerHelper {
   Future<ControllerHelper> init() async {
     _initLogger(_config.enableLog);
     await _initPushService(
-      _config.fcmPushProvider,
-      _config.oneSignalPushProvider,
+      _config.vPush,
     );
     _initSocketTimer();
+    setLocaleMessages('ar', ArMessages());
+    setLocaleMessages('ar_short', ArShortMessages());
     return ControllerHelper._();
   }
 
@@ -58,18 +59,18 @@ class ControllerHelper {
   }
 
   Future<void> _initPushService(
-    VChatPushProviderBase? fcm,
-    VChatPushProviderBase? onesignal,
+    VPush vPush,
   ) async {
+    final fcm = vPush.fcmProvider;
+    final onesignal = vPush.oneSignalProvider;
     if (VPlatforms.isWeb || VPlatforms.isDeskTop) return;
+    _config.currentPushProviderService = fcm ?? onesignal;
     if (fcm != null && onesignal != null) {
       ///first try to init fcm
       final fcmInit = await fcm.init();
-      _config.currentPushProviderService = fcm;
       if (!fcmInit) {
         ///we need to enable onesignal here
         await onesignal.init();
-        _config.currentPushProviderService = onesignal;
         _log.fine(
           "init the sdk with OneSignal done successfully through V_CHAT_SDK",
         );
@@ -80,6 +81,7 @@ class ControllerHelper {
       }
       return;
     }
+
     if (fcm != null) {
       final fcmInit = await fcm.init();
       if (!fcmInit) {
@@ -95,12 +97,12 @@ class ControllerHelper {
     }
     if (onesignal != null) {
       await onesignal.init();
-      _config.currentPushProviderService = onesignal;
       _log.fine(
         "init the sdk with OneSignal done successfully through V_CHAT_SDK",
       );
       return;
     }
+
     if (fcm == null && onesignal == null) {
       _log.fine("init the sdk without push notification service!");
     }

@@ -10,11 +10,6 @@ class ErrorInterceptor implements ErrorConverter {
   FutureOr<Response> convertError<BodyType, InnerType>(Response response) {
     final errorMap =
         jsonDecode(response.body.toString()) as Map<String, dynamic>;
-
-    // String errStr = errorMap['data'].toString();
-    // if (errStr.contains("t.")) {
-    //   errStr = errorMap['data'].toString().split("t.")[1];
-    // }
     return response.copyWith(
       bodyError: errorMap,
       body: errorMap,

@@ -18,15 +18,5 @@ class DirectionItemHolder extends StatelessWidget {
       isMeSender,
       child,
     );
-
-    // return BubbleSpecialOne(
-    //   isSender: isMeSender,
-    //   isRtl: isRtl,
-    //   tail: true,
-    //   color: context.vMessageTheme.vMessageItemBuilder.holderColor(
-    //     isMeSender,
-    //   ),
-    //   child: child,
-    // );
   }
 }

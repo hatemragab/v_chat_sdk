@@ -1,11 +1,9 @@
 import 'dart:ui' as ui;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
-import 'package:v_chat_one_signal/v_chat_one_signal.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -17,21 +15,27 @@ import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
 import 'generated/l10n.dart';
 
+final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(vFirebaseMessagingBackgroundHandler);
   await VChatController.init(
+    navigatorKey: _navigatorKey,
     vChatConfig: VChatConfig(
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
-      fcmPushProvider: VChatFcmProver(
-        enableForegroundNotification: true,
-      ),
-      oneSignalPushProvider: VChatOneSignalProver(
-        enableForegroundNotification: true,
-        appId: VAppConstants.oneSignalAppId,
+      vPush: VPush(
+        fcmProvider: VPlatforms.isMobile ? VChatFcmProver() : null,
+        // oneSignalProvider: VPlatforms.isMobile
+        //     ? VChatOneSignalProver(
+        //         appId: VAppConstants.oneSignalAppId,
+        //       )
+        //     : null,
+        enableVForegroundNotification: true,
+        vPushConfig: VLocalNotificationPushConfig(),
       ),
     ),
     vNavigator: VNavigator(
@@ -97,6 +101,7 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             title: "V Chat V2",
             initialRoute: AppPages.INITIAL,
+            navigatorKey: _navigatorKey,
             getPages: AppPages.routes,
             defaultTransition: Transition.cupertino,
             debugShowCheckedModeBanner: false,
@@ -107,7 +112,7 @@ class MyApp extends StatelessWidget {
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
-              VChatLocalizations.delegate,
+              VTrans.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
             locale: appService.locale,

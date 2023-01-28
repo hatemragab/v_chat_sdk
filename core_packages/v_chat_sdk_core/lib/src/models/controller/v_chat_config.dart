@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:v_chat_sdk_core/src/models/controller/config.dart';
 
 import 'package:v_chat_sdk_core/src/models/push_provider/v_chat_push_provider.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VChatConfig {
-  final VChatPushProviderBase? fcmPushProvider;
-  final VChatPushProviderBase? oneSignalPushProvider;
+  final VPush vPush;
+
   final bool enableLog;
   final bool enableMessageEncryption;
 
@@ -15,8 +16,7 @@ class VChatConfig {
   final Uri baseUrl;
 
   VChatConfig({
-    this.fcmPushProvider,
-    this.oneSignalPushProvider,
+    required this.vPush,
     required this.encryptHashKey,
     required this.baseUrl,
     this.enableLog = kDebugMode,
@@ -26,7 +26,7 @@ class VChatConfig {
   });
 
   bool get isPushEnable =>
-      fcmPushProvider != null || oneSignalPushProvider != null;
+      vPush.fcmProvider != null || vPush.oneSignalProvider != null;
 
   VChatPushProviderBase? currentPushProviderService;
 

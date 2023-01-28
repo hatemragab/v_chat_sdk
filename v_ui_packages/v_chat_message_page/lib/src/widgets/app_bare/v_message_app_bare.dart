@@ -47,11 +47,11 @@ class VMessageAppBare extends StatelessWidget {
           );
         },
         title: state.roomTitle.text.bold,
-        subtitle: state.typingText != null
+        subtitle: state.typingText(context) != null
             ? MessageTypingWidget(
-                text: state.typingText!,
+                text: state.typingText(context)!,
               )
-            : _getSubTitle(),
+            : _getSubTitle(context),
       ),
       actions: [
         _getCallIcon(),
@@ -78,7 +78,7 @@ class VMessageAppBare extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  const Text("Search"),
+                  Text(VTrans.of(context).labels.search),
                 ],
               ),
             ),
@@ -93,7 +93,7 @@ class VMessageAppBare extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  const Text("Media"),
+                  Text(VTrans.of(context).labels.media),
                 ],
               ),
             ),
@@ -103,18 +103,19 @@ class VMessageAppBare extends StatelessWidget {
     );
   }
 
-  Widget? _getSubTitle() {
+  Widget? _getSubTitle(BuildContext context) {
     if (state.roomType.isSingleOrOrder) {
       if (state.isOnline) {
-        //todo trans
-        return const Text("Online");
+        return Text(VTrans.of(context).labels.online);
       }
       if (state.lastSeenAt == null) {
         return null;
       } else {
-        //todo trans
         return Text(
-          format(state.lastSeenAt!.toLocal()),
+          format(
+            state.lastSeenAt!.toLocal(),
+            locale: VAppConstants.sdkLanguage,
+          ),
         );
       }
     }
@@ -123,7 +124,10 @@ class VMessageAppBare extends StatelessWidget {
 
   Widget _getCallIcon() {
     if (state.roomType.isSingleOrOrder) {
-      return const Icon(Icons.call);
+      return const Icon(
+        Icons.call,
+        color: Colors.grey,
+      );
     }
     return const SizedBox();
   }

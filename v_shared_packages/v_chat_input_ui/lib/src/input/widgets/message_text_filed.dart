@@ -33,53 +33,73 @@ class MessageTextFiled extends StatefulWidget {
 
 class _MessageTextFiledState extends State<MessageTextFiled> {
   String txt = "";
+  int lines = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.textEditingController.addListener(_lineListener);
+  }
+
+  @override
+  void dispose() {
+    widget.textEditingController.removeListener(_lineListener);
+    super.dispose();
+  }
+
+  bool get isMultiLine => lines != 1;
+
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment:
+          isMultiLine ? CrossAxisAlignment.end : CrossAxisAlignment.center,
       children: [
         InkWell(
           onTap: widget.onShowEmoji,
-          child: context.vInputTheme.emojiIcon,
+          child: Padding(
+            padding: isMultiLine
+                ? const EdgeInsets.only(bottom: 8)
+                : EdgeInsets.zero,
+            child: context.vInputTheme.emojiIcon,
+          ),
         ),
         const SizedBox(
           width: 4,
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 0, top: 0),
-            child: AutoDirection(
-              text: txt,
-              child: TextField(
-                textCapitalization: TextCapitalization.sentences,
-                controller: widget.textEditingController,
-                focusNode: widget.focusNode,
-                autofocus: widget.autofocus,
-                maxLines: 5,
-                onChanged: (value) {
-                  setState(() {
-                    txt = value;
-                  });
-                },
-                style: context.vInputTheme.textFieldTextStyle,
-                minLines: 1,
-                decoration: context.vInputTheme.textFieldDecoration
-                    .copyWith(hintText: widget.hint),
-                onSubmitted: VPlatforms.isMobile
-                    ? null
-                    : (value) {
-                        if (value.isNotEmpty) {
-                          widget.onSubmit(value);
-                        }
-                        widget.focusNode.requestFocus();
-                        widget.textEditingController.clear();
-                      },
-                textInputAction:
-                    !VPlatforms.isMobile ? null : TextInputAction.newline,
-                keyboardType: VPlatforms.isMobile
-                    ? TextInputType.multiline
-                    : TextInputType.text,
-              ),
+          child: AutoDirection(
+            text: txt,
+            child: TextField(
+              textCapitalization: TextCapitalization.sentences,
+              controller: widget.textEditingController,
+              focusNode: widget.focusNode,
+              autofocus: widget.autofocus,
+              maxLines: 5,
+              onChanged: (value) {
+                setState(() {
+                  txt = value;
+                });
+              },
+              style: context.vInputTheme.textFieldTextStyle,
+              minLines: 1,
+              textAlignVertical: TextAlignVertical.top,
+              decoration: context.vInputTheme.textFieldDecoration
+                  .copyWith(hintText: widget.hint),
+              onSubmitted: VPlatforms.isMobile
+                  ? null
+                  : (value) {
+                      if (value.isNotEmpty) {
+                        widget.onSubmit(value);
+                      }
+                      widget.focusNode.requestFocus();
+                      widget.textEditingController.clear();
+                    },
+              textInputAction:
+                  !VPlatforms.isMobile ? null : TextInputAction.newline,
+              keyboardType: VPlatforms.isMobile
+                  ? TextInputType.multiline
+                  : TextInputType.text,
             ),
           ),
         ),
@@ -88,24 +108,43 @@ class _MessageTextFiledState extends State<MessageTextFiled> {
         ),
         Visibility(
           visible: !widget.isTyping,
-          child: Row(
-            children: [
-              if (VPlatforms.isMobile)
-                InkWell(
-                  onTap: widget.onCameraPress,
-                  child: context.vInputTheme.cameraIcon,
+          child: Padding(
+            padding: isMultiLine
+                ? const EdgeInsets.only(bottom: 8)
+                : EdgeInsets.zero,
+            child: Row(
+              children: [
+                if (VPlatforms.isMobile)
+                  InkWell(
+                    onTap: widget.onCameraPress,
+                    child: context.vInputTheme.cameraIcon,
+                  ),
+                const SizedBox(
+                  width: 10,
                 ),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         InkWell(
           onTap: widget.onAttachFilePress,
-          child: context.vInputTheme.fileIcon,
+          child: Padding(
+            padding: isMultiLine
+                ? const EdgeInsets.only(bottom: 8)
+                : EdgeInsets.zero,
+            child: context.vInputTheme.fileIcon,
+          ),
         ),
       ],
     );
+  }
+
+  void _lineListener() {
+    final count = widget.textEditingController.text.split('\n').length;
+    if (lines != count) {
+      setState(() {
+        lines = count;
+      });
+    }
   }
 }

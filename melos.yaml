@@ -12,9 +12,8 @@ command:
     usePubspecOverrides: true
 
 scripts:
-  lint:
-    run: melos run format && melos run analyze
 
+  postbootstrap: cd core_packages/v_chat_translations && flutter gen-l10n
   analyze:
     run: |
       melos exec -c 1 -- \

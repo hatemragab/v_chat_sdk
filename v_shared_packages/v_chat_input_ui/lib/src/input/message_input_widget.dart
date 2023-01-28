@@ -173,8 +173,6 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                     padding: const EdgeInsets.only(
                       left: 6,
                       right: 6,
-                      top: 8,
-                      bottom: 8,
                     ),
                     decoration: context.vInputTheme.containerDecoration,
                     child: Column(

@@ -21,7 +21,7 @@ class VRoomItem extends StatelessWidget {
     required this.room,
     super.key,
     required this.onRoomItemPress,
-    this.isIconOnly = true,
+    this.isIconOnly = false,
     required this.onRoomItemLongPress,
   });
 
@@ -81,9 +81,9 @@ class VRoomItem extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            if (room.roomTypingText != null)
+                            if (room.roomTypingText(context) != null)
                               ChatTypingWidget(
-                                text: room.roomTypingText!,
+                                text: room.roomTypingText(context)!,
                               )
                             else if (room.lastMessage.isMeSender)
                               Flexible(

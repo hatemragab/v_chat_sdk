@@ -14,27 +14,32 @@ class ReplyMsgWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getTitle().text.maxLine(1),
-              vBaseMessage.getMessageText.cap.maxLine(2).overflowEllipsis,
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getTitle(context).text.maxLine(1),
+                vBaseMessage.realContentMentionParsedWithAt.cap
+                    .maxLine(2)
+                    .overflowEllipsis,
+              ],
+            ),
           ),
-        ),
-        getImage()
-      ],
+          getImage()
+        ],
+      ),
     );
   }
 
-  String getTitle() {
+  String getTitle(BuildContext context) {
     if (vBaseMessage.isMeSender) {
-      return "Reply to your self";
+      return VTrans.of(context).labels.replyToYourSelf;
     }
     return vBaseMessage.senderName;
   }

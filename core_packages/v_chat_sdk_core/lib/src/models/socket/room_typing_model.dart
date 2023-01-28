@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -62,25 +63,25 @@ class VSocketRoomTypingModel {
     return 'RoomTyping{status: $status, roomId: $roomId, name: $name userId:$userId}';
   }
 
-  String? get inSingleText {
-    return _statusInText;
+  String? inSingleText(BuildContext context) {
+    return _statusInText(context);
   }
 
-  String? get _statusInText {
-    //todo fix trnas
+  String? _statusInText(BuildContext context) {
     switch (status) {
       case VRoomTypingEnum.stop:
         return null;
       case VRoomTypingEnum.typing:
-        return "S.current.typing";
+        return VTrans.of(context).labels.typing;
+
       case VRoomTypingEnum.recording:
-        return "S.current.recording";
+        return VTrans.of(context).labels.recording;
     }
   }
 
-  String? get inGroupText {
-    if (_statusInText == null) return null;
-    return "$name ${_statusInText!}";
+  String? inGroupText(BuildContext context) {
+    if (_statusInText(context) == null) return null;
+    return "$name ${_statusInText(context)!}";
   }
 
   factory VSocketRoomTypingModel.fromMap(Map<String, dynamic> map) {

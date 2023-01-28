@@ -54,10 +54,8 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
       color: Colors.green,
     ),
     this.textFieldDecoration = const InputDecoration(
-      contentPadding: EdgeInsets.only(top: 7, bottom: 5),
       border: InputBorder.none,
       fillColor: Colors.transparent,
-      isDense: true,
     ),
     this.recordBtn,
     this.sendBtn,
@@ -81,7 +79,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
         color: Colors.green,
       ),
       child: const Icon(
-        PhosphorIcons.paperPlaneRight,
+        Icons.send,
         color: Colors.white,
       ),
     );
@@ -115,10 +113,8 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
       color: Colors.green,
     ),
     this.textFieldDecoration = const InputDecoration(
-      contentPadding: EdgeInsets.only(top: 7, bottom: 5),
       border: InputBorder.none,
       fillColor: Colors.transparent,
-      isDense: true,
     ),
     this.recordBtn,
     this.textFieldTextStyle = const TextStyle(height: 1.3),
@@ -142,7 +138,7 @@ class VInputTheme extends ThemeExtension<VInputTheme> {
         color: Colors.green,
       ),
       child: const Icon(
-        PhosphorIcons.paperPlaneRight,
+        Icons.send,
         color: Colors.white,
       ),
     );

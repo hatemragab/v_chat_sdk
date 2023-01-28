@@ -18,6 +18,7 @@ class ChatsTabView extends GetView<ChatsTabController> {
             SizedBox(
               width: 300,
               child: VChatPage(
+                context: navigator == null ? context : navigator!.context,
                 appBar: AppBar(
                   title: Text("start chat"),
                 ),
@@ -46,6 +47,7 @@ class ChatsTabView extends GetView<ChatsTabController> {
       );
     }
     return VChatPage(
+      context: context,
       appBar: AppBar(
         title: const Text('Chats Tab View'),
         centerTitle: true,

@@ -17,8 +17,12 @@ class BanWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //todo fix
-            "you don't have access".text.color(Colors.white).black,
+            VTrans.of(context)
+                .labels
+                .youDontHaveAccess
+                .text
+                .color(Colors.white)
+                .black,
             // if (isMy)
             //   InkWell(
             //     onTap: onUnBan,

@@ -18,28 +18,14 @@ class VNotificationListener {
   }
 
   void _init() {
-    if (!vChatConfig.isPushEnable) return;
-    if (VPlatforms.isWeb) {
+    if (vChatConfig.vPush.enableVForegroundNotification) {
       nativeApi.streams.vOnNewNotificationStream.listen((event) {
         final message = event.message;
         final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
         if (!isRoomOpen && !message.isMeSender) {
           VAppAlert.showOverlaySupport(
             title: message.senderName,
-            subtitle: message.getMessageText,
-          );
-        }
-      });
-      return;
-    }
-    if (vChatConfig.currentPushProviderService!.enableForegroundNotification) {
-      nativeApi.streams.vOnNewNotificationStream.listen((event) {
-        final message = event.message;
-        final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
-        if (!isRoomOpen && !message.isMeSender) {
-          VAppAlert.showOverlaySupport(
-            title: message.senderName,
-            subtitle: message.getMessageText,
+            subtitle: message.realContentMentionParsed,
           );
         }
       });
@@ -49,16 +35,16 @@ class VNotificationListener {
       final room = event.room;
       final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
       if (isRoomOpen) return;
-      if (VChatController.I.navigationContext == null) {
+      if (VChatController.I.navigatorKey.currentContext == null) {
         _log.shout(
-          "(vOnNotificationsClickedStream) please set the navigation context to handle the notification click VChatController.I.setContext",
+          "(vOnNotificationsClickedStream) please set the navigatorKey context to handle the notification click VChatController.I.init(navigatorKey:)",
         );
         return;
       }
-
       vNavigator.messageNavigator
-          .toMessagePage(VChatController.I.navigationContext!, room);
+          .toMessagePage(VChatController.I.navigationContext, room);
     });
+    if (!vChatConfig.isPushEnable) return;
     nativeApi.streams.vOnUpdateNotificationsTokenStream.listen((event) async {
       await nativeApi.remote.profile.addFcm(event.token);
     });
@@ -71,22 +57,22 @@ class VNotificationListener {
   }
 
   Future<void> _getOpenAppNotification() async {
-    await Future.delayed(const Duration(seconds: 3));
     await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
+    await Future.delayed(const Duration(seconds: 2));
     final message =
         await vChatConfig.currentPushProviderService!.getOpenAppNotification();
     if (message == null) return;
     final room = await _getRoom(message.roomId);
     final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
     if (room == null || isRoomOpen) return;
-    if (VChatController.I.navigationContext == null) {
+    if (VChatController.I.navigatorKey.currentContext == null) {
       _log.shout(
-        "(_getOpenAppNotification) please set the navigation context to handle the notification click by VChatController.I.setContext",
+        "(vOnNotificationsClickedStream) please set the navigatorKey context to handle the notification click VChatController.I.init(navigatorKey:)",
       );
       return;
     }
     vNavigator.messageNavigator.toMessagePage(
-      VChatController.I.navigationContext!,
+      VChatController.I.navigationContext,
       room,
     );
   }

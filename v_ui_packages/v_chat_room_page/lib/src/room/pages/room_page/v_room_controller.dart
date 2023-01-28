@@ -1,17 +1,9 @@
 part of 'v_room_page.dart';
 
 class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
-  final bool isTesting;
-  late final RoomStreamState _localStreamChanges;
-  late final RoomItemController _roomItemController;
-  late final RoomStateController _roomState;
-
-  final _roomProvider = RoomProvider();
-
   VRoomController({
     this.isTesting = false,
   }) {
-    _roomItemController = RoomItemController(_roomProvider);
     initSocketStatusStream(
       VChatController.I.nativeApi.streams.socketStatusStream,
     );
@@ -24,6 +16,22 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
       roomState: _roomState,
     );
     _getRoomsFromLocal();
+  }
+
+  final bool isTesting;
+  late final RoomStreamState _localStreamChanges;
+  late RoomItemController _roomItemController;
+  late final RoomStateController _roomState;
+  late BuildContext _context;
+
+  final _roomProvider = RoomProvider();
+
+  void _init(BuildContext context) {
+    _context = context;
+    _roomItemController = RoomItemController(
+      _roomProvider,
+      _context,
+    );
   }
 
   void sortRoomsBy(VRoomType? type) {
@@ -60,16 +68,24 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
   void _onRoomItemLongPress(VRoom room, BuildContext context) async {
     switch (room.roomType) {
       case VRoomType.s:
-        await _roomItemController.openForSingle(room, context);
+        await _roomItemController.openForSingle(
+          room,
+        );
         break;
       case VRoomType.g:
-        await _roomItemController.openForGroup(room, context);
+        await _roomItemController.openForGroup(
+          room,
+        );
         break;
       case VRoomType.b:
-        await _roomItemController.openForBroadcast(room, context);
+        await _roomItemController.openForBroadcast(
+          room,
+        );
         break;
       case VRoomType.o:
-        // TODO: Handle this case.
+        await _roomItemController.openForOrder(
+          room,
+        );
         break;
     }
   }

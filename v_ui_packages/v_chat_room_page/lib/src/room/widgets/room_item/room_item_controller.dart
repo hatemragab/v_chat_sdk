@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -7,10 +9,16 @@ import '../../pages/room_page/room_provider.dart';
 
 class RoomItemController {
   final RoomProvider _provider;
+  final BuildContext context;
 
-  ModelSheetItem<VRoomItemClickRes> _muteItem(BuildContext context) {
+  RoomItemController(
+    this._provider,
+    this.context,
+  );
+
+  ModelSheetItem<VRoomItemClickRes> _muteItem() {
     return ModelSheetItem(
-      title: "Mute",
+      title: VTrans.of(context).labels.mute,
       id: VRoomItemClickRes.mute,
       iconData: const Icon(
         Icons.notifications_off,
@@ -18,9 +26,9 @@ class RoomItemController {
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _unMuteItem(BuildContext context) {
+  ModelSheetItem<VRoomItemClickRes> _unMuteItem() {
     return ModelSheetItem(
-      title: "Un mute",
+      title: VTrans.of(context).labels.unMute,
       id: VRoomItemClickRes.unMute,
       iconData: const Icon(
         Icons.notifications,
@@ -28,17 +36,17 @@ class RoomItemController {
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _deleteItem(BuildContext context) {
+  ModelSheetItem<VRoomItemClickRes> _deleteItem() {
     return ModelSheetItem(
-      title: "Delete",
+      title: VTrans.of(context).labels.delete,
       iconData: const Icon(Icons.delete),
       id: VRoomItemClickRes.delete,
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _reportItem(BuildContext context) {
+  ModelSheetItem<VRoomItemClickRes> _reportItem() {
     return ModelSheetItem(
-      title: "Report",
+      title: VTrans.of(context).labels.report,
       id: VRoomItemClickRes.report,
       iconData: const Icon(
         Icons.report_gmailerrorred,
@@ -47,9 +55,9 @@ class RoomItemController {
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _unBlockItem(BuildContext context) {
+  ModelSheetItem<VRoomItemClickRes> _unBlockItem() {
     return ModelSheetItem(
-      title: "Un block",
+      title: VTrans.of(context).labels.unBlock,
       id: VRoomItemClickRes.unBlock,
       iconData: const Icon(
         Icons.security,
@@ -58,9 +66,9 @@ class RoomItemController {
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _blockItem(BuildContext context) {
+  ModelSheetItem<VRoomItemClickRes> _blockItem() {
     return ModelSheetItem(
-      title: "Block",
+      title: VTrans.of(context).labels.block,
       id: VRoomItemClickRes.block,
       iconData: const Icon(
         Icons.block,
@@ -69,11 +77,9 @@ class RoomItemController {
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _leaveItem(
-    BuildContext context,
-  ) {
+  ModelSheetItem<VRoomItemClickRes> _leaveItem() {
     return ModelSheetItem(
-      title: "Leave",
+      title: VTrans.of(context).labels.leave,
       id: VRoomItemClickRes.leave,
       iconData: const Icon(
         Icons.exit_to_app,
@@ -82,22 +88,18 @@ class RoomItemController {
     );
   }
 
-  RoomItemController(
-    this._provider,
-  );
-
-  Future openForSingle(VRoom room, BuildContext context) async {
+  Future openForSingle(VRoom room) async {
     final l = <ModelSheetItem>[
-      if (room.isMuted) _unMuteItem(context) else _muteItem(context),
-      _deleteItem(context),
-      _reportItem(context),
+      if (room.isMuted) _unMuteItem() else _muteItem(),
+      _deleteItem(),
+      _reportItem(),
     ];
 
     if (room.isThereBlock && room.isMeBlocker) {
-      l.add(_unBlockItem(context));
+      l.add(_unBlockItem());
     }
     if (!room.isThereBlock) {
-      l.add(_blockItem(context));
+      l.add(_blockItem());
     }
     final res = await VAppAlert.showModalSheet(
       content: l,
@@ -105,140 +107,181 @@ class RoomItemController {
     );
 
     if (res == null) return;
-    _process(res.id, room, context);
+    _process(
+      res.id,
+      room,
+    );
   }
 
-  Future _process(Object res, VRoom room, BuildContext context) async {
+  Future _process(Object res, VRoom room) async {
     switch (res as VRoomItemClickRes) {
       case VRoomItemClickRes.mute:
-        await _mute(context, room);
+        await _mute(room);
         break;
       case VRoomItemClickRes.unMute:
-        await _unMute(context, room);
+        await _unMute(room);
         break;
       case VRoomItemClickRes.delete:
-        await _delete(context, room);
+        await _delete(room);
         break;
       case VRoomItemClickRes.block:
-        await _block(context, room);
+        await _block(room);
         break;
       case VRoomItemClickRes.unBlock:
-        await _unBlock(context, room);
+        await _unBlock(room);
         break;
       case VRoomItemClickRes.report:
-        //todo support
+        if (VChatController.I.vMessagePageConfig.onReportUserPress != null) {
+          unawaited(VChatController.I.vMessagePageConfig.onReportUserPress!(
+            context,
+            room.peerIdentifier ?? room.id,
+            room.roomType,
+          ));
+        }
         break;
       case VRoomItemClickRes.leave:
-        _groupLeave(context, room);
+        _groupLeave(room);
         break;
     }
   }
 
-  Future openForGroup(VRoom room, BuildContext context) async {
+  Future openForGroup(VRoom room) async {
     final res = await VAppAlert.showModalSheet(
       content: [
-        if (room.isMuted) _unMuteItem(context) else _muteItem(context),
-        _leaveItem(context),
-        _deleteItem(context),
+        if (room.isMuted) _unMuteItem() else _muteItem(),
+        _leaveItem(),
+        _deleteItem(),
       ],
       context: context,
     );
     if (res == null) return;
-    _process(res.id, room, context);
+    _process(
+      res.id,
+      room,
+    );
   }
 
-  Future openForBroadcast(VRoom room, BuildContext context) async {
+  Future openForBroadcast(
+    VRoom room,
+  ) async {
     final res = await VAppAlert.showModalSheet(
       content: [
-        _deleteItem(context),
+        _deleteItem(),
       ],
       context: context,
     );
     if (res == null) return;
-    _process(res.id, room, context);
+    _process(res.id, room);
   }
 
-  Future _mute(BuildContext context, VRoom room) async {
+  Future _mute(VRoom room) async {
     await vSafeApiCall(
       request: () async {
         await _provider.mute(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showOverlaySupport(title: "Chat muted");
+        //VAppAlert.showOverlaySupport(title: "Chat muted");
       },
     );
   }
 
-  Future _unMute(BuildContext context, VRoom room) async {
+  Future _unMute(VRoom room) async {
     await vSafeApiCall(
       request: () async {
         await _provider.unMute(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showOverlaySupport(title: "Chat un muted");
+        //VAppAlert.showOverlaySupport(title: "Chat un muted");
       },
     );
   }
 
-  Future _delete(BuildContext context, VRoom room) async {
+  Future _delete(VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: "Delete you copy?",
-      content: "Are you sure to permit your copy this action cant undo",
+      title: VTrans.of(context).labels.deleteYouCopy,
+      content: VTrans.of(context)
+          .labels
+          .areYouSureToPermitYourCopyThisActionCantUndo,
     );
     if (res != 1) return;
     await vSafeApiCall(
       request: () async {
         await _provider.deleteRoom(room.id);
       },
-      onSuccess: (response) {
-        VAppAlert.showOverlaySupport(title: "Chat deleted");
-      },
+      onSuccess: (response) {},
     );
   }
 
-  Future _block(BuildContext context, VRoom room) async {
+  Future _block(VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: "Block this user?",
-      content: "Are you sure to block this user cant send message to you",
+      title: VTrans.of(context).labels.blockThisUser,
+      content: VTrans.of(context)
+          .labels
+          .areYouSureToBlockThisUserCantSendMessageToYou,
     );
     if (res != 1) return;
+
+    if (VChatController.I.vMessagePageConfig.onUserBlockAnother != null) {
+      VChatController.I.vMessagePageConfig.onUserBlockAnother!(
+        context,
+        room.peerIdentifier!,
+      );
+    }
     await vSafeApiCall(
       request: () async {
         await _provider.block(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showOverlaySupport(title: "User blocked");
+        VAppAlert.showOverlaySupport(
+            title: VTrans.of(context).labels.userBlocked);
       },
     );
   }
 
-  Future _unBlock(BuildContext context, VRoom room) async {
+  Future _unBlock(VRoom room) async {
+    if (VChatController.I.vMessagePageConfig.onUserUnBlockAnother != null) {
+      VChatController.I.vMessagePageConfig.onUserUnBlockAnother!(
+        context,
+        room.peerIdentifier!,
+      );
+    }
+
     await vSafeApiCall(
       request: () async {
         await _provider.block(room.id);
       },
       onSuccess: (response) {
-        VAppAlert.showOverlaySupport(title: "User un blocked");
+        VAppAlert.showOverlaySupport(
+            title: VTrans.of(context).labels.userUnBlocked);
       },
     );
   }
 
-  Future _groupLeave(BuildContext context, VRoom room) async {
+  Future _groupLeave(VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: "Are you sure to leave?",
-      content: "Leave group and delete your message copy?",
+      title: VTrans.of(context).labels.areYouSureToLeave,
+      content: VTrans.of(context).labels.leaveGroupAndDeleteYourMessageCopy,
     );
     if (res != 1) return;
     await vSafeApiCall(
       request: () async {
         await _provider.groupLeave(room.id);
       },
-      onSuccess: (response) {
-        VAppAlert.showOverlaySupport(title: "Group left");
-      },
+      onSuccess: (response) {},
     );
+  }
+
+  Future openForOrder(VRoom room) async {
+    final res = await VAppAlert.showModalSheet(
+      content: [
+        _deleteItem(),
+      ],
+      context: context,
+    );
+    if (res == null) return;
+    _process(res.id, room);
   }
 }
