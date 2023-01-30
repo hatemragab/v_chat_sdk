@@ -1,8 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:badges/badges.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
-import '../../shared/colored_circle_container.dart';
 
 class ChatUnReadWidget extends StatelessWidget {
   final int unReadCount;

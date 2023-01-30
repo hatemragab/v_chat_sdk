@@ -3,8 +3,6 @@ import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../models/v_message/v_message_status_model.dart';
-
 class VChannelApiService {
   static ChannelApi? _channelApiService;
 

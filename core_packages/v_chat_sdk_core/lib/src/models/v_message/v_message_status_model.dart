@@ -41,9 +41,9 @@ class VMessageStatusModel {
     VIdentifierUser? identifierUser,
   }) {
     return VMessageStatusModel(
-      deliveredAt: dAt ?? this.deliveredAt,
-      seenAt: sAt ?? this.seenAt,
-      sendAt: cAt ?? this.sendAt,
+      deliveredAt: dAt ?? deliveredAt,
+      seenAt: sAt ?? seenAt,
+      sendAt: cAt ?? sendAt,
       identifierUser: identifierUser ?? this.identifierUser,
     );
   }

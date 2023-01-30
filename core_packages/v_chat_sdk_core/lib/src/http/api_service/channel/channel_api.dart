@@ -154,7 +154,7 @@ abstract class ChannelApi extends ChopperService {
   );
 
   @Patch(
-      path: "/{roomId}/group/members/{identifier}/{role}", optionalBody: true)
+      path: "/{roomId}/group/members/{identifier}/{role}", optionalBody: true,)
   Future<Response> changeUserGroupRole(
     @Path('roomId') String roomId,
     @Path('identifier') String peerIdentifier,
