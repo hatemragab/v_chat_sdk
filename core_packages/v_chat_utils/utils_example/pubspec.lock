@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: adaptive_dialog
-      sha256: "9b0c03cb8cbd28f242b40f7bebc18dfeb6d2c5baa9661d0ae071dd6ea96e7bb4"
+      sha256: "5dea5b051a217d127b57587686990131488f964a9d2ea1142401f101e18795df"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.1+1"
+    version: "1.8.2"
   animations:
     dependency: transitive
     description:
@@ -1040,7 +1040,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   vector_math:
     dependency: transitive
     description:

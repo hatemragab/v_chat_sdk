@@ -16,11 +16,20 @@ import 'firebase_options.dart';
 import 'generated/l10n.dart';
 
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+class EnvironmentConfig {
+  static const MAPS = String.fromEnvironment(
+      'maps',
+      defaultValue: 'awesomeApp'
+  );
+
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  print("maps =>>>>>>" +EnvironmentConfig.MAPS);
   FirebaseMessaging.onBackgroundMessage(vFirebaseMessagingBackgroundHandler);
   await VChatController.init(
     navigatorKey: _navigatorKey,

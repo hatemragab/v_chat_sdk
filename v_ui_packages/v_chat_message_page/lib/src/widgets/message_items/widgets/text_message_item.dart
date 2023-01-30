@@ -24,7 +24,6 @@ class TextMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return VTextParserWidget(
       text: message,
-      maxLines: 5,
       textStyle: textStyle,
       enableTabs: true,
       onEmailPress: onEmailPress,

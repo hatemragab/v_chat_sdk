@@ -270,7 +270,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                           await _recordStateKey.currentState!.stopRecord(),
                         );
                         _changeTypingType(VRoomTypingEnum.stop);
-                      } else if (_text.isNotEmpty) {
+                      } else if (_text.isNotEmpty && _text.trim().isNotEmpty) {
                         widget.onSubmitText(_textEditingController.markupText);
                         _text = "";
                         _textEditingController.clear();

@@ -58,7 +58,7 @@ class VMessageItem extends StatelessWidget {
 
     if (message.messageType.isCenter) {
       return CenterItemHolder(
-        child: message.getMessageText(context).text.italic.medium,
+        child: message.getMessageTextInfoTranslated(context).text.italic.medium,
       );
     }
     return InkWell(

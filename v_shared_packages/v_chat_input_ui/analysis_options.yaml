@@ -18,6 +18,7 @@ linter:
 
   # Make constructors the first thing in every class
   # sort_constructors_first: true
+    use_build_context_synchronously: false
 
   # Choose wisely, but you don't have to
   # prefer_double_quotes: true

@@ -21,6 +21,12 @@ abstract class VRoomEvents extends VAppEvent {
   List<Object?> get props => [roomId];
 }
 
+class VOnGroupKicked extends VRoomEvents {
+  const VOnGroupKicked({
+    required super.roomId,
+  });
+}
+
 class VInsertRoomEvent extends VRoomEvents {
   final VRoom room;
 

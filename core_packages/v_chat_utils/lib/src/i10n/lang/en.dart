@@ -183,4 +183,7 @@ class EnLocalizations extends VChatLocalizationLabels {
 
   @override
   String get typing => "Typing";
+
+  @override
+  String get members => "Members";
 }

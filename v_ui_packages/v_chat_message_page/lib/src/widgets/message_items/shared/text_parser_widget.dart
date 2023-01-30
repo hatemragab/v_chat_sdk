@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class VTextParserWidget extends StatelessWidget {
+class VTextParserWidget extends StatefulWidget {
   final Function(String email)? onEmailPress;
   final Function(String userId)? onMentionPress;
   final Function(String phone)? onPhonePress;
   final Function(String link)? onLinkPress;
   final bool enableTabs;
   final String text;
-  final int? maxLines;
+  final bool isOneLine;
   final TextStyle? textStyle;
   final TextStyle? emailTextStyle;
   final TextStyle? phoneTextStyle;
@@ -22,7 +22,7 @@ class VTextParserWidget extends StatelessWidget {
     this.onPhonePress,
     this.onLinkPress,
     this.enableTabs = false,
-    this.maxLines,
+    this.isOneLine = false,
     required this.text,
     this.textStyle,
     this.emailTextStyle,
@@ -31,16 +31,79 @@ class VTextParserWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<VTextParserWidget> createState() => _VTextParserWidgetState();
+}
+
+class _VTextParserWidgetState extends State<VTextParserWidget> {
+  late String firstHalf;
+  late String secondHalf;
+  int maxWords = 300;
+  bool isShowMoreEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.text.length > maxWords) {
+      firstHalf = widget.text.substring(0, maxWords);
+      secondHalf = widget.text.substring(maxWords, widget.text.length);
+      isShowMoreEnabled = true;
+    } else {
+      firstHalf = widget.text;
+      secondHalf = "";
+      isShowMoreEnabled = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     const blueTheme = TextStyle(color: Colors.blue);
+    if (widget.isOneLine) {
+      return _renderText(
+        blueTheme: blueTheme,
+        maxLine: 1,
+        text: firstHalf,
+      );
+    }
+    if (secondHalf.isEmpty) {
+      return _renderText(
+        blueTheme: blueTheme,
+        text: firstHalf,
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        _renderText(
+          blueTheme: blueTheme,
+          text: isShowMoreEnabled ? "$firstHalf ..." : widget.text,
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              isShowMoreEnabled = !isShowMoreEnabled;
+            });
+          },
+          child: isShowMoreEnabled
+              ? const Icon(Icons.arrow_circle_down, )
+              : const Icon(Icons.arrow_circle_up, ),
+        )
+      ],
+    );
+  }
+
+  Widget _renderText({
+    required TextStyle blueTheme,
+    required String text,
+    int? maxLine,
+  }) {
     return IgnorePointer(
-      ignoring: !enableTabs,
+      ignoring: !widget.enableTabs,
       child: AutoDirection(
         text: text,
         child: ParsedText(
           text: text,
-          maxLines: maxLines,
-          style: textStyle,
+          maxLines: maxLine,
+          style: widget.textStyle,
           parse: [
             MatchText(
               pattern: r"\[(@[^:]+):([^\]]+)\]",
@@ -57,27 +120,27 @@ class VTextParserWidget extends StatelessWidget {
               onTap: (url) {
                 final match = VStringUtils.vMentionRegExp.firstMatch(url)!;
                 final userId = match.group(2);
-                if (onMentionPress != null && userId != null) {
-                  onMentionPress!(userId);
+                if (widget.onMentionPress != null && userId != null) {
+                  widget.onMentionPress!(userId);
                 }
               },
             ),
-            if (onEmailPress != null)
+            if (widget.onEmailPress != null)
               MatchText(
                 type: ParsedType.EMAIL,
                 style: blueTheme,
                 onTap: (url) {
-                  onEmailPress!(url);
+                  widget.onEmailPress!(url);
                 },
               ),
-            if (onPhonePress != null)
+            if (widget.onPhonePress != null)
               MatchText(
                   type: ParsedType.PHONE,
                   style: blueTheme,
                   onTap: (url) {
-                    onPhonePress!(url);
+                    widget.onPhonePress!(url);
                   }),
-            if (onLinkPress != null)
+            if (widget.onLinkPress != null)
               MatchText(
                 type: ParsedType.URL,
                 style: blueTheme,
@@ -86,7 +149,7 @@ class VTextParserWidget extends StatelessWidget {
                   if (!fullUrl.contains("https") || !fullUrl.contains("http")) {
                     fullUrl = "https://$url";
                   }
-                  onLinkPress!(fullUrl);
+                  widget.onLinkPress!(fullUrl);
                 },
               ),
           ],

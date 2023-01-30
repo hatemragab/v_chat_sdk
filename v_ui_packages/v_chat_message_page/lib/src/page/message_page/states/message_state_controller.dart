@@ -57,6 +57,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   }
 
   void _updateCacheState(List<VBaseMessage> apiMessages) {
+    if(apiMessages.isEmpty)return;
     final stateMessages = value;
     final newList = <VBaseMessage>[];
     newList.addAll(apiMessages);
@@ -99,8 +100,6 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     closeSocketStatusStream();
   }
 
-  // VBaseMessage? _messageByLocalId(String localId) =>
-  //     value.firstWhereOrNull((e) => e.localId == localId);
 
   int _indexByLocalId(String localId) =>
       value.indexWhere((e) => e.localId == localId);

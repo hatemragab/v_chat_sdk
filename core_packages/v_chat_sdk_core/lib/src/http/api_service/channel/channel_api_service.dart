@@ -3,6 +3,8 @@ import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../models/v_message/v_message_status_model.dart';
+
 class VChannelApiService {
   static ChannelApi? _channelApiService;
 
@@ -170,6 +172,12 @@ class VChannelApiService {
     return extractDataFromResponse(res)['isMeOut'] as bool;
   }
 
+  Future<VMyGroupInfo> getMyGroupInfo(String roomId) async {
+    final res = await _channelApiService!.getMyGroupInfo(roomId);
+    throwIfNotSuccess(res);
+    return VMyGroupInfo.fromMap(extractDataFromResponse(res));
+  }
+
   Future<bool> leaveGroup(String roomId) async {
     final res = await _channelApiService!.leaveGroup(roomId);
     throwIfNotSuccess(res);
@@ -185,6 +193,35 @@ class VChannelApiService {
     });
     throwIfNotSuccess(res);
     return true;
+  }
+
+  Future<bool> updateGroupExtraData(
+    String roomId,
+    Map<String, dynamic> data,
+  ) async {
+    final res = await _channelApiService!.updateGroupExtraData(roomId, data);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<List<VMessageStatusModel>> getMessageStatusForGroup(
+    String roomId,
+    String messageId,
+    Map<String, Object> pagination, {
+    required bool isSeen,
+  }) async {
+    final res = await _channelApiService!.getMessageStatusForGroup(
+      roomId,
+      messageId,
+      pagination,
+      isSeen ? "seen" : "deliver",
+    );
+
+    throwIfNotSuccess(res);
+    final resList = extractDataFromResponse(res)['docs'] as List;
+    return resList
+        .map((e) => VMessageStatusModel.fromMap(e as Map<String, dynamic>))
+        .toList();
   }
 
   Future<String> updateGroupImage(
@@ -230,8 +267,8 @@ class VChannelApiService {
     String roomId,
     List<String> ids,
   ) async {
-    final res =
-        await _channelApiService!.addParticipantsToGroup(roomId, {"ids": ids});
+    final res = await _channelApiService!
+        .addParticipantsToGroup(roomId, {"identifiers": ids});
     throwIfNotSuccess(res);
     return true;
   }

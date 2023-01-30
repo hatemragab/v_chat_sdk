@@ -21,22 +21,23 @@ class RoomItemMsg extends StatelessWidget {
       return VTrans.of(context).labels.messageHasBeenDeleted.text.italic;
     }
     if (message.isDeleted) {
-      return message.getMessageText(context).text.lineThrough;
+      return message.getMessageTextInfoTranslated(context).text.lineThrough;
     }
     if (isBold) {
       return VTextParserWidget(
-        text: message.getMessageText(context),
+        text: message.getMessageTextInfoTranslated(context),
         enableTabs: false,
         onMentionPress: (userId) {},
-        maxLines: 1,
+
+        isOneLine: true,
         textStyle: theme.unSeenLastMessageTextStyle,
       );
     }
     return VTextParserWidget(
-      text: message.getMessageText(context),
+      text: message.getMessageTextInfoTranslated(context),
       enableTabs: false,
       onMentionPress: (userId) {},
-      maxLines: 1,
+      isOneLine: true,
       textStyle: theme.seenLastMessageTextStyle,
     );
   }

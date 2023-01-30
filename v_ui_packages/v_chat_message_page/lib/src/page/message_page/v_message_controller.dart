@@ -75,6 +75,9 @@ class VMessageController {
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
     _removeAllNotifications();
+    if (vRoom.roomType.isGroup) {
+      _setMyGroupInfo(vRoom.id);
+    }
   }
 
   Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
@@ -278,5 +281,19 @@ class VMessageController {
 
   void _removeAllNotifications() async {
     await VChatController.I.vChatConfig.cleanNotifications();
+  }
+
+  Future _setMyGroupInfo(String id) async {
+    vSafeApiCall<VMyGroupInfo>(
+      request: () async {
+        return VChatController.I.nativeApi.remote.room.getMyGroupInfo(id);
+      },
+      onSuccess: (response) {
+        if (response.isMeOut) {
+          inputStateController.closeChat();
+        }
+        appBarStateController.setMemberCount(response.membersCount);
+      },
+    );
   }
 }

@@ -5,7 +5,7 @@ import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../pages/room_page/room_provider.dart';
+import 'room_provider.dart';
 
 class RoomItemController {
   final RoomProvider _provider;
@@ -268,9 +268,10 @@ class RoomItemController {
     if (res != 1) return;
     await vSafeApiCall(
       request: () async {
+        await _provider.deleteRoom(room.id);
         await _provider.groupLeave(room.id);
       },
-      onSuccess: (response) {},
+      onSuccess: (response) async {},
     );
   }
 

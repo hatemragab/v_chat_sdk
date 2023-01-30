@@ -264,6 +264,41 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
+  Future<Response<dynamic>> getMessageStatusForGroup(
+    String roomId,
+    String mId,
+    Map<String, Object> query,
+    String type,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/${roomId}/group/message/${mId}/status/${type}');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateGroupExtraData(
+    String roomId,
+    Map<String, dynamic> body,
+  ) {
+    final Uri $url = Uri.parse('channel/${roomId}/group/extra-data');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> updateGroupImage(
     String roomId,
     MultipartFile file,
@@ -342,11 +377,11 @@ class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> changeUserGroupRole(
     String roomId,
-    String peerId,
+    String peerIdentifier,
     String role,
   ) {
     final Uri $url =
-        Uri.parse('channel/${roomId}/group/members/${peerId}/${role}');
+        Uri.parse('channel/${roomId}/group/members/${peerIdentifier}/${role}');
     final Request $request = Request(
       'PATCH',
       $url,
@@ -358,9 +393,10 @@ class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> kickGroupUser(
     String roomId,
-    String peerId,
+    String peerIdentifier,
   ) {
-    final Uri $url = Uri.parse('channel/${roomId}/group/members/${peerId}');
+    final Uri $url =
+        Uri.parse('channel/${roomId}/group/members/${peerIdentifier}');
     final Request $request = Request(
       'DELETE',
       $url,

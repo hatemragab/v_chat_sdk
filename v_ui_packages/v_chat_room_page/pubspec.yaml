@@ -23,6 +23,8 @@ dependencies:
   share_plus: ^6.0.1
   loadmore: ^2.0.1
   meta: ^1.8.0
+  auto_size_text: ^3.0.0
+  badges: ^3.0.2
 
 
 dev_dependencies:

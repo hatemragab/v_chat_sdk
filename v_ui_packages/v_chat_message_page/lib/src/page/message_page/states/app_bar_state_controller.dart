@@ -13,9 +13,7 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
   AppBarStateController(
     this._vRoom,
     this._messageProvider,
-  ) : super(MessageAppBarStateModel.fromVRoom(
-          _vRoom,
-        )) {
+  ) : super(MessageAppBarStateModel.fromVRoom(_vRoom)) {
     initSocketIntervalStream(
       VChatController.I.nativeApi.streams.socketIntervalStream,
     );
@@ -26,7 +24,10 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
     value.roomTitle = title;
     notifyListeners();
   }
-
+  void setMemberCount(int count) {
+      value.memberCount = count;
+      notifyListeners();
+  }
   void updateOnline() {
     if (!_vRoom.isThereBlock) {
       value.isOnline = true;

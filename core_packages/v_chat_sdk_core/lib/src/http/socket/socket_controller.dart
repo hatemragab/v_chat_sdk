@@ -12,6 +12,14 @@ class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
   late final SocketService _socketService;
   final Completer<void> socketCompleter = Completer<void>();
+
+  Socket get _socket => socketIoClient.socket;
+  static final SocketController instance = SocketController._();
+
+  bool get isSocketConnected => socketIoClient.socket.connected;
+  final socketIoClient = SocketIoClient();
+  final vChatEvents = VEventBusSingleton.vEventBus;
+
   SocketController._() {
     _socketService = SocketService(socketIoClient);
     _initSocketEvents();
@@ -29,17 +37,10 @@ class SocketController implements ISocketIoClient {
       vChatEvents.fire(const VSocketStatusEvent(isConnected: false));
     });
     socketIoClient.socket.onDisconnect((data) {
+      _log.finer("Socket onDisconnect successfully");
       vChatEvents.fire(const VSocketStatusEvent(isConnected: false));
     });
   }
-
-  Socket get _socket => socketIoClient.socket;
-
-  static final SocketController instance = SocketController._();
-
-  bool get isSocketConnected => socketIoClient.socket.connected;
-  final socketIoClient = SocketIoClient();
-  final vChatEvents = VEventBusSingleton.vEventBus;
 
   @override
   void connect() {
@@ -100,6 +101,11 @@ class SocketController implements ISocketIoClient {
       final data = jsonDecode(json.toString()) as Map<String, dynamic>;
       final ban = OnBanUserChatModel.fromMap(data);
       await _socketService.handleOnRoomBan(ban);
+    });
+
+    _socket.on(SocketEvents.v1OnKickGroupMember.name, (dynamic json) async {
+      final data = jsonDecode(json.toString()) as Map<String, dynamic>;
+      await _socketService.handleOnGroupKick(data);
     });
 
     _socket.on(

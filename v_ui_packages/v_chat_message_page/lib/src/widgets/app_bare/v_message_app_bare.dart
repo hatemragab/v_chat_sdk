@@ -118,6 +118,8 @@ class VMessageAppBare extends StatelessWidget {
           ),
         );
       }
+    }else if(state.roomType.isGroup&& state.memberCount!=null){
+      return Text("${VTrans.of(context).labels.members} ${state.memberCount}");
     }
     return null;
   }

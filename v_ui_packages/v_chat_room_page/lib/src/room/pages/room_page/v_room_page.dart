@@ -7,7 +7,7 @@ import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state_cont
 import 'package:v_chat_room_page/src/room/pages/room_page/states/room_stream_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-import '../../widgets/room_item/room_item_controller.dart';
+import 'room_item_controller.dart';
 import 'package:loadmore/loadmore.dart';
 import '../../../../v_chat_room_page.dart';
 

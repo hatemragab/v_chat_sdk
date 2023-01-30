@@ -218,7 +218,7 @@ abstract class VBaseMessage {
 
   bool get isContainReply => replyTo != null;
 
-  String getMessageText(BuildContext context) {
+  String getMessageTextInfoTranslated(BuildContext context) {
     return VMessageConstants.getMessageBody(this, context);
   }
 

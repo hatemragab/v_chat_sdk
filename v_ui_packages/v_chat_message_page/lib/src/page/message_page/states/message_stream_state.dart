@@ -78,6 +78,11 @@ class MessageStreamState with VMessageStream, VRoomStream {
   }
 
   @override
+  void onGroupKicked(VOnGroupKicked event) {
+    return inputStateController.closeChat();
+  }
+
+  @override
   void onDeliverAllMgs(VUpdateMessageDeliverEvent event) {
     return messageState.deliverAll(event.model);
   }

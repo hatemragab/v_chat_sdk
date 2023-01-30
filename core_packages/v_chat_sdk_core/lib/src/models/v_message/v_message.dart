@@ -14,5 +14,6 @@ export './info_message/msg_info_att.dart';
 export './location_message/location_message.dart';
 export './message_upload_model.dart';
 export './text_message/text_message.dart';
+export './v_message_status_model.dart';
 export './video_message/video_message.dart';
 export './voice_message/voice_message.dart';

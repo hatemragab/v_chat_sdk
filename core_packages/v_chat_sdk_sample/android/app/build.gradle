@@ -46,10 +46,8 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.vchatsdk.app.v2"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+        manifestPlaceholders["API_KEY"] = "value0"
         minSdkVersion 21
         targetSdkVersion 33
         multiDexEnabled true

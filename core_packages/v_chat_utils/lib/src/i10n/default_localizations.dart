@@ -34,6 +34,7 @@ abstract class VChatLocalizationLabels {
   String get fileHasBeenSavedTo;
   String get media;
   String get online;
+  String get members;
   String get youDontHaveAccess;
   String get replyToYourSelf;
   String get forwarded;

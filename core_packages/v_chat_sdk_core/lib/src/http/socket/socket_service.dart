@@ -106,4 +106,19 @@ class SocketService {
       ),
     );
   }
+
+  Future handleOnGroupKick(
+    Map<String, dynamic> data,
+  ) async {
+    final roomId = data['roomId'] as String;
+    final userId = data['userId'] as String;
+    if (VAppConstants.myProfile.baseUser.vChatId == userId) {
+      //push block
+      VEventBusSingleton.vEventBus.fire(
+        VOnGroupKicked(
+          roomId: roomId,
+        ),
+      );
+    }
+  }
 }

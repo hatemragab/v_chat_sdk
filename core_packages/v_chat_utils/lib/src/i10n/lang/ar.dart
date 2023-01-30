@@ -72,7 +72,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get share => "شارك";
 
   @override
-  String get forward => "إلى الأمام";
+  String get forward => "اعاده توجيه";
 
   @override
   String get reply => "رد";
@@ -90,7 +90,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get fileHasBeenSavedTo => "تم حفظ الملف إلى";
 
   @override
-  String get media => "وسائل الإعلام";
+  String get media => "المعرض";
 
   @override
   String get online => "متصل";
@@ -126,7 +126,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get unBlock => "كتلة";
 
   @override
-  String get block => "منع";
+  String get block => "حظر";
 
   @override
   String get leave => "غادر";
@@ -138,14 +138,14 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get chatUnMuted => "الدردشة غير صامتة";
 
   @override
-  String get deleteYouCopy => "حذفك نسخ؟";
+  String get deleteYouCopy => "حذفك نسختك؟";
 
   @override
   String get areYouSureToPermitYourCopyThisActionCantUndo =>
       "هل أنت متأكد من السماح بنسخك هذا الإجراء غير قادر على التراجع";
 
   @override
-  String get blockThisUser => "منع هذا المستخدم؟";
+  String get blockThisUser => "حظر هذا المستخدم؟";
 
   @override
   String get areYouSureToBlockThisUserCantSendMessageToYou =>
@@ -155,7 +155,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get userBlocked => "المستخدم المحظور";
 
   @override
-  String get userUnBlocked => "المستخدم UN المحظور";
+  String get userUnBlocked => "المستخدم المحظور";
 
   @override
   String get areYouSureToLeave => "هل أنت متأكد من المغادرة؟";
@@ -183,5 +183,8 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get recording => "يسجل صوتي";
 
   @override
-  String get typing => "يكتب";
+  String get typing => "يكتب...";
+
+  @override
+  String get members => "الاعضاء";
 }

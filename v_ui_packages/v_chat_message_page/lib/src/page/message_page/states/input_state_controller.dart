@@ -13,9 +13,9 @@ class InputStateController extends ValueNotifier<MessageInputModel> {
     this._vRoom,
     this._messageProvider,
   ) : super(MessageInputModel(isCloseInput: _vRoom.blockerId != null)) {
-    if (_vRoom.roomType.isGroup) {
-      _checkStatus(_vRoom.id);
-    }
+    // if (_vRoom.roomType.isGroup) {
+    //   _checkStatus(_vRoom.id);
+    // }
   }
 
   void dismissReply() {
@@ -42,18 +42,18 @@ class InputStateController extends ValueNotifier<MessageInputModel> {
     dispose();
   }
 
-  void _checkStatus(String roomId) async {
-    await vSafeApiCall<bool>(
-      request: () async {
-        return await _messageProvider.checkGroupStatus(roomId);
-      },
-      onSuccess: (isMeOut) {
-        if (isMeOut) {
-          closeChat();
-        }
-      },
-    );
-  }
+  // void _checkStatus(String roomId) async {
+  //   await vSafeApiCall<bool>(
+  //     request: () async {
+  //       return await _messageProvider.checkGroupStatus(roomId);
+  //     },
+  //     onSuccess: (isMeOut) {
+  //       if (isMeOut) {
+  //         closeChat();
+  //       }
+  //     },
+  //   );
+  // }
 
   void hide() {
     value.isHidden = true;

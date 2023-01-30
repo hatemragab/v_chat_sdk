@@ -11,6 +11,7 @@ class MessageAppBarStateModel {
   VRoomType roomType;
   bool isOnline;
   bool isSearching;
+  int? memberCount;
 
   MessageAppBarStateModel._({
     required this.roomTitle,

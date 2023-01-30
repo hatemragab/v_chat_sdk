@@ -84,29 +84,6 @@ class VMessageApiService {
     return MessageFactory.createBaseMessage(extractDataFromResponse(res));
   }
 
-  //todo fix
-  Future<List<dynamic>> getMessageStatus(
-    String roomId,
-    String messageId,
-    Map<String, Object> pagination, {
-    required bool isSeen,
-  }) async {
-    final Response res = await _messageApi!.getMessageStatus(
-      roomId,
-      messageId,
-      pagination,
-      isSeen ? "seen" : "deliver",
-    );
-
-    throwIfNotSuccess(res);
-    // final resList = (res.body as Map<String, dynamic>)['data'] as List;
-    // return resList
-    //     .map((e) => MessageStatusModel.fromMap(e as Map<String, dynamic>))
-    //     .toList();
-
-    return [];
-  }
-
   static VMessageApiService init({
     Uri? baseUrl,
     String? accessToken,

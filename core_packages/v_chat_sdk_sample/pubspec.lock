@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: adaptive_dialog
-      sha256: "9b0c03cb8cbd28f242b40f7bebc18dfeb6d2c5baa9661d0ae071dd6ea96e7bb4"
+      sha256: "5dea5b051a217d127b57587686990131488f964a9d2ea1142401f101e18795df"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.1+1"
+    version: "1.8.2"
   animated_login:
     dependency: "direct main"
     description:
@@ -81,6 +81,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  badges:
+    dependency: transitive
+    description:
+      name: badges
+      sha256: "461031a60efbb95276f52107f63d5d45008b5ca1eb7f8ca440cadda9ec2143b0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   bloc:
     dependency: transitive
     description:
@@ -518,6 +534,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  flutter_audio_waveforms:
+    dependency: transitive
+    description:
+      name: flutter_audio_waveforms
+      sha256: b0e5d18c0b4caf56cd3cb245385cdd40294f7a24605d0252394c2c42c8b854ed
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1+7"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -937,10 +961,10 @@ packages:
     dependency: transitive
     description:
       name: logging
-      sha256: c0bbfe94d46aedf9b8b3e695cf3bd48c8e14b35e3b2c639e0aa7755d589ba946
+      sha256: "04094f2eb032cbb06c6f6e8d3607edcfcb0455e2bb6cbc010cb01171dcb64e6d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   macos_ui:
     dependency: transitive
     description:
@@ -1486,18 +1510,18 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "067ab48dbc66bae05e18073a604443baa35957101bd3905b94f65e764c6d0688"
+      sha256: "78324387dc81df14f78df06019175a86a2ee0437624166c382e145d0a7fd9a4f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3"
+    version: "2.2.4+1"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: b2ed22d1d62c944ec0dac5cc687ae99cb3331c3ebe146d726ed24704634b5ccd
+      sha256: bfd6973aaeeb93475bc0d875ac9aefddf7965ef22ce09790eb963992ffc5183f
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2+2"
   sqlite3_flutter_libs:
     dependency: transitive
     description:
@@ -1688,21 +1712,21 @@ packages:
       path: "../../push_providers/v_chat_firebase_fcm"
       relative: true
     source: path
-    version: "0.3.0+2"
+    version: "0.4.0"
   v_chat_input_ui:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_media_editor"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1717,42 +1741,42 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   v_chat_one_signal:
     dependency: "direct main"
     description:
       path: "../../push_providers/v_chat_one_signal"
       relative: true
     source: path
-    version: "0.3.0+2"
+    version: "0.4.0"
   v_chat_room_page:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.3.0+2"
+    version: "0.4.0"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../v_chat_utils"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_voice_player"
       relative: true
     source: path
-    version: "0.3.0"
+    version: "0.4.0"
   vector_math:
     dependency: transitive
     description:

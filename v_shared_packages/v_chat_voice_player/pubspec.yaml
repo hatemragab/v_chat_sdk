@@ -17,6 +17,7 @@ dependencies:
 #  flutter_audio_waveforms: ^1.2.1+7
   just_audio: ^0.9.31
   meta: ^1.8.0
+  flutter_audio_waveforms: ^1.2.1+7
 
 dev_dependencies:
   flutter_test:

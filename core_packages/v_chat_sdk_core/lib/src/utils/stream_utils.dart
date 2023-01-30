@@ -60,6 +60,8 @@ mixin VRoomStream {
 
   void onInsertRoom(VInsertRoomEvent event) {}
 
+  void onGroupKicked(VOnGroupKicked event) {}
+
   void onBlockRoom(VBlockRoomEvent event);
 
   void onRoomOnline(VRoomOnlineEvent event);
@@ -116,6 +118,9 @@ mixin VRoomStream {
         }
         if (event is VRoomOnlineEvent) {
           return onRoomOnline(event);
+        }
+        if (event is VOnGroupKicked) {
+          return onGroupKicked(event);
         }
       },
     );
