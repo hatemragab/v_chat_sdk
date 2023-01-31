@@ -4,7 +4,6 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 typedef VInfoMessageRouteFunction = Function(
   BuildContext context,
-  VRoom room,
   VBaseMessage baseMessage,
 );
 typedef VMediaViewerFunction = Function(
@@ -34,10 +33,22 @@ class VRoomNavigator {
 }
 
 class VMessageNavigator {
-  final VInfoMessageRouteFunction toMessageInfo;
+  ///message info
+  final VInfoMessageRouteFunction toSingleChatMessageInfo;
+  final VInfoMessageRouteFunction toGroupChatMessageInfo;
+  final VInfoMessageRouteFunction toBroadcastChatMessageInfo;
+
+  ///media
   final VMediaViewerFunction toImageViewer;
   final VMediaViewerFunction toVideoPlayer;
-  final VToUserProfileFunction? toUserProfile;
+  final Function(BuildContext context, String roomId) toViewChatMedia;
+
+  ///user
+  final VToUserProfileFunction? toUserProfilePage;
+
+  /// chat settings
+  final VToUserProfileFunction? toSingleSettings;
+  final VToChatSettingsFunction? toOrderSettings;
   final VToChatSettingsFunction? toGroupSettings;
   final VToChatSettingsFunction? toBroadcastSettings;
 
@@ -47,11 +58,16 @@ class VMessageNavigator {
   ) toMessagePage;
 
   const VMessageNavigator({
+    required this.toSingleChatMessageInfo,
+    required this.toBroadcastChatMessageInfo,
+    required this.toGroupChatMessageInfo,
     required this.toMessagePage,
-    required this.toMessageInfo,
     required this.toImageViewer,
     required this.toVideoPlayer,
-    this.toUserProfile,
+    this.toUserProfilePage,
+    this.toOrderSettings,
+    required this.toViewChatMedia,
+    this.toSingleSettings,
     this.toBroadcastSettings,
     this.toGroupSettings,
   });

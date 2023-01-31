@@ -307,22 +307,35 @@ class VMessageController {
         VChatController.I.vNavigator.messageNavigator.toGroupSettings;
     final toBroadcastSettings =
         VChatController.I.vNavigator.messageNavigator.toBroadcastSettings;
-    final toUserProfile =
-        VChatController.I.vNavigator.messageNavigator.toUserProfile;
+    final toOrderSettings =
+        VChatController.I.vNavigator.messageNavigator.toOrderSettings;
+    final toSingleSettings =
+        VChatController.I.vNavigator.messageNavigator.toSingleSettings;
     if (roomType.isGroup && toGroupSettings != null) {
       toGroupSettings(
-          context,
-          VToChatSettingsModel(
-            title: vRoom.title,
-            image: vRoom.thumbImage,
-            roomId: roomId,
-          ));
+        context,
+        VToChatSettingsModel(
+          title: vRoom.title,
+          image: vRoom.thumbImage,
+          roomId: roomId,
+        ),
+      );
       return;
-    } else if (roomType.isSingle && toUserProfile != null) {
-      toUserProfile(context, vRoom.peerIdentifier!);
+    } else if (roomType.isSingle && toSingleSettings != null) {
+      toSingleSettings(context, vRoom.peerIdentifier!);
       return;
     } else if (roomType.isBroadcast && toBroadcastSettings != null) {
       toBroadcastSettings(
+        context,
+        VToChatSettingsModel(
+          title: vRoom.title,
+          image: vRoom.thumbImage,
+          roomId: roomId,
+        ),
+      );
+      return;
+    } else if (roomType.isOrder && toOrderSettings != null) {
+      toOrderSettings(
         context,
         VToChatSettingsModel(
           title: vRoom.title,

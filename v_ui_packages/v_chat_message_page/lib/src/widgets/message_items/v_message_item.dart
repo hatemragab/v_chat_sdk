@@ -142,7 +142,7 @@ class VMessageItem extends StatelessWidget {
           },
           onMentionPress: (context, userId) {
             final method =
-                VChatController.I.vNavigator.messageNavigator.toUserProfile;
+                VChatController.I.vNavigator.messageNavigator.toUserProfilePage;
             if (method != null) {
               method(context, userId);
             }

@@ -207,7 +207,7 @@ class VMessageItemController {
             message = VVoiceMessage.buildMessage(
               data: (baseMessage as VVoiceMessage).data,
               roomId: roomId,
-              content:baseMessage.realContent ,
+              content: baseMessage.realContent,
               forwardId: baseMessage.localId,
             );
             break;
@@ -273,11 +273,25 @@ class VMessageItemController {
 
   void _handleInfo(VBaseMessage message, VRoom room) {
     FocusScope.of(context).unfocus();
-    VChatController.I.vNavigator.messageNavigator.toMessageInfo(
-      context,
-      room,
-      message,
-    );
+    if (room.roomType.isSingleOrOrder) {
+      VChatController.I.vNavigator.messageNavigator.toSingleChatMessageInfo(
+        context,
+        message,
+      );
+      return;
+    } else if (room.roomType.isGroup) {
+      VChatController.I.vNavigator.messageNavigator.toGroupChatMessageInfo(
+        context,
+        message,
+      );
+      return;
+    } else if (room.roomType.isBroadcast) {
+      VChatController.I.vNavigator.messageNavigator.toBroadcastChatMessageInfo(
+        context,
+        message,
+      );
+      return;
+    }
   }
 
   void _handleDelete(VBaseMessage message) async {

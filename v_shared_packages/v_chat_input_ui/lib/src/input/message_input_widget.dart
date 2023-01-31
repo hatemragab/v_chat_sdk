@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:place_picker/entities/localization_item.dart';
-import 'package:place_picker/entities/location_result.dart';
-import 'package:place_picker/widgets/place_picker.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' as latlong;
+
 import 'package:v_chat_input_ui/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_record_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_send_btn.dart';
@@ -359,30 +359,59 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
           break;
         case VAttachEnumRes.location:
           if (widget.googleMapsApiKey == null) return;
-          final LocationResult? result = await context.toPage<LocationResult?>(
-            PlacePicker(
-              widget.googleMapsApiKey!,
-              localizationItem:
-                  LocalizationItem(languageCode: widget.googleMapsLangKey),
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlacePicker(
+                apiKey: widget.googleMapsApiKey!,
+                autocompleteLanguage: widget.googleMapsLangKey,
+                onPlacePicked: (result) {
+                  Navigator.of(context).pop(result);
+                },
+                initialPosition: const LatLng(-33.8567844, 151.213108),
+                useCurrentLocation: true,
+                resizeToAvoidBottomInset: false,
+              ),
             ),
-          );
-          if (result != null &&
-              result.latLng != null &&
-              result.latLng != null) {
+          ) as PickResult?;
+          if (result != null && result.geometry != null) {
             final location = VLocationMessageData(
-              latLng: LatLng(
-                result.latLng!.latitude,
-                result.latLng!.longitude,
+              latLng: latlong.LatLng(
+                result.geometry!.location.lat,
+                result.geometry!.location.lng,
               ),
               linkPreviewData: VLinkPreviewData(
-                title: result.name,
+                title: " ",
                 desc: result.formattedAddress,
-                link:
-                    "https://maps.google.com/?q=${result.latLng!.latitude},${result.latLng!.longitude}",
+                link: result.url.toString(),
               ),
             );
             widget.onSubmitLocation(location);
           }
+          // final LocationResult? result = await context.toPage<LocationResult?>(
+          //   PlacePicker(
+          //     widget.googleMapsApiKey!,
+          //     localizationItem:
+          //         LocalizationItem(languageCode: widget.googleMapsLangKey),
+          //   ),
+          // );
+          // if (result != null &&
+          //     result.latLng != null &&
+          //     result.latLng != null) {
+          //   final location = VLocationMessageData(
+          //     latLng: LatLng(
+          //       result.latLng!.latitude,
+          //       result.latLng!.longitude,
+          //     ),
+          //     linkPreviewData: VLinkPreviewData(
+          //       title: result.name,
+          //       desc: result.formattedAddress,
+          //       link:
+          //           "https://maps.google.com/?q=${result.latLng!.latitude},${result.latLng!.longitude}",
+          //     ),
+          //   );
+          //   widget.onSubmitLocation(location);
+          // }
           break;
       }
     }

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import 'message_status_controller.dart';
+import 'message_group_status_controller.dart';
 
-class VMessageStatusPage extends StatefulWidget {
+class VMessageGroupStatusPage extends StatefulWidget {
   final VBaseMessage message;
-  final VRoom room;
 
-  const VMessageStatusPage({
+
+  const VMessageGroupStatusPage({
     Key? key,
     required this.message,
-    required this.room,
+
   }) : super(key: key);
 
   @override
-  State<VMessageStatusPage> createState() => _VMessageStatusPageState();
+  State<VMessageGroupStatusPage> createState() => _VMessageGroupStatusPageState();
 }
 
-class _VMessageStatusPageState extends State<VMessageStatusPage> {
-  late final MessageStatusController controller;
+class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
+  late final MessageGroupStatusController controller;
 
   @override
   void initState() {
-    controller = MessageStatusController();
+    controller = MessageGroupStatusController();
     super.initState();
   }
 
@@ -30,7 +30,7 @@ class _VMessageStatusPageState extends State<VMessageStatusPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Message info"),
+        title: const Text("Message info Group"),
       ),
     );
   }

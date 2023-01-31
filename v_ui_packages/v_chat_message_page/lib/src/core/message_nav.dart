@@ -1,15 +1,21 @@
+import 'package:v_chat_message_page/src/page/message_status/group/message_group_status_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_message_page.dart';
-import '../page/message_status/message_status_page.dart';
+import '../page/chat_media/chat_media_page.dart';
+import '../page/message_status/broadcast/message_broadcast_status_page.dart';
+import '../page/message_status/single/message_single_status_page.dart';
 
 final vDefaultMessageNavigator = VMessageNavigator(
+  toViewChatMedia: (context, roomId) => context.toPage(ChatMediaPage(
+    roomId: roomId,
+  )),
   toMessagePage: (context, vRoom) {
-    context.toPage(VMessagePage(vRoom: vRoom));
+    return context.toPage(VMessagePage(vRoom: vRoom));
   },
   toVideoPlayer: (context, source) {
-    context.toPage(
+    return context.toPage(
       VVideoPlayer(
         platformFileSource: source,
         appName: VAppConstants.appName,
@@ -17,18 +23,21 @@ final vDefaultMessageNavigator = VMessageNavigator(
     );
   },
   toImageViewer: (context, source) {
-    context.toPage(
+    return context.toPage(
       VImageViewer(
         platformFileSource: source,
         appName: VAppConstants.appName,
       ),
     );
   },
-  toMessageInfo: (context, room, baseMessage) {
-    context.toPage(VMessageStatusPage(
-      message: baseMessage,
-      room: room,
-    ));
-  },
-
+  toGroupChatMessageInfo: (context, message) =>
+      context.toPage(VMessageGroupStatusPage(message: message)),
+  toBroadcastChatMessageInfo: (context, message) =>
+      context.toPage(VMessageBroadcastStatusPage(
+    message: message,
+  )),
+  toSingleChatMessageInfo: (context, message) =>
+      context.toPage(VMessageSingleStatusPage(
+    message: message,
+  )),
 );

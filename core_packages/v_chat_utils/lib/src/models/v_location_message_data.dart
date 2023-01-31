@@ -11,7 +11,10 @@ class VLocationMessageData {
     required this.linkPreviewData,
   });
 
-// from json
+  @override
+  String toString() {
+    return 'VLocationMessageData{latLng: $latLng, linkPreviewData: $linkPreviewData}';
+  } // from json
   VLocationMessageData.fromMap(Map<String, dynamic> json)
       : latLng = LatLng(
           json['lat'] as double,
