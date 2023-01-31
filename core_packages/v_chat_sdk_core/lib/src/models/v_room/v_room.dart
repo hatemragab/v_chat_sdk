@@ -203,6 +203,10 @@ class VRoom {
     );
   }
 
+  void toggleSelect() {
+    isSelected = !isSelected;
+  }
+
   VRoom copyWith({
     String? id,
     String? title,

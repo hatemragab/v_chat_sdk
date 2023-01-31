@@ -138,7 +138,7 @@ class NativeLocalMessage {
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return _localMessageRepo.getMessagesByStatus(
-      status: MessageEmitStatus.error,
+      status: VMessageEmitStatus.error,
     );
   }
 

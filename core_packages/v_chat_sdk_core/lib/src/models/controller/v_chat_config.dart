@@ -6,10 +6,8 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VChatConfig {
   final VPush vPush;
-
   final bool enableLog;
   final bool enableMessageEncryption;
-
   final int maxGroupMembers;
   final int maxBroadcastMembers;
   final String encryptHashKey;

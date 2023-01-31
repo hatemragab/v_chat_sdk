@@ -34,9 +34,9 @@ abstract class ProfileApi extends ChopperService {
   @Delete(path: "/fcm")
   Future<Response> deleteFcm();
 
-  @Get(path: "/users/{peerId}/last-seen", optionalBody: true)
+  @Get(path: "/users/{identifier}/last-seen", optionalBody: true)
   Future<Response> getLastSeenAt(
-    @Path("peerId") String peerId,
+    @Path("identifier") String peerId,
   );
   @Get(path: "/users")
   Future<Response> appUsers(

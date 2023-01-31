@@ -104,11 +104,11 @@ class VMessageController {
     BuildContext context,
     String query,
   ) async {
-    return VChatController.I.vMessagePageConfig.onMentionRequireSearch(
-      context,
-      vRoom.roomType,
-      query,
-    );
+    if (vRoom.roomType.isGroup) {
+      return VChatController.I.nativeApi.remote.room
+          .searchToMention(roomId, filter: VBaseFilter(name: query));
+    }
+    return <VMentionModel>[];
   }
 
   void onSubmitMedia(
@@ -145,6 +145,7 @@ class VMessageController {
     final localMsg = VVoiceMessage.buildMessage(
       data: data,
       roomId: vRoom.id,
+      content: VStringUtils.printDuration(data.durationObj),
     );
     _onSubmitSendMessage(localMsg);
     scrollDown();
@@ -295,5 +296,41 @@ class VMessageController {
         appBarStateController.setMemberCount(response.membersCount);
       },
     );
+  }
+
+  void onTitlePress(
+    BuildContext context,
+    String id,
+    VRoomType roomType,
+  ) {
+    final toGroupSettings =
+        VChatController.I.vNavigator.messageNavigator.toGroupSettings;
+    final toBroadcastSettings =
+        VChatController.I.vNavigator.messageNavigator.toBroadcastSettings;
+    final toUserProfile =
+        VChatController.I.vNavigator.messageNavigator.toUserProfile;
+    if (roomType.isGroup && toGroupSettings != null) {
+      toGroupSettings(
+          context,
+          VToChatSettingsModel(
+            title: vRoom.title,
+            image: vRoom.thumbImage,
+            roomId: roomId,
+          ));
+      return;
+    } else if (roomType.isSingle && toUserProfile != null) {
+      toUserProfile(context, vRoom.peerIdentifier!);
+      return;
+    } else if (roomType.isBroadcast && toBroadcastSettings != null) {
+      toBroadcastSettings(
+        context,
+        VToChatSettingsModel(
+          title: vRoom.title,
+          image: vRoom.thumbImage,
+          roomId: roomId,
+        ),
+      );
+      return;
+    }
   }
 }

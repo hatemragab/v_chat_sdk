@@ -125,7 +125,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
 
   @override
   Future<List<VBaseMessage>> getMessagesByStatus({
-    required MessageEmitStatus status,
+    required VMessageEmitStatus status,
     int limit = 90,
   }) async {
     final maps = await _database.query(
@@ -183,10 +183,10 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     return _database.update(
       _table,
       {
-        MessageTable.columnMessageEmitStatus: MessageEmitStatus.error.name,
+        MessageTable.columnMessageEmitStatus: VMessageEmitStatus.error.name,
       },
       where: "${MessageTable.columnMessageEmitStatus} =?",
-      whereArgs: [MessageEmitStatus.sending.name],
+      whereArgs: [VMessageEmitStatus.sending.name],
     );
   }
 

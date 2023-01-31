@@ -56,8 +56,8 @@ class MessageProvider {
     unawaited(_localRoom.updateRoomUnreadToZero(roomId));
   }
 
-  Future<DateTime> getLastSeenAt(String peerId) async {
-    return _remoteProfile.getUserLastSeenAt(peerId);
+  Future<DateTime> getLastSeenAt(String identifier) async {
+    return _remoteProfile.getUserLastSeenAt(identifier);
   }
 
   Future<bool> checkGroupStatus(String roomId) async {

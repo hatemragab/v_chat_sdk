@@ -12,6 +12,16 @@ typedef VMediaViewerFunction = Function(
   VPlatformFileSource source,
 );
 
+typedef VToUserProfileFunction = Function(
+  BuildContext context,
+  String identifier,
+);
+
+typedef VToChatSettingsFunction = Function(
+  BuildContext context,
+  VToChatSettingsModel data,
+);
+
 class VRoomNavigator {
   final Future<List<String>?> Function(
     BuildContext context,
@@ -26,18 +36,24 @@ class VRoomNavigator {
 class VMessageNavigator {
   final VInfoMessageRouteFunction toMessageInfo;
   final VMediaViewerFunction toImageViewer;
+  final VMediaViewerFunction toVideoPlayer;
+  final VToUserProfileFunction? toUserProfile;
+  final VToChatSettingsFunction? toGroupSettings;
+  final VToChatSettingsFunction? toBroadcastSettings;
+
   final Function(
     BuildContext context,
     VRoom vRoom,
   ) toMessagePage;
-
-  final VMediaViewerFunction toVideoPlayer;
 
   const VMessageNavigator({
     required this.toMessagePage,
     required this.toMessageInfo,
     required this.toImageViewer,
     required this.toVideoPlayer,
+    this.toUserProfile,
+    this.toBroadcastSettings,
+    this.toGroupSettings,
   });
 }
 

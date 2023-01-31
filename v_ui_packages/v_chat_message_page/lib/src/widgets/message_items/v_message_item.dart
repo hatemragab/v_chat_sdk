@@ -141,8 +141,11 @@ class VMessageItem extends StatelessWidget {
             await VStringUtils.lunchLink(email);
           },
           onMentionPress: (context, userId) {
-            final method = VChatController.I.vMessagePageConfig.onMentionPress;
-            method(context, userId);
+            final method =
+                VChatController.I.vNavigator.messageNavigator.toUserProfile;
+            if (method != null) {
+              method(context, userId);
+            }
           },
           onPhonePress: (phone) async {
             await VStringUtils.lunchLink(phone);

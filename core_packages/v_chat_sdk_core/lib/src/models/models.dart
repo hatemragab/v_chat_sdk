@@ -8,4 +8,6 @@ export './socket/room_typing_model.dart';
 export './v_message/v_message.dart';
 export './v_pagination_model.dart';
 export './v_room/export_v_room.dart';
+export './v_to_chat_chat_settings_model.dart';
 export './v_user/v_user.dart';
+export './v_base_filter.dart';

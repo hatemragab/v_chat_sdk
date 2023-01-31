@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class ChooseRoomsController extends ValueNotifier<List<VSelectRoom>> {
+class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   final String? currentId;
 
   ChooseRoomsController(this.currentId) : super([]) {
@@ -18,7 +18,7 @@ class ChooseRoomsController extends ValueNotifier<List<VSelectRoom>> {
     final l = <String>[];
     for (var element in value) {
       if (element.isSelected) {
-        l.add(element.vRoom.id);
+        l.add(element.id);
       }
     }
     context.pop(l);
@@ -29,11 +29,11 @@ class ChooseRoomsController extends ValueNotifier<List<VSelectRoom>> {
         (await VChatController.I.nativeApi.local.room.getRooms(limit: 120))
             .where((e) => e.id != currentId && !e.roomType.isBroadcast)
             .toList();
-    value = vRooms.map((e) => VSelectRoom(vRoom: e)).toList();
+    value = vRooms;
   }
 
   void onRoomItemPress(VRoom room, BuildContext context) {
-    value.firstWhere((e) => e.vRoom == room).toggle();
+    value.firstWhere((e) => e == room).toggleSelect();
     notifyListeners();
   }
 }

@@ -16,12 +16,10 @@ import 'firebase_options.dart';
 import 'generated/l10n.dart';
 
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-class EnvironmentConfig {
-  static const MAPS = String.fromEnvironment(
-      'maps',
-      defaultValue: 'awesomeApp'
-  );
 
+class EnvironmentConfig {
+  static const MAPS =
+      String.fromEnvironment('maps', defaultValue: 'awesomeApp');
 }
 
 void main() async {
@@ -29,7 +27,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print("maps =>>>>>>" +EnvironmentConfig.MAPS);
   FirebaseMessaging.onBackgroundMessage(vFirebaseMessagingBackgroundHandler);
   await VChatController.init(
     navigatorKey: _navigatorKey,
@@ -38,45 +35,28 @@ void main() async {
       baseUrl: _getBaseUrl(),
       vPush: VPush(
         fcmProvider: VPlatforms.isMobile ? VChatFcmProver() : null,
-        // oneSignalProvider: VPlatforms.isMobile
-        //     ? VChatOneSignalProver(
-        //         appId: VAppConstants.oneSignalAppId,
-        //       )
-        //     : null,
         enableVForegroundNotification: true,
         vPushConfig: VLocalNotificationPushConfig(),
       ),
     ),
     vNavigator: VNavigator(
-      roomNavigator: roomDefaultNavigator,
-      messageNavigator: messageDefaultNavigator,
-    ),
-    vMessagePageConfig: VMessagePageConfig(
-      onMentionRequireSearch: (context, roomType, query) async {
-        if (roomType == VRoomType.g) {
-          ///enable mentions only for group chat
-          return [
-            VMentionModel(
-              identifier: "identifier",
-              name: "name",
-              image:
-                  "https://super-up-dev.s3.eu-west-3.amazonaws.com/default_user_image.png",
-            ),
-            VMentionModel(
-              identifier: "identifier2",
-              name: "name2",
-              image:
-                  "https://super-up-dev.s3.eu-west-3.amazonaws.com/default_user_image.png",
-            ),
-          ];
-        }
-
-        ///this mean stop mention!
-        return [];
-      },
-      onMentionPress: (context, id) {
-        print("id");
-      },
+      roomNavigator: vDefaultRoomNavigator,
+      messageNavigator: VMessageNavigator(
+        toImageViewer: vDefaultMessageNavigator.toImageViewer,
+        toVideoPlayer: vDefaultMessageNavigator.toVideoPlayer,
+        toMessageInfo: vDefaultMessageNavigator.toMessageInfo,
+        toMessagePage: vDefaultMessageNavigator.toMessagePage,
+        toGroupSettings: (context, data) {
+          Get.toNamed(Routes.GROUP_SETTINGS, arguments: data);
+          print("Going to group $data");
+        },
+        toUserProfile: (context, identifier) {
+          print("Going to toUserProfile $identifier");
+        },
+        toBroadcastSettings: (context, data) {
+          print("Going to broadcast settings $data");
+        },
+      ),
     ),
   );
   final appService = Get.put<AppService>(AppService());

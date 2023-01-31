@@ -16,20 +16,7 @@ class VMessagePageConfig {
   ///set max record time
   final Duration maxRecordTime;
 
-  ///call back when user click mention you should handle and open peer page
-  final Function(BuildContext context, String id) onMentionPress;
-
-  ///call back when user click the app bar title in single room the id will be the user identifier
-  ///so you can open the peer page on other rooms it will be the room id its important to deal with this room apis later
-  final UserActionType? onAppBarTitlePress;
-
   final UserActionType? onReportUserPress;
-
-  final Future<List<VMentionModel>> Function(
-    BuildContext context,
-    VRoomType roomType,
-    String query,
-  ) onMentionRequireSearch;
 
   final Function(
     BuildContext context,
@@ -49,10 +36,7 @@ class VMessagePageConfig {
     this.onReportUserPress,
     this.onUserBlockAnother,
     this.onUserUnBlockAnother,
-    required this.onMentionPress,
-    required this.onMentionRequireSearch,
     this.maxRecordTime = const Duration(minutes: 30),
-    this.onAppBarTitlePress,
     this.maxMediaSize = 1024 * 1024 * 50,
   });
 }

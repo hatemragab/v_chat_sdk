@@ -25,7 +25,7 @@ class VRoomMessagesDto {
   final int limit;
   String? lastId;
   final String? text;
-  final MessagesFilter? filter;
+  final VMessagesFilter? filter;
   final VMessageBetweenFilter? between;
 
   Map<String, dynamic> toMap() {
@@ -33,7 +33,7 @@ class VRoomMessagesDto {
       'limit': limit,
       'lastId': lastId,
       'text': text,
-      'filter': filter == null ? MessagesFilter.all.name : filter!.name,
+      'filter': filter == null ? VMessagesFilter.all.name : filter!.name,
     };
   }
 
@@ -43,7 +43,7 @@ class VRoomMessagesDto {
       MessageTable.columnId: lastId,
       MessageTable.columnContent: text,
       MessageTable.columnMessageType:
-          filter == null ? MessagesFilter.all.name : filter!.name,
+          filter == null ? VMessagesFilter.all.name : filter!.name,
     };
   }
 }

@@ -46,9 +46,9 @@ class MessageStatusIcon extends StatelessWidget {
 
   Widget _getIcon(VMsgStatusTheme themeData) {
     switch (vBaseMessage.emitStatus) {
-      case MessageEmitStatus.serverConfirm:
+      case VMessageEmitStatus.serverConfirm:
         return themeData.sendIcon;
-      case MessageEmitStatus.error:
+      case VMessageEmitStatus.error:
         return InkWell(
           onTap: () {
             if (onReSend != null) {
@@ -57,7 +57,7 @@ class MessageStatusIcon extends StatelessWidget {
           },
           child: themeData.refreshIcon,
         );
-      case MessageEmitStatus.sending:
+      case VMessageEmitStatus.sending:
         return themeData.pendingIcon;
     }
   }

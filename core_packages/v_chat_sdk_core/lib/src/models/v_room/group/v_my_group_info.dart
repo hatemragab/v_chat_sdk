@@ -3,7 +3,7 @@ import 'package:v_chat_sdk_core/src/utils/enums.dart';
 class VMyGroupInfo {
   final bool isMeOut;
   final int membersCount;
-  final GroupMemberRole myRole;
+  final VGroupMemberRole myRole;
   final VMyGroupSettings? groupSettings;
 
 //<editor-fold desc="Data Methods">
@@ -17,7 +17,7 @@ class VMyGroupInfo {
 
   VMyGroupInfo.empty()
       : membersCount = 0,
-        myRole = GroupMemberRole.member,
+        myRole = VGroupMemberRole.member,
         groupSettings = VMyGroupSettings.empty(),
         isMeOut = false;
 
@@ -45,7 +45,7 @@ class VMyGroupInfo {
           : VMyGroupSettings.fromMap(
               map['groupSettings'] as Map<String, dynamic>,
             ),
-      myRole: GroupMemberRole.values.byName(map['myRole'] as String),
+      myRole: VGroupMemberRole.values.byName(map['myRole'] as String),
     );
   }
 

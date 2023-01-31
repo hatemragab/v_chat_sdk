@@ -27,8 +27,6 @@ class RoomItemMsg extends StatelessWidget {
       return VTextParserWidget(
         text: message.getMessageTextInfoTranslated(context),
         enableTabs: false,
-        onMentionPress: (userId) {},
-
         isOneLine: true,
         textStyle: theme.unSeenLastMessageTextStyle,
       );
@@ -36,7 +34,6 @@ class RoomItemMsg extends StatelessWidget {
     return VTextParserWidget(
       text: message.getMessageTextInfoTranslated(context),
       enableTabs: false,
-      onMentionPress: (userId) {},
       isOneLine: true,
       textStyle: theme.seenLastMessageTextStyle,
     );

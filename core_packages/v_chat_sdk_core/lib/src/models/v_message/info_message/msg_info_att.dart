@@ -1,7 +1,7 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VMsgInfoAtt {
-  final MessageInfoType action;
+  final VMessageInfoType action;
   final String targetName;
   final String targetId;
   final String adminName;
@@ -23,7 +23,7 @@ class VMsgInfoAtt {
   bool get isMe => VAppConstants.myId == targetId;
 
   bool get isDark {
-    if (action == MessageInfoType.kick) {
+    if (action == VMessageInfoType.kick) {
       return true;
     }
     return false;
@@ -40,7 +40,7 @@ class VMsgInfoAtt {
 
   factory VMsgInfoAtt.fromMap(Map<String, dynamic> map) {
     return VMsgInfoAtt(
-      action: MessageInfoType.values.byName(map['action'] as String),
+      action: VMessageInfoType.values.byName(map['action'] as String),
       targetName: map['targetName'] as String,
       adminName: map['adminName'] as String,
       targetId: map['targetId'] as String,

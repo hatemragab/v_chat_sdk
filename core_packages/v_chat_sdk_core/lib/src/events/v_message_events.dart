@@ -61,7 +61,7 @@ class VUpdateMessageTypeEvent extends VMessageEvents {
 }
 
 class VUpdateMessageStatusEvent extends VMessageEvents {
-  final MessageEmitStatus emitState;
+  final VMessageEmitStatus emitState;
 
   const VUpdateMessageStatusEvent({
     required super.roomId,

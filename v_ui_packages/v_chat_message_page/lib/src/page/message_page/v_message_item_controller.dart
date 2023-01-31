@@ -207,6 +207,7 @@ class VMessageItemController {
             message = VVoiceMessage.buildMessage(
               data: (baseMessage as VVoiceMessage).data,
               roomId: roomId,
+              content:baseMessage.realContent ,
               forwardId: baseMessage.localId,
             );
             break;

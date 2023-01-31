@@ -59,7 +59,7 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
     if (value.isOnline) {
       await vSafeApiCall<DateTime>(
         request: () async {
-          return await _messageProvider.getLastSeenAt(_vRoom.peerId!);
+          return await _messageProvider.getLastSeenAt(_vRoom.peerIdentifier!);
         },
         onSuccess: (response) {
           updateLastSeen(response);
@@ -82,7 +82,7 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
         value.lastSeenAt == null) {
       await vSafeApiCall<DateTime>(
         request: () async {
-          return await _messageProvider.getLastSeenAt(_vRoom.peerId!);
+          return await _messageProvider.getLastSeenAt(_vRoom.peerIdentifier!);
         },
         onSuccess: (response) {
           updateLastSeen(response);

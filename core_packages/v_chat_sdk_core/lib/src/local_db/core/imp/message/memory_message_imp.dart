@@ -107,7 +107,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
 
   @override
   Future<List<VBaseMessage>> getMessagesByStatus({
-    required MessageEmitStatus status,
+    required VMessageEmitStatus status,
     int limit = 50,
   }) {
     return Future.value(

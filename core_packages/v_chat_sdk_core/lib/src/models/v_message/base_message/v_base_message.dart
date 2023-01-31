@@ -51,7 +51,7 @@ abstract class VBaseMessage {
   MessageType messageType;
 
   ///serverConfirm,error,sending
-  MessageEmitStatus emitStatus;
+  VMessageEmitStatus emitStatus;
 
   /// only will have value if this message reply to another
   VBaseMessage? replyTo;
@@ -103,7 +103,7 @@ abstract class VBaseMessage {
         parentBroadcastId = map['pBId'] as String?,
         localId = map['lId'] as String,
         createdAt = map['createdAt'] as String,
-        emitStatus = MessageEmitStatus.serverConfirm,
+        emitStatus = VMessageEmitStatus.serverConfirm,
         updatedAt = map['updatedAt'] as String;
 
   /// from local
@@ -132,7 +132,7 @@ abstract class VBaseMessage {
         localId = map[MessageTable.columnLocalId] as String,
         createdAt = map[MessageTable.columnCreatedAt] as String,
         updatedAt = map[MessageTable.columnUpdatedAt] as String,
-        emitStatus = MessageEmitStatus.values
+        emitStatus = VMessageEmitStatus.values
             .byName(map[MessageTable.columnMessageEmitStatus] as String),
         messageType = MessageType.values
             .byName(map[MessageTable.columnMessageType] as String);
@@ -245,7 +245,7 @@ abstract class VBaseMessage {
         senderName = VAppConstants.myProfile.baseUser.fullName,
         senderImageThumb =
             VAppConstants.myProfile.baseUser.userImages.smallImage,
-        emitStatus = MessageEmitStatus.sending,
+        emitStatus = VMessageEmitStatus.sending,
         parentBroadcastId = broadcastId,
         deletedAt = null,
         seenAt = null,

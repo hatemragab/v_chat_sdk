@@ -14,6 +14,10 @@ import '../modules/create_product/bindings/create_product_binding.dart';
 import '../modules/create_product/views/create_product_view.dart';
 import '../modules/edit_profile/bindings/edit_profile_binding.dart';
 import '../modules/edit_profile/views/edit_profile_view.dart';
+import '../modules/group_members/bindings/group_members_binding.dart';
+import '../modules/group_members/views/group_members_view.dart';
+import '../modules/group_settings/bindings/group_settings_binding.dart';
+import '../modules/group_settings/views/group_settings_view.dart';
 import '../modules/home_tabs/home/bindings/home_binding.dart';
 import '../modules/home_tabs/home/views/home_view.dart';
 import '../modules/my_orders/bindings/my_orders_binding.dart';
@@ -99,6 +103,16 @@ class AppPages {
       name: _Paths.CREATE_BROADCAST,
       page: () => const CreateBroadcastView(),
       binding: CreateBroadcastBinding(),
+    ),
+    GetPage(
+      name: _Paths.GROUP_SETTINGS,
+      page: () => const GroupSettingsView(),
+      binding: GroupSettingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.GROUP_MEMBERS,
+      page: () => const GroupMembersView(),
+      binding: GroupMembersBinding(),
     ),
   ];
 }

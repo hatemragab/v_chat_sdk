@@ -39,10 +39,8 @@ class VProfileApiService {
     return true;
   }
 
-  Future<DateTime> getUserLastSeenAt(
-    String peerId,
-  ) async {
-    final res = await _profileApi!.getLastSeenAt(peerId);
+  Future<DateTime> getUserLastSeenAt(String identifier) async {
+    final res = await _profileApi!.getLastSeenAt(identifier);
     throwIfNotSuccess(res);
     return DateTime.parse((res.body as Map<String, dynamic>)['data'] as String);
   }
@@ -57,10 +55,7 @@ class VProfileApiService {
         .toList();
   }
 
-  static VProfileApiService init({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static VProfileApiService init({Uri? baseUrl, String? accessToken}) {
     _profileApi ??= ProfileApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,

@@ -176,6 +176,28 @@ class VChannelApiService {
     return VMyGroupInfo.fromMap(extractDataFromResponse(res));
   }
 
+  Future<List<VMentionModel>> searchToMention(
+    String roomId, {
+   required VBaseFilter filter,
+  }) async {
+    final res = await _channelApiService!
+        .getGroupMembers(roomId,  filter.toMap());
+    throwIfNotSuccess(res);
+    final list = extractDataFromResponse(res)['docs'] as List;
+    final users = list
+        .map((e) => VIdentifierUser.fromMap(
+              (e as Map<String, dynamic>)['userData'] as Map<String, dynamic>,
+            ))
+        .toList();
+    return users
+        .map((e) => VMentionModel(
+              identifier: e.identifier,
+              name: e.baseUser.fullName,
+              image: e.baseUser.userImages.smallImage,
+            ))
+        .toList();
+  }
+
   Future<bool> leaveGroup(String roomId) async {
     final res = await _channelApiService!.leaveGroup(roomId);
     throwIfNotSuccess(res);
@@ -248,19 +270,20 @@ class VChannelApiService {
   //   );
   // }
 
-  // Future<List<GroupMember>> getGroupMembers(
-  //     String roomId,
-  //     Map<String, dynamic> filter,
-  //     ) async {
-  //   final res = await _channelApiService.getGroupMembers(roomId, filter);
-  //   if (!res.isSuccessful)
-  //     throw BadRequestHttpException(
-  //       error: HttpError.fromChopper(res),
-  //     );
-  //   return ((res.body as Map<String, dynamic>)['data'] as List)
-  //       .map((e) => GroupMember.fromMap(e as Map<String, dynamic>))
-  //       .toList();
-  // }
+  Future<List<VGroupMember>> getGroupMembers(
+    String roomId, {
+    VBaseFilter? filter,
+  }) async {
+    final res = await _channelApiService!.getGroupMembers(
+      roomId,
+      filter == null ? {} : filter.toMap(),
+    );
+    final data = extractDataFromResponse(res)['docs'] as List;
+    return data
+        .map((e) => VGroupMember.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+
   Future<bool> addParticipantsToGroup(
     String roomId,
     List<String> ids,
@@ -274,7 +297,7 @@ class VChannelApiService {
   Future<bool> changeUserGroupRole(
     String roomId,
     String peerId,
-    GroupMemberRole role,
+    VGroupMemberRole role,
   ) async {
     final res = await _channelApiService!.changeUserGroupRole(
       roomId,

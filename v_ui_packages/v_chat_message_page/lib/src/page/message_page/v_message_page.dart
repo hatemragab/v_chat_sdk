@@ -65,12 +65,7 @@ class _VMessagePageState extends State<VMessagePage> {
               state: value,
               onSearch: controller.onOpenSearch,
               onViewMedia: () => controller.onViewMedia(context, value.roomId),
-              onTitlePress: (context, id, roomType) {
-                final method = _config.onAppBarTitlePress;
-                if (method != null) {
-                  method(context, id, roomType);
-                }
-              },
+              onTitlePress: controller.onTitlePress,
             );
           },
         ),

@@ -28,7 +28,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<VSelectRoom>>(
+    return ValueListenableBuilder<List<VRoom>>(
         valueListenable: controller,
         builder: (_, value, __) {
           return Scaffold(
@@ -47,7 +47,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
                 cacheExtent: 300,
                 itemBuilder: (context, index) {
                   return VRoomItem(
-                    room: value[index].vRoom,
+                    room: value[index],
                     isIconOnly: false,
                     onRoomItemLongPress: (room) =>
                         controller.onRoomItemPress(room, context),

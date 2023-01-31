@@ -105,7 +105,7 @@ mixin MessageLocalStorage {
 
   Future<List<VBaseMessage>> getUnSendMessages() async {
     return localMessageRepo.getMessagesByStatus(
-      status: MessageEmitStatus.error,
+      status: VMessageEmitStatus.error,
     );
   }
 

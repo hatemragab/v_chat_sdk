@@ -19,7 +19,7 @@ class VEmptyMessage extends VBaseMessage {
           seenAt: null,
           isStared: false,
           deliveredAt: null,
-          emitStatus: MessageEmitStatus.serverConfirm,
+          emitStatus: VMessageEmitStatus.serverConfirm,
           forwardId: null,
           deletedAt: null,
           parentBroadcastId: null,

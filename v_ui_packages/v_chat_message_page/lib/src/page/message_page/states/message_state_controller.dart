@@ -128,7 +128,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     }
   }
 
-  void updateMessageStatus(String localId, MessageEmitStatus emitState) {
+  void updateMessageStatus(String localId, VMessageEmitStatus emitState) {
     final index = _indexByLocalId(localId);
     if (index != -1) {
       value[index].emitStatus = emitState;

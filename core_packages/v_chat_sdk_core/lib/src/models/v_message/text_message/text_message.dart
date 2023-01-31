@@ -39,7 +39,7 @@ class VTextMessage extends VBaseMessage {
 
   VTextMessage.buildFakeMessage({
     required int index,
-    MessageEmitStatus messageStatus = MessageEmitStatus.serverConfirm,
+    VMessageEmitStatus messageStatus = VMessageEmitStatus.serverConfirm,
   }) : super.buildFakeMessage(
           content: randomString(index * 25),
           messageType: MessageType.text,

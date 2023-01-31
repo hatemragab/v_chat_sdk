@@ -44,7 +44,7 @@ abstract class BaseLocalMessageRepo {
   });
 
   Future<List<VBaseMessage>> getMessagesByStatus({
-    required MessageEmitStatus status,
+    required VMessageEmitStatus status,
     int limit = 50,
   });
 }

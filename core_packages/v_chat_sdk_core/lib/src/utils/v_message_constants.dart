@@ -10,27 +10,27 @@ abstract class VMessageConstants {
     if (m is VInfoMessage) {
       final infoAtt = m.data;
       switch (infoAtt.action) {
-        case MessageInfoType.updateTitle:
+        case VMessageInfoType.updateTitle:
           return "${infoAtt.adminName} ${VTrans.labelsOf(context).updateTitleTo} ${infoAtt.targetName}";
-        case MessageInfoType.updateImage:
+        case VMessageInfoType.updateImage:
           return "${infoAtt.adminName} ${VTrans.labelsOf(context).updateImage}";
-        case MessageInfoType.addGroupMember:
+        case VMessageInfoType.addGroupMember:
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).joinedBy} ${infoAtt.adminName}";
-        case MessageInfoType.upAdmin:
+        case VMessageInfoType.upAdmin:
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).promotedToAdminBy} ${infoAtt.adminName}";
-        case MessageInfoType.downMember:
+        case VMessageInfoType.downMember:
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).dismissedToMemberBy} ${infoAtt.adminName}";
-        case MessageInfoType.leave:
+        case VMessageInfoType.leave:
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).leftTheGroup}";
-        case MessageInfoType.kick:
+        case VMessageInfoType.kick:
           if (infoAtt.isMe) {
             return "You ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}";
           }
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}";
-        case MessageInfoType.createGroup:
+        case VMessageInfoType.createGroup:
           return "${VTrans.labelsOf(context).groupCreatedBy} ${infoAtt.adminName}";
 
-        case MessageInfoType.addToBroadcast:
+        case VMessageInfoType.addToBroadcast:
           return "${infoAtt.adminName} ${VTrans.labelsOf(context).addedYouToNewBroadcast} ${infoAtt.targetName}";
       }
     }

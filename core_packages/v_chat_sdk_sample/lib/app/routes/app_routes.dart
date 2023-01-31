@@ -16,6 +16,8 @@ abstract class Routes {
   static const CHOOSE_MEMBERS = _Paths.CHOOSE_MEMBERS;
   static const CREATE_GROUP = _Paths.CREATE_GROUP;
   static const CREATE_BROADCAST = _Paths.CREATE_BROADCAST;
+  static const GROUP_SETTINGS = _Paths.GROUP_SETTINGS;
+  static const GROUP_MEMBERS = _Paths.GROUP_MEMBERS;
 }
 
 abstract class _Paths {
@@ -33,4 +35,6 @@ abstract class _Paths {
   static const CHOOSE_MEMBERS = '/choose-members';
   static const CREATE_GROUP = '/create-group';
   static const CREATE_BROADCAST = '/create-broadcast';
+  static const GROUP_SETTINGS = '/group-settings';
+  static const GROUP_MEMBERS = '/group-members';
 }

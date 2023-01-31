@@ -59,7 +59,7 @@ class VChatController {
     required VChatConfig vChatConfig,
     required VNavigator vNavigator,
     required GlobalKey<NavigatorState> navigatorKey,
-    required VMessagePageConfig vMessagePageConfig,
+    VMessagePageConfig? vMessagePageConfig,
   }) async {
     assert(
       !_instance._isControllerInit,
@@ -69,7 +69,8 @@ class VChatController {
     _instance.vChatConfig = vChatConfig;
     _instance.navigatorKey = navigatorKey;
     _instance.vNavigator = vNavigator;
-    _instance.vMessagePageConfig = vMessagePageConfig;
+    _instance.vMessagePageConfig =
+        vMessagePageConfig ?? const VMessagePageConfig();
     await VAppPref.init();
     _instance.nativeApi = await VNativeApi.init();
     _instance.authApi = AuthApi(

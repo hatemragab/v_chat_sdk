@@ -73,12 +73,13 @@ class VVoiceMessage extends VBaseMessage {
   VVoiceMessage.buildMessage({
     required super.roomId,
     required this.data,
+    required String content,
     super.forwardId,
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
           isEncrypted: false,
-          content: VMessageConstants.thisContentIsVoice,
+          content: "${VMessageConstants.thisContentIsVoice} $content",
           messageType: MessageType.voice,
         );
 }

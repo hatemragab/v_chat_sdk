@@ -75,24 +75,24 @@ extension StrType on VRoomType {
   bool get isOrder => this == VRoomType.o;
 }
 
-enum MessageEmitStatus {
+enum VMessageEmitStatus {
   //send
   serverConfirm,
   error,
   sending,
 }
 
-extension MessageSendingStatusEnumExt on MessageEmitStatus {
-  bool get isSending => this == MessageEmitStatus.sending;
+extension VMessageSendingStatusEnumExt on VMessageEmitStatus {
+  bool get isSending => this == VMessageEmitStatus.sending;
 
-  bool get isServerConfirm => this == MessageEmitStatus.serverConfirm;
+  bool get isServerConfirm => this == VMessageEmitStatus.serverConfirm;
 
   bool get isSendingOrError => isSending || isSendError;
 
-  bool get isSendError => this == MessageEmitStatus.error;
+  bool get isSendError => this == VMessageEmitStatus.error;
 }
 
-enum MessageInfoType {
+enum VMessageInfoType {
   updateTitle,
   updateImage,
   addGroupMember,
@@ -104,6 +104,6 @@ enum MessageInfoType {
   addToBroadcast,
 }
 
-enum GroupMemberRole { admin, member, superAdmin }
+enum VGroupMemberRole { admin, member, superAdmin }
 
-enum MessagesFilter { media, links, file, voice, all }
+enum VMessagesFilter { media, links, file, voice, all }
