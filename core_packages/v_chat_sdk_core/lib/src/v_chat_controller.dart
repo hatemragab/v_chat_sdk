@@ -118,4 +118,7 @@ class VChatController {
       _instance.vNavigator,
     );
   }
+
+  Future<void> updateLanguageCode(String languageCode) =>
+      VAppPref.setStringKey(VStorageKeys.vAppLanguage.name, languageCode);
 }

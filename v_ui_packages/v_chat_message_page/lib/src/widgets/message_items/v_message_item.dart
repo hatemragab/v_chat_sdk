@@ -23,24 +23,23 @@ import '../../core/types.dart';
 
 class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
-  final VRoom room;
-  final VMessageCallback onSwipe;
+  final VMessageCallback? onSwipe;
   final VMessageCallback? onTap;
   final VMessageCallback? onLongTap;
-  final VVoiceMessageController? Function(VBaseMessage message) voiceController;
-  final VMessageCallback onHighlightMessage;
-  final VMessageCallback onReSend;
+  final VVoiceMessageController? Function(VBaseMessage message)?
+      voiceController;
+  final VMessageCallback? onHighlightMessage;
+  final VMessageCallback? onReSend;
 
   const VMessageItem({
     Key? key,
-    required this.room,
     this.onLongTap,
     this.onTap,
-    required this.voiceController,
+    this.voiceController,
     required this.message,
-    required this.onSwipe,
-    required this.onReSend,
-    required this.onHighlightMessage,
+    this.onSwipe,
+    this.onReSend,
+    this.onHighlightMessage,
   }) : super(key: key);
 
   bool get isAllowOnTap =>
@@ -74,9 +73,11 @@ class VMessageItem extends StatelessWidget {
           : null,
       child: SwipeTo(
         key: UniqueKey(),
-        onRightSwipe: () {
-          onSwipe(message);
-        },
+        onRightSwipe: onSwipe == null || message.messageType.isAllDeleted
+            ? null
+            : () {
+                onSwipe!(message);
+              },
         child: DirectionItemHolder(
           isMeSender: message.isMeSender,
           child: Column(
@@ -106,11 +107,17 @@ class VMessageItem extends StatelessWidget {
                     dateTime: message.createdAtDate,
                   ),
                   MessageStatusIcon(
-                    isDeliver: message.deliveredAt != null,
-                    isSeen: message.seenAt != null,
-                    isMeSender: message.isMeSender,
-                    vBaseMessage: message,
-                    onReSend: onReSend,
+                    model: MessageStatusIconDataModel(
+                      isSeen: message.seenAt != null,
+                      isDeliver: message.deliveredAt != null,
+                      emitStatus: message.emitStatus,
+                      isMeSender: message.isMeSender,
+                    ),
+                    onReSend: () {
+                      if (onReSend != null) {
+                        onReSend!(message);
+                      }
+                    },
                   ),
                 ],
               )
@@ -167,7 +174,7 @@ class VMessageItem extends StatelessWidget {
       case MessageType.voice:
         return VoiceMessageItem(
           message: message as VVoiceMessage,
-          voiceController: voiceController,
+          voiceController: voiceController!,
         );
       case MessageType.location:
         return LocationMessageItem(

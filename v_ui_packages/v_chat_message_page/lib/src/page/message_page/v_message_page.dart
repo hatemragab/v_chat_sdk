@@ -131,7 +131,7 @@ class _VMessagePageState extends State<VMessagePage> {
                                           }
                                           return null;
                                         },
-                                        room: controller.vRoom,
+                                        //room: controller.vRoom,
                                         onSwipe: controller.setReply,
                                         onHighlightMessage:
                                             controller.onHighlightMessage,

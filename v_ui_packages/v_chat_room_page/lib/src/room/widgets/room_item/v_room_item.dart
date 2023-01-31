@@ -91,11 +91,14 @@ class VRoomItem extends StatelessWidget {
                                   children: [
                                     //status
                                     MessageStatusIcon(
-                                      isDeliver:
-                                          room.lastMessage.deliveredAt != null,
-                                      isSeen: room.lastMessage.seenAt != null,
-                                      isMeSender: room.lastMessage.isMeSender,
-                                      vBaseMessage: room.lastMessage,
+                                      model: MessageStatusIconDataModel(
+                                        isSeen: room.lastMessage.seenAt != null,
+                                        isDeliver:
+                                            room.lastMessage.deliveredAt !=
+                                                null,
+                                        emitStatus: room.lastMessage.emitStatus,
+                                        isMeSender: room.lastMessage.isMeSender,
+                                      ),
                                     ),
                                     //grey
                                     Flexible(

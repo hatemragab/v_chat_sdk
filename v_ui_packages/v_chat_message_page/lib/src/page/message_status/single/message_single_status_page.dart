@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/page/message_page/v_message_item_controller.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/v_message_item.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../../v_chat_message_page.dart';
 import 'message_single_status_controller.dart';
 
 class VMessageSingleStatusPage extends StatefulWidget {
@@ -28,8 +32,68 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Message info VMessageSingleStatusPage"),
+      backgroundColor: context.isDark ? Colors.black : Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ListTile(
+                title: AppBar(
+                  backgroundColor: context.isDark ? Colors.transparent : null,
+                  //todo trans
+                  title: "Message info".text,
+                ),
+                contentPadding: EdgeInsets.zero,
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: VMessageItem(
+                    voiceController: controller.getVoiceController,
+                    message: widget.message,
+                    onSwipe: null,
+                    onReSend: (message) {},
+                    onHighlightMessage: (message) {},
+                  ),
+                ),
+              ),
+
+
+              const SizedBox(
+                height: 20,
+              ),
+              Card(
+                child: Column(
+                  children: [
+                    ReadItem(
+                      dateTime: widget.message.seenAtDate,
+                      title: "Read",
+                      model: MessageStatusIconDataModel(
+                        isMeSender: widget.message.isMeSender,
+                        emitStatus: widget.message.emitStatus,
+                        isDeliver: false,
+                        isSeen: true,
+                      ),
+                    ),
+                    Divider(
+                      color: context.isDark ? const Color(0xff261e1e) : null,
+                      height: 1,
+                    ),
+                    ReadItem(
+                      title: "Delivered",
+                      dateTime: widget.message.deliveredAtDate,
+                      model: MessageStatusIconDataModel(
+                        isMeSender: widget.message.isMeSender,
+                        emitStatus: widget.message.emitStatus,
+                        isDeliver: true,
+                        isSeen: false,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -38,5 +102,53 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
   void dispose() {
     super.dispose();
     controller.close();
+  }
+}
+
+class ReadItem extends StatelessWidget {
+  final DateTime? dateTime;
+  final String title;
+  final MessageStatusIconDataModel model;
+
+  const ReadItem({
+    Key? key,
+    this.dateTime,
+    required this.title,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: context.isDark ? const Color(0xff261e1e) : null,
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              MessageStatusIcon(
+                model: model,
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              title.text,
+            ],
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          dateTime == null
+              ? const SizedBox(
+                  height: 10,
+                )
+              : format(
+                  dateTime!,
+                  locale: VAppConstants.sdkLanguage,
+                ).text.color(Colors.grey)
+        ],
+      ),
+    );
   }
 }

@@ -4,32 +4,40 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import '../../../../v_chat_message_page.dart';
 import '../../../core/types.dart';
 
-class MessageStatusIcon extends StatelessWidget {
-  final VBaseMessage vBaseMessage;
+class MessageStatusIconDataModel {
   final bool isMeSender;
-  final VMessageCallback? onReSend;
   final bool isSeen;
   final bool isDeliver;
+  final VMessageEmitStatus emitStatus;
+
+  const MessageStatusIconDataModel({
+    required this.isMeSender,
+    required this.isSeen,
+    required this.isDeliver,
+    required this.emitStatus,
+  });
+}
+
+class MessageStatusIcon extends StatelessWidget {
+  final VoidCallback? onReSend;
+  final MessageStatusIconDataModel model;
 
   const MessageStatusIcon({
     Key? key,
-    required this.isMeSender,
-    required this.vBaseMessage,
-    required this.isDeliver,
+    required this.model,
     this.onReSend,
-    required this.isSeen,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final themeData = context.vMessageTheme.messageSendingStatus;
-    if (!isMeSender) {
+    if (!model.isMeSender) {
       return const SizedBox.shrink();
     }
-    if (isSeen) {
+    if (model.isSeen) {
       return _getBody(themeData.seenIcon);
     }
-    if (isDeliver) {
+    if (model.isDeliver) {
       return _getBody(themeData.deliverIcon);
     }
     return _getBody(
@@ -45,14 +53,14 @@ class MessageStatusIcon extends StatelessWidget {
   }
 
   Widget _getIcon(VMsgStatusTheme themeData) {
-    switch (vBaseMessage.emitStatus) {
+    switch (model.emitStatus) {
       case VMessageEmitStatus.serverConfirm:
         return themeData.sendIcon;
       case VMessageEmitStatus.error:
         return InkWell(
           onTap: () {
             if (onReSend != null) {
-              onReSend!(vBaseMessage);
+              onReSend!();
             }
           },
           child: themeData.refreshIcon,

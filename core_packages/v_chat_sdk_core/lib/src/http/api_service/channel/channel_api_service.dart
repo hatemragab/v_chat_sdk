@@ -178,10 +178,10 @@ class VChannelApiService {
 
   Future<List<VMentionModel>> searchToMention(
     String roomId, {
-   required VBaseFilter filter,
+    required VBaseFilter filter,
   }) async {
-    final res = await _channelApiService!
-        .getGroupMembers(roomId,  filter.toMap());
+    final res =
+        await _channelApiService!.getGroupMembers(roomId, filter.toMap());
     throwIfNotSuccess(res);
     final list = extractDataFromResponse(res)['docs'] as List;
     final users = list
@@ -226,14 +226,14 @@ class VChannelApiService {
 
   Future<List<VMessageStatusModel>> getMessageStatusForGroup(
     String roomId,
-    String messageId,
-    Map<String, Object> pagination, {
+    String messageId, {
+    Map<String, Object>? pagination,
     required bool isSeen,
   }) async {
     final res = await _channelApiService!.getMessageStatusForGroup(
       roomId,
       messageId,
-      pagination,
+      pagination??{},
       isSeen ? "seen" : "deliver",
     );
 

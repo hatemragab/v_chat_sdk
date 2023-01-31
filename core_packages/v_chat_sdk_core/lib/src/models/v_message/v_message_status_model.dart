@@ -1,19 +1,21 @@
 import 'package:v_chat_sdk_core/src/models/models.dart';
 
 class VMessageStatusModel {
-  final String? deliveredAt;
+  final String deliveredAt;
   final String? seenAt;
   final String sendAt;
   final VIdentifierUser identifierUser;
 
 //<editor-fold desc="Data Methods">
   const VMessageStatusModel({
-    this.deliveredAt,
+    required  this.deliveredAt,
     this.seenAt,
     required this.sendAt,
     required this.identifierUser,
   });
 
+  DateTime get delivered => DateTime.parse(deliveredAt).toLocal();
+  DateTime? get seen =>seenAt==null?null: DateTime.parse(seenAt!).toLocal();
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -53,17 +55,17 @@ class VMessageStatusModel {
       'dAt': deliveredAt,
       'sAt': seenAt,
       'cAt': sendAt,
-      'user': identifierUser.toMap(),
+      'userData': identifierUser.toMap(),
     };
   }
 
   factory VMessageStatusModel.fromMap(Map<String, dynamic> map) {
     return VMessageStatusModel(
-      deliveredAt: map['dAt'] as String?,
+      deliveredAt: map['dAt'] as String,
       seenAt: map['sAt'] as String?,
       sendAt: map['cAt'] as String,
       identifierUser:
-          VIdentifierUser.fromMap(map['user'] as Map<String, dynamic>),
+          VIdentifierUser.fromMap(map['userData'] as Map<String, dynamic>),
     );
   }
 

@@ -6,7 +6,7 @@ import '../../../core/types.dart';
 
 class ReplyItemWidget extends StatelessWidget {
   final VBaseMessage? rToMessage;
-  final VMessageCallback onHighlightMessage;
+  final VMessageCallback? onHighlightMessage;
 
   const ReplyItemWidget({
     Key? key,
@@ -27,7 +27,7 @@ class ReplyItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: InkWell(
-        onTap: () => onHighlightMessage(rToMessage!),
+        onTap:onHighlightMessage==null?null: () => onHighlightMessage!(rToMessage!),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
