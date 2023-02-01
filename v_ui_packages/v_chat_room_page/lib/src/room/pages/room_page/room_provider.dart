@@ -44,7 +44,10 @@ class RoomProvider {
   }
 
   Future<bool> mute(String roomId) async {
-    await _remoteRoom.changeRoomNotification(roomId);
+    await _remoteRoom.changeRoomNotification(
+      roomId: roomId,
+      isMuted: true,
+    );
     await _localRoom.updateRoomIsMuted(VUpdateRoomMuteEvent(
       roomId: roomId,
       isMuted: true,
@@ -53,7 +56,10 @@ class RoomProvider {
   }
 
   Future<bool> unMute(String roomId) async {
-    await _remoteRoom.changeRoomNotification(roomId);
+    await _remoteRoom.changeRoomNotification(
+      roomId: roomId,
+      isMuted: false,
+    );
     await _localRoom.updateRoomIsMuted(VUpdateRoomMuteEvent(
       roomId: roomId,
       isMuted: false,

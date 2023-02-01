@@ -47,16 +47,15 @@ class MessageGroupStatusController
       },
       request: () async {
         final x = MessageGroupStatusState();
-        x.seen.addAll(await VChatController.I.nativeApi.remote.room
-            .getMessageStatusForGroup(
-          message.roomId,
-          message.id,
+        x.seen.addAll(await VChatController.I.roomApi.getMessageStatusForGroup(
+          roomId: message.roomId,
+          messageId: message.id,
           isSeen: true,
         ));
-        x.deliver.addAll(await VChatController.I.nativeApi.remote.room
-            .getMessageStatusForGroup(
-          message.roomId,
-          message.id,
+        x.deliver
+            .addAll(await VChatController.I.roomApi.getMessageStatusForGroup(
+          roomId: message.roomId,
+          messageId: message.id,
           isSeen: false,
         ));
         return x;

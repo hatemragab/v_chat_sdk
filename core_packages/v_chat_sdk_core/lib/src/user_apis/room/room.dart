@@ -33,15 +33,21 @@ class RoomApi {
     }
   }
 
-  Future<bool> changeRoomNotification(String roomId) async {
-    final res = await _vNativeApi.remote.room.changeRoomNotification(roomId);
+  Future<bool> changeRoomNotification({
+    required String roomId,
+    required bool isMuted,
+  }) async {
+    await _vNativeApi.remote.room.changeRoomNotification(
+      roomId: roomId,
+      isMuted: isMuted,
+    );
     await _vNativeApi.local.room.updateRoomIsMuted(
       VUpdateRoomMuteEvent(
         roomId: roomId,
-        isMuted: res,
+        isMuted: isMuted,
       ),
     );
-    return res;
+    return isMuted;
   }
 
   Future<bool> changeGroupMemberRole({

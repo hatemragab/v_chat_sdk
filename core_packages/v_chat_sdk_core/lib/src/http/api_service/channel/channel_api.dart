@@ -24,9 +24,12 @@ abstract class ChannelApi extends ChopperService {
   @Get(path: "/{roomId}")
   Future<Response> getRoomById(@Path() String roomId);
 
-  @Patch(path: "/{roomId}/notification", optionalBody: true)
+  @Patch(
+    path: "/{roomId}/notification",
+  )
   Future<Response> changeRoomNotification(
     @Path() String roomId,
+    @Body() Map<String, dynamic> body,
   );
 
   ///delete room

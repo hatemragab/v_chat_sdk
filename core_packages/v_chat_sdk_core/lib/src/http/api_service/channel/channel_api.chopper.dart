@@ -50,12 +50,17 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
-  Future<Response<dynamic>> changeRoomNotification(String roomId) {
+  Future<Response<dynamic>> changeRoomNotification(
+    String roomId,
+    Map<String, dynamic> body,
+  ) {
     final Uri $url = Uri.parse('channel/${roomId}/notification');
+    final $body = body;
     final Request $request = Request(
       'PATCH',
       $url,
       client.baseUrl,
+      body: $body,
     );
     return client.send<dynamic, dynamic>($request);
   }

@@ -25,12 +25,14 @@ class VChannelApiService {
     throwIfNotSuccess(res);
   }
 
-  Future<bool> changeRoomNotification(
-    String roomId,
-  ) async {
-    final res = await _channelApiService!.changeRoomNotification(roomId);
+  Future<bool> changeRoomNotification({
+    required String roomId,
+    required bool isMuted,
+  }) async {
+    final res = await _channelApiService!
+        .changeRoomNotification(roomId, {"isMuted": isMuted});
     throwIfNotSuccess(res);
-    return true;
+    return (res.body as Map<String, dynamic>)['data'] as bool;
   }
 
   Future<bool> deleteRoom(
