@@ -21,7 +21,7 @@ abstract class AuthApi extends ChopperService {
     @PartFile("file") MultipartFile? file,
   );
 
-  @Post(path: "/logout")
+  @Post(path: "/logout", optionalBody: true)
   Future<Response> logout();
 
   static AuthApi create({

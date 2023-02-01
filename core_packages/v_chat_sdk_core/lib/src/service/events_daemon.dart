@@ -1,9 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:v_chat_sdk_core/src/events/events.dart';
-import 'package:v_chat_sdk_core/src/models/models.dart';
-import 'package:v_chat_sdk_core/src/v_chat_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -62,7 +59,9 @@ class EventsDaemon {
         );
       }
     }
-    if (message is VVoiceMessage && VPlatforms.isMobile && !message.isMeSender) {
+    if (message is VVoiceMessage &&
+        VPlatforms.isMobile &&
+        !message.isMeSender) {
       await DefaultCacheManager().getSingleFile(
         message.data.fileSource.url!,
         key: message.data.fileSource.getUrlPath,

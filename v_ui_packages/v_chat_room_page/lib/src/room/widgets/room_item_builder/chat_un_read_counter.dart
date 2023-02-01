@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart' hide Badge;
-import 'package:badges/badges.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../shared/colored_circle_container.dart';
 
 class ChatUnReadWidget extends StatelessWidget {
   final int unReadCount;
@@ -19,8 +16,9 @@ class ChatUnReadWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         width: 22,
         alignment: Alignment.center,
-        decoration: const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
-        child: unReadCount.toString().text  ,
+        decoration:
+            const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+        child: unReadCount.toString().text,
       ),
     );
   }

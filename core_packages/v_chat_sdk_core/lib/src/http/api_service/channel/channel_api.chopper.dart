@@ -264,10 +264,26 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
+  Future<Response<dynamic>> updateGroupDescription(
+    String roomId,
+    Map<String, dynamic> body,
+  ) {
+    final Uri $url = Uri.parse('channel/${roomId}/group/description');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> getMessageStatusForGroup(
     String roomId,
     String mId,
-    Map<String, Object> query,
+    Map<String, dynamic> query,
     String type,
   ) {
     final Uri $url =

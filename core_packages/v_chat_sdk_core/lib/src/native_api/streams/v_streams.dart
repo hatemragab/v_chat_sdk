@@ -9,6 +9,9 @@ class VStreams {
   Stream<VSocketStatusEvent> get socketStatusStream =>
       _emitter.on<VSocketStatusEvent>();
 
+  Stream<VTotalUnReadCount> get totalUnreadMessageCountStream =>
+      _emitter.on<VTotalUnReadCount>();
+
   Stream<VSocketIntervalEvent> get socketIntervalStream =>
       _emitter.on<VSocketIntervalEvent>();
 

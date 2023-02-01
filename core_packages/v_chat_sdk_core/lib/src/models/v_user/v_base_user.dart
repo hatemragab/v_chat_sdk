@@ -1,4 +1,4 @@
-import 'package:v_chat_sdk_core/src/models/v_user/v_user_image.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VBaseUser {
   final String vChatId;
@@ -12,6 +12,8 @@ class VBaseUser {
     required this.fullName,
     required this.userImages,
   });
+
+  bool get isMe => VAppConstants.myId == vChatId;
 
   @override
   bool operator ==(Object other) =>
@@ -86,6 +88,8 @@ class VIdentifierUser {
 
   @override
   int get hashCode => identifier.hashCode ^ baseUser.hashCode;
+
+  bool get isMe => baseUser.isMe;
 
   @override
   String toString() {

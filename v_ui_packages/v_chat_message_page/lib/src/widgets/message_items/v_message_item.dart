@@ -130,11 +130,11 @@ class VMessageItem extends StatelessWidget {
 
   Widget _getChild(VBaseMessage message, BuildContext context) {
     switch (message.messageType) {
-      case MessageType.allDeleted:
+      case VMessageType.allDeleted:
         return AllDeletedItem(
           message: message as VAllDeletedMessage,
         );
-      case MessageType.text:
+      case VMessageType.text:
         return TextMessageItem(
           message: (message as VTextMessage).realContent,
           textStyle: context.vMessageTheme.textItemStyle(
@@ -159,40 +159,40 @@ class VMessageItem extends StatelessWidget {
           },
         );
 
-      case MessageType.image:
+      case VMessageType.image:
         return ImageMessageItem(
           message: message as VImageMessage,
         );
-      case MessageType.file:
+      case VMessageType.file:
         return FileMessageItem(
           message: message as VFileMessage,
         );
-      case MessageType.video:
+      case VMessageType.video:
         return VideoMessageItem(
           message: message as VVideoMessage,
         );
-      case MessageType.voice:
+      case VMessageType.voice:
         return VoiceMessageItem(
           message: message as VVoiceMessage,
           voiceController: voiceController!,
         );
-      case MessageType.location:
+      case VMessageType.location:
         return LocationMessageItem(
           message: message as VLocationMessage,
         );
 
-      case MessageType.call:
+      case VMessageType.call:
         return CallMessageItem(
           message: message as VCallMessage,
         );
-      case MessageType.custom:
+      case VMessageType.custom:
         return context.vMessageTheme.customMessageItem(
           context,
           message.isMeSender,
           (message as VCustomMessage).data.data,
         );
 
-      case MessageType.info:
+      case VMessageType.info:
         throw "MessageType.info should not render her it center render!";
     }
   }

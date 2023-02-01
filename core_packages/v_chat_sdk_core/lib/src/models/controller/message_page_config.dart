@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 typedef UserActionType = Function(
   BuildContext context,
@@ -39,4 +38,58 @@ class VMessagePageConfig {
     this.maxRecordTime = const Duration(minutes: 30),
     this.maxMediaSize = 1024 * 1024 * 50,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'googleMapsApiKey': googleMapsApiKey,
+      'maxRecordTime': maxRecordTime,
+      'onReportUserPress': onReportUserPress,
+      'onUserBlockAnother': onUserBlockAnother,
+      'onUserUnBlockAnother': onUserUnBlockAnother,
+      'maxMediaSize': maxMediaSize,
+    };
+  }
+
+  factory VMessagePageConfig.fromMap(Map<String, dynamic> map) {
+    return VMessagePageConfig(
+      googleMapsApiKey: map['googleMapsApiKey'] as String,
+      maxRecordTime: map['maxRecordTime'] as Duration,
+      onReportUserPress: map['onReportUserPress'] as UserActionType,
+      onUserBlockAnother: map['onUserBlockAnother'] as Function(
+        BuildContext context,
+        String peerIdentifer,
+      ),
+      onUserUnBlockAnother: map['onUserUnBlockAnother'] as Function(
+        BuildContext context,
+        String peerIdentifer,
+      ),
+      maxMediaSize: map['maxMediaSize'] as int,
+    );
+  }
+
+  VMessagePageConfig copyWith({
+    String? googleMapsApiKey,
+    Duration? maxRecordTime,
+    UserActionType? onReportUserPress,
+    Function(
+      BuildContext context,
+      String peerIdentifer,
+    )?
+        onUserBlockAnother,
+    Function(
+      BuildContext context,
+      String peerIdentifer,
+    )?
+        onUserUnBlockAnother,
+    int? maxMediaSize,
+  }) {
+    return VMessagePageConfig(
+      googleMapsApiKey: googleMapsApiKey ?? this.googleMapsApiKey,
+      maxRecordTime: maxRecordTime ?? this.maxRecordTime,
+      onReportUserPress: onReportUserPress ?? this.onReportUserPress,
+      onUserBlockAnother: onUserBlockAnother ?? this.onUserBlockAnother,
+      onUserUnBlockAnother: onUserUnBlockAnother ?? this.onUserUnBlockAnother,
+      maxMediaSize: maxMediaSize ?? this.maxMediaSize,
+    );
+  }
 }

@@ -9,7 +9,7 @@ final fakeApiMessages = [
     "plm": "Other",
     "rId": "rid1",
     "c": "first message",
-    "mT": MessageType.allDeleted.name,
+    "mT": VMessageType.allDeleted.name,
     "msgAtt": null,
     "rTo": null,
     "sAt": null,

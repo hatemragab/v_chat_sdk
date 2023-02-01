@@ -33,7 +33,7 @@ class VTextMessage extends VBaseMessage {
     super.forwardId,
     super.broadcastId,
     super.replyTo,
-  }) : super.buildMessage(messageType: MessageType.text);
+  }) : super.buildMessage(messageType: VMessageType.text);
 
   VTextMessage.fromRemoteMap(super.map) : super.fromRemoteMap();
 
@@ -42,7 +42,7 @@ class VTextMessage extends VBaseMessage {
     VMessageEmitStatus messageStatus = VMessageEmitStatus.serverConfirm,
   }) : super.buildFakeMessage(
           content: randomString(index * 25),
-          messageType: MessageType.text,
+          messageType: VMessageType.text,
           emitStatus: messageStatus,
         );
 

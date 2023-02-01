@@ -24,10 +24,12 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
     value.roomTitle = title;
     notifyListeners();
   }
+
   void setMemberCount(int count) {
-      value.memberCount = count;
-      notifyListeners();
+    value.memberCount = count;
+    notifyListeners();
   }
+
   void updateOnline() {
     if (!_vRoom.isThereBlock) {
       value.isOnline = true;

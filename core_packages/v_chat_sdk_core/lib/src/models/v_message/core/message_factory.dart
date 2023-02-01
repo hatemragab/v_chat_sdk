@@ -8,27 +8,27 @@ abstract class MessageFactory {
     if (typeNullable != null) {
       return _createMessageFromLocal(map);
     }
-    final type = MessageType.values.byName(map['mT'] as String);
+    final type = VMessageType.values.byName(map['mT'] as String);
     switch (type) {
-      case MessageType.text:
+      case VMessageType.text:
         return VTextMessage.fromRemoteMap(map);
-      case MessageType.image:
+      case VMessageType.image:
         return VImageMessage.fromRemoteMap(map);
-      case MessageType.file:
+      case VMessageType.file:
         return VFileMessage.fromRemoteMap(map);
-      case MessageType.video:
+      case VMessageType.video:
         return VVideoMessage.fromRemoteMap(map);
-      case MessageType.voice:
+      case VMessageType.voice:
         return VVoiceMessage.fromRemoteMap(map);
-      case MessageType.location:
+      case VMessageType.location:
         return VLocationMessage.fromRemoteMap(map);
-      case MessageType.allDeleted:
+      case VMessageType.allDeleted:
         return VAllDeletedMessage.fromRemoteMap(map);
-      case MessageType.info:
+      case VMessageType.info:
         return VInfoMessage.fromRemoteMap(map);
-      case MessageType.call:
+      case VMessageType.call:
         return VCallMessage.fromRemoteMap(map);
-      case MessageType.custom:
+      case VMessageType.custom:
         return VCustomMessage.fromRemoteMap(map);
     }
   }
@@ -36,28 +36,28 @@ abstract class MessageFactory {
   static VBaseMessage _createMessageFromLocal(
     Map<String, dynamic> map,
   ) {
-    final type = MessageType.values
+    final type = VMessageType.values
         .byName(map[MessageTable.columnMessageType] as String);
     switch (type) {
-      case MessageType.text:
+      case VMessageType.text:
         return VTextMessage.fromLocalMap(map);
-      case MessageType.image:
+      case VMessageType.image:
         return VImageMessage.fromLocalMap(map);
-      case MessageType.file:
+      case VMessageType.file:
         return VFileMessage.fromLocalMap(map);
-      case MessageType.video:
+      case VMessageType.video:
         return VVideoMessage.fromLocalMap(map);
-      case MessageType.voice:
+      case VMessageType.voice:
         return VVoiceMessage.fromLocalMap(map);
-      case MessageType.location:
+      case VMessageType.location:
         return VLocationMessage.fromLocalMap(map);
-      case MessageType.allDeleted:
+      case VMessageType.allDeleted:
         return VAllDeletedMessage.fromLocalMap(map);
-      case MessageType.info:
+      case VMessageType.info:
         return VInfoMessage.fromLocalMap(map);
-      case MessageType.call:
+      case VMessageType.call:
         return VCallMessage.fromLocalMap(map);
-      case MessageType.custom:
+      case VMessageType.custom:
         return VCustomMessage.fromLocalMap(map);
     }
   }

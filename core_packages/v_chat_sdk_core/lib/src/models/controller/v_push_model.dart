@@ -12,4 +12,19 @@ class VPush {
     this.fcmProvider,
     this.oneSignalProvider,
   });
+
+  VPush copyWith({
+    bool? enableVForegroundNotification,
+    VLocalNotificationPushConfig? vPushConfig,
+    VChatPushProviderBase? fcmProvider,
+    VChatPushProviderBase? oneSignalProvider,
+  }) {
+    return VPush(
+      enableVForegroundNotification:
+          enableVForegroundNotification ?? this.enableVForegroundNotification,
+      vPushConfig: vPushConfig ?? this.vPushConfig,
+      fcmProvider: fcmProvider ?? this.fcmProvider,
+      oneSignalProvider: oneSignalProvider ?? this.oneSignalProvider,
+    );
+  }
 }

@@ -48,7 +48,7 @@ class VDeleteMessageEvent extends VMessageEvents {
 }
 
 class VUpdateMessageTypeEvent extends VMessageEvents {
-  final MessageType messageType;
+  final VMessageType messageType;
 
   const VUpdateMessageTypeEvent({
     required super.roomId,

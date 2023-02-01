@@ -42,7 +42,8 @@ class VChatFcmProver extends VChatPushProviderBase {
   Future<bool> init() async {
     try {
       FirebaseMessaging.onBackgroundMessage(
-          vFirebaseMessagingBackgroundHandler);
+        vFirebaseMessagingBackgroundHandler,
+      );
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }
@@ -164,7 +165,7 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final token = VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name);
   if (token != null) {
     try {
-      await _setDeliverForThisRoom(msg.roomId, token);
+      await setDeliverForThisRoom(msg.roomId, token);
     } catch (err) {
       if (kDebugMode) {
         print(err);
@@ -180,7 +181,8 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   return Future<void>.value();
 }
 
-Future _setDeliverForThisRoom(String roomId, String token) async {
+@pragma('vm:entry-point')
+Future setDeliverForThisRoom(String roomId, String token) async {
   if (kDebugMode) {
     final res = await patch(
       Uri.parse(

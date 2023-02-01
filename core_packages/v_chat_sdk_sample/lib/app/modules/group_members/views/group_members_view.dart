@@ -26,7 +26,8 @@ class GroupMembersView extends GetView<GroupMembersController> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: VCircleAvatar(
-                      fullUrl:logic.members[index].userData.baseUser.userImages.chatImage ,
+                      fullUrl: logic.members[index].userData.baseUser.userImages
+                          .chatImage,
                     ),
                     title: logic.members[index].userData.baseUser.fullName.text,
                   );

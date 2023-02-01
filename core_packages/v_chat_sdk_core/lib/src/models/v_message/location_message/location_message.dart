@@ -64,7 +64,7 @@ class VLocationMessage extends VBaseMessage {
     super.replyTo,
   }) : super.buildMessage(
           isEncrypted: false,
-          messageType: MessageType.location,
+          messageType: VMessageType.location,
           content: VMessageConstants.thisContentIsLocation,
         );
 

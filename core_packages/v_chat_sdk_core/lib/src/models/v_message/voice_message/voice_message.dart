@@ -80,6 +80,6 @@ class VVoiceMessage extends VBaseMessage {
   }) : super.buildMessage(
           isEncrypted: false,
           content: "${VMessageConstants.thisContentIsVoice} $content",
-          messageType: MessageType.voice,
+          messageType: VMessageType.voice,
         );
 }

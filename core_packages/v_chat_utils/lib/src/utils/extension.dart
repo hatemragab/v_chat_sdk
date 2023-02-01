@@ -7,7 +7,6 @@ extension MediaQueryExt2 on BuildContext {
         this,
         MaterialPageRoute(
           builder: (context) => page,
-
         ),
       );
 

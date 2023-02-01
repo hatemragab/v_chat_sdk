@@ -1,7 +1,7 @@
 class VBaseFilter {
-    int? limit;
-    int? page;
-    String? name;
+  int? limit;
+  int? page;
+  String? name;
 
 //<editor-fold desc="Data Methods">
   VBaseFilter({
@@ -24,11 +24,7 @@ class VBaseFilter {
 
   @override
   String toString() {
-    return 'VBaseFilter{' +
-        ' limit: $limit,' +
-        ' page: $page,' +
-        ' name: $name,' +
-        '}';
+    return 'VBaseFilter{ limit: $limit, page: $page, name: $name,}';
   }
 
   VBaseFilter copyWith({
@@ -45,9 +41,9 @@ class VBaseFilter {
 
   Map<String, dynamic> toMap() {
     return {
-      'limit': this.limit,
-      'page': this.page,
-      'name': this.name,
+      'limit': limit,
+      'page': page,
+      'name': name,
     };
   }
 

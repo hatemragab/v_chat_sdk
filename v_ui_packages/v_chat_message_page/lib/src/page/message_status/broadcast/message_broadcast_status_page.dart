@@ -6,18 +6,18 @@ import 'message_broadcast_status_controller.dart';
 class VMessageBroadcastStatusPage extends StatefulWidget {
   final VBaseMessage message;
 
-
   const VMessageBroadcastStatusPage({
     Key? key,
     required this.message,
-
   }) : super(key: key);
 
   @override
-  State<VMessageBroadcastStatusPage> createState() => _VMessageBroadcastStatusPageState();
+  State<VMessageBroadcastStatusPage> createState() =>
+      _VMessageBroadcastStatusPageState();
 }
 
-class _VMessageBroadcastStatusPageState extends State<VMessageBroadcastStatusPage> {
+class _VMessageBroadcastStatusPageState
+    extends State<VMessageBroadcastStatusPage> {
   late final MessageBroadcastStatusController controller;
 
   @override

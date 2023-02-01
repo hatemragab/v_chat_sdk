@@ -74,7 +74,6 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
     if (msg == null) return 0;
     final i = _messages.indexOf(msg);
     _messages[i].messageType = event.messageType;
-    print("updateMessageTypeupdateMessageType $event");
     return Future.value(1);
   }
 

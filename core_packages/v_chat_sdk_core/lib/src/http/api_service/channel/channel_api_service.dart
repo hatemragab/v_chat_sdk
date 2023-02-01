@@ -185,16 +185,20 @@ class VChannelApiService {
     throwIfNotSuccess(res);
     final list = extractDataFromResponse(res)['docs'] as List;
     final users = list
-        .map((e) => VIdentifierUser.fromMap(
-              (e as Map<String, dynamic>)['userData'] as Map<String, dynamic>,
-            ))
+        .map(
+          (e) => VIdentifierUser.fromMap(
+            (e as Map<String, dynamic>)['userData'] as Map<String, dynamic>,
+          ),
+        )
         .toList();
     return users
-        .map((e) => VMentionModel(
-              identifier: e.identifier,
-              name: e.baseUser.fullName,
-              image: e.baseUser.userImages.smallImage,
-            ))
+        .map(
+          (e) => VMentionModel(
+            identifier: e.identifier,
+            name: e.baseUser.fullName,
+            image: e.baseUser.userImages.smallImage,
+          ),
+        )
         .toList();
   }
 
@@ -204,10 +208,10 @@ class VChannelApiService {
     return true;
   }
 
-  Future<bool> updateGroupTitle(
-    String roomId,
-    String title,
-  ) async {
+  Future<bool> updateGroupTitle({
+    required String roomId,
+    required String title,
+  }) async {
     final res = await _channelApiService!.updateGroupTitle(roomId, {
       "title": title,
     });
@@ -215,25 +219,36 @@ class VChannelApiService {
     return true;
   }
 
-  Future<bool> updateGroupExtraData(
-    String roomId,
-    Map<String, dynamic> data,
-  ) async {
+  Future<bool> updateGroupDescription({
+    required String roomId,
+    required String description,
+  }) async {
+    final res = await _channelApiService!.updateGroupDescription(roomId, {
+      "description": description,
+    });
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> updateGroupExtraData({
+    required String roomId,
+    required Map<String, dynamic> data,
+  }) async {
     final res = await _channelApiService!.updateGroupExtraData(roomId, data);
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<List<VMessageStatusModel>> getMessageStatusForGroup(
-    String roomId,
-    String messageId, {
-    Map<String, Object>? pagination,
+  Future<List<VMessageStatusModel>> getMessageStatusForGroup({
+    required String roomId,
+    required String messageId,
+    VBaseFilter? pagination,
     required bool isSeen,
   }) async {
     final res = await _channelApiService!.getMessageStatusForGroup(
       roomId,
       messageId,
-      pagination??{},
+      pagination == null ? {} : pagination.toMap(),
       isSeen ? "seen" : "deliver",
     );
 
@@ -244,10 +259,10 @@ class VChannelApiService {
         .toList();
   }
 
-  Future<String> updateGroupImage(
-    String roomId,
-    VPlatformFileSource file,
-  ) async {
+  Future<String> updateGroupImage({
+    required String roomId,
+    required VPlatformFileSource file,
+  }) async {
     final res = await _channelApiService!.updateGroupImage(
       roomId,
       await VPlatforms.getMultipartFile(
@@ -257,18 +272,6 @@ class VChannelApiService {
     throwIfNotSuccess(res);
     return (res.body as Map<String, dynamic>)['data'] as String;
   }
-
-  // Future<VSingleBanModel> getMySingleRoomInfo(
-  //   String roomId,
-  // ) async {
-  //   final res = await _channelApiService.getMySingleRoomInfo(
-  //     roomId,
-  //   );
-  //   throwIfNotSuccess(res);
-  //   return VSingleBanModel.fromMap(
-  //     extractDataFromResponse(res),
-  //   );
-  // }
 
   Future<List<VGroupMember>> getGroupMembers(
     String roomId, {
@@ -284,37 +287,37 @@ class VChannelApiService {
         .toList();
   }
 
-  Future<bool> addParticipantsToGroup(
-    String roomId,
-    List<String> ids,
-  ) async {
+  Future<bool> addParticipantsToGroup({
+    required String roomId,
+    required List<String> ids,
+  }) async {
     final res = await _channelApiService!
         .addParticipantsToGroup(roomId, {"identifiers": ids});
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<bool> changeUserGroupRole(
-    String roomId,
-    String peerId,
-    VGroupMemberRole role,
-  ) async {
+  Future<bool> changeUserGroupRole({
+    required String roomId,
+    required String peerIdentifier,
+    required VGroupMemberRole role,
+  }) async {
     final res = await _channelApiService!.changeUserGroupRole(
       roomId,
-      peerId,
+      peerIdentifier,
       role.name,
     );
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<bool> kickGroupUser(
-    String roomId,
-    String peerId,
-  ) async {
+  Future<bool> kickGroupUser({
+    required String roomId,
+    required String peerIdentifier,
+  }) async {
     final res = await _channelApiService!.kickGroupUser(
       roomId,
-      peerId,
+      peerIdentifier,
     );
     throwIfNotSuccess(res);
     return true;

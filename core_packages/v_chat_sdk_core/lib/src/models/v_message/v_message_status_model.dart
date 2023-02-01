@@ -8,14 +8,15 @@ class VMessageStatusModel {
 
 //<editor-fold desc="Data Methods">
   const VMessageStatusModel({
-    required  this.deliveredAt,
+    required this.deliveredAt,
     this.seenAt,
     required this.sendAt,
     required this.identifierUser,
   });
 
   DateTime get delivered => DateTime.parse(deliveredAt).toLocal();
-  DateTime? get seen =>seenAt==null?null: DateTime.parse(seenAt!).toLocal();
+  DateTime? get seen =>
+      seenAt == null ? null : DateTime.parse(seenAt!).toLocal();
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -28,8 +29,10 @@ class VMessageStatusModel {
 
   @override
   int get hashCode =>
-      deliveredAt.hashCode ^ seenAt.hashCode ^ sendAt.hashCode ^ identifierUser.hashCode;
-
+      deliveredAt.hashCode ^
+      seenAt.hashCode ^
+      sendAt.hashCode ^
+      identifierUser.hashCode;
 
   @override
   String toString() {

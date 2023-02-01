@@ -14,7 +14,7 @@ class MessageGroupStatusController
 
   MessageGroupStatusController(this.message)
       : super(MessageGroupStatusState()) {
-     getData();
+    getData();
   }
 
   VChatLoadingState state = VChatLoadingState.ideal;
@@ -39,8 +39,7 @@ class MessageGroupStatusController
     return null;
   }
 
-
-  void  getData() async {
+  void getData() async {
     await vSafeApiCall<MessageGroupStatusState>(
       onLoading: () {
         state = VChatLoadingState.loading;

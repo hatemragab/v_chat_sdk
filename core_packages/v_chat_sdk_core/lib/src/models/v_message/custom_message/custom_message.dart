@@ -38,7 +38,7 @@ class VCustomMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          messageType: MessageType.custom,
+          messageType: VMessageType.custom,
         );
   VCustomMessage.fromRemoteMap(super.map)
       : data = VCustomMsgData.fromMap(map['msgAtt'] as Map<String, dynamic>),

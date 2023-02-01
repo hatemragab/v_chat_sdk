@@ -27,7 +27,9 @@ class ReplyItemWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: InkWell(
-        onTap:onHighlightMessage==null?null: () => onHighlightMessage!(rToMessage!),
+        onTap: onHighlightMessage == null
+            ? null
+            : () => onHighlightMessage!(rToMessage!),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

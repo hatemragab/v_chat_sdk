@@ -81,6 +81,6 @@ class VFileMessage extends VBaseMessage {
     super.replyTo,
   }) : super.buildMessage(
           content: VMessageConstants.thisContentIsFile,
-          messageType: MessageType.file,
+          messageType: VMessageType.file,
         );
 }

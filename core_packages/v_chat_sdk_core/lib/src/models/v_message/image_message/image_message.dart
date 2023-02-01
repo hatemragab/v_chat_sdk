@@ -60,7 +60,7 @@ class VImageMessage extends VBaseMessage {
   }) : super.buildMessage(
           isEncrypted: false,
           content: VMessageConstants.thisContentIsImage,
-          messageType: MessageType.image,
+          messageType: VMessageType.image,
         );
 
   @override
@@ -92,7 +92,7 @@ class VImageMessage extends VBaseMessage {
         ),
         super.buildFakeMessage(
           content: "Fake this is fake image message",
-          messageType: MessageType.image,
+          messageType: VMessageType.image,
           emitStatus: VMessageEmitStatus.serverConfirm,
         );
 }

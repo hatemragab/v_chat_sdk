@@ -173,7 +173,7 @@ class VMessageItemController {
       for (final roomId in ids) {
         VBaseMessage? message;
         switch (baseMessage.messageType) {
-          case MessageType.text:
+          case VMessageType.text:
             message = VTextMessage.buildMessage(
               content: baseMessage.realContent,
               roomId: roomId,
@@ -181,14 +181,14 @@ class VMessageItemController {
               isEncrypted: baseMessage.isEncrypted,
             );
             break;
-          case MessageType.image:
+          case VMessageType.image:
             message = VImageMessage.buildMessage(
               data: (baseMessage as VImageMessage).data,
               roomId: roomId,
               forwardId: baseMessage.localId,
             );
             break;
-          case MessageType.file:
+          case VMessageType.file:
             message = VFileMessage.buildMessage(
               data: (baseMessage as VFileMessage).data,
               isEncrypted: false,
@@ -196,14 +196,14 @@ class VMessageItemController {
               forwardId: baseMessage.localId,
             );
             break;
-          case MessageType.video:
+          case VMessageType.video:
             message = VVideoMessage.buildMessage(
               data: (baseMessage as VVideoMessage).data,
               roomId: roomId,
               forwardId: baseMessage.localId,
             );
             break;
-          case MessageType.voice:
+          case VMessageType.voice:
             message = VVoiceMessage.buildMessage(
               data: (baseMessage as VVoiceMessage).data,
               roomId: roomId,
@@ -211,18 +211,18 @@ class VMessageItemController {
               forwardId: baseMessage.localId,
             );
             break;
-          case MessageType.location:
+          case VMessageType.location:
             message = VLocationMessage.buildMessage(
               data: (baseMessage as VLocationMessage).data,
               roomId: roomId,
               forwardId: baseMessage.localId,
             );
             break;
-          case MessageType.allDeleted:
+          case VMessageType.allDeleted:
             break;
-          case MessageType.call:
+          case VMessageType.call:
             break;
-          case MessageType.custom:
+          case VMessageType.custom:
             message = VCustomMessage.buildMessage(
               data: (baseMessage as VCustomMessage).data,
               content: baseMessage.realContent,
@@ -231,7 +231,7 @@ class VMessageItemController {
               forwardId: baseMessage.localId,
             );
             break;
-          case MessageType.info:
+          case VMessageType.info:
             break;
         }
         if (message != null) {

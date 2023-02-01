@@ -6,7 +6,7 @@ class GroupMembersBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<GroupMembersController>(
-       GroupMembersController(Get.arguments),
+      GroupMembersController(Get.arguments),
     );
   }
 }

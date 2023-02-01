@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:v_chat_message_page/src/page/message_page/v_message_item_controller.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/v_message_item.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -56,8 +55,6 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
                   ),
                 ),
               ),
-
-
               const SizedBox(
                 height: 20,
               ),

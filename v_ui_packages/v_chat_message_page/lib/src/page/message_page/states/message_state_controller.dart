@@ -57,7 +57,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   }
 
   void _updateCacheState(List<VBaseMessage> apiMessages) {
-    if(apiMessages.isEmpty)return;
+    if (apiMessages.isEmpty) return;
     final stateMessages = value;
     final newList = <VBaseMessage>[];
     newList.addAll(apiMessages);
@@ -100,7 +100,6 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     closeSocketStatusStream();
   }
 
-
   int _indexByLocalId(String localId) =>
       value.indexWhere((e) => e.localId == localId);
 
@@ -114,7 +113,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
 
   void updateMessageType(
     String localId,
-    MessageType messageType,
+    VMessageType messageType,
   ) {
     final index = _indexByLocalId(localId);
     if (index != -1) {

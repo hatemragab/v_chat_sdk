@@ -318,6 +318,7 @@ class VMessageController {
           title: vRoom.title,
           image: vRoom.thumbImage,
           roomId: roomId,
+          room: vRoom,
         ),
       );
       return;
@@ -331,6 +332,7 @@ class VMessageController {
           title: vRoom.title,
           image: vRoom.thumbImage,
           roomId: roomId,
+          room: vRoom,
         ),
       );
       return;
@@ -341,6 +343,7 @@ class VMessageController {
           title: vRoom.title,
           image: vRoom.thumbImage,
           roomId: roomId,
+          room: vRoom,
         ),
       );
       return;

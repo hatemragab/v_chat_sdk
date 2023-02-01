@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:v_chat_sdk_core/src/models/v_message/base_message/v_base_message.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_voice_player/src/voice_message_controller.dart';
+import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 class MessageSingleStatusController extends ValueNotifier {
   MessageSingleStatusController() : super([]);

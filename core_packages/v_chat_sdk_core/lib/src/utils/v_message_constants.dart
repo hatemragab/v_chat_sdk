@@ -24,6 +24,7 @@ abstract class VMessageConstants {
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).leftTheGroup}";
         case VMessageInfoType.kick:
           if (infoAtt.isMe) {
+            ///todo fix trans
             return "You ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}";
           }
           return "${infoAtt.targetName} ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}";

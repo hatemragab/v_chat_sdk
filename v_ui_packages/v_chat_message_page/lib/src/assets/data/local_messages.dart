@@ -57,7 +57,7 @@ final fakeLocalMessages = [
     "tb_m_s_img": "default_user_image.png",
     "tb_m_room_id": "rid1",
     "tb_m_content": "image",
-    "tb_m_type": MessageType.image.name,
+    "tb_m_type": VMessageType.image.name,
     "tb_m_att": jsonEncode(
       VMessageImageData(
         fileSource: VPlatformFileSource.fromUrl(url: "url"),

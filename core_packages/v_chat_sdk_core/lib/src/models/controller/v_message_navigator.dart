@@ -71,6 +71,43 @@ class VMessageNavigator {
     this.toBroadcastSettings,
     this.toGroupSettings,
   });
+
+  VMessageNavigator copyWith({
+    VInfoMessageRouteFunction? toSingleChatMessageInfo,
+    VInfoMessageRouteFunction? toGroupChatMessageInfo,
+    VInfoMessageRouteFunction? toBroadcastChatMessageInfo,
+    VMediaViewerFunction? toImageViewer,
+    VMediaViewerFunction? toVideoPlayer,
+    Function(BuildContext context, String roomId)? toViewChatMedia,
+    VToUserProfileFunction? toUserProfilePage,
+    VToUserProfileFunction? toSingleSettings,
+    VToChatSettingsFunction? toOrderSettings,
+    VToChatSettingsFunction? toGroupSettings,
+    VToChatSettingsFunction? toBroadcastSettings,
+    Function(
+      BuildContext context,
+      VRoom vRoom,
+    )?
+        toMessagePage,
+  }) {
+    return VMessageNavigator(
+      toSingleChatMessageInfo:
+          toSingleChatMessageInfo ?? this.toSingleChatMessageInfo,
+      toGroupChatMessageInfo:
+          toGroupChatMessageInfo ?? this.toGroupChatMessageInfo,
+      toBroadcastChatMessageInfo:
+          toBroadcastChatMessageInfo ?? this.toBroadcastChatMessageInfo,
+      toImageViewer: toImageViewer ?? this.toImageViewer,
+      toVideoPlayer: toVideoPlayer ?? this.toVideoPlayer,
+      toViewChatMedia: toViewChatMedia ?? this.toViewChatMedia,
+      toUserProfilePage: toUserProfilePage ?? this.toUserProfilePage,
+      toSingleSettings: toSingleSettings ?? this.toSingleSettings,
+      toOrderSettings: toOrderSettings ?? this.toOrderSettings,
+      toGroupSettings: toGroupSettings ?? this.toGroupSettings,
+      toBroadcastSettings: toBroadcastSettings ?? this.toBroadcastSettings,
+      toMessagePage: toMessagePage ?? this.toMessagePage,
+    );
+  }
 }
 
 class VNavigator {

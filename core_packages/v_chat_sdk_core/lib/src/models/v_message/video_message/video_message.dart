@@ -54,7 +54,7 @@ class VVideoMessage extends VBaseMessage {
     super.replyTo,
   }) : super.buildMessage(
           isEncrypted: false,
-          messageType: MessageType.video,
+          messageType: VMessageType.video,
           content: VMessageConstants.thisContentIsVideo,
         );
 

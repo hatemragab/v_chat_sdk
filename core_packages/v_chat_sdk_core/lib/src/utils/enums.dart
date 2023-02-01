@@ -1,6 +1,6 @@
 enum VChatHttpMethods { get, post, patch, delete, put }
 
-enum MessageType {
+enum VMessageType {
   text,
   image,
   file,
@@ -13,34 +13,34 @@ enum MessageType {
   info,
 }
 
-extension MessageTypeExt on MessageType {
-  bool get isImage => this == MessageType.image;
+extension MessageTypeExt on VMessageType {
+  bool get isImage => this == VMessageType.image;
 
-  bool get isInfo => this == MessageType.info;
+  bool get isInfo => this == VMessageType.info;
 
-  bool get isVideo => this == MessageType.video;
+  bool get isVideo => this == VMessageType.video;
 
-  bool get isLocation => this == MessageType.location;
+  bool get isLocation => this == VMessageType.location;
 
-  bool get isVoice => this == MessageType.voice;
+  bool get isVoice => this == VMessageType.voice;
 
-  bool get isFile => this == MessageType.file;
+  bool get isFile => this == VMessageType.file;
 
-  bool get isText => this == MessageType.text;
+  bool get isText => this == VMessageType.text;
 
-  bool get isAllDeleted => this == MessageType.allDeleted;
+  bool get isAllDeleted => this == VMessageType.allDeleted;
 
-  bool get isCenter => this == MessageType.info;
+  bool get isCenter => this == VMessageType.info;
 }
 
-enum NotificationType {
+enum VNotificationType {
   groupChat,
   singleChat,
   broadcastChat,
   deleteMessage,
 }
 
-enum GroupMsgInfo {
+enum VGroupMsgInfo {
   gLeave,
   gJoin,
   gUpgrade,
@@ -52,12 +52,12 @@ enum GroupMsgInfo {
   bDeleted,
 }
 
-enum CallStatus {
+enum VCallStatus {
   inComing,
   cancel,
 }
 
-enum SocketStateType { connected, connecting }
+enum VSocketStateType { connected, connecting }
 
 ///s is single room (one to one chat)
 ///g is group chat

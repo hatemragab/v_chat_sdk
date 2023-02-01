@@ -13,6 +13,17 @@ class VChatConfig {
   final String encryptHashKey;
   final Uri baseUrl;
 
+  bool get isPushEnable =>
+      vPush.fcmProvider != null || vPush.oneSignalProvider != null;
+
+  VChatPushProviderBase? currentPushProviderService;
+
+  Future cleanNotifications() async {
+    if (!isPushEnable || VPlatforms.isWeb) return;
+    await currentPushProviderService!.cleanAll();
+  }
+
+//<editor-fold desc="Data Methods">
   VChatConfig({
     required this.vPush,
     required this.encryptHashKey,
@@ -23,13 +34,82 @@ class VChatConfig {
     this.maxBroadcastMembers = 512,
   });
 
-  bool get isPushEnable =>
-      vPush.fcmProvider != null || vPush.oneSignalProvider != null;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VChatConfig &&
+          runtimeType == other.runtimeType &&
+          vPush == other.vPush &&
+          enableLog == other.enableLog &&
+          enableMessageEncryption == other.enableMessageEncryption &&
+          maxGroupMembers == other.maxGroupMembers &&
+          maxBroadcastMembers == other.maxBroadcastMembers &&
+          encryptHashKey == other.encryptHashKey &&
+          baseUrl == other.baseUrl &&
+          currentPushProviderService == other.currentPushProviderService);
 
-  VChatPushProviderBase? currentPushProviderService;
+  @override
+  int get hashCode =>
+      vPush.hashCode ^
+      enableLog.hashCode ^
+      enableMessageEncryption.hashCode ^
+      maxGroupMembers.hashCode ^
+      maxBroadcastMembers.hashCode ^
+      encryptHashKey.hashCode ^
+      baseUrl.hashCode ^
+      currentPushProviderService.hashCode;
 
-  Future cleanNotifications() async {
-    if (!isPushEnable || VPlatforms.isWeb) return;
-    await currentPushProviderService!.cleanAll();
+  @override
+  String toString() {
+    return 'VChatConfig{ vPush: $vPush, enableLog: $enableLog, enableMessageEncryption: $enableMessageEncryption, maxGroupMembers: $maxGroupMembers, maxBroadcastMembers: $maxBroadcastMembers, encryptHashKey: $encryptHashKey, baseUrl: $baseUrl, currentPushProviderService: $currentPushProviderService,}';
   }
+
+  VChatConfig copyWith({
+    VPush? vPush,
+    bool? enableLog,
+    bool? enableMessageEncryption,
+    int? maxGroupMembers,
+    int? maxBroadcastMembers,
+    String? encryptHashKey,
+    Uri? baseUrl,
+    VChatPushProviderBase? currentPushProviderService,
+  }) {
+    return VChatConfig(
+      vPush: vPush ?? this.vPush,
+      enableLog: enableLog ?? this.enableLog,
+      enableMessageEncryption:
+          enableMessageEncryption ?? this.enableMessageEncryption,
+      maxGroupMembers: maxGroupMembers ?? this.maxGroupMembers,
+      maxBroadcastMembers: maxBroadcastMembers ?? this.maxBroadcastMembers,
+      encryptHashKey: encryptHashKey ?? this.encryptHashKey,
+      baseUrl: baseUrl ?? this.baseUrl,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'vPush': vPush,
+      'enableLog': enableLog,
+      'enableMessageEncryption': enableMessageEncryption,
+      'maxGroupMembers': maxGroupMembers,
+      'maxBroadcastMembers': maxBroadcastMembers,
+      'encryptHashKey': encryptHashKey,
+      'baseUrl': baseUrl,
+      'currentPushProviderService': currentPushProviderService,
+    };
+  }
+
+  factory VChatConfig.fromMap(Map<String, dynamic> map) {
+    return VChatConfig(
+      vPush: map['vPush'] as VPush,
+      enableLog: map['enableLog'] as bool,
+      enableMessageEncryption: map['enableMessageEncryption'] as bool,
+      maxGroupMembers: map['maxGroupMembers'] as int,
+      maxBroadcastMembers: map['maxBroadcastMembers'] as int,
+      encryptHashKey: map['encryptHashKey'] as String,
+      baseUrl: map['baseUrl'] as Uri,
+    );
+  }
+
+//</editor-fold>
 }

@@ -49,6 +49,7 @@ class UsersTabController extends GetxController {
   }
 
   Future onItemPress(VIdentifierUser item) async {
-    await VChatController.I.roomApi.openChatWith(Get.context!, item.identifier);
+    await VChatController.I.roomApi
+        .openChatWith(peerIdentifier: item.identifier);
   }
 }

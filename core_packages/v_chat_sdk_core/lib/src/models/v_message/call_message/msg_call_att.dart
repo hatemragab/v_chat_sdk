@@ -1,7 +1,7 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VMsgCallAtt {
-  final CallStatus status;
+  final VCallStatus status;
   final int? duration;
   final String callerId;
 
@@ -25,7 +25,7 @@ class VMsgCallAtt {
 
   factory VMsgCallAtt.fromMap(Map<String, dynamic> map) {
     return VMsgCallAtt(
-      status: CallStatus.values.byName(map['status'] as String),
+      status: VCallStatus.values.byName(map['status'] as String),
       duration: map['duration'] as int?,
       callerId: map['callerId'] as String,
     );

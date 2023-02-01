@@ -25,4 +25,20 @@ class VMessageUploadModel {
 
   @override
   int get hashCode => msgLocalId.hashCode;
+
+  VMessageUploadModel copyWith({
+    List<PartValue>? body,
+    http.MultipartFile? file1,
+    http.MultipartFile? file2,
+    String? roomId,
+    String? msgLocalId,
+  }) {
+    return VMessageUploadModel(
+      body: body ?? this.body,
+      file1: file1 ?? this.file1,
+      file2: file2 ?? this.file2,
+      roomId: roomId ?? this.roomId,
+      msgLocalId: msgLocalId ?? this.msgLocalId,
+    );
+  }
 }

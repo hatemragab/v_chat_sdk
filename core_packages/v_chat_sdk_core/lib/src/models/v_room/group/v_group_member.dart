@@ -13,14 +13,13 @@ class VGroupMember {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          (other is VGroupMember &&
-              runtimeType == other.runtimeType &&
-              userData == other.userData &&
-              role == other.role);
+      (other is VGroupMember &&
+          runtimeType == other.runtimeType &&
+          userData == other.userData &&
+          role == other.role);
 
   @override
   int get hashCode => userData.hashCode ^ role.hashCode;
-
 
   @override
   String toString() {
@@ -32,22 +31,23 @@ class VGroupMember {
     VGroupMemberRole? role,
   }) {
     return VGroupMember(
-      userData: user ?? this.userData,
+      userData: user ?? userData,
       role: role ?? this.role,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'userData': this.userData,
-      'gR': this.role.name,
+      'userData': userData,
+      'gR': role.name,
     };
   }
 
   factory VGroupMember.fromMap(Map<String, dynamic> map) {
     return VGroupMember(
-      userData: VIdentifierUser.fromMap(map['userData'] as Map<String, dynamic>),
-      role:VGroupMemberRole.values.byName( map['gR'] as String)  ,
+      userData:
+          VIdentifierUser.fromMap(map['userData'] as Map<String, dynamic>),
+      role: VGroupMemberRole.values.byName(map['gR'] as String),
     );
   }
 

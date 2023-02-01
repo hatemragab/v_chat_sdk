@@ -84,8 +84,12 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
             });
           },
           child: isShowMoreEnabled
-              ? const Icon(Icons.arrow_circle_down, )
-              : const Icon(Icons.arrow_circle_up, ),
+              ? const Icon(
+                  Icons.arrow_circle_down,
+                )
+              : const Icon(
+                  Icons.arrow_circle_up,
+                ),
         )
       ],
     );

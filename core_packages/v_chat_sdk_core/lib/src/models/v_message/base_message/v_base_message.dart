@@ -48,7 +48,7 @@ abstract class VBaseMessage {
 
   @protected
   final String content;
-  MessageType messageType;
+  VMessageType messageType;
 
   ///serverConfirm,error,sending
   VMessageEmitStatus emitStatus;
@@ -91,7 +91,7 @@ abstract class VBaseMessage {
         roomId = map['rId'] as String,
         isStared = (map['isStared'] as bool?) ?? false,
         content = map['c'] as String,
-        messageType = MessageType.values.byName(map['mT'] as String),
+        messageType = VMessageType.values.byName(map['mT'] as String),
         replyTo = map['rTo'] == null
             ? null
             : MessageFactory.createBaseMessage(
@@ -134,7 +134,7 @@ abstract class VBaseMessage {
         updatedAt = map[MessageTable.columnUpdatedAt] as String,
         emitStatus = VMessageEmitStatus.values
             .byName(map[MessageTable.columnMessageEmitStatus] as String),
-        messageType = MessageType.values
+        messageType = VMessageType.values
             .byName(map[MessageTable.columnMessageType] as String);
 
   Map<String, Object?> toLocalMap() {

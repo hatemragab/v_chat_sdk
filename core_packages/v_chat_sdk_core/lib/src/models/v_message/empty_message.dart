@@ -11,7 +11,7 @@ class VEmptyMessage extends VBaseMessage {
           platform: "EmptyMessage",
           roomId: "EmptyMessage",
           content: "",
-          messageType: MessageType.text,
+          messageType: VMessageType.text,
           localId: "EmptyMessage",
           createdAt: DateTime.now().toLocal().toIso8601String(),
           updatedAt: DateTime.now().toLocal().toIso8601String(),

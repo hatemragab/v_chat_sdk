@@ -1,3 +1,4 @@
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_sdk_core/src/utils/enums.dart';
 
 class VMyGroupInfo {
@@ -15,12 +16,19 @@ class VMyGroupInfo {
     required this.groupSettings,
   });
 
+  bool get isMeMember => myRole == VGroupMemberRole.member;
+
+  bool get isMeAdmin => myRole == VGroupMemberRole.admin;
+
+  bool get isMeSuperAdmin => myRole == VGroupMemberRole.superAdmin;
+
+  bool get isMeAdminOrSuperAdmin => isMeAdmin || isMeSuperAdmin;
+
   VMyGroupInfo.empty()
       : membersCount = 0,
         myRole = VGroupMemberRole.member,
         groupSettings = VMyGroupSettings.empty(),
         isMeOut = false;
-
 
   @override
   String toString() {
@@ -49,6 +57,19 @@ class VMyGroupInfo {
     );
   }
 
+  VMyGroupInfo copyWith({
+    bool? isMeOut,
+    int? membersCount,
+    VGroupMemberRole? myRole,
+    VMyGroupSettings? groupSettings,
+  }) {
+    return VMyGroupInfo(
+      isMeOut: isMeOut ?? this.isMeOut,
+      membersCount: membersCount ?? this.membersCount,
+      myRole: myRole ?? this.myRole,
+      groupSettings: groupSettings ?? this.groupSettings,
+    );
+  }
 //</editor-fold>
 }
 
@@ -57,6 +78,7 @@ class VMyGroupSettings {
   final Map<String, dynamic>? pinMsg;
   final Map<String, dynamic>? extraData;
   final String? desc;
+  final String createdAt;
 
 //<editor-fold desc="Data Methods">
 
@@ -65,12 +87,18 @@ class VMyGroupSettings {
     this.pinMsg,
     this.extraData,
     this.desc,
+    required this.createdAt,
   });
+
+  DateTime get createAtDate => DateTime.parse(createdAt).toLocal();
+
+  bool get isMeCreator => VAppConstants.myId == creatorId;
 
   VMyGroupSettings.empty()
       : creatorId = "",
         desc = null,
         extraData = null,
+        createdAt = DateTime.now().toIso8601String(),
         pinMsg = null;
 
   @override
@@ -91,12 +119,13 @@ class VMyGroupSettings {
       'pinMsg': pinMsg,
       'extraData': extraData,
       'desc': desc,
+      'createdAt': createdAt,
     };
   }
 
   @override
   String toString() {
-    return 'VMyGroupSettings{creatorId: $creatorId, pinMsg: $pinMsg, extraData: $extraData, desc: $desc}';
+    return 'VMyGroupSettings{creatorId: $creatorId, pinMsg: $pinMsg, extraData: $extraData, desc: $desc createdAt $createdAt}';
   }
 
   factory VMyGroupSettings.fromMap(Map<String, dynamic> map) {
@@ -105,8 +134,24 @@ class VMyGroupSettings {
       pinMsg: map['pinMsg'] as Map<String, dynamic>?,
       extraData: map['extraData'] as Map<String, dynamic>?,
       desc: map['desc'] as String?,
+      createdAt: map['createdAt'] as String,
     );
   }
 
+  VMyGroupSettings copyWith({
+    String? creatorId,
+    Map<String, dynamic>? pinMsg,
+    Map<String, dynamic>? extraData,
+    String? desc,
+    String? createdAt,
+  }) {
+    return VMyGroupSettings(
+      creatorId: creatorId ?? this.creatorId,
+      pinMsg: pinMsg ?? this.pinMsg,
+      extraData: extraData ?? this.extraData,
+      desc: desc ?? this.desc,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 //</editor-fold>
 }

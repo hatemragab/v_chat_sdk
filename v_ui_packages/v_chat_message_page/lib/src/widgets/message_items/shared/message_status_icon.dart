@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../v_chat_message_page.dart';
-import '../../../core/types.dart';
 
 class MessageStatusIconDataModel {
   final bool isMeSender;

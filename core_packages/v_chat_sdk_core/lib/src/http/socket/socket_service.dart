@@ -102,7 +102,7 @@ class SocketService {
       VUpdateMessageTypeEvent(
         roomId: msg.roomId,
         localId: msg.localId,
-        messageType: MessageType.allDeleted,
+        messageType: VMessageType.allDeleted,
       ),
     );
   }

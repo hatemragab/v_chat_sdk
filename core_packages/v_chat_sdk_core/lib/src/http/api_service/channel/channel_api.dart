@@ -13,10 +13,10 @@ part 'channel_api.chopper.dart';
 abstract class ChannelApi extends ChopperService {
   /// ----------------------------------------- single chat apis ------------------------------------------
 
-  @Post(path: "/peer-room/{identifier}")
+  @Post(path: "/peer-room/{identifier}", optionalBody: true)
   Future<Response> getPeerRoom(@Path() String identifier);
 
-  @Post(path: "/{roomId}/close")
+  @Post(path: "/{roomId}/close", optionalBody: true)
   Future<Response> closeChat(
     @Path("roomId") String roomId,
   );
@@ -105,12 +105,22 @@ abstract class ChannelApi extends ChopperService {
     @Body() Map<String, dynamic> body,
   );
 
-  @Get(path: "/{roomId}/group/message/{messageId}/status/{type}", optionalBody: true)
+  @Patch(path: "/{roomId}/group/description")
+  Future<Response> updateGroupDescription(
+    @Path("roomId") String roomId,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Get(
+    path: "/{roomId}/group/message/{messageId}/status/{type}",
+    optionalBody: true,
+  )
   Future<Response> getMessageStatusForGroup(
     @Path("roomId") String roomId,
     @Path("messageId") String mId,
+
     ///it can be seen or deliver
-    @QueryMap() Map<String, Object> query,
+    @QueryMap() Map<String, dynamic> query,
     @Path("type") String type,
   );
 
@@ -154,7 +164,9 @@ abstract class ChannelApi extends ChopperService {
   );
 
   @Patch(
-      path: "/{roomId}/group/members/{identifier}/{role}", optionalBody: true,)
+    path: "/{roomId}/group/members/{identifier}/{role}",
+    optionalBody: true,
+  )
   Future<Response> changeUserGroupRole(
     @Path('roomId') String roomId,
     @Path('identifier') String peerIdentifier,
