@@ -1596,14 +1596,14 @@ packages:
       path: "../../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "0.4.3"
+    version: "0.4.3+2"
   v_chat_sdk_core:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.4.3+1"
+    version: "0.4.3+2"
   v_chat_utils:
     dependency: "direct overridden"
     description:

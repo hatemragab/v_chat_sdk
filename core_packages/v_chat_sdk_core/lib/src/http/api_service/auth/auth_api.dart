@@ -39,7 +39,7 @@ abstract class AuthApi extends ChopperService {
       client: VPlatforms.isWeb
           ? null
           : IOClient(
-              HttpClient()..connectionTimeout = const Duration(seconds: 7),
+              HttpClient()..connectionTimeout = const Duration(seconds: 15),
             ),
     );
     return _$AuthApi(client);

@@ -8,7 +8,7 @@ class VEventBusSingleton {
   // static final VEventBusSingleton instance =
   //     VEventBusSingleton._privateConstructor();
 
-  static void close() {
-    vEventBus.dispose();
-  }
+  // static void close() {
+  //   vEventBus.dispose();
+  // }
 }

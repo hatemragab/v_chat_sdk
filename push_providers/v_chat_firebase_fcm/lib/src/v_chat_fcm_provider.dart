@@ -126,7 +126,9 @@ class VChatFcmProver extends VChatPushProviderBase {
     final String? fromVChat = remoteMsg.data['fromVChat'];
     final String? message = remoteMsg.data['vMessage'];
     if (fromVChat != null && message != null) {
-      return MessageFactory.createBaseMessage(jsonDecode(message));
+      final msg = MessageFactory.createBaseMessage(jsonDecode(message));
+      if (msg.messageType.isCall) return null;
+      return msg;
     }
     return null;
   }

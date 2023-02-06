@@ -10,6 +10,7 @@
 #include <emoji_picker_flutter/emoji_picker_flutter_plugin_c_api.h>
 #include <file_saver/file_saver_plugin.h>
 #include <flutter_secure_storage_windows/flutter_secure_storage_windows_plugin.h>
+#include <flutter_webrtc/flutter_web_r_t_c_plugin.h>
 #include <geolocator_windows/geolocator_windows.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <platform_device_id_windows/platform_device_id_windows_plugin.h>
@@ -27,6 +28,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FileSaverPlugin"));
   FlutterSecureStorageWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterSecureStorageWindowsPlugin"));
+  FlutterWebRTCPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterWebRTCPlugin"));
   GeolocatorWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("GeolocatorWindows"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(

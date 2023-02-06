@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
   file_saver
   flutter_secure_storage_linux
+  flutter_webrtc
   platform_device_id_linux
   record_linux
   sqlite3_flutter_libs

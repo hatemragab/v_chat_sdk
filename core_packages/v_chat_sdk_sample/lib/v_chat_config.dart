@@ -6,6 +6,7 @@ import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -25,6 +26,7 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
     ),
     vNavigator: VNavigator(
       roomNavigator: vDefaultRoomNavigator,
+      callNavigator: vDefaultCallNavigator,
       messageNavigator: VMessageNavigator(
         toImageViewer: vDefaultMessageNavigator.toImageViewer,
         toViewChatMedia: vDefaultMessageNavigator.toViewChatMedia,
@@ -61,6 +63,9 @@ Uri _getBaseUrl() {
     }
     //this will only working on the android emulator
     //to test on real device get you ipv4 first google it ! how to get my ipv4
+    if (false) {
+      return Uri.parse("http://192.168.1.3:3001");
+    }
     return Uri.parse("http://10.0.2.2:3001");
   }
   return Uri.parse("http://v_chat_endpoint:3001");

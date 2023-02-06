@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:v_chat_sdk_core/src/events/events.dart';
 import 'package:v_chat_sdk_core/src/models/models.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -110,12 +111,30 @@ class VMessageNavigator {
   }
 }
 
+class VCallNavigator {
+  final Function(
+    BuildContext context,
+    VCallerDto dto,
+  ) toCaller;
+  final Function(
+    BuildContext context,
+    VNewCallModel callModel,
+  ) toCallee;
+
+  const VCallNavigator({
+    required this.toCaller,
+    required this.toCallee,
+  });
+}
+
 class VNavigator {
   final VRoomNavigator roomNavigator;
   final VMessageNavigator messageNavigator;
+  final VCallNavigator callNavigator;
 
   const VNavigator({
     required this.roomNavigator,
     required this.messageNavigator,
+    required this.callNavigator,
   });
 }

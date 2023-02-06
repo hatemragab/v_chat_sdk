@@ -14,12 +14,14 @@ class VMessageAppBare extends StatelessWidget {
   ) onTitlePress;
   final VoidCallback onSearch;
   final VoidCallback onViewMedia;
+  final Function(bool isVideo) onCreateCall;
 
   const VMessageAppBare({
     Key? key,
     required this.state,
     required this.onTitlePress,
     required this.onSearch,
+    required this.onCreateCall,
     required this.onViewMedia,
   }) : super(key: key);
 
@@ -126,9 +128,22 @@ class VMessageAppBare extends StatelessWidget {
 
   Widget _getCallIcon() {
     if (state.roomType.isSingleOrOrder) {
-      return const Icon(
-        Icons.call,
-        color: Colors.grey,
+      return Row(
+        children: [
+          InkWell(
+            onTap: () => onCreateCall(false),
+            child: const Icon(
+              Icons.call,
+            ),
+          ),
+          const SizedBox(width: 5,),
+          InkWell(
+            onTap: () => onCreateCall(true),
+            child: const Icon(
+              Icons.video_call,
+            ),
+          ),
+        ],
       );
     }
     return const SizedBox();

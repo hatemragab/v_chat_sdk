@@ -13,7 +13,7 @@ command:
 
 scripts:
 
-  postbootstrap: cd core_packages/v_chat_translations && flutter gen-l10n
+#  postbootstrap: cd core_packages/v_chat_translations && flutter gen-l10n
   analyze:
     run: |
       melos exec -c 1 -- \

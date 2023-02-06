@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
+import 'package:v_chat_sdk_core/src/models/socket/new_call_model.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../models/socket/on_aceept_call.dart';
 
 class SocketService {
   final _log = Logger('SocketService');
@@ -21,6 +24,7 @@ class SocketService {
   SocketService(this._socketIoClient);
 
   bool get isSocketConnected => _socketIoClient.socket.connected;
+  final _emitter = VEventBusSingleton.vEventBus;
 
   void handleConnect() {
     final access =
@@ -114,11 +118,43 @@ class SocketService {
     final userId = data['userId'] as String;
     if (VAppConstants.myProfile.baseUser.vChatId == userId) {
       //push block
-      VEventBusSingleton.vEventBus.fire(
+      _emitter.fire(
         VOnGroupKicked(
           roomId: roomId,
         ),
       );
     }
+  }
+
+  void handleNewCall(VNewCallModel vOnNewCall) {
+    _emitter.fire(
+      VOnNewCallEvent(
+        roomId: vOnNewCall.roomId,
+        data: vOnNewCall,
+      ),
+    );
+  }
+
+  void handleCallTimeout(String roomId) {
+    _emitter.fire(VCallTimeoutEvent(roomId: roomId));
+  }
+
+  void handleCallAccepted(VOnAcceptCall onAcceptCall) {
+    _emitter.fire(VCallAcceptedEvent(
+      roomId: onAcceptCall.roomId,
+      data: onAcceptCall,
+    ));
+  }
+
+  void handleCallEnded(String roomId) {
+    _emitter.fire(VCallEndedEvent(roomId: roomId));
+  }
+
+  void handleCallCanceled(String roomId) {
+    _emitter.fire(VCallCanceledEvent(roomId: roomId));
+  }
+
+  void handleCallRejected(String roomId) {
+    _emitter.fire(VCallRejectedEvent(roomId: roomId));
   }
 }

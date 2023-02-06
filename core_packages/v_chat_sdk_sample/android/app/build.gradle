@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "com.vchatsdk.app.v2"
         manifestPlaceholders["API_KEY"] = "value0"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 33
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()

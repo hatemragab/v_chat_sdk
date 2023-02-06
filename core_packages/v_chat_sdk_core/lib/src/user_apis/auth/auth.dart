@@ -8,7 +8,7 @@ import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class AuthApi implements AuthEndPoints {
+class VAuthApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
   final ControllerHelper _helper = ControllerHelper.instance;
   final VChatConfig _chatConfig;
@@ -16,7 +16,7 @@ class AuthApi implements AuthEndPoints {
 
   NativeRemoteAuth get _remoteAuth => _vNativeApi.remote.remoteAuth;
 
-  AuthApi(
+  VAuthApi(
     this._vNativeApi,
     this._chatConfig,
   );

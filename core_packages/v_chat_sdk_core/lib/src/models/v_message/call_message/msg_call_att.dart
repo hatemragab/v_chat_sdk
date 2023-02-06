@@ -1,33 +1,33 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VMsgCallAtt {
-  final VCallStatus status;
-  final int? duration;
-  final String callerId;
+  final VMessageCallStatus callStatus;
+  final String? duration;
 
 //<editor-fold desc="Data Methods">
 
   VMsgCallAtt({
-    required this.status,
+    required this.callStatus,
     required this.duration,
-    required this.callerId,
   });
 
-  bool get isMe => VAppConstants.myId == callerId;
+
+  @override
+  String toString() {
+    return 'VMsgCallAtt{callStatus: $callStatus, duration: $duration}';
+  }
 
   Map<String, dynamic> toMap() {
     return {
-      'status': status.name,
+      'callStatus': callStatus.name,
       'duration': duration,
-      'callerId': callerId,
     };
   }
 
   factory VMsgCallAtt.fromMap(Map<String, dynamic> map) {
     return VMsgCallAtt(
-      status: VCallStatus.values.byName(map['status'] as String),
-      duration: map['duration'] as int?,
-      callerId: map['callerId'] as String,
+      callStatus: VMessageCallStatus.values.byName(map['callStatus'] as String),
+      duration: map['duration'] as String?,
     );
   }
 

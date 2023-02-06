@@ -15,6 +15,7 @@ enum VMessageType {
 
 extension MessageTypeExt on VMessageType {
   bool get isImage => this == VMessageType.image;
+  bool get isCall => this == VMessageType.call;
 
   bool get isInfo => this == VMessageType.info;
 
@@ -52,9 +53,14 @@ enum VGroupMsgInfo {
   bDeleted,
 }
 
-enum VCallStatus {
-  inComing,
-  cancel,
+enum VMessageCallStatus {
+  ring,
+  canceled,
+  timeout,
+  rejected,
+  finished,
+  inCall,
+  sessionEnd
 }
 
 enum VSocketStateType { connected, connecting }
@@ -69,9 +75,11 @@ extension StrType on VRoomType {
   bool get isGroup => this == VRoomType.g;
 
   bool get isSingle => this == VRoomType.s;
+
   bool get isSingleOrOrder => this == VRoomType.s || this == VRoomType.o;
 
   bool get isBroadcast => this == VRoomType.b;
+
   bool get isOrder => this == VRoomType.o;
 }
 

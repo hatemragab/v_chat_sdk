@@ -71,7 +71,7 @@ abstract class MessageApi extends ChopperService {
       client: VPlatforms.isWeb
           ? null
           : IOClient(
-              HttpClient()..connectionTimeout = const Duration(seconds: 6),
+              HttpClient()..connectionTimeout = const Duration(seconds: 7),
             ),
     );
     return _$MessageApi(client);

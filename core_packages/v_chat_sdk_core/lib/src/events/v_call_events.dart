@@ -1,0 +1,87 @@
+import 'package:v_chat_sdk_core/src/models/socket/new_call_model.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../models/socket/on_aceept_call.dart';
+
+abstract class VCallEvents extends VAppEvent {
+  final String roomId;
+
+  const VCallEvents({
+    required this.roomId,
+  });
+
+  @override
+  List<Object?> get props => [roomId];
+
+  @override
+  String toString() {
+    return 'VCallEvents{roomId: $roomId}';
+  }
+}
+
+class VOnNewCallEvent extends VCallEvents {
+  final VNewCallModel data;
+
+  const VOnNewCallEvent({
+    required super.roomId,
+    required this.data,
+  });
+
+  @override
+  String toString() {
+    return 'VOnNewCallEvent{data: $data}';
+  }
+}
+class VCallTimeoutEvent extends VCallEvents {
+  const VCallTimeoutEvent({
+    required super.roomId,
+  });
+
+  @override
+  String toString() {
+    return 'VCallTimeoutEvent{}';
+  }
+}
+class VCallCanceledEvent extends VCallEvents {
+  const VCallCanceledEvent({
+    required super.roomId,
+  });
+
+  @override
+  String toString() {
+    return 'VCallCanceledEvent{}';
+  }
+}
+class VCallRejectedEvent extends VCallEvents {
+  const VCallRejectedEvent({
+    required super.roomId,
+  });
+
+  @override
+  String toString() {
+    return 'VCallRejectedEvent{}';
+  }
+}
+class VCallAcceptedEvent extends VCallEvents {
+  final VOnAcceptCall data;
+  const VCallAcceptedEvent({
+    required super.roomId,
+    required this.data,
+  });
+
+  @override
+  String toString() {
+    return 'VCallAcceptedEvent{} data $data';
+  }
+}
+class VCallEndedEvent extends VCallEvents {
+  const VCallEndedEvent({
+    required super.roomId,
+  });
+
+  @override
+  String toString() {
+    return 'VCallEndedEvent{}';
+  }
+}

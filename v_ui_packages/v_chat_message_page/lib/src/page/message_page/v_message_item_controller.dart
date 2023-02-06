@@ -135,6 +135,12 @@ class VMessageItemController {
       //solution
       items.add(_deleteItem());
     }
+    if (message.messageType.isCall) {
+      items.clear();
+      //solution
+      items.add(_deleteItem());
+      items.add(_replyItem());
+    }
 
     final res = await VAppAlert.showModalSheet(
       content: items,

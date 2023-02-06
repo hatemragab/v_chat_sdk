@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
@@ -49,11 +48,12 @@ class VMessageController {
   MessageAppBarStateModel get appBareState => appBarStateController.value;
 
   String get roomId => vRoom.id;
+  final BuildContext context;
 
   VMessageController({
     required this.vRoom,
     this.isInTesting = false,
-    required BuildContext context,
+    required this.context,
   }) {
     messageState = MessageStateController(
       vRoom,
@@ -348,5 +348,17 @@ class VMessageController {
       );
       return;
     }
+  }
+
+  void onCreateCall(bool isVideo) async {
+    VChatController.I.vNavigator.callNavigator.toCaller(
+      context,
+      VCallerDto(
+        isVideoEnable: isVideo,
+        roomId: vRoom.id,
+        peerImage: vRoom.thumbImage,
+        peerName: vRoom.title,
+      ),
+    );
   }
 }

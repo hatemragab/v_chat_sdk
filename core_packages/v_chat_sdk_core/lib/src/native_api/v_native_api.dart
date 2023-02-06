@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
+import 'package:v_chat_sdk_core/src/http/api_service/call/call_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api_service.dart';
@@ -19,6 +20,7 @@ class VNativeApi {
     VChannelApiService.init(),
     VMessageApiService.init(),
     VProfileApiService.init(),
+    VCallApiService.init(),
   );
   final streams = VStreams();
 
@@ -70,12 +72,14 @@ class VRemoteNativeApi {
   final socketIo = NativeRemoteSocketIo();
   final VChannelApiService _room;
   final VMessageApiService _nativeRemoteMessage;
+  final VCallApiService _nativeRemoteCallApiService;
   final VProfileApiService _nativeProfileApiService;
 
   VRemoteNativeApi(
     this._room,
     this._nativeRemoteMessage,
     this._nativeProfileApiService,
+    this._nativeRemoteCallApiService,
   );
 
   VChannelApiService get room => _room;
@@ -83,7 +87,6 @@ class VRemoteNativeApi {
   final remoteAuth = NativeRemoteAuth(
     VAuthApiService.init(),
   );
-
   Future<http.Response> nativeHttp(
     Uri uri, {
     required VChatHttpMethods method,
@@ -111,4 +114,5 @@ class VRemoteNativeApi {
   VMessageApiService get message => _nativeRemoteMessage;
 
   VProfileApiService get profile => _nativeProfileApiService;
+  VCallApiService get calls => _nativeRemoteCallApiService;
 }

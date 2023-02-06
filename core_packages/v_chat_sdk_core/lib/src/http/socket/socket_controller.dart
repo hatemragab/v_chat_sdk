@@ -8,6 +8,9 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../models/socket/on_aceept_call.dart';
+import '../../models/socket/new_call_model.dart';
+
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
   late final SocketService _socketService;
@@ -117,6 +120,54 @@ class SocketController implements ISocketIoClient {
         await _socketService.updateMessageType(msg);
       },
     );
+
+    _socket.on(
+      SocketEvents.v1OnNewCall.name,
+      (dynamic data) async {
+        _socketService.handleNewCall(
+          VNewCallModel.fromMap(
+            jsonDecode(data.toString()) as Map<String, dynamic>,
+          ),
+        );
+      },
+    );
+
+    _socket.on(
+      SocketEvents.v1OnCallTimeout.name,
+      (dynamic data) async {
+        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+        _socketService.handleCallTimeout(res['roomId'] as String);
+      },
+    );
+
+    _socket.on(
+      SocketEvents.v1OnCallCanceled.name,
+      (dynamic data) async {
+        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+        _socketService.handleCallCanceled(res['roomId'] as String);
+      },
+    );
+    _socket.on(
+      SocketEvents.v1OnCallRejected.name,
+      (dynamic data) async {
+        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+        _socketService.handleCallRejected(res['roomId'] as String);
+      },
+    );
+    _socket.on(
+      SocketEvents.v1OnCallAccepted.name,
+      (dynamic data) async {
+        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+        _socketService.handleCallAccepted(VOnAcceptCall.fromMap(res));
+      },
+    );
+    _socket.on(
+      SocketEvents.v1OnCallEnded.name,
+      (dynamic data) async {
+        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+        _socketService.handleCallEnded(res['roomId'] as String);
+      },
+    );
   }
 
   void emitGetMyOnline(String data) {
@@ -160,6 +211,14 @@ enum SocketEvents {
   v1OnBanUserChat,
   v1OnKickGroupMember,
   v1OnDeleteMessageFromAll,
+
+  //call events
+  v1OnCallAccepted,
+  v1OnCallEnded,
+  v1OnNewCall,
+  v1OnCallTimeout,
+  v1OnCallCanceled,
+  v1OnCallRejected,
 
   ///Emitter
   v1RoomStatusChange,

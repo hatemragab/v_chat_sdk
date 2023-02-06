@@ -16,6 +16,7 @@ class VStreams {
       _emitter.on<VSocketIntervalEvent>();
 
   Stream<VRoomEvents> get roomStream => _emitter.on<VRoomEvents>();
+  Stream<VCallEvents> get callStream => _emitter.on<VCallEvents>();
 
   Stream<VOnNotificationsClickedEvent> get vOnNotificationsClickedStream =>
       _emitter.on<VOnNotificationsClickedEvent>();
