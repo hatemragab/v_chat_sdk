@@ -1,4 +1,3 @@
-
 class VCallerDto {
   final bool isVideoEnable;
   final String roomId;
@@ -32,12 +31,7 @@ class VCallerDto {
 
   @override
   String toString() {
-    return 'VCallerDto{' +
-        ' isVideoEnable: $isVideoEnable,' +
-        ' roomId: $roomId,' +
-        ' peerName: $peerName,' +
-        ' peerImage: $peerImage,' +
-        '}';
+    return 'VCallerDto{ isVideoEnable: $isVideoEnable, roomId: $roomId, peerName: $peerName, peerImage: $peerImage,}';
   }
 
   VCallerDto copyWith({
@@ -56,10 +50,10 @@ class VCallerDto {
 
   Map<String, dynamic> toMap() {
     return {
-      'isVideoEnable': this.isVideoEnable,
-      'roomId': this.roomId,
-      'peerName': this.peerName,
-      'peerImage': this.peerImage,
+      'isVideoEnable': isVideoEnable,
+      'roomId': roomId,
+      'peerName': peerName,
+      'peerImage': peerImage,
     };
   }
 

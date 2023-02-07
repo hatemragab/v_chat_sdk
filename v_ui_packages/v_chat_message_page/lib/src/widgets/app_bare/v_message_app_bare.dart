@@ -145,8 +145,6 @@ class VMessageAppBare extends StatelessWidget {
               PhosphorIcons.phoneCallFill,
             ),
           ),
-
-
         ],
       );
     }

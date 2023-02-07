@@ -64,7 +64,7 @@ class _VMessagePageState extends State<VMessagePage> {
             return VMessageAppBare(
               state: value,
               onSearch: controller.onOpenSearch,
-              onCreateCall:  controller.onCreateCall,
+              onCreateCall: controller.onCreateCall,
               onViewMedia: () => controller.onViewMedia(context, value.roomId),
               onTitlePress: controller.onTitlePress,
             );

@@ -31,8 +31,13 @@
 - ## 0.2.0+1
 
 - add base url for the VPlatfromFileSource to let user add custom prefix to the url only
+
 ## 0.3.0
+
 - add web support
 
 ## 0.4.0
+
 - full localization support
+- ## 0.5.0
+- support voice and video calls

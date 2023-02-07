@@ -12,11 +12,13 @@ class HomeController extends GetxController {
         duration: const Duration(milliseconds: 300), curve: Curves.ease);
     update();
   }
-@override
+
+  @override
   void onInit() {
-  vInitCallListener();
+    vInitCallListener();
     super.onInit();
   }
+
   void onPageChanged(int i) {
     tabIndex = i;
     update();

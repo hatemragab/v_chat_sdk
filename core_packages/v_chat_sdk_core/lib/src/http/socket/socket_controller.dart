@@ -8,9 +8,6 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../models/socket/on_aceept_call.dart';
-import '../../models/socket/new_call_model.dart';
-
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
   late final SocketService _socketService;

@@ -5,10 +5,11 @@ class _CallerController extends ValueNotifier<VCallerState> {
   String? meetId;
   late final StreamSubscription subscription;
   final BuildContext context;
-   RTCPeerConnection? _peerConnection;
+  RTCPeerConnection? _peerConnection;
   final stopWatchTimer = StopWatchTimer(
-      mode: StopWatchMode.countUp,
+    mode: StopWatchMode.countUp,
   );
+
   /// ---------- webrtc -------------
   final _localRenderer = RTCVideoRenderer();
   final _remoteRenderer = RTCVideoRenderer();
@@ -115,7 +116,6 @@ class _CallerController extends ValueNotifier<VCallerState> {
       onSuccess: (_) {
         value.status = CallStatus.callEnd;
         notifyListeners();
-
       },
       onError: (exception, trace) async {
         VAppAlert.showErrorSnackBar(msg: exception, context: context);
@@ -179,7 +179,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
   }
 
   void _initTimer() {
-     stopWatchTimer.onStartTimer();
+    stopWatchTimer.onStartTimer();
   }
 
   Future<void> _handleAcceptCall(Map<String, dynamic> data) async {
@@ -213,6 +213,6 @@ class _CallerController extends ValueNotifier<VCallerState> {
     _remoteRenderer.dispose();
     _localMediaStream?.dispose();
     _peerConnection?.dispose();
-     stopWatchTimer.dispose();
+    stopWatchTimer.dispose();
   }
 }

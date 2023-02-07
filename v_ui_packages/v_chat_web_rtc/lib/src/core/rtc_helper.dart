@@ -16,5 +16,4 @@ abstract class RtcHelper {
       {'DtlsSrtpKeyAgreement': true},
     ],
   };
-
 }

@@ -8,23 +8,25 @@ import 'widgets/noises.dart';
 
 class VVoiceMessageView extends StatelessWidget {
   final VVoiceMessageController controller;
-  final Color circlesColor;
   final Color activeSliderColor;
   final Color? notActiveSliderColor;
-  final TextStyle circlesTextStyle;
+  final Color? backgroundColor;
   final TextStyle counterTextStyle;
+  final Widget? playIcon;
+  final Widget? pauseIcon;
+  final Widget? errorIcon;
+  final Function(String speed)? speedBuilder;
 
   const VVoiceMessageView({
     Key? key,
     required this.controller,
     this.activeSliderColor = Colors.red,
     this.notActiveSliderColor,
-    this.circlesColor = Colors.red,
-    this.circlesTextStyle = const TextStyle(
-      color: Colors.white,
-      fontSize: 10,
-      fontWeight: FontWeight.bold,
-    ),
+    this.backgroundColor,
+    this.playIcon,
+    this.pauseIcon,
+    this.errorIcon,
+    this.speedBuilder,
     this.counterTextStyle = const TextStyle(
       fontSize: 11,
       fontWeight: FontWeight.w500,
@@ -45,7 +47,7 @@ class VVoiceMessageView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        // color: context.vVoiceMessageTheme.backgroundColor,
+        color: backgroundColor,
       ),
       child: ValueListenableBuilder(
         valueListenable: controller,
@@ -65,17 +67,17 @@ class VVoiceMessageView extends StatelessWidget {
               else if (controller.isPlaying)
                 InkWell(
                   onTap: controller.pausePlaying,
-                  child: context.vVoiceMessageTheme.pauseIcon,
+                  child: pauseIcon ?? _pauseIcon,
                 )
               else if (controller.isDownloadError)
                 InkWell(
                   onTap: controller.initAndPlay,
-                  child: context.vVoiceMessageTheme.errorIcon,
+                  child: errorIcon ?? _errorIcon,
                 )
               else
                 InkWell(
                   onTap: controller.initAndPlay,
-                  child: context.vVoiceMessageTheme.playIcon,
+                  child: playIcon ?? _playIcon,
                 ),
               const SizedBox(
                 width: 5,
@@ -149,9 +151,23 @@ class VVoiceMessageView extends StatelessWidget {
                 offset: const Offset(0, -7),
                 child: InkWell(
                   onTap: controller.changeSpeed,
-                  child: context.vVoiceMessageTheme.speedBuilder(
-                    context,
-                    controller.playSpeedStr,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 3,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      controller.playSpeedStr,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -164,6 +180,66 @@ class VVoiceMessageView extends StatelessWidget {
       ),
     );
   }
+
+  // Function _speedBuilder = (String speed) {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(
+  //       horizontal: 3,
+  //       vertical: 2,
+  //     ),
+  //     decoration: BoxDecoration(
+  //       color: Colors.red,
+  //       borderRadius: BorderRadius.circular(4),
+  //     ),
+  //     child: Text(
+  //       speed,
+  //       style: const TextStyle(
+  //         color: Colors.white,
+  //         fontSize: 10,
+  //         fontWeight: FontWeight.bold,
+  //       ),
+  //     ),
+  //   );
+  // };
+
+  Widget get _pauseIcon => Container(
+        height: 38,
+        width: 38,
+        decoration: const BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.pause_rounded,
+          color: Colors.white,
+        ),
+      );
+
+  Widget get _playIcon => Container(
+        height: 38,
+        width: 38,
+        decoration: const BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.play_arrow_rounded,
+          color: Colors.white,
+        ),
+      );
+
+  Widget get _errorIcon => Container(
+        height: 38,
+        width: 38,
+        decoration: const BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+        ),
+        child: const Icon(
+          Icons.refresh,
+          color: Colors.white,
+        ),
+      );
 }
 
 class CustomTrackShape extends RoundedRectSliderTrackShape {

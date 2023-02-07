@@ -49,7 +49,10 @@ class CallMessageItem extends StatelessWidget {
 
   Widget _getSub() {
     if (message.data.duration != null) {
-      return "${message.data.duration.toString()} S".text.maxLine(2).overflowEllipsis;
+      return "${message.data.duration.toString()} S"
+          .text
+          .maxLine(2)
+          .overflowEllipsis;
     }
     return message.data.callStatus.name
         .toString()

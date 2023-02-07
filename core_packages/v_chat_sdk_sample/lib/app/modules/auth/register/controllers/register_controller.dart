@@ -1,6 +1,5 @@
 import 'package:animated_login/src/models/login_data.dart';
 import 'package:animated_login/src/models/signup_data.dart';
-import 'package:callkeep/callkeep.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +29,7 @@ class RegisterController extends GetxController {
       passwordController.text = "12345678";
     }
   }
+
   Future<String?> onLogin(LoginData loginData) async {
     try {
       final vUser = await VChatController.I.authApi.login(

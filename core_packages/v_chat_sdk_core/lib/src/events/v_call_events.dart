@@ -1,8 +1,5 @@
-import 'package:v_chat_sdk_core/src/models/socket/new_call_model.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../models/socket/on_aceept_call.dart';
 
 abstract class VCallEvents extends VAppEvent {
   final String roomId;
@@ -33,6 +30,7 @@ class VOnNewCallEvent extends VCallEvents {
     return 'VOnNewCallEvent{data: $data}';
   }
 }
+
 class VCallTimeoutEvent extends VCallEvents {
   const VCallTimeoutEvent({
     required super.roomId,
@@ -43,6 +41,7 @@ class VCallTimeoutEvent extends VCallEvents {
     return 'VCallTimeoutEvent{}';
   }
 }
+
 class VCallCanceledEvent extends VCallEvents {
   const VCallCanceledEvent({
     required super.roomId,
@@ -53,6 +52,7 @@ class VCallCanceledEvent extends VCallEvents {
     return 'VCallCanceledEvent{}';
   }
 }
+
 class VCallRejectedEvent extends VCallEvents {
   const VCallRejectedEvent({
     required super.roomId,
@@ -63,6 +63,7 @@ class VCallRejectedEvent extends VCallEvents {
     return 'VCallRejectedEvent{}';
   }
 }
+
 class VCallAcceptedEvent extends VCallEvents {
   final VOnAcceptCall data;
   const VCallAcceptedEvent({
@@ -75,6 +76,7 @@ class VCallAcceptedEvent extends VCallEvents {
     return 'VCallAcceptedEvent{} data $data';
   }
 }
+
 class VCallEndedEvent extends VCallEvents {
   const VCallEndedEvent({
     required super.roomId,

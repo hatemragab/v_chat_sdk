@@ -32,7 +32,7 @@ class VNewCallModel {
       roomId: map['roomId'] as String,
       meetId: map['meetId'] as String,
       withVideo: map['withVideo'] as bool,
-      payload:jsonDecode(map['payload'] as String)  as Map<String, dynamic>,
+      payload: jsonDecode(map['payload'] as String) as Map<String, dynamic>,
       identifierUser: VIdentifierUser.fromMap(
         map['userData'] as Map<String, dynamic>,
       ),

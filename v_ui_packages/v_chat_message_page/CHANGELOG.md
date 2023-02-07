@@ -6,3 +6,5 @@ add theming
 - add web support
 ## 0.4.0
 - full localization support
+- ## 0.5.0
+- support voice and video calls
