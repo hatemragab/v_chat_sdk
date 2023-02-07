@@ -28,7 +28,7 @@ class UserIconWidget extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          userName.h5,
+          userName.h5.color(Colors.white),
           SizedBox(
             height: 5,
           ),

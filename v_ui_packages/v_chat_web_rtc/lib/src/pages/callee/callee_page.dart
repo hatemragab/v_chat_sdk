@@ -39,6 +39,13 @@ class _VCalleePageState extends State<VCalleePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: "End-to-end encryption".cap.color(Colors.grey),
+        ),
         body: SafeArea(
           child: ValueListenableBuilder<VCallerState>(
             valueListenable: _controller,
@@ -87,24 +94,6 @@ class _VCalleePageState extends State<VCalleePage> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.lock_clock_outlined,
-                                  size: 17,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                //todo trans
-                                "End-to-end encryption".b2.color(Colors.grey)
-                              ],
-                            ),
-                            SizedBox(
                               height: 25,
                             ),
                             UserIconWidget(
@@ -119,7 +108,7 @@ class _VCalleePageState extends State<VCalleePage> {
                                       stopWatchTimer:
                                           _controller.stopWatchTimer,
                                     )
-                                  : value.status.name.b1,
+                                  : value.status.name.b1.color(Colors.white),
                             )
                           ],
                         ),

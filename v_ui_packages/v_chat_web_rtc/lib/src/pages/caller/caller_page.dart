@@ -49,6 +49,13 @@ class _VCallerPageState extends State<VCallerPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: "End-to-end encryption".cap.color(Colors.grey),
+        ),
         body: SafeArea(
           child: ValueListenableBuilder<VCallerState>(
             valueListenable: _controller,
@@ -98,23 +105,23 @@ class _VCallerPageState extends State<VCallerPage> {
                       Expanded(
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.lock_clock_outlined,
-                                  size: 17,
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                "End-to-end encryption".b2.color(Colors.grey)
-                              ],
-                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.center,
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Icon(
+                            //       Icons.lock_clock_outlined,
+                            //       size: 17,
+                            //     ),
+                            //     SizedBox(
+                            //       width: 5,
+                            //     ),
+                            //     // "End-to-end encryption".b2.color(Colors.grey)
+                            //   ],
+                            // ),
                             SizedBox(
                               height: 25,
                             ),
@@ -128,7 +135,7 @@ class _VCallerPageState extends State<VCallerPage> {
                                       stopWatchTimer:
                                           _controller.stopWatchTimer,
                                     )
-                                  : value.status.name.b1,
+                                  : value.status.name.b1.color(Colors.white),
                             )
                           ],
                         ),

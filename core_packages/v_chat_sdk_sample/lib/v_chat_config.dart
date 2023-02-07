@@ -57,9 +57,9 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
 
 Uri _getBaseUrl() {
   // return Uri.parse("http://192.168.1.4:3001");
-  // if (true) {
-  //   return Uri.parse("http://192.168.1.3:3001");
-  // }
+  if (true) {
+    return Uri.parse("http://192.168.1.3:3001");
+  }
   if (kDebugMode) {
     if (kIsWeb || VPlatforms.isIOS) {
       return Uri.parse("http://localhost:3001");

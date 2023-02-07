@@ -41,9 +41,9 @@ class VChatFcmProver extends VChatPushProviderBase {
   @override
   Future<bool> init() async {
     try {
-      FirebaseMessaging.onBackgroundMessage(
-        vFirebaseMessagingBackgroundHandler,
-      );
+      // FirebaseMessaging.onBackgroundMessage(
+      //   vFirebaseMessagingBackgroundHandler,
+      // );
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }
@@ -168,6 +168,7 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (token != null) {
     try {
       await setDeliverForThisRoom(msg.roomId, token);
+      print("set Deliver For This Room");
     } catch (err) {
       if (kDebugMode) {
         print(err);
@@ -185,33 +186,22 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 @pragma('vm:entry-point')
 Future setDeliverForThisRoom(String roomId, String token) async {
-  if (kDebugMode) {
-    final res = await patch(
-      Uri.parse(
-        "${VAppConstants.emulatorBaseUrl}/channel/$roomId/deliver",
-      ),
-      headers: {
-        'authorization': "Bearer $token",
-        "clint-version": VAppConstants.clintVersion,
-        "Accept-Language": "en"
-      },
-    );
-    if (res.statusCode != 200) {
-      throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
-    }
-  } else {
-    final res = await patch(
-      Uri.parse("${VAppConstants.baseUri.toString()}/channel/$roomId/deliver"),
-      headers: {
-        'authorization': "Bearer $token",
-        "clint-version": VAppConstants.clintVersion,
-        "Accept-Language": "en"
-      },
-    );
-    if (res.statusCode != 200) {
-      print(res.body);
-      print(res.statusCode);
-      throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
-    }
+  final baseUrl = VAppPref.getStringOrNullKey(VStorageKeys.vBaseUrl.name);
+  print(baseUrl);
+  final res = await patch(
+    Uri.parse(
+      "$baseUrl/channel/$roomId/deliver",
+    ),
+    headers: {
+      'authorization': "Bearer $token",
+      "clint-version": VAppConstants.clintVersion,
+      "Accept-Language": "en"
+    },
+  );
+  print(res.body);
+  if (res.statusCode != 200) {
+    print(res.body);
+    print(res.statusCode);
+    throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
   }
 }

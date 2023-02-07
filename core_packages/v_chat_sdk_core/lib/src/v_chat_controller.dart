@@ -84,6 +84,7 @@ class VChatController {
     await ControllerHelper.instance.init();
     SocketController.instance.connect();
     _startServices();
+
     return _instance;
   }
 

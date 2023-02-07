@@ -26,6 +26,10 @@ class ControllerHelper {
     _initSocketTimer();
     setLocaleMessages('ar', ArMessages());
     setLocaleMessages('ar_short', ArShortMessages());
+    await VAppPref.setStringKey(
+      VStorageKeys.vBaseUrl.name,
+      VAppConstants.baseUri.toString(),
+    );
     return ControllerHelper._();
   }
 

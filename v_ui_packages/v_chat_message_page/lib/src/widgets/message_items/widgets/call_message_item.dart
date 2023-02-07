@@ -19,25 +19,42 @@ class CallMessageItem extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            PhosphorIcons.phoneCall,
-            size: 35,
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration:
+                const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+            child: Icon(
+              message.data.withVideo
+                  ? PhosphorIcons.videoCameraFill
+                  : PhosphorIcons.phoneCall,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
           Expanded(
             child: ListTile(
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               dense: true,
               //todo fix
-              title: "Audio call".text,
-              subtitle: message.data.callStatus.name
-                  .toString()
-                  .text
-                  .maxLine(2)
-                  .overflowEllipsis,
+              title: message.data.withVideo
+                  ? "Video call".text
+                  : "Audio call".text,
+              subtitle: _getSub(),
             ),
           )
         ],
       ),
     );
+  }
+
+  Widget _getSub() {
+    if (message.data.duration != null) {
+      return "${message.data.duration.toString()} S".text.maxLine(2).overflowEllipsis;
+    }
+    return message.data.callStatus.name
+        .toString()
+        .text
+        .maxLine(2)
+        .overflowEllipsis;
   }
 }

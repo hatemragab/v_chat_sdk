@@ -16,13 +16,8 @@ class TimerWidget extends StatelessWidget {
       initialData: 0,
       builder: (context, snap) {
         final value = snap.data;
-        final displayTime = StopWatchTimer.getDisplayTime(
-          value!,
-          hours: true,
-          minute: true,
-          second: true,
-          milliSecond: false
-        );
+        final displayTime = StopWatchTimer.getDisplayTime(value!,
+            hours: true, minute: true, second: true, milliSecond: false);
         return Column(
           children: <Widget>[
             Padding(
@@ -36,9 +31,11 @@ class TimerWidget extends StatelessWidget {
                     child: Text(
                       displayTime.toString(),
                       style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'Helvetica',
-                          fontWeight: FontWeight.bold),
+                        fontSize: 30,
+                        fontFamily: 'Helvetica',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],

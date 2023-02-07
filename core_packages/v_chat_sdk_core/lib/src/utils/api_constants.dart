@@ -19,6 +19,7 @@ abstract class VAppConstants {
   }
 
   static String emulatorBaseUrl = "http://10.0.2.2:3001/api/$apiVersion";
+  static String realDeviceBaseUrl = "http://192.168.1.3:3001/api/$apiVersion";
 
   static Uri get baseUri {
     return Uri.parse("$baseServerIp/api/$apiVersion");

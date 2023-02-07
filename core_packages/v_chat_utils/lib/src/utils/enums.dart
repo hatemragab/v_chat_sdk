@@ -25,6 +25,7 @@ enum VStorageKeys {
   vLastAppliedUpdate,
   vLastSuccessFetchRoomsTime,
   vIsLogin,
+  vBaseUrl,
 }
 
 enum VAttachEnumRes { media, files, location }
