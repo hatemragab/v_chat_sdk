@@ -351,6 +351,12 @@ class VMessageController {
   }
 
   void onCreateCall(bool isVideo) async {
+    final res = await VAppAlert.showAskYesNoDialog(
+      context: context,
+      title: "Make call",
+      content: "Are you want to make ${isVideo ? 'video' : 'audio'} call?",
+    );
+    if (res != 1) return;
     VChatController.I.vNavigator.callNavigator.toCaller(
       context,
       VCallerDto(

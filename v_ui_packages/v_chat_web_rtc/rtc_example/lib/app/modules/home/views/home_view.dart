@@ -44,7 +44,7 @@ class HomeView extends GetView<HomeController> {
                   context,
                   VNewCallModel(
                     roomId: "roomId",
-                    withVideo: false,
+                    withVideo: true,
                     payload: {},
                     identifierUser: VIdentifierUser(
                       identifier: "identifier",

@@ -133,14 +133,16 @@ class VMessageAppBare extends StatelessWidget {
           InkWell(
             onTap: () => onCreateCall(false),
             child: const Icon(
-              Icons.call,
+              PhosphorIcons.phoneCallFill,
             ),
           ),
-          const SizedBox(width: 5,),
+          const SizedBox(
+            width: 10,
+          ),
           InkWell(
             onTap: () => onCreateCall(true),
             child: const Icon(
-              Icons.video_call,
+              PhosphorIcons.videoCameraFill,
             ),
           ),
         ],

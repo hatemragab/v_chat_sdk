@@ -7,11 +7,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sdp_transform/sdp_transform.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/src/core/enums.dart';
 import 'package:v_chat_web_rtc/src/core/rtc_helper.dart';
 import 'package:v_chat_web_rtc/src/core/v_caller_state.dart';
+
+import '../widgets/call_fotter.dart';
+import '../widgets/timer_widget.dart';
+import '../widgets/user_icon_widget.dart';
 
 part 'caller_controller.dart';
 
@@ -42,85 +47,100 @@ class _VCallerPageState extends State<VCallerPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => _controller.onExit(context),
+      onWillPop: () async => false,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Caller page"),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ValueListenableBuilder<VCallerState>(
-              valueListenable: _controller,
-              builder: (_, value, __) {
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: SafeArea(
+          child: ValueListenableBuilder<VCallerState>(
+            valueListenable: _controller,
+            builder: (_, value, __) {
+              return Stack(
+                fit: StackFit.expand,
+                alignment: Alignment.center,
+                children: [
+                  Visibility(
+                    visible: widget.dto.isVideoEnable,
+                    child: RTCVideoView(
+                      _controller._remoteRenderer,
+                      placeholderBuilder: (context) => Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    bottom: 100,
+                    end: 1,
+                    child: Visibility(
+                      visible: widget.dto.isVideoEnable,
+                      child: SizedBox(
+                        height: 170,
+                        width: 170,
+                        child: RTCVideoView(
+                          _controller._localRenderer,
+                          placeholderBuilder: (context) => Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              CircularProgressIndicator(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 300,
-                        child: Row(
+                      Expanded(
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: RTCVideoView(
-                                _controller._localRenderer,
-                                placeholderBuilder: (context) => Row(
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                  ],
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.lock_clock_outlined,
+                                  size: 17,
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: RTCVideoView(
-                                _controller._remoteRenderer,
-                                placeholderBuilder: (context) => Row(
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                  ],
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ),
+                                "End-to-end encryption".b2.color(Colors.grey)
+                              ],
                             ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            UserIconWidget(
+                              url: widget.dto.peerImage,
+                              isVisible: !value.status.accepted ||
+                                  !widget.dto.isVideoEnable,
+                              userName: widget.dto.peerName,
+                              subTitle: value.status.accepted
+                                  ? TimerWidget(
+                                      stopWatchTimer:
+                                          _controller.stopWatchTimer,
+                                    )
+                                  : value.status.name.b1,
+                            )
                           ],
                         ),
                       ),
-                      ListTile(
-                        title: const Text("Call status"),
-                        subtitle: _controller.value.status.name.text,
-                      ),
-                      ListTile(
-                        title: const Text("Call Timer"),
-                        subtitle: _controller.value.time.toString().text,
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Visibility(
-                        visible: _controller.meetId != null,
-                        child: ElevatedButton(
-                          onPressed: _controller.cancelCall,
-                          child: "cancel".text,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Visibility(
-                        visible: _controller.meetId != null &&
-                            _controller.value.status == CallStatus.accepted,
-                        child: ElevatedButton(
-                          onPressed: _controller.cancelCall,
-                          child: "End call".text,
-                        ),
-                      ),
+                      CallFotter(
+                        onClose: () => _controller.onExit(context),
+                      )
                     ],
                   ),
-                );
-              },
-            ),
+                ],
+              );
+            },
           ),
         ),
       ),

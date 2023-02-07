@@ -5,9 +5,10 @@ class _CallerController extends ValueNotifier<VCallerState> {
   String? meetId;
   late final StreamSubscription subscription;
   final BuildContext context;
-  Timer? _timer;
-  RTCPeerConnection? _peerConnection;
-
+   RTCPeerConnection? _peerConnection;
+  final stopWatchTimer = StopWatchTimer(
+      mode: StopWatchMode.countUp,
+  );
   /// ---------- webrtc -------------
   final _localRenderer = RTCVideoRenderer();
   final _remoteRenderer = RTCVideoRenderer();
@@ -26,15 +27,17 @@ class _CallerController extends ValueNotifier<VCallerState> {
     _remoteRenderer.initialize();
     await _initLocalMediaRender();
     await _createPeerConnection();
-    // await _createOffer();
+    await _createOffer();
   }
 
   Future<void> _initLocalMediaRender() async {
     final Map<String, dynamic> constraints = {
       'audio': true,
-      'video': {
-        'facingMode': 'user',
-      },
+      'video': callDto.isVideoEnable
+          ? {
+              'facingMode': 'user',
+            }
+          : false,
     };
     final stream = await navigator.mediaDevices.getUserMedia(
       constraints,
@@ -57,8 +60,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
   }
 
   Future _createOffer() async {
-    final description =
-        await _peerConnection!.createOffer({'offerToReceiveVideo': 1});
+    final description = await _peerConnection!.createOffer();
     final session = parse(description.sdp!);
     _peerConnection!.setLocalDescription(description);
     await _requestCall(session);
@@ -97,7 +99,6 @@ class _CallerController extends ValueNotifier<VCallerState> {
       onSuccess: (_) {
         value.status = CallStatus.callEnd;
         notifyListeners();
-        _backAfterSecond();
       },
       onError: (exception, trace) async {
         VAppAlert.showErrorSnackBar(msg: exception, context: context);
@@ -114,7 +115,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
       onSuccess: (_) {
         value.status = CallStatus.callEnd;
         notifyListeners();
-        _backAfterSecond();
+
       },
       onError: (exception, trace) async {
         VAppAlert.showErrorSnackBar(msg: exception, context: context);
@@ -136,12 +137,11 @@ class _CallerController extends ValueNotifier<VCallerState> {
     if (res == 1) {
       if (value.status == CallStatus.ring) {
         await cancelCall();
-        return true;
       }
       if (value.status == CallStatus.accepted) {
         await endCall();
       }
-      return true;
+      _backAfterSecond();
     }
     return false;
   }
@@ -179,16 +179,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
   }
 
   void _initTimer() {
-    _timer?.cancel();
-    _timer = Timer(
-      const Duration(seconds: 1),
-      () {
-        value.time = Duration(
-          seconds: value.time.inSeconds + 1,
-        );
-        notifyListeners();
-      },
-    );
+     stopWatchTimer.onStartTimer();
   }
 
   Future<void> _handleAcceptCall(Map<String, dynamic> data) async {
@@ -222,6 +213,6 @@ class _CallerController extends ValueNotifier<VCallerState> {
     _remoteRenderer.dispose();
     _localMediaStream?.dispose();
     _peerConnection?.dispose();
-    _timer?.cancel();
+     stopWatchTimer.dispose();
   }
 }

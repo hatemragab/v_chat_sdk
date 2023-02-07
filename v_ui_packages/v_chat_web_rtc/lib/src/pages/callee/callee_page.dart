@@ -5,6 +5,9 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/src/core/enums.dart';
 
 import '../../core/v_caller_state.dart';
+import '../widgets/call_fotter.dart';
+import '../widgets/timer_widget.dart';
+import '../widgets/user_icon_widget.dart';
 import 'callee_controller.dart';
 
 class VCalleePage extends StatefulWidget {
@@ -34,87 +37,154 @@ class _VCalleePageState extends State<VCalleePage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => _controller.onExit(context),
+      onWillPop: () async => false,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("is video ${widget.model.withVideo}"),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ValueListenableBuilder<VCallerState>(
-              valueListenable: _controller,
-              builder: (_, value, __) {
-                return SingleChildScrollView(
-                  child: Column(
+        body: SafeArea(
+          child: ValueListenableBuilder<VCallerState>(
+            valueListenable: _controller,
+            builder: (_, value, __) {
+              return Stack(
+                alignment: Alignment.center,
+                fit: StackFit.expand,
+                children: [
+                  Visibility(
+                    visible: widget.model.withVideo,
+                    child: RTCVideoView(
+                      _controller.remoteRenderer,
+                      placeholderBuilder: (context) => Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
+                  ),
+                  PositionedDirectional(
+                    bottom: 100,
+                    end: 1,
+                    child: Visibility(
+                      visible: widget.model.withVideo,
+                      child: SizedBox(
+                        height: 170,
+                        width: 170,
+                        child: RTCVideoView(
+                          _controller.localRenderer,
+                          placeholderBuilder: (context) => Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              CircularProgressIndicator(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
                     children: [
-                      SizedBox(
-                        height: 300,
-                        child: Row(
+                      Expanded(
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: RTCVideoView(
-                                _controller.localRenderer,
-                                placeholderBuilder: (context) => Row(
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                  ],
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.lock_clock_outlined,
+                                  size: 17,
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: RTCVideoView(
-                                _controller.remoteRenderer,
-                                placeholderBuilder: (context) => Row(
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                  ],
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ),
+                                //todo trans
+                                "End-to-end encryption".b2.color(Colors.grey)
+                              ],
                             ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            UserIconWidget(
+                              url: widget.model.identifierUser.baseUser
+                                  .userImages.fullImage,
+                              isVisible: !value.status.accepted ||
+                                  !widget.model.withVideo,
+                              userName:
+                                  widget.model.identifierUser.baseUser.fullName,
+                              subTitle: value.status.accepted
+                                  ? TimerWidget(
+                                      stopWatchTimer:
+                                          _controller.stopWatchTimer,
+                                    )
+                                  : value.status.name.b1,
+                            )
                           ],
                         ),
                       ),
-                      ListTile(
-                        title: const Text("Call status"),
-                        subtitle: _controller.value.status.name.text,
-                      ),
-                      ListTile(
-                        title: const Text("Call Timer"),
-                        subtitle: _controller.value.time.toString().text,
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      ElevatedButton(
-                        onPressed: _controller.rejectCall,
-                        child: "Reject".text,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: _controller.acceptCall,
-                        child: "Accept call".text,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Visibility(
-                        visible: _controller.value.status == CallStatus.accepted,
-                        child: ElevatedButton(
-                          onPressed: _controller.endCall,
-                          child: "End call".text,
+                      VConditionalBuilder(
+                        condition: value.status.ring,
+                        thenBuilder: () => Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Color(0xff4f3434),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(
+                                PhosphorIcons.chat,
+                                color: Colors.grey,
+                                size: 35,
+                              ),
+                              InkWell(
+                                onTap: _controller.acceptCall,
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.green,
+                                  ),
+                                  child: Icon(
+                                    Icons.call,
+                                    color: Colors.white,
+                                    size: 55,
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () => _controller.onExit(context),
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.red,
+                                  ),
+                                  child: Icon(
+                                    Icons.call_end,
+                                    color: Colors.white,
+                                    size: 35,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        elseBuilder: () => CallFotter(
+                          onClose: () => _controller.onExit(context),
                         ),
                       ),
                     ],
                   ),
-                );
-              },
-            ),
+                ],
+              );
+            },
           ),
         ),
       ),

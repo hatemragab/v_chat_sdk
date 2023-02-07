@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:retry/retry.dart';
 import 'package:sdp_transform/sdp_transform.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -16,11 +17,13 @@ class CalleeController extends ValueNotifier<VCallerState> {
   final BuildContext context;
 
   final VNewCallModel callModel;
+  final stopWatchTimer = StopWatchTimer(
+    mode: StopWatchMode.countUp,
+  );
 
   String get meetId => callModel.meetId;
   late final StreamSubscription subscription;
-  Timer? _timer;
-  RTCPeerConnection? _peerConnection;
+   RTCPeerConnection? _peerConnection;
   final _iceCandidates = <RTCIceCandidate>[];
 
   /// ---------- webrtc -------------
@@ -49,7 +52,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
     remoteRenderer.dispose();
     _localMediaStream?.dispose();
     _peerConnection?.dispose();
-    _timer?.cancel();
+     stopWatchTimer.dispose();
   }
 
   void _addListeners() {
@@ -79,16 +82,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
   }
 
   void _initTimer() {
-    _timer?.cancel();
-    _timer = Timer(
-      const Duration(seconds: 1),
-      () {
-        value.time = Duration(
-          seconds: value.time.inSeconds + 1,
-        );
-        notifyListeners();
-      },
-    );
+    stopWatchTimer.onStartTimer();
   }
 
   void _backAfterSecond() async {
@@ -151,9 +145,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
   }
 
   Future<Map<String, dynamic>> _createAnswer() async {
-    final description = await _peerConnection!.createAnswer({
-      'offerToReceiveVideo': 1,
-    });
+    final description = await _peerConnection!.createAnswer();
     final session = parse(description.sdp.toString());
     _peerConnection!.setLocalDescription(description);
     return session;
@@ -162,9 +154,11 @@ class CalleeController extends ValueNotifier<VCallerState> {
   Future<void> _initLocalMediaRender() async {
     final Map<String, dynamic> constraints = {
       'audio': true,
-      'video': {
-        'facingMode': 'user',
-      },
+      'video': callModel.withVideo
+          ? {
+              'facingMode': 'user',
+            }
+          : false,
     };
     _localMediaStream = await navigator.mediaDevices.getUserMedia(
       constraints,
@@ -173,15 +167,14 @@ class CalleeController extends ValueNotifier<VCallerState> {
     notifyListeners();
   }
 
-  void rejectCall() async {
-    vSafeApiCall<bool>(
+  Future rejectCall() async {
+    await vSafeApiCall<bool>(
       request: () async {
         return VChatController.I.nativeApi.remote.calls.rejectCall(meetId);
       },
       onSuccess: (_) {
-        value.status = CallStatus.callEnd;
+        value.status = CallStatus.rejected;
         notifyListeners();
-        _backAfterSecond();
       },
       onError: (exception, trace) async {
         VAppAlert.showErrorSnackBar(msg: exception, context: context);
@@ -197,7 +190,6 @@ class CalleeController extends ValueNotifier<VCallerState> {
       onSuccess: (_) {
         value.status = CallStatus.callEnd;
         notifyListeners();
-        _backAfterSecond();
       },
       onError: (exception, trace) async {
         VAppAlert.showErrorSnackBar(msg: exception, context: context);
@@ -216,7 +208,10 @@ class CalleeController extends ValueNotifier<VCallerState> {
       if (value.status == CallStatus.accepted) {
         await endCall();
       }
-      return true;
+      if (value.status == CallStatus.ring) {
+        await rejectCall();
+      }
+      _backAfterSecond();
     }
     return false;
   }
