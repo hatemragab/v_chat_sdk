@@ -9,6 +9,17 @@
 <a href="https://hatemragab.github.io/VChatSdk-Documentation/docs/how_to_get_backend_code/how_to_get_backend_code"> Backend Code </a>  <br />
 
 
+- To run the project first activate melos
+```
+dart pub global activate melos
+```
+then run this commend in the out root
+```
+melos bs
+```
+this code will run pub get for you
+
+
 ## Android Test
 
 <a href="https://play.google.com/store/apps/details?id=com.vchatsdk.app"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />

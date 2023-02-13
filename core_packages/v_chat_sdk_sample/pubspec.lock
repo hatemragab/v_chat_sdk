@@ -1927,7 +1927,7 @@ packages:
       path: "../../v_ui_packages/v_chat_web_rtc"
       relative: true
     source: path
-    version: "0.5.0+4"
+    version: "0.5.0+5"
   vector_math:
     dependency: transitive
     description:

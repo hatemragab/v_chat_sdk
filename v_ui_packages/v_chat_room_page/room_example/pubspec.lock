@@ -213,10 +213,10 @@ packages:
     dependency: transitive
     description:
       name: cross_file
-      sha256: f71079978789bc2fe78d79227f1f8cfe195b31bbd8db2399b0d15a4b96fb843b
+      sha256: "0b0036e8cccbfbe0555fd83c1d31a6f30b77a96b598b35a5d36dd41f718695e9"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3+2"
+    version: "0.3.3+4"
   crypto:
     dependency: transitive
     description:
@@ -475,6 +475,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
+  flutter_sound_lite:
+    dependency: transitive
+    description:
+      name: flutter_sound_lite
+      sha256: "50ceda27151e5f2c50e7ef944879d437ec6acd71cde7e242597b8eea92806055"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.5.0"
+  flutter_sound_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_sound_platform_interface
+      sha256: e29e73453f5ba5bb4d7fbb1044ba3f71e1e008f43ec1e13fd67f0a71ea2890a8
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.5.0"
+  flutter_sound_web:
+    dependency: transitive
+    description:
+      name: flutter_sound_web
+      sha256: "0a2334296e6e2015042cb2735c9f252cb6d59e14dbd4e93e6eb1878594e8a58c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.5.0"
   flutter_staggered_grid_view:
     dependency: transitive
     description:
@@ -601,10 +625,10 @@ packages:
     dependency: transitive
     description:
       name: google_maps_place_picker_mb
-      sha256: "148fec4c4c6775ceb492e36d77bd492c695fdecb9e05515dad398e8a1edf534b"
+      sha256: "70ab77809c4ccd1baf6a371747481f6f9b175a966def22c4d25914940be06155"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   google_maps_webservice:
     dependency: transitive
     description:
@@ -765,30 +789,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  location:
-    dependency: transitive
-    description:
-      name: location
-      sha256: "9051959f6f2ccadd887b28b66e9cbbcc25b6838e37cf9e894c421ccc0ebf80b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.4.0"
-  location_platform_interface:
-    dependency: transitive
-    description:
-      name: location_platform_interface
-      sha256: "62eeaf1658e92e4459b727f55a3c328eccbac8ba043fa6d262ac5286ad48384c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
-  location_web:
-    dependency: transitive
-    description:
-      name: location_web
-      sha256: "6c08c408a040534c0269c4ff9fe17eebb5a36dea16512fbaf116b9c8bc21545b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1"
   logger:
     dependency: transitive
     description:
@@ -1165,6 +1165,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   record:
     dependency: transitive
     description:
