@@ -6,6 +6,8 @@ class _CallerController extends ValueNotifier<VCallerState> {
   late final StreamSubscription subscription;
   final BuildContext context;
   RTCPeerConnection? _peerConnection;
+
+  final _iceCandidates = <RTCIceCandidate>[];
   final stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
   );
@@ -24,8 +26,8 @@ class _CallerController extends ValueNotifier<VCallerState> {
   }
 
   Future<void> _initRenderer() async {
-    _localRenderer.initialize();
-    _remoteRenderer.initialize();
+    await _localRenderer.initialize();
+    await _remoteRenderer.initialize();
     await _initLocalMediaRender();
     await _createPeerConnection();
     await _createOffer();
@@ -40,12 +42,29 @@ class _CallerController extends ValueNotifier<VCallerState> {
             }
           : false,
     };
-    final stream = await navigator.mediaDevices.getUserMedia(
+    _localMediaStream = await navigator.mediaDevices.getUserMedia(
       constraints,
     );
-    _localRenderer.srcObject = stream;
-    _localMediaStream = stream;
+    _localRenderer.srcObject = _localMediaStream;
     notifyListeners();
+  }
+
+  void _emitIce(RTCIceCandidate candidate) {
+    if (meetId == null) return;
+    vRtcLoggerStream.add(
+      VRtcAppLog(
+        title: "Caller _emitIce",
+        desc: jsonEncode({
+          "sdpMid": candidate.sdpMid as String,
+          "sdpMLineIndex": candidate.sdpMLineIndex,
+          "candidate": candidate.candidate,
+        }),
+      ),
+    );
+    VChatController.I.nativeApi.remote.socketIo.emitRtcIce(
+      candidate.toMap(),
+      meetId!,
+    );
   }
 
   Future _createPeerConnection() async {
@@ -53,6 +72,12 @@ class _CallerController extends ValueNotifier<VCallerState> {
       RtcHelper.iceServers,
       RtcHelper.offerSdpConstraints,
     );
+    _peerConnection!.onIceCandidate = (e) {
+      if (e.candidate != null) {
+        // _emitIce(e);
+        _iceCandidates.add(e);
+      }
+    };
     _peerConnection!.addStream(_localMediaStream!);
     _peerConnection!.onAddStream = (stream) {
       _remoteRenderer.srcObject = stream;
@@ -61,10 +86,30 @@ class _CallerController extends ValueNotifier<VCallerState> {
   }
 
   Future _createOffer() async {
-    final description = await _peerConnection!.createOffer();
-    final session = parse(description.sdp!);
-    _peerConnection!.setLocalDescription(description);
-    await _requestCall(session);
+    final offer = await _peerConnection!.createOffer(
+      {
+        'offerToReceiveVideo': 1,
+        'offerToReceiveAudio': 1,
+      },
+    );
+    vRtcLoggerStream.add(
+      VRtcAppLog(
+        title: "Caller create offer",
+        desc: jsonEncode({
+          "type": offer.type!,
+          "sdp": parse(offer.sdp!),
+        }),
+      ),
+    );
+    await _peerConnection!.setLocalDescription(offer);
+    // if (_iceCandidates.isEmpty) {
+    //   await Future.delayed(Duration(milliseconds: 400));
+    // }
+    await _requestCall({
+      "sdp": parse(offer.sdp!),
+      "type": offer.type!,
+      // "ice": _iceCandidates.map((e) => e.toMap()).toList(),
+    });
   }
 
 // end connections apis ----------------------------------------
@@ -167,6 +212,10 @@ class _CallerController extends ValueNotifier<VCallerState> {
           _backAfterSecond();
           return;
         }
+        if (e is VOnRtcIceEvent) {
+          await _setIce(e.data);
+          return;
+        }
         if (e is VCallAcceptedEvent) {
           value.status = CallStatus.accepted;
           await _handleAcceptCall(e.data.peerAnswer);
@@ -184,26 +233,45 @@ class _CallerController extends ValueNotifier<VCallerState> {
 
   Future<void> _handleAcceptCall(Map<String, dynamic> data) async {
     final answer = data['answer'] as Map<String, dynamic>;
-    final ice = data['ice'] as Map<String, dynamic>;
+    // final ice = (data['ice'] as List).cast<Map<String, dynamic>>();
     await _setRemote(answer);
-    await _setIce(ice);
+     _emitIce(_iceCandidates.last);
   }
 
   Future _setRemote(Map<String, dynamic> session) async {
-    String sdp = write(session, null);
     RTCSessionDescription description = RTCSessionDescription(
-      sdp,
-      'answer',
+      write(session['sdp'] as Map<String, dynamic>, null),
+      session['type'] as String,
+    );
+    vRtcLoggerStream.add(
+      VRtcAppLog(
+        title: "Caller _setRemote",
+        desc: jsonEncode({
+          "type": session['type'],
+          "sdp": write(session['sdp'] as Map<String, dynamic>, null),
+        }),
+      ),
     );
     await _peerConnection!.setRemoteDescription(description);
   }
 
   Future _setIce(Map<String, dynamic> ice) async {
+    vRtcLoggerStream.add(
+      VRtcAppLog(
+        title: "Caller _setIce",
+        desc: jsonEncode({
+          "sdpMid": ice['sdpMid'] as String,
+          "sdpMLineIndex": ice['sdpMLineIndex'] as int,
+          "candidate": ice['candidate'] as String,
+        }),
+      ),
+    );
     final candidate = RTCIceCandidate(
       ice['candidate'] as String,
       ice['sdpMid'] as String,
       ice['sdpMLineIndex'] as int,
     );
+    print("caller _setIce $ice");
     await _peerConnection!.addCandidate(candidate);
   }
 

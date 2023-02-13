@@ -5,7 +5,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/src/pages/callee/callee_page.dart';
 
 export './src/call_nav.dart';
-
+export './src/core/logger_stream.dart';
 void vInitCallListener() async {
   final remote = VChatController.I.nativeApi.remote;
   await remote.socketIo.socketCompleter.future;
