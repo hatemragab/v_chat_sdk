@@ -4,7 +4,7 @@
 
 ## Check Our Full documention 
 <a href="https://hatemragab.github.io/VChatSdk-Documentation/"> VCHAT Documention</a>  <br />
-<a href="https://pub.dev/packages/v_chat_sdk"> v_chat_sdk on pub.dev</a>  <br />
+
 
 <a href="https://hatemragab.github.io/VChatSdk-Documentation/docs/how_to_get_backend_code/how_to_get_backend_code"> Backend Code </a>  <br />
 
@@ -24,11 +24,12 @@ this code will run pub get for you
 
 <a href="https://drive.google.com/file/d/1l9L8K8bIeiZMDFic0nhlEJMKFHHiU_pY/view?usp=sharing"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
 
-## IOS Test Flight coming soon
-
 ## Web test
-<a href="https://web.superupdev.online">  <p> Web version </p> </a> <br />
+<a href="https://web.superupdev.online"> Web version  </a> <br />
 
+
+
+## IOS Test Flight coming soon
 ## Admin panel test coming soon
 
 **Quick Review**
