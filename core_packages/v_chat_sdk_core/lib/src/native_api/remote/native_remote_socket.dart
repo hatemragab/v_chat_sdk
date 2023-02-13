@@ -26,6 +26,16 @@ class NativeRemoteSocketIo {
   void emitDeliverRoomMessages(String roomId) => SocketController.instance
       .emitDeliverRoomMessages(jsonEncode({"roomId": roomId}));
 
+  void emitRtcIce(
+    Map<String, dynamic> data,
+    String meetId,
+  ) =>
+      SocketController.instance.emitRtcIce(
+        jsonEncode(
+          {"data": data, "meetId": meetId},
+        ),
+      );
+
   void emitSeenRoomMessages(String roomId) => SocketController.instance
       .emitSeenRoomMessages(jsonEncode({"roomId": roomId}));
 }

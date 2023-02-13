@@ -42,7 +42,8 @@ class VMsgCallAtt {
     return VMsgCallAtt(
       callStatus: VMessageCallStatus.values.byName(map['callStatus'] as String),
       endAt: map['endAt'] as String?,
-      startAt: map['startAt'] as String,
+      startAt: (map['startAt'] as String?) ??
+          DateTime.now().toLocal().toIso8601String(),
       withVideo: map['withVideo'] as bool,
     );
   }

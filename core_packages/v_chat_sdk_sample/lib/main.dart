@@ -8,6 +8,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 import 'app/core/app_service.dart';
 import 'app/core/lazy_inject.dart';
 import 'app/core/utils/app_localization.dart';
+import 'app/modules/logs/controllers/logs_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
 import 'generated/l10n.dart';
@@ -29,6 +30,9 @@ void main() async {
   final appService = Get.put<AppService>(AppService());
   setAppTheme(appService);
   await setAppLanguage(appService);
+  Get.put<LogsController>(
+    LogsController(),
+  );
   runApp(const MyApp());
 }
 
@@ -50,6 +54,17 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             themeMode: appService.themeMode,
             initialBinding: LazyInjection(),
+            builder: (context, child) {
+              return Scaffold(
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.LOGS);
+                  },
+                  child: Icon(Icons.light),
+                ),
+                body: child!,
+              );
+            },
             localizationsDelegates: [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

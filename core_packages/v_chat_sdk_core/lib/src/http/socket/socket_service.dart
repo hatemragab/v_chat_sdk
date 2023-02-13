@@ -137,10 +137,12 @@ class SocketService {
   }
 
   void handleCallAccepted(VOnAcceptCall onAcceptCall) {
-    _emitter.fire(VCallAcceptedEvent(
-      roomId: onAcceptCall.roomId,
-      data: onAcceptCall,
-    ),);
+    _emitter.fire(
+      VCallAcceptedEvent(
+        roomId: onAcceptCall.roomId,
+        data: onAcceptCall,
+      ),
+    );
   }
 
   void handleCallEnded(String roomId) {
@@ -153,5 +155,14 @@ class SocketService {
 
   void handleCallRejected(String roomId) {
     _emitter.fire(VCallRejectedEvent(roomId: roomId));
+  }
+
+  void handleOnIce(Map<String, dynamic> res) {
+    _emitter.fire(
+      VOnRtcIceEvent(
+        roomId: "roomId",
+        data: res['data'] as Map<String, dynamic>,
+      ),
+    );
   }
 }

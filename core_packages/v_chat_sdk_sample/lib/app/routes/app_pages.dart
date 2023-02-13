@@ -20,6 +20,8 @@ import '../modules/group_settings/bindings/group_settings_binding.dart';
 import '../modules/group_settings/views/group_settings_view.dart';
 import '../modules/home_tabs/home/bindings/home_binding.dart';
 import '../modules/home_tabs/home/views/home_view.dart';
+import '../modules/logs/bindings/logs_binding.dart';
+import '../modules/logs/views/logs_view.dart';
 import '../modules/my_orders/bindings/my_orders_binding.dart';
 import '../modules/my_orders/views/my_orders_view.dart';
 import '../modules/on_boarding/bindings/on_boarding_binding.dart';
@@ -113,6 +115,11 @@ class AppPages {
       name: _Paths.GROUP_MEMBERS,
       page: () => const GroupMembersView(),
       binding: GroupMembersBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGS,
+      page: () => const LogsView(),
+      binding: LogsBinding(),
     ),
   ];
 }

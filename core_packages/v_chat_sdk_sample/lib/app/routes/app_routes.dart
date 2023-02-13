@@ -18,6 +18,7 @@ abstract class Routes {
   static const CREATE_BROADCAST = _Paths.CREATE_BROADCAST;
   static const GROUP_SETTINGS = _Paths.GROUP_SETTINGS;
   static const GROUP_MEMBERS = _Paths.GROUP_MEMBERS;
+  static const LOGS = _Paths.LOGS;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const CREATE_BROADCAST = '/create-broadcast';
   static const GROUP_SETTINGS = '/group-settings';
   static const GROUP_MEMBERS = '/group-members';
+  static const LOGS = '/logs';
 }

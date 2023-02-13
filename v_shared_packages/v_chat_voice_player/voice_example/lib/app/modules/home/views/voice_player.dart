@@ -19,7 +19,6 @@ class VoicePlayerState extends State<VoicePlayer> {
   bool isLoading = true;
   late String path;
   late final VVoiceMessageController messageController;
-
   @override
   void initState() {
     super.initState();

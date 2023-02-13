@@ -11,6 +11,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class RecordWidget extends StatefulWidget {
   final Duration maxTime;
+
   const RecordWidget({
     super.key,
     required this.onCancel,
@@ -38,6 +39,8 @@ class RecordWidgetState extends State<RecordWidget> {
     super.initState();
     if (VPlatforms.isMobile) {
       recorder = MobileRecorder();
+    } else if (VPlatforms.isWeb) {
+      recorder = WebRecorder();
     } else {
       recorder = PlatformRecorder();
     }

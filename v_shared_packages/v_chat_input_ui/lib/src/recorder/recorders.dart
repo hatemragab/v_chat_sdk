@@ -1,4 +1,5 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:record/record.dart';
 
 abstract class AppRecorder {
@@ -76,5 +77,34 @@ class PlatformRecorder extends AppRecorder {
   @override
   Future<String?> stop() async {
     return recorder.stop();
+  }
+}
+
+class WebRecorder extends AppRecorder {
+  final recorder = FlutterSoundRecorder();
+
+  @override
+  Future close() async {
+    await recorder.closeAudioSession();
+  }
+
+  @override
+  Future pause() async {
+    await recorder.pauseRecorder();
+  }
+
+  @override
+  Future<void> start([String? path]) async {
+    await recorder.startRecorder();
+  }
+
+  @override
+  Future<bool> isRecording() async {
+    return recorder.isRecording;
+  }
+
+  @override
+  Future<String?> stop() async {
+    return recorder.stopRecorder();
   }
 }

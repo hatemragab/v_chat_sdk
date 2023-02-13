@@ -41,12 +41,12 @@ class VChatFcmProver extends VChatPushProviderBase {
   @override
   Future<bool> init() async {
     try {
-      // FirebaseMessaging.onBackgroundMessage(
-      //   vFirebaseMessagingBackgroundHandler,
-      // );
       if (Firebase.apps.isEmpty) {
         await Firebase.initializeApp();
       }
+      FirebaseMessaging.onBackgroundMessage(
+        vFirebaseMessagingBackgroundHandler,
+      );
       final status =
           (await FirebaseMessaging.instance.getNotificationSettings())
               .authorizationStatus;

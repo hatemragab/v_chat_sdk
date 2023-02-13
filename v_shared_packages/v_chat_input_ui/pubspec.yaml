@@ -16,9 +16,10 @@ dependencies:
   permission_handler: ^10.2.0
   stop_watch_timer: ^2.0.0
 #  place_picker: ^0.10.0
-  google_maps_place_picker_mb: ^3.0.0
+  google_maps_place_picker_mb: ^3.0.1
+  flutter_sound_lite: ^8.5.0
   latlong2: ^0.8.1
-  cross_file: ^0.3.3+2
+  cross_file: ^0.3.3+4
   path_provider: ^2.0.11
   giphy_get: ^3.2.0
   record: ^4.4.4

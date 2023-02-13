@@ -151,6 +151,14 @@ class SocketController implements ISocketIoClient {
         _socketService.handleCallRejected(res['roomId'] as String);
       },
     );
+
+    _socket.on(
+      SocketEvents.v1OnIceCandidate.name,
+      (dynamic data) async {
+        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+        _socketService.handleOnIce(res);
+      },
+    );
     _socket.on(
       SocketEvents.v1OnCallAccepted.name,
       (dynamic data) async {
@@ -188,6 +196,13 @@ class SocketController implements ISocketIoClient {
     );
   }
 
+  void emitRtcIce(String data) {
+    _socket.emit(
+      SocketEvents.v1IceCandidate.name,
+      data,
+    );
+  }
+
   void emitSeenRoomMessages(String data) {
     _socket.emit(
       SocketEvents.v1EnterChatRoom.name,
@@ -216,10 +231,12 @@ enum SocketEvents {
   v1OnCallTimeout,
   v1OnCallCanceled,
   v1OnCallRejected,
+  v1OnIceCandidate,
 
   ///Emitter
   v1RoomStatusChange,
   v1MyOnline,
   v1EnterChatRoom,
   v1DeliverChatRoom,
+  v1IceCandidate
 }

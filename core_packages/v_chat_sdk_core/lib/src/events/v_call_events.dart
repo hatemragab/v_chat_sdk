@@ -64,6 +64,19 @@ class VCallRejectedEvent extends VCallEvents {
   }
 }
 
+class VOnRtcIceEvent extends VCallEvents {
+  final Map<String,dynamic> data;
+  const VOnRtcIceEvent({
+    required super.roomId,
+    required this.data,
+  });
+
+  @override
+  String toString() {
+    return 'VCallRejectedEvent{ data $data}';
+  }
+}
+
 class VCallAcceptedEvent extends VCallEvents {
   final VOnAcceptCall data;
   const VCallAcceptedEvent({
