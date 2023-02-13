@@ -22,13 +22,14 @@ this code will run pub get for you
 
 ## Android Test
 
-<a href="https://play.google.com/store/apps/details?id=com.vchatsdk.app"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
+<a href="https://drive.google.com/file/d/1l9L8K8bIeiZMDFic0nhlEJMKFHHiU_pY/view?usp=sharing"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
 
-## IOS Test Flight
+## IOS Test Flight coming soon
 
-<a href="https://testflight.apple.com/join/Bb2LLcKx"> <img src="https://user-images.githubusercontent.com/37384769/145644883-e914dd94-c797-4944-bb6d-fb4ec629c016.png" width ="300" /> </a> <br />
+## Web test
+<a href="https://web.superupdev.online">  <p> Web version </p> </a> <br />
 
-
+## Admin panel test coming soon
 
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
