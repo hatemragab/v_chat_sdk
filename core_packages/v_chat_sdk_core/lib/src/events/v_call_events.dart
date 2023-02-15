@@ -65,7 +65,7 @@ class VCallRejectedEvent extends VCallEvents {
 }
 
 class VOnRtcIceEvent extends VCallEvents {
-  final Map<String,dynamic> data;
+  final Map<String, dynamic> data;
   const VOnRtcIceEvent({
     required super.roomId,
     required this.data,

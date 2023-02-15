@@ -32,9 +32,7 @@ abstract class VChatLocalizationLabels {
   String get deleteFromMe;
   String get downloading;
   String get fileHasBeenSavedTo;
-  String get media;
   String get online;
-  String get members;
   String get youDontHaveAccess;
   String get replyToYourSelf;
   String get forwarded;
@@ -58,12 +56,34 @@ abstract class VChatLocalizationLabels {
   String get areYouSureToLeave;
   String get leaveGroupAndDeleteYourMessageCopy;
   String get groupLeft;
+  String get typing;
+  String get recording;
   String get shareFiles;
+  String get media;
   String get shareLocation;
   String get shareMediaAndLocation;
   String get typeYourMessage;
-  String get typing;
-  String get recording;
+  String get endtoendEncryption;
+  String get exitFromTheCall;
+  String get areYouSureToEndTheCall;
+  String get messageInfo;
+  String get read;
+  String get delivered;
+  String get chatMedia;
+  String get busy;
+  String get members;
+  String get ring;
+  String get roomAlreadyInCall;
+  String get timeout;
+  String get callEnd;
+  String get rejected;
+  String get videoCall;
+  String get audioCall;
+  String get canceled;
+  String get inCall;
+  String get makeCall;
+  String get areYouWantToMakeVideoCall;
+  String get areYouWantToMakeVoiceCall;
 }
 
 const localizations = <String, VChatLocalizationLabels>{

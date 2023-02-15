@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:v_chat_voice_player/src/helpers/theme_builder.dart';
 import 'package:v_chat_voice_player/src/voice_message_controller.dart';
 
 import 'helpers/utils.dart';

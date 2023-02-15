@@ -35,11 +35,10 @@ class CallMessageItem extends StatelessWidget {
             child: ListTile(
               visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               dense: true,
-              //todo fix
               title: message.data.withVideo
-                  ? "Video call".text
-                  : "Audio call".text,
-              subtitle: _getSub(),
+                  ? VTrans.labelsOf(context).videoCall.text
+                  : VTrans.labelsOf(context).audioCall.text,
+              subtitle: _getSub(context),
             ),
           )
         ],
@@ -47,14 +46,15 @@ class CallMessageItem extends StatelessWidget {
     );
   }
 
-  Widget _getSub() {
+  Widget _getSub(BuildContext context) {
     if (message.data.duration != null) {
       return "${message.data.duration.toString()} S"
           .text
           .maxLine(2)
           .overflowEllipsis;
     }
-    return message.data.callStatus.name
+    return message.data.callStatus
+        .tr(context)
         .toString()
         .text
         .maxLine(2)

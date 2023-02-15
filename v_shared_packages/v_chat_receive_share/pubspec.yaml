@@ -12,17 +12,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.2.0
-  v_chat_sdk_core: ^0.0.3
-  v_chat_media_editor: ^0.0.4
-  v_chat_room_page: ^0.0.1
+  v_chat_utils: ^0.5.0+2
+  v_chat_sdk_core: ^0.5.0+2
+  v_chat_media_editor: ^0.5.0
+  v_chat_room_page: ^0.5.0
   share_handler: ^0.0.16
-  meta: ^1.8.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
   lints: ^2.0.1
 
 

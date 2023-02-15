@@ -44,7 +44,10 @@ class _VCalleePageState extends State<VCalleePage> {
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: "End-to-end encryption".cap.color(Colors.grey),
+          title: VTrans.labelsOf(context)
+              .endtoendEncryption
+              .cap
+              .color(Colors.grey),
         ),
         body: SafeArea(
           child: ValueListenableBuilder<VCallerState>(
@@ -108,7 +111,10 @@ class _VCalleePageState extends State<VCalleePage> {
                                       stopWatchTimer:
                                           _controller.stopWatchTimer,
                                     )
-                                  : value.status.name.b1.color(Colors.white),
+                                  : value.status
+                                      .tr(context)
+                                      .b1
+                                      .color(Colors.white),
                             )
                           ],
                         ),

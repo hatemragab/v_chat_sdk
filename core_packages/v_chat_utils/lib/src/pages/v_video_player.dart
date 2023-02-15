@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../v_chat_utils.dart';
@@ -103,10 +104,23 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
         videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false),
       );
     } else if (widget.platformFileSource.isFromUrl) {
-      _videoPlayerController = VideoPlayerController.network(
-        widget.platformFileSource.url!,
-        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false),
-      );
+      if (VPlatforms.isMobile) {
+        final file = await DefaultCacheManager().getSingleFile(
+          widget.platformFileSource.url!,
+          key: widget.platformFileSource.urlKey,
+        );
+        _videoPlayerController = VideoPlayerController.file(
+          file,
+          videoPlayerOptions:
+              VideoPlayerOptions(allowBackgroundPlayback: false),
+        );
+      } else {
+        _videoPlayerController = VideoPlayerController.network(
+          widget.platformFileSource.url!,
+          videoPlayerOptions:
+              VideoPlayerOptions(allowBackgroundPlayback: false),
+        );
+      }
     }
 
     await _videoPlayerController!.initialize();

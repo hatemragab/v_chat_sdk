@@ -56,12 +56,12 @@ class MyApp extends StatelessWidget {
             initialBinding: LazyInjection(),
             builder: (context, child) {
               return Scaffold(
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.LOGS);
-                  },
-                  child: Icon(Icons.light),
-                ),
+                // floatingActionButton: FloatingActionButton(
+                //   onPressed: () {
+                //     Get.toNamed(Routes.LOGS);
+                //   },
+                //   child: Icon(Icons.light),
+                // ),
                 body: child!,
               );
             },
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
             ],
             supportedLocales: S.delegate.supportedLocales,
             locale: appService.locale,
-            fallbackLocale: const Locale("en"),
+            fallbackLocale: const Locale("ar"),
             theme: ThemeData(
               useMaterial3: true,
               colorSchemeSeed: Colors.green,

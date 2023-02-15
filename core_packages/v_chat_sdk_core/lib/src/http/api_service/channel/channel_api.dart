@@ -82,12 +82,25 @@ abstract class ChannelApi extends ChopperService {
   @Delete(path: "/{roomId}/broadcast/members/{peerId}", optionalBody: true)
   Future<Response> kickBroadcastUser(
     @Path('roomId') String roomId,
-    @Path('peerId') String peerId,
+    @Path('identifier') String identifier,
   );
 
   @Get(path: "/{roomId}/broadcast/my-info")
   Future<Response> getMyBroadcastInfo(
     @Path("roomId") String roomId,
+  );
+
+  @Get(
+    path: "/{roomId}/broadcast/message/{messageId}/status/{type}",
+    optionalBody: true,
+  )
+  Future<Response> getMessageStatusForBroadcast(
+    @Path("roomId") String roomId,
+    @Path("messageId") String mId,
+
+    ///it can be seen or deliver
+    @QueryMap() Map<String, dynamic> query,
+    @Path("type") String type,
   );
 
   /// ----------------------------------------- group apis ------------------------------------------

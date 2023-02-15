@@ -45,7 +45,7 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
           print("Going to toSingleSettings $identifier");
         },
         toBroadcastSettings: (context, data) {
-          print("Going to broadcast settings $data");
+          Get.toNamed(Routes.BROADCAST_SETTINGS, arguments: data);
         },
         toUserProfilePage: (context, identifier) {
           print("Going to toUserProfile $identifier");

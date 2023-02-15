@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:retry/retry.dart';
 import 'package:sdp_transform/sdp_transform.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -106,7 +105,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
         title: "Callee _setRemote",
         desc: jsonEncode({
           "type": session['type'],
-          "sdp":  write(session['sdp'] as Map<String, dynamic>, null),
+          "sdp": write(session['sdp'] as Map<String, dynamic>, null),
         }),
       ),
     );
@@ -183,7 +182,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
         _initTimer();
       },
       onError: (exception, trace) async {
-        VAppAlert.showErrorSnackBar(msg: exception, context: context);
+        // VAppAlert.showErrorSnackBar(msg: exception, context: context);
       },
     );
   }
@@ -256,7 +255,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
         notifyListeners();
       },
       onError: (exception, trace) async {
-        VAppAlert.showErrorSnackBar(msg: exception, context: context);
+        // VAppAlert.showErrorSnackBar(msg: exception, context: context);
       },
     );
   }
@@ -271,7 +270,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
         notifyListeners();
       },
       onError: (exception, trace) async {
-        VAppAlert.showErrorSnackBar(msg: exception, context: context);
+        //VAppAlert.showErrorSnackBar(msg: exception, context: context);
       },
     );
   }
@@ -279,9 +278,8 @@ class CalleeController extends ValueNotifier<VCallerState> {
   Future<bool> onExit(BuildContext context) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      //todo trans
-      title: "Exit call",
-      content: "Are you sure to end the call ?",
+      title: VTrans.labelsOf(context).exitFromTheCall,
+      content: VTrans.labelsOf(context).areYouSureToEndTheCall,
     );
     if (res == 1) {
       if (value.status == CallStatus.accepted) {

@@ -78,6 +78,9 @@ class VMessageController {
     if (vRoom.roomType.isGroup) {
       _setMyGroupInfo(vRoom.id);
     }
+    if (vRoom.roomType.isBroadcast) {
+      _setMyBroadcastInfo(vRoom.id);
+    }
   }
 
   Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
@@ -284,6 +287,17 @@ class VMessageController {
     await VChatController.I.vChatConfig.cleanNotifications();
   }
 
+  Future _setMyBroadcastInfo(String id) async {
+    vSafeApiCall<VMyBroadcastInfo>(
+      request: () async {
+        return VChatController.I.nativeApi.remote.room.getBroadcastInfo(id);
+      },
+      onSuccess: (response) {
+        appBarStateController.setMemberCount(response.totalUsers);
+      },
+    );
+  }
+
   Future _setMyGroupInfo(String id) async {
     vSafeApiCall<VMyGroupInfo>(
       request: () async {
@@ -353,8 +367,10 @@ class VMessageController {
   void onCreateCall(bool isVideo) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: "Make call",
-      content: "Are you want to make ${isVideo ? 'video' : 'audio'} call?",
+      title: VTrans.labelsOf(context).makeCall,
+      content: isVideo
+          ? VTrans.labelsOf(context).areYouWantToMakeVideoCall
+          : VTrans.labelsOf(context).areYouWantToMakeVoiceCall,
     );
     if (res != 1) return;
     VChatController.I.vNavigator.callNavigator.toCaller(

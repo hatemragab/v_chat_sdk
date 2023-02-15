@@ -3,7 +3,7 @@ import '../../../v_chat_utils.dart';
 class ArLocalizations extends VChatLocalizationLabels {
   const ArLocalizations();
   @override
-  String get ok => "موافق";
+  String get ok => "نعم";
 
   @override
   String get cancel => "يلغي";
@@ -21,13 +21,13 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get successfullyDownloadedIn => "تم تنزيله بنجاح في";
 
   @override
-  String get pleaseWait => "أرجو الإنتظار ...";
+  String get pleaseWait => "انتظر من فضلك ...";
 
   @override
   String get search => "يبحث ...";
 
   @override
-  String get updateTitleTo => "عنوان التحديث إلى";
+  String get updateTitleTo => "تحديث عنوان إلى";
 
   @override
   String get updateImage => "تحديث الصورة";
@@ -48,7 +48,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get kickedBy => "ركل من قبل";
 
   @override
-  String get groupCreatedBy => "مجموعة أنشأتها";
+  String get groupCreatedBy => "المجموعة التي أنشأتها";
 
   @override
   String get addedYouToNewBroadcast => "أضافك إلى البث الجديد";
@@ -57,7 +57,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get connecting => "توصيل...";
 
   @override
-  String get delete => "حذف";
+  String get delete => "يمسح";
 
   @override
   String get download => "تحميل";
@@ -69,10 +69,10 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get info => "معلومات";
 
   @override
-  String get share => "شارك";
+  String get share => "يشارك";
 
   @override
-  String get forward => "اعاده توجيه";
+  String get forward => "إلى الأمام";
 
   @override
   String get reply => "رد";
@@ -88,9 +88,6 @@ class ArLocalizations extends VChatLocalizationLabels {
 
   @override
   String get fileHasBeenSavedTo => "تم حفظ الملف إلى";
-
-  @override
-  String get media => "المعرض";
 
   @override
   String get online => "متصل";
@@ -126,26 +123,26 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get unBlock => "كتلة";
 
   @override
-  String get block => "حظر";
+  String get block => "حاجز";
 
   @override
-  String get leave => "غادر";
+  String get leave => "يترك";
 
   @override
-  String get chatMuted => "دردشة صامتة";
+  String get chatMuted => "محادثة صامتة";
 
   @override
   String get chatUnMuted => "الدردشة غير صامتة";
 
   @override
-  String get deleteYouCopy => "حذفك نسختك؟";
+  String get deleteYouCopy => "حذفك نسخ؟";
 
   @override
   String get areYouSureToPermitYourCopyThisActionCantUndo =>
       "هل أنت متأكد من السماح بنسخك هذا الإجراء غير قادر على التراجع";
 
   @override
-  String get blockThisUser => "حظر هذا المستخدم؟";
+  String get blockThisUser => "منع هذا المستخدم؟";
 
   @override
   String get areYouSureToBlockThisUserCantSendMessageToYou =>
@@ -155,7 +152,7 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get userBlocked => "المستخدم المحظور";
 
   @override
-  String get userUnBlocked => "المستخدم المحظور";
+  String get userUnBlocked => "المستخدم UN المحظور";
 
   @override
   String get areYouSureToLeave => "هل أنت متأكد من المغادرة؟";
@@ -168,7 +165,16 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get groupLeft => "غادرت المجموعة";
 
   @override
+  String get typing => "الكتابة ...";
+
+  @override
+  String get recording => "تسجيل...";
+
+  @override
   String get shareFiles => "مشاركة الملفات";
+
+  @override
+  String get media => "وسائط";
 
   @override
   String get shareLocation => "مشاركة الموقع";
@@ -180,11 +186,65 @@ class ArLocalizations extends VChatLocalizationLabels {
   String get typeYourMessage => "اكتب رسالتك ...";
 
   @override
-  String get recording => "يسجل صوتي";
+  String get endtoendEncryption => "تشفير من طرف إلى طرف";
 
   @override
-  String get typing => "يكتب...";
+  String get exitFromTheCall => "الخروج من المكالمة";
 
   @override
-  String get members => "الاعضاء";
+  String get areYouSureToEndTheCall => "هل أنت متأكد من إنهاء المكالمة؟";
+
+  @override
+  String get messageInfo => "معلومات الرسالة";
+
+  @override
+  String get read => "يقرأ";
+
+  @override
+  String get delivered => "تم التوصيل";
+
+  @override
+  String get chatMedia => "وسائط الدردشة";
+
+  @override
+  String get busy => "مشغول";
+
+  @override
+  String get members => "أعضاء";
+
+  @override
+  String get ring => "جرس";
+
+  @override
+  String get roomAlreadyInCall => "الغرفة بالفعل في الاتصال";
+
+  @override
+  String get timeout => "نفذ الوقت";
+
+  @override
+  String get callEnd => "استدعاء نهاية";
+
+  @override
+  String get rejected => "مرفوض";
+
+  @override
+  String get videoCall => "مكالمة فيديو";
+
+  @override
+  String get audioCall => "مكالمة صوتية";
+
+  @override
+  String get canceled => "ألغيت";
+
+  @override
+  String get inCall => "في المكالمة";
+
+  @override
+  String get makeCall => "إجراء مكالمة";
+
+  @override
+  String get areYouWantToMakeVideoCall => "هل تريد إجراء مكالمة فيديو";
+
+  @override
+  String get areYouWantToMakeVoiceCall => "هل تريد إجراء مكالمة صوتية";
 }

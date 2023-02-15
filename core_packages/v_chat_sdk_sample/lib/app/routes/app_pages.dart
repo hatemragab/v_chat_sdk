@@ -4,6 +4,10 @@ import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
 import '../modules/auth/register/bindings/register_binding.dart';
 import '../modules/auth/register/views/register_view.dart';
+import '../modules/broadcast_members/bindings/broadcast_members_binding.dart';
+import '../modules/broadcast_members/views/broadcast_members_view.dart';
+import '../modules/broadcast_settings/bindings/broadcast_settings_binding.dart';
+import '../modules/broadcast_settings/views/broadcast_settings_view.dart';
 import '../modules/choose_members/bindings/choose_members_binding.dart';
 import '../modules/choose_members/views/choose_members_view.dart';
 import '../modules/create_broadcast/bindings/create_broadcast_binding.dart';
@@ -120,6 +124,16 @@ class AppPages {
       name: _Paths.LOGS,
       page: () => const LogsView(),
       binding: LogsBinding(),
+    ),
+    GetPage(
+      name: _Paths.BROADCAST_SETTINGS,
+      page: () => const BroadcastSettingsView(),
+      binding: BroadcastSettingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.BROADCAST_MEMBERS,
+      page: () => const BroadcastMembersView(),
+      binding: BroadcastMembersBinding(),
     ),
   ];
 }

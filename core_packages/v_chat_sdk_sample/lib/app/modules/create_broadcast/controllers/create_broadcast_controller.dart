@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/utils/app_auth.dart';
 import '../../../routes/app_pages.dart';
 
 class CreateBroadcastController extends GetxController {
-  final List<UserModel> users;
+  final List<VIdentifierUser> users;
 
-  CreateBroadcastController(this.users);
+  CreateBroadcastController(
+    this.users,
+  );
 
-  final user = AppAuth.getMyModel;
   VPlatformFileSource? groupImage;
   final nameController = TextEditingController();
 
@@ -28,17 +28,20 @@ class CreateBroadcastController extends GetxController {
     if (name.isEmpty) {
       VAppAlert.showErrorSnackBar(
           msg: "name must not empty", context: Get.context!);
-    }
-    if (groupImage == null) {
-      VAppAlert.showErrorSnackBar(
-          msg: "image must not empty", context: Get.context!);
+      return;
     }
     await vSafeApiCall(
       onLoading: () {
         VAppAlert.showLoading(context: Get.context!);
       },
       request: () async {
-        await Future.delayed(const Duration(seconds: 1));
+        await VChatController.I.nativeApi.remote.room.createBroadcast(
+          CreateBroadcastDto(
+            identifiers: users.map((e) => e.identifier).toList(),
+            title: name,
+            platformImage: groupImage,
+          ),
+        );
         // V CHAT REQUEST
       },
       onSuccess: (response) {

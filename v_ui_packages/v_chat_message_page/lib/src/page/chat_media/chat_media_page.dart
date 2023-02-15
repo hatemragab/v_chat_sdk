@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import 'chat_media_controller.dart';
 
@@ -27,7 +28,9 @@ class _ChatMediaPageState extends State<ChatMediaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("chat media"),
+        title: Text(
+          VTrans.labelsOf(context).chatMedia,
+        ),
       ),
     );
   }

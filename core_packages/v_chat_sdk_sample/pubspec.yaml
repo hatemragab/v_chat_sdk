@@ -25,6 +25,7 @@ dependencies:
   v_chat_sdk_core: ^0.4.3+2
   v_chat_web_rtc: ^0.0.1
   v_chat_utils: ^0.4.3
+  v_chat_receive_share: ^0.2.0
   v_chat_message_page: ^0.4.3+1
   v_chat_firebase_fcm: ^0.4.3
   v_chat_room_page: ^0.4.3+2

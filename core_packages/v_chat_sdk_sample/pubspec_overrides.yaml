@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: v_chat_firebase_fcm,v_chat_input_ui,v_chat_media_editor,v_chat_message_page,v_chat_room_page,v_chat_sdk_core,v_chat_utils,v_chat_voice_player,v_chat_web_rtc
+# melos_managed_dependency_overrides: v_chat_firebase_fcm,v_chat_input_ui,v_chat_media_editor,v_chat_message_page,v_chat_one_signal,v_chat_receive_share,v_chat_room_page,v_chat_sdk_core,v_chat_utils,v_chat_voice_player,v_chat_web_rtc
 dependency_overrides:
   v_chat_firebase_fcm:
     path: ../../push_providers/v_chat_firebase_fcm
@@ -10,6 +10,8 @@ dependency_overrides:
     path: ../../v_ui_packages/v_chat_message_page
   v_chat_one_signal:
     path: ../../push_providers/v_chat_one_signal
+  v_chat_receive_share:
+    path: ../../v_shared_packages/v_chat_receive_share
   v_chat_room_page:
     path: ../../v_ui_packages/v_chat_room_page
   v_chat_sdk_core:

@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
+
 enum VChatHttpMethods { get, post, patch, delete, put }
 
 enum VMessageType {
@@ -15,6 +18,7 @@ enum VMessageType {
 
 extension MessageTypeExt on VMessageType {
   bool get isImage => this == VMessageType.image;
+
   bool get isCall => this == VMessageType.call;
 
   bool get isInfo => this == VMessageType.info;
@@ -51,6 +55,28 @@ enum VGroupMsgInfo {
   bAdd,
   bKick,
   bDeleted,
+}
+
+extension VMessageCallStatusTr on VMessageCallStatus {
+  String tr(BuildContext context) {
+    switch (this) {
+      case VMessageCallStatus.ring:
+        return VTrans.labelsOf(context).ring;
+
+      case VMessageCallStatus.canceled:
+        return VTrans.labelsOf(context).canceled;
+      case VMessageCallStatus.timeout:
+        return VTrans.labelsOf(context).timeout;
+      case VMessageCallStatus.rejected:
+        return VTrans.labelsOf(context).rejected;
+      case VMessageCallStatus.finished:
+        return VTrans.labelsOf(context).callEnd;
+      case VMessageCallStatus.inCall:
+        return VTrans.labelsOf(context).inCall;
+      case VMessageCallStatus.sessionEnd:
+        return VTrans.labelsOf(context).callEnd;
+    }
+  }
 }
 
 enum VMessageCallStatus {

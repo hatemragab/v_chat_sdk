@@ -196,9 +196,9 @@ class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> kickBroadcastUser(
     String roomId,
-    String peerId,
+    String identifier,
   ) {
-    final Uri $url = Uri.parse('channel/${roomId}/broadcast/members/${peerId}');
+    final Uri $url = Uri.parse('channel/${roomId}/broadcast/members/{peerId}');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -214,6 +214,25 @@ class _$ChannelApi extends ChannelApi {
       'GET',
       $url,
       client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getMessageStatusForBroadcast(
+    String roomId,
+    String mId,
+    Map<String, dynamic> query,
+    String type,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/${roomId}/broadcast/message/${mId}/status/${type}');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
     );
     return client.send<dynamic, dynamic>($request);
   }

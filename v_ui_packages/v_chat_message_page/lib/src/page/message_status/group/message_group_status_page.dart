@@ -39,8 +39,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
               contentPadding: EdgeInsets.zero,
               title: AppBar(
                 backgroundColor: context.isDark ? Colors.transparent : null,
-                //todo trans
-                title: "Message info".text,
+                title: VTrans.labelsOf(context).messageInfo.text,
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 10),
@@ -76,7 +75,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                 ),
               ),
             ),
-            ValueListenableBuilder<MessageGroupStatusState>(
+            ValueListenableBuilder<MessageStatusState>(
                 valueListenable: controller,
                 builder: (__, value, _) {
                   return VAsyncWidgetsBuilder(
@@ -101,7 +100,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  "Read".text,
+                                  VTrans.labelsOf(context).read.text,
                                   format(value.seen[index].seen!)
                                       .text
                                       .color(Colors.grey),
@@ -111,7 +110,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  "Delivered".text,
+                                  VTrans.labelsOf(context).delivered.text,
                                   format(value.seen[index].delivered)
                                       .text
                                       .color(Colors.grey),
@@ -151,7 +150,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                 ),
               ),
             ),
-            ValueListenableBuilder<MessageGroupStatusState>(
+            ValueListenableBuilder<MessageStatusState>(
                 valueListenable: controller,
                 builder: (__, value, _) {
                   return VAsyncWidgetsBuilder(

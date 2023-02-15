@@ -86,10 +86,10 @@ class VChannelApiService {
     return VMyBroadcastInfo.fromMap(extractDataFromResponse(res));
   }
 
-  Future<bool> updateBroadcastTitle(
-    String roomId,
-    String title,
-  ) async {
+  Future<bool> updateBroadcastTitle({
+    required String roomId,
+    required String title,
+  }) async {
     final res = await _channelApiService!.updateBroadcastTitle(roomId, {
       "title": title,
     });
@@ -97,10 +97,10 @@ class VChannelApiService {
     return true;
   }
 
-  Future<String> updateBroadcastImage(
-    String roomId,
-    VPlatformFileSource file,
-  ) async {
+  Future<String> updateBroadcastImage({
+    required String roomId,
+    required VPlatformFileSource file,
+  }) async {
     final res = await _channelApiService!.updateBroadcastImage(
       roomId,
       await VPlatforms.getMultipartFile(
@@ -111,35 +111,39 @@ class VChannelApiService {
     return (res.body as Map<String, dynamic>)['data'] as String;
   }
 
-  // Future<List<BroadcastMember>> getBroadcastMembers(
-  //   String roomId,
-  //   Map<String, dynamic> filter,
-  // ) async {
-  //   final res = await _channelApiService.getBroadcastMembers(roomId, filter);
-  //   throwIfNotSuccess(res);
-  //   return ((res.body as Map<String, dynamic>)['data'] as List)
-  //       .map((e) => BroadcastMember.fromMap(e as Map<String, dynamic>))
-  //       .toList();
-  // }
-  Future<bool> addParticipantsToBroadcast(
-    String roomId,
-    List<String> body,
-  ) async {
+  Future<List<VBroadcastMember>> getBroadcastMembers({
+    required String roomId,
+    VBaseFilter? filter,
+  }) async {
+    final res = await _channelApiService!.getBroadcastMembers(
+      roomId,
+      filter == null ? {} : filter.toMap(),
+    );
+    throwIfNotSuccess(res);
+    return (extractDataFromResponse(res)['docs'] as List)
+        .map((e) => VBroadcastMember.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<bool> addParticipantsToBroadcast({
+    required String roomId,
+    required List<String> identifiers,
+  }) async {
     final res = await _channelApiService!.addParticipantsToBroadcast(
       roomId,
-      {"ids": body},
+      {"identifiers": identifiers},
     );
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<bool> kickBroadcastUser(
-    String roomId,
-    String peerId,
-  ) async {
+  Future<bool> kickBroadcastUser({
+    required String roomId,
+    required String peerIdentifier,
+  }) async {
     final res = await _channelApiService!.kickBroadcastUser(
       roomId,
-      peerId,
+      peerIdentifier,
     );
     throwIfNotSuccess(res);
     return true;
@@ -248,6 +252,26 @@ class VChannelApiService {
     required bool isSeen,
   }) async {
     final res = await _channelApiService!.getMessageStatusForGroup(
+      roomId,
+      messageId,
+      pagination == null ? {} : pagination.toMap(),
+      isSeen ? "seen" : "deliver",
+    );
+
+    throwIfNotSuccess(res);
+    final resList = extractDataFromResponse(res)['docs'] as List;
+    return resList
+        .map((e) => VMessageStatusModel.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<VMessageStatusModel>> getMessageStatusForBroadcast({
+    required String roomId,
+    required String messageId,
+    VBaseFilter? pagination,
+    required bool isSeen,
+  }) async {
+    final res = await _channelApiService!.getMessageStatusForBroadcast(
       roomId,
       messageId,
       pagination == null ? {} : pagination.toMap(),

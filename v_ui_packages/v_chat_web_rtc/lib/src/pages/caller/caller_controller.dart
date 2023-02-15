@@ -131,7 +131,6 @@ class _CallerController extends ValueNotifier<VCallerState> {
         value.status = CallStatus.busy;
         notifyListeners();
         _backAfterSecond();
-        print(exception);
       },
     );
   }
@@ -147,7 +146,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
         notifyListeners();
       },
       onError: (exception, trace) async {
-        VAppAlert.showErrorSnackBar(msg: exception, context: context);
+        // VAppAlert.showErrorSnackBar(msg: exception, context: context);
       },
     );
   }
@@ -163,7 +162,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
         notifyListeners();
       },
       onError: (exception, trace) async {
-        VAppAlert.showErrorSnackBar(msg: exception, context: context);
+        // VAppAlert.showErrorSnackBar(msg: exception, context: context);
       },
     );
   }
@@ -176,8 +175,8 @@ class _CallerController extends ValueNotifier<VCallerState> {
   Future<bool> onExit(BuildContext context) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: "Exit call",
-      content: "Are you sure to end the call ?",
+      title: VTrans.labelsOf(context).exitFromTheCall,
+      content: VTrans.labelsOf(context).areYouSureToEndTheCall,
     );
     if (res == 1) {
       if (value.status == CallStatus.ring) {
@@ -235,7 +234,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
     final answer = data['answer'] as Map<String, dynamic>;
     // final ice = (data['ice'] as List).cast<Map<String, dynamic>>();
     await _setRemote(answer);
-     _emitIce(_iceCandidates.last);
+    _emitIce(_iceCandidates.last);
   }
 
   Future _setRemote(Map<String, dynamic> session) async {

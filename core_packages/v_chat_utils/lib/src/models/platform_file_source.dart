@@ -59,6 +59,11 @@ class VPlatformFileSource {
     return "${uri.scheme}://${uri.host}${uri.path}";
   }
 
+  String get urlKey {
+    final uri = Uri.parse(url!);
+    return "${uri.scheme}://${uri.host}${uri.path}";
+  }
+
   List<int> get getBytes {
     if (bytes != null) {
       return bytes!;

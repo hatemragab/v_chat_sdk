@@ -597,6 +597,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  multi_value_listenable_builder:
+    dependency: transitive
+    description:
+      name: multi_value_listenable_builder
+      sha256: "5d073a5ab4935c3eab7134dec939544467bdf8a71ab24d01f0dcc3f94f03a71e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   nested:
     dependency: transitive
     description:
@@ -1088,7 +1096,7 @@ packages:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.5.0+2"
   v_chat_voice_player:
     dependency: "direct main"
     description:

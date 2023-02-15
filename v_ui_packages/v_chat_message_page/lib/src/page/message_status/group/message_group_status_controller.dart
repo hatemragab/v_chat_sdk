@@ -3,17 +3,15 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
-class MessageGroupStatusState {
+class MessageStatusState {
   final List<VMessageStatusModel> seen = [];
   final List<VMessageStatusModel> deliver = [];
 }
 
-class MessageGroupStatusController
-    extends ValueNotifier<MessageGroupStatusState> {
+class MessageGroupStatusController extends ValueNotifier<MessageStatusState> {
   final VBaseMessage message;
 
-  MessageGroupStatusController(this.message)
-      : super(MessageGroupStatusState()) {
+  MessageGroupStatusController(this.message) : super(MessageStatusState()) {
     getData();
   }
 
@@ -40,13 +38,13 @@ class MessageGroupStatusController
   }
 
   void getData() async {
-    await vSafeApiCall<MessageGroupStatusState>(
+    await vSafeApiCall<MessageStatusState>(
       onLoading: () {
         state = VChatLoadingState.loading;
         notifyListeners();
       },
       request: () async {
-        final x = MessageGroupStatusState();
+        final x = MessageStatusState();
         x.seen.addAll(await VChatController.I.roomApi.getMessageStatusForGroup(
           roomId: message.roomId,
           messageId: message.id,

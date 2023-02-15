@@ -11,6 +11,7 @@ class RoomApi {
     this._vNativeApi,
   );
 
+  /// single room apis and common ----------------------------------------------
   Future<VRoom> getPeerRoom({
     required String peerIdentifier,
   }) async {
@@ -33,6 +34,14 @@ class RoomApi {
     }
   }
 
+  Future<bool> deleteRoom(
+    String roomId,
+  ) async {
+    await _vNativeApi.local.room.deleteRoom(roomId);
+    await _vNativeApi.remote.room.deleteRoom(roomId);
+    return true;
+  }
+
   Future<bool> changeRoomNotification({
     required String roomId,
     required bool isMuted,
@@ -50,6 +59,7 @@ class RoomApi {
     return isMuted;
   }
 
+  /// group room apis ----------------------------------------------
   Future<bool> changeGroupMemberRole({
     required String roomId,
     required String peerIdentifier,
@@ -113,21 +123,33 @@ class RoomApi {
     );
   }
 
-  Future<bool> deleteRoom(
-    String roomId,
-  ) async {
-    await _vNativeApi.local.room.deleteRoom(roomId);
-    await _vNativeApi.remote.room.deleteRoom(roomId);
-    return true;
+  Future<bool> updateGroupExtraData({
+    required String roomId,
+    required Map<String, dynamic> data,
+  }) {
+    return _vNativeApi.remote.room.updateGroupExtraData(
+      roomId: roomId,
+      data: data,
+    );
   }
 
   Future<bool> addParticipantsToGroup(
     String roomId,
-    List<String> ids,
+    List<String> identifiers,
   ) {
     return _vNativeApi.remote.room.addParticipantsToGroup(
       roomId: roomId,
-      ids: ids,
+      ids: identifiers,
+    );
+  }
+
+  Future<List<VGroupMember>> getGroupMembers(
+    String roomId, {
+    VBaseFilter? filter,
+  }) {
+    return _vNativeApi.remote.room.getGroupMembers(
+      roomId,
+      filter: filter,
     );
   }
 
@@ -145,24 +167,6 @@ class RoomApi {
     );
   }
 
-  Future<VRoom> createBroadcast({
-    required CreateBroadcastDto dto,
-  }) {
-    return _vNativeApi.remote.room.createBroadcast(
-      dto,
-    );
-  }
-
-  Future<bool> updateGroupExtraData({
-    required String roomId,
-    required Map<String, dynamic> data,
-  }) {
-    return _vNativeApi.remote.room.updateGroupExtraData(
-      roomId: roomId,
-      data: data,
-    );
-  }
-
   Future<bool> kickGroupUser({
     required String roomId,
     required String peerIdentifier,
@@ -173,13 +177,85 @@ class RoomApi {
     );
   }
 
-  Future<List<VGroupMember>> getGroupMembers(
+  /// broadcast room apis ----------------------------------------------
+
+  Future<VRoom> createBroadcast({
+    required CreateBroadcastDto dto,
+  }) {
+    return _vNativeApi.remote.room.createBroadcast(
+      dto,
+    );
+  }
+
+  Future<List<VBroadcastMember>> getBroadcastMembers(
     String roomId, {
     VBaseFilter? filter,
   }) {
-    return _vNativeApi.remote.room.getGroupMembers(
-      roomId,
+    return _vNativeApi.remote.room.getBroadcastMembers(
+      roomId: roomId,
       filter: filter,
+    );
+  }
+
+  Future<bool> kickBroadcastUser({
+    required String roomId,
+    required String peerIdentifier,
+  }) {
+    return _vNativeApi.remote.room.kickBroadcastUser(
+      peerIdentifier: peerIdentifier,
+      roomId: roomId,
+    );
+  }
+
+  Future<List<VMessageStatusModel>> getMessageStatusForBroadcast({
+    required String roomId,
+    required String messageId,
+    VBaseFilter? pagination,
+    required bool isSeen,
+  }) {
+    return _vNativeApi.remote.room.getMessageStatusForBroadcast(
+      roomId: roomId,
+      isSeen: isSeen,
+      messageId: messageId,
+      pagination: pagination,
+    );
+  }
+
+  Future<bool> addParticipantsToBroadcast(
+    String roomId,
+    List<String> identifiers,
+  ) {
+    return _vNativeApi.remote.room.addParticipantsToBroadcast(
+      roomId: roomId,
+      identifiers: identifiers,
+    );
+  }
+
+  Future<bool> updateBroadcastTitle({
+    required String roomId,
+    required String title,
+  }) {
+    return _vNativeApi.remote.room.updateBroadcastTitle(
+      roomId: roomId,
+      title: title,
+    );
+  }
+
+  Future<String> updateBroadcastImage({
+    required String roomId,
+    required VPlatformFileSource file,
+  }) {
+    return _vNativeApi.remote.room.updateBroadcastImage(
+      roomId: roomId,
+      file: file,
+    );
+  }
+
+  Future<VMyBroadcastInfo> getBroadcastMyInfo({
+    required String roomId,
+  }) {
+    return _vNativeApi.remote.room.getBroadcastInfo(
+      roomId,
     );
   }
 }

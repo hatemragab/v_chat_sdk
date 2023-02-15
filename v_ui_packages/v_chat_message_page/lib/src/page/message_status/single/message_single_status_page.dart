@@ -40,8 +40,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
               ListTile(
                 title: AppBar(
                   backgroundColor: context.isDark ? Colors.transparent : null,
-                  //todo trans
-                  title: "Message info".text,
+                  title: VTrans.labelsOf(context).messageInfo.text,
                 ),
                 contentPadding: EdgeInsets.zero,
                 subtitle: Padding(
@@ -63,7 +62,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
                   children: [
                     ReadItem(
                       dateTime: widget.message.seenAtDate,
-                      title: "Read",
+                      title: VTrans.labelsOf(context).read,
                       model: MessageStatusIconDataModel(
                         isMeSender: widget.message.isMeSender,
                         emitStatus: widget.message.emitStatus,
@@ -76,7 +75,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
                       height: 1,
                     ),
                     ReadItem(
-                      title: "Delivered",
+                      title: VTrans.labelsOf(context).delivered,
                       dateTime: widget.message.deliveredAtDate,
                       model: MessageStatusIconDataModel(
                         isMeSender: widget.message.isMeSender,

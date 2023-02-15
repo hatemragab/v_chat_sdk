@@ -90,9 +90,6 @@ class EnLocalizations extends VChatLocalizationLabels {
   String get fileHasBeenSavedTo => "File has been saved to";
 
   @override
-  String get media => "Media";
-
-  @override
   String get online => "Online";
 
   @override
@@ -168,7 +165,17 @@ class EnLocalizations extends VChatLocalizationLabels {
   String get groupLeft => "Group left";
 
   @override
+  String get typing => "Typing...";
+
+  @override
+  String get recording => "Recording...";
+
+  @override
   String get shareFiles => "Share files";
+
+  @override
+  String get media => "Media";
+
   @override
   String get shareLocation => "Share location";
 
@@ -179,11 +186,65 @@ class EnLocalizations extends VChatLocalizationLabels {
   String get typeYourMessage => "Type your message...";
 
   @override
-  String get recording => "Recording";
+  String get endtoendEncryption => "End-to-end encryption";
 
   @override
-  String get typing => "Typing";
+  String get exitFromTheCall => "Exit from the call";
+
+  @override
+  String get areYouSureToEndTheCall => "Are you sure to end the call ?";
+
+  @override
+  String get messageInfo => "Message info";
+
+  @override
+  String get read => "Read";
+
+  @override
+  String get delivered => "Delivered";
+
+  @override
+  String get chatMedia => "Chat media";
+
+  @override
+  String get busy => "Busy";
 
   @override
   String get members => "Members";
+
+  @override
+  String get ring => "Ring";
+
+  @override
+  String get roomAlreadyInCall => "Room Already In Call";
+
+  @override
+  String get timeout => "Timeout";
+
+  @override
+  String get callEnd => "Call end";
+
+  @override
+  String get rejected => "Rejected";
+
+  @override
+  String get videoCall => "Video call";
+
+  @override
+  String get audioCall => "Audio call";
+
+  @override
+  String get canceled => "Canceled";
+
+  @override
+  String get inCall => "In call";
+
+  @override
+  String get makeCall => "Make call";
+
+  @override
+  String get areYouWantToMakeVideoCall => "Are you want to make video call";
+
+  @override
+  String get areYouWantToMakeVoiceCall => "Are you want to make voice call";
 }

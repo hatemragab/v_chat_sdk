@@ -17,7 +17,8 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   final controller = Get.find<HomeController>();
   final voicesList = <VoiceMessageModel>[];
-  final url ="https://super-up-vchat.s3.eu-west-3.amazonaws.com/v-media/63d6683a88c3d52e0e6dffa4/media600-d790a399-7b9a-469f-adfa-85695351cb7b.webm?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASLNW35LCAS2545PY%2F20230209%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20230209T230152Z&X-Amz-Expires=432000&X-Amz-Signature=165fa27124326019a9fff8eb87e285603782fb654c7f26a306afd4de295ab24b&X-Amz-SignedHeaders=host";
+  final url =
+      "https://super-up-vchat.s3.eu-west-3.amazonaws.com/v-media/63d6683a88c3d52e0e6dffa4/media600-d790a399-7b9a-469f-adfa-85695351cb7b.webm?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASLNW35LCAS2545PY%2F20230209%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20230209T230152Z&X-Amz-Expires=432000&X-Amz-Signature=165fa27124326019a9fff8eb87e285603782fb654c7f26a306afd4de295ab24b&X-Amz-SignedHeaders=host";
 
   @override
   void initState() {
