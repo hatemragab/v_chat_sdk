@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:record/record.dart';

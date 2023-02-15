@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 import 'package:map_launcher/map_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 

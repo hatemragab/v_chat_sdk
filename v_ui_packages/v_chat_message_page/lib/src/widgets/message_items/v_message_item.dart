@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/center_item_holder.dart';

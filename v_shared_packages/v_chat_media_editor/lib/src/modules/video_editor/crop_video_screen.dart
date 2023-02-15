@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 // import 'package:flutter/material.dart';
 // import 'package:helpers/helpers.dart' show AnimatedInteractiveViewer;
 // import 'package:video_editor/domain/bloc/controller.dart';

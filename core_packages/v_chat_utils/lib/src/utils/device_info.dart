@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:uuid/uuid.dart' as u;

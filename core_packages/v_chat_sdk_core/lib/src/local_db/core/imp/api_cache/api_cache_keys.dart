@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 abstract class ApiCacheKeys {
   static const mySingleInfo = "api/single/id/my-info/";
   static const myGroupInfo = "api/group/id/my-info/";

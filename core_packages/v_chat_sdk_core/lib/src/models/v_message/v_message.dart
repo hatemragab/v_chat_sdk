@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 export './all_deleted/all_deleted_message.dart';
 export './base_message/v_base_message.dart';
 export './call_message/call_message.dart';

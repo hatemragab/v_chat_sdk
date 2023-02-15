@@ -8,16 +8,22 @@ packages:
   - v_shared_packages/**
 
 command:
+  version:
+    # Generate commit links in package changelogs.
+    linkToCommits: true
+    # # Only allow versioning to happen on main branch.
+    # branch: master
+    # Additionally build a changelog at the root of the workspace.
+    workspaceChangelog: true
+    changelogs:
+      - path: firebase_ui_changelog.md
+        description: |
+          All notable changes for vchatsdk packages
   bootstrap:
+    runPubGetInParallel: false
     usePubspecOverrides: true
 
 scripts:
-
-#  postbootstrap: cd core_packages/v_chat_translations && flutter gen-l10n
-  analyze:
-    run: |
-      melos exec -c 1 -- \
-          dart analyze . --fatal-infos
   format:
     run: melos exec -c 1 -- \
       flutter format .
@@ -27,3 +33,71 @@ scripts:
   add:
     run: melos exec -c 1 -- \
       flutter pub add flutter_lints --dev
+
+  add-license-header:
+    # If you add here another --ignore flag, add it also to
+    # "check-license-header".
+    run: |
+      addlicense -f header_template.txt \
+        --ignore "**/*.yml" \
+        --ignore "**/*.yaml" \
+        --ignore "**/*.xml" \
+        --ignore "**/*.g.dart" \
+        --ignore "**/*.sh" \
+        --ignore "**/*.html" \
+        --ignore "**/*.js" \
+        --ignore "**/*.ts" \
+        --ignore "**/*.g.h" \
+        --ignore "**/*.g.m" \
+        --ignore "**/*.rb" \
+        --ignore "**/*.txt" \
+        --ignore "**/*.cmake" \
+        --ignore "**/Runner/AppDelegate.swift" \
+        --ignore "**/Runner/MainFlutterWindow.swift" \
+        --ignore "**/Runner/Runner-Bridging-Header.h" \
+        --ignore "**/Runner/AppDelegate.h" \
+        --ignore "**/Runner/AppDelegate.m" \
+        --ignore "**/Runner/main.m" \
+        --ignore "**/MainActivity.kt" \
+        --ignore "**/MainActivity.java" \
+        --ignore "**/FlutterMultiDexApplication.java" \
+        --ignore "**/GeneratedPluginRegistrant.swift" \
+        --ignore "**/Pods/**" \
+        --ignore "**/flutter/generated_plugin_registrant.h" \
+        --ignore "**/flutter/generated_plugin_registrant.cc" \
+        .
+    description: Add a license header to all necessary files.
+  check-license-header:
+    # If you add here another --ignore flag, add it also to
+    # "add-license-header".
+    run: |
+      addlicense -f header_template.txt \
+        --check \
+        --ignore "**/*.yml" \
+        --ignore "**/*.yaml" \
+        --ignore "**/*.xml" \
+        --ignore "**/*.g.dart" \
+        --ignore "**/*.sh" \
+        --ignore "**/*.html" \
+        --ignore "**/*.js" \
+        --ignore "**/*.ts" \
+        --ignore "**/*.g.h" \
+        --ignore "**/*.g.m" \
+        --ignore "**/*.rb" \
+        --ignore "**/*.txt" \
+        --ignore "**/*.cmake" \
+        --ignore "**/Runner/AppDelegate.swift" \
+        --ignore "**/Runner/MainFlutterWindow.swift" \
+        --ignore "**/Runner/Runner-Bridging-Header.h" \
+        --ignore "**/Runner/AppDelegate.h" \
+        --ignore "**/Runner/AppDelegate.m" \
+        --ignore "**/Runner/main.m" \
+        --ignore "**/MainActivity.kt" \
+        --ignore "**/MainActivity.java" \
+        --ignore "**/FlutterMultiDexApplication.java" \
+        --ignore "**/GeneratedPluginRegistrant.swift" \
+        --ignore "**/Pods/**" \
+        --ignore "**/flutter/generated_plugin_registrant.h" \
+        --ignore "**/flutter/generated_plugin_registrant.cc" \
+        .
+    description: Add a license header to all necessary files.
