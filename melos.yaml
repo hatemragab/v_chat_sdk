@@ -6,19 +6,28 @@ packages:
   - v_ui_packages/**
   - push_providers/**
   - v_shared_packages/**
+ignore:
+  - 'core_packages/v_chat_utils/utils_example'
+  - 'v_shared_packages/v_chat_input_ui/input_example'
+  - 'v_shared_packages/v_chat_media_editor/editor_example'
+  - 'v_shared_packages/v_chat_receive_share/receive_share_example'
+  - 'v_shared_packages/v_chat_voice_player/voice_example'
+  - 'v_ui_packages/v_chat_message_page/message_example'
+  - 'v_ui_packages/v_chat_room_page/room_example'
+  - 'v_ui_packages/v_chat_web_rtc/rtc_example'
 
 command:
-  version:
-    # Generate commit links in package changelogs.
-    linkToCommits: true
-    # # Only allow versioning to happen on main branch.
-    # branch: master
-    # Additionally build a changelog at the root of the workspace.
-    workspaceChangelog: true
-    changelogs:
-      - path: firebase_ui_changelog.md
-        description: |
-          All notable changes for vchatsdk packages
+#  version:
+#    # Generate commit links in package changelogs.
+#    linkToCommits: true
+#    # # Only allow versioning to happen on main branch.
+#    # branch: master
+#    # Additionally build a changelog at the root of the workspace.
+#    workspaceChangelog: true
+#    changelogs:
+#      - path: x.md
+#        description: |
+#          All notable changes for vchatsdk packages
   bootstrap:
     runPubGetInParallel: false
     usePubspecOverrides: true
@@ -33,7 +42,8 @@ scripts:
   add:
     run: melos exec -c 1 -- \
       flutter pub add flutter_lints --dev
-
+  generate:
+    run: cd core_packages/v_chat_sdk_core && flutter pub run build_runner build --delete-conflicting-outputs
   add-license-header:
     # If you add here another --ignore flag, add it also to
     # "check-license-header".

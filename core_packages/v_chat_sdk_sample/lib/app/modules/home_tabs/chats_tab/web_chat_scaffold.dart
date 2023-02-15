@@ -29,10 +29,10 @@ class VWebChatNavigation {
               position: animation.drive(tween),
               child: child,
             );
-            break;
+
           case TransitionType.noAnimation:
             return child;
-            break;
+
         }
       },
     );

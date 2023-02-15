@@ -505,10 +505,10 @@ packages:
     dependency: transitive
     description:
       name: map_launcher
-      sha256: "01830d19ca7c49ee5225c3b16d8d98e557285572eaedab1b11d8ad38fd615a99"
+      sha256: "4db9f2878dd0764f476f613eda671b969084960b6ae81bf578699cfe03e58ce0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.5.0+1"
   matcher:
     dependency: transitive
     description:
@@ -1048,7 +1048,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.5.0+2"
+    version: "0.6.0"
   vector_math:
     dependency: transitive
     description:
@@ -1178,5 +1178,5 @@ packages:
     source: hosted
     version: "6.2.2"
 sdks:
-  dart: ">=2.18.5 <4.0.0"
+  dart: ">=2.18.5 <3.0.0"
   flutter: ">=3.3.0"

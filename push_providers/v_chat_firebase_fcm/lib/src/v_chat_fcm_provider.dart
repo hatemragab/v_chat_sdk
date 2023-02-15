@@ -172,7 +172,6 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (token != null) {
     try {
       await setDeliverForThisRoom(msg.roomId, token);
-      print("set Deliver For This Room");
     } catch (err) {
       if (kDebugMode) {
         print(err);
@@ -191,7 +190,6 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
 @pragma('vm:entry-point')
 Future setDeliverForThisRoom(String roomId, String token) async {
   final baseUrl = VAppPref.getStringOrNullKey(VStorageKeys.vBaseUrl.name);
-  print(baseUrl);
   final res = await patch(
     Uri.parse(
       "$baseUrl/channel/$roomId/deliver",
@@ -202,10 +200,7 @@ Future setDeliverForThisRoom(String roomId, String token) async {
       "Accept-Language": "en"
     },
   );
-  print(res.body);
   if (res.statusCode != 200) {
-    print(res.body);
-    print(res.statusCode);
     throw "cant deliver the message status in background for ${VPlatforms.currentPlatform}";
   }
 }

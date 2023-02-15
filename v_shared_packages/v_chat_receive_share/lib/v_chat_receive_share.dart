@@ -4,6 +4,7 @@
 
 library v_chat_receive_share;
 
+import 'package:flutter/foundation.dart';
 import 'package:share_handler/share_handler.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -25,8 +26,7 @@ Future<void> vInitReceiveShareHandler() async {
 }
 
 Future<void> _handleOnNewShare(SharedMedia media) async {
-  print("_handleOnNewShare_handleOnNewShare_handleOnNewShare $media");
-  final messages = <VBaseMessage>[];
+   final messages = <VBaseMessage>[];
   final pFiles = <VPlatformFileSource>[];
 
   if (media.attachments != null && media.attachments!.isNotEmpty) {
@@ -66,7 +66,9 @@ Future<void> _handleOnNewShare(SharedMedia media) async {
               await MessageFactory.createUploadMessage(message),
             );
           } catch (err) {
-            print(err);
+            if (kDebugMode) {
+              print(err);
+            }
           }
         }
       }

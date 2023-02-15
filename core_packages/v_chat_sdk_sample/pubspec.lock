@@ -221,10 +221,10 @@ packages:
     dependency: transitive
     description:
       name: chopper
-      sha256: ea41a0bafd5f4d4d735a90a722e00bb1d80e830073cb380edfa1979901d6d2df
+      sha256: "7790aa830262a8ad4eb121847a290af7c282b8f494e54175628c79a1e8719814"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.1.0"
   clock:
     dependency: transitive
     description:
@@ -1057,10 +1057,10 @@ packages:
     dependency: transitive
     description:
       name: map_launcher
-      sha256: "01830d19ca7c49ee5225c3b16d8d98e557285572eaedab1b11d8ad38fd615a99"
+      sha256: "4db9f2878dd0764f476f613eda671b969084960b6ae81bf578699cfe03e58ce0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.5.0+1"
   matcher:
     dependency: transitive
     description:
@@ -1145,10 +1145,10 @@ packages:
     dependency: transitive
     description:
       name: open_file_plus
-      sha256: bda6afebe870b1c8107545fc423943c8ac673812288a8b56890c4524ca5767c0
+      sha256: "7acaa3557b8aef36ff7c03b57e9da9c18f0381773af1bcfa68aeca600c653d16"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0"
+    version: "3.4.0"
   overlay_support:
     dependency: transitive
     description:
@@ -1569,10 +1569,10 @@ packages:
     dependency: transitive
     description:
       name: share_plus
-      sha256: e387077716f80609bb979cd199331033326033ecd1c8f200a90c5f57b1c9f55e
+      sha256: "8c6892037b1824e2d7e8f59d54b3105932899008642e6372e5079c6939b4b625"
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.3.1"
   share_plus_platform_interface:
     dependency: transitive
     description:
@@ -1896,21 +1896,21 @@ packages:
       path: "../../push_providers/v_chat_firebase_fcm"
       relative: true
     source: path
-    version: "0.5.0+1"
+    version: "0.6.0"
   v_chat_input_ui:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_media_editor"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1925,56 +1925,56 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   v_chat_one_signal:
     dependency: "direct main"
     description:
       path: "../../push_providers/v_chat_one_signal"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: "../../v_shared_packages/v_chat_receive_share"
       relative: true
     source: path
-    version: "0.2.0"
+    version: "0.6.0"
   v_chat_room_page:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.5.0+2"
+    version: "0.6.0"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../v_chat_utils"
       relative: true
     source: path
-    version: "0.5.0+2"
+    version: "0.6.0"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_voice_player"
       relative: true
     source: path
-    version: "0.5.0"
+    version: "0.6.0"
   v_chat_web_rtc:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_web_rtc"
       relative: true
     source: path
-    version: "0.5.0+5"
+    version: "0.6.0"
   vector_math:
     dependency: transitive
     description:
@@ -2112,5 +2112,5 @@ packages:
     source: hosted
     version: "6.2.2"
 sdks:
-  dart: ">=2.18.0 <4.0.0"
+  dart: ">=2.19.1 <3.0.0"
   flutter: ">=3.3.0"

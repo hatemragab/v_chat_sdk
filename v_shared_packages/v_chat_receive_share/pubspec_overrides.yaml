@@ -1,16 +1,6 @@
-# melos_managed_dependency_overrides: v_chat_input_ui,v_chat_media_editor,v_chat_message_page,v_chat_room_page,v_chat_sdk_core,v_chat_utils,v_chat_voice_player
+# melos_managed_dependency_overrides: v_chat_sdk_core,v_chat_utils
 dependency_overrides:
-  v_chat_input_ui:
-    path: ../v_chat_input_ui
-  v_chat_media_editor:
-    path: ../v_chat_media_editor
-  v_chat_message_page:
-    path: ../../v_ui_packages/v_chat_message_page
-  v_chat_room_page:
-    path: ../../v_ui_packages/v_chat_room_page
   v_chat_sdk_core:
     path: ../../core_packages/v_chat_sdk_core
   v_chat_utils:
     path: ../../core_packages/v_chat_utils
-  v_chat_voice_player:
-    path: ../v_chat_voice_player
