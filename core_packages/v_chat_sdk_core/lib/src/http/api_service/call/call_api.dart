@@ -13,6 +13,9 @@ abstract class CallApi extends ChopperService {
   @Get(path: "/active", optionalBody: true)
   Future<Response> getActiveCall();
 
+  @Get(path: "/history", optionalBody: true)
+  Future<Response> getCallHistory();
+
   @Post(path: "/create/{roomId}")
   Future<Response> createCall(
     @Path() String roomId,

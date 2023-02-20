@@ -262,4 +262,9 @@ class RoomApi {
       roomId,
     );
   }
+
+  //-------calls
+  Future<List<VCallHistory>> getCallHistory() {
+    return _vNativeApi.remote.calls.getCallHistory();
+  }
 }

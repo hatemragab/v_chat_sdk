@@ -65,6 +65,15 @@ class VCallApiService {
     return VOnNewCallEvent(roomId: obj.roomId, data: obj);
   }
 
+  Future<List<VCallHistory>> getCallHistory() async {
+    final res = await _callApi!.getCallHistory();
+    throwIfNotSuccess(res);
+    final data = (res.body as Map<String, dynamic>)['data'] as List;
+    return data
+        .map((e) => VCallHistory.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+
   static VCallApiService init({
     Uri? baseUrl,
     String? accessToken,

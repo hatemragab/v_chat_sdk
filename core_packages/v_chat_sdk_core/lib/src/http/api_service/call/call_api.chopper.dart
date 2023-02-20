@@ -28,6 +28,17 @@ class _$CallApi extends CallApi {
   }
 
   @override
+  Future<Response<dynamic>> getCallHistory() {
+    final Uri $url = Uri.parse('call/history');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> createCall(
     String roomId,
     Map<String, dynamic> body,
