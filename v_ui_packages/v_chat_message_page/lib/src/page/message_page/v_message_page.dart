@@ -131,6 +131,7 @@ class _VMessagePageState extends State<VMessagePage> {
                                             : Colors.black.withOpacity(0.2),
                                         child: VMessageItem(
                                           onTap: controller.onMessageTap,
+                                          roomType: widget.vRoom.roomType,
                                           onLongTap:
                                               controller.onMessageLongTap,
                                           message: snapshot.data!,

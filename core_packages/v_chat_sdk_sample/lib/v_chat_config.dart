@@ -17,8 +17,9 @@ import 'app/routes/app_pages.dart';
 Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
   await VChatController.init(
     navigatorKey: _navigatorKey,
-    vMessagePageConfig:
-        VMessagePageConfig(googleMapsApiKey: "AIzaSyAP-dfhdfhg",),
+    vMessagePageConfig: VMessagePageConfig(
+      googleMapsApiKey: "AIzaSyAP-dfhdfhg",
+    ),
     vChatConfig: VChatConfig(
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
@@ -45,8 +46,8 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
           Get.toNamed(Routes.GROUP_SETTINGS, arguments: data);
           print("Going to group $data");
         },
-        toSingleSettings: (context, identifier) {
-          print("Going to toSingleSettings $identifier");
+        toSingleSettings: (context, data) {
+          print("Going to toSingleSettings $data");
         },
         toBroadcastSettings: (context, data) {
           Get.toNamed(Routes.BROADCAST_SETTINGS, arguments: data);

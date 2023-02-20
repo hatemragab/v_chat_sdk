@@ -54,6 +54,7 @@ class _VMessageBroadcastStatusPageState
                 child: VMessageItem(
                   voiceController: controller.getVoiceController,
                   message: widget.message,
+                  roomType: VRoomType.b,
                   onSwipe: null,
                   onReSend: (message) {},
                   onHighlightMessage: (message) {},

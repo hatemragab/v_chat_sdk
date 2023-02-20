@@ -41,3 +41,5 @@
 - full localization support
 - ## 0.5.0
 - support voice and video calls
+- ## 0.6.1
+- fix web downloading

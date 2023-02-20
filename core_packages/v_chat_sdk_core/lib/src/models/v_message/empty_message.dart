@@ -8,6 +8,7 @@ class VEmptyMessage extends VBaseMessage {
   VEmptyMessage()
       : super(
           id: "EmptyMessage",
+          sIdentifier: "sIdfire",
           senderId: "EmptyMessage",
           senderName: "EmptyMessage",
           senderImageThumb: "Empty.url",

@@ -26,7 +26,7 @@ Future<void> vInitReceiveShareHandler() async {
 }
 
 Future<void> _handleOnNewShare(SharedMedia media) async {
-   final messages = <VBaseMessage>[];
+  final messages = <VBaseMessage>[];
   final pFiles = <VPlatformFileSource>[];
 
   if (media.attachments != null && media.attachments!.isNotEmpty) {

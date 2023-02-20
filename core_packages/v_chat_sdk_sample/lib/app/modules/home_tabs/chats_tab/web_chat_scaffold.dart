@@ -32,7 +32,6 @@ class VWebChatNavigation {
 
           case TransitionType.noAnimation:
             return child;
-
         }
       },
     );

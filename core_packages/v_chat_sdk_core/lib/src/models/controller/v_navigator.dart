@@ -51,7 +51,7 @@ class VMessageNavigator {
   final VToUserProfileFunction? toUserProfilePage;
 
   /// chat settings
-  final VToUserProfileFunction? toSingleSettings;
+  final VToChatSettingsFunction? toSingleSettings;
   final VToChatSettingsFunction? toOrderSettings;
   final VToChatSettingsFunction? toGroupSettings;
   final VToChatSettingsFunction? toBroadcastSettings;
@@ -84,7 +84,7 @@ class VMessageNavigator {
     VMediaViewerFunction? toVideoPlayer,
     Function(BuildContext context, String roomId)? toViewChatMedia,
     VToUserProfileFunction? toUserProfilePage,
-    VToUserProfileFunction? toSingleSettings,
+    VToChatSettingsFunction? toSingleSettings,
     VToChatSettingsFunction? toOrderSettings,
     VToChatSettingsFunction? toGroupSettings,
     VToChatSettingsFunction? toBroadcastSettings,

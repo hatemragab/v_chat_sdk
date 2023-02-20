@@ -15,6 +15,7 @@ class VFileMessage extends VBaseMessage {
 
   VFileMessage({
     required super.id,
+    required super.sIdentifier,
     required super.senderId,
     required super.senderName,
     required super.senderImageThumb,

@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/center_item_holder.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/direction_item_holder.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/shared/forward_ttem_widget.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/shared/forward_item_widget.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/shared/group_header.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_broadcast_icon.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_time_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/reply_item_widget.dart';
@@ -34,10 +35,12 @@ class VMessageItem extends StatelessWidget {
       voiceController;
   final VMessageCallback? onHighlightMessage;
   final VMessageCallback? onReSend;
+  final VRoomType roomType;
 
   const VMessageItem({
     Key? key,
     this.onLongTap,
+    required this.roomType,
     this.onTap,
     this.voiceController,
     required this.message,
@@ -89,6 +92,16 @@ class VMessageItem extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
+              message.isMeSender
+                  ? const SizedBox.shrink()
+                  : GroupHeader(
+                      isGroup: roomType.isGroup,
+                      senderImage: message.senderImageThumb,
+                      senderName: message.senderName,
+                      onTab: () {
+                        _onMentionPress(context,message.sIdentifier);
+                      },
+                    ),
               ForwardItemWidget(
                 isFroward: message.isForward,
               ),
@@ -151,13 +164,7 @@ class VMessageItem extends StatelessWidget {
           onEmailPress: (email) async {
             await VStringUtils.lunchLink(email);
           },
-          onMentionPress: (context, userId) {
-            final method =
-                VChatController.I.vNavigator.messageNavigator.toUserProfilePage;
-            if (method != null) {
-              method(context, userId);
-            }
-          },
+          onMentionPress: _onMentionPress,
           onPhonePress: (phone) async {
             await VStringUtils.lunchLink(phone);
           },
@@ -198,6 +205,14 @@ class VMessageItem extends StatelessWidget {
 
       case VMessageType.info:
         throw "MessageType.info should not render her it center render!";
+    }
+  }
+
+  void _onMentionPress(BuildContext context, String identifier) {
+    final method =
+        VChatController.I.vNavigator.messageNavigator.toUserProfilePage;
+    if (method != null) {
+      method(context, identifier);
     }
   }
 }

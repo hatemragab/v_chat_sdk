@@ -9,6 +9,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 class VTextMessage extends VBaseMessage {
   VTextMessage({
     required super.id,
+    required super.sIdentifier,
     required super.senderId,
     required super.senderName,
     required super.senderImageThumb,

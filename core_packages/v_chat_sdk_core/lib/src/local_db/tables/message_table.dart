@@ -8,6 +8,7 @@ abstract class MessageTable {
   static const tableName = 'tb_m_';
   static const columnId = '${tableName}id';
   static const columnSenderId = '${tableName}s_id';
+  static const columnSIdentifier = '${tableName}s_id_fire';
   static const columnSenderName = '${tableName}s_name';
   static const columnSenderImageThumb = '${tableName}s_img';
   static const columnRoomId = '${tableName}room_id';
@@ -44,6 +45,7 @@ abstract class MessageTable {
           create table $tableName (
             $columnId       TEXT PRIMARY KEY UNIQUE ,
             $columnSenderId     TEXT,
+            $columnSIdentifier     TEXT,
             $columnSenderName   TEXT,
             $columnSenderImageThumb   TEXT,
             $columnRoomId   TEXT,

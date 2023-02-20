@@ -1,6 +1,6 @@
 name: v_chat_media_editor
 description: v chat media editor package
-version: 0.6.0
+version: 0.6.1
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/v_shared_packages/v_chat_media_editor
@@ -12,7 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.6.0
+  v_chat_utils: ^0.6.1
   permission_handler: ^10.2.0
   flutter_painter_v2: ^2.0.0
   path: ^1.8.1

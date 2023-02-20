@@ -12,6 +12,7 @@ class VCustomMessage extends VBaseMessage {
 
   VCustomMessage({
     required super.id,
+    required super.sIdentifier,
     required super.senderId,
     required super.senderName,
     required super.emitStatus,

@@ -42,14 +42,7 @@ class VCallHistory {
 
   @override
   String toString() {
-    return 'VCallHistory{' +
-        ' peerUser: $peerUser,' +
-        ' callStatus: $callStatus,' +
-        ' roomId: $roomId,' +
-        ' withVideo: $withVideo,' +
-        ' endAt: $endAt,' +
-        ' startAt: $startAt,' +
-        '}';
+    return 'VCallHistory{ peerUser: $peerUser, callStatus: $callStatus, roomId: $roomId, withVideo: $withVideo, endAt: $endAt, startAt: $startAt,}';
   }
 
   VCallHistory copyWith({
@@ -72,12 +65,12 @@ class VCallHistory {
 
   Map<String, dynamic> toMap() {
     return {
-      'peerUser': this.peerUser.toMap(),
-      'callStatus': this.callStatus.name,
-      'roomId': this.roomId,
-      'withVideo': this.withVideo,
-      'endAt': this.endAt,
-      'startAt': this.startAt,
+      'peerUser': peerUser.toMap(),
+      'callStatus': callStatus.name,
+      'roomId': roomId,
+      'withVideo': withVideo,
+      'endAt': endAt,
+      'startAt': startAt,
     };
   }
 

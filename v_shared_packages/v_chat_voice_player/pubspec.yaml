@@ -1,6 +1,6 @@
 name: v_chat_voice_player
 description: v chat voice player
-version: 0.6.0
+version: 0.6.1
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/v_shared_packages/v_chat_voice_player
@@ -12,7 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.6.0
+  v_chat_utils: ^0.6.1
   flutter_cache_manager: ^3.3.0
 #  flutter_audio_waveforms: ^1.2.1+7
   just_audio: ^0.9.31

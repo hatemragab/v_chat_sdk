@@ -45,7 +45,8 @@ class VChatConfig {
           runtimeType == other.runtimeType &&
           vPush == other.vPush &&
           enableLog == other.enableLog &&
-          enableEndToEndMessageEncryption == other.enableEndToEndMessageEncryption &&
+          enableEndToEndMessageEncryption ==
+              other.enableEndToEndMessageEncryption &&
           maxGroupMembers == other.maxGroupMembers &&
           maxBroadcastMembers == other.maxBroadcastMembers &&
           encryptHashKey == other.encryptHashKey &&
@@ -82,7 +83,7 @@ class VChatConfig {
       vPush: vPush ?? this.vPush,
       enableLog: enableLog ?? this.enableLog,
       enableEndToEndMessageEncryption:
-          enableMessageEncryption ?? this.enableEndToEndMessageEncryption,
+          enableMessageEncryption ?? enableEndToEndMessageEncryption,
       maxGroupMembers: maxGroupMembers ?? this.maxGroupMembers,
       maxBroadcastMembers: maxBroadcastMembers ?? this.maxBroadcastMembers,
       encryptHashKey: encryptHashKey ?? this.encryptHashKey,

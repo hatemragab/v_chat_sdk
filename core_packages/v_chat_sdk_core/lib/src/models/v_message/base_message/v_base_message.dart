@@ -13,8 +13,9 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class VBaseMessage {
-  VBaseMessage({
+  VBaseMessage(  {
     required this.id,
+    required this.sIdentifier,
     required this.senderId,
     required this.senderName,
     required this.senderImageThumb,
@@ -38,6 +39,7 @@ abstract class VBaseMessage {
 
   ///id will be changed if message get from remote
   String id;
+  final String sIdentifier;
 
   /// sender data
   String senderId;
@@ -87,6 +89,7 @@ abstract class VBaseMessage {
   VBaseMessage.fromRemoteMap(Map<String, dynamic> map)
       : id = map['_id'] as String,
         senderId = map['sId'] as String,
+        sIdentifier = (map['sIdentifier'] as String?) ?? "",
         senderName = map['sName'] as String,
         senderImageThumb = map['sImg'] as String,
         platform = map['plm'] as String,
@@ -114,6 +117,7 @@ abstract class VBaseMessage {
   VBaseMessage.fromLocalMap(Map<String, dynamic> map)
       : id = map[MessageTable.columnId] as String,
         senderId = map[MessageTable.columnSenderId] as String,
+        sIdentifier = map[MessageTable.columnSenderId] as String,
         senderName = map[MessageTable.columnSenderName] as String,
         senderImageThumb = map[MessageTable.columnSenderImageThumb] as String,
         platform = map[MessageTable.columnPlatform] as String,
@@ -145,6 +149,7 @@ abstract class VBaseMessage {
     final map = {
       MessageTable.columnId: id,
       MessageTable.columnSenderId: senderId,
+      MessageTable.columnSIdentifier: sIdentifier,
       MessageTable.columnSenderName: senderName,
       MessageTable.columnSenderImageThumb: senderImageThumb,
       MessageTable.columnPlatform: platform,
@@ -198,10 +203,8 @@ abstract class VBaseMessage {
 
   String get realContent => content;
 
-
-
   String get realContentMentionParsedWithAt =>
-      VStringUtils.parseVMentions(realContent );
+      VStringUtils.parseVMentions(realContent);
 
   String get lastMessageTimeString =>
       DateFormat.jm().format(DateTime.parse(createdAt).toLocal());
@@ -240,6 +243,7 @@ abstract class VBaseMessage {
     this.replyTo,
   })  : id = ObjectId().hexString,
         localId = const Uuid().v4(),
+        sIdentifier = "",
         platform = VPlatforms.currentPlatform,
         createdAt = DateTime.now().toLocal().toIso8601String(),
         updatedAt = DateTime.now().toLocal().toIso8601String(),
@@ -263,6 +267,7 @@ abstract class VBaseMessage {
     this.replyTo,
   })  : id = ObjectId().hexString,
         localId = const Uuid().v4(),
+        sIdentifier = "",
         roomId = "roomId $content",
         isEncrypted = false,
         platform = VPlatforms.currentPlatform,
@@ -282,6 +287,7 @@ abstract class VBaseMessage {
     return {
       "_id": id,
       "sId": senderId,
+      "sIdentifier": sIdentifier,
       "sName": senderName,
       "sImg": senderImageThumb,
       "plm": platform,

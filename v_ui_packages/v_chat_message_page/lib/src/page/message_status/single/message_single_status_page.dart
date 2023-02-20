@@ -50,6 +50,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: VMessageItem(
+                    roomType: VRoomType.s,
                     voiceController: controller.getVoiceController,
                     message: widget.message,
                     onSwipe: null,

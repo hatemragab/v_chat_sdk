@@ -50,6 +50,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                 child: VMessageItem(
                   voiceController: controller.getVoiceController,
                   message: widget.message,
+                  roomType: VRoomType.g,
                   onSwipe: null,
                   onReSend: (message) {},
                   onHighlightMessage: (message) {},
