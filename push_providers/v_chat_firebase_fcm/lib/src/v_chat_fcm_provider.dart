@@ -92,6 +92,7 @@ class VChatFcmProver extends VChatPushProviderBase {
     _onNewMessage = FirebaseMessaging.onMessage.listen((remoteMsg) {
       final String? fromVChat = remoteMsg.data['fromVChat'];
       final String? message = remoteMsg.data['vMessage'];
+      // final String? type = remoteMsg.data['type'];
       if (fromVChat != null && message != null) {
         final msg = MessageFactory.createBaseMessage(
           jsonDecode(message),

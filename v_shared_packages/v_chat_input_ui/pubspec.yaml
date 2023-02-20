@@ -24,7 +24,7 @@ dependencies:
   giphy_get: ^3.2.0
   record: ^4.4.4
   v_chat_mention_controller: ^1.0.0
-  audio_waveforms: ^1.0.1
+  audio_waveforms: ^1.0.2
   emoji_picker_flutter: ^1.5.2
   meta: ^1.8.0
   google_maps_flutter: ^2.2.3

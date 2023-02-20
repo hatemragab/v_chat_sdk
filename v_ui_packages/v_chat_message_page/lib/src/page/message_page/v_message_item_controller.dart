@@ -343,7 +343,7 @@ class VMessageItemController {
   void _handleCopy(VBaseMessage message) async {
     await Clipboard.setData(
       ClipboardData(
-        text: message.realContentMentionParsed,
+        text: message.realContentMentionParsedWithAt,
       ),
     );
   }
@@ -360,7 +360,9 @@ class VMessageItemController {
     );
     final url = await VDownloaderService.instance.addToQueue(message);
     context.pop();
-    await OpenFile.open(url);
+    if(VPlatforms.isMobile) {
+      await OpenFile.open(url);
+    }
 
     VAppAlert.showOverlaySupport(
         title: VTrans.of(context).labels.fileHasBeenSavedTo + url);

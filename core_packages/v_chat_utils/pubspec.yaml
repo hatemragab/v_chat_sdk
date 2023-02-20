@@ -53,6 +53,7 @@ dependencies:
   meta: ^1.8.0
   flutter_localizations:
     sdk: flutter
+  flutter_local_notifications: ^13.0.0
 dev_dependencies:
   flutter_lints: ^2.0.1
   lints: ^2.0.1

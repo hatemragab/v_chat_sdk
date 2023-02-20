@@ -198,11 +198,10 @@ abstract class VBaseMessage {
 
   String get realContent => content;
 
-  String get realContentMentionParsed =>
-      VStringUtils.parseVMentions(realContent);
+
 
   String get realContentMentionParsedWithAt =>
-      VStringUtils.parseVMentions(realContent, withOutAt: false);
+      VStringUtils.parseVMentions(realContent );
 
   String get lastMessageTimeString =>
       DateFormat.jm().format(DateTime.parse(createdAt).toLocal());

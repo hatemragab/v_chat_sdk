@@ -24,6 +24,7 @@ class BroadcastMembersView extends GetView<BroadcastMembersController> {
           ),
           body: VAsyncWidgetsBuilder(
             loadingState: logic.loadingState,
+            onRefresh: logic.getMembers,
             successWidget: () {
               return ListView.separated(
                 padding: EdgeInsets.only(top: 10),

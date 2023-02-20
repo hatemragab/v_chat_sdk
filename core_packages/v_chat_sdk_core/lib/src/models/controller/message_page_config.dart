@@ -32,6 +32,7 @@ class VMessagePageConfig {
 
   ///set max upload files size default it 50 mb
   final int maxMediaSize;
+  final int maxForward;
 
   const VMessagePageConfig({
     this.googleMapsApiKey,
@@ -40,6 +41,7 @@ class VMessagePageConfig {
     this.onUserUnBlockAnother,
     this.maxRecordTime = const Duration(minutes: 30),
     this.maxMediaSize = 1024 * 1024 * 50,
+    this.maxForward = 7,
   });
 
   Map<String, dynamic> toMap() {

@@ -49,7 +49,7 @@ class VChatController {
 
   late final VAuthApi authApi;
   late final RoomApi roomApi;
-  late final VChatConfig vChatConfig;
+  late VChatConfig vChatConfig;
   late final VNavigator vNavigator;
   late final VMessagePageConfig vMessagePageConfig;
   bool _isControllerInit = false;
@@ -96,6 +96,10 @@ class VChatController {
 
   void dispose() {
     _isControllerInit = false;
+  }
+
+  void updateConfig(VChatConfig chatConfig) {
+    vChatConfig = chatConfig;
   }
 
   ///make sure you already login or already login to v chat

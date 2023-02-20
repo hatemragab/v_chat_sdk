@@ -23,7 +23,7 @@ class ListViewPageState extends State<ListViewPage> {
   void initState() {
     super.initState();
     //  _parse();
-    _transTo();
+    // _transTo();
   }
 
   @override
@@ -78,6 +78,17 @@ class ListViewPageState extends State<ListViewPage> {
               },
               child: const Text("Theme"),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            // TextButton(
+            //   onPressed: () async {
+            //     await VAwesomeNotifications.I.init();
+            //     await VAwesomeNotifications.I
+            //         .showNotification(title: "title", body: "body", id: 1);
+            //   },
+            //   child: const Text("Push notify"),
+            // ),
           ],
         ),
       ),

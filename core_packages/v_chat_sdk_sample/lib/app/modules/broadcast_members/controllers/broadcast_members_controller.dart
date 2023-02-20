@@ -15,11 +15,11 @@ class BroadcastMembersController extends GetxController {
 
   @override
   void onInit() {
-    _getMembers();
+    getMembers();
     super.onInit();
   }
 
-  void _getMembers() async {
+  void getMembers() async {
     await vSafeApiCall<List<VBroadcastMember>>(
       onLoading: () {
         loadingState = VChatLoadingState.loading;

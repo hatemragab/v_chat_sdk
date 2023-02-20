@@ -8,25 +8,19 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../v_chat_utils.dart';
 
 abstract class VStringUtils {
-  static final RegExp vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
+  static final vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
 
-  static String parseVMentions(String txt, {bool withOutAt = true}) {
-    final readyToCopy = StringBuffer();
-    final words = txt.split(" ");
-    for (final element in words) {
-      final match = VStringUtils.vMentionRegExp.firstMatch(element);
-      if (match != null) {
+  static String parseVMentions(String txt, {bool withOutAt = false}) {
+    return txt.replaceAllMapped(
+      VStringUtils.vMentionRegExp,
+      (match) {
         final matchTxt = match.group(1)!;
         if (withOutAt) {
-          readyToCopy.write("${matchTxt.replaceFirst("@", "")} ");
-        } else {
-          readyToCopy.write("$matchTxt ");
+          return matchTxt.replaceFirst("@", "");
         }
-      } else {
-        readyToCopy.write("$element ");
-      }
-    }
-    return readyToCopy.toString();
+        return matchTxt;
+      },
+    );
   }
 
   static Future<bool> lunchLink(String url) async {

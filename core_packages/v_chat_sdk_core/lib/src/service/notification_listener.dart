@@ -29,7 +29,7 @@ class VNotificationListener {
         if (!isRoomOpen && !message.isMeSender) {
           VAppAlert.showOverlaySupport(
             title: message.senderName,
-            subtitle: message.realContentMentionParsed,
+            subtitle: message.realContentMentionParsedWithAt,
           );
         }
       });

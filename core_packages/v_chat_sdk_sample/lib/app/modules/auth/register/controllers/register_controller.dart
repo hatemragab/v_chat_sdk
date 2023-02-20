@@ -36,6 +36,7 @@ class RegisterController extends GetxController {
 
   Future<String?> onLogin(LoginData loginData) async {
     try {
+      // VChatController.I.
       final vUser = await VChatController.I.authApi.login(
         identifier: loginData.email,
         deviceLanguage: const Locale("en"),

@@ -18,7 +18,7 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
   await VChatController.init(
     navigatorKey: _navigatorKey,
     vMessagePageConfig:
-        VMessagePageConfig(googleMapsApiKey: "AIzaSyAP-dfhdfhg"),
+        VMessagePageConfig(googleMapsApiKey: "AIzaSyAP-dfhdfhg",),
     vChatConfig: VChatConfig(
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),

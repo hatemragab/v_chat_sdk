@@ -43,8 +43,6 @@ class RecordWidgetState extends State<RecordWidget> {
     super.initState();
     if (VPlatforms.isMobile) {
       recorder = MobileRecorder();
-    } else if (VPlatforms.isWeb) {
-      recorder = WebRecorder();
     } else {
       recorder = PlatformRecorder();
     }

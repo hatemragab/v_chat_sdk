@@ -84,31 +84,31 @@ class PlatformRecorder extends AppRecorder {
   }
 }
 
-class WebRecorder extends AppRecorder {
-  final recorder = FlutterSoundRecorder();
-
-  @override
-  Future close() async {
-    await recorder.closeAudioSession();
-  }
-
-  @override
-  Future pause() async {
-    await recorder.pauseRecorder();
-  }
-
-  @override
-  Future<void> start([String? path]) async {
-    await recorder.startRecorder();
-  }
-
-  @override
-  Future<bool> isRecording() async {
-    return recorder.isRecording;
-  }
-
-  @override
-  Future<String?> stop() async {
-    return recorder.stopRecorder();
-  }
-}
+// class WebRecorder extends AppRecorder {
+//   final recorder = FlutterSoundRecorder();
+//
+//   @override
+//   Future close() async {
+//     await recorder.closeAudioSession();
+//   }
+//
+//   @override
+//   Future pause() async {
+//     await recorder.pauseRecorder();
+//   }
+//
+//   @override
+//   Future<void> start([String? path]) async {
+//     await recorder.startRecorder();
+//   }
+//
+//   @override
+//   Future<bool> isRecording() async {
+//     return recorder.isRecording;
+//   }
+//
+//   @override
+//   Future<String?> stop() async {
+//     return recorder.stopRecorder();
+//   }
+// }
