@@ -11,7 +11,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class VChatConfig {
   final VPush vPush;
   final bool enableLog;
-  final bool enableMessageEncryption;
+  final bool enableEndToEndMessageEncryption;
   final int maxGroupMembers;
   final int maxBroadcastMembers;
   final String encryptHashKey;
@@ -33,7 +33,7 @@ class VChatConfig {
     required this.encryptHashKey,
     required this.baseUrl,
     this.enableLog = kDebugMode,
-    this.enableMessageEncryption = false,
+    this.enableEndToEndMessageEncryption = false,
     this.maxGroupMembers = 512,
     this.maxBroadcastMembers = 512,
   });
@@ -45,7 +45,7 @@ class VChatConfig {
           runtimeType == other.runtimeType &&
           vPush == other.vPush &&
           enableLog == other.enableLog &&
-          enableMessageEncryption == other.enableMessageEncryption &&
+          enableEndToEndMessageEncryption == other.enableEndToEndMessageEncryption &&
           maxGroupMembers == other.maxGroupMembers &&
           maxBroadcastMembers == other.maxBroadcastMembers &&
           encryptHashKey == other.encryptHashKey &&
@@ -56,7 +56,7 @@ class VChatConfig {
   int get hashCode =>
       vPush.hashCode ^
       enableLog.hashCode ^
-      enableMessageEncryption.hashCode ^
+      enableEndToEndMessageEncryption.hashCode ^
       maxGroupMembers.hashCode ^
       maxBroadcastMembers.hashCode ^
       encryptHashKey.hashCode ^
@@ -65,7 +65,7 @@ class VChatConfig {
 
   @override
   String toString() {
-    return 'VChatConfig{ vPush: $vPush, enableLog: $enableLog, enableMessageEncryption: $enableMessageEncryption, maxGroupMembers: $maxGroupMembers, maxBroadcastMembers: $maxBroadcastMembers, encryptHashKey: $encryptHashKey, baseUrl: $baseUrl, currentPushProviderService: $currentPushProviderService,}';
+    return 'VChatConfig{ vPush: $vPush, enableLog: $enableLog, enableMessageEncryption: $enableEndToEndMessageEncryption, maxGroupMembers: $maxGroupMembers, maxBroadcastMembers: $maxBroadcastMembers, encryptHashKey: $encryptHashKey, baseUrl: $baseUrl, currentPushProviderService: $currentPushProviderService,}';
   }
 
   VChatConfig copyWith({
@@ -81,8 +81,8 @@ class VChatConfig {
     return VChatConfig(
       vPush: vPush ?? this.vPush,
       enableLog: enableLog ?? this.enableLog,
-      enableMessageEncryption:
-          enableMessageEncryption ?? this.enableMessageEncryption,
+      enableEndToEndMessageEncryption:
+          enableMessageEncryption ?? this.enableEndToEndMessageEncryption,
       maxGroupMembers: maxGroupMembers ?? this.maxGroupMembers,
       maxBroadcastMembers: maxBroadcastMembers ?? this.maxBroadcastMembers,
       encryptHashKey: encryptHashKey ?? this.encryptHashKey,
@@ -94,7 +94,7 @@ class VChatConfig {
     return {
       'vPush': vPush,
       'enableLog': enableLog,
-      'enableMessageEncryption': enableMessageEncryption,
+      'enableMessageEncryption': enableEndToEndMessageEncryption,
       'maxGroupMembers': maxGroupMembers,
       'maxBroadcastMembers': maxBroadcastMembers,
       'encryptHashKey': encryptHashKey,
@@ -107,7 +107,7 @@ class VChatConfig {
     return VChatConfig(
       vPush: map['vPush'] as VPush,
       enableLog: map['enableLog'] as bool,
-      enableMessageEncryption: map['enableMessageEncryption'] as bool,
+      enableEndToEndMessageEncryption: map['enableMessageEncryption'] as bool,
       maxGroupMembers: map['maxGroupMembers'] as int,
       maxBroadcastMembers: map['maxBroadcastMembers'] as int,
       encryptHashKey: map['encryptHashKey'] as String,

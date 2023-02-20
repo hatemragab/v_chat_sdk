@@ -45,18 +45,28 @@ class _VImageViewerState extends State<VImageViewer> {
           ? FloatingActionButton(
               child: const Icon(Icons.save_alt),
               onPressed: () async {
-                VAppAlert.showLoading(
-                  context: context,
-                  isDismissible: true,
-                );
-                final url = await VFileUtils.saveFileToPublicPath(
-                  fileAttachment: widget.platformFileSource,
-                  appName: widget.appName,
-                );
-                context.pop();
-                VAppAlert.showSuccessSnackBar(
-                  msg: VTrans.of(context).labels.successfullyDownloadedIn + url,
-                  context: context,
+                await vSafeApiCall<String>(
+                  onLoading: () {
+                    VAppAlert.showOverlaySupport(
+                      title: VTrans.of(context).labels.downloading,
+                    );
+                  },
+                  request: () async {
+                    return VFileUtils.saveFileToPublicPath(
+                      fileAttachment: widget.platformFileSource,
+                      appName: widget.appName,
+                    );
+                  },
+                  onSuccess: (url) async {
+                    VAppAlert.showSuccessSnackBar(
+                      msg: VTrans.of(context).labels.successfullyDownloadedIn +
+                          url,
+                      context: context,
+                    );
+                  },
+                  onError: (exception, trace) {
+                    print(exception);
+                  },
                 );
               },
             )

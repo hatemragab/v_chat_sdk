@@ -10,6 +10,7 @@ import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_c
 import 'package:v_chat_message_page/src/page/message_page/states/input_state_controller.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/message_state_controller.dart';
 import 'package:v_chat_message_page/src/page/message_page/v_voice_controller.dart';
+import 'package:v_chat_message_page/src/widgets/drag_drop_if_web_desk.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -97,7 +98,7 @@ class VMessageController {
   }
 
   void onSubmitText(String message) {
-    final isEnable = _vConfig.enableMessageEncryption;
+    final isEnable = _vConfig.enableEndToEndMessageEncryption;
     final localMsg = VTextMessage.buildMessage(
       content: isEnable ? VMessageEncryption.encryptMessage(message) : message,
       isEncrypted: isEnable,
@@ -387,4 +388,6 @@ class VMessageController {
       ),
     );
   }
+
+
 }

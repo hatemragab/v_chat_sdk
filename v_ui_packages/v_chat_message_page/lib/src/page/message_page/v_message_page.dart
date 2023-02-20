@@ -13,6 +13,7 @@ import '../../models/input_state_model.dart';
 import '../../v_message.dart';
 import '../../widgets/app_bare/v_message_app_bare.dart';
 import '../../widgets/arrow_down.dart';
+import '../../widgets/drag_drop_if_web_desk.dart';
 import '../../widgets/input_widgets/ban_widget.dart';
 import '../../widgets/input_widgets/reply_msg_widget.dart';
 import '../../widgets/message_items/v_message_item.dart';
@@ -86,97 +87,102 @@ class _VMessagePageState extends State<VMessagePage> {
             Expanded(
               child: Stack(
                 children: [
-                  ValueListenableBuilder<List<VBaseMessage>>(
-                    valueListenable: controller.messageState,
-                    builder: (_, value, __) {
-                      return Scrollbar(
-                        interactive: true,
-                        thickness: 5,
-                        controller: controller.autoScrollTagController,
-                        child: ListView.separated(
+                  DragDropIfWeb(
+                    onDragDone: controller.onSubmitFiles,
+                    child: ValueListenableBuilder<List<VBaseMessage>>(
+                      valueListenable: controller.messageState,
+                      builder: (_, value, __) {
+                        return Scrollbar(
+                          interactive: true,
+                          thickness: 5,
                           controller: controller.autoScrollTagController,
-                          // key: const PageStorageKey("VListViewItems"),
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 8,
-                          ),
-                          cacheExtent: 300,
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Builder(
-                              key: UniqueKey(),
-                              builder: (context) {
-                                final message = value[index];
-                                final msgItem = StreamBuilder<VBaseMessage>(
-                                  stream: controller
-                                      .messageState.messageStateStream.stream
-                                      .where(
-                                    (e) => e.localId == message.localId,
-                                  ),
-                                  initialData: message,
-                                  builder: (context, snapshot) {
-                                    if (message.isDeleted) {
-                                      return const SizedBox.shrink();
-                                    }
-                                    return AutoScrollTag(
-                                      key: UniqueKey(),
-                                      controller:
-                                          controller.autoScrollTagController,
-                                      index: index,
-                                      highlightColor: context.isDark
-                                          ? Colors.white.withOpacity(0.2)
-                                          : Colors.black.withOpacity(0.2),
-                                      child: VMessageItem(
-                                        onTap: controller.onMessageTap,
-                                        onLongTap: controller.onMessageLongTap,
-                                        message: snapshot.data!,
-                                        voiceController: (message) {
-                                          if (message is VVoiceMessage) {
-                                            return controller.voiceControllers
-                                                .getVoiceController(message);
-                                          }
-                                          return null;
-                                        },
-                                        //room: controller.vRoom,
-                                        onSwipe: controller.setReply,
-                                        onHighlightMessage:
-                                            controller.onHighlightMessage,
-                                        onReSend: controller.onReSend,
-                                      ),
-                                    );
-                                  },
-                                );
-
-                                final isTopMessage =
-                                    _isTopMessage(value.length, index);
-                                final dividerDate = _getDateDiff(
-                                  bigDate: message.createdAtDate,
-                                  smallDate: isTopMessage
-                                      ? value[index].createdAtDate
-                                      : value[index + 1].createdAtDate,
-                                );
-                                if (dividerDate != null || isTopMessage) {
-                                  //set date divider
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      context.vMessageTheme.dateDividerWidget(
-                                        context,
-                                        dividerDate ?? message.createdAtDate,
-                                      ),
-                                      msgItem,
-                                    ],
+                          child: ListView.separated(
+                            controller: controller.autoScrollTagController,
+                            // key: const PageStorageKey("VListViewItems"),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 8,
+                            ),
+                            cacheExtent: 300,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Builder(
+                                key: UniqueKey(),
+                                builder: (context) {
+                                  final message = value[index];
+                                  final msgItem = StreamBuilder<VBaseMessage>(
+                                    stream: controller
+                                        .messageState.messageStateStream.stream
+                                        .where(
+                                      (e) => e.localId == message.localId,
+                                    ),
+                                    initialData: message,
+                                    builder: (context, snapshot) {
+                                      if (message.isDeleted) {
+                                        return const SizedBox.shrink();
+                                      }
+                                      return AutoScrollTag(
+                                        key: UniqueKey(),
+                                        controller:
+                                            controller.autoScrollTagController,
+                                        index: index,
+                                        highlightColor: context.isDark
+                                            ? Colors.white.withOpacity(0.2)
+                                            : Colors.black.withOpacity(0.2),
+                                        child: VMessageItem(
+                                          onTap: controller.onMessageTap,
+                                          onLongTap:
+                                              controller.onMessageLongTap,
+                                          message: snapshot.data!,
+                                          voiceController: (message) {
+                                            if (message is VVoiceMessage) {
+                                              return controller.voiceControllers
+                                                  .getVoiceController(message);
+                                            }
+                                            return null;
+                                          },
+                                          //room: controller.vRoom,
+                                          onSwipe: controller.setReply,
+                                          onHighlightMessage:
+                                              controller.onHighlightMessage,
+                                          onReSend: controller.onReSend,
+                                        ),
+                                      );
+                                    },
                                   );
-                                }
-                                return msgItem;
-                              },
-                            );
-                          },
-                          itemCount: value.length,
-                          reverse: true,
-                        ),
-                      );
-                    },
+
+                                  final isTopMessage =
+                                      _isTopMessage(value.length, index);
+                                  final dividerDate = _getDateDiff(
+                                    bigDate: message.createdAtDate,
+                                    smallDate: isTopMessage
+                                        ? value[index].createdAtDate
+                                        : value[index + 1].createdAtDate,
+                                  );
+                                  if (dividerDate != null || isTopMessage) {
+                                    //set date divider
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        context.vMessageTheme.dateDividerWidget(
+                                          context,
+                                          dividerDate ?? message.createdAtDate,
+                                        ),
+                                        msgItem,
+                                      ],
+                                    );
+                                  }
+                                  return msgItem;
+                                },
+                              );
+                            },
+                            itemCount: value.length,
+                            reverse: true,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   PositionedDirectional(
                     bottom: 10,
@@ -199,7 +205,8 @@ class _VMessagePageState extends State<VMessagePage> {
                   if (value.isHidden) return const SizedBox.shrink();
                   return VMessageInputWidget(
                     onSubmitText: controller.onSubmitText,
-                    autofocus: !VPlatforms.isMobile,
+                    autofocus:
+                        !VPlatforms.isWebRunOnMobile && !VPlatforms.isMobile,
                     language: VInputLanguage(
                       files: VTrans.of(context).labels.shareFiles,
                       location: VTrans.of(context).labels.shareLocation,

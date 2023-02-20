@@ -12,13 +12,14 @@ class VDownloaderService {
 
   static final instance = VDownloaderService._();
 
-  Future addToQueue(VBaseMessage message) async {
+  Future<String> addToQueue(VBaseMessage message) async {
     if (message is VFileMessage) {
       return _startDownload(message.data.fileSource);
       // _downloadQueue.removeWhere((e) => e.localId == message.localId);
     } else if (message is VVoiceMessage) {
       return _startDownload(message.data.fileSource);
     }
+    return "";
     // if (!_downloadQueue.contains(message)) {
     //   _downloadQueue.add(message);
     //   if (message is VFileMessage) {

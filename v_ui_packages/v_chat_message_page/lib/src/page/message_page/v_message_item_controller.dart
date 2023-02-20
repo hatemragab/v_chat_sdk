@@ -353,18 +353,24 @@ class VMessageItemController {
       return;
     }
 
-    VAppAlert.showLoading(
-      context: context,
-      isDismissible: true,
-      message: VTrans.of(context).labels.downloading,
+    await vSafeApiCall<String>(
+      onLoading: () {
+        VAppAlert.showOverlaySupport(
+          title: VTrans.of(context).labels.downloading,
+        );
+      },
+      request: () async {
+        return VDownloaderService.instance.addToQueue(message);
+      },
+      onSuccess: (url) async {
+        if (VPlatforms.isMobile) {
+          await OpenFile.open(url);
+        }
+        VAppAlert.showOverlaySupport(
+          title: VTrans.of(context).labels.fileHasBeenSavedTo + url,
+        );
+      },
+      onError: (exception, trace) {},
     );
-    final url = await VDownloaderService.instance.addToQueue(message);
-    context.pop();
-    if(VPlatforms.isMobile) {
-      await OpenFile.open(url);
-    }
-
-    VAppAlert.showOverlaySupport(
-        title: VTrans.of(context).labels.fileHasBeenSavedTo + url);
   }
 }

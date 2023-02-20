@@ -9,7 +9,6 @@ import 'list_view_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await VAppPref.init(hasKey: "dfgdfklkeggereteth");
   runApp(const MyApp());
 }

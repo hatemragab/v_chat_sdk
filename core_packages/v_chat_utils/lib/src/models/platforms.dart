@@ -7,6 +7,7 @@ import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:universal_html/html.dart';
 
 import '../../v_chat_utils.dart';
 
@@ -49,6 +50,14 @@ abstract class VPlatforms {
   static bool get isDeskTop => isWindows || isLinux || isMac;
 
   static bool get isLinux => isWeb ? false : io.Platform.isLinux;
+
+  static bool get isWebRunOnMobile {
+    final userAgent = window.navigator.userAgent.toString().toLowerCase();
+    if (userAgent.contains("iphone")) return true;
+    if (userAgent.contains("ipad")) return true;
+    if (userAgent.contains("android")) return true;
+    return false;
+  }
 
   static Future<http.MultipartFile> getMultipartFile({
     required VPlatformFileSource source,

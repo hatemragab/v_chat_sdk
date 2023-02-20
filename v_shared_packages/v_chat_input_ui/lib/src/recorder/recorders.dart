@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:record/record.dart';
 
 abstract class AppRecorder {

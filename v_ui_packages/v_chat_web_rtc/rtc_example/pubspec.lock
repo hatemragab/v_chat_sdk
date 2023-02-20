@@ -137,6 +137,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  charcode:
+    dependency: transitive
+    description:
+      name: charcode
+      sha256: fb98c0f6d12c920a02ee2d998da788bca066ca5f148492b7085ee23372b12306
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.1"
   chewie:
     dependency: transitive
     description:
@@ -217,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.15"
+  dbus:
+    dependency: transitive
+    description:
+      name: dbus
+      sha256: "6f07cba3f7b3448d42d015bfd3d53fe12e5b36da2423f23838efc1d5fb31a263"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.8"
   device_info:
     dependency: transitive
     description:
@@ -382,6 +398,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_local_notifications:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications
+      sha256: "293995f94e120c8afce768981bd1fa9c5d6de67c547568e3b42ae2defdcbb4a0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "13.0.0"
+  flutter_local_notifications_linux:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_linux
+      sha256: ccb08b93703aeedb58856e5637450bf3ffec899adb66dc325630b68994734b89
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0+1"
+  flutter_local_notifications_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_platform_interface
+      sha256: "5ec1feac5f7f7d9266759488bc5f76416152baba9aa1b26fe572246caa00d1ab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -533,6 +573,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  local_notifier:
+    dependency: transitive
+    description:
+      name: local_notifier
+      sha256: cc855aa6362c8840e3d3b35b1c3b058a3a8becdb2b03d5a9aa3f3a1e861f0a03
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   logger:
     dependency: transitive
     description:
@@ -805,6 +853,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  platform_local_notifications:
+    dependency: transitive
+    description:
+      name: platform_local_notifications
+      sha256: a535276623c63197a392dcf0a2b17b3d691ef214eca85ac4e707da968ce6448f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -1074,6 +1130,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  timezone:
+    dependency: transitive
+    description:
+      name: timezone
+      sha256: "24c8fcdd49a805d95777a39064862133ff816ebfffe0ceff110fb5960e557964"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1"
   typed_data:
     dependency: transitive
     description:
@@ -1082,6 +1146,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  universal_html:
+    dependency: transitive
+    description:
+      name: universal_html
+      sha256: b5061c64c7c863c12e46279e032976f1c274f927fb3589b52b5928dcd2d52f7c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.9"
+  universal_io:
+    dependency: transitive
+    description:
+      name: universal_io
+      sha256: "06866290206d196064fd61df4c7aea1ffe9a4e7c4ccaa8fcded42dd41948005d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   url_launcher:
     dependency: transitive
     description:
