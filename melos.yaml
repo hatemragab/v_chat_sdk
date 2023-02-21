@@ -29,7 +29,7 @@ command:
 #        description: |
 #          All notable changes for vchatsdk packages
   bootstrap:
-    runPubGetInParallel: false
+    runPubGetInParallel: true
     usePubspecOverrides: true
 
 scripts:
@@ -42,7 +42,7 @@ scripts:
   add:
     run: melos exec -c 1 -- \
       flutter pub add flutter_lints --dev
-  generate:
+  g:
     run: cd core_packages/v_chat_sdk_core && flutter pub run build_runner build --delete-conflicting-outputs
   add-license-header:
     # If you add here another --ignore flag, add it also to

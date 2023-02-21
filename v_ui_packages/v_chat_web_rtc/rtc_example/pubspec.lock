@@ -457,10 +457,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_webrtc
-      sha256: "865005387e9385d0f81c19ad1f2ea6db7204317476141d4f4d1cbb619d6383c0"
+      sha256: "558d90e093cd1a48b8ce6d859f1435630b624cd19c6fda39ac7956402f91818c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.22"
+    version: "0.9.23"
   get:
     dependency: "direct main"
     description:
@@ -857,10 +857,10 @@ packages:
     dependency: transitive
     description:
       name: platform_local_notifications
-      sha256: a535276623c63197a392dcf0a2b17b3d691ef214eca85ac4e707da968ce6448f
+      sha256: "2e20165a7b002d5c1c6171ad2c306e1435974e3615f29fdb61a195191c3c5e95"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -1240,21 +1240,21 @@ packages:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1+1"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1"
   v_chat_web_rtc:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1"
   vector_math:
     dependency: transitive
     description:

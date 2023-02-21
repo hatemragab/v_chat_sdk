@@ -873,10 +873,10 @@ packages:
     dependency: transitive
     description:
       name: platform_local_notifications
-      sha256: a535276623c63197a392dcf0a2b17b3d691ef214eca85ac4e707da968ce6448f
+      sha256: "2e20165a7b002d5c1c6171ad2c306e1435974e3615f29fdb61a195191c3c5e95"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -1256,28 +1256,28 @@ packages:
       path: "../../v_chat_media_editor"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1"
   v_chat_sdk_core:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1+1"
   v_chat_utils:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.6.1"
   vector_math:
     dependency: transitive
     description:

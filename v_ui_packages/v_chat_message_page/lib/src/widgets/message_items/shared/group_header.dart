@@ -27,6 +27,7 @@ class GroupHeader extends StatelessWidget {
       child: InkWell(
         onTap: onTab,
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             VCircleAvatar(
               fullUrl: senderImage,

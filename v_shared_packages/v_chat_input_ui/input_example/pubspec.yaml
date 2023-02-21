@@ -8,8 +8,8 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.5
   get: 4.6.5
-  v_chat_utils: ^0.1.0+5
-  v_chat_sdk_core: ^0.1.0+6
+  v_chat_utils: ^0.6.1
+  v_chat_sdk_core: ^0.6.1+1
   v_chat_input_ui:
     path: ../
 #  v_chat_sdk_core:

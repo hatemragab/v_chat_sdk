@@ -15,10 +15,10 @@ class HomeController extends GetxController {
   final isReplying = false.obs;
   final _serverMentions = List.generate(
     1000,
-    (i) => MentionWithPhoto(
-      id: "$i",
-      display: "u$i",
-      photo: "https://picsum.photos/600/60$i",
+    (i) => VMentionModel(
+      identifier:   "$i",
+      name:   "u$i",
+      image: "https://picsum.photos/600/60$i",
     ),
   );
 
@@ -39,7 +39,7 @@ class HomeController extends GetxController {
     printOnScreen(InputLog("onSubmitText", message));
   }
 
-  Future<List<MentionWithPhoto>> onMentionRequireSearch(String text) async {
+  Future<List<VMentionModel>> onMentionRequireSearch(String text) async {
     printOnScreen(
       InputLog("onMentionRequireSearch", text),
       dissmiseReply: false,
