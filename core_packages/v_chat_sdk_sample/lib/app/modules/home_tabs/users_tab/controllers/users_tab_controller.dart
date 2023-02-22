@@ -39,7 +39,7 @@ class UsersTabController extends GetxController {
         data.addAll(response);
         update();
       },
-      ignoreTimeoutAndNoInternet: false,
+      ignoreTimeoutAndNoInternet: true,
     );
   }
 

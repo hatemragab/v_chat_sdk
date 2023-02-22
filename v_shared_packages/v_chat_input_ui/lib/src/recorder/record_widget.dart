@@ -4,7 +4,6 @@
 
 import 'dart:async';
 
-import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -151,7 +150,7 @@ class RecordWidgetState extends State<RecordWidget> {
               //     ),
               //   )
               // else
-                const Text("")
+              const Text("")
             ],
           ),
           const SizedBox(

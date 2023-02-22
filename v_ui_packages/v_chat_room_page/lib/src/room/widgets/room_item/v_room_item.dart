@@ -52,7 +52,7 @@ class VRoomItem extends StatelessWidget {
             ? theme.getChatAvatar(
                 imageUrl: room.thumbImage,
                 chatTitle: room.title,
-                isOnline: room.isThereBlock ? false : room.isOnline,
+                isOnline: room.isOnline,
                 size: 60,
               )
             : Row(
@@ -60,7 +60,7 @@ class VRoomItem extends StatelessWidget {
                   theme.getChatAvatar(
                     imageUrl: room.thumbImage,
                     chatTitle: room.title,
-                    isOnline: room.isThereBlock ? false : room.isOnline,
+                    isOnline: room.isOnline,
                     size: 60,
                   ),
                   const SizedBox(

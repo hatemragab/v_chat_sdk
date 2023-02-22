@@ -46,7 +46,7 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
           Get.toNamed(Routes.GROUP_SETTINGS, arguments: data);
           print("Going to group $data");
         },
-        toSingleSettings: (context, data) {
+        toSingleSettings: (context, data, peerIdentifier) {
           print("Going to toSingleSettings $data");
         },
         toBroadcastSettings: (context, data) {

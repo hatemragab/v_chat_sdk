@@ -14,6 +14,7 @@ import 'package:v_chat_sdk_core/src/service/re_send_daemon.dart';
 import 'package:v_chat_sdk_core/src/service/socket_status_service.dart';
 import 'package:v_chat_sdk_core/src/service/v_app_lifecycle_state.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
+import 'package:v_chat_sdk_core/src/user_apis/block/block.dart';
 import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -49,6 +50,7 @@ class VChatController {
 
   late final VAuthApi authApi;
   late final RoomApi roomApi;
+  late final Block blockApi;
   late VChatConfig vChatConfig;
   late final VNavigator vNavigator;
   late final VMessagePageConfig vMessagePageConfig;
@@ -83,6 +85,9 @@ class VChatController {
       _instance.vChatConfig,
     );
     _instance.roomApi = RoomApi(
+      _instance.nativeApi,
+    );
+    _instance.blockApi = Block(
       _instance.nativeApi,
     );
     await ControllerHelper.instance.init();

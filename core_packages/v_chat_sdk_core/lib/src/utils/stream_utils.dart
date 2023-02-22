@@ -44,19 +44,19 @@ mixin VMessageStream {
     _messagesStream.cancel();
   }
 
-  void onNewMsg(VInsertMessageEvent event);
+  void onNewMsg(VInsertMessageEvent event) {}
 
-  void onUpdateMsg(VUpdateMessageEvent event);
+  void onUpdateMsg(VUpdateMessageEvent event) {}
 
-  void onDeleteMsg(VDeleteMessageEvent event);
+  void onDeleteMsg(VDeleteMessageEvent event) {}
 
-  void onUpdateMsgType(VUpdateMessageTypeEvent event);
+  void onUpdateMsgType(VUpdateMessageTypeEvent event) {}
 
-  void onUpdateMsgStatus(VUpdateMessageStatusEvent event);
+  void onUpdateMsgStatus(VUpdateMessageStatusEvent event) {}
 
-  void onSeenAllMgs(VUpdateMessageSeenEvent event);
+  void onSeenAllMgs(VUpdateMessageSeenEvent event) {}
 
-  void onDeliverAllMgs(VUpdateMessageDeliverEvent event);
+  void onDeliverAllMgs(VUpdateMessageDeliverEvent event) {}
 }
 
 mixin VRoomStream {
@@ -66,17 +66,17 @@ mixin VRoomStream {
 
   void onGroupKicked(VOnGroupKicked event) {}
 
-  void onBlockRoom(VBlockRoomEvent event);
+  void onBlockRoom(VBlockRoomEvent event) {}
 
-  void onRoomOnline(VRoomOnlineEvent event);
+  void onRoomOnline(VRoomOnlineEvent event) {}
 
-  void onRoomOffline(VRoomOfflineEvent event);
+  void onRoomOffline(VRoomOfflineEvent event) {}
 
-  void onUpdateTyping(VUpdateRoomTypingEvent event);
+  void onUpdateTyping(VUpdateRoomTypingEvent event) {}
 
-  void onUpdateRoomName(VUpdateRoomNameEvent event);
+  void onUpdateRoomName(VUpdateRoomNameEvent event) {}
 
-  void onUpdateRoomImage(VUpdateRoomImageEvent event);
+  void onUpdateRoomImage(VUpdateRoomImageEvent event) {}
 
   void onAddOneToUnRead(VUpdateRoomUnReadCountByOneEvent event) {}
 

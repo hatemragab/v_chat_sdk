@@ -7,8 +7,8 @@ import 'dart:async';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../assets/data/api_messages.dart';
-import '../../assets/data/local_messages.dart';
+import '../../../assets/data/api_messages.dart';
+import '../../../assets/data/local_messages.dart';
 
 class MessageProvider {
   final _remoteMessage = VChatController.I.nativeApi.remote.message;

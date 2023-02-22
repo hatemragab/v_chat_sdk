@@ -6,39 +6,43 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
+import 'package:v_chat_message_page/src/page/message_page/controllers/base_message_controller.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_page/states/block_state_controller.dart';
 import 'package:v_chat_message_page/src/page/message_page/states/input_state_controller.dart';
-import 'package:v_chat_message_page/src/page/message_page/states/message_state_controller.dart';
-import 'package:v_chat_message_page/src/page/message_page/v_voice_controller.dart';
+import 'package:v_chat_message_page/src/page/message_page/states/last_seen_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_page/states/my_info_broadcast_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_page/states/my_info_group_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_page/controllers/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../models/app_bare_state_model.dart';
-import '../../models/input_state_model.dart';
-import '../chat_media/chat_media_page.dart';
-import 'message_provider.dart';
-import 'states/message_stream_state.dart';
+import '../../../models/app_bare_state_model.dart';
+import '../../../models/input_state_model.dart';
+import '../../chat_media/chat_media_page.dart';
+import '../providers/message_provider.dart';
+import '../states/message_state/message_state_controller.dart';
+import 'message_stream_state_controller.dart';
 import 'v_message_item_controller.dart';
 
-class VMessageController {
+class VMessageController extends BaseMessageController {
   final bool isInTesting;
   final VRoom vRoom;
   final _messageProvider = MessageProvider();
   late final MessageStateController messageState;
 
   late final AppBarStateController appBarStateController;
+
+  LastSeenStateController? lastSeenStateController;
   late final InputStateController inputStateController;
 
-  final _localStorage = VChatController.I.nativeApi.local;
-
-  // final _remoteStorage = VChatController.I.nativeApi.remote;
   final autoScrollTagController = AutoScrollController(
     axis: Axis.vertical,
     suggestedRowHeight: 200,
   );
   final _vConfig = VChatController.I.vChatConfig;
   late final VMessageItemController _itemController;
-  final focusNode = FocusNode();
+
   late final MessageStreamState _localStreamChanges;
   final _currentUser = VAppConstants.myProfile;
 
@@ -59,37 +63,15 @@ class VMessageController {
     this.isInTesting = false,
     required this.context,
   }) {
-    messageState = MessageStateController(
-      vRoom,
-      _messageProvider,
-      isInTesting,
-      context,
-      autoScrollTagController,
-    );
-    appBarStateController = AppBarStateController(vRoom, _messageProvider);
-    inputStateController = InputStateController(vRoom, _messageProvider);
-    _localStreamChanges = MessageStreamState(
-      nativeApi: VChatController.I.nativeApi,
-      messageState: messageState,
-      appBarStateController: appBarStateController,
-      inputStateController: inputStateController,
-      currentRoom: vRoom,
-    );
-    _itemController = VMessageItemController(_messageProvider, context);
+    _initStates();
     _messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
     _removeAllNotifications();
-    if (vRoom.roomType.isGroup) {
-      _setMyGroupInfo(vRoom.id);
-    }
-    if (vRoom.roomType.isBroadcast) {
-      _setMyBroadcastInfo(vRoom.id);
-    }
   }
 
   Future<void> _onSubmitSendMessage(VBaseMessage localMsg) async {
     localMsg.replyTo = inputState.replyMsg;
-    await _localStorage.message.insertMessage(localMsg);
+    await VChatController.I.nativeApi.local.message.insertMessage(localMsg);
     MessageUploaderQueue.instance.addToQueue(
       await MessageFactory.createUploadMessage(localMsg),
     );
@@ -198,6 +180,7 @@ class VMessageController {
     appBarStateController.close();
     inputStateController.close();
     voiceControllers.close();
+    lastSeenStateController?.close();
     focusNode.dispose();
     autoScrollTagController.dispose();
     VRoomTracker.instance.closeOpenedRoom(roomId);
@@ -291,31 +274,7 @@ class VMessageController {
     await VChatController.I.vChatConfig.cleanNotifications();
   }
 
-  Future _setMyBroadcastInfo(String id) async {
-    vSafeApiCall<VMyBroadcastInfo>(
-      request: () async {
-        return VChatController.I.nativeApi.remote.room.getBroadcastInfo(id);
-      },
-      onSuccess: (response) {
-        appBarStateController.setMemberCount(response.totalUsers);
-      },
-    );
-  }
-
-  Future _setMyGroupInfo(String id) async {
-    vSafeApiCall<VMyGroupInfo>(
-      request: () async {
-        return VChatController.I.nativeApi.remote.room.getMyGroupInfo(id);
-      },
-      onSuccess: (response) {
-        if (response.isMeOut) {
-          inputStateController.closeChat();
-        }
-        appBarStateController.setMemberCount(response.membersCount);
-      },
-    );
-  }
-
+  @override
   void onTitlePress(
     BuildContext context,
     String id,
@@ -349,6 +308,7 @@ class VMessageController {
           roomId: roomId,
           room: vRoom,
         ),
+        vRoom.peerIdentifier!,
       );
       return;
     } else if (roomType.isBroadcast && toBroadcastSettings != null) {
@@ -371,6 +331,7 @@ class VMessageController {
           roomId: roomId,
           room: vRoom,
         ),
+        vRoom.peerIdentifier!,
       );
       return;
     }
@@ -393,6 +354,62 @@ class VMessageController {
         peerImage: vRoom.thumbImage,
         peerName: vRoom.title,
       ),
+    );
+  }
+
+  void _initStates() {
+    messageState = MessageStateController(
+      vRoom,
+      _messageProvider,
+      isInTesting,
+      context,
+      autoScrollTagController,
+    );
+    appBarStateController = AppBarStateController(vRoom, _messageProvider);
+    inputStateController = InputStateController(vRoom, _messageProvider);
+    _itemController = VMessageItemController(_messageProvider, context);
+
+    if (vRoom.roomType.isGroup) {
+      MyInfoGroupStateController(
+        inputStateController,
+        vRoom,
+        appBarStateController,
+      );
+    }
+    if (vRoom.roomType.isBroadcast) {
+      MyInfoBroadcastStateController(vRoom, appBarStateController);
+    }
+
+    if (vRoom.roomType.isSingleOrOrder) {
+      lastSeenStateController = LastSeenStateController(
+        appBarStateController,
+        vRoom,
+        _messageProvider,
+      );
+    }
+
+    _localStreamChanges = MessageStreamState(
+      nativeApi: VChatController.I.nativeApi,
+      messageState: messageState,
+      appBarStateController: appBarStateController,
+      inputStateController: inputStateController,
+      currentRoom: vRoom,
+      blockStateController: BlockStateController(inputStateController, vRoom),
+    );
+  }
+
+  Future onUpdateBlock(bool isBlocked) async {
+    vSafeApiCall(
+      request: () async {
+        if (isBlocked) {
+          return VChatController.I.blockApi
+              .blockUser(peerIdentifier: vRoom.peerIdentifier!);
+        } else {
+          return VChatController.I.blockApi
+              .unBlockUser(peerIdentifier: vRoom.peerIdentifier!);
+        }
+      },
+      onSuccess: (response) {},
     );
   }
 }

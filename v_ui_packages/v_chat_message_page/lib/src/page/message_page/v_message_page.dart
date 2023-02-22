@@ -18,12 +18,6 @@ import '../../widgets/input_widgets/ban_widget.dart';
 import '../../widgets/input_widgets/reply_msg_widget.dart';
 import '../../widgets/message_items/v_message_item.dart';
 
-typedef X = Widget Function(
-  MessageAppBarStateModel state,
-  Function(String) onSearch,
-  Function() onCloseSearch,
-);
-
 class VMessagePage extends StatefulWidget {
   final bool isInTesting;
 
@@ -69,6 +63,7 @@ class _VMessagePageState extends State<VMessagePage> {
             return VMessageAppBare(
               state: value,
               onSearch: controller.onOpenSearch,
+              onUpdateBlock: controller.onUpdateBlock,
               onCreateCall: controller.onCreateCall,
               onViewMedia: () => controller.onViewMedia(context, value.roomId),
               onTitlePress: controller.onTitlePress,

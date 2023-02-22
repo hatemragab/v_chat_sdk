@@ -28,13 +28,17 @@ Future<T?> vSafeApiCall<T>({
     if (onError != null) {
       onError(err.toString(), stacktrace);
     }
-    log("", error: err, stackTrace: stacktrace, level: 1000);
+    if (!ignoreTimeoutAndNoInternet) {
+      log("", error: err, stackTrace: stacktrace, level: 1000);
+    }
   } on TimeoutException catch (err, stacktrace) {
     // _showError(err, showToastError);
     if (onError != null && !ignoreTimeoutAndNoInternet) {
       onError(err.toString(), stacktrace);
     }
-    log("", error: err, stackTrace: stacktrace, level: 1000);
+    if (!ignoreTimeoutAndNoInternet) {
+      log("", error: err, stackTrace: stacktrace, level: 1000);
+    }
   } catch (err, stacktrace) {
     // _showError(err, showToastError);
     if (onError != null) {

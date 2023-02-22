@@ -19,6 +19,7 @@ class VMessageAppBare extends StatelessWidget {
   final VoidCallback onSearch;
   final VoidCallback onViewMedia;
   final Function(bool isVideo) onCreateCall;
+  final Function(bool isBlocked) onUpdateBlock;
 
   const VMessageAppBare({
     Key? key,
@@ -27,6 +28,7 @@ class VMessageAppBare extends StatelessWidget {
     required this.onSearch,
     required this.onCreateCall,
     required this.onViewMedia,
+    required this.onUpdateBlock,
   }) : super(key: key);
 
   @override
@@ -70,40 +72,84 @@ class VMessageAppBare extends StatelessWidget {
               // onSearchClicked();
             } else if (value == 'media') {
               onViewMedia();
+            } else if (value == 'block') {
+              onUpdateBlock(true);
+            } else if (value == 'un_block') {
+              onUpdateBlock(false);
             }
           },
-          itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-            PopupMenuItem(
-              value: "Search",
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search,
-                    color: context.isDark ? Colors.white : Colors.black,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(VTrans.of(context).labels.search),
-                ],
+          itemBuilder: (BuildContext context) {
+            final l = <PopupMenuItem<String>>[
+              PopupMenuItem(
+                value: "Search",
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      color: context.isDark ? Colors.white : Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(VTrans.of(context).labels.search),
+                  ],
+                ),
               ),
-            ),
-            PopupMenuItem(
-              value: "media",
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.image,
-                    color: context.isDark ? Colors.white : Colors.black,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(VTrans.of(context).labels.media),
-                ],
+              PopupMenuItem(
+                value: "media",
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.image,
+                      color: context.isDark ? Colors.white : Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(VTrans.of(context).labels.media),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ];
+            if (state.roomType.isSingleOrOrder) {
+              final map = VAppPref.getMap("ban-${state.roomId}");
+              final banModel = map == null ? null : VCheckBanModel.fromMap(map);
+              if (banModel == null || !banModel.isMeBanner) {
+                l.add(PopupMenuItem(
+                  value: "block",
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.block,
+                        color: Colors.red,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(VTrans.of(context).labels.block),
+                    ],
+                  ),
+                ));
+              } else {
+                l.add(PopupMenuItem(
+                  value: "un_block",
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.security,
+                        color: context.isDark ? Colors.white : Colors.black,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(VTrans.of(context).labels.unBlock),
+                    ],
+                  ),
+                ));
+              }
+            }
+            return l;
+          },
         )
       ],
     );

@@ -99,7 +99,7 @@ class VMessageItem extends StatelessWidget {
                       senderImage: message.senderImageThumb,
                       senderName: message.senderName,
                       onTab: () {
-                        _onMentionPress(context,message.sIdentifier);
+                        _onMentionPress(context, message.sIdentifier);
                       },
                     ),
               ForwardItemWidget(

@@ -104,9 +104,9 @@ abstract class VFileUtils {
   }
 
   ///only [VPlatformFileSource.fromPath(filePath: filePath)] will work!
-  static Future<int> getVideoDurationMill(VPlatformFileSource file) async {
+  static Future<int?> getVideoDurationMill(VPlatformFileSource file) async {
     if (file.isFromBytes) {
-      return 000;
+      return null;
       // final controller = VideoPlayerController.contentUri(
       //   Uri.dataFromBytes(file.bytes!),
       // );

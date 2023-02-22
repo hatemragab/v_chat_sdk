@@ -76,13 +76,13 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   VRoom? roomById(String roomId) =>
       stateRooms.firstWhereOrNull((e) => e.id == roomId);
 
-  void blockRoom(String roomId, OnBanUserChatModel banModel) {
-    final room = roomById(roomId);
-    if (room != null) {
-      room.blockerId = banModel.bannerId;
-      // roomStateStream.sink.add(room);
-    }
-  }
+  // void blockRoom(String roomId, OnBanUserChatModel banModel) {
+  //   final room = roomById(roomId);
+  //   if (room != null) {
+  //     room.blockerId = banModel.bannerId;
+  //     // roomStateStream.sink.add(room);
+  //   }
+  // }
 
   void updateOnline(String roomId) {
     final room = roomById(roomId);

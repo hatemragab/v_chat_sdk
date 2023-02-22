@@ -10,9 +10,9 @@ import 'package:share_plus/share_plus.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../core/enums.dart';
-import '../../core/v_downloader_service.dart';
-import 'message_provider.dart';
+import '../../../core/enums.dart';
+import '../../../core/v_downloader_service.dart';
+import '../providers/message_provider.dart';
 
 class VMessageItemController {
   final MessageProvider _messageProvider;

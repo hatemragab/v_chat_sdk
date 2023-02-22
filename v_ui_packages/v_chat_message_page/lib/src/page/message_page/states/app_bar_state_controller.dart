@@ -4,25 +4,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
-
 import '../../../models/app_bare_state_model.dart';
-import '../message_provider.dart';
+import '../providers/message_provider.dart';
 
-class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
-    with VSocketIntervalStream {
+class AppBarStateController extends ValueNotifier<MessageAppBarStateModel> {
   final MessageProvider _messageProvider;
   final VRoom _vRoom;
 
   AppBarStateController(
     this._vRoom,
     this._messageProvider,
-  ) : super(MessageAppBarStateModel.fromVRoom(_vRoom)) {
-    initSocketIntervalStream(
-      VChatController.I.nativeApi.streams.socketIntervalStream,
-    );
-    _updateAppBareState();
-  }
+  ) : super(MessageAppBarStateModel.fromVRoom(_vRoom));
 
   void updateTitle(String title) {
     value.roomTitle = title;
@@ -35,10 +27,8 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
   }
 
   void updateOnline() {
-    if (!_vRoom.isThereBlock) {
-      value.isOnline = true;
-      notifyListeners();
-    }
+    value.isOnline = true;
+    notifyListeners();
   }
 
   void updateImage(String image) {
@@ -58,43 +48,11 @@ class AppBarStateController extends ValueNotifier<MessageAppBarStateModel>
 
   void close() {
     dispose();
-    closeSocketIntervalStream();
   }
 
   void updateOffline() async {
-    if (value.isOnline) {
-      await vSafeApiCall<DateTime>(
-        request: () async {
-          return await _messageProvider.getLastSeenAt(_vRoom.peerIdentifier!);
-        },
-        onSuccess: (response) {
-          updateLastSeen(response);
-        },
-      );
-    }
     value.isOnline = false;
     notifyListeners();
-  }
-
-  @override
-  void onIntervalFire() async {
-    _updateAppBareState();
-  }
-
-  Future<void> _updateAppBareState() async {
-    if (!_vRoom.isOnline &&
-        _vRoom.roomType.isSingleOrOrder &&
-        _vRoom.blockerId == null &&
-        value.lastSeenAt == null) {
-      await vSafeApiCall<DateTime>(
-        request: () async {
-          return await _messageProvider.getLastSeenAt(_vRoom.peerIdentifier!);
-        },
-        onSuccess: (response) {
-          updateLastSeen(response);
-        },
-      );
-    }
   }
 
   void onOpenSearch() {

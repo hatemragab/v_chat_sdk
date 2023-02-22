@@ -25,6 +25,12 @@ typedef VToChatSettingsFunction = Function(
   VToChatSettingsModel data,
 );
 
+typedef VToSingleOrOrderSettingsFunction = Function(
+  BuildContext context,
+  VToChatSettingsModel data,
+  String identifier,
+);
+
 class VRoomNavigator {
   final Future<List<String>?> Function(
     BuildContext context,
@@ -51,8 +57,8 @@ class VMessageNavigator {
   final VToUserProfileFunction? toUserProfilePage;
 
   /// chat settings
-  final VToChatSettingsFunction? toSingleSettings;
-  final VToChatSettingsFunction? toOrderSettings;
+  final VToSingleOrOrderSettingsFunction? toSingleSettings;
+  final VToSingleOrOrderSettingsFunction? toOrderSettings;
   final VToChatSettingsFunction? toGroupSettings;
   final VToChatSettingsFunction? toBroadcastSettings;
 
@@ -84,8 +90,8 @@ class VMessageNavigator {
     VMediaViewerFunction? toVideoPlayer,
     Function(BuildContext context, String roomId)? toViewChatMedia,
     VToUserProfileFunction? toUserProfilePage,
-    VToChatSettingsFunction? toSingleSettings,
-    VToChatSettingsFunction? toOrderSettings,
+    VToSingleOrOrderSettingsFunction? toSingleSettings,
+    VToSingleOrOrderSettingsFunction? toOrderSettings,
     VToChatSettingsFunction? toGroupSettings,
     VToChatSettingsFunction? toBroadcastSettings,
     Function(

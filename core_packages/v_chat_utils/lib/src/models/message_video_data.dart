@@ -7,11 +7,13 @@ import '../../v_chat_utils.dart';
 class VMessageVideoData {
   VPlatformFileSource fileSource;
   VMessageImageData? thumbImage;
-  int duration;
+  int? duration;
 
-  Duration get durationObj => Duration(milliseconds: duration);
+  Duration? get durationObj =>
+      duration == null ? null : Duration(milliseconds: duration!);
 
-  String get dateFormat {
+  String? get durationFormat {
+    if (durationObj == null) return null;
     return '$durationObj'.split('.')[0].padLeft(8, '0');
   }
 
@@ -46,7 +48,7 @@ class VMessageVideoData {
   }) {
     return VMessageVideoData(
       fileSource: VPlatformFileSource.fromMap(map, baseUrl: baseUrl),
-      duration: map['duration'] == null ? 0 : map['duration'] as int,
+      duration: map['duration'] as int?,
       thumbImage: map['thumbImage'] == null
           ? null
           : VMessageImageData.fromMap(

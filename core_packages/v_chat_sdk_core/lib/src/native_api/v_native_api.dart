@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
+import 'package:v_chat_sdk_core/src/http/api_service/block/block_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/call/call_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api_service.dart';
@@ -25,6 +26,7 @@ class VNativeApi {
     VMessageApiService.init(),
     VProfileApiService.init(),
     VCallApiService.init(),
+    VBlockApiService.init(),
   );
   final streams = VStreams();
 
@@ -77,6 +79,7 @@ class VRemoteNativeApi {
   final VChannelApiService _room;
   final VMessageApiService _nativeRemoteMessage;
   final VCallApiService _nativeRemoteCallApiService;
+  final VBlockApiService _nativeRemoteBlockApiService;
   final VProfileApiService _nativeProfileApiService;
 
   VRemoteNativeApi(
@@ -84,6 +87,7 @@ class VRemoteNativeApi {
     this._nativeRemoteMessage,
     this._nativeProfileApiService,
     this._nativeRemoteCallApiService,
+    this._nativeRemoteBlockApiService,
   );
 
   VChannelApiService get room => _room;
@@ -119,4 +123,5 @@ class VRemoteNativeApi {
 
   VProfileApiService get profile => _nativeProfileApiService;
   VCallApiService get calls => _nativeRemoteCallApiService;
+  VBlockApiService get block => _nativeRemoteBlockApiService;
 }

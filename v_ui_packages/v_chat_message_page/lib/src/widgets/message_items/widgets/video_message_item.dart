@@ -23,7 +23,7 @@ class VideoMessageItem extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 400),
       child: Stack(
         alignment: Alignment.center,
-        fit: StackFit.loose,
+        //  fit: StackFit.expand,
         children: [
           getBackground(context),
           Row(
@@ -42,27 +42,29 @@ class VideoMessageItem extends StatelessWidget {
               ),
             ],
           ),
-          Positioned(
-            bottom: 5,
-            right: 5,
-            child: RoundedContainer(
-              borderRadius: BorderRadius.circular(30),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              color: Colors.blueGrey.withOpacity(.5),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.videocam_rounded,
-                    color: Colors.white,
+          message.data.durationFormat == null
+              ? const SizedBox.shrink()
+              : Positioned(
+                  bottom: 5,
+                  right: 5,
+                  child: RoundedContainer(
+                    borderRadius: BorderRadius.circular(30),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    color: Colors.blueGrey.withOpacity(.5),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.videocam_rounded,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        message.data.durationFormat!.s2.color(Colors.white),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  message.data.dateFormat.s2.color(Colors.white),
-                ],
-              ),
-            ),
-          ),
+                ),
           Positioned(
             bottom: 5,
             left: 5,
@@ -99,6 +101,7 @@ class VideoMessageItem extends StatelessWidget {
     return VConstraintImage(
       data: message.data.thumbImage!,
       borderRadius: BorderRadius.circular(15),
+      fit: BoxFit.cover,
     );
   }
 }

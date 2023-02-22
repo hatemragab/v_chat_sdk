@@ -2,4 +2,4 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-enum VRoomItemClickRes { mute, unMute, delete, block, unBlock, report, leave }
+enum VRoomItemClickRes { mute, unMute, delete, report, leave }

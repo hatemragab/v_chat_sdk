@@ -3,5 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 export './v_base_user.dart';
+export './v_check_ban_model.dart';
 export './v_user.dart';
 export './v_user_image.dart';

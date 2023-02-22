@@ -4,14 +4,16 @@
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import 'app_bar_state_controller.dart';
-import 'input_state_controller.dart';
-import 'message_state_controller.dart';
+import '../states/app_bar_state_controller.dart';
+import '../states/block_state_controller.dart';
+import '../states/input_state_controller.dart';
+import '../states/message_state/message_state_controller.dart';
 
 class MessageStreamState with VMessageStream, VRoomStream {
   final MessageStateController messageState;
   final AppBarStateController appBarStateController;
   final InputStateController inputStateController;
+  final BlockStateController blockStateController;
   final VNativeApi nativeApi;
   final VRoom currentRoom;
 
@@ -21,6 +23,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
     required this.appBarStateController,
     required this.inputStateController,
     required this.currentRoom,
+    required this.blockStateController,
   }) {
     ///listen to all message
     initMessageStream(
@@ -69,10 +72,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
 
   @override
   void onBlockRoom(VBlockRoomEvent event) {
-    if (event.banModel.banned) {
-      return inputStateController.closeChat();
-    }
-    return inputStateController.openChat();
+    blockStateController.updateFromRemote();
   }
 
   /////////////// message methods//////////

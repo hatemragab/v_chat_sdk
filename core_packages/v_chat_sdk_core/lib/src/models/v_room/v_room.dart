@@ -25,7 +25,6 @@ class VRoom {
   String? nickName;
   final String? peerId;
   final String? peerIdentifier;
-  String? blockerId;
   bool isSelected = false;
 
   VRoom({
@@ -40,7 +39,6 @@ class VRoom {
     required this.createdAt,
     required this.isMuted,
     this.isOnline = false,
-    this.blockerId,
     required this.peerId,
     required this.peerIdentifier,
     required this.nickName,
@@ -62,7 +60,6 @@ class VRoom {
         peerIdentifier = null,
         typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
-        blockerId = null,
         peerId = null,
         lastMessage = VEmptyMessage();
 
@@ -81,7 +78,6 @@ class VRoom {
         nickName = null,
         typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
-        blockerId = map['bId'] as String?,
         peerId = map['pId'] as String?,
         lastMessage = map['lastMessage'] == null
             ? VEmptyMessage()
@@ -105,7 +101,6 @@ class VRoom {
         peerIdentifier = map[RoomTable.columnPeerIdentifier] as String?,
         typingStatus = VSocketRoomTypingModel.offline,
         isOnline = false,
-        blockerId = map[RoomTable.columnBlockerId] as String?,
         peerId = map[RoomTable.columnPeerId] as String?,
         lastMessage = MessageFactory.createBaseMessage(map);
 
@@ -123,7 +118,6 @@ class VRoom {
       RoomTable.columnPeerIdentifier: peerIdentifier,
       RoomTable.columnNickName: nickName,
       RoomTable.columnPeerId: peerId,
-      RoomTable.columnBlockerId: blockerId,
     };
   }
 
@@ -175,12 +169,12 @@ class VRoom {
 
   bool get isRoomUnread => unReadCount != 0;
 
-  bool get isThereBlock => blockerId != null;
-
-  bool get isMeBlocker {
-    if (blockerId == null) return false;
-    return VAppConstants.myProfile.baseUser.vChatId == blockerId;
-  }
+  // bool get isThereBlock => blockerId != null;
+  //
+  // bool get isMeBlocker {
+  //   if (blockerId == null) return false;
+  //   return VAppConstants.myProfile.baseUser.vChatId == blockerId;
+  // }
 
   String get lastMessageTimeString =>
       DateFormat.jm().format(lastMessage.createdAtDate);
@@ -246,7 +240,6 @@ class VRoom {
       typingStatus: typingStatus ?? this.typingStatus,
       nickName: nickName ?? this.nickName,
       peerId: peerId ?? this.peerId,
-      blockerId: blockerId ?? this.blockerId,
     );
   }
 }

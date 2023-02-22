@@ -40,6 +40,7 @@ class MessageUploaderQueue {
       // rethrow;
     } on VChatBaseHttpException catch (err) {
       await _deleteTheMessage(uploadModel);
+      print(err);
       _log.warning("VChatBaseHttpException", err);
     } on VUserInternetException catch (err) {
       await _setErrorToMessage(uploadModel);

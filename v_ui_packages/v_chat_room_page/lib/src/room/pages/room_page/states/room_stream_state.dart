@@ -61,10 +61,10 @@ class RoomStreamState with VMessageStream, VRoomStream, VSocketIntervalStream {
     return roomState.addUnReadOne(event.roomId);
   }
 
-  @override
-  void onBlockRoom(VBlockRoomEvent event) {
-    return roomState.blockRoom(event.roomId, event.banModel);
-  }
+  // @override
+  // void onBlockRoom(VBlockRoomEvent event) {
+  //   return roomState.blockRoom(event.roomId, event.banModel);
+  // }
 
   @override
   void onChangeMute(VUpdateRoomMuteEvent event) {

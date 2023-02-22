@@ -16,8 +16,8 @@ class HomeController extends GetxController {
   final _serverMentions = List.generate(
     1000,
     (i) => VMentionModel(
-      identifier:   "$i",
-      name:   "u$i",
+      identifier: "$i",
+      name: "u$i",
       image: "https://picsum.photos/600/60$i",
     ),
   );

@@ -58,17 +58,17 @@ class SqlRoomImp extends BaseLocalRoomRepo {
     return maps.map((e) => VRoom.fromLocalMap(e)).toList();
   }
 
-  @override
-  Future<int> updateBlockRoom(VBlockRoomEvent event) {
-    return _database.update(
-      _table,
-      {
-        RoomTable.columnBlockerId: event.banModel.bannerId,
-      },
-      where: "$_id =?",
-      whereArgs: [event.roomId],
-    );
-  }
+  // @override
+  // Future<int> updateBlockRoom(VBlockRoomEvent event) {
+  //   return _database.update(
+  //     _table,
+  //     {
+  //       RoomTable.columnBlockerId: event.banModel.bannerId,
+  //     },
+  //     where: "$_id =?",
+  //     whereArgs: [event.roomId],
+  //   );
+  // }
 
   @override
   Future<int> updateCountByOne(VUpdateRoomUnReadCountByOneEvent event) {

@@ -49,14 +49,14 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
           .toList(),
     );
   }
-
-  @override
-  Future<int> updateBlockRoom(VBlockRoomEvent event) async {
-    final room = getRoomById(event.roomId);
-    if (room == null) return 0;
-    room.blockerId = event.banModel.bannerId;
-    return Future.value(1);
-  }
+  //
+  // @override
+  // Future<int> updateBlockRoom(VBlockRoomEvent event) async {
+  //   final room = getRoomById(event.roomId);
+  //   if (room == null) return 0;
+  //   room.blockerId = event.banModel.bannerId;
+  //   return Future.value(1);
+  // }
 
   @override
   Future<int> updateCountByOne(

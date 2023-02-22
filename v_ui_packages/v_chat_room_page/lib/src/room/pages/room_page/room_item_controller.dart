@@ -59,27 +59,27 @@ class RoomItemController {
     );
   }
 
-  ModelSheetItem<VRoomItemClickRes> _unBlockItem() {
-    return ModelSheetItem(
-      title: VTrans.of(context).labels.unBlock,
-      id: VRoomItemClickRes.unBlock,
-      iconData: const Icon(
-        Icons.security,
-        color: Colors.red,
-      ),
-    );
-  }
-
-  ModelSheetItem<VRoomItemClickRes> _blockItem() {
-    return ModelSheetItem(
-      title: VTrans.of(context).labels.block,
-      id: VRoomItemClickRes.block,
-      iconData: const Icon(
-        Icons.block,
-        color: Colors.red,
-      ),
-    );
-  }
+  // ModelSheetItem<VRoomItemClickRes> _unBlockItem() {
+  //   return ModelSheetItem(
+  //     title: VTrans.of(context).labels.unBlock,
+  //     id: VRoomItemClickRes.unBlock,
+  //     iconData: const Icon(
+  //       Icons.security,
+  //       color: Colors.red,
+  //     ),
+  //   );
+  // }
+  //
+  // ModelSheetItem<VRoomItemClickRes> _blockItem() {
+  //   return ModelSheetItem(
+  //     title: VTrans.of(context).labels.block,
+  //     id: VRoomItemClickRes.block,
+  //     iconData: const Icon(
+  //       Icons.block,
+  //       color: Colors.red,
+  //     ),
+  //   );
+  // }
 
   ModelSheetItem<VRoomItemClickRes> _leaveItem() {
     return ModelSheetItem(
@@ -99,12 +99,12 @@ class RoomItemController {
       _reportItem(),
     ];
 
-    if (room.isThereBlock && room.isMeBlocker) {
-      l.add(_unBlockItem());
-    }
-    if (!room.isThereBlock) {
-      l.add(_blockItem());
-    }
+    // if (room.isThereBlock && room.isMeBlocker) {
+    //   l.add(_unBlockItem());
+    // }
+    // if (!room.isThereBlock) {
+    //   l.add(_blockItem());
+    // }
     final res = await VAppAlert.showModalSheet(
       content: l,
       context: context,
@@ -128,11 +128,11 @@ class RoomItemController {
       case VRoomItemClickRes.delete:
         await _delete(room);
         break;
-      case VRoomItemClickRes.block:
-        await _block(room);
-        break;
-      case VRoomItemClickRes.unBlock:
-        await _unBlock(room);
+        // case VRoomItemClickRes.block:
+        //   // await _block(room);
+        //   break;
+        // case VRoomItemClickRes.unBlock:
+        //   // await _unBlock(room);
         break;
       case VRoomItemClickRes.report:
         if (VChatController.I.vMessagePageConfig.onReportUserPress != null) {
@@ -217,51 +217,51 @@ class RoomItemController {
     );
   }
 
-  Future _block(VRoom room) async {
-    final res = await VAppAlert.showAskYesNoDialog(
-      context: context,
-      title: VTrans.of(context).labels.blockThisUser,
-      content: VTrans.of(context)
-          .labels
-          .areYouSureToBlockThisUserCantSendMessageToYou,
-    );
-    if (res != 1) return;
-
-    if (VChatController.I.vMessagePageConfig.onUserBlockAnother != null) {
-      VChatController.I.vMessagePageConfig.onUserBlockAnother!(
-        context,
-        room.peerIdentifier!,
-      );
-    }
-    await vSafeApiCall(
-      request: () async {
-        await _provider.block(room.id);
-      },
-      onSuccess: (response) {
-        VAppAlert.showOverlaySupport(
-            title: VTrans.of(context).labels.userBlocked);
-      },
-    );
-  }
-
-  Future _unBlock(VRoom room) async {
-    if (VChatController.I.vMessagePageConfig.onUserUnBlockAnother != null) {
-      VChatController.I.vMessagePageConfig.onUserUnBlockAnother!(
-        context,
-        room.peerIdentifier!,
-      );
-    }
-
-    await vSafeApiCall(
-      request: () async {
-        await _provider.block(room.id);
-      },
-      onSuccess: (response) {
-        VAppAlert.showOverlaySupport(
-            title: VTrans.of(context).labels.userUnBlocked);
-      },
-    );
-  }
+  // Future _block(VRoom room) async {
+  //   final res = await VAppAlert.showAskYesNoDialog(
+  //     context: context,
+  //     title: VTrans.of(context).labels.blockThisUser,
+  //     content: VTrans.of(context)
+  //         .labels
+  //         .areYouSureToBlockThisUserCantSendMessageToYou,
+  //   );
+  //   if (res != 1) return;
+  //
+  //   if (VChatController.I.vMessagePageConfig.onUserBlockAnother != null) {
+  //     VChatController.I.vMessagePageConfig.onUserBlockAnother!(
+  //       context,
+  //       room.peerIdentifier!,
+  //     );
+  //   }
+  //   await vSafeApiCall(
+  //     request: () async {
+  //       await _provider.block(room.id);
+  //     },
+  //     onSuccess: (response) {
+  //       VAppAlert.showOverlaySupport(
+  //           title: VTrans.of(context).labels.userBlocked);
+  //     },
+  //   );
+  // }
+  //
+  // Future _unBlock(VRoom room) async {
+  //   if (VChatController.I.vMessagePageConfig.onUserUnBlockAnother != null) {
+  //     VChatController.I.vMessagePageConfig.onUserUnBlockAnother!(
+  //       context,
+  //       room.peerIdentifier!,
+  //     );
+  //   }
+  //
+  //   await vSafeApiCall(
+  //     request: () async {
+  //       await _provider.block(room.id);
+  //     },
+  //     onSuccess: (response) {
+  //       VAppAlert.showOverlaySupport(
+  //           title: VTrans.of(context).labels.userUnBlocked);
+  //     },
+  //   );
+  // }
 
   Future _groupLeave(VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(

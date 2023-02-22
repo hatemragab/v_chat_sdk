@@ -10,8 +10,8 @@ import 'package:v_chat_message_page/src/core/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../../v_chat_message_page.dart';
-import '../message_provider.dart';
+import '../../../../../v_chat_message_page.dart';
+import '../../providers/message_provider.dart';
 
 class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     with VSocketStatusStream {
@@ -69,7 +69,9 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
       stateMessages.where((e) => e.emitStatus.isSendingOrError),
     );
     //we need to sort
-    value = newList.sortById();
+    if (context.mounted) {
+      value = newList.sortById();
+    }
   }
 
   void insertMessage(VBaseMessage messageModel) {
@@ -249,7 +251,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     return localLoadedMessages;
   }
 
-  Future loadUntil(VBaseMessage message) async {
+  Future<void> loadUntil(VBaseMessage message) async {
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
         return _messageProvider.getLocalMessages(

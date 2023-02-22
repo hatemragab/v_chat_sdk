@@ -77,15 +77,15 @@ class RoomProvider {
     return true;
   }
 
-  Future<bool> block(String roomId) async {
-    await _remoteRoom.closeChat(roomId);
-    return true;
-  }
-
-  Future<bool> unBlock(String roomId) async {
-    await _remoteRoom.closeChat(roomId);
-    return true;
-  }
+  // Future<bool> block(String roomId) async {
+  //   await _remoteRoom.closeChat(roomId);
+  //   return true;
+  // }
+  //
+  // Future<bool> unBlock(String roomId) async {
+  //   await _remoteRoom.closeChat(roomId);
+  //   return true;
+  // }
 
   Future groupLeave(String roomId) async {
     return await _remoteRoom.leaveGroup(roomId);

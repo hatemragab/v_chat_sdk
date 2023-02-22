@@ -46,6 +46,14 @@ class RoomApi {
     return true;
   }
 
+  ///only works for single rooms
+  // Future<bool> blockUser(String roomId) async {
+  //   await _vNativeApi.local.room
+  //       .updateRoomBlock(OnBanUserChatModel( roomId: roomId));
+  //   // await _vNativeApi.remote.room.closeChat(roomId);
+  //   return true;
+  // }
+
   Future<bool> changeRoomNotification({
     required String roomId,
     required bool isMuted,

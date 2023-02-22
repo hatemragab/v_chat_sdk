@@ -24,10 +24,10 @@ class VChannelApiService {
     return VRoom.fromMap(extractDataFromResponse(res));
   }
 
-  Future<void> closeChat(String roomId) async {
-    final res = await _channelApiService!.closeChat(roomId);
-    throwIfNotSuccess(res);
-  }
+  // Future<void> closeChat(String roomId) async {
+  //   final res = await _channelApiService!.closeChat(roomId);
+  //   throwIfNotSuccess(res);
+  // }
 
   Future<bool> changeRoomNotification({
     required String roomId,

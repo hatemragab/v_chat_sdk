@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_receive_share/v_chat_receive_share.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 
 import '../../../logs/controllers/logs_controller.dart';
@@ -45,7 +44,7 @@ class HomeController extends GetxController {
   }
 
   void getC() async {
-    final x = await VChatController.I.roomApi.getCallHistory();
-    print(x);
+    // final x = await VChatController.I.roomApi.getCallHistory();
+    // print(x);
   }
 }
