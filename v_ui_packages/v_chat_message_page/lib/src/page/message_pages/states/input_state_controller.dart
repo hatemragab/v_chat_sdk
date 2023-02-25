@@ -6,15 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../models/input_state_model.dart';
-import '../providers/message_provider.dart';
 
 class InputStateController extends ValueNotifier<MessageInputModel> {
-  final MessageProvider _messageProvider;
-  final VRoom _vRoom;
+  final VRoom vRoom;
 
   InputStateController(
-    this._vRoom,
-    this._messageProvider,
+    this.vRoom,
   ) : super(MessageInputModel(isCloseInput: false)) {
     // if (_vRoom.roomType.isGroup) {
     //   _checkStatus(_vRoom.id);

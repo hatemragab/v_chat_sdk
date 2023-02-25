@@ -1,4 +1,4 @@
-import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_pages/states/app_bar_state_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -8,7 +8,7 @@ class LastSeenStateController with VRoomStream {
   final VRoom room;
   final String _cacheKey = "last-seen-";
   DateTime? value;
-
+  final AppBarStateController appBarStateController;
   final MessageProvider _messageProvider;
 
   LastSeenStateController(
@@ -21,7 +21,11 @@ class LastSeenStateController with VRoomStream {
         (e) => e.roomId == room.id,
       ),
     );
-    if (!room.isOnline) {
+    _autoUpdateValue();
+  }
+
+  void _autoUpdateValue() {
+    if (!room.isOnline && value == null) {
       updateFromRemote();
     }
   }
@@ -30,11 +34,9 @@ class LastSeenStateController with VRoomStream {
     closeRoomStream();
   }
 
-  final AppBarStateController appBarStateController;
-
   @override
   void onRoomOffline(VRoomOfflineEvent event) {
-    updateFromRemote();
+    _autoUpdateValue();
   }
 
   void updateValue(DateTime value) {
@@ -44,12 +46,13 @@ class LastSeenStateController with VRoomStream {
 
   Future<void> updateFromRemote() async {
     await vSafeApiCall<DateTime>(
-        request: () async {
-          return await _messageProvider.getLastSeenAt(room.peerIdentifier!);
-        },
-        onSuccess: (response) {
-          updateValue(response);
-        },
-        ignoreTimeoutAndNoInternet: true);
+      request: () async {
+        return await _messageProvider.getLastSeenAt(room.peerIdentifier!);
+      },
+      onSuccess: (response) {
+        updateValue(response);
+      },
+      ignoreTimeoutAndNoInternet: true,
+    );
   }
 }

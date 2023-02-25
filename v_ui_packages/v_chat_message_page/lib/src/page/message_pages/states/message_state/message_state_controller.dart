@@ -6,7 +6,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:v_chat_message_page/src/core/extentions.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -15,24 +15,23 @@ import '../../providers/message_provider.dart';
 
 class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     with VSocketStatusStream {
-  final VRoom _vRoom;
+  final VRoom vRoom;
   final BuildContext context;
-  final bool isInTesting;
-  final MessageProvider _messageProvider;
-  final ScrollController scrollController;
+  final MessageProvider messageProvider;
+  final AutoScrollController scrollController;
   LoadMoreStatus _loadingStatus = LoadMoreStatus.loaded;
 
-  MessageStateController(
-    this._vRoom,
-    this._messageProvider,
-    this.isInTesting,
-    this.context,
-    this.scrollController,
-  ) : super(<VBaseMessage>[]) {
+  MessageStateController({
+    required this.vRoom,
+    required this.messageProvider,
+    required this.context,
+    required this.scrollController,
+  }) : super(<VBaseMessage>[]) {
     initSocketStatusStream(
       VChatController.I.nativeApi.streams.socketStatusStream,
     );
-    _initLocalMessages();
+    getMessagesFromLocal();
+    unawaited(getMessagesFromRemote(_initFilterDto));
     scrollController.addListener(_loadMoreListener);
   }
 
@@ -56,11 +55,11 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     lastId: null,
   );
 
-  void insertAll(List<VBaseMessage> messages) {
-    value = messages.sortById();
+  void insertAllMessages(List<VBaseMessage> messages) {
+    value = sort(messages);
   }
 
-  void _updateCacheState(List<VBaseMessage> apiMessages) {
+  void updateApiMessages(List<VBaseMessage> apiMessages) {
     if (apiMessages.isEmpty) return;
     final stateMessages = value;
     final newList = <VBaseMessage>[];
@@ -70,8 +69,15 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     );
     //we need to sort
     if (context.mounted) {
-      value = newList.sortById();
+      value = sort(newList);
     }
+  }
+
+  List<VBaseMessage> sort(List<VBaseMessage> messages) {
+    messages.sort((a, b) {
+      return b.id.compareTo(a.id);
+    });
+    return messages;
   }
 
   void insertMessage(VBaseMessage messageModel) {
@@ -158,52 +164,43 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
 
   @override
   void onSocketConnected() {
-    _getApiMessages(_initFilterDto);
-    _messageProvider.setSeen(_vRoom.id);
+    getMessagesFromRemote(_initFilterDto);
+    messageProvider.setSeen(vRoom.id);
   }
 
-  Future<void> _getApiMessages(
+  Future<void> getMessagesFromRemote(
     VRoomMessagesDto dto,
   ) async {
     await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
-        if (isInTesting) {
-          return await _messageProvider.getFakeApiMessages();
-        } else {
-          return _messageProvider.getApiMessages(
-            roomId: _vRoom.id,
-            dto: dto,
-          );
-        }
+        return messageProvider.getApiMessages(
+          roomId: vRoom.id,
+          dto: dto,
+        );
       },
       onSuccess: (response) {
-        _updateCacheState(response);
+        updateApiMessages(response);
       },
     );
   }
 
-  Future<void> _initLocalMessages() async {
+  Future<void> getMessagesFromLocal() async {
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
-        if (isInTesting) {
-          return await _messageProvider.getFakeLocalMessages();
-        } else {
-          return _messageProvider.getLocalMessages(
-            roomId: _vRoom.id,
-            filter: _initFilterDto,
-          );
-        }
+        return messageProvider.getLocalMessages(
+          roomId: vRoom.id,
+          filter: _initFilterDto,
+        );
       },
       onSuccess: (response) {
-        insertAll(response);
+        insertAllMessages(response);
       },
     );
-    await _getApiMessages(_initFilterDto);
   }
 
   void emitSeenFor(String roomId) {
-    _messageProvider.setSeen(roomId);
+    messageProvider.setSeen(roomId);
   }
 
   bool get requireLoadMoreMessages =>
@@ -220,16 +217,16 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   Future<List<VBaseMessage>?> loadMoreMessages() async {
     _loadingStatus = LoadMoreStatus.loading;
     _filterDto.lastId = value.last.id;
-    final localLoadedMessages = await _messageProvider.getLocalMessages(
-      roomId: _vRoom.id,
+    final localLoadedMessages = await messageProvider.getLocalMessages(
+      roomId: vRoom.id,
       filter: _filterDto,
     );
     if (localLoadedMessages.isEmpty) {
       ///if no more data ask server for it
       return await vSafeApiCall<List<VBaseMessage>>(
         request: () async {
-          return _messageProvider.getApiMessages(
-            roomId: _vRoom.id,
+          return messageProvider.getApiMessages(
+            roomId: vRoom.id,
             dto: _filterDto,
           );
         },
@@ -254,8 +251,8 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   Future<void> loadUntil(VBaseMessage message) async {
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
-        return _messageProvider.getLocalMessages(
-          roomId: _vRoom.id,
+        return messageProvider.getLocalMessages(
+          roomId: vRoom.id,
           filter: VRoomMessagesDto(
             between: VMessageBetweenFilter(
               lastId: value.last.id,
@@ -271,14 +268,14 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     );
   }
 
-  void onSearch(String text) async {
-    final searchMessages = await _messageProvider.search(_vRoom.id, text);
+  void messageSearch(String text) async {
+    final searchMessages = await messageProvider.search(vRoom.id, text);
     value = searchMessages;
     notifyListeners();
   }
 
-  void onCloseSearch() {
+  void resetMessages() {
     _initLoadMore();
-    _initLocalMessages();
+    getMessagesFromLocal();
   }
 }

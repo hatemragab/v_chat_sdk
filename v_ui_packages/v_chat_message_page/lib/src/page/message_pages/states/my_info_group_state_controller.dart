@@ -1,4 +1,4 @@
-import 'package:v_chat_message_page/src/page/message_page/states/app_bar_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_pages/states/app_bar_state_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 

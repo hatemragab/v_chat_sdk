@@ -201,7 +201,6 @@ class VMessageItemController {
           case VMessageType.file:
             message = VFileMessage.buildMessage(
               data: (baseMessage as VFileMessage).data,
-              isEncrypted: false,
               roomId: roomId,
               forwardId: baseMessage.localId,
             );

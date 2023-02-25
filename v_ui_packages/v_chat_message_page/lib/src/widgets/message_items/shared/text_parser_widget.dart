@@ -89,10 +89,10 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
           },
           child: isShowMoreEnabled
               ? const Icon(
-                  Icons.arrow_circle_down,
+                  PhosphorIcons.arrowCircleDown,
                 )
               : const Icon(
-                  Icons.arrow_circle_up,
+                  PhosphorIcons.arrowCircleUp,
                 ),
         )
       ],

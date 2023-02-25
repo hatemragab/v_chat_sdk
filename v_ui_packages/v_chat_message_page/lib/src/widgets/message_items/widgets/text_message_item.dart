@@ -26,6 +26,24 @@ class TextMessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return CustomCard(
+    //   msg: message,
+    //   timeTextWidget: Row(
+    //     children: [
+    //       MessageTimeWidget(
+    //         dateTime: DateTime.now(),
+    //       ),
+    //       const MessageStatusIcon(
+    //         model: MessageStatusIconDataModel(
+    //             isMeSender: true,
+    //             isSeen: false,
+    //             isDeliver: false,
+    //             emitStatus: VMessageEmitStatus.serverConfirm
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
     return VTextParserWidget(
       text: message,
       textStyle: textStyle,

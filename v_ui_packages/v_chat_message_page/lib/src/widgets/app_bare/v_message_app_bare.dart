@@ -20,6 +20,7 @@ class VMessageAppBare extends StatelessWidget {
   final VoidCallback onViewMedia;
   final Function(bool isVideo) onCreateCall;
   final Function(bool isBlocked) onUpdateBlock;
+  final bool isCallsAllow;
 
   const VMessageAppBare({
     Key? key,
@@ -29,6 +30,7 @@ class VMessageAppBare extends StatelessWidget {
     required this.onCreateCall,
     required this.onViewMedia,
     required this.onUpdateBlock,
+    required this.isCallsAllow,
   }) : super(key: key);
 
   @override
@@ -181,18 +183,26 @@ class VMessageAppBare extends StatelessWidget {
       return Row(
         children: [
           InkWell(
-            onTap: () => onCreateCall(true),
-            child: const Icon(
+            onTap: () {
+              if (!isCallsAllow) return;
+              onCreateCall(true);
+            },
+            child: Icon(
               PhosphorIcons.videoCameraFill,
+              color: isCallsAllow ? null : Colors.grey,
             ),
           ),
           const SizedBox(
             width: 20,
           ),
           InkWell(
-            onTap: () => onCreateCall(false),
-            child: const Icon(
+            onTap: () {
+              if (!isCallsAllow) return;
+              onCreateCall(false);
+            },
+            child: Icon(
               PhosphorIcons.phoneCallFill,
+              color: isCallsAllow ? null : Colors.grey,
             ),
           ),
         ],

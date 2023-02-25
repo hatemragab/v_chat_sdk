@@ -5,16 +5,13 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import '../../../models/app_bare_state_model.dart';
-import '../providers/message_provider.dart';
 
 class AppBarStateController extends ValueNotifier<MessageAppBarStateModel> {
-  final MessageProvider _messageProvider;
-  final VRoom _vRoom;
+  final VRoom vRoom;
 
   AppBarStateController(
-    this._vRoom,
-    this._messageProvider,
-  ) : super(MessageAppBarStateModel.fromVRoom(_vRoom));
+    this.vRoom,
+  ) : super(MessageAppBarStateModel.fromVRoom(vRoom));
 
   void updateTitle(String title) {
     value.roomTitle = title;

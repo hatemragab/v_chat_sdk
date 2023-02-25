@@ -16,7 +16,23 @@ final vDefaultMessageNavigator = VMessageNavigator(
     roomId: roomId,
   )),
   toMessagePage: (context, vRoom) {
-    return context.toPage(VMessagePage(vRoom: vRoom));
+    if (vRoom.roomType.isSingle) {
+      return context.toPage(
+        VSingleView(vRoom: vRoom),
+      );
+    } else if (vRoom.roomType.isGroup) {
+      return context.toPage(
+        VGroupView(vRoom: vRoom),
+      );
+    } else if (vRoom.roomType.isBroadcast) {
+      return context.toPage(
+        VBroadcastView(vRoom: vRoom),
+      );
+    } else if (vRoom.roomType.isOrder) {
+      return context.toPage(
+        VOrderView(vRoom: vRoom),
+      );
+    }
   },
   toVideoPlayer: (context, source) {
     return context.toPage(

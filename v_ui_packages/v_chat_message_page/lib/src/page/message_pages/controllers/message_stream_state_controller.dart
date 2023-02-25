@@ -13,7 +13,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
   final MessageStateController messageState;
   final AppBarStateController appBarStateController;
   final InputStateController inputStateController;
-  final BlockStateController blockStateController;
+  final BlockStateController? blockStateController;
   final VNativeApi nativeApi;
   final VRoom currentRoom;
 
@@ -23,7 +23,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
     required this.appBarStateController,
     required this.inputStateController,
     required this.currentRoom,
-    required this.blockStateController,
+      this.blockStateController,
   }) {
     ///listen to all message
     initMessageStream(
@@ -72,7 +72,8 @@ class MessageStreamState with VMessageStream, VRoomStream {
 
   @override
   void onBlockRoom(VBlockRoomEvent event) {
-    blockStateController.updateFromRemote();
+    if(blockStateController ==null) return;
+    blockStateController!.updateFromRemote();
   }
 
   /////////////// message methods//////////
