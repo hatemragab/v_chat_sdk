@@ -85,4 +85,10 @@ class _VBroadcastViewState extends State<VBroadcastView> {
       ),
     );
   }
+  @override
+  void dispose() {
+    controller.close();
+    super.dispose();
+
+  }
 }

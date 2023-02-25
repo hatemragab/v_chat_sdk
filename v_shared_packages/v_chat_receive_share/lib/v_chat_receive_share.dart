@@ -30,6 +30,9 @@ Future<void> _handleOnNewShare(SharedMedia media) async {
   final pFiles = <VPlatformFileSource>[];
 
   if (media.attachments != null && media.attachments!.isNotEmpty) {
+    if (media.content != null) {
+      //
+    }
     for (final m in media.attachments!) {
       if (m == null) continue;
       m.path.replaceAll("file://", "");
@@ -47,14 +50,25 @@ Future<void> _handleOnNewShare(SharedMedia media) async {
         files: pFiles,
       )) as List<VBaseMediaRes>?;
       if (fileRes == null) return;
-      for (final id in roomsIds) {
-        messages.addAll(fileRes
-            .map((e) => VFileMessage.buildMessage(
-                  roomId: id,
-                  data: VMessageFileData(fileSource: e.getVPlatformFile()),
-                  isEncrypted: false,
-                ))
-            .toList());
+      for (final roomId in roomsIds) {
+        for (final file in fileRes) {
+          if (file is VMediaImageRes) {
+            messages.add(VImageMessage.buildMessage(
+              roomId: roomId,
+              data: file.data,
+            ));
+          } else if (file is VMediaVideoRes) {
+            messages.add(VVideoMessage.buildMessage(
+              roomId: roomId,
+              data: file.data,
+            ));
+          } else {
+            messages.add(VFileMessage.buildMessage(
+              roomId: roomId,
+              data: VMessageFileData(fileSource: file.getVPlatformFile()),
+            ));
+          }
+        }
       }
 
       if (messages.isNotEmpty) {

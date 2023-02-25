@@ -3,9 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:latlong2/latlong.dart' as latlong;
+import 'package:place_picker/entities/localization_item.dart';
+import 'package:place_picker/place_picker.dart';
 
 import 'package:v_chat_input_ui/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_record_btn.dart';
@@ -24,7 +24,7 @@ class VMessageInputWidget extends StatefulWidget {
   final Function(String message) onSubmitText;
 
   ///callback when user send images or videos or mixed
-  final Function(List<VBaseMediaRes> files) onSubmitMedia;
+  final Function(List<VPlatformFileSource> files) onSubmitMedia;
 
   ///callback when user send files
   final Function(List<VPlatformFileSource> files) onSubmitFiles;
@@ -350,8 +350,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         case VAttachEnumRes.media:
           final files = await VAppPick.getMedia();
           if (files != null) {
+            if (files.isNotEmpty) widget.onSubmitMedia(files);
             final resFiles = await _processMediaToSubmit(files);
-            if (resFiles.isNotEmpty) widget.onSubmitMedia(resFiles);
           }
           break;
         case VAttachEnumRes.files:
@@ -363,59 +363,59 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
           break;
         case VAttachEnumRes.location:
           if (widget.googleMapsApiKey == null) return;
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PlacePicker(
-                apiKey: widget.googleMapsApiKey!,
-                autocompleteLanguage: widget.googleMapsLangKey,
-                onPlacePicked: (result) {
-                  Navigator.of(context).pop(result);
-                },
-                initialPosition: const LatLng(-33.8567844, 151.213108),
-                useCurrentLocation: true,
-                resizeToAvoidBottomInset: false,
-              ),
-            ),
-          ) as PickResult?;
-          if (result != null && result.geometry != null) {
-            final location = VLocationMessageData(
-              latLng: latlong.LatLng(
-                result.geometry!.location.lat,
-                result.geometry!.location.lng,
-              ),
-              linkPreviewData: VLinkPreviewData(
-                title: " ",
-                desc: result.formattedAddress,
-                link: result.url.toString(),
-              ),
-            );
-            widget.onSubmitLocation(location);
-          }
-          // final LocationResult? result = await context.toPage<LocationResult?>(
-          //   PlacePicker(
-          //     widget.googleMapsApiKey!,
-          //     localizationItem:
-          //         LocalizationItem(languageCode: widget.googleMapsLangKey),
+          // final result = await Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => PlacePicker(
+          //       apiKey: widget.googleMapsApiKey!,
+          //       autocompleteLanguage: widget.googleMapsLangKey,
+          //       onPlacePicked: (result) {
+          //         Navigator.of(context).pop(result);
+          //       },
+          //       initialPosition: const LatLng(-33.8567844, 151.213108),
+          //       useCurrentLocation: true,
+          //       resizeToAvoidBottomInset: false,
+          //     ),
           //   ),
-          // );
-          // if (result != null &&
-          //     result.latLng != null &&
-          //     result.latLng != null) {
+          // ) as PickResult?;
+          // if (result != null && result.geometry != null) {
           //   final location = VLocationMessageData(
-          //     latLng: LatLng(
-          //       result.latLng!.latitude,
-          //       result.latLng!.longitude,
+          //     latLng: latlong.LatLng(
+          //       result.geometry!.location.lat,
+          //       result.geometry!.location.lng,
           //     ),
           //     linkPreviewData: VLinkPreviewData(
-          //       title: result.name,
+          //       title: " ",
           //       desc: result.formattedAddress,
-          //       link:
-          //           "https://maps.google.com/?q=${result.latLng!.latitude},${result.latLng!.longitude}",
+          //       link: result.url.toString(),
           //     ),
           //   );
           //   widget.onSubmitLocation(location);
           // }
+          final LocationResult? result = await context.toPage<LocationResult?>(
+            PlacePicker(
+              widget.googleMapsApiKey!,
+              localizationItem:
+                  LocalizationItem(languageCode: widget.googleMapsLangKey),
+            ),
+          );
+          if (result != null &&
+              result.latLng != null &&
+              result.latLng != null) {
+            final location = VLocationMessageData(
+              latLng: latlong.LatLng(
+                result.latLng!.latitude,
+                result.latLng!.longitude,
+              ),
+              linkPreviewData: VLinkPreviewData(
+                title: result.name,
+                desc: result.formattedAddress,
+                link:
+                    "https://maps.google.com/?q=${result.latLng!.latitude},${result.latLng!.longitude}",
+              ),
+            );
+            widget.onSubmitLocation(location);
+          }
           break;
       }
     }
@@ -472,49 +472,23 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     super.dispose();
   }
 
-  Future<List<VBaseMediaRes>> _processMediaToSubmit(
+  Future<List<VPlatformFileSource>> _processMediaToSubmit(
     List<VPlatformFileSource> files,
   ) async {
-    final resFiles = <VBaseMediaRes>[];
+    final resFiles = <VPlatformFileSource>[];
     for (final sourceFile in files) {
       if (sourceFile.isContentImage) {
-        final compressedImage =
-            await VFileUtils.compressImage(fileSource: sourceFile);
-        final imageData = await VFileUtils.getImageInfo(
-          fileSource: compressedImage,
-        );
-        resFiles.add(
-          VMediaImageRes(
-            data: VMessageImageData(
-              fileSource: compressedImage,
-              height: imageData.image.height,
-              width: imageData.image.width,
-            ),
-          ),
-        );
+        resFiles.add(sourceFile);
       } else if (sourceFile.isContentVideo) {
         if (sourceFile.fileSize > widget.maxMediaSize) {
           //this file should be ignored
-          ///todo trans
           VAppAlert.showErrorSnackBar(
-              msg: "Some videos size bigger than allowed size",
-              context: context);
+            msg: widget.language.thereIsVideoSizeBiggerThanAllowedSize,
+            context: context,
+          );
           continue;
         }
-
-        final videoDuration = await VFileUtils.getVideoDurationMill(sourceFile);
-        final thumbData =
-            await VFileUtils.getVideoThumb(fileSource: sourceFile);
-
-        resFiles.add(
-          VMediaVideoRes(
-            data: VMessageVideoData(
-              fileSource: sourceFile,
-              duration: videoDuration,
-              thumbImage: thumbData,
-            ),
-          ),
-        );
+        resFiles.add(sourceFile);
       }
     }
     return resFiles;
@@ -526,9 +500,11 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     for (final sourceFile in files) {
       if (sourceFile.fileSize > widget.maxMediaSize) {
         //this file should be ignored
-        ///todo trans
+
         VAppAlert.showErrorSnackBar(
-            msg: "File size bigger than allowed size", context: context);
+          msg: widget.language.thereIsFileHasSizeBiggerThanAllowedSize,
+          context: context,
+        );
         continue;
       }
       res.add(sourceFile);

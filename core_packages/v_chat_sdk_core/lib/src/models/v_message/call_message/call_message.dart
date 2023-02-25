@@ -20,6 +20,7 @@ class VCallMessage extends VBaseMessage {
     required super.isEncrypted,
     required super.senderImageThumb,
     required super.platform,
+    required super.contentTr,
     required super.roomId,
     required super.content,
     required super.messageType,

@@ -49,6 +49,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
           .toList(),
     );
   }
+
   //
   // @override
   // Future<int> updateBlockRoom(VBlockRoomEvent event) async {
@@ -154,5 +155,13 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   @override
   Future<bool> isRoomExist(String roomId) async {
     return _rooms.firstWhereOrNull((e) => e.id == roomId) != null;
+  }
+
+  @override
+  Future<int> updateTransTo(VUpdateTransToEvent event) async {
+    final room = getRoomById(event.roomId);
+    if (room == null) return 0;
+    room.transTo = event.transTo;
+    return Future.value(1);
   }
 }

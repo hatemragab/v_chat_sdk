@@ -17,12 +17,11 @@ import 'app/routes/app_pages.dart';
 Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
   await VChatController.init(
     navigatorKey: _navigatorKey,
-    vMessagePageConfig: VMessagePageConfig(
-      googleMapsApiKey: "AIzaSyAP-dfhdfhg",
-    ),
     vChatConfig: VChatConfig(
+      googleMapsApiKey: "AIzaSyAP-dfhdfhg",
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
+      maxForward: 2,
       vPush: VPush(
         fcmProvider: VPlatforms.isMobile ? VChatFcmProver() : null,
         enableVForegroundNotification: true,
@@ -61,12 +60,12 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
 }
 
 Uri _getBaseUrl() {
-  // return Uri.parse("http://192.168.1.4:3001");
+  // return Uri.parse("http://192.168.1.5:3001");
   // if (true) {
   //   return Uri.parse("http://192.168.1.13:3001");
   // }
   if (kDebugMode) {
-    if (kIsWeb || VPlatforms.isIOS) {
+    if (kIsWeb || VPlatforms.isIOS || VPlatforms.isMac) {
       return Uri.parse("http://localhost:3001");
     }
     //this will only working on the android emulator

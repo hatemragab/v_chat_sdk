@@ -37,7 +37,7 @@ class RegisterController extends GetxController {
   Future<String?> onLogin(LoginData loginData) async {
     try {
       // VChatController.I.
-      final vUser = await VChatController.I.authApi.login(
+      final vUser = await VChatController.I.profileApi.login(
         identifier: loginData.email,
         deviceLanguage: const Locale("en"),
       );
@@ -53,7 +53,7 @@ class RegisterController extends GetxController {
 
   Future<String?> onSignup(SignUpData signUpData) async {
     try {
-      final vUser = await VChatController.I.authApi.register(
+      final vUser = await VChatController.I.profileApi.register(
         identifier: signUpData.email,
         fullName: signUpData.name,
         deviceLanguage: const Locale("en"),

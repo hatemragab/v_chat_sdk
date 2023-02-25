@@ -48,12 +48,11 @@ class VChatController {
     return _instance;
   }
 
-  late final VAuthApi authApi;
+  late final VProfileApi profileApi;
   late final RoomApi roomApi;
   late final Block blockApi;
   late VChatConfig vChatConfig;
   late final VNavigator vNavigator;
-  late final VMessagePageConfig vMessagePageConfig;
   bool _isControllerInit = false;
   late final VNativeApi nativeApi;
 
@@ -66,7 +65,6 @@ class VChatController {
     required VChatConfig vChatConfig,
     required VNavigator vNavigator,
     required GlobalKey<NavigatorState> navigatorKey,
-    VMessagePageConfig? vMessagePageConfig,
   }) async {
     assert(
       !_instance._isControllerInit,
@@ -76,11 +74,9 @@ class VChatController {
     _instance.vChatConfig = vChatConfig;
     _instance.navigatorKey = navigatorKey;
     _instance.vNavigator = vNavigator;
-    _instance.vMessagePageConfig =
-        vMessagePageConfig ?? const VMessagePageConfig();
     await VAppPref.init();
     _instance.nativeApi = await VNativeApi.init();
-    _instance.authApi = VAuthApi(
+    _instance.profileApi = VProfileApi(
       _instance.nativeApi,
       _instance.vChatConfig,
     );

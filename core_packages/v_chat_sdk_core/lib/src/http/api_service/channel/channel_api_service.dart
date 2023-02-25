@@ -39,6 +39,23 @@ class VChannelApiService {
     return (res.body as Map<String, dynamic>)['data'] as bool;
   }
 
+  Future<bool> transTo({
+    required String roomId,
+    required String transTo,
+  }) async {
+    final res = await _channelApiService!.transTo(roomId, {"transTo": transTo});
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> stopRoomAutoTranslate({
+    required String roomId,
+  }) async {
+    final res = await _channelApiService!.stopRoomAutoTranslate(roomId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
   Future<bool> deleteRoom(
     String roomId,
   ) async {

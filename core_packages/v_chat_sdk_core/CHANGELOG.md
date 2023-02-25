@@ -1,3 +1,5 @@
+- ## 0.7.0
+- support macos
 - ## 0.6.0
 - add all apis
 - ## 0.5.0

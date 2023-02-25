@@ -3,19 +3,46 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/src/models/controller/config.dart';
 
 import 'package:v_chat_sdk_core/src/models/push_provider/v_chat_push_provider.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+typedef UserActionType = Function(
+  BuildContext context,
+  String id,
+);
+
 class VChatConfig {
   final VPush vPush;
   final bool enableLog;
+  final bool isCallsAllowed;
   final bool enableEndToEndMessageEncryption;
   final int maxGroupMembers;
   final int maxBroadcastMembers;
   final String encryptHashKey;
   final Uri baseUrl;
+
+  ///callback when user clicked send attachment (this current show bottom sheet with media etc ...)
+  final Future<VAttachEnumRes?> Function()? onMessageAttachmentIconPress;
+
+  ///set api if you want to make users able to pick locations
+  final String? googleMapsApiKey;
+
+  ///set max record time
+  final Duration maxRecordTime;
+
+  final UserActionType? onReportUserPress;
+
+  final UserActionType? onUserBlockAnother;
+
+  final UserActionType? onUserUnBlockAnother;
+
+  ///set max upload files size default it 50 mb
+  final int maxMediaSize;
+  final int maxForward;
+  final int compressImageQuality;
 
   bool get isPushEnable =>
       vPush.fcmProvider != null || vPush.oneSignalProvider != null;
@@ -23,7 +50,7 @@ class VChatConfig {
   VChatPushProviderBase? currentPushProviderService;
 
   Future cleanNotifications() async {
-    if (!isPushEnable || VPlatforms.isWeb) return;
+    if (!isPushEnable || !VPlatforms.isMobile) return;
     await currentPushProviderService!.cleanAll();
   }
 
@@ -35,86 +62,18 @@ class VChatConfig {
     this.enableLog = kDebugMode,
     this.enableEndToEndMessageEncryption = false,
     this.maxGroupMembers = 512,
+    this.compressImageQuality = 55,
+    this.isCallsAllowed = true,
     this.maxBroadcastMembers = 512,
+    this.googleMapsApiKey,
+    this.onReportUserPress,
+    this.onMessageAttachmentIconPress,
+    this.onUserBlockAnother,
+    this.onUserUnBlockAnother,
+    this.maxRecordTime = const Duration(minutes: 30),
+    this.maxMediaSize = 1024 * 1024 * 50,
+    this.maxForward = 7,
   });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is VChatConfig &&
-          runtimeType == other.runtimeType &&
-          vPush == other.vPush &&
-          enableLog == other.enableLog &&
-          enableEndToEndMessageEncryption ==
-              other.enableEndToEndMessageEncryption &&
-          maxGroupMembers == other.maxGroupMembers &&
-          maxBroadcastMembers == other.maxBroadcastMembers &&
-          encryptHashKey == other.encryptHashKey &&
-          baseUrl == other.baseUrl &&
-          currentPushProviderService == other.currentPushProviderService);
-
-  @override
-  int get hashCode =>
-      vPush.hashCode ^
-      enableLog.hashCode ^
-      enableEndToEndMessageEncryption.hashCode ^
-      maxGroupMembers.hashCode ^
-      maxBroadcastMembers.hashCode ^
-      encryptHashKey.hashCode ^
-      baseUrl.hashCode ^
-      currentPushProviderService.hashCode;
-
-  @override
-  String toString() {
-    return 'VChatConfig{ vPush: $vPush, enableLog: $enableLog, enableMessageEncryption: $enableEndToEndMessageEncryption, maxGroupMembers: $maxGroupMembers, maxBroadcastMembers: $maxBroadcastMembers, encryptHashKey: $encryptHashKey, baseUrl: $baseUrl, currentPushProviderService: $currentPushProviderService,}';
-  }
-
-  VChatConfig copyWith({
-    VPush? vPush,
-    bool? enableLog,
-    bool? enableMessageEncryption,
-    int? maxGroupMembers,
-    int? maxBroadcastMembers,
-    String? encryptHashKey,
-    Uri? baseUrl,
-    VChatPushProviderBase? currentPushProviderService,
-  }) {
-    return VChatConfig(
-      vPush: vPush ?? this.vPush,
-      enableLog: enableLog ?? this.enableLog,
-      enableEndToEndMessageEncryption:
-          enableMessageEncryption ?? enableEndToEndMessageEncryption,
-      maxGroupMembers: maxGroupMembers ?? this.maxGroupMembers,
-      maxBroadcastMembers: maxBroadcastMembers ?? this.maxBroadcastMembers,
-      encryptHashKey: encryptHashKey ?? this.encryptHashKey,
-      baseUrl: baseUrl ?? this.baseUrl,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'vPush': vPush,
-      'enableLog': enableLog,
-      'enableMessageEncryption': enableEndToEndMessageEncryption,
-      'maxGroupMembers': maxGroupMembers,
-      'maxBroadcastMembers': maxBroadcastMembers,
-      'encryptHashKey': encryptHashKey,
-      'baseUrl': baseUrl,
-      'currentPushProviderService': currentPushProviderService,
-    };
-  }
-
-  factory VChatConfig.fromMap(Map<String, dynamic> map) {
-    return VChatConfig(
-      vPush: map['vPush'] as VPush,
-      enableLog: map['enableLog'] as bool,
-      enableEndToEndMessageEncryption: map['enableMessageEncryption'] as bool,
-      maxGroupMembers: map['maxGroupMembers'] as int,
-      maxBroadcastMembers: map['maxBroadcastMembers'] as int,
-      encryptHashKey: map['encryptHashKey'] as String,
-      baseUrl: map['baseUrl'] as Uri,
-    );
-  }
 
 //</editor-fold>
 }

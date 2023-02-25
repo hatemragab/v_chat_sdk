@@ -1256,28 +1256,28 @@ packages:
       path: "../../v_chat_media_editor"
       relative: true
     source: path
-    version: "0.6.1"
+    version: "0.6.2"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.6.1"
+    version: "0.6.2"
   v_chat_sdk_core:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.6.1+1"
+    version: "0.6.2+2"
   v_chat_utils:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.6.1"
+    version: "0.6.2"
   vector_math:
     dependency: transitive
     description:

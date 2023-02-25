@@ -7,13 +7,9 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 abstract class BaseLocalRoomRepo {
   Future<int> insert(VInsertRoomEvent event);
 
-  // Future<int> updateBlockRoom(VBlockRoomEvent event);
-
-  // Future<int> updateOnline(UpdateRoomOnlineEvent event);
-
-  // Future<int> updateTyping(UpdateRoomTypingEvent event);
-
   Future<int> updateName(VUpdateRoomNameEvent event);
+
+  Future<int> updateTransTo(VUpdateTransToEvent event);
 
   Future<int> insertMany(List<VRoom> rooms);
 

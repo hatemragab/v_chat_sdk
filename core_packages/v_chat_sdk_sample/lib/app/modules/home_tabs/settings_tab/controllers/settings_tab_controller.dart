@@ -91,7 +91,7 @@ class SettingsTabController extends GetxController {
       content: "Are you sure to logout ?",
     );
     if (res == 1) {
-      await VChatController.I.authApi.logout();
+      await VChatController.I.profileApi.logout();
       await VAppPref.clear();
       Get.offAndToNamed(Routes.SPLASH);
     }

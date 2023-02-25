@@ -36,6 +36,19 @@ abstract class ChannelApi extends ChopperService {
     @Body() Map<String, dynamic> body,
   );
 
+  ///deliver room messages
+  @Patch(path: "/{roomId}/translate", optionalBody: true)
+  Future<Response> transTo(
+    @Path() String roomId,
+    @Body() Map<String, dynamic> body,
+  );
+
+  /// translate/stop
+  @Patch(path: "/{roomId}/translate/stop", optionalBody: true)
+  Future<Response> stopRoomAutoTranslate(
+    @Path() String roomId,
+  );
+
   ///delete room
   @Delete(path: "/{roomId}", optionalBody: true)
   Future<Response> deleteRoom(

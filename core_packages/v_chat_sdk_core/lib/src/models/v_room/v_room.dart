@@ -23,6 +23,7 @@ class VRoom {
   bool isOnline;
   VSocketRoomTypingModel typingStatus;
   String? nickName;
+  String? transTo;
   final String? peerId;
   final String? peerIdentifier;
   bool isSelected = false;
@@ -33,6 +34,7 @@ class VRoom {
     required this.enTitle,
     required this.roomType,
     required this.thumbImage,
+    required this.transTo,
     required this.isArchived,
     required this.unReadCount,
     required this.lastMessage,
@@ -48,6 +50,7 @@ class VRoom {
   VRoom.empty()
       : id = "",
         title = "",
+        transTo = null,
         thumbImage = "empty!.png",
         isArchived = false,
         roomType = VRoomType.s,
@@ -65,6 +68,7 @@ class VRoom {
 
   VRoom.fromMap(Map<String, dynamic> map)
       : id = map['rId'] as String,
+        transTo = map['tTo'] as String?,
         title = map['t'] as String,
         thumbImage = map['img'] as String,
         isArchived = map['isA'] as bool,
@@ -91,6 +95,7 @@ class VRoom {
             VRoomType.values.byName(map[RoomTable.columnRoomType] as String),
         title = map[RoomTable.columnTitle] as String,
         thumbImage = map[RoomTable.columnThumbImage] as String,
+        transTo = map[RoomTable.columnTransTo] as String?,
         isArchived = (map[RoomTable.columnIsArchived] as int) == 1,
         createdAt = DateTime.parse(map[RoomTable.columnCreatedAt] as String),
         enTitle = map[RoomTable.columnEnTitle] as String,
@@ -108,6 +113,7 @@ class VRoom {
     return {
       RoomTable.columnId: id,
       RoomTable.columnTitle: title,
+      RoomTable.columnTransTo: transTo,
       RoomTable.columnThumbImage: thumbImage,
       RoomTable.columnEnTitle: enTitle,
       RoomTable.columnRoomType: roomType.name,
@@ -133,7 +139,7 @@ class VRoom {
 
   @override
   String toString() {
-    return 'BaseRoom{id: $id, title: $title, enTitle: $enTitle, thumbImage: $thumbImage, roomType: $roomType, isArchived: $isArchived, unReadCount: $unReadCount, lastMessage: $lastMessage, isDeleted: $isDeleted, createdAt: $createdAt,}';
+    return 'BaseRoom{id: $id, title: $title, enTitle: $enTitle,transTo $transTo , thumbImage: $thumbImage, roomType: $roomType, isArchived: $isArchived, unReadCount: $unReadCount, lastMessage: $lastMessage, isDeleted: $isDeleted, createdAt: $createdAt,}';
   }
 
   ///getters
@@ -147,6 +153,8 @@ class VRoom {
     }
     return false;
   }
+
+  bool get isTransEnable => transTo != null;
 
   String? roomTypingText(BuildContext context) {
     final current = this;
@@ -198,6 +206,7 @@ class VRoom {
           ? VSocketRoomTypingModel.typing
           : VSocketRoomTypingModel.offline,
       nickName: null,
+      transTo: null,
     );
   }
 
@@ -220,6 +229,7 @@ class VRoom {
     bool? isOnline,
     VSocketRoomTypingModel? typingStatus,
     String? nickName,
+    String? transTo,
     String? peerId,
     String? peerIdentifier,
     String? blockerId,
@@ -229,6 +239,7 @@ class VRoom {
       peerIdentifier: peerIdentifier ?? this.peerIdentifier,
       title: title ?? this.title,
       enTitle: enTitle ?? this.enTitle,
+      transTo: transTo ?? this.transTo,
       thumbImage: thumbImage ?? this.thumbImage,
       roomType: roomType ?? this.roomType,
       isArchived: isArchived ?? this.isArchived,

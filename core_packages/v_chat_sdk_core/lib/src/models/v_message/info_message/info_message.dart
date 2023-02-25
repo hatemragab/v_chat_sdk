@@ -21,6 +21,7 @@ class VInfoMessage extends VBaseMessage {
     required super.senderImageThumb,
     required super.platform,
     required super.roomId,
+    required super.contentTr,
     required super.content,
     required super.messageType,
     required super.localId,

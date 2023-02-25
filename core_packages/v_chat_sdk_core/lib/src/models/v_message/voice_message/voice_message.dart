@@ -23,6 +23,7 @@ class VVoiceMessage extends VBaseMessage {
     required super.platform,
     required super.roomId,
     required super.content,
+    required super.contentTr,
     required super.messageType,
     required super.localId,
     required super.createdAt,

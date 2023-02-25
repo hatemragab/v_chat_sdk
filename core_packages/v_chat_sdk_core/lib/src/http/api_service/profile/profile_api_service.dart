@@ -26,14 +26,14 @@ class VProfileApiService {
     return true;
   }
 
-  Future<bool> updateImage(VPlatformFileSource img) async {
+  Future<VUserImage> updateImage(VPlatformFileSource img) async {
     final res = await _profileApi!.updateImage(
       await VPlatforms.getMultipartFile(
         source: img,
       ),
     );
     throwIfNotSuccess(res);
-    return true;
+    return VUserImage.fromMap(extractDataFromResponse(res));
   }
 
   Future<bool> updateUserName(String fullName) async {

@@ -16,6 +16,7 @@ class VLocationMessage extends VBaseMessage {
   VLocationMessage({
     required super.id,
     required super.sIdentifier,
+    required super.contentTr,
     required super.isEncrypted,
     required super.senderId,
     required super.emitStatus,

@@ -15,6 +15,7 @@ class VTextMessage extends VBaseMessage {
     required super.senderImageThumb,
     required super.emitStatus,
     required super.isEncrypted,
+    required super.contentTr,
     required super.platform,
     required super.roomId,
     required super.content,

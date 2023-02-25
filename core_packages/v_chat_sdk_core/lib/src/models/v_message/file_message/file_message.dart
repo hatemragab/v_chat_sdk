@@ -19,6 +19,7 @@ class VFileMessage extends VBaseMessage {
     required super.senderId,
     required super.senderName,
     required super.senderImageThumb,
+    required super.contentTr,
     required super.platform,
     required super.roomId,
     required super.content,
@@ -79,7 +80,6 @@ class VFileMessage extends VBaseMessage {
 
   VFileMessage.buildMessage({
     required super.roomId,
-    required super.isEncrypted,
     required this.data,
     super.forwardId,
     super.broadcastId,
@@ -87,5 +87,6 @@ class VFileMessage extends VBaseMessage {
   }) : super.buildMessage(
           content: VMessageConstants.thisContentIsFile,
           messageType: VMessageType.file,
+          isEncrypted: false,
         );
 }

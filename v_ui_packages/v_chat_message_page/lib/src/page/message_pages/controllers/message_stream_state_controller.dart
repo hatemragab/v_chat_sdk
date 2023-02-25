@@ -23,7 +23,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
     required this.appBarStateController,
     required this.inputStateController,
     required this.currentRoom,
-      this.blockStateController,
+    this.blockStateController,
   }) {
     ///listen to all message
     initMessageStream(
@@ -72,7 +72,7 @@ class MessageStreamState with VMessageStream, VRoomStream {
 
   @override
   void onBlockRoom(VBlockRoomEvent event) {
-    if(blockStateController ==null) return;
+    if (blockStateController == null) return;
     blockStateController!.updateFromRemote();
   }
 

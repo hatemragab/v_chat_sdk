@@ -17,6 +17,7 @@ class VImageMessage extends VBaseMessage {
     required super.id,
     required super.sIdentifier,
     required super.senderId,
+    required super.contentTr,
     required super.senderName,
     required super.isEncrypted,
     required super.emitStatus,

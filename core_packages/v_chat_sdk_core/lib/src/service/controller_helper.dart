@@ -71,7 +71,7 @@ class ControllerHelper {
   ) async {
     final fcm = vPush.fcmProvider;
     final onesignal = vPush.oneSignalProvider;
-    if (VPlatforms.isWeb || VPlatforms.isDeskTop) return;
+    // if (VPlatforms.isWeb) return;
     _config.currentPushProviderService = fcm ?? onesignal;
     if (fcm != null && onesignal != null) {
       ///first try to init fcm

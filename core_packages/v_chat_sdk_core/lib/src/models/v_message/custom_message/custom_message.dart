@@ -15,6 +15,7 @@ class VCustomMessage extends VBaseMessage {
     required super.sIdentifier,
     required super.senderId,
     required super.senderName,
+    required super.contentTr,
     required super.emitStatus,
     required super.isEncrypted,
     required super.senderImageThumb,

@@ -35,6 +35,7 @@ abstract class VBaseMessage {
     required this.parentBroadcastId,
     required this.isStared,
     required this.isEncrypted,
+    required this.contentTr,
   });
 
   ///id will be changed if message get from remote
@@ -55,6 +56,8 @@ abstract class VBaseMessage {
   @protected
   final String content;
   VMessageType messageType;
+
+  String? contentTr;
 
   ///serverConfirm,error,sending
   VMessageEmitStatus emitStatus;
@@ -96,6 +99,7 @@ abstract class VBaseMessage {
         isEncrypted = map['isEncrypted'] as bool,
         forwardId = map['forId'] as String?,
         roomId = map['rId'] as String,
+        contentTr = null,
         isStared = (map['isStared'] as bool?) ?? false,
         content = map['c'] as String,
         messageType = VMessageType.values.byName(map['mT'] as String),
@@ -124,6 +128,7 @@ abstract class VBaseMessage {
         roomId = map[MessageTable.columnRoomId] as String,
         isEncrypted = (map[MessageTable.columnIsEncrypted] as int) == 1,
         isStared = (map[MessageTable.columnIsStar] as int) == 1,
+        contentTr = map[MessageTable.columnContentTr] as String?,
         content = map[MessageTable.columnContent] as String,
         seenAt = map[MessageTable.columnSeenAt] as String?,
         replyTo = map[MessageTable.columnReplyTo] == null
@@ -154,6 +159,7 @@ abstract class VBaseMessage {
       MessageTable.columnSenderImageThumb: senderImageThumb,
       MessageTable.columnPlatform: platform,
       MessageTable.columnRoomId: roomId,
+      MessageTable.columnContentTr: contentTr,
       MessageTable.columnIsStar: isStared ? 1 : 0,
       MessageTable.columnIsEncrypted: isEncrypted ? 1 : 0,
       MessageTable.columnContent: content,
@@ -201,7 +207,9 @@ abstract class VBaseMessage {
   ///Some Getters
   bool get isForward => forwardId != null;
 
-  String get realContent => content;
+  String get realContent => contentTr ?? content;
+
+  bool get isTrans => contentTr != null;
 
   String get realContentMentionParsedWithAt =>
       VStringUtils.parseVMentions(realContent);
@@ -213,6 +221,8 @@ abstract class VBaseMessage {
 
   DateTime? get seenAtDate =>
       seenAt == null ? null : DateTime.parse(seenAt!).toLocal();
+
+  DateTime get updatedAtDate => DateTime.parse(updatedAt).toLocal();
 
   DateTime? get deliveredAtDate =>
       deliveredAt == null ? null : DateTime.parse(deliveredAt!).toLocal();

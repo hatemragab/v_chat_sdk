@@ -8,6 +8,8 @@ class VInputLanguage {
   final String files;
   final String location;
   final String shareMediaAndLocation;
+  final String thereIsVideoSizeBiggerThanAllowedSize;
+  final String thereIsFileHasSizeBiggerThanAllowedSize;
 
   const VInputLanguage({
     this.textFieldHint = "Type your message...",
@@ -15,22 +17,9 @@ class VInputLanguage {
     this.files = "Files",
     this.location = "Location",
     this.shareMediaAndLocation = "Share media and location",
+    this.thereIsVideoSizeBiggerThanAllowedSize =
+        "There is video size bigger than allowed size",
+    this.thereIsFileHasSizeBiggerThanAllowedSize =
+        "There is File has size bigger than allowed size",
   });
-
-  VInputLanguage copyWith({
-    String? textFieldHint,
-    String? media,
-    String? files,
-    String? location,
-    String? shareMediaAndLocation,
-  }) {
-    return VInputLanguage(
-      textFieldHint: textFieldHint ?? this.textFieldHint,
-      media: media ?? this.media,
-      files: files ?? this.files,
-      location: location ?? this.location,
-      shareMediaAndLocation:
-          shareMediaAndLocation ?? this.shareMediaAndLocation,
-    );
-  }
 }

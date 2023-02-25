@@ -22,6 +22,7 @@ abstract class MessageTable {
   static const columnParentBroadcastId = '${tableName}p_b_id';
   static const columnDeliveredAt = '${tableName}delivered_at';
   static const columnForwardId = '${tableName}forward_l_id';
+  static const columnContentTr = '${tableName}c_tr';
   static const columnIsStar = '${tableName}is_star';
   static const columnIsEncrypted = '${tableName}is_encrypted';
   static const columnCreatedAt = '${tableName}created_at';
@@ -55,6 +56,7 @@ abstract class MessageTable {
             $columnLinkAttachment   TEXT,
             $columnReplyTo   TEXT,
             $columnSeenAt   TEXT,
+            $columnContentTr   TEXT,
             $columnPlatform   TEXT,
             $columnAllDeletedAt   TEXT,
             $columnParentBroadcastId TEXT,

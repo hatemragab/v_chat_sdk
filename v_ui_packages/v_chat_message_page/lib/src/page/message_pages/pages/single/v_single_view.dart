@@ -85,4 +85,10 @@ class _VSingleViewState extends State<VSingleView> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    controller.close();
+    super.dispose();
+  }
 }

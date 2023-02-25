@@ -10,7 +10,10 @@ import '../../v_chat_utils.dart';
 abstract class VStringUtils {
   static final vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
 
-  static String parseVMentions(String txt, {bool withOutAt = false}) {
+  static String parseVMentions(
+    String txt, {
+    bool withOutAt = false,
+  }) {
     return txt.replaceAllMapped(
       VStringUtils.vMentionRegExp,
       (match) {

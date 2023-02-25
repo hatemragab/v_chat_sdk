@@ -7,24 +7,33 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class PermissionManager {
   static Future<bool> isAllowRecord() async {
-    if (VPlatforms.isWeb) return true;
-    return Permission.microphone.isGranted;
+    if (VPlatforms.isMobile || VPlatforms.isWindows) {
+      return Permission.microphone.isGranted;
+    }
+    return true;
   }
 
   static Future<bool> isCameraAllowed() async {
-    if (VPlatforms.isWeb) return true;
-    return Permission.camera.isGranted;
+    if (VPlatforms.isMobile || VPlatforms.isWindows) {
+      return Permission.camera.isGranted;
+    }
+    return true;
   }
 
   static Future<bool> askForCamera() async {
-    if (VPlatforms.isWeb) return true;
-    final st = await Permission.camera.request();
-    return st == PermissionStatus.granted;
+    if (VPlatforms.isMobile || VPlatforms.isWindows) {
+      final st = await Permission.camera.request();
+      return st == PermissionStatus.granted;
+    } else {
+      return true;
+    }
   }
 
   static Future<bool> askForRecord() async {
-    if (VPlatforms.isWeb) return true;
-    final st = await Permission.microphone.request();
-    return st == PermissionStatus.granted;
+    if (VPlatforms.isMobile || VPlatforms.isWindows) {
+      final st = await Permission.microphone.request();
+      return st == PermissionStatus.granted;
+    }
+    return true;
   }
 }

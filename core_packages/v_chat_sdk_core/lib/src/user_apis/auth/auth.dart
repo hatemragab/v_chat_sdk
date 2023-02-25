@@ -6,13 +6,14 @@ import 'dart:ui';
 
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/abstraction/abstraction.dart';
+import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api_service.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class VAuthApi implements AuthEndPoints {
+class VProfileApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
   final ControllerHelper _helper = ControllerHelper.instance;
   final VChatConfig _chatConfig;
@@ -20,7 +21,9 @@ class VAuthApi implements AuthEndPoints {
 
   NativeRemoteAuth get _remoteAuth => _vNativeApi.remote.remoteAuth;
 
-  VAuthApi(
+  VProfileApiService get _profileApi => _vNativeApi.remote.profile;
+
+  VProfileApi(
     this._vNativeApi,
     this._chatConfig,
   );
@@ -30,7 +33,14 @@ class VAuthApi implements AuthEndPoints {
   Future<VIdentifierUser> login({
     required String identifier,
     required Locale deviceLanguage,
+    bool ignoreIfUserAlreadyLogin = true,
   }) async {
+    final userMap = VAppPref.getMap(VStorageKeys.vMyProfile.name);
+    if (userMap != null) {
+      _connectSuccessLogin();
+      return VIdentifierUser.fromMap(userMap);
+    }
+
     final deviceHelper = DeviceInfoHelper();
     final dto = VChatLoginDto(
       identifier: identifier,
@@ -41,12 +51,29 @@ class VAuthApi implements AuthEndPoints {
       password: await _helper.getPasswordFromIdentifier(identifier),
     );
     final user = await _remoteAuth.login(dto);
+    _connectSuccessLogin();
+
+    return user;
+  }
+
+  void _connectSuccessLogin() {
     SocketController.instance.connect();
     if (VChatController.I.vChatConfig.isPushEnable && !VPlatforms.isWeb) {
       VChatController.I.vChatConfig.currentPushProviderService!
           .askForPermissions();
     }
-    return user;
+  }
+
+  Future<bool> updateName(String newName) async {
+    return _profileApi.updateUserName(newName);
+  }
+
+  Future<VUserImage> updateImage(VPlatformFileSource fileSource) async {
+    return _profileApi.updateImage(fileSource);
+  }
+
+  Future<DateTime> getUserLastSeenAt(String identifier) async {
+    return _profileApi.getUserLastSeenAt(identifier);
   }
 
   ///register to v chat system
@@ -57,6 +84,11 @@ class VAuthApi implements AuthEndPoints {
     VPlatformFileSource? image,
     required Locale deviceLanguage,
   }) async {
+    final userMap = VAppPref.getMap(VStorageKeys.vMyProfile.name);
+    if (userMap != null) {
+      _connectSuccessLogin();
+      return VIdentifierUser.fromMap(userMap);
+    }
     final deviceHelper = DeviceInfoHelper();
     final dto = VChatRegisterDto(
       identifier: identifier,
@@ -68,13 +100,9 @@ class VAuthApi implements AuthEndPoints {
       pushKey: await _helper.getPushToken(),
       image: image,
     );
-
     final user = await _remoteAuth.register(dto);
+    _connectSuccessLogin();
     SocketController.instance.connect();
-    if (VChatController.I.vChatConfig.isPushEnable) {
-      VChatController.I.vChatConfig.currentPushProviderService!
-          .askForPermissions();
-    }
     return user;
   }
 

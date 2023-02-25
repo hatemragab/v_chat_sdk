@@ -1472,7 +1472,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.6.1+1"
+    version: "0.6.2"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1487,14 +1487,14 @@ packages:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.6.1+1"
+    version: "0.6.2+2"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.6.1"
+    version: "0.6.2"
   vector_math:
     dependency: transitive
     description:

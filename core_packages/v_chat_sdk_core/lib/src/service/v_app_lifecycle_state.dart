@@ -16,7 +16,7 @@ class VAppLifecycleState {
   Timer? _timer;
 
   VAppLifecycleState() {
-    if (VPlatforms.isWeb) return;
+    if (!VPlatforms.isMobile) return;
     FGBGEvents.stream.listen((event) {
       switch (event) {
         case FGBGType.foreground:

@@ -14,6 +14,7 @@ class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   }
 
   void close() {}
+  final maxForward = VChatController.I.vChatConfig.maxForward;
 
   bool get isThereSelection =>
       value.firstWhereOrNull((e) => e.isSelected) == null;
@@ -36,7 +37,14 @@ class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
     value = vRooms;
   }
 
+  int get selectedCount => value.where((e) => e.isSelected).length;
+
   void onRoomItemPress(VRoom room, BuildContext context) {
+    print(selectedCount);
+    print(maxForward);
+    if (selectedCount >= maxForward) {
+      return;
+    }
     value.firstWhere((e) => e == room).toggleSelect();
     notifyListeners();
   }

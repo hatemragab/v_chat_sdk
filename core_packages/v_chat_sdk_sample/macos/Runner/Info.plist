@@ -26,6 +26,10 @@
 	<string>$(PRODUCT_COPYRIGHT)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
+	<key>NSCameraUsageDescription</key>
+	<string>to mac video call we need to start video chat</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>to mac voice recording</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

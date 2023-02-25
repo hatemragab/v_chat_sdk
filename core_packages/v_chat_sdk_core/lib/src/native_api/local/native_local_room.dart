@@ -133,4 +133,13 @@ class NativeLocalRoom {
   Future<void> reCreateRoomTable() {
     return _roomRepo.reCreate();
   }
+
+  Future<void> updateTransTo({
+    required String roomId,
+    required String transTo,
+  }) async {
+    final e = VUpdateTransToEvent(roomId: roomId, transTo: transTo);
+    await _roomRepo.updateTransTo(e);
+    _emitter.fire(e);
+  }
 }

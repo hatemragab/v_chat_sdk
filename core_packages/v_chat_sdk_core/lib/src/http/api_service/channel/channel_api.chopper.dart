@@ -1,3 +1,7 @@
+// Copyright 2023, the hatemragab project author.
+// All rights reserved. Use of this source code is governed by a
+// MIT license that can be found in the LICENSE file.
+
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'channel_api.dart';
@@ -19,17 +23,6 @@ class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> getPeerRoom(String identifier) {
     final Uri $url = Uri.parse('channel/peer-room/${identifier}');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> closeChat(String roomId) {
-    final Uri $url = Uri.parse('channel/${roomId}/close');
     final Request $request = Request(
       'POST',
       $url,
@@ -61,6 +54,33 @@ class _$ChannelApi extends ChannelApi {
       $url,
       client.baseUrl,
       body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> transTo(
+    String roomId,
+    Map<String, dynamic> body,
+  ) {
+    final Uri $url = Uri.parse('channel/${roomId}/translate');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> stopRoomAutoTranslate(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/translate/stop');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
   }

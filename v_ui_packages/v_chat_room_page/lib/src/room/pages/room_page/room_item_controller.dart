@@ -135,13 +135,7 @@ class RoomItemController {
         //   // await _unBlock(room);
         break;
       case VRoomItemClickRes.report:
-        if (VChatController.I.vMessagePageConfig.onReportUserPress != null) {
-          unawaited(VChatController.I.vMessagePageConfig.onReportUserPress!(
-            context,
-            room.peerIdentifier ?? room.id,
-            room.roomType,
-          ));
-        }
+        _report(room);
         break;
       case VRoomItemClickRes.leave:
         _groupLeave(room);
@@ -288,5 +282,14 @@ class RoomItemController {
     );
     if (res == null) return;
     _process(res.id, room);
+  }
+
+  Future _report(VRoom room) async {
+    if (VChatController.I.vChatConfig.onReportUserPress != null) {
+      unawaited(VChatController.I.vChatConfig.onReportUserPress!(
+        context,
+        room.peerIdentifier ?? room.id,
+      ));
+    }
   }
 }

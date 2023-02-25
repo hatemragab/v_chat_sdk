@@ -85,4 +85,10 @@ class _VGroupViewState extends State<VGroupView> {
       ),
     );
   }
+  @override
+  void dispose() {
+    controller.close();
+    super.dispose();
+
+  }
 }

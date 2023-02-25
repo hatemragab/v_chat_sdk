@@ -32,6 +32,7 @@ class VOrderController extends VBaseMessageController {
   void close() {
     _localStreamChanges.close();
     lastSeenStateController?.close();
+    super.close();
   }
 
   @override

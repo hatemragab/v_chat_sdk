@@ -246,4 +246,16 @@ class SqlRoomImp extends BaseLocalRoomRepo {
     );
     return maps.isNotEmpty;
   }
+
+  @override
+  Future<int> updateTransTo(VUpdateTransToEvent event) {
+    return _database.update(
+      _table,
+      {
+        RoomTable.columnTransTo: event.transTo,
+      },
+      where: "$_id =?",
+      whereArgs: [event.roomId],
+    );
+  }
 }

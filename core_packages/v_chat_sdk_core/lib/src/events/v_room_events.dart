@@ -101,6 +101,18 @@ class VUpdateRoomNameEvent extends VRoomEvents {
   List<Object?> get props => [super.props, name];
 }
 
+class VUpdateTransToEvent extends VRoomEvents {
+  final String? transTo;
+
+  const VUpdateTransToEvent({
+    required super.roomId,
+    required this.transTo,
+  });
+
+  @override
+  List<Object?> get props => [super.props, transTo];
+}
+
 class VUpdateRoomImageEvent extends VRoomEvents {
   final String image;
 

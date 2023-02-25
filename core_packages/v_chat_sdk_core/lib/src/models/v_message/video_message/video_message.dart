@@ -19,6 +19,7 @@ class VVideoMessage extends VBaseMessage {
     required super.senderId,
     required super.emitStatus,
     required super.senderName,
+    required super.contentTr,
     required super.isEncrypted,
     required super.senderImageThumb,
     required super.platform,

@@ -11,7 +11,7 @@ abstract class VAppConstants {
   static const appName = "VChatSdkV2";
   static const dbName = "VChatSdkV2.db";
   static const apiVersion = "v2";
-  static const dbVersion = 2;
+  static const dbVersion = 3;
   static const socketInterval = 10; //10sec
   static String get baseServerIp {
     final uri = VChatController.I.vChatConfig.baseUrl;

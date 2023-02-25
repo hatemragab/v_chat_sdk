@@ -12,6 +12,7 @@ class RoomTable {
   static const columnRoomType = '${tableName}_room_type';
   static const columnTitle = '${tableName}_title';
   static const columnThumbImage = '${tableName}_img';
+  static const columnTransTo = '${tableName}_t_to';
   static const columnIsArchived = '${tableName}_is_archived';
   static const columnIsMuted = '${tableName}_is_muted';
   static const columnPeerId = '${tableName}_peer_id';
@@ -41,6 +42,7 @@ class RoomTable {
             $columnTitle     TEXT   ,
             $columnEnTitle     TEXT   ,
             $columnThumbImage     TEXT   ,
+            $columnTransTo     TEXT   ,
             $columnCreatedAt     TEXT   ,
             $columnIsArchived     INTEGER ,
             

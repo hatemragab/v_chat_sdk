@@ -5,7 +5,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
-import 'package:v_chat_message_page/src/page/message_pages/states/block_state_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/states/last_seen_state_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/states/my_info_broadcast_state_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -33,6 +32,7 @@ class VBroadcastController extends VBaseMessageController {
   void close() {
     _localStreamChanges.close();
     lastSeenStateController?.close();
+    super.close();
   }
 
   @override

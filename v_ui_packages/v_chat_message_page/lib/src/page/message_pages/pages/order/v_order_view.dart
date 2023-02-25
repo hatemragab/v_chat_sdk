@@ -85,4 +85,10 @@ class _VOrderViewState extends State<VOrderView> {
       ),
     );
   }
+  @override
+  void dispose() {
+    controller.close();
+    super.dispose();
+
+  }
 }
