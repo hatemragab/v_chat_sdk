@@ -45,7 +45,7 @@ class VMessageItem extends StatelessWidget {
     this.voiceController,
     required this.message,
     this.onSwipe,
-    this.onReSend,
+    this.onReSend ,
     this.onHighlightMessage,
   }) : super(key: key);
 
@@ -92,16 +92,15 @@ class VMessageItem extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
-              message.isMeSender
-                  ? const SizedBox.shrink()
-                  : GroupHeader(
-                      isGroup: roomType.isGroup,
-                      senderImage: message.senderImageThumb,
-                      senderName: message.senderName,
-                      onTab: () {
-                        _onMentionPress(context, message.sIdentifier);
-                      },
-                    ),
+              if (!message.isMeSender)
+                GroupHeader(
+                  isGroup: roomType.isGroup,
+                  senderImage: message.senderImageThumb,
+                  senderName: message.senderName,
+                  onTab: () {
+                    _onMentionPress(context, message.sIdentifier);
+                  },
+                ),
               ForwardItemWidget(
                 isFroward: message.isForward,
               ),
@@ -114,6 +113,7 @@ class VMessageItem extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
+              ///footer
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

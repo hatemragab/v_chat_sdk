@@ -67,15 +67,19 @@ class VMessageAppBare extends StatelessWidget {
         _getCallIcon(),
         PopupMenuButton(
           onSelected: (value) {
+            //don't not translate
             if (value == 'Search') {
               onSearch();
               //focusNode.requestFocus();
               // controller.toggleSearchMode();
               // onSearchClicked();
+              //don't not translate
             } else if (value == 'media') {
               onViewMedia();
+              //don't not translate
             } else if (value == 'block') {
               onUpdateBlock(true);
+              //don't not translate
             } else if (value == 'un_block') {
               onUpdateBlock(false);
             }
@@ -83,6 +87,7 @@ class VMessageAppBare extends StatelessWidget {
           itemBuilder: (BuildContext context) {
             final l = <PopupMenuItem<String>>[
               PopupMenuItem(
+                //don't not translate
                 value: "Search",
                 child: Row(
                   children: [
@@ -98,6 +103,7 @@ class VMessageAppBare extends StatelessWidget {
                 ),
               ),
               PopupMenuItem(
+                //don't not translate
                 value: "media",
                 child: Row(
                   children: [
@@ -134,6 +140,7 @@ class VMessageAppBare extends StatelessWidget {
                 ));
               } else {
                 l.add(PopupMenuItem(
+                  //don't not translate
                   value: "un_block",
                   child: Row(
                     children: [
