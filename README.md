@@ -50,10 +50,6 @@ this code will run pub get for you
 
 
 
-Don't forget to see the example attached to github
-here <a href="https://github.com/hatemragab/v_chat_sdk/tree/master/example">V_CHAT_SDK
-Example</a>  <br />
-
 
 
 ---
@@ -190,6 +186,8 @@ Example</a>  <br />
 ### Who start use v chat
 
 ### 1- Super up is one of apps using v chat  you can check the demo from here
+#### check super up from here
+<a href="https://github.com/hatemragab/superup">Super up</a>
 
 ### Android Test
 
