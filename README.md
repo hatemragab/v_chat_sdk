@@ -102,16 +102,16 @@ this code will run pub get for you
     <td>👍</td>
     <td>👍</td>
     <td>👍</td>
-    <td> </td>
-    <td> </td>
+    <td>SOON</td>
+    <td>SOON</td>
   </tr>
   <tr>
     <td>message notification</td>
     <td>👍</td>
     <td>👍</td>
     <td>👍</td>
-    <td> </td>
-    <td> </td>
+    <td>SOON</td>
+    <td>SOON</td>
 
   </tr>
   <tr>
