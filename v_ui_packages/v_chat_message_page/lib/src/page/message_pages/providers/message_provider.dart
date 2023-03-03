@@ -4,7 +4,6 @@
 
 import 'dart:async';
 
-import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../assets/data/api_messages.dart';
@@ -67,8 +66,6 @@ class MessageProvider {
   Future<bool> checkGroupStatus(String roomId) async {
     return _remoteRoom.getGroupStatus(roomId);
   }
-
-
 
   void emitTypingChanged(VSocketRoomTypingModel model) {
     return _socket.emitUpdateRoomStatus(model);

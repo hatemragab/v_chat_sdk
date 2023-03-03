@@ -1,3 +1,5 @@
+- ## 0.7.1
+- support windows os
 - ## 0.7.0
 - support macos
 - ## 0.6.0

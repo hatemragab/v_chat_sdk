@@ -26,7 +26,7 @@ class EnvironmentConfig {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if(VPlatforms.isMobile){
+  if (VPlatforms.isMobile) {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

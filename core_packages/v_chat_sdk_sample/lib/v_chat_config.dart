@@ -65,7 +65,7 @@ Uri _getBaseUrl() {
   //   return Uri.parse("http://192.168.1.13:3001");
   // }
   if (kDebugMode) {
-    if (kIsWeb || VPlatforms.isIOS || VPlatforms.isMac) {
+    if (kIsWeb || VPlatforms.isIOS || VPlatforms.isMacOs) {
       return Uri.parse("http://localhost:3001");
     }
     //this will only working on the android emulator

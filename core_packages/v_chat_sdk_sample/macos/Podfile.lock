@@ -7,8 +7,6 @@ PODS:
     - FlutterMacOS
   - emoji_picker_flutter (0.0.1):
     - FlutterMacOS
-  - facebook_auth_desktop (0.0.3):
-    - FlutterMacOS
   - file_saver (0.0.1):
     - FlutterMacOS
   - Firebase/CoreOnly (10.3.0):
@@ -47,8 +45,6 @@ PODS:
   - flutter_app_badger (1.3.0):
     - FlutterMacOS
   - flutter_local_notifications (0.0.1):
-    - FlutterMacOS
-  - flutter_secure_storage_macos (6.1.1):
     - FlutterMacOS
   - flutter_webrtc (0.9.22):
     - FlutterMacOS
@@ -138,13 +134,11 @@ DEPENDENCIES:
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
   - dynamic_color (from `Flutter/ephemeral/.symlinks/plugins/dynamic_color/macos`)
   - emoji_picker_flutter (from `Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos`)
-  - facebook_auth_desktop (from `Flutter/ephemeral/.symlinks/plugins/facebook_auth_desktop/macos`)
   - file_saver (from `Flutter/ephemeral/.symlinks/plugins/file_saver/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - firebase_messaging (from `Flutter/ephemeral/.symlinks/plugins/firebase_messaging/macos`)
   - flutter_app_badger (from `Flutter/ephemeral/.symlinks/plugins/flutter_app_badger/macos`)
   - flutter_local_notifications (from `Flutter/ephemeral/.symlinks/plugins/flutter_local_notifications/macos`)
-  - flutter_secure_storage_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos`)
   - flutter_webrtc (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - geolocator_apple (from `Flutter/ephemeral/.symlinks/plugins/geolocator_apple/macos`)
@@ -187,8 +181,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/dynamic_color/macos
   emoji_picker_flutter:
     :path: Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos
-  facebook_auth_desktop:
-    :path: Flutter/ephemeral/.symlinks/plugins/facebook_auth_desktop/macos
   file_saver:
     :path: Flutter/ephemeral/.symlinks/plugins/file_saver/macos
   firebase_core:
@@ -199,8 +191,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_app_badger/macos
   flutter_local_notifications:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_local_notifications/macos
-  flutter_secure_storage_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos
   flutter_webrtc:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos
   FlutterMacOS:
@@ -241,7 +231,6 @@ SPEC CHECKSUMS:
   device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
   dynamic_color: 2eaa27267de1ca20d879fbd6e01259773fb1670f
   emoji_picker_flutter: 533634326b1c5de9a181ba14b9758e6dfe967a20
-  facebook_auth_desktop: 0ec755e3b01669ec14776af18b6945671a788916
   file_saver: 44e6fbf666677faf097302460e214e977fdd977b
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   firebase_core: 2569fb36c8e95ab963e04d8d9fdc9f0f1d297765
@@ -252,7 +241,6 @@ SPEC CHECKSUMS:
   FirebaseMessaging: e345b219fd15d325f0cf2fef28cb8ce00d851b3f
   flutter_app_badger: 55a64b179f8438e89d574320c77b306e327a1730
   flutter_local_notifications: 3805ca215b2fb7f397d78b66db91f6a747af52e4
-  flutter_secure_storage_macos: 75c8cadfdba05ca007c0fa4ea0c16e5cf85e521b
   flutter_webrtc: 79e5bcac548314a108c28c29cd49ffdf13cd83f7
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -261,7 +249,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   just_audio: 9b67ca7b97c61cfc9784ea23cd8cc55eb226d489
   local_notifier: e9506bc66fc70311e8bc7291fb70f743c081e4ff
-  macos_ui: 125c911559d646194386d84c017ad6819122e2db
+  macos_ui: 6229a8922cd97bafb7d9636c8eb8dfb0744183ca
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604

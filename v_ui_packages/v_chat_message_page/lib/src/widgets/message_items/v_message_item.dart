@@ -45,7 +45,7 @@ class VMessageItem extends StatelessWidget {
     this.voiceController,
     required this.message,
     this.onSwipe,
-    this.onReSend ,
+    this.onReSend,
     this.onHighlightMessage,
   }) : super(key: key);
 
@@ -113,6 +113,7 @@ class VMessageItem extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
+
               ///footer
               Row(
                 mainAxisSize: MainAxisSize.min,

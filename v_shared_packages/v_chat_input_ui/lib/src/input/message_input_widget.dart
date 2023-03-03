@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:place_picker/entities/localization_item.dart';
 import 'package:place_picker/place_picker.dart';
-
 import 'package:v_chat_input_ui/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_record_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_send_btn.dart';
@@ -300,13 +299,10 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
               ],
             ),
           ),
-          if (VPlatforms.isMac)
-            const SizedBox.shrink()
-          else
-            EmojiKeyboard(
-              controller: _textEditingController,
-              isEmojiShowing: _isEmojiShowing,
-            ),
+          EmojiKeyboard(
+            controller: _textEditingController,
+            isEmojiShowing: _isEmojiShowing,
+          ),
         ],
       ),
     );

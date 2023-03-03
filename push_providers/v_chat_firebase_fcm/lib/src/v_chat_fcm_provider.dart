@@ -185,7 +185,7 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (insertRes == 1) {
     await x.room.updateRoomUnreadCountAddOne(msg.roomId);
   }
-  return Future<void>.value();
+  return Future<void>.value(null);
 }
 
 @pragma('vm:entry-point')

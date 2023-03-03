@@ -5,3 +5,4 @@
 - some predefine pages like
 - v_image_viewer
 - v_video_player
+- fix upgrade to v 0.7.1 ```flutter update-packages --force-upgrade```

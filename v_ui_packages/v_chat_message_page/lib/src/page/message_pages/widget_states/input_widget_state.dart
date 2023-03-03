@@ -30,7 +30,9 @@ class InputWidgetState extends StatelessWidget {
           if (value.isHidden) return const SizedBox.shrink();
           return VMessageInputWidget(
             onSubmitText: controller.onSubmitText,
-            autofocus: !VPlatforms.isWebRunOnMobile && !VPlatforms.isMobile,
+            autofocus: VPlatforms.isWebRunOnMobile || VPlatforms.isMobile
+                ? false
+                : true,
             language: VInputLanguage(
               files: VTrans.of(context).labels.shareFiles,
               location: VTrans.of(context).labels.shareLocation,

@@ -38,8 +38,7 @@ class TextMessageItem extends StatelessWidget {
     //             isMeSender: true,
     //             isSeen: false,
     //             isDeliver: false,
-    //             emitStatus: VMessageEmitStatus.serverConfirm
-    //         ),
+    //             emitStatus: VMessageEmitStatus.serverConfirm),
     //       ),
     //     ],
     //   ),

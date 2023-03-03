@@ -17,6 +17,7 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTextRtl = Bidi.detectRtlDirectionality(msg);
     return AutoDirection(
       text: msg,
       child: Stack(
@@ -27,28 +28,39 @@ class CustomCard extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 children: <TextSpan>[
+                  if (isTextRtl)
+                    const TextSpan(
+                      text: "    12:10 AM",
+                      style: TextStyle(
+                        color: Colors.transparent,
+                      ),
+                    ),
                   //real message
                   TextSpan(
-                    text: "$msg      ",
+                    text: context.isRtl ? msg : "$msg      ",
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  //fake additionalInfo as placeholder
-                  const TextSpan(
-                    text: "12:10 AM",
-                    style: TextStyle(
-                      color: Colors.transparent,
+                  if (!isTextRtl)
+                    const TextSpan(
+                      text: "12:10 AM",
+                      style: TextStyle(
+                        color: Colors.transparent,
+                      ),
                     ),
-                  ),
+                  //fake additionalInfo as placeholder
                 ],
               ),
             ),
           ),
 
           //real additionalInfo
-          PositionedDirectional(
-            end: 0,
-            bottom: 2,
-            child: timeTextWidget,
+          AutoDirection(
+            text: "hi",
+            child: Positioned(
+              right: 0,
+              bottom: 2,
+              child: timeTextWidget,
+            ),
           )
         ],
       ),
