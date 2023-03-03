@@ -191,7 +191,7 @@ this code will run pub get for you
 
 ### Android Test
 
-<a href="https://drive.google.com/file/d/1l9L8K8bIeiZMDFic0nhlEJMKFHHiU_pY/view?usp=sharing"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
+<a href="https://superupdev.online/apps/app-arm64-v8a-release.apk"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
 
 ### Web test
 
@@ -201,11 +201,13 @@ this code will run pub get for you
 
 <a href="https://testflight.apple.com/join/F4tAbW5J"> <img src="https://user-images.githubusercontent.com/37384769/221687355-e7d19dd2-dc9a-4cf9-bf93-a8fb9e80379f.png" width ="300" /></a> <br />
 
-### Admin panel test coming soon
------------
-### Mac version coming soon
------------
+
+### Mac version 
+<a href="https://superupdev.online/apps/super_up.dmg"> <img src="https://user-images.githubusercontent.com/37384769/222607065-1bfd6d69-3102-46ce-870d-1ebefce0d599.jpeg" width ="300" /></a> <br />
+
 ### Windows version coming soon
+-----------
+### Admin panel test coming soon
 -----------
 
 ## Check Our Full documentation
