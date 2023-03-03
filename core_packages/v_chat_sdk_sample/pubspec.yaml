@@ -8,11 +8,7 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.5
   shared_preferences: ^2.0.17
-  flutter_facebook_auth: ^5.0.7
   http: ^0.13.5
-  smooth_page_indicator: ^1.0.0+2
-  the_apple_sign_in: ^1.1.1
-  flutter_bloc: ^8.1.1
   bottom_navy_bar: ^6.0.0
   url_launcher: ^6.1.8
   firebase_messaging: ^14.2.1
@@ -38,7 +34,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   v_chat_one_signal: ^0.4.3
-  callkeep: ^0.3.3
 dev_dependencies:
   flutter_test: 
     sdk: flutter

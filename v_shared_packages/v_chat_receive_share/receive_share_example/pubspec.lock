@@ -157,10 +157,10 @@ packages:
     dependency: transitive
     description:
       name: chopper
-      sha256: "7790aa830262a8ad4eb121847a290af7c282b8f494e54175628c79a1e8719814"
+      sha256: b2645618fa760df06d7609c96b092d7b3e7a8f23639d34269f62f45a5edabc7d
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   clock:
     dependency: transitive
     description:
@@ -1070,10 +1070,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3_flutter_libs
-      sha256: ebfdab73610bbd2ec01d8f367b7a1b49ad3a01f398df436f283e4063173ceb7b
+      sha256: "02f80aea54a19a36b347dedf6d4181ecd9107f5831ea6139cfd0376a3de197ba"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.12"
+    version: "0.5.13"
   stack_trace:
     dependency: transitive
     description:
@@ -1256,28 +1256,28 @@ packages:
       path: "../../v_chat_media_editor"
       relative: true
     source: path
-    version: "0.6.2"
+    version: "0.7.0"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.6.2"
+    version: "0.7.0"
   v_chat_sdk_core:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.6.2+2"
+    version: "0.7.0"
   v_chat_utils:
     dependency: "direct overridden"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.6.2"
+    version: "0.7.0"
   vector_math:
     dependency: transitive
     description:

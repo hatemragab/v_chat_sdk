@@ -6,7 +6,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
   emoji_picker_flutter
   file_saver
-  flutter_secure_storage_windows
   flutter_webrtc
   geolocator_windows
   local_notifier

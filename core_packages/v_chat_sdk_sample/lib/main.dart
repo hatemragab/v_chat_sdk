@@ -26,9 +26,12 @@ class EnvironmentConfig {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if(VPlatforms.isMobile){
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
   FirebaseMessaging.onBackgroundMessage(vFirebaseMessagingBackgroundHandler);
   await initVChat(_navigatorKey);
   final appService = Get.put<AppService>(AppService());

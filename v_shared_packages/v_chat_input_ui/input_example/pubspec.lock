@@ -53,10 +53,10 @@ packages:
     dependency: transitive
     description:
       name: audio_waveforms
-      sha256: "791a79ddb939b1de529b97d8d74d601065ad56c4c1ce24cf1154b9d5761aa295"
+      sha256: c07be4f7ab271a846b27b5d0e388c96d37b794dea6c9dc6fce21886f359fc2e7
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -165,10 +165,10 @@ packages:
     dependency: transitive
     description:
       name: chopper
-      sha256: "7790aa830262a8ad4eb121847a290af7c282b8f494e54175628c79a1e8719814"
+      sha256: b2645618fa760df06d7609c96b092d7b3e7a8f23639d34269f62f45a5edabc7d
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   clock:
     dependency: transitive
     description:
@@ -549,14 +549,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  google_api_headers:
-    dependency: transitive
-    description:
-      name: google_api_headers
-      sha256: ac6f4e27e35c9eb4fbe8ce4ce7380e651d3a7bee3ad4c2ff30e67aaa73f005d3
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0+1"
   google_maps_flutter:
     dependency: transitive
     description:
@@ -589,22 +581,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.5"
-  google_maps_place_picker_mb:
-    dependency: transitive
-    description:
-      name: google_maps_place_picker_mb
-      sha256: "70ab77809c4ccd1baf6a371747481f6f9b175a966def22c4d25914940be06155"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
-  google_maps_webservice:
-    dependency: transitive
-    description:
-      name: google_maps_webservice
-      sha256: d0ae4e4508afd74a3f051565261a3cdbae59db29448f9b6e6beb5674545e1eb7
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.20-nullsafety.5"
   html:
     dependency: transitive
     description:
@@ -701,14 +677,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: c33da08e136c3df0190bd5bbe51ae1df4a7d96e7954d1d7249fea2968a72d317
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.0"
   latlong2:
     dependency: transitive
     description:
@@ -837,22 +805,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  package_info_plus:
-    dependency: transitive
-    description:
-      name: package_info_plus
-      sha256: f619162573096d428ccde2e33f92e05b5a179cd6f0e3120c1005f181bee8ed16
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
-  package_info_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: package_info_plus_platform_interface
-      sha256: "9bc8ba46813a4cc42c66ab781470711781940780fd8beddd0c3da62506d3a6c6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   path:
     dependency: transitive
     description:
@@ -997,6 +949,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.14.0"
+  place_picker:
+    dependency: transitive
+    description:
+      name: place_picker
+      sha256: "95a861eaffe015d5b3ae45c991e5d667009f7d1eb136b1438075e2470880509d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.0"
   platform:
     dependency: transitive
     description:
@@ -1270,10 +1230,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3_flutter_libs
-      sha256: ebfdab73610bbd2ec01d8f367b7a1b49ad3a01f398df436f283e4063173ceb7b
+      sha256: "02f80aea54a19a36b347dedf6d4181ecd9107f5831ea6139cfd0376a3de197ba"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.12"
+    version: "0.5.13"
   stack_trace:
     dependency: transitive
     description:
@@ -1362,14 +1322,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.1"
-  tuple:
-    dependency: transitive
-    description:
-      name: tuple
-      sha256: "0ea99cd2f9352b2586583ab2ce6489d1f95a5f6de6fb9492faaf97ae2060f0aa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   typed_data:
     dependency: transitive
     description:
@@ -1472,7 +1424,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.6.2"
+    version: "0.7.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1487,14 +1439,14 @@ packages:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.6.2+2"
+    version: "0.7.0"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.6.2"
+    version: "0.7.0"
   vector_math:
     dependency: transitive
     description:

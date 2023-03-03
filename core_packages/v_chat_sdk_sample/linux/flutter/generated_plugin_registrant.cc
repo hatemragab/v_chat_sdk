@@ -9,7 +9,6 @@
 #include <dynamic_color/dynamic_color_plugin.h>
 #include <emoji_picker_flutter/emoji_picker_flutter_plugin.h>
 #include <file_saver/file_saver_plugin.h>
-#include <flutter_secure_storage_linux/flutter_secure_storage_linux_plugin.h>
 #include <flutter_webrtc/flutter_web_r_t_c_plugin.h>
 #include <local_notifier/local_notifier_plugin.h>
 #include <platform_device_id_linux/platform_device_id_linux_plugin.h>
@@ -27,9 +26,6 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) file_saver_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "FileSaverPlugin");
   file_saver_plugin_register_with_registrar(file_saver_registrar);
-  g_autoptr(FlPluginRegistrar) flutter_secure_storage_linux_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterSecureStorageLinuxPlugin");
-  flutter_secure_storage_linux_plugin_register_with_registrar(flutter_secure_storage_linux_registrar);
   g_autoptr(FlPluginRegistrar) flutter_webrtc_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterWebRTCPlugin");
   flutter_web_r_t_c_plugin_register_with_registrar(flutter_webrtc_registrar);
