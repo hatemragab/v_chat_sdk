@@ -28,6 +28,10 @@ this code will run pub get for you
 **Quick Review**
 ![carbon](https://user-images.githubusercontent.com/37384769/137525753-03155709-c903-4b4d-89bf-ee40e0525d63.png)
 
+
+
+
+
 ### Android <br />
 
 <p float="left">
@@ -195,15 +199,18 @@ this code will run pub get for you
 
 ### Web test
 
-<a href="https://web.superupdev.online"> <img src="https://user-images.githubusercontent.com/37384769/221687646-1e2fa089-1a03-4fc7-9f6a-491e9bd5aae2.png" width ="300" /></a> <br />
+<a href="https://web.superupdev.online"> <img src="https://user-images.githubusercontent.com/37384769/221687646-1e2fa089-1a03-4fc7-9f6a-491e9bd5aae2.png" width ="120" /></a> <br />
 
 ### IOS Test Flight
 
-<a href="https://testflight.apple.com/join/F4tAbW5J"> <img src="https://user-images.githubusercontent.com/37384769/221687355-e7d19dd2-dc9a-4cf9-bf93-a8fb9e80379f.png" width ="300" /></a> <br />
+<a href="https://testflight.apple.com/join/F4tAbW5J"> <img src="https://user-images.githubusercontent.com/37384769/221687355-e7d19dd2-dc9a-4cf9-bf93-a8fb9e80379f.png" width ="120" /></a> <br />
 
 
 ### Mac version 
-<a href="https://superupdev.online/apps/super_up.dmg"> <img src="https://user-images.githubusercontent.com/37384769/222607065-1bfd6d69-3102-46ce-870d-1ebefce0d599.jpeg" width ="300" /></a> <br />
+<a href="https://superupdev.online/apps/super_up.dmg"> <img src="https://user-images.githubusercontent.com/37384769/222607065-1bfd6d69-3102-46ce-870d-1ebefce0d599.jpeg" width ="120" /></a> <br />
+
+### Postman endpoints documentation
+<a href="https://documenter.getpostman.com/view/24524392/2s93Jox6Dq"> <img src="https://user-images.githubusercontent.com/37384769/223219009-1f863fc6-a90e-4cf8-acf4-7379027054ab.jpg" width ="120" /></a> <br />
 
 ### Windows version coming soon
 -----------
