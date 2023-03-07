@@ -16,6 +16,7 @@ class MessageAppBarStateModel {
   bool isOnline;
   bool isSearching;
   int? memberCount;
+  int? totalOnline;
 
   MessageAppBarStateModel._({
     required this.roomTitle,

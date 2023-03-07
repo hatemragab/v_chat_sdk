@@ -5,8 +5,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_receive_share/v_chat_receive_share.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 
+import '../../../../core/enums.dart';
 import '../../../logs/controllers/logs_controller.dart';
 
 class HomeController extends GetxController {
@@ -23,11 +26,8 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    vInitCallListener();
+    _setUpVChat();
 
-    vRtcLoggerStream.stream.listen((event) {
-      logger.logs.add(event);
-    });
     super.onInit();
   }
 
@@ -46,5 +46,19 @@ class HomeController extends GetxController {
   void getC() async {
     // final x = await VChatController.I.roomApi.getCallHistory();
     // print(x);
+  }
+
+  void _setUpVChat() async {
+    final data = VAppPref.getMap(SStorageKeys.myProfile.name);
+
+    VChatController.I.profileApi.connect(
+      identifier: data!['identifier'],
+      fullName: null,
+    );
+    vInitCallListener();
+
+    vRtcLoggerStream.stream.listen((event) {
+      logger.logs.add(event);
+    });
   }
 }

@@ -9,12 +9,8 @@ class NativeRemoteAuth {
 
   NativeRemoteAuth(this._authApiService);
 
-  Future<VIdentifierUser> login(VChatLoginDto dto) {
-    return Future.value(_authApiService.login(dto));
-  }
-
-  Future<VIdentifierUser> register(VChatRegisterDto dto) {
-    return Future.value(_authApiService.register(dto));
+  Future<VIdentifierUser> connect(VChatRegisterDto dto) {
+    return Future.value(_authApiService.connect(dto));
   }
 
   Future<bool> logout() {

@@ -1,7 +1,3 @@
-// Copyright 2023, the hatemragab project author.
-// All rights reserved. Use of this source code is governed by a
-// MIT license that can be found in the LICENSE file.
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'profile_api.dart';
@@ -66,8 +62,8 @@ class _$ProfileApi extends ProfileApi {
   }
 
   @override
-  Future<Response<dynamic>> addFcm(Map<String, dynamic> body) {
-    final Uri $url = Uri.parse('profile/fcm');
+  Future<Response<dynamic>> addNotificationPush(Map<String, dynamic> body) {
+    final Uri $url = Uri.parse('profile/push');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -79,8 +75,8 @@ class _$ProfileApi extends ProfileApi {
   }
 
   @override
-  Future<Response<dynamic>> deleteFcm() {
-    final Uri $url = Uri.parse('profile/fcm');
+  Future<Response<dynamic>> deleteNotificationPush() {
+    final Uri $url = Uri.parse('profile/push');
     final Request $request = Request(
       'DELETE',
       $url,

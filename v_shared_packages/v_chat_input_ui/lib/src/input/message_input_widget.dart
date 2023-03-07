@@ -149,9 +149,9 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
         }
       }
     });
-    if (!VPlatforms.isMobile) {
-      _focusNode.requestFocus();
-    }
+    // if (!VPlatforms.isMobile) {
+    //   _focusNode.requestFocus();
+    // }
   }
 
   @override
@@ -246,7 +246,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                             onSubmit: (v) {
                               if (v.isNotEmpty) {
                                 widget.onSubmitText(
-                                    _textEditingController.markupText);
+                                  _textEditingController.markupText,
+                                );
                                 _text = "";
                                 _textEditingController.clear();
                                 _changeTypingType(VRoomTypingEnum.stop);

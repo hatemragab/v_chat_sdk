@@ -4,8 +4,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_api_availability/google_api_availability.dart';
 import 'package:v_chat_sdk_core/src/models/controller/config.dart';
-
 import 'package:v_chat_sdk_core/src/models/push_provider/v_chat_push_provider.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -27,6 +27,8 @@ class VChatConfig {
   ///callback when user clicked send attachment (this current show bottom sheet with media etc ...)
   final Future<VAttachEnumRes?> Function()? onMessageAttachmentIconPress;
 
+  //todo add onRoomItemLongPress
+
   ///set api if you want to make users able to pick locations
   final String? googleMapsApiKey;
 
@@ -44,14 +46,34 @@ class VChatConfig {
   final int maxForward;
   final int compressImageQuality;
 
+  bool get isCurrentPlatformsNotSupportBackgroundPush {
+    return VPlatforms.isWindows || VPlatforms.isLinux || VPlatforms.isWeb;
+  }
+
   bool get isPushEnable =>
       vPush.fcmProvider != null || vPush.oneSignalProvider != null;
 
-  VChatPushProviderBase? currentPushProviderService;
+  Future<VChatPushProviderBase?> get currentPushProviderService async {
+    if (isCurrentPlatformsNotSupportBackgroundPush) return null;
+    try {
+      if (VPlatforms.isAndroid) {
+        final availability = await GoogleApiAvailability.instance
+            .checkGooglePlayServicesAvailability();
+
+        if (availability != GooglePlayServicesAvailability.success) {
+          return vPush.oneSignalProvider;
+        }
+      }
+    } catch (err) {
+      debugPrint(err.toString());
+    }
+    return vPush.fcmProvider ?? vPush.oneSignalProvider;
+  }
 
   Future cleanNotifications() async {
     if (!isPushEnable || !VPlatforms.isMobile) return;
-    await currentPushProviderService!.cleanAll();
+    final res = await currentPushProviderService;
+    await res!.cleanAll();
   }
 
 //<editor-fold desc="Data Methods">

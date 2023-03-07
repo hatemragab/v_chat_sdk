@@ -757,6 +757,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  google_api_availability:
+    dependency: transitive
+    description:
+      name: google_api_availability
+      sha256: a1f58c5213abae549fb1e1451bc68eb499da7033039f77bc289fd6faca384295
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   google_maps_flutter:
     dependency: transitive
     description:
@@ -1807,7 +1815,7 @@ packages:
       path: "../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.7.1"
+    version: "0.7.1+1"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
@@ -1829,7 +1837,7 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "0.7.1"
+    version: "0.7.1+1"
   v_chat_one_signal:
     dependency: "direct main"
     description:

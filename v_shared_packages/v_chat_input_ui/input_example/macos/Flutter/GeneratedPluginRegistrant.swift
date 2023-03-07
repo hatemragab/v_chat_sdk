@@ -13,7 +13,7 @@ import flutter_local_notifications
 import geolocator_apple
 import local_notifier
 import macos_ui
-import path_provider_macos
+import path_provider_foundation
 import photo_manager
 import platform_device_id
 import platform_device_id_macos

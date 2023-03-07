@@ -135,6 +135,8 @@ class _CallerController extends ValueNotifier<VCallerState> {
         value.status = CallStatus.busy;
         notifyListeners();
         _backAfterSecond();
+        VAppAlert.showErrorSnackBar(
+            msg: exception.toString(), context: context);
       },
     );
   }

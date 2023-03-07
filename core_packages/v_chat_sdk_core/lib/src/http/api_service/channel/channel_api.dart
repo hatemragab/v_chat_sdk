@@ -28,12 +28,29 @@ abstract class ChannelApi extends ChopperService {
   @Get(path: "/{roomId}")
   Future<Response> getRoomById(@Path() String roomId);
 
-  @Patch(
-    path: "/{roomId}/notification",
-  )
-  Future<Response> changeRoomNotification(
+  @Patch(path: "/{roomId}/notification/mute", optionalBody: true)
+  Future<Response> muteRoomNotification(
     @Path() String roomId,
-    @Body() Map<String, dynamic> body,
+  );
+
+  @Patch(path: "/{roomId}/notification/un-mute", optionalBody: true)
+  Future<Response> unMuteRoomNotification(
+    @Path() String roomId,
+  );
+
+  @Patch(path: "/{roomId}/archive", optionalBody: true)
+  Future<Response> archiveRoom(
+    @Path() String roomId,
+  );
+
+  @Patch(path: "/{roomId}/un-archive", optionalBody: true)
+  Future<Response> unArchiveRoom(
+    @Path() String roomId,
+  );
+
+  @Get(path: "/{roomId}/un-read-count", optionalBody: true)
+  Future<Response> getRoomUnReadCount(
+    @Path() String roomId,
   );
 
   ///deliver room messages
@@ -210,6 +227,13 @@ abstract class ChannelApi extends ChopperService {
   Future<Response> kickGroupUser(
     @Path('roomId') String roomId,
     @Path('identifier') String peerIdentifier,
+  );
+
+  /// ----------------------------------------- order apis ------------------------------------------
+
+  @Get(path: "/{roomId}/group/members", optionalBody: true)
+  Future<Response> getOrderRoomInfo(
+    @Path("roomId") String roomId,
   );
 
   static ChannelApi create({

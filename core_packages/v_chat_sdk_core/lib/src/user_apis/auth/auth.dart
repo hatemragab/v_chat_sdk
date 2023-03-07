@@ -15,7 +15,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VProfileApi implements AuthEndPoints {
   final VNativeApi _vNativeApi;
-  final ControllerHelper _helper = ControllerHelper.instance;
+  final VChatControllerHelper _helper = VChatControllerHelper.instance;
   final VChatConfig _chatConfig;
   final _log = Logger('user_api.Auth');
 
@@ -28,40 +28,14 @@ class VProfileApi implements AuthEndPoints {
     this._chatConfig,
   );
 
-  ///login to v chat system
-  @override
-  Future<VIdentifierUser> login({
-    required String identifier,
-    required Locale deviceLanguage,
-    bool ignoreIfUserAlreadyLogin = true,
-  }) async {
-    final userMap = VAppPref.getMap(VStorageKeys.vMyProfile.name);
-    if (userMap != null) {
-      _connectSuccessLogin();
-      return VIdentifierUser.fromMap(userMap);
-    }
-
-    final deviceHelper = DeviceInfoHelper();
-    final dto = VChatLoginDto(
-      identifier: identifier,
-      platform: VPlatforms.currentPlatform,
-      deviceId: await deviceHelper.getId(),
-      language: deviceLanguage.languageCode,
-      pushKey: await _helper.getPushToken(),
-      password: await _helper.getPasswordFromIdentifier(identifier),
-    );
-    final user = await _remoteAuth.login(dto);
-    _connectSuccessLogin();
-
-    return user;
-  }
-
-  void _connectSuccessLogin() {
+  Future<void> _connectSuccessLogin() async {
     SocketController.instance.connect();
-    if (VChatController.I.vChatConfig.isPushEnable && !VPlatforms.isWeb) {
-      VChatController.I.vChatConfig.currentPushProviderService!
-          .askForPermissions();
+    VChatControllerHelper.instance.initSocketTimer();
+    if (VChatController.I.vChatConfig.isPushEnable) {
+      await (await VChatController.I.vChatConfig.currentPushProviderService)
+          ?.askForPermissions();
     }
+    await VNotificationListener.init();
   }
 
   Future<bool> updateName(String newName) async {
@@ -78,13 +52,14 @@ class VProfileApi implements AuthEndPoints {
 
   ///register to v chat system
   @override
-  Future<VIdentifierUser> register({
+  Future<VIdentifierUser> connect({
     required String identifier,
-    required String fullName,
+    required String? fullName,
     VPlatformFileSource? image,
-    required Locale deviceLanguage,
+    Locale? deviceLanguage,
   }) async {
     final userMap = VAppPref.getMap(VStorageKeys.vMyProfile.name);
+    await VChatControllerHelper.instance.initPushService();
     if (userMap != null) {
       _connectSuccessLogin();
       return VIdentifierUser.fromMap(userMap);
@@ -94,15 +69,14 @@ class VProfileApi implements AuthEndPoints {
       identifier: identifier,
       fullName: fullName,
       deviceId: await deviceHelper.getId(),
-      language: deviceLanguage.languageCode,
+      language: deviceLanguage?.languageCode,
       platform: VPlatforms.currentPlatform,
       password: await _helper.getPasswordFromIdentifier(identifier),
       pushKey: await _helper.getPushToken(),
       image: image,
     );
-    final user = await _remoteAuth.register(dto);
+    final user = await _remoteAuth.connect(dto);
     _connectSuccessLogin();
-    SocketController.instance.connect();
     return user;
   }
 
@@ -111,7 +85,7 @@ class VProfileApi implements AuthEndPoints {
   Future<void> logout() async {
     try {
       await _remoteAuth.logout();
-      await _chatConfig.currentPushProviderService?.deleteToken();
+      await (await _chatConfig.currentPushProviderService)?.deleteToken();
     } catch (err) {
       _log.warning(err);
     }

@@ -4,6 +4,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:eraser/eraser.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,8 +59,11 @@ class VChatFcmProver extends VChatPushProviderBase {
         _initStreams();
       }
       return true;
-    } catch (err) {
-      //
+    } catch (err, trac) {
+      print("-----");
+      print(err.toString() ==
+          "Google Play services missing or without correct permission.");
+      log("", stackTrace: trac, error: err, name: "V_CHAT_FCM");
     }
     return false;
   }
@@ -72,7 +76,12 @@ class VChatFcmProver extends VChatPushProviderBase {
   @override
   Future<void> askForPermissions() async {
     try {
-      final status = (await FirebaseMessaging.instance.requestPermission())
+      final status = (await FirebaseMessaging.instance.requestPermission(
+        sound: true,
+        badge: true,
+        alert: true,
+        criticalAlert: true,
+      ))
           .authorizationStatus;
       if (status == AuthorizationStatus.authorized) {
         _initStreams();

@@ -8,7 +8,6 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/service/call_listener.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/events_daemon.dart';
-import 'package:v_chat_sdk_core/src/service/notification_listener.dart';
 import 'package:v_chat_sdk_core/src/service/offline_online_emitter_service.dart';
 import 'package:v_chat_sdk_core/src/service/re_send_daemon.dart';
 import 'package:v_chat_sdk_core/src/service/socket_status_service.dart';
@@ -86,10 +85,8 @@ class VChatController {
     _instance.blockApi = Block(
       _instance.nativeApi,
     );
-    await ControllerHelper.instance.init();
-    SocketController.instance.connect();
+    await VChatControllerHelper.instance.init();
     _startServices();
-
     return _instance;
   }
 
@@ -123,11 +120,6 @@ class VChatController {
     EventsDaemon().start();
     OfflineOnlineEmitterService().start();
     SocketStatusService();
-    VNotificationListener(
-      _instance.nativeApi,
-      _instance.vChatConfig,
-      _instance.vNavigator,
-    );
     CallListener(
       _instance.nativeApi,
       _instance.vChatConfig,

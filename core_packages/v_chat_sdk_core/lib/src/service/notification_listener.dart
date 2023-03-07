@@ -5,20 +5,33 @@
 import 'package:logging/logging.dart';
 import 'package:platform_local_notifications/platform_local_notifications.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VNotificationListener {
-  final VNativeApi nativeApi;
-  final VChatConfig vChatConfig;
-  final VNavigator vNavigator;
-
   final _log = Logger('VNotificationListener');
+  final vChatConfig = VChatController.I.vChatConfig;
+  final nativeApi = VChatController.I.nativeApi;
+  final vNavigator = VChatController.I.vNavigator;
 
-  VNotificationListener(
-    this.nativeApi,
-    this.vChatConfig,
-    this.vNavigator,
-  ) {
-    _init();
+  VNotificationListener._();
+
+  static final _instance = VNotificationListener._();
+  bool _isControllerInit = false;
+
+  static VNotificationListener get I {
+    assert(
+      _instance._isControllerInit,
+      'You must initialize the v chat controller instance before calling VChatController.I',
+    );
+    return _instance;
+  }
+
+  static Future<void> init() async {
+    if (_instance._isControllerInit) {
+      return;
+    }
+    _instance._isControllerInit = true;
+    _instance._init();
   }
 
   Future<void> _setRoomSeen(String roomId) async {
@@ -29,6 +42,7 @@ class VNotificationListener {
   Future<void> _init() async {
     if (vChatConfig.vPush.enableVForegroundNotification) {
       await PlatformNotifier.I.init(appName: "v_chat_sdk");
+      await PlatformNotifier.I.requestPermissions();
       PlatformNotifier.I.platformNotifierStream.listen((event) async {
         if (event.payload!.isEmpty) return;
         if (event is PluginNotificationReplyAction) {
@@ -91,7 +105,7 @@ class VNotificationListener {
     nativeApi.streams.vOnUpdateNotificationsTokenStream.listen((event) async {
       await nativeApi.remote.profile.addFcm(event.token);
     });
-    _getOpenAppNotification();
+    getOpenAppNotification();
   }
 
   Future<VRoom?> _getRoom(String roomId) async {
@@ -99,11 +113,15 @@ class VNotificationListener {
         .getOneWithLastMessageByRoomId(roomId);
   }
 
-  Future<void> _getOpenAppNotification() async {
-    await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
-    await Future.delayed(const Duration(seconds: 2));
-    final message =
-        await vChatConfig.currentPushProviderService!.getOpenAppNotification();
+  Future<void> getOpenAppNotification() async {
+    final currentPush = await vChatConfig.currentPushProviderService;
+    if (currentPush == null) return;
+    if (currentPush.serviceName() == VChatPushService.onesignal) {
+      return;
+    }
+    await Future.delayed(const Duration(milliseconds: 200));
+    final message = await (await vChatConfig.currentPushProviderService)!
+        .getOpenAppNotification();
     if (message == null) return;
     final room = await _getRoom(message.roomId);
     final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);

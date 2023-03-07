@@ -10,31 +10,27 @@ import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-class ControllerHelper {
+class VChatControllerHelper {
   final _config = VChatController.I.vChatConfig;
   final _log = Logger('ControllerHelper');
   Timer? _timer;
 
   ///singleton
-  ControllerHelper._privateConstructor();
+  VChatControllerHelper._privateConstructor();
 
-  static final instance = ControllerHelper._privateConstructor();
+  static final instance = VChatControllerHelper._privateConstructor();
 
-  ControllerHelper._();
+  VChatControllerHelper._();
 
-  Future<ControllerHelper> init() async {
+  Future<VChatControllerHelper> init() async {
     _initLogger(_config.enableLog);
-    await _initPushService(
-      _config.vPush,
-    );
-    _initSocketTimer();
-    setLocaleMessages('ar', ArMessages());
-    setLocaleMessages('ar_short', ArShortMessages());
+    _setupTimeAgo();
     await VAppPref.setStringKey(
       VStorageKeys.vBaseUrl.name,
       VAppConstants.baseUri.toString(),
     );
-    return ControllerHelper._();
+    //todo invoke method channel
+    return VChatControllerHelper._();
   }
 
   String _getHashedPassword(String identifier) {
@@ -66,53 +62,23 @@ class ControllerHelper {
     });
   }
 
-  Future<void> _initPushService(
-    VPush vPush,
-  ) async {
-    final fcm = vPush.fcmProvider;
-    final onesignal = vPush.oneSignalProvider;
-    // if (VPlatforms.isWeb) return;
-    _config.currentPushProviderService = fcm ?? onesignal;
-    if (fcm != null && onesignal != null) {
-      ///first try to init fcm
-      final fcmInit = await fcm.init();
-      if (!fcmInit) {
-        ///we need to enable onesignal here
-        await onesignal.init();
-        _log.fine(
-          "init the sdk with OneSignal done successfully through V_CHAT_SDK",
-        );
-      } else {
-        _log.fine(
-          "init the sdk with fcm done successfully through V_CHAT_SDK",
-        );
-      }
+  Future<void> initPushService() async {
+    final current = await _config.currentPushProviderService;
+    if (current == null) {
+      _log.fine("init the sdk without push notification service!");
       return;
     }
-
-    if (fcm != null) {
-      final fcmInit = await fcm.init();
-      if (!fcmInit) {
-        _log.shout(
-          "init the sdk with fcm didn't this may be user internet connection or device not support google play service please use onesignal",
-        );
-        return;
-      }
-      _log.fine(
-        "init the sdk with fcm done successfully through V_CHAT_SDK",
-      );
+    final isInit = await current.init();
+    if (isInit == false) {
+      _log.warning("Notification permission not accepted");
       return;
     }
-    if (onesignal != null) {
-      await onesignal.init();
+    if (current.serviceName() == VChatPushService.firebase) {
+      _log.fine("init the sdk with fcm done successfully through V_CHAT_SDK");
+    } else {
       _log.fine(
         "init the sdk with OneSignal done successfully through V_CHAT_SDK",
       );
-      return;
-    }
-
-    if (fcm == null && onesignal == null) {
-      _log.fine("init the sdk without push notification service!");
     }
   }
 
@@ -121,10 +87,11 @@ class ControllerHelper {
   }
 
   Future<String?> getPushToken() async {
-    if (!_config.isPushEnable || VPlatforms.isWeb) {
+    if (!_config.isPushEnable ||
+        _config.isCurrentPlatformsNotSupportBackgroundPush) {
       return null;
     }
-    final token = await _config.currentPushProviderService!.getToken();
+    final token = await (await _config.currentPushProviderService)?.getToken();
     if (token == null) {
       _log.warning(
         "FCM value is null this device will not receive notifications this may be bad network or this device not support google play service",
@@ -134,7 +101,7 @@ class ControllerHelper {
     return token;
   }
 
-  void _initSocketTimer() {
+  void initSocketTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(
       const Duration(seconds: 10),
@@ -142,5 +109,17 @@ class ControllerHelper {
         VEventBusSingleton.vEventBus.fire(VSocketIntervalEvent());
       },
     );
+  }
+
+  void _setupTimeAgo() {
+    setLocaleMessages('ar', ArMessages());
+    setLocaleMessages('fr', FiMessages());
+    setLocaleMessages('it', ItMessages());
+    setLocaleMessages('ko', KoMessages());
+    setLocaleMessages('uk', UkMessages());
+    setLocaleMessages('vi', ViMessages());
+    setLocaleMessages('pt', PtBrMessages());
+    setLocaleMessages('hi', HiMessages());
+    setLocaleMessages('ar_short', ArShortMessages());
   }
 }

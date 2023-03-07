@@ -8,6 +8,7 @@ import 'package:v_chat_sdk_core/src/utils/enums.dart';
 class VMyGroupInfo {
   final bool isMeOut;
   final int membersCount;
+  final int totalOnline;
   final VGroupMemberRole myRole;
   final VMyGroupSettings? groupSettings;
 
@@ -16,6 +17,7 @@ class VMyGroupInfo {
   const VMyGroupInfo({
     required this.isMeOut,
     required this.membersCount,
+    required this.totalOnline,
     required this.myRole,
     required this.groupSettings,
   });
@@ -30,19 +32,21 @@ class VMyGroupInfo {
 
   VMyGroupInfo.empty()
       : membersCount = 0,
+        totalOnline = 0,
         myRole = VGroupMemberRole.member,
         groupSettings = VMyGroupSettings.empty(),
         isMeOut = false;
 
   @override
   String toString() {
-    return 'VMyGroupInfo{isMeOut: $isMeOut, membersCount: $membersCount, myRole: $myRole, groupSettings: $groupSettings}';
+    return 'VMyGroupInfo{isMeOut: $isMeOut, totalOnline:$totalOnline,membersCount: $membersCount, myRole: $myRole, groupSettings: $groupSettings}';
   }
 
   Map<String, dynamic> toMap() {
     return {
       'isMeOut': isMeOut,
       'membersCount': membersCount,
+      'totalOnline': totalOnline,
       'myRole': myRole.name,
       'groupSettings': groupSettings?.toMap(),
     };
@@ -52,6 +56,7 @@ class VMyGroupInfo {
     return VMyGroupInfo(
       isMeOut: map['isMeOut'] as bool,
       membersCount: map['membersCount'] as int,
+      totalOnline: map['totalOnline'] as int,
       groupSettings: (map['groupSettings'] as Map<String, dynamic>?) == null
           ? null
           : VMyGroupSettings.fromMap(
@@ -64,12 +69,14 @@ class VMyGroupInfo {
   VMyGroupInfo copyWith({
     bool? isMeOut,
     int? membersCount,
+    int? totalOnline,
     VGroupMemberRole? myRole,
     VMyGroupSettings? groupSettings,
   }) {
     return VMyGroupInfo(
       isMeOut: isMeOut ?? this.isMeOut,
       membersCount: membersCount ?? this.membersCount,
+      totalOnline: totalOnline ?? this.totalOnline,
       myRole: myRole ?? this.myRole,
       groupSettings: groupSettings ?? this.groupSettings,
     );

@@ -29,14 +29,40 @@ class VChannelApiService {
   //   throwIfNotSuccess(res);
   // }
 
-  Future<bool> changeRoomNotification({
-    required String roomId,
-    required bool isMuted,
-  }) async {
-    final res = await _channelApiService!
-        .changeRoomNotification(roomId, {"isMuted": isMuted});
+  Future<bool> muteRoomNotification({required String roomId}) async {
+    final res = await _channelApiService!.muteRoomNotification(roomId);
     throwIfNotSuccess(res);
-    return (res.body as Map<String, dynamic>)['data'] as bool;
+    return true;
+  }
+
+  Future<bool> unMuteRoomNotification({required String roomId}) async {
+    final res = await _channelApiService!.unMuteRoomNotification(roomId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> archiveRoom({required String roomId}) async {
+    final res = await _channelApiService!.archiveRoom(roomId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> unArchiveRoom({required String roomId}) async {
+    final res = await _channelApiService!.unArchiveRoom(roomId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<VMyOrderInfo> getOrderRoomInfo({required String roomId}) async {
+    final res = await _channelApiService!.getOrderRoomInfo(roomId);
+    throwIfNotSuccess(res);
+    return VMyOrderInfo.fromMap(extractDataFromResponse(res));
+  }
+
+  Future<int> getRoomUnReadCount({required String roomId}) async {
+    final res = await _channelApiService!.getRoomUnReadCount(roomId);
+    throwIfNotSuccess(res);
+    return (res.body as Map<String, dynamic>)['data'] as int;
   }
 
   Future<bool> transTo({

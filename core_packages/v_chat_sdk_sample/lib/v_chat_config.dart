@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
+import 'package:v_chat_one_signal/v_chat_one_signal.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -21,10 +22,13 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
       googleMapsApiKey: "AIzaSyAP-dfhdfhg",
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
-      maxForward: 2,
+      maxForward: 10,
       vPush: VPush(
         fcmProvider: VPlatforms.isMobile ? VChatFcmProver() : null,
         enableVForegroundNotification: true,
+        oneSignalProvider: VChatOneSignalProver(
+          appId: "sdfgdfshdgjhfgj",
+        ),
         vPushConfig: VLocalNotificationPushConfig(),
       ),
     ),

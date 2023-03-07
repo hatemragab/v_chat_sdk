@@ -1,7 +1,3 @@
-// Copyright 2023, the hatemragab project author.
-// All rights reserved. Use of this source code is governed by a
-// MIT license that can be found in the LICENSE file.
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'auth_api.dart';
@@ -21,24 +17,11 @@ class _$AuthApi extends AuthApi {
   final definitionType = AuthApi;
 
   @override
-  Future<Response<dynamic>> login(Map<String, dynamic> body) {
-    final Uri $url = Uri.parse('auth/login');
-    final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
-  Future<Response<dynamic>> register(
+  Future<Response<dynamic>> connect(
     List<PartValue<dynamic>> body,
     MultipartFile? file,
   ) {
-    final Uri $url = Uri.parse('auth/register');
+    final Uri $url = Uri.parse('auth/connect');
     final List<PartValue> $parts = <PartValue>[
       PartValueFile<MultipartFile?>(
         'file',

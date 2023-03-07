@@ -22,8 +22,8 @@ class VLocationMessageData {
 
   VLocationMessageData.fromMap(Map<String, dynamic> json)
       : latLng = LatLng(
-          json['lat'] as double,
-          json['long'] as double,
+          double.parse(json['lat'].toString()),
+          double.parse(json['long'].toString()),
         ),
         linkPreviewData = VLinkPreviewData.fromMap(
           json['linkPreviewData'] as Map<String, dynamic>,
@@ -31,8 +31,8 @@ class VLocationMessageData {
 
   // to json
   Map<String, dynamic> toMap() => {
-        'lat': latLng.latitude,
-        'long': latLng.longitude,
+        'lat': latLng.latitude.toString(),
+        'long': latLng.longitude.toString(),
         'linkPreviewData': linkPreviewData.toMap(),
       };
 }

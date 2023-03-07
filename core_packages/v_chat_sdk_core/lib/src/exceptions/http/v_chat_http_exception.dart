@@ -35,6 +35,17 @@ class VChatHttpForbidden extends VChatBaseHttpException {
         );
 }
 
+class VChatHttpUnAuth extends VChatBaseHttpException {
+  final Object vChatException;
+
+  VChatHttpUnAuth({
+    required this.vChatException,
+  }) : super(
+          statusCode: 450,
+          exception: vChatException,
+        );
+}
+
 class VChatHttpNotFound extends VChatBaseHttpException {
   final Object vChatException;
 

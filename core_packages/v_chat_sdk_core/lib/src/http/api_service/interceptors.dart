@@ -35,6 +35,10 @@ void throwIfNotSuccess(Response res) {
     throw VChatHttpForbidden(
       vChatException: (res.error! as Map<String, dynamic>)['data'].toString(),
     );
+  } else if (res.statusCode == 450) {
+    throw VChatHttpUnAuth(
+      vChatException: (res.error! as Map<String, dynamic>)['data'].toString(),
+    );
   }
   if (!res.isSuccessful) {
     throw VChatHttpBadRequest(

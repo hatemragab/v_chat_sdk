@@ -15,12 +15,9 @@ part 'auth_api.chopper.dart';
 
 @ChopperApi(baseUrl: 'auth')
 abstract class AuthApi extends ChopperService {
-  @Post(path: "/login")
-  Future<Response> login(@Body() Map<String, dynamic> body);
-
-  @Post(path: "/register")
+  @Post(path: "/connect")
   @multipart
-  Future<Response> register(
+  Future<Response> connect(
     @PartMap() List<PartValue> body,
     @PartFile("file") MultipartFile? file,
   );

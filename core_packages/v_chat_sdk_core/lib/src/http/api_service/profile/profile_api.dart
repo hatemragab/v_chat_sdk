@@ -31,12 +31,12 @@ abstract class ProfileApi extends ChopperService {
   Future<Response> updateUserName(@Body() Map<String, dynamic> body);
 
   ///add fcm
-  @Post(path: "/fcm")
-  Future<Response> addFcm(@Body() Map<String, dynamic> body);
+  @Post(path: "/push")
+  Future<Response> addNotificationPush(@Body() Map<String, dynamic> body);
 
   ///delete fcm
-  @Delete(path: "/fcm")
-  Future<Response> deleteFcm();
+  @Delete(path: "/push")
+  Future<Response> deleteNotificationPush();
 
   @Get(path: "/users/{identifier}/last-seen", optionalBody: true)
   Future<Response> getLastSeenAt(

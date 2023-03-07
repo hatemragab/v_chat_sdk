@@ -52,6 +52,7 @@ class ChatsTabView extends GetView<ChatsTabController> {
     }
     return VChatPage(
       context: context,
+      useIconForRoomItem: false,
       appBar: AppBar(
         title: const Text('Chats Tab View'),
         centerTitle: true,

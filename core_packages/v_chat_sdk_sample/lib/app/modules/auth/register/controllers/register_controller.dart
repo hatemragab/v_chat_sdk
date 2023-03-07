@@ -36,10 +36,10 @@ class RegisterController extends GetxController {
 
   Future<String?> onLogin(LoginData loginData) async {
     try {
-      // VChatController.I.
-      final vUser = await VChatController.I.profileApi.login(
+      final vUser = await VChatController.I.profileApi.connect(
         identifier: loginData.email,
         deviceLanguage: const Locale("en"),
+        fullName: null,
       );
       await VAppPref.setMap(SStorageKeys.myProfile.name, vUser.toMap());
       Get.offAndToNamed(Routes.HOME);
@@ -53,7 +53,7 @@ class RegisterController extends GetxController {
 
   Future<String?> onSignup(SignUpData signUpData) async {
     try {
-      final vUser = await VChatController.I.profileApi.register(
+      final vUser = await VChatController.I.profileApi.connect(
         identifier: signUpData.email,
         fullName: signUpData.name,
         deviceLanguage: const Locale("en"),

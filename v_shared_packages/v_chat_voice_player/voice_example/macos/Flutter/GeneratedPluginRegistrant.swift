@@ -11,7 +11,7 @@ import dynamic_color
 import file_saver
 import just_audio
 import macos_ui
-import path_provider_macos
+import path_provider_foundation
 import photo_manager
 import platform_device_id
 import platform_device_id_macos

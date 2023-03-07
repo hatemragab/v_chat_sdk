@@ -12,30 +12,9 @@ class VAuthApiService {
 
   static AuthApi? _authApi;
 
-  Future<VIdentifierUser> login(VChatLoginDto dto) async {
-    final body = dto.toMap();
-    final response = await _authApi!.login(body);
-    throwIfNotSuccess(response);
-    final myUser = VIdentifierUser.fromMap(
-      extractDataFromResponse(response)['user'] as Map<String, dynamic>,
-    );
-    await Future.wait([
-      VAppPref.setHashedString(
-        VStorageKeys.vAccessToken.name,
-        extractDataFromResponse(response)['accessToken'].toString(),
-      ),
-      VAppPref.setStringKey(
-        VStorageKeys.vAppLanguage.name,
-        dto.language,
-      ),
-      VAppPref.setMap(VStorageKeys.vMyProfile.name, myUser.toMap())
-    ]);
-    return myUser;
-  }
-
-  Future<VIdentifierUser> register(VChatRegisterDto dto) async {
+  Future<VIdentifierUser> connect(VChatRegisterDto dto) async {
     final body = dto.toListOfPartValue();
-    final response = await _authApi!.register(
+    final response = await _authApi!.connect(
       body,
       dto.image == null
           ? null
@@ -54,7 +33,7 @@ class VAuthApiService {
       ),
       VAppPref.setStringKey(
         VStorageKeys.vAppLanguage.name,
-        dto.language,
+        dto.language ?? "en",
       ),
       VAppPref.setMap(VStorageKeys.vMyProfile.name, myUser.toMap())
     ]);

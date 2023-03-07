@@ -1,7 +1,3 @@
-// Copyright 2023, the hatemragab project author.
-// All rights reserved. Use of this source code is governed by a
-// MIT license that can be found in the LICENSE file.
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'channel_api.dart';
@@ -43,17 +39,56 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
-  Future<Response<dynamic>> changeRoomNotification(
-    String roomId,
-    Map<String, dynamic> body,
-  ) {
-    final Uri $url = Uri.parse('channel/${roomId}/notification');
-    final $body = body;
+  Future<Response<dynamic>> muteRoomNotification(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/notification/mute');
     final Request $request = Request(
       'PATCH',
       $url,
       client.baseUrl,
-      body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> unMuteRoomNotification(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/notification/un-mute');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> archiveRoom(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/archive');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> unArchiveRoom(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/un-archive');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getRoomUnReadCount(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/un-read-count');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
     );
     return client.send<dynamic, dynamic>($request);
   }
@@ -459,6 +494,17 @@ class _$ChannelApi extends ChannelApi {
         Uri.parse('channel/${roomId}/group/members/${peerIdentifier}');
     final Request $request = Request(
       'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getOrderRoomInfo(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/group/members');
+    final Request $request = Request(
+      'GET',
       $url,
       client.baseUrl,
     );

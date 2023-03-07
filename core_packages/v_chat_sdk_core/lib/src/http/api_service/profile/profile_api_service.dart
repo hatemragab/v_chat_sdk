@@ -13,7 +13,7 @@ class VProfileApiService {
   VProfileApiService._();
 
   Future<bool> addFcm(String fcm) async {
-    final res = await _profileApi!.addFcm(
+    final res = await _profileApi!.addNotificationPush(
       {'pushKey': fcm},
     );
     throwIfNotSuccess(res);
@@ -21,7 +21,7 @@ class VProfileApiService {
   }
 
   Future<bool> deleteFcm() async {
-    final res = await _profileApi!.deleteFcm();
+    final res = await _profileApi!.deleteNotificationPush();
     throwIfNotSuccess(res);
     return true;
   }

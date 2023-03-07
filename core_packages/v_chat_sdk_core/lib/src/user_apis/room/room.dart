@@ -64,22 +64,22 @@ class RoomApi {
   //   return true;
   // }
 
-  Future<bool> changeRoomNotification({
-    required String roomId,
-    required bool isMuted,
-  }) async {
-    await _vNativeApi.remote.room.changeRoomNotification(
-      roomId: roomId,
-      isMuted: isMuted,
-    );
-    await _vNativeApi.local.room.updateRoomIsMuted(
-      VUpdateRoomMuteEvent(
-        roomId: roomId,
-        isMuted: isMuted,
-      ),
-    );
-    return isMuted;
-  }
+  // Future<bool> changeRoomNotification({
+  //   required String roomId,
+  //   required bool isMuted,
+  // }) async {
+  //   await _vNativeApi.remote.room.unMuteRoomNotification(
+  //     roomId: roomId,
+  //     isMuted: isMuted,
+  //   );
+  //   await _vNativeApi.local.room.updateRoomIsMuted(
+  //     VUpdateRoomMuteEvent(
+  //       roomId: roomId,
+  //       isMuted: isMuted,
+  //     ),
+  //   );
+  //   return isMuted;
+  // }
 
   /// group room apis ----------------------------------------------
   Future<bool> changeGroupMemberRole({

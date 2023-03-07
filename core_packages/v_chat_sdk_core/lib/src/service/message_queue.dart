@@ -2,6 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -40,7 +41,9 @@ class MessageUploaderQueue {
       // rethrow;
     } on VChatBaseHttpException catch (err) {
       await _deleteTheMessage(uploadModel);
-      print(err);
+      if (kDebugMode) {
+        print(err);
+      }
       _log.warning("VChatBaseHttpException", err);
     } on VUserInternetException catch (err) {
       await _setErrorToMessage(uploadModel);
@@ -55,9 +58,8 @@ class MessageUploaderQueue {
   }
 
   Future<void> _deleteMessage(String localId) async {
-    final VBaseMessage? baseMessage =
-        await _localStorage.getMessageByLocalId(localId);
-    if (baseMessage != null) {
+    final baseMessage = await _localStorage.getMessageByLocalId(localId);
+    if (baseMessage != null && !baseMessage.emitStatus.isServerConfirm) {
       await _localStorage.deleteMessageByLocalId(baseMessage);
     }
   }
