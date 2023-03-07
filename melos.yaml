@@ -6,15 +6,15 @@ packages:
   - v_ui_packages/**
   - push_providers/**
   - v_shared_packages/**
-ignore:
-  - 'core_packages/v_chat_utils/utils_example'
-  - 'v_shared_packages/v_chat_input_ui/input_example'
-  - 'v_shared_packages/v_chat_media_editor/editor_example'
-  - 'v_shared_packages/v_chat_receive_share/receive_share_example'
-  - 'v_shared_packages/v_chat_voice_player/voice_example'
-  - 'v_ui_packages/v_chat_message_page/message_example'
-  - 'v_ui_packages/v_chat_room_page/room_example'
-  - 'v_ui_packages/v_chat_web_rtc/rtc_example'
+#ignore:
+#  - 'core_packages/v_chat_utils/utils_example'
+#  - 'v_shared_packages/v_chat_input_ui/input_example'
+#  - 'v_shared_packages/v_chat_media_editor/editor_example'
+#  - 'v_shared_packages/v_chat_receive_share/receive_share_example'
+#  - 'v_shared_packages/v_chat_voice_player/voice_example'
+#  - 'v_ui_packages/v_chat_message_page/message_example'
+#  - 'v_ui_packages/v_chat_room_page/room_example'
+#  - 'v_ui_packages/v_chat_web_rtc/rtc_example'
 
 command:
 #  version:

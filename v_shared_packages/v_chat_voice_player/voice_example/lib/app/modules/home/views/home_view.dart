@@ -21,7 +21,7 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   final controller = Get.find<HomeController>();
   final voicesList = <VoiceMessageModel>[];
-  final url = " ";
+  final url = "https://superupdev.online/apps/x.wav";
 
   @override
   void initState() {

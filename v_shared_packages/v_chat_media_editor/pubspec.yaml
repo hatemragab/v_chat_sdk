@@ -16,7 +16,7 @@ dependencies:
   permission_handler: ^10.2.0
   flutter_painter_v2: ^2.0.0
   path: ^1.8.1
-  path_provider: ^2.0.11
+  path_provider: ^2.0.13
   meta: ^1.8.0
 dev_dependencies:
   flutter_test:

@@ -22,7 +22,7 @@ class MobileRecorder extends AppRecorder {
     ..androidEncoder = AndroidEncoder.aac
     ..androidOutputFormat = AndroidOutputFormat.mpeg4
     ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
-    ..sampleRate = 44100 ~/ 2;
+    ..sampleRate = 44100;
 
   @override
   Future<void> start([String? path]) async {
