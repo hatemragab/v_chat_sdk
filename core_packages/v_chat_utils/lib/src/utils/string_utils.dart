@@ -26,13 +26,23 @@ abstract class VStringUtils {
     );
   }
 
-  static Future<bool> lunchLink(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+  static Future<bool> lunchLink(String urlText) async {
+    final url = Uri.tryParse(urlText);
+    if (url != null && await canLaunchUrl(url)) {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
       return true;
     } else {
       return false;
+    }
+  }
+
+  static Future<void> lunchEmail(String mail) async {
+    final url = Uri(scheme: 'mailto', path: mail);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     }
   }
 

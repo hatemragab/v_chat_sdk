@@ -49,12 +49,10 @@ class VMessageItem extends StatelessWidget {
     this.onHighlightMessage,
   }) : super(key: key);
 
-  bool get isAllowOnTap =>
-      !message.messageType.isAllDeleted &&
-      !message.messageType.isVoice &&
-      onTap != null;
-
-  bool get isAllowLongTap => onLongTap != null;
+  // bool get isAllowOnTap =>
+  //     !message.messageType.isAllDeleted &&
+  //     !message.messageType.isVoice &&
+  //     onTap != null;
 
   @override
   Widget build(BuildContext context) {
@@ -68,22 +66,14 @@ class VMessageItem extends StatelessWidget {
       );
     }
     return InkWell(
-      onLongPress: isAllowLongTap
-          ? () {
-              onLongTap!(message);
-            }
-          : null,
-      onTap: isAllowOnTap
-          ? () {
-              onTap!(message);
-            }
-          : null,
+      onLongPress: () => onLongTap?.call(message),
+      onTap: () => onTap?.call(message),
       child: SwipeTo(
         key: UniqueKey(),
-        onRightSwipe: onSwipe == null || message.messageType.isAllDeleted
+        onRightSwipe: message.messageType.isAllDeleted
             ? null
             : () {
-                onSwipe!(message);
+                onSwipe?.call(message);
               },
         child: DirectionItemHolder(
           isMeSender: message.isMeSender,
@@ -132,9 +122,7 @@ class VMessageItem extends StatelessWidget {
                       isMeSender: message.isMeSender,
                     ),
                     onReSend: () {
-                      if (onReSend != null) {
-                        onReSend!(message);
-                      }
+                      onReSend?.call(message);
                     },
                   ),
                 ],
@@ -163,7 +151,7 @@ class VMessageItem extends StatelessWidget {
             await VStringUtils.lunchLink(link);
           },
           onEmailPress: (email) async {
-            await VStringUtils.lunchLink(email);
+            await VStringUtils.lunchEmail(email);
           },
           onMentionPress: _onMentionPress,
           onPhonePress: (phone) async {

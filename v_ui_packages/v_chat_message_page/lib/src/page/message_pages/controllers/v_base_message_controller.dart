@@ -7,7 +7,6 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_message_item_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_voice_controller.dart';
-
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -35,21 +34,9 @@ abstract class VBaseMessageController extends MessageStateController {
     messageProvider.setSeen(roomId);
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
     _removeAllNotifications();
-    voiceControllers = VVoicePlayerController(
-      (localId) {
-        final index = value.indexWhere((e) => e.localId == localId);
-        if (index == -1 || index == 0) {
-          return null;
-        }
-        if (!value[index - 1].messageType.isVoice) {
-          return null;
-        }
-        return value[index - 1].localId;
-      },
-    );
+    _setUpVoiceController();
   }
-  bool get isSocketConnected =>
-      VChatController.I.nativeApi.remote.socketIo.isConnected;
+
   late final VVoicePlayerController voiceControllers;
 
   final _currentUser = VAppConstants.myProfile;
@@ -256,4 +243,19 @@ abstract class VBaseMessageController extends MessageStateController {
     BuildContext context,
     String query,
   );
+
+  void _setUpVoiceController() {
+    voiceControllers = VVoicePlayerController(
+      (localId) {
+        final index = value.indexWhere((e) => e.localId == localId);
+        if (index == -1 || index == 0) {
+          return null;
+        }
+        if (!value[index - 1].messageType.isVoice) {
+          return null;
+        }
+        return value[index - 1].localId;
+      },
+    );
+  }
 }

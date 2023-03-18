@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -112,6 +113,8 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
           text: text,
           maxLines: maxLine,
           style: widget.textStyle,
+          regexOptions: const RegexOptions(multiLine: true, dotAll: true),
+          textWidthBasis: TextWidthBasis.longestLine,
           parse: [
             MatchText(
               pattern: r"\[(@[^:]+):([^\]]+)\]",
@@ -135,10 +138,10 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
             ),
             if (widget.onEmailPress != null)
               MatchText(
-                type: ParsedType.EMAIL,
+                pattern: regexEmail,
                 style: blueTheme,
                 onTap: (url) {
-                  widget.onEmailPress!(url);
+                  widget.onEmailPress?.call(url);
                 },
               ),
             if (widget.onPhonePress != null)
@@ -150,14 +153,17 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
                   }),
             if (widget.onLinkPress != null)
               MatchText(
-                type: ParsedType.URL,
+                pattern: regexLink,
                 style: blueTheme,
                 onTap: (url) {
-                  String fullUrl = url;
-                  if (!fullUrl.contains("https") || !fullUrl.contains("http")) {
-                    fullUrl = "https://$url";
+                  final protocolIdentifierRegex = RegExp(
+                    r'^((http|ftp|https):\/\/)',
+                    caseSensitive: false,
+                  );
+                  if (!url.startsWith(protocolIdentifierRegex)) {
+                    url = 'https://$url';
                   }
-                  widget.onLinkPress!(fullUrl);
+                  widget.onLinkPress?.call(url);
                 },
               ),
           ],

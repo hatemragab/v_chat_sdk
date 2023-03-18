@@ -28,6 +28,7 @@ abstract class BaseLocalRoomRepo {
   Future<VRoom?> getOneByPeerId(String roomId);
 
   Future<String?> getRoomIdByPeerId(String peerId);
+
   Future<bool> isRoomExist(String roomId);
 
   Future<VRoom?> getOneWithLastMessageByRoomId(String roomId);
@@ -35,4 +36,6 @@ abstract class BaseLocalRoomRepo {
   Future<List<VRoom>> search(String text, int limit, VRoomType? roomType);
 
   Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300});
+
+  Future<int> getUnReadCount();
 }

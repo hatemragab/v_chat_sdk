@@ -258,4 +258,11 @@ class SqlRoomImp extends BaseLocalRoomRepo {
       whereArgs: [event.roomId],
     );
   }
+
+  @override
+  Future<int> getUnReadCount() async {
+    final maps = await _database
+        .rawQuery("SELECT SUM(${RoomTable.columnUnReadCount}) FROM $_table");
+    return int.parse(maps.first['SUM(tb_r_un_counter)'].toString());
+  }
 }

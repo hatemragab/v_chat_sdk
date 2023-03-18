@@ -164,4 +164,13 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
     room.transTo = event.transTo;
     return Future.value(1);
   }
+
+  @override
+  Future<int> getUnReadCount() async {
+    var x = 0;
+    for (var i = 0; i < _rooms.length; i++) {
+      x = x + _rooms[i].unReadCount;
+    }
+    return x;
+  }
 }

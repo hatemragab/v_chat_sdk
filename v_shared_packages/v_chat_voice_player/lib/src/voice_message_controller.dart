@@ -5,13 +5,15 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart' as cache;
+import 'package:just_audio/just_audio.dart' as js_audio;
+import 'package:just_audio/just_audio.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import 'helpers/bytes_custom_source.dart';
 import 'helpers/play_status.dart';
 import 'helpers/utils.dart';
 
@@ -118,7 +120,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   }
 
   void _listenToRemindingTime() {
-    _positionStream = _player.onPositionChanged.listen((Duration p) async {
+    _positionStream = _player.positionStream.listen((Duration p) async {
       _currentDuration = p;
       final value = (noiseWidth * currentMillSeconds) / maxMillSeconds;
       animController.value = value;
@@ -141,26 +143,29 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   }
 
   Future _startPlayingForIo(String path) async {
-    await _player.play(
-      DeviceFileSource(path),
-      position: _currentDuration,
-      volume: 1.0,
+    await _player.setAudioSource(
+      AudioSource.uri(Uri.file(path)),
+      initialPosition: _currentDuration,
     );
-    _player.setPlaybackRate(_speed.getSpeed);
+    _player.play();
+    _player.setSpeed(_speed.getSpeed);
   }
 
   Future startPlayingForJs() async {
     if (isBytes) {
-      await _player.play(
-        BytesSource(Uint8List.fromList(audioSrc.bytes!)),
-        position: _currentDuration,
+      await _player.setAudioSource(
+        BytesCustomSource(audioSrc.bytes!),
+        initialPosition: _currentDuration,
       );
     }
     if (isUrl) {
-      await _player.play(UrlSource(audioSrc.url!), position: _currentDuration);
+      await _player.setAudioSource(
+        AudioSource.uri(Uri.parse(audioSrc.url!)),
+        initialPosition: _currentDuration,
+      );
     }
-    _player.setPlaybackRate(_speed.getSpeed);
-    _player.setVolume(1.0);
+    _player.play();
+    _player.setSpeed(_speed.getSpeed);
   }
 
   @override
@@ -189,13 +194,15 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   }
 
   void _listenToPlayerState() {
-    _playerStateStream = _player.onPlayerStateChanged.listen((event) async {
-      if (event == PlayerState.completed) {
-        await _player.stop();
-        _playStatus = PlayStatus.stop;
-        animController.reset();
-        _updateUi();
-      } else if (event == PlayerState.playing) {
+    _playerStateStream = _player.playerStateStream.listen((event) async {
+      if (event.processingState == ProcessingState.completed) {
+        // await _player.stop();
+        // currentDuration = Duration.zero;
+        // playStatus = PlayStatus.init;
+        // animController.reset();
+        // _updateUi();
+        // onComplete(id);
+      } else if (event.playing) {
         _playStatus = PlayStatus.playing;
         _updateUi();
       }
@@ -235,7 +242,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
         _speed = PlaySpeed.x1;
         break;
     }
-    await _player.setPlaybackRate(_speed.getSpeed);
+    await _player.setSpeed(_speed.getSpeed);
     _updateUi();
   }
 
@@ -272,9 +279,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
 
   Future _setMaxDurationForIo(String path) async {
     try {
-      await _player.setSourceDeviceFile(path);
-      final maxDuration = await _player.getDuration();
-
+      final maxDuration = await js_audio.AudioPlayer().setFilePath(path);
       if (maxDuration != null) {
         this.maxDuration = maxDuration;
         animController.duration = maxDuration;
@@ -289,16 +294,17 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   Future _setMaxDurationForJs() async {
     try {
       if (isUrl) {
-        await _player.setSourceUrl(audioSrc.url!);
-        final maxDuration = await _player.getDuration();
+        final maxDuration = await js_audio.AudioPlayer()
+            .setAudioSource(AudioSource.uri(Uri.parse(audioSrc.url!)));
         if (maxDuration != null) {
           this.maxDuration = maxDuration;
           animController.duration = maxDuration;
         }
       }
       if (isBytes) {
-        await _player.setSourceBytes(Uint8List.fromList(audioSrc.bytes!));
-        final maxDuration = await _player.getDuration();
+        final maxDuration = await js_audio.AudioPlayer().setAudioSource(
+          BytesCustomSource(audioSrc.bytes!),
+        );
         if (maxDuration != null) {
           this.maxDuration = maxDuration;
           animController.duration = maxDuration;

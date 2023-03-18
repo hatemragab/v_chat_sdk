@@ -4,17 +4,39 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChatLastMsgTime extends StatelessWidget {
-  final String lastMessageTimeString;
+  final DateTime lastMessageTime;
+
   const ChatLastMsgTime({
     Key? key,
-    required this.lastMessageTimeString,
+    required this.lastMessageTime,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return lastMessageTimeString.cap;
+    final now = DateTime.now().toLocal();
+    final difference = now.difference(lastMessageTime).inDays;
+    if (difference == 0) {
+      //same day
+      return DateFormat.jm(VAppConstants.sdkLanguage)
+          .format(lastMessageTime)
+          .cap;
+    }
+    if (difference == 1) {
+      return "Yesterday".cap;
+      //todo trans
+      // VTrans.labelsOf(context).yesterDay
+    }
+    if (difference <= 7) {
+      return DateFormat.E(VAppConstants.sdkLanguage)
+          .format(lastMessageTime)
+          .cap;
+    }
+    return DateFormat.yMd(VAppConstants.sdkLanguage)
+        .format(lastMessageTime)
+        .cap;
   }
 }

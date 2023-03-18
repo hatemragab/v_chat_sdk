@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../assets/data/api_rooms.dart';
 import '../../../assets/data/local_rooms.dart';
@@ -20,9 +21,9 @@ class RoomProvider {
 
   Future<VPaginationModel<VRoom>> getLocalRooms() async {
     return VPaginationModel<VRoom>(
-      values: await _localRoom.getRooms(limit: 200),
+      values: await _localRoom.getRooms(limit: 100),
       page: 1,
-      limit: 200,
+      limit: 100,
     );
   }
 
@@ -35,6 +36,12 @@ class RoomProvider {
     VRoomsDto dto, {
     bool deleteOnEmpty = true,
   }) async {
+    final access = VAppPref.getHashedString(
+      key: VStorageKeys.vAccessToken.name,
+    );
+    if (access == null) {
+      await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
+    }
     final apiModel = await _remoteRoom.getRooms(dto);
     unawaited(_localRoom.cacheRooms(
       apiModel.values,

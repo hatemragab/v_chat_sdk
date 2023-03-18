@@ -12,27 +12,16 @@ import '../page/message_status/broadcast/message_broadcast_status_page.dart';
 import '../page/message_status/single/message_single_status_page.dart';
 
 final vDefaultMessageNavigator = VMessageNavigator(
-  toViewChatMedia: (context, roomId) => context.toPage(ChatMediaPage(
-    roomId: roomId,
-  )),
+  toViewChatMedia: (context, roomId) => context.toPage(
+    ChatMediaPage(
+      roomId: roomId,
+    ),
+  ),
   toMessagePage: (context, vRoom) {
-    if (vRoom.roomType.isSingle) {
-      return context.toPage(
-        VSingleView(vRoom: vRoom),
-      );
-    } else if (vRoom.roomType.isGroup) {
-      return context.toPage(
-        VGroupView(vRoom: vRoom),
-      );
-    } else if (vRoom.roomType.isBroadcast) {
-      return context.toPage(
-        VBroadcastView(vRoom: vRoom),
-      );
-    } else if (vRoom.roomType.isOrder) {
-      return context.toPage(
-        VOrderView(vRoom: vRoom),
-      );
-    }
+    return context.toPage(VMessagePage(
+      vRoom: vRoom,
+      context: context,
+    ));
   },
   toVideoPlayer: (context, source) {
     return context.toPage(

@@ -38,7 +38,7 @@ class _VGroupViewState extends State<VGroupView> {
     final provider = MessageProvider();
     controller = VGroupController(
       vRoom: widget.vRoom,
-      context: widget.context ?? context,
+      context: context,
       messageProvider: provider,
       scrollController: AutoScrollController(
         axis: Axis.vertical,
@@ -48,7 +48,7 @@ class _VGroupViewState extends State<VGroupView> {
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
         provider,
-        widget.context ?? context,
+        context,
       ),
     );
   }

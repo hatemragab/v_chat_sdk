@@ -195,7 +195,7 @@ this code will run pub get for you
 
 ### Android Test
 
-<a href="https://superupdev.online/apps/app-arm64-v8a-release.apk"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
+<a href="https://play.google.com/store/apps/details?id=com.app.superup"> <img src="https://user-images.githubusercontent.com/37384769/145644981-17ec8f75-be19-4cea-9322-52f1b31a15da.png" width ="300" /></a> <br />
 
 ### Web test
 

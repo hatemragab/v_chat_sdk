@@ -77,7 +77,7 @@ class VRoomItem extends StatelessWidget {
                               child: ChatTitle(title: room.title),
                             ),
                             ChatLastMsgTime(
-                              lastMessageTimeString: room.lastMessageTimeString,
+                              lastMessageTime: room.lastMessageTime,
                             )
                           ],
                         ),

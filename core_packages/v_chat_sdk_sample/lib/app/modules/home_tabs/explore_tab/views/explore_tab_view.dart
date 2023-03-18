@@ -21,6 +21,11 @@ class ExploreTabView extends GetView<ExploreTabController> {
         title: const Text('Explore products'),
         centerTitle: true,
       ),
+      body: Center(
+        child: GetBuilder<ExploreTabController>(builder: (logic) {
+          return Text(controller.txt.toString());
+        }),
+      ),
       // body: Padding(
       //   padding: const EdgeInsets.all(8.0),
       //   child: FirestorePagination(

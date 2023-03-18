@@ -2,6 +2,8 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+import 'dart:async';
+
 import 'package:sqflite/sqlite_api.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_room_repo.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/imp/room/memory_room_imp.dart';
@@ -23,8 +25,14 @@ class NativeLocalRoom {
     }
   }
 
-  Future<List<VRoom>> getRooms({int limit = 300}) async {
+  Future<List<VRoom>> getRooms({int limit = 100}) async {
+    unawaited(_reloadUnreadCounter());
     return _roomRepo.getRoomsWithLastMessage(limit: limit);
+  }
+
+  Future<void> _reloadUnreadCounter() async {
+    final unreadCount = await _roomRepo.getUnReadCount();
+    _emitter.fire(VTotalUnReadCount(unreadCount));
   }
 
   Future<VRoom?> getOneWithLastMessageByRoomId(String id) {
@@ -54,7 +62,9 @@ class NativeLocalRoom {
     }
     await _localMessage
         .cacheRoomMessages(rooms.map((e) => e.lastMessage).toList());
-    return _roomRepo.insertMany(rooms);
+    await _roomRepo.insertMany(rooms);
+    await _reloadUnreadCounter();
+    return 1;
   }
 
   Future<int?> updateRoomTyping(VSocketRoomTypingModel typing) async {
@@ -97,7 +107,9 @@ class NativeLocalRoom {
   ) async {
     final event = VUpdateRoomUnReadCountByOneEvent(roomId: roomId);
     _emitter.fire(event);
-    return _roomRepo.updateCountByOne(event);
+    await _roomRepo.updateCountByOne(event);
+    _reloadUnreadCounter();
+    return 1;
   }
 
   Future<int> updateRoomUnreadToZero(
@@ -105,7 +117,9 @@ class NativeLocalRoom {
   ) async {
     final event = VUpdateRoomUnReadCountToZeroEvent(roomId: roomId);
     _emitter.fire(event);
-    return _roomRepo.updateCountToZero(event);
+    await _roomRepo.updateCountToZero(event);
+    await _reloadUnreadCounter();
+    return 1;
   }
 
   Future<int> updateRoomIsMuted(VUpdateRoomMuteEvent event) async {
@@ -127,6 +141,7 @@ class NativeLocalRoom {
   Future<void> deleteRoom(String roomId) async {
     await _localMessage.deleteMessageByRoomId(roomId);
     await _roomRepo.delete(VDeleteRoomEvent(roomId: roomId));
+    await _reloadUnreadCounter();
     _emitter.fire(VDeleteRoomEvent(roomId: roomId));
   }
 

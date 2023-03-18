@@ -5,9 +5,7 @@
 part of 'v_room_page.dart';
 
 class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
-  VRoomController({
-    this.isTesting = false,
-  }) {
+  VRoomController() {
     initSocketStatusStream(
       VChatController.I.nativeApi.streams.socketStatusStream,
     );
@@ -19,10 +17,9 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
       nativeApi: VChatController.I.nativeApi,
       roomState: _roomState,
     );
-    _getRoomsFromLocal();
   }
 
-  final bool isTesting;
+  bool isFetchingRooms = false;
   late final RoomStreamState _localStreamChanges;
   late RoomItemController _roomItemController;
   late final RoomStateController _roomState;
@@ -36,6 +33,8 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
       _roomProvider,
       _context,
     );
+    _getRoomsFromLocal();
+    _getRoomsFromApi();
   }
 
   void sortRoomsBy(VRoomType? type) {
@@ -49,20 +48,12 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
   Future<void> _getRoomsFromLocal() async {
     await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
-        if (isTesting) {
-          return VPaginationModel<VRoom>(
-            values: await _roomProvider.getFakeLocalRooms(),
-            page: 1,
-            limit: 20,
-          );
-        }
         return _roomProvider.getLocalRooms();
       },
       onSuccess: (response) {
         _roomState.insertAll(response);
       },
     );
-    await _getRoomsFromApi();
   }
 
   void setRoomSelected(String roomId) {
@@ -95,16 +86,13 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
   }
 
   Future _getRoomsFromApi() async {
+    if (isFetchingRooms) {
+      return;
+    }
+    isFetchingRooms = true;
     await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
-        if (isTesting) {
-          return VPaginationModel(
-            values: await _roomProvider.getFakeApiRooms(),
-            page: 1,
-            limit: 20,
-          );
-        }
         return _roomProvider.getApiRooms(
           const VRoomsDto(),
         );
@@ -113,6 +101,7 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
         _roomState.updateCacheState(response);
       },
     );
+    isFetchingRooms = false;
   }
 
   void dispose() {
@@ -130,13 +119,13 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
     return _roomState.onLoadMore();
   }
 
-  bool _getIsFinishLoadMore() {
+  bool get _getIsFinishLoadMore {
     return _roomState.isFinishLoadMore;
   }
 
   @override
   void onSocketConnected() {
     super.onSocketConnected();
-    _getRoomsFromLocal();
+    _getRoomsFromApi();
   }
 }

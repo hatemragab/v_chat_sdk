@@ -38,7 +38,7 @@ class _VSingleViewState extends State<VSingleView> {
     final provider = MessageProvider();
     controller = VSingleController(
       vRoom: widget.vRoom,
-      context: widget.context ?? context,
+      context: context,
       messageProvider: provider,
       scrollController: AutoScrollController(
         axis: Axis.vertical,
@@ -48,7 +48,7 @@ class _VSingleViewState extends State<VSingleView> {
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
         provider,
-        widget.context ?? context,
+        context,
       ),
     );
   }

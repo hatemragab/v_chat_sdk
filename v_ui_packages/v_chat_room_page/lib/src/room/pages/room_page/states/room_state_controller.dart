@@ -19,7 +19,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
           VPaginationModel<VRoom>(
             values: <VRoom>[],
             limit: 20,
-            page: 1,
+            page: 2,
             nextPage: null,
           ),
         );
@@ -236,7 +236,6 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   }
 
   Future<bool> onLoadMore() async {
-    ++value.page;
     final res = await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
         return _roomProvider.getApiRooms(
@@ -245,10 +244,11 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         );
       },
       onSuccess: (response) {
+        ++value.page;
         if (response.values.isEmpty) {
           isFinishLoadMore = true;
         }
-        for (var e in value.values) {
+        for (final e in response.values) {
           if (!value.values.contains(e)) {
             value.values.add(e);
           }

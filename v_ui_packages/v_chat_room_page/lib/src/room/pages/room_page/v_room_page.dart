@@ -5,15 +5,17 @@
 library v_room_page;
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:loadmore/loadmore.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state_controller.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/states/room_stream_state.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
-import 'room_item_controller.dart';
-import 'package:loadmore/loadmore.dart';
+
 import '../../../../v_chat_room_page.dart';
+import 'room_item_controller.dart';
 
 part './v_room_controller.dart';
 
@@ -70,7 +72,7 @@ class _VChatPageState extends State<VChatPage> {
                 return Expanded(
                   child: LoadMore(
                     onLoadMore: widget.controller._onLoadMore,
-                    isFinish: widget.controller._getIsFinishLoadMore(),
+                    isFinish: widget.controller._getIsFinishLoadMore,
                     textBuilder: (status) {
                       return "";
                     },

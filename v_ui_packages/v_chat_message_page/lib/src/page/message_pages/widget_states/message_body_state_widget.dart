@@ -17,9 +17,11 @@ class MessageBodyStateWidget extends StatelessWidget {
   final VBaseMessageController controller;
   final VRoomType roomType;
 
-  const MessageBodyStateWidget(
-      {Key? key, required this.controller, required this.roomType})
-      : super(key: key);
+  const MessageBodyStateWidget({
+    Key? key,
+    required this.controller,
+    required this.roomType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

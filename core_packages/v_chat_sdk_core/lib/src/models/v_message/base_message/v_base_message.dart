@@ -214,9 +214,6 @@ abstract class VBaseMessage {
   String get realContentMentionParsedWithAt =>
       VStringUtils.parseVMentions(realContent);
 
-  String get lastMessageTimeString =>
-      DateFormat.jm().format(DateTime.parse(createdAt).toLocal());
-
   DateTime get createdAtDate => DateTime.parse(createdAt).toLocal();
 
   DateTime? get seenAtDate =>

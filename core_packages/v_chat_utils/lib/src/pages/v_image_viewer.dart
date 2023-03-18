@@ -32,45 +32,53 @@ class _VImageViewerState extends State<VImageViewer> {
       return Material(
           child: Text("the file must be image ${widget.platformFileSource}"));
     }
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(color: Colors.white),
+    return Dismissible(
+      key: const Key('photo_view_gallery'),
+      direction: DismissDirection.down,
+      onDismissed: (direction) {
+        context.pop();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
+        body: PhotoView(
+          imageProvider: _getImageProvider(),
+        ),
+        floatingActionButton: widget.platformFileSource.isFromUrl
+            ? FloatingActionButton(
+                child: const Icon(Icons.save_alt),
+                onPressed: () async {
+                  await vSafeApiCall<String>(
+                    onLoading: () {
+                      VAppAlert.showOverlaySupport(
+                        title: VTrans.of(context).labels.downloading,
+                      );
+                    },
+                    request: () async {
+                      return VFileUtils.saveFileToPublicPath(
+                        fileAttachment: widget.platformFileSource,
+                        appName: widget.appName,
+                      );
+                    },
+                    onSuccess: (url) async {
+                      VAppAlert.showSuccessSnackBar(
+                        msg:
+                            VTrans.of(context).labels.successfullyDownloadedIn +
+                                url,
+                        context: context,
+                      );
+                    },
+                    onError: (exception, trace) {
+                      print(exception);
+                    },
+                  );
+                },
+              )
+            : null,
       ),
-      body: PhotoView(
-        imageProvider: _getImageProvider(),
-      ),
-      floatingActionButton: widget.platformFileSource.isFromUrl
-          ? FloatingActionButton(
-              child: const Icon(Icons.save_alt),
-              onPressed: () async {
-                await vSafeApiCall<String>(
-                  onLoading: () {
-                    VAppAlert.showOverlaySupport(
-                      title: VTrans.of(context).labels.downloading,
-                    );
-                  },
-                  request: () async {
-                    return VFileUtils.saveFileToPublicPath(
-                      fileAttachment: widget.platformFileSource,
-                      appName: widget.appName,
-                    );
-                  },
-                  onSuccess: (url) async {
-                    VAppAlert.showSuccessSnackBar(
-                      msg: VTrans.of(context).labels.successfullyDownloadedIn +
-                          url,
-                      context: context,
-                    );
-                  },
-                  onError: (exception, trace) {
-                    print(exception);
-                  },
-                );
-              },
-            )
-          : null,
     );
   }
 
