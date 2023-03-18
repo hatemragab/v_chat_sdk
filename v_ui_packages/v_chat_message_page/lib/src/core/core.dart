@@ -4,3 +4,4 @@
 
 export './enums.dart';
 export './message_nav.dart';
+export './stream_mixin.dart';

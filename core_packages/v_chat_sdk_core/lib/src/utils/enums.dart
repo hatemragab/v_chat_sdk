@@ -14,7 +14,6 @@ enum VMessageType {
   video,
   voice,
   location,
-  allDeleted,
   call,
   custom,
   info,
@@ -36,8 +35,6 @@ extension MessageTypeExt on VMessageType {
   bool get isFile => this == VMessageType.file;
 
   bool get isText => this == VMessageType.text;
-
-  bool get isAllDeleted => this == VMessageType.allDeleted;
 
   bool get isCenter => this == VMessageType.info;
 }

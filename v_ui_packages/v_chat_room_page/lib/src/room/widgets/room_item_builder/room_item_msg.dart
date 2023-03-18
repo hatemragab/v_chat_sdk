@@ -21,8 +21,13 @@ class RoomItemMsg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.vRoomTheme;
-    if (message.messageType.isAllDeleted) {
-      return VTrans.of(context).labels.messageHasBeenDeleted.text.italic;
+    if (message.allDeletedAt != null) {
+      return VTrans.of(context)
+          .labels
+          .messageHasBeenDeleted
+          .text
+          .italic
+          .color(Colors.grey);
     }
     if (message.isDeleted) {
       return message.getMessageTextInfoTranslated(context).text.lineThrough;

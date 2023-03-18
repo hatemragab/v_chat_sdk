@@ -4,7 +4,7 @@
 
 import 'package:event_bus_plus/res/event_bus.dart';
 
-class VEventBusSingleton {
+abstract class VEventBusSingleton {
   static EventBus vEventBus = EventBus();
 
   // VEventBusSingleton._privateConstructor();

@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/group/group_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../../v_chat_message_page.dart';
+import '../../../../widgets/app_bare/v_message_app_bare.dart';
 import '../../controllers/v_message_item_controller.dart';
 import '../../providers/message_provider.dart';
-import '../../states/app_bar_state_controller.dart';
 import '../../states/input_state_controller.dart';
-import '../../widget_states/app_bar_state_widget.dart';
 import '../../widget_states/input_widget_state.dart';
 import '../../widget_states/message_body_state_widget.dart';
+import 'group_app_bar_controller.dart';
 
 class VGroupView extends StatefulWidget {
   const VGroupView({
@@ -44,11 +45,14 @@ class _VGroupViewState extends State<VGroupView> {
         axis: Axis.vertical,
         suggestedRowHeight: 200,
       ),
-      appBarStateController: AppBarStateController(widget.vRoom),
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
         provider,
         context,
+      ),
+      groupAppBarController: GroupAppBarController(
+        messageProvider: provider,
+        vRoom: widget.vRoom,
       ),
     );
   }
@@ -58,8 +62,25 @@ class _VGroupViewState extends State<VGroupView> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppBarStateWidget(
-          controller: controller,
+        child: ValueListenableBuilder<GroupAppBarStateModel>(
+          valueListenable: controller.groupAppBarController,
+          builder: (_, value, __) {
+            if (value.isSearching) {
+              return VSearchAppBare(
+                onClose: controller.onCloseSearch,
+                onSearch: controller.onSearch,
+              );
+            }
+            return VMessageAppBare(
+              onSearch: controller.onOpenSearch,
+              room: widget.vRoom,
+              memberCount: value.myGroupInfo.membersCount,
+              totalOnline: value.myGroupInfo.totalOnline,
+              inTypingText: value.typingText,
+              onViewMedia: () => controller.onViewMedia(context, value.roomId),
+              onTitlePress: controller.onTitlePress,
+            );
+          },
         ),
       ),
       body: Container(

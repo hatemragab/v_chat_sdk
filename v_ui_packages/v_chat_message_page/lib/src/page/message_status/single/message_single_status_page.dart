@@ -23,12 +23,23 @@ class VMessageSingleStatusPage extends StatefulWidget {
       _VMessageSingleStatusPageState();
 }
 
-class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
+class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
+    with StreamMix {
   late final MessageSingleStatusController controller;
 
   @override
   void initState() {
     controller = MessageSingleStatusController();
+    streamsMix.addAll([
+      VEventBusSingleton.vEventBus
+          .on<VUpdateMessageDeliverEvent>()
+          .where((e) => e.roomId == widget.message.roomId)
+          .listen(_handleDeliver),
+      VEventBusSingleton.vEventBus
+          .on<VUpdateMessageSeenEvent>()
+          .where((e) => e.roomId == widget.message.roomId)
+          .listen(_handleSeen),
+    ]);
     super.initState();
   }
 
@@ -103,6 +114,17 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage> {
   void dispose() {
     super.dispose();
     controller.close();
+    closeStreamMix();
+  }
+
+  void _handleDeliver(VUpdateMessageDeliverEvent event) {
+    widget.message.deliveredAt = event.model.date;
+    setState(() {});
+  }
+
+  void _handleSeen(VUpdateMessageSeenEvent event) {
+    widget.message.seenAt = event.model.date;
+    setState(() {});
   }
 }
 

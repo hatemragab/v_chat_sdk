@@ -98,16 +98,16 @@ class SocketService {
     }
   }
 
-  Future<void> handleOnRoomBan(OnBanUserChatModel ban) async {
+  Future<void> handleOnSingleRoomBan(VSingleBlockModel ban) async {
     await _localRoom.updateRoomBlock(ban);
   }
 
-  Future<void> updateMessageType(VBaseMessage msg) async {
-    await _localMessage.updateMessageType(
-      VUpdateMessageTypeEvent(
+  Future<void> updateMessageToAllDeleted(VBaseMessage msg) async {
+    await _localMessage.updateMessageToAllDeleted(
+      VUpdateMessageAllDeletedEvent(
         roomId: msg.roomId,
         localId: msg.localId,
-        messageType: VMessageType.allDeleted,
+        message: msg,
       ),
     );
   }

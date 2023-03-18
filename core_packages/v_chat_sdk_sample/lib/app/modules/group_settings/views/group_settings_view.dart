@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -37,7 +36,11 @@ class GroupSettingsView extends GetView<GroupSettingsController> {
                   ListTile(
                     title: Text("Show members"),
                     onTap: logic.toShowMembers,
-                  )
+                  ),
+                  ListTile(
+                    title: Text("Leave"),
+                    onTap: logic.leave,
+                  ),
                 ],
               ),
             ),

@@ -1,6 +1,6 @@
 name: v_chat_utils
 description: utils for v chat sdk
-version: 0.7.3
+version: 0.7.5
 homepage: https://hatemragab.github.io/VChatSdk-Documentation/
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/core_packages/v_chat_utils
@@ -18,7 +18,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   cached_network_image: ^3.2.3
   textless: ^6.6.6
-  file_picker: ^5.2.5
+  file_picker: ^5.2.6
   image: ^4.0.15
   url_launcher: ^6.1.10
   image_cropper: ^3.0.1
@@ -38,7 +38,7 @@ dependencies:
   event_bus_plus: ^0.6.1
   photo_view: ^0.14.0
   chewie: ^1.4.0
-  video_player: ^2.5.3
+  video_player: ^2.6.0
   file_saver: ^0.1.1
   image_gallery_saver: ^1.7.1
   phosphor_flutter: ^1.4.0
@@ -53,7 +53,7 @@ dependencies:
   meta: ^1.8.0
   flutter_localizations:
     sdk: flutter
-  universal_html: ^2.0.9
+  universal_html: ^2.2.1
 dev_dependencies:
   flutter_lints: ^2.0.1
   lints: ^2.0.1

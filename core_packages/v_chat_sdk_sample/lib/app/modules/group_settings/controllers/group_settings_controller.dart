@@ -14,4 +14,8 @@ class GroupSettingsController extends GetxController {
   void toShowMembers() {
     Get.toNamed(Routes.GROUP_MEMBERS, arguments: data);
   }
+
+  void leave() async {
+    await VChatController.I.roomApi.leaveGroup(roomId: data.roomId);
+  }
 }

@@ -31,7 +31,7 @@ abstract class VBaseMessage {
     required this.seenAt,
     required this.deliveredAt,
     required this.forwardId,
-    required this.deletedAt,
+    required this.allDeletedAt,
     required this.parentBroadcastId,
     required this.isStared,
     required this.isEncrypted,
@@ -71,7 +71,7 @@ abstract class VBaseMessage {
   String? forwardId;
 
   /// when message deleted from all
-  String? deletedAt;
+  String? allDeletedAt;
 
   ///if message send through broadcast
   String? parentBroadcastId;
@@ -110,7 +110,7 @@ abstract class VBaseMessage {
               ),
         seenAt = map['sAt'] as String?,
         deliveredAt = map['dAt'] as String?,
-        deletedAt = map['dltAt'] as String?,
+        allDeletedAt = map['dltAt'] as String?,
         parentBroadcastId = map['pBId'] as String?,
         localId = map['lId'] as String,
         createdAt = map['createdAt'] as String,
@@ -139,7 +139,7 @@ abstract class VBaseMessage {
               ),
         deliveredAt = map[MessageTable.columnDeliveredAt] as String?,
         forwardId = map[MessageTable.columnForwardId] as String?,
-        deletedAt = map[MessageTable.columnAllDeletedAt] as String?,
+        allDeletedAt = map[MessageTable.columnAllDeletedAt] as String?,
         parentBroadcastId =
             map[MessageTable.columnParentBroadcastId] as String?,
         localId = map[MessageTable.columnLocalId] as String,
@@ -169,7 +169,7 @@ abstract class VBaseMessage {
       MessageTable.columnSeenAt: seenAt,
       MessageTable.columnDeliveredAt: deliveredAt,
       MessageTable.columnForwardId: forwardId,
-      MessageTable.columnAllDeletedAt: deletedAt,
+      MessageTable.columnAllDeletedAt: allDeletedAt,
       MessageTable.columnMessageEmitStatus: emitStatus.name,
       MessageTable.columnParentBroadcastId: parentBroadcastId,
       MessageTable.columnLocalId: localId,
@@ -210,6 +210,7 @@ abstract class VBaseMessage {
   String get realContent => contentTr ?? content;
 
   bool get isTrans => contentTr != null;
+  bool get isAllDeleted => allDeletedAt != null;
 
   String get realContentMentionParsedWithAt =>
       VStringUtils.parseVMentions(realContent);
@@ -225,7 +226,7 @@ abstract class VBaseMessage {
       deliveredAt == null ? null : DateTime.parse(deliveredAt!).toLocal();
 
   DateTime? get deletedAtDate =>
-      deletedAt == null ? null : DateTime.parse(deletedAt!).toLocal();
+      allDeletedAt == null ? null : DateTime.parse(allDeletedAt!).toLocal();
 
   bool get isFromBroadcast => parentBroadcastId != null;
 
@@ -237,7 +238,7 @@ abstract class VBaseMessage {
 
   @override
   String toString() {
-    return 'BaseMessage{id: $id, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, platform: $platform, roomId: $roomId, content: $content, messageType: $messageType, messageStatus: $emitStatus, replyTo: $replyTo, seenAt: $seenAt, deliveredAt: $deliveredAt, forwardId: $forwardId, deletedAt: $deletedAt, parentBroadcastId: $parentBroadcastId,  localId: $localId, createdAt: $createdAt, updatedAt: $updatedAt, isDeleted: $isDeleted, isStared: $isStared}';
+    return 'BaseMessage{id: $id, senderId: $senderId, senderName: $senderName, senderImageThumb: $senderImageThumb, platform: $platform, roomId: $roomId, content: $content, messageType: $messageType, messageStatus: $emitStatus, replyTo: $replyTo, seenAt: $seenAt, deliveredAt: $deliveredAt, forwardId: $forwardId, deletedAt: $allDeletedAt, parentBroadcastId: $parentBroadcastId,  localId: $localId, createdAt: $createdAt, updatedAt: $updatedAt, isDeleted: $isDeleted, isStared: $isStared}';
   }
 
   VBaseMessage.buildMessage({
@@ -261,7 +262,7 @@ abstract class VBaseMessage {
             VAppConstants.myProfile.baseUser.userImages.smallImage,
         emitStatus = VMessageEmitStatus.sending,
         parentBroadcastId = broadcastId,
-        deletedAt = null,
+        allDeletedAt = null,
         seenAt = null,
         deliveredAt = null;
 
@@ -286,7 +287,7 @@ abstract class VBaseMessage {
         senderImageThumb =
             VAppConstants.fakeMyProfile.baseUser.userImages.smallImage,
         parentBroadcastId = broadcastId,
-        deletedAt = null,
+        allDeletedAt = null,
         seenAt = null,
         deliveredAt = null;
 
@@ -308,7 +309,7 @@ abstract class VBaseMessage {
       "lId": localId,
       "dAt": deliveredAt,
       "forId": forwardId,
-      "dltAt": deletedAt,
+      "dltAt": allDeletedAt,
       "pBId": parentBroadcastId,
       "createdAt": createdAt,
       "updatedAt": updatedAt

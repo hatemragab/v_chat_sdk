@@ -11,7 +11,7 @@ abstract class BaseLocalMessageRepo {
 
   Future<int> deleteAllMessagesByRoomId(String roomId);
 
-  Future<int> updateMessageType(VUpdateMessageTypeEvent event);
+  Future<int> updateMessageToAllDeleted(VUpdateMessageAllDeletedEvent event);
 
   Future<int> updateMessageStatus(VUpdateMessageStatusEvent event);
 

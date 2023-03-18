@@ -11,12 +11,14 @@ class MessageStatusIconDataModel {
   final bool isMeSender;
   final bool isSeen;
   final bool isDeliver;
+  final bool isAllDeleted;
   final VMessageEmitStatus emitStatus;
 
   const MessageStatusIconDataModel({
     required this.isMeSender,
     required this.isSeen,
     required this.isDeliver,
+    this.isAllDeleted = false,
     required this.emitStatus,
   });
 }
@@ -34,7 +36,7 @@ class MessageStatusIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = context.vMessageTheme.messageSendingStatus;
-    if (!model.isMeSender) {
+    if (!model.isMeSender || model.isAllDeleted) {
       return const SizedBox.shrink();
     }
     if (model.isSeen) {

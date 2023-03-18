@@ -17,11 +17,9 @@ class NativeRemoteSocketIo {
 
   bool get isConnected => SocketController.instance.currentSocket.connected;
 
-  void emitGetMyOnline(List<VOnlineOfflineModel> ids) =>
+  void emitGetMyOnline(List<Map<String, dynamic>> ids) =>
       SocketController.instance.emitGetMyOnline(
-        jsonEncode(
-          ids.map((e) => e.toMap()).toList(),
-        ),
+        jsonEncode(ids),
       );
 
   void emitUpdateRoomStatus(VSocketRoomTypingModel model) =>

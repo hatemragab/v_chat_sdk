@@ -7,7 +7,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class AllDeletedItem extends StatelessWidget {
-  final VAllDeletedMessage message;
+  final VBaseMessage message;
 
   const AllDeletedItem({
     Key? key,

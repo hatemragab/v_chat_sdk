@@ -2,32 +2,34 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
+import 'package:v_chat_message_page/src/core/stream_mixin.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_message_item_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../chat_media/chat_media_page.dart';
-import '../states/app_bar_state_controller.dart';
 import '../states/input_state_controller.dart';
 import '../states/message_state/message_state_controller.dart';
 
-abstract class VBaseMessageController extends MessageStateController {
+abstract class VBaseMessageController extends MessageStateController
+    with StreamMix {
   final focusNode = FocusNode();
   final vConfig = VChatController.I.vChatConfig;
-  final AppBarStateController appBarStateController;
   final InputStateController inputStateController;
   final VMessageItemController itemController;
+  final events = VEventBusSingleton.vEventBus;
 
   VBaseMessageController({
     required super.vRoom,
     required super.messageProvider,
     required super.context,
     required super.scrollController,
-    required this.appBarStateController,
     required this.inputStateController,
     required this.itemController,
   }) {
@@ -35,6 +37,7 @@ abstract class VBaseMessageController extends MessageStateController {
     VRoomTracker.instance.addToOpenRoom(roomId: roomId);
     _removeAllNotifications();
     _setUpVoiceController();
+    _initMessagesStreams();
   }
 
   late final VVoicePlayerController voiceControllers;
@@ -43,19 +46,15 @@ abstract class VBaseMessageController extends MessageStateController {
 
   String get roomId => vRoom.id;
 
-  void onTitlePress(
-    BuildContext context,
-    String id,
-    VRoomType roomType,
-  );
+  void onTitlePress(BuildContext context);
 
   @override
   void close() {
     focusNode.dispose();
     inputStateController.close();
-    appBarStateController.close();
     voiceControllers.close();
     VRoomTracker.instance.closeOpenedRoom(roomId);
+    closeStreamMix();
     super.close();
   }
 
@@ -65,12 +64,10 @@ abstract class VBaseMessageController extends MessageStateController {
 
   void onOpenSearch() {
     inputStateController.hide();
-    appBarStateController.onOpenSearch();
   }
 
   void onCloseSearch() {
     inputStateController.unHide();
-    appBarStateController.onCloseSearch();
     resetMessages();
   }
 
@@ -257,5 +254,69 @@ abstract class VBaseMessageController extends MessageStateController {
         return value[index - 1].localId;
       },
     );
+  }
+
+  ///----------------------------- Messages streams -----------------------------------------------------
+  void _initMessagesStreams() {
+    ///messages events
+    streamsMix.addAll([
+      events
+          .on<VInsertMessageEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnNewMessage),
+      events
+          .on<VUpdateMessageEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnUpdateMessage),
+      events
+          .on<VDeleteMessageEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnDeleteMessage),
+      events
+          .on<VUpdateMessageDeliverEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnDeliverMessage),
+      events
+          .on<VUpdateMessageSeenEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnSeenMessage),
+      events
+          .on<VUpdateMessageStatusEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnUpdateMessageStatus),
+      events
+          .on<VUpdateMessageAllDeletedEvent>()
+          .where((event) => event.roomId == vRoom.id)
+          .listen(_handleOnAllDeleted),
+    ]);
+  }
+
+  void _handleOnNewMessage(VInsertMessageEvent event) async {
+    emitSeenFor(event.roomId);
+    insertMessage(event.messageModel);
+  }
+
+  void _handleOnUpdateMessage(VUpdateMessageEvent event) async {
+    updateMessage(event.messageModel);
+  }
+
+  void _handleOnDeleteMessage(VDeleteMessageEvent event) async {
+    deleteMessage(event.localId);
+  }
+
+  void _handleOnDeliverMessage(VUpdateMessageDeliverEvent event) async {
+    deliverAll(event.model);
+  }
+
+  void _handleOnSeenMessage(VUpdateMessageSeenEvent event) async {
+    seenAll(event.model);
+  }
+
+  void _handleOnUpdateMessageStatus(VUpdateMessageStatusEvent event) async {
+    updateMessageStatus(event.localId, event.emitState);
+  }
+
+  void _handleOnAllDeleted(VUpdateMessageAllDeletedEvent event) {
+    updateMessageAllDeletedAt(event.localId, event.message.allDeletedAt);
   }
 }

@@ -2,17 +2,14 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
-class MessageSingleStatusController extends ValueNotifier {
-  MessageSingleStatusController() : super([]);
+class MessageSingleStatusController {
   VVoiceMessageController? voiceMessageController;
 
   void close() {
     voiceMessageController?.dispose();
-    dispose();
   }
 
   VVoiceMessageController? getVoiceController(VBaseMessage message) {

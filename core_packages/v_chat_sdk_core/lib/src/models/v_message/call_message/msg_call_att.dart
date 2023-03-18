@@ -12,9 +12,9 @@ class VMsgCallAtt {
 
 //<editor-fold desc="Data Methods">
   DateTime? get endAtDate =>
-      endAt == null ? null : DateTime.parse(endAt!).toLocal();
+      endAt == null ? null : DateTime.parse(endAt!).toUtc();
 
-  DateTime get startAtDate => DateTime.parse(startAt).toLocal();
+  DateTime get startAtDate => DateTime.parse(startAt).toUtc();
 
   VMsgCallAtt({
     required this.callStatus,
@@ -25,7 +25,7 @@ class VMsgCallAtt {
 
   String? get duration {
     if (endAt == null) return null;
-    return endAtDate!.difference(startAtDate).inSeconds.toString();
+    return endAtDate!.difference(startAtDate).toString();
   }
 
   @override

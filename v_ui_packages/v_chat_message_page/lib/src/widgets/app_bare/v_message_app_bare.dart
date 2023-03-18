@@ -6,31 +6,32 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../models/app_bare_state_model.dart';
 import '../message_items/shared/message_typing_widget.dart';
 
 class VMessageAppBare extends StatelessWidget {
-  final MessageAppBarStateModel state;
-  final Function(
-    BuildContext context,
-    String id,
-    VRoomType roomType,
-  ) onTitlePress;
+  final Function(BuildContext context) onTitlePress;
   final VoidCallback onSearch;
   final VoidCallback onViewMedia;
-  final Function(bool isVideo) onCreateCall;
-  final Function(bool isBlocked) onUpdateBlock;
-  final bool isCallsAllow;
+  final Function(bool isVideo)? onCreateCall;
+  final Function(bool isBlocked)? onUpdateBlock;
+  final VRoom room;
+  final int? memberCount;
+  final int? totalOnline;
+  final DateTime? lastSeenAt;
+  final String? Function(BuildContext context) inTypingText;
 
   const VMessageAppBare({
     Key? key,
-    required this.state,
     required this.onTitlePress,
+    required this.room,
     required this.onSearch,
-    required this.onCreateCall,
+    required this.inTypingText,
+    this.onCreateCall,
+    this.memberCount,
+    this.totalOnline,
+    this.lastSeenAt,
+    this.onUpdateBlock,
     required this.onViewMedia,
-    required this.onUpdateBlock,
-    required this.isCallsAllow,
   }) : super(key: key);
 
   @override
@@ -42,52 +43,48 @@ class VMessageAppBare extends StatelessWidget {
       title: ListTile(
         contentPadding: EdgeInsets.zero,
         leading: VChatAvatarImage(
-          imageUrl: state.roomImage,
-          chatTitle: state.roomTitle,
-          isOnline: state.isOnline,
+          imageUrl: room.thumbImage,
+          chatTitle: room.title,
+          isOnline: room.isOnline,
           size: 40,
         ),
         horizontalTitleGap: 12,
         minLeadingWidth: 0,
         onTap: () {
-          onTitlePress(
-            context,
-            state.peerIdentifier ?? state.roomId,
-            state.roomType,
-          );
+          onTitlePress(context);
         },
-        title: state.roomTitle.text.bold,
-        subtitle: state.typingText(context) != null
+        title: room.title.text.bold,
+        subtitle: inTypingText(context) != null
             ? MessageTypingWidget(
-                text: state.typingText(context)!,
+                text: inTypingText(context)!,
               )
             : _getSubTitle(context),
       ),
       actions: [
-        _getCallIcon(),
+        _getCallIcon,
         PopupMenuButton(
           onSelected: (value) {
-            //don't not translate
+            ///don't not translate
             if (value == 'Search') {
               onSearch();
-              //focusNode.requestFocus();
-              // controller.toggleSearchMode();
-              // onSearchClicked();
-              //don't not translate
+
+              ///don't not translate
             } else if (value == 'media') {
               onViewMedia();
-              //don't not translate
+
+              ///don't not translate
             } else if (value == 'block') {
-              onUpdateBlock(true);
-              //don't not translate
+              onUpdateBlock?.call(true);
+
+              ///don't not translate
             } else if (value == 'un_block') {
-              onUpdateBlock(false);
+              onUpdateBlock?.call(false);
             }
           },
           itemBuilder: (BuildContext context) {
             final l = <PopupMenuItem<String>>[
               PopupMenuItem(
-                //don't not translate
+                ///don't not translate
                 value: "Search",
                 child: Row(
                   children: [
@@ -103,7 +100,7 @@ class VMessageAppBare extends StatelessWidget {
                 ),
               ),
               PopupMenuItem(
-                //don't not translate
+                /// don't not translate
                 value: "media",
                 child: Row(
                   children: [
@@ -119,9 +116,10 @@ class VMessageAppBare extends StatelessWidget {
                 ),
               ),
             ];
-            if (state.roomType.isSingleOrOrder) {
-              final map = VAppPref.getMap("ban-${state.roomId}");
-              final banModel = map == null ? null : VCheckBanModel.fromMap(map);
+            if (room.roomType.isSingleOrOrder) {
+              final map = VAppPref.getMap("ban-${room.id}");
+              final banModel =
+                  map == null ? null : VSingleBlockModel.fromMap(map);
               if (banModel == null || !banModel.isMeBanner) {
                 l.add(PopupMenuItem(
                   value: "block",
@@ -140,7 +138,7 @@ class VMessageAppBare extends StatelessWidget {
                 ));
               } else {
                 l.add(PopupMenuItem(
-                  //don't not translate
+                  ///don't not translate
                   value: "un_block",
                   child: Row(
                     children: [
@@ -165,38 +163,43 @@ class VMessageAppBare extends StatelessWidget {
   }
 
   Widget? _getSubTitle(BuildContext context) {
-    if (state.roomType.isSingleOrOrder) {
-      if (state.isOnline) {
+    if (room.roomType.isSingleOrOrder) {
+      if (room.isOnline) {
         return Text(VTrans.of(context).labels.online);
       }
-      if (state.lastSeenAt == null) {
+      if (lastSeenAt == null) {
         return null;
       } else {
         return Text(
           format(
-            state.lastSeenAt!.toLocal(),
+            lastSeenAt!.toLocal(),
             locale: VAppConstants.sdkLanguage,
           ),
         );
       }
-    } else if (state.memberCount != null) {
-      return Text("${VTrans.of(context).labels.members} ${state.memberCount}");
+    } else if (memberCount != null) {
+      if (totalOnline != null) {
+        return Text(
+            "${VTrans.of(context).labels.members} $memberCount  (${VTrans.labelsOf(context).online} $totalOnline)");
+      }
+      return Text("${VTrans.of(context).labels.members} $memberCount");
     }
     return null;
   }
 
-  Widget _getCallIcon() {
-    if (state.roomType.isSingleOrOrder) {
+  Widget get _getCallIcon {
+    final isCallsAllowed = VChatController.I.vChatConfig.isCallsAllowed;
+    if (room.roomType.isSingleOrOrder) {
       return Row(
         children: [
           InkWell(
             onTap: () {
-              if (!isCallsAllow) return;
-              onCreateCall(true);
+              if (!isCallsAllowed) return;
+              onCreateCall?.call(true);
             },
             child: Icon(
               PhosphorIcons.videoCameraFill,
-              color: isCallsAllow ? null : Colors.grey,
+              color: isCallsAllowed ? null : Colors.grey,
             ),
           ),
           const SizedBox(
@@ -204,12 +207,12 @@ class VMessageAppBare extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              if (!isCallsAllow) return;
-              onCreateCall(false);
+              if (!isCallsAllowed) return;
+              onCreateCall?.call(false);
             },
             child: Icon(
               PhosphorIcons.phoneCallFill,
-              color: isCallsAllow ? null : Colors.grey,
+              color: isCallsAllowed ? null : Colors.grey,
             ),
           ),
         ],

@@ -20,7 +20,7 @@ class Block {
     return _api.blockUser(identifier: peerIdentifier);
   }
 
-  Future<VCheckBanModel> checkIfThereBan({
+  Future<VSingleBlockModel> checkIfThereBan({
     required String peerIdentifier,
   }) async {
     return _api.checkIfThereBan(identifier: peerIdentifier);

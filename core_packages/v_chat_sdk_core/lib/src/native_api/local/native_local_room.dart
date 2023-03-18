@@ -75,8 +75,8 @@ class NativeLocalRoom {
     // return _roomRepo.updateTyping(event);
   }
 
-  Future<int> updateRoomBlock(OnBanUserChatModel ban) async {
-    final event = VBlockRoomEvent(banModel: ban, roomId: ban.roomId);
+  Future<int> updateRoomBlock(VSingleBlockModel ban) async {
+    final event = VSingleBlockEvent(banModel: ban, roomId: ban.roomId);
     // await _roomRepo.updateBlockRoom(event);
     _emitter.fire(event);
     return 1;

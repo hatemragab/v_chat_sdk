@@ -3,40 +3,52 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
+import 'package:v_chat_message_page/src/core/stream_mixin.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
-import 'package:v_chat_message_page/src/page/message_pages/states/block_state_controller.dart';
-import 'package:v_chat_message_page/src/page/message_pages/states/last_seen_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_pages/pages/single/single_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../controllers/message_stream_state_controller.dart';
-
-class VSingleController extends VBaseMessageController {
-  LastSeenStateController? lastSeenStateController;
-  late final MessageStreamState _localStreamChanges;
+class VSingleController extends VBaseMessageController with StreamMix {
+  final SingleAppBarController singleAppBarController;
 
   VSingleController({
     required super.vRoom,
     required super.context,
     required super.messageProvider,
     required super.scrollController,
-    required super.appBarStateController,
     required super.inputStateController,
     required super.itemController,
+    required this.singleAppBarController,
   }) {
-    _initStates();
+    _initStreams();
+    _getFromCache();
+    _checkBanRemote();
   }
 
   @override
   void close() {
-    _localStreamChanges.close();
-    lastSeenStateController?.close();
+    singleAppBarController.close();
+    closeStreamMix();
     super.close();
   }
 
   @override
-  void onTitlePress(BuildContext context, String id, VRoomType roomType) {
+  void onOpenSearch() {
+    singleAppBarController.onOpenSearch();
+    super.onOpenSearch();
+  }
+
+  @override
+  void onCloseSearch() {
+    singleAppBarController.onCloseSearch();
+    super.onCloseSearch();
+  }
+
+  @override
+  void onTitlePress(BuildContext context) {
     final toSingleSettings =
         VChatController.I.vNavigator.messageNavigator.toSingleSettings;
     if (toSingleSettings == null) return;
@@ -72,23 +84,6 @@ class VSingleController extends VBaseMessageController {
     );
   }
 
-  void _initStates() {
-    lastSeenStateController = LastSeenStateController(
-      appBarStateController,
-      vRoom,
-      messageProvider,
-    );
-
-    _localStreamChanges = MessageStreamState(
-      nativeApi: VChatController.I.nativeApi,
-      messageState: this,
-      appBarStateController: appBarStateController,
-      inputStateController: inputStateController,
-      currentRoom: vRoom,
-      blockStateController: BlockStateController(inputStateController, vRoom),
-    );
-  }
-
   Future onUpdateBlock(bool isBlocked) async {
     vSafeApiCall(
       request: () async {
@@ -108,5 +103,50 @@ class VSingleController extends VBaseMessageController {
   Future<List<VMentionModel>> onMentionRequireSearch(
       BuildContext context, String query) {
     return Future(() => []);
+  }
+
+  void _initStreams() {
+    streamsMix.add(VEventBusSingleton.vEventBus
+        .on<VSingleBlockEvent>()
+        .where((e) => e.roomId == vRoom.id)
+        .listen(_handleBlockEvent));
+  }
+
+  void _handleBlockEvent(VSingleBlockEvent event) async {
+    await updateValue(event.banModel);
+    if (event.banModel.isThereBan) {
+      inputStateController.closeChat();
+    } else {
+      inputStateController.openChat();
+    }
+  }
+
+  Future<void> _getFromCache() async {
+    final res = VAppPref.getMap("ban-${vRoom.id}");
+    if (res == null) return;
+    updateValue(VSingleBlockModel.fromMap(res));
+  }
+
+  Future<void> updateValue(VSingleBlockModel value) async {
+    await VAppPref.setMap("ban-${vRoom.id}", value.toMap());
+    if (value.isThereBan) {
+      inputStateController.closeChat();
+    } else {
+      inputStateController.openChat();
+    }
+  }
+
+  Future<void> _checkBanRemote() async {
+    if (vRoom.roomType.isSingleOrOrder) {
+      await vSafeApiCall<VSingleBlockModel>(
+        request: () {
+          return VChatController.I.blockApi
+              .checkIfThereBan(peerIdentifier: vRoom.peerIdentifier!);
+        },
+        onSuccess: (response) async {
+          await updateValue(response);
+        },
+      );
+    }
   }
 }

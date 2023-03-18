@@ -51,17 +51,17 @@ class VDeleteMessageEvent extends VMessageEvents {
   List<Object?> get props => [super.props, upMessage];
 }
 
-class VUpdateMessageTypeEvent extends VMessageEvents {
-  final VMessageType messageType;
+class VUpdateMessageAllDeletedEvent extends VMessageEvents {
+  final VBaseMessage message;
 
-  const VUpdateMessageTypeEvent({
+  const VUpdateMessageAllDeletedEvent({
     required super.roomId,
     required super.localId,
-    required this.messageType,
+    required this.message,
   });
 
   @override
-  List<Object?> get props => [super.props, messageType];
+  List<Object?> get props => [super.props, message];
 }
 
 class VUpdateMessageStatusEvent extends VMessageEvents {

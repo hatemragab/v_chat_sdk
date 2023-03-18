@@ -134,7 +134,7 @@ class VMessageItemController {
     if (message.messageType.isText) {
       items.add(_copyItem());
     }
-    if (message.messageType.isAllDeleted) {
+    if (message.allDeletedAt != null) {
       items.clear();
       //solution
       items.add(_deleteItem());
@@ -227,8 +227,6 @@ class VMessageItemController {
               forwardId: baseMessage.localId,
             );
             break;
-          case VMessageType.allDeleted:
-            break;
           case VMessageType.call:
             break;
           case VMessageType.custom:
@@ -306,7 +304,7 @@ class VMessageItemController {
   void _handleDelete(VBaseMessage message) async {
     final l = <ModelSheetItem>[];
     if (message.isMeSender &&
-        !message.messageType.isAllDeleted &&
+        !message.isAllDeleted &&
         message.emitStatus.isServerConfirm) {
       l.add(ModelSheetItem(
           title: VTrans.of(context).labels.deleteFromAll, id: 1));

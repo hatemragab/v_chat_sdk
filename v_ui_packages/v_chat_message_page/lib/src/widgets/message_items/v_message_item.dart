@@ -70,7 +70,7 @@ class VMessageItem extends StatelessWidget {
       onTap: () => onTap?.call(message),
       child: SwipeTo(
         key: UniqueKey(),
-        onRightSwipe: message.messageType.isAllDeleted
+        onRightSwipe: message.isAllDeleted
             ? null
             : () {
                 onSwipe?.call(message);
@@ -95,8 +95,7 @@ class VMessageItem extends StatelessWidget {
                 isFroward: message.isForward,
               ),
               ReplyItemWidget(
-                rToMessage:
-                    message.messageType.isAllDeleted ? null : message.replyTo,
+                rToMessage: message.isAllDeleted ? null : message.replyTo,
                 onHighlightMessage: onHighlightMessage,
               ),
               _getChild(message, context),
@@ -135,11 +134,12 @@ class VMessageItem extends StatelessWidget {
   }
 
   Widget _getChild(VBaseMessage message, BuildContext context) {
+    if (message.allDeletedAt != null) {
+      return AllDeletedItem(
+        message: message,
+      );
+    }
     switch (message.messageType) {
-      case VMessageType.allDeleted:
-        return AllDeletedItem(
-          message: message as VAllDeletedMessage,
-        );
       case VMessageType.text:
         return TextMessageItem(
           message: (message as VTextMessage).realContent,

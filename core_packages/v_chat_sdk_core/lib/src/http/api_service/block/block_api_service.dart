@@ -27,12 +27,12 @@ class VBlockApiService {
     return true;
   }
 
-  Future<VCheckBanModel> checkIfThereBan({
+  Future<VSingleBlockModel> checkIfThereBan({
     required String identifier,
   }) async {
     final res = await _blockApi!.checkBan(identifier);
     throwIfNotSuccess(res);
-    return VCheckBanModel.fromMap(extractDataFromResponse(res));
+    return VSingleBlockModel.fromMap(extractDataFromResponse(res));
   }
 
   static VBlockApiService init({

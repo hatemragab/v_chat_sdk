@@ -3,40 +3,46 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
-import 'package:v_chat_message_page/src/page/message_pages/states/block_state_controller.dart';
-import 'package:v_chat_message_page/src/page/message_pages/states/last_seen_state_controller.dart';
+import 'package:v_chat_message_page/src/page/message_pages/pages/order/order_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../controllers/message_stream_state_controller.dart';
-
 class VOrderController extends VBaseMessageController {
-  LastSeenStateController? lastSeenStateController;
-  late final MessageStreamState _localStreamChanges;
+  final OrderAppBarController orderAppBarController;
 
   VOrderController({
     required super.vRoom,
     required super.context,
     required super.messageProvider,
     required super.scrollController,
-    required super.appBarStateController,
     required super.inputStateController,
     required super.itemController,
-  }) {
-    _initStates();
-  }
+    required this.orderAppBarController,
+  });
 
   @override
   void close() {
-    _localStreamChanges.close();
-    lastSeenStateController?.close();
+    orderAppBarController.close();
     super.close();
   }
 
   @override
-  void onTitlePress(BuildContext context, String id, VRoomType roomType) {
+  void onOpenSearch() {
+    orderAppBarController.onOpenSearch();
+    super.onOpenSearch();
+  }
+
+  @override
+  void onCloseSearch() {
+    orderAppBarController.onCloseSearch();
+    super.onCloseSearch();
+  }
+
+  @override
+  void onTitlePress(BuildContext context) {
     final toSingleSettings =
         VChatController.I.vNavigator.messageNavigator.toSingleSettings;
     if (toSingleSettings == null) return;
@@ -69,23 +75,6 @@ class VOrderController extends VBaseMessageController {
         peerImage: vRoom.thumbImage,
         peerName: vRoom.title,
       ),
-    );
-  }
-
-  void _initStates() {
-    lastSeenStateController = LastSeenStateController(
-      appBarStateController,
-      vRoom,
-      messageProvider,
-    );
-
-    _localStreamChanges = MessageStreamState(
-      nativeApi: VChatController.I.nativeApi,
-      messageState: this,
-      appBarStateController: appBarStateController,
-      inputStateController: inputStateController,
-      currentRoom: vRoom,
-      blockStateController: BlockStateController(inputStateController, vRoom),
     );
   }
 

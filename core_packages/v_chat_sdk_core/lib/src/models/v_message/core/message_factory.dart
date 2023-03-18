@@ -26,8 +26,7 @@ abstract class MessageFactory {
         return VVoiceMessage.fromRemoteMap(map);
       case VMessageType.location:
         return VLocationMessage.fromRemoteMap(map);
-      case VMessageType.allDeleted:
-        return VAllDeletedMessage.fromRemoteMap(map);
+
       case VMessageType.info:
         return VInfoMessage.fromRemoteMap(map);
       case VMessageType.call:
@@ -55,8 +54,6 @@ abstract class MessageFactory {
         return VVoiceMessage.fromLocalMap(map);
       case VMessageType.location:
         return VLocationMessage.fromLocalMap(map);
-      case VMessageType.allDeleted:
-        return VAllDeletedMessage.fromLocalMap(map);
       case VMessageType.info:
         return VInfoMessage.fromLocalMap(map);
       case VMessageType.call:

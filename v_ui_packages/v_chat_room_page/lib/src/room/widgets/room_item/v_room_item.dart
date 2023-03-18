@@ -96,6 +96,9 @@ class VRoomItem extends StatelessWidget {
                                     //status
                                     MessageStatusIcon(
                                       model: MessageStatusIconDataModel(
+                                        isAllDeleted:
+                                            room.lastMessage.allDeletedAt !=
+                                                null,
                                         isSeen: room.lastMessage.seenAt != null,
                                         isDeliver:
                                             room.lastMessage.deliveredAt !=

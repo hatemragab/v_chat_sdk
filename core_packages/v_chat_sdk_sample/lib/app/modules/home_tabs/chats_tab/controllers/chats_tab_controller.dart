@@ -34,4 +34,10 @@ class ChatsTabController extends GetxController {
       }
     }
   }
+
+  @override
+  void onClose() {
+    super.onClose();
+    vRoomController.dispose();
+  }
 }

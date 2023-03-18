@@ -7,57 +7,52 @@ import 'dart:async';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-mixin VMessageStream {
-  late final StreamSubscription<VMessageEvents> _messagesStream;
-
-  void initMessageStream(Stream<VMessageEvents> stream) {
-    _messagesStream = stream.listen(
-      (event) {
-        if (event is VInsertMessageEvent) {
-          return onNewMsg(event);
-        }
-        if (event is VUpdateMessageEvent) {
-          return onUpdateMsg(event);
-        }
-        if (event is VDeleteMessageEvent) {
-          return onDeleteMsg(event);
-        }
-        if (event is VUpdateMessageTypeEvent) {
-          return onUpdateMsgType(event);
-        }
-
-        if (event is VUpdateMessageStatusEvent) {
-          return onUpdateMsgStatus(event);
-        }
-
-        if (event is VUpdateMessageSeenEvent) {
-          return onSeenAllMgs(event);
-        }
-        if (event is VUpdateMessageDeliverEvent) {
-          return onDeliverAllMgs(event);
-        }
-      },
-    );
-  }
-
-  void closeMessageStream() {
-    _messagesStream.cancel();
-  }
-
-  void onNewMsg(VInsertMessageEvent event) {}
-
-  void onUpdateMsg(VUpdateMessageEvent event) {}
-
-  void onDeleteMsg(VDeleteMessageEvent event) {}
-
-  void onUpdateMsgType(VUpdateMessageTypeEvent event) {}
-
-  void onUpdateMsgStatus(VUpdateMessageStatusEvent event) {}
-
-  void onSeenAllMgs(VUpdateMessageSeenEvent event) {}
-
-  void onDeliverAllMgs(VUpdateMessageDeliverEvent event) {}
-}
+// mixin VMessageStream {
+//   late final StreamSubscription<VMessageEvents> _messagesStream;
+//
+//   void initMessageStream(Stream<VMessageEvents> stream) {
+//     _messagesStream = stream.listen(
+//       (event) {
+//         if (event is VInsertMessageEvent) {
+//           return onNewMsg(event);
+//         }
+//         if (event is VUpdateMessageEvent) {
+//           return onUpdateMsg(event);
+//         }
+//         if (event is VDeleteMessageEvent) {
+//           return onDeleteMsg(event);
+//         }
+//
+//         if (event is VUpdateMessageStatusEvent) {
+//           return onUpdateMsgStatus(event);
+//         }
+//
+//         if (event is VUpdateMessageSeenEvent) {
+//           return onSeenAllMgs(event);
+//         }
+//         if (event is VUpdateMessageDeliverEvent) {
+//           return onDeliverAllMgs(event);
+//         }
+//       },
+//     );
+//   }
+//
+//   void closeMessageStream() {
+//     _messagesStream.cancel();
+//   }
+//
+//   void onNewMsg(VInsertMessageEvent event) {}
+//
+//   void onUpdateMsg(VUpdateMessageEvent event) {}
+//
+//   void onDeleteMsg(VDeleteMessageEvent event) {}
+//
+//   void onUpdateMsgStatus(VUpdateMessageStatusEvent event) {}
+//
+//   void onSeenAllMgs(VUpdateMessageSeenEvent event) {}
+//
+//   void onDeliverAllMgs(VUpdateMessageDeliverEvent event) {}
+// }
 
 mixin VRoomStream {
   late final StreamSubscription<VRoomEvents> _roomStream;
@@ -66,7 +61,7 @@ mixin VRoomStream {
 
   void onGroupKicked(VOnGroupKicked event) {}
 
-  void onBlockRoom(VBlockRoomEvent event) {}
+  void onBlockRoom(VSingleBlockEvent event) {}
 
   void onRoomOnline(VRoomOnlineEvent event) {}
 
@@ -92,7 +87,7 @@ mixin VRoomStream {
         if (event is VInsertRoomEvent) {
           return onInsertRoom(event);
         }
-        if (event is VBlockRoomEvent) {
+        if (event is VSingleBlockEvent) {
           return onBlockRoom(event);
         }
 

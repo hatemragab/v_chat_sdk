@@ -103,8 +103,8 @@ class SocketController implements ISocketIoClient {
     });
     _socket.on(SocketEvents.v1OnBanUserChat.name, (dynamic json) async {
       final data = jsonDecode(json.toString()) as Map<String, dynamic>;
-      final ban = OnBanUserChatModel.fromMap(data);
-      await _socketService.handleOnRoomBan(ban);
+      final ban = VSingleBlockModel.fromMap(data);
+      await _socketService.handleOnSingleRoomBan(ban);
     });
 
     _socket.on(SocketEvents.v1OnKickGroupMember.name, (dynamic json) async {
@@ -118,7 +118,7 @@ class SocketController implements ISocketIoClient {
         final msg = MessageFactory.createBaseMessage(
           jsonDecode(data.toString()) as Map<String, dynamic>,
         );
-        await _socketService.updateMessageType(msg);
+        await _socketService.updateMessageToAllDeleted(msg);
       },
     );
 

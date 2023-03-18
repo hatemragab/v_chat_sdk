@@ -76,14 +76,6 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   VRoom? roomById(String roomId) =>
       stateRooms.firstWhereOrNull((e) => e.id == roomId);
 
-  // void blockRoom(String roomId, OnBanUserChatModel banModel) {
-  //   final room = roomById(roomId);
-  //   if (room != null) {
-  //     room.blockerId = banModel.bannerId;
-  //     // roomStateStream.sink.add(room);
-  //   }
-  // }
-
   void updateOnline(String roomId) {
     final room = roomById(roomId);
     if (room != null) {
@@ -100,7 +92,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void setTyping(String roomId, VSocketRoomTypingModel typingModel) {
+  void updateTyping(String roomId, VSocketRoomTypingModel typingModel) {
     final room = roomById(roomId);
     if (room != null) {
       room.typingStatus = typingModel;
@@ -108,10 +100,10 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void updateName(String roomId, String name) {
+  void updateTitle(String roomId, String title) {
     final room = roomById(roomId);
     if (room != null) {
-      room.title = name;
+      room.title = title;
       roomStateStream.sink.add(room);
     }
   }
@@ -124,7 +116,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void addUnReadOne(String roomId) {
+  void updateCounterByOne(String roomId) {
     final room = roomById(roomId);
     if (room != null) {
       room.unReadCount = ++room.unReadCount;
@@ -156,7 +148,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void onDeleteMessage(VDeleteMessageEvent event) {
+  void deleteRoomLastMessage(VDeleteMessageEvent event) {
     final room = roomById(event.roomId);
     if (room != null && room.lastMessage.localId == event.localId) {
       if (event.upMessage != null) {
@@ -168,7 +160,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void onDeliverAllMgs(VUpdateMessageDeliverEvent event) {
+  void deliverRoomLastMessage(VUpdateMessageDeliverEvent event) {
     final room = roomById(event.roomId);
     if (room != null) {
       room.lastMessage.deliveredAt = event.model.date;
@@ -176,7 +168,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void onSeenAllMgs(VUpdateMessageSeenEvent event) {
+  void seenRoomLastMessage(VUpdateMessageSeenEvent event) {
     final room = roomById(event.roomId);
     if (room != null) {
       room.lastMessage.seenAt = event.model.date;
@@ -185,15 +177,15 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void onUpdateMsg(VUpdateMessageEvent event) {
+  void updateRoomLastMessageAllDelete(VUpdateMessageAllDeletedEvent event) {
     final room = roomById(event.roomId);
     if (room != null && room.lastMessage.localId == event.localId) {
-      room.lastMessage = event.messageModel;
+      room.lastMessage.allDeletedAt = event.message.allDeletedAt;
       roomStateStream.sink.add(room);
     }
   }
 
-  void onUpdateMsgStatus(VUpdateMessageStatusEvent event) {
+  void updateRoomLastMessageStatus(VUpdateMessageStatusEvent event) {
     final room = roomById(event.roomId);
     if (room != null && room.lastMessage.localId == event.localId) {
       room.lastMessage.emitStatus = event.emitState;
@@ -201,21 +193,15 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     }
   }
 
-  void onUpdateMsgType(VUpdateMessageTypeEvent event) {
+  void updateRoomLastMessage(VUpdateMessageEvent event) {
     final room = roomById(event.roomId);
     if (room != null && room.lastMessage.localId == event.localId) {
-      if (event.messageType.isAllDeleted) {
-        room.lastMessage.messageType = event.messageType;
-        final deletedMessage = VAllDeletedMessage.fromRemoteMap(
-          room.lastMessage.toRemoteMap(),
-        );
-        room.lastMessage = deletedMessage;
-        roomStateStream.sink.add(room);
-      }
+      room.lastMessage = event.messageModel;
+      roomStateStream.sink.add(room);
     }
   }
 
-  void onNewMessage(VInsertMessageEvent event) async {
+  void insertRoomLastMessage(VInsertMessageEvent event) async {
     final room = roomById(event.roomId);
     if (room != null) {
       room.isDeleted = false;

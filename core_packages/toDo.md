@@ -8,11 +8,15 @@
 - build v chat text parser widget package for parse links and texts and emails
 - support for link preview in message
 - support share contacts
+- add watermark () for email suport@suport.com to let people know
 - add order room api page
 - message media view page 
-- improve the message info real time updates
-- add total online member for group!
+- improve the message info real time updates [done]
+- add total online member for group! [done]
 - add custom widget from order item view page
-- improve appbar code
-
+- add inherited widget for manage chat customization
+- improve appbar code [done]
+- set all deleted as message props not type [done]
+- take look about fix update and edit message localId uuid vs mongo id!!!!
+- fix ban and check for ban api and group status also ! [done]
 

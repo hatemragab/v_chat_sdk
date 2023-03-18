@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:random_string/random_string.dart';
-
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VTextMessage extends VBaseMessage {
@@ -27,7 +26,7 @@ class VTextMessage extends VBaseMessage {
     required super.seenAt,
     required super.deliveredAt,
     required super.forwardId,
-    required super.deletedAt,
+    required super.allDeletedAt,
     required super.parentBroadcastId,
     required super.isStared,
   });

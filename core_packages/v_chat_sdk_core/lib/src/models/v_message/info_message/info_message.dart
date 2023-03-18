@@ -31,7 +31,7 @@ class VInfoMessage extends VBaseMessage {
     required super.seenAt,
     required super.deliveredAt,
     required super.forwardId,
-    required super.deletedAt,
+    required super.allDeletedAt,
     required super.parentBroadcastId,
     required super.isStared,
     required this.data,

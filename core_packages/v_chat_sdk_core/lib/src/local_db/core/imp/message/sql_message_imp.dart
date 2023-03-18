@@ -73,11 +73,11 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateMessageType(VUpdateMessageTypeEvent event) {
+  Future<int> updateMessageToAllDeleted(VUpdateMessageAllDeletedEvent event) {
     return _database.update(
       _table,
       {
-        MessageTable.columnMessageType: event.messageType.name,
+        MessageTable.columnAllDeletedAt: event.message.allDeletedAt,
       },
       where: "$_localId =?",
       whereArgs: [event.localId],

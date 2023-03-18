@@ -4,23 +4,18 @@
 
 part of 'v_room_page.dart';
 
-class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
+class VRoomController with StreamMix {
   VRoomController() {
-    initSocketStatusStream(
-      VChatController.I.nativeApi.streams.socketStatusStream,
-    );
-    initVAppLifeCycleStreamStream();
+    _initStreams();
     _roomState = RoomStateController(
       _roomProvider,
     );
-    _localStreamChanges = RoomStreamState(
-      nativeApi: VChatController.I.nativeApi,
-      roomState: _roomState,
-    );
   }
 
+  final _nativeApi = VChatController.I.nativeApi;
+  final _events = VEventBusSingleton.vEventBus;
   bool isFetchingRooms = false;
-  late final RoomStreamState _localStreamChanges;
+
   late RoomItemController _roomItemController;
   late final RoomStateController _roomState;
   late BuildContext _context;
@@ -106,9 +101,7 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
 
   void dispose() {
     _roomState.close();
-    _localStreamChanges.close();
-    closeSocketStatusStream();
-    closeVAppLifeCycleStreamStream();
+    closeStreamMix();
   }
 
   void _onRoomItemPress(VRoom room, BuildContext context) {
@@ -123,9 +116,130 @@ class VRoomController with VSocketStatusStream, VVAppLifeCycleStream {
     return _roomState.isFinishLoadMore;
   }
 
-  @override
-  void onSocketConnected() {
-    super.onSocketConnected();
-    _getRoomsFromApi();
+  void _initStreams() {
+    streamsMix.addAll([
+      ///socket events
+      _events.on<VSocketStatusEvent>().listen(_handleSocketConnectionStatus),
+      _events.on<VSocketIntervalEvent>().listen(_handleSocketIntervalFire),
+
+      ///room events
+      _events.on<VUpdateRoomImageEvent>().listen(_handleUpdateRoomImage),
+      _events.on<VUpdateRoomNameEvent>().listen(_handleUpdateRoomTitle),
+      _events.on<VUpdateRoomTypingEvent>().listen(_handleRoomTyping),
+      _events
+          .on<VUpdateRoomUnReadCountByOneEvent>()
+          .listen(_handleCounterByOne),
+      _events.on<VUpdateRoomMuteEvent>().listen(_handleMute),
+      _events.on<VDeleteRoomEvent>().listen(_handleDeleteRoom),
+      _events.on<VInsertRoomEvent>().listen(_handleInsertRoom),
+      _events
+          .on<VUpdateRoomUnReadCountToZeroEvent>()
+          .listen(_handleResetCounter),
+      _events.on<VRoomOfflineEvent>().listen(_handleOnOffRoom),
+      _events.on<VRoomOnlineEvent>().listen(_handleOnOnlineRoom),
+
+      ///messages events
+      _events.on<VInsertMessageEvent>().listen(_handleInsertMessage),
+      _events.on<VDeleteMessageEvent>().listen(_handleDeleteMessage),
+      _events.on<VUpdateMessageDeliverEvent>().listen(_handleDeliverMessages),
+      _events.on<VUpdateMessageSeenEvent>().listen(_handleSeenMessages),
+      _events.on<VUpdateMessageEvent>().listen(_handleUpdateMessages),
+      _events
+          .on<VUpdateMessageAllDeletedEvent>()
+          .listen(_handleAllDeleteMessage),
+      _events
+          .on<VUpdateMessageStatusEvent>()
+          .listen(_handleUpdateMessageStatus),
+    ]);
+  }
+
+  void _handleSocketConnectionStatus(VSocketStatusEvent event) {
+    if (event.isConnected) {
+      _getRoomsFromApi();
+    }
+  }
+
+  void _handleSocketIntervalFire(VSocketIntervalEvent event) {
+    ///emit to update online and offline
+    final ids = _roomState.stateRooms
+        .where((element) => element.roomType.isSingleOrOrder)
+        .toList();
+    _nativeApi.remote.socketIo.emitGetMyOnline(
+      ids
+          .map((e) => VOnlineOfflineModel(
+                peerId: e.peerId!,
+                isOnline: false,
+                roomId: e.id,
+              ).toMap())
+          .toList(),
+    );
+  }
+
+  void _handleUpdateRoomImage(VUpdateRoomImageEvent event) {
+    _roomState.updateImage(event.roomId, event.image);
+  }
+
+  void _handleUpdateRoomTitle(VUpdateRoomNameEvent event) {
+    _roomState.updateTitle(event.roomId, event.name);
+  }
+
+  void _handleRoomTyping(VUpdateRoomTypingEvent event) {
+    _roomState.updateTyping(event.roomId, event.typingModel);
+  }
+
+  void _handleCounterByOne(VUpdateRoomUnReadCountByOneEvent event) {
+    _roomState.updateCounterByOne(event.roomId);
+  }
+
+  void _handleMute(VUpdateRoomMuteEvent event) {
+    _roomState.updateMute(event.roomId, event.isMuted);
+  }
+
+  void _handleDeleteRoom(VDeleteRoomEvent event) {
+    _roomState.deleteRoom(event.roomId);
+  }
+
+  void _handleInsertRoom(VInsertRoomEvent event) {
+    _roomState.insertRoom(event.room);
+  }
+
+  void _handleResetCounter(VUpdateRoomUnReadCountToZeroEvent event) {
+    _roomState.resetRoomCounter(event.roomId);
+  }
+
+  void _handleOnOffRoom(VRoomOfflineEvent event) {
+    _roomState.updateOffline(event.roomId);
+  }
+
+  void _handleOnOnlineRoom(VRoomOnlineEvent event) {
+    _roomState.updateOnline(event.roomId);
+  }
+
+  void _handleInsertMessage(VInsertMessageEvent event) {
+    _roomState.insertRoomLastMessage(event);
+  }
+
+  void _handleDeleteMessage(VDeleteMessageEvent event) {
+    _roomState.deleteRoomLastMessage(event);
+  }
+
+  void _handleDeliverMessages(VUpdateMessageDeliverEvent event) {
+    _roomState.deliverRoomLastMessage(event);
+  }
+
+  void _handleSeenMessages(VUpdateMessageSeenEvent event) {
+    _roomState.seenRoomLastMessage(event);
+  }
+
+  void _handleUpdateMessages(VUpdateMessageEvent event) {
+    _roomState.updateRoomLastMessage(event);
+  }
+
+  void _handleUpdateMessageStatus(VUpdateMessageStatusEvent event) {
+    _roomState.updateRoomLastMessageStatus(event);
+  }
+
+  void _handleAllDeleteMessage(VUpdateMessageAllDeletedEvent event) {
+    _roomState.updateRoomLastMessageAllDelete(event);
   }
 }

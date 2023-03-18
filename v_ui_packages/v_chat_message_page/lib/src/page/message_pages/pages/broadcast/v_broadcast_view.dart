@@ -4,15 +4,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:v_chat_message_page/src/page/message_pages/pages/broadcast/broadcast_app_bar_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/broadcast/v_broadcast_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../../v_chat_message_page.dart';
+import '../../../../widgets/app_bare/v_message_app_bare.dart';
 import '../../controllers/v_message_item_controller.dart';
 import '../../providers/message_provider.dart';
-import '../../states/app_bar_state_controller.dart';
 import '../../states/input_state_controller.dart';
-import '../../widget_states/app_bar_state_widget.dart';
 import '../../widget_states/input_widget_state.dart';
 import '../../widget_states/message_body_state_widget.dart';
 
@@ -44,11 +45,14 @@ class _VBroadcastViewState extends State<VBroadcastView> {
         axis: Axis.vertical,
         suggestedRowHeight: 200,
       ),
-      appBarStateController: AppBarStateController(widget.vRoom),
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
         provider,
         context,
+      ),
+      broadcastAppBarController: BroadcastAppBarController(
+        messageProvider: provider,
+        vRoom: widget.vRoom,
       ),
     );
   }
@@ -58,8 +62,26 @@ class _VBroadcastViewState extends State<VBroadcastView> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppBarStateWidget(
-          controller: controller,
+        child: ValueListenableBuilder<BroadcastAppBarStateModel>(
+          valueListenable: controller.broadcastAppBarController,
+          builder: (_, value, __) {
+            if (value.isSearching) {
+              return VSearchAppBare(
+                onClose: controller.onCloseSearch,
+                onSearch: controller.onSearch,
+              );
+            }
+            return VMessageAppBare(
+              onSearch: controller.onOpenSearch,
+              memberCount: value.members,
+              room: widget.vRoom,
+              inTypingText: (context) {
+                return null;
+              },
+              onViewMedia: () => controller.onViewMedia(context, value.roomId),
+              onTitlePress: controller.onTitlePress,
+            );
+          },
         ),
       ),
       body: Container(

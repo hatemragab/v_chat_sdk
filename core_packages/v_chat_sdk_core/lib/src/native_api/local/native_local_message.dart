@@ -88,11 +88,11 @@ class NativeLocalMessage {
     return 1;
   }
 
-  Future<int> updateMessageType(
-    VUpdateMessageTypeEvent event,
+  Future<int> updateMessageToAllDeleted(
+    VUpdateMessageAllDeletedEvent event,
   ) async {
     _emitter.fire(event);
-    await _localMessageRepo.updateMessageType(event);
+    await _localMessageRepo.updateMessageToAllDeleted(event);
     return 1;
   }
 

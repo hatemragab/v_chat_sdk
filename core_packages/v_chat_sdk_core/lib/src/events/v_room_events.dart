@@ -43,10 +43,10 @@ class VInsertRoomEvent extends VRoomEvents {
   List<Object?> get props => [super.props, room];
 }
 
-class VBlockRoomEvent extends VRoomEvents {
-  final OnBanUserChatModel banModel;
+class VSingleBlockEvent extends VRoomEvents {
+  final VSingleBlockModel banModel;
 
-  const VBlockRoomEvent({
+  const VSingleBlockEvent({
     required super.roomId,
     required this.banModel,
   });

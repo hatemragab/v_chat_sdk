@@ -123,26 +123,18 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     }
   }
 
-  void updateMessageType(
-    String localId,
-    VMessageType messageType,
-  ) {
-    final index = _indexByLocalId(localId);
-    if (index != -1) {
-      if (messageType.isAllDeleted) {
-        value[index].messageType = messageType;
-        final deletedMessage =
-            VAllDeletedMessage.fromRemoteMap(value[index].toRemoteMap());
-        value[index] = deletedMessage;
-        messageStateStream.add(deletedMessage);
-      }
-    }
-  }
-
   void updateMessageStatus(String localId, VMessageEmitStatus emitState) {
     final index = _indexByLocalId(localId);
     if (index != -1) {
       value[index].emitStatus = emitState;
+      messageStateStream.add(value[index]);
+    }
+  }
+
+  void updateMessageAllDeletedAt(String localId, String? allDeletedAt) {
+    final index = _indexByLocalId(localId);
+    if (index != -1) {
+      value[index].allDeletedAt = allDeletedAt;
       messageStateStream.add(value[index]);
     }
   }
