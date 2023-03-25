@@ -52,7 +52,7 @@ class MessageStatusIcon extends StatelessWidget {
 
   Widget _getBody(Widget icon) {
     return Padding(
-      padding: const EdgeInsets.only(right: 3),
+      padding: const EdgeInsets.only(right: 0),
       child: icon,
     );
   }

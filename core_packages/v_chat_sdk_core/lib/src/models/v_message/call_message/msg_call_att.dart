@@ -25,7 +25,7 @@ class VMsgCallAtt {
 
   String? get duration {
     if (endAt == null) return null;
-    return endAtDate!.difference(startAtDate).toString();
+    return endAtDate!.difference(startAtDate).inSeconds.toString();
   }
 
   @override

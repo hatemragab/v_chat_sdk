@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -18,8 +19,9 @@ class CallMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        maxWidth: 400,
+        maxWidth: 300,
       ),
+      padding: const EdgeInsets.all(5),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -37,11 +39,27 @@ class CallMessageItem extends StatelessWidget {
           ),
           Expanded(
             child: ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              //visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               dense: true,
               title: message.data.withVideo
-                  ? VTrans.labelsOf(context).videoCall.text
-                  : VTrans.labelsOf(context).audioCall.text,
+                  ? VTrans.labelsOf(context)
+                      .videoCall
+                      .text
+                      .styled(
+                        style: message.isMeSender
+                            ? context.vMessageThemeNew.textMeSenderColor
+                            : context.vMessageThemeNew.textMeReceiverColor,
+                      )
+                      .size(14)
+                  : VTrans.labelsOf(context)
+                      .audioCall
+                      .text
+                      .styled(
+                        style: message.isMeSender
+                            ? context.vMessageThemeNew.textMeSenderColor
+                            : context.vMessageThemeNew.textMeReceiverColor,
+                      )
+                      .size(14),
               subtitle: _getSub(context),
             ),
           )
@@ -55,13 +73,25 @@ class CallMessageItem extends StatelessWidget {
       return "${message.data.duration.toString()} S"
           .text
           .maxLine(2)
-          .overflowEllipsis;
+          .overflowEllipsis
+          .styled(
+            style: message.isMeSender
+                ? context.vMessageThemeNew.textMeSenderColor
+                : context.vMessageThemeNew.textMeReceiverColor,
+          )
+          .size(14);
     }
     return message.data.callStatus
         .tr(context)
         .toString()
         .text
         .maxLine(2)
-        .overflowEllipsis;
+        .overflowEllipsis
+        .styled(
+          style: message.isMeSender
+              ? context.vMessageThemeNew.textMeSenderColor
+              : context.vMessageThemeNew.textMeReceiverColor,
+        )
+        .size(14);
   }
 }

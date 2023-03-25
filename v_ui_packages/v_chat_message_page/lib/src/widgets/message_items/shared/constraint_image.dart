@@ -24,7 +24,7 @@ class VConstraintImage extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(
         maxHeight: VPlatforms.isMobile ? height * .50 : height * .30,
-        maxWidth: VPlatforms.isMobile ? width * .80 : width * .40,
+        maxWidth: VPlatforms.isMobile ? width * .72 : width * .40,
       ),
       child: AspectRatio(
         aspectRatio: data.width / data.height,

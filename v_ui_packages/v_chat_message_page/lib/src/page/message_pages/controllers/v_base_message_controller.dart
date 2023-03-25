@@ -83,7 +83,7 @@ abstract class VBaseMessageController extends MessageStateController
     );
   }
 
-  void onMessageLongTap(VBaseMessage message) {
+  void onMessageLongTap(BuildContext context, VBaseMessage message) {
     return itemController.onMessageItemLongPress(
       message,
       vRoom,

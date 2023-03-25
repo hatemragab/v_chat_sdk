@@ -73,7 +73,8 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
 
   @override
   Future<int> updateMessageToAllDeleted(
-      VUpdateMessageAllDeletedEvent event,) async {
+    VUpdateMessageAllDeletedEvent event,
+  ) async {
     final msg = await findByLocalId(event.localId);
 
     if (msg == null) return 0;

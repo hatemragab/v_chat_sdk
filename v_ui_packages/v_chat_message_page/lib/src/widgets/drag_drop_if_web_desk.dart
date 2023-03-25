@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
@@ -36,7 +37,6 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
             onCreated: (DropzoneViewController ctrl) {
               controller.complete(ctrl);
             },
-            onLoaded: () => print('Zone loaded'),
             onError: (String? ev) => print('Error: $ev'),
             onHover: () {
               setState(() {

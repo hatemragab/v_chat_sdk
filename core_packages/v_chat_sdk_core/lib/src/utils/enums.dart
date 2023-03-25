@@ -21,6 +21,7 @@ enum VMessageType {
 
 extension MessageTypeExt on VMessageType {
   bool get isImage => this == VMessageType.image;
+  bool get isMedia => isImage || isVideo;
 
   bool get isCall => this == VMessageType.call;
 

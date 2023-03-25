@@ -20,7 +20,6 @@ final vDefaultMessageNavigator = VMessageNavigator(
   toMessagePage: (context, vRoom) {
     return context.toPage(VMessagePage(
       vRoom: vRoom,
-      context: context,
     ));
   },
   toVideoPlayer: (context, source) {

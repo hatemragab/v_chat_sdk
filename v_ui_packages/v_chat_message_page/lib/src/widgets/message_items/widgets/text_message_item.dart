@@ -43,14 +43,17 @@ class TextMessageItem extends StatelessWidget {
     //     ],
     //   ),
     // );
-    return VTextParserWidget(
-      text: message,
-      textStyle: textStyle,
-      enableTabs: true,
-      onEmailPress: onEmailPress,
-      onLinkPress: onLinkPress,
-      onPhonePress: onPhonePress,
-      onMentionPress: (userId) => onMentionPress(context, userId),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      child: VTextParserWidget(
+        text: message,
+        textStyle: textStyle,
+        enableTabs: true,
+        onEmailPress: onEmailPress,
+        onLinkPress: onLinkPress,
+        onPhonePress: onPhonePress,
+        onMentionPress: (userId) => onMentionPress(context, userId),
+      ),
     );
   }
 }

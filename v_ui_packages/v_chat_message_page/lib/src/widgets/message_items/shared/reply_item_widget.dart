@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -11,11 +12,13 @@ import '../../../core/types.dart';
 class ReplyItemWidget extends StatelessWidget {
   final VBaseMessage? rToMessage;
   final VMessageCallback? onHighlightMessage;
+  final bool isMeSender;
 
   const ReplyItemWidget({
     Key? key,
     required this.rToMessage,
     required this.onHighlightMessage,
+    required this.isMeSender,
   }) : super(key: key);
 
   @override
@@ -23,41 +26,65 @@ class ReplyItemWidget extends StatelessWidget {
     if (rToMessage == null) {
       return const SizedBox.shrink();
     }
+
     return Container(
-      margin: const EdgeInsets.all(1),
-      padding: const EdgeInsets.all(3),
+      constraints: const BoxConstraints(maxWidth: 300),
       decoration: BoxDecoration(
-        color: context.isDark ? Colors.black38 : const Color(0xffe7d8d8),
-        borderRadius: BorderRadius.circular(7),
+        color: isMeSender
+            ? context.vMessageThemeNew.bubbleMeSenderColor.withOpacity(.4)
+            : context.vMessageThemeNew.bubbleMeReceiverColor.withOpacity(.4),
+        // color: context.isDark
+        //     ? Colors.blue.withOpacity(.2)
+        //     : const Color(0xffe7d8d8).withOpacity(.5),
+        borderRadius: const BorderRadius.only(
+          bottomRight: Radius.circular(15),
+        ),
       ),
       child: InkWell(
+        onLongPress: null,
         onTap: onHighlightMessage == null
             ? null
             : () => onHighlightMessage!(rToMessage!),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.reply,
-              color: Colors.green,
-              size: 15,
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                VerticalDivider(
+                  color: isMeSender
+                      ? context.vMessageThemeNew.bubbleMeSenderColor
+                      : context.vMessageThemeNew.bubbleMeReceiverColor,
+                  thickness: 3,
+                  width: 2,
+                  indent: 2,
+                ),
+                const SizedBox(
+                  width: 9,
+                ),
+                // const Icon(
+                //   Icons.reply,
+                //   color: Colors.green,
+                //   size: 15,
+                // ),
+                const SizedBox(width: 2),
+                Flexible(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      getTitle(context).text.color(Colors.green),
+                      rToMessage!.realContentMentionParsedWithAt.cap
+                          .maxLine(2)
+                          .overflowEllipsis,
+                    ],
+                  ),
+                ),
+                _getImage()
+              ],
             ),
-            const SizedBox(width: 2),
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getTitle(context).text.color(Colors.green),
-                  rToMessage!.realContentMentionParsedWithAt.cap
-                      .maxLine(2)
-                      .overflowEllipsis,
-                ],
-              ),
-            ),
-            _getImage()
-          ],
+          ),
         ),
       ),
     );

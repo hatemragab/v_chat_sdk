@@ -42,7 +42,7 @@ class VTextParserWidget extends StatefulWidget {
 class _VTextParserWidgetState extends State<VTextParserWidget> {
   late String firstHalf;
   late String secondHalf;
-  int maxWords = 300;
+  int maxWords = 400;
   bool isShowMoreEnabled = false;
 
   @override
@@ -61,7 +61,11 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
 
   @override
   Widget build(BuildContext context) {
-    const blueTheme = TextStyle(color: Colors.blue);
+    const blueTheme = TextStyle(
+      // color: Colors.blue,
+      decoration: TextDecoration.underline,
+      fontWeight: FontWeight.w400,
+    );
     if (widget.isOneLine) {
       return _renderText(
         blueTheme: blueTheme,

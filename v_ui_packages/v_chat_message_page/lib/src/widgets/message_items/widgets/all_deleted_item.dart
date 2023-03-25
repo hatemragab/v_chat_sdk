@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -16,6 +17,16 @@ class AllDeletedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return VTrans.of(context).labels.messageHasBeenDeleted.text.italic;
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Text(
+        VTrans.of(context).labels.messageHasBeenDeleted,
+        style: message.isMeSender
+            ? context.vMessageThemeNew.textMeSenderColor
+                .merge(const TextStyle(fontStyle: FontStyle.italic))
+            : context.vMessageThemeNew.textMeReceiverColor
+                .merge(const TextStyle(fontStyle: FontStyle.italic)),
+      ),
+    );
   }
 }

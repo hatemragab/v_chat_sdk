@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-const double _iconSize = 19.0;
+const double _iconSize = 14.0;
 
 class VMsgStatusTheme {
   final Widget pendingIcon;

@@ -16,7 +16,7 @@ class MessageTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: DateFormat.jm().format(dateTime.toLocal()).cap,
+      child: DateFormat.jm().format(dateTime.toLocal()).cap.size(11).thin,
     );
   }
 }

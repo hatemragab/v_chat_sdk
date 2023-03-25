@@ -44,7 +44,7 @@ Future<T?> vSafeApiCall<T>({
     if (onError != null) {
       onError(err.toString(), stacktrace);
     }
-    log("", error: err, stackTrace: stacktrace, level: 1000);
+    log(err.toString(), error: err, stackTrace: stacktrace, level: 1000);
   } finally {
     if (finallyCallback != null) {
       finallyCallback();

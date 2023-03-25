@@ -301,6 +301,29 @@ class VMessageItemController {
     }
   }
 
+  void handleInfo2(BuildContext context, VBaseMessage message, VRoom room) {
+    FocusScope.of(context).unfocus();
+    if (room.roomType.isSingleOrOrder) {
+      VChatController.I.vNavigator.messageNavigator.toSingleChatMessageInfo(
+        context,
+        message,
+      );
+      return;
+    } else if (room.roomType.isGroup) {
+      VChatController.I.vNavigator.messageNavigator.toGroupChatMessageInfo(
+        context,
+        message,
+      );
+      return;
+    } else if (room.roomType.isBroadcast) {
+      VChatController.I.vNavigator.messageNavigator.toBroadcastChatMessageInfo(
+        context,
+        message,
+      );
+      return;
+    }
+  }
+
   void _handleDelete(VBaseMessage message) async {
     final l = <ModelSheetItem>[];
     if (message.isMeSender &&

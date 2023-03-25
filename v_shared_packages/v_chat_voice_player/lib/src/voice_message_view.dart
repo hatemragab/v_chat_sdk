@@ -56,6 +56,7 @@ class VVoiceMessageView extends StatelessWidget {
         valueListenable: controller,
         builder: (context, value, child) {
           return Row(
+            mainAxisSize: MainAxisSize.min,
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(

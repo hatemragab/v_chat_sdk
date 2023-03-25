@@ -46,7 +46,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                 title: VTrans.labelsOf(context).messageInfo.text,
               ),
               subtitle: Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
                 child: VMessageItem(
                   voiceController: controller.getVoiceController,
                   message: widget.message,

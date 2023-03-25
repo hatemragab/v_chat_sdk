@@ -23,8 +23,9 @@ class VoiceMessageItem extends StatelessWidget {
     //   print(message.data.fileSource.url);
     return Container(
       constraints: const BoxConstraints(
-        maxWidth: 400,
+        maxWidth: 300,
       ),
+      padding: const EdgeInsets.all(10),
       child: VVoiceMessageView(
         controller: voiceController(message)!,
         notActiveSliderColor: context.vMessageTheme

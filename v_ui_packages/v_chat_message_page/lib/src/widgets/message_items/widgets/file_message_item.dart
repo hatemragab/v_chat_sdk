@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -18,8 +19,9 @@ class FileMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        maxWidth: 400,
+        maxWidth: 300,
       ),
+      padding: const EdgeInsets.all(5),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -29,10 +31,21 @@ class FileMessageItem extends StatelessWidget {
           ),
           Expanded(
             child: ListTile(
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              dense: true,
-              title: message.data.fileSource.name.text,
-              subtitle: message.data.fileSource.readableSize.text,
+              // visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              title: message.data.fileSource.name.text
+                  .styled(
+                    style: message.isMeSender
+                        ? context.vMessageThemeNew.textMeSenderColor
+                        : context.vMessageThemeNew.textMeReceiverColor,
+                  )
+                  .size(14),
+              subtitle: message.data.fileSource.readableSize.text
+                  .styled(
+                    style: message.isMeSender
+                        ? context.vMessageThemeNew.textMeSenderColor
+                        : context.vMessageThemeNew.textMeReceiverColor,
+                  )
+                  .size(14),
             ),
           )
         ],

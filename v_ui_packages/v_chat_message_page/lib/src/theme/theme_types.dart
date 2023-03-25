@@ -3,11 +3,11 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/bubble_normal.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../widgets/message_items/shared/bubble_special_one.dart';
 import '../widgets/message_items/widgets/date_divider_item.dart';
 
 typedef LocationTypeDef = Widget Function(
@@ -106,16 +106,14 @@ Widget getMessageItemHolder(
   bool isMeSender,
   Widget child,
 ) {
-  final isRtl = context.isRtl;
   return Container(
     constraints: BoxConstraints(
       maxWidth: VPlatforms.isMobile
           ? MediaQuery.of(context).size.width * .75
           : MediaQuery.of(context).size.width * .50,
     ),
-    child: BubbleSpecialOne(
+    child: BubbleNormal(
       isSender: isMeSender,
-      isRtl: isRtl,
       tail: true,
       color: context.vMessageTheme.messageItemHolderColor(
         context,

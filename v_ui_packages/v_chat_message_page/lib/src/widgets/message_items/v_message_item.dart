@@ -4,10 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:swipe_to/swipe_to.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/bubble_normal.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/center_item_holder.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/shared/direction_item_holder.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/forward_item_widget.dart';
-import 'package:v_chat_message_page/src/widgets/message_items/shared/group_header.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_broadcast_icon.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_time_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/reply_item_widget.dart';
@@ -21,7 +20,7 @@ import 'package:v_chat_message_page/src/widgets/message_items/widgets/video_mess
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/voice_message_item.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_utils/v_chat_utils.dart' hide TextDirection;
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 
 import '../../core/types.dart';
@@ -49,22 +48,14 @@ class VMessageItem extends StatelessWidget {
     this.onHighlightMessage,
   }) : super(key: key);
 
-  // bool get isAllowOnTap =>
-  //     !message.messageType.isAllDeleted &&
-  //     !message.messageType.isVoice &&
-  //     onTap != null;
-
   @override
   Widget build(BuildContext context) {
-    //we have date divider holder
-    //we have normal holder
-    //we have info holder
-
     if (message.messageType.isCenter) {
       return CenterItemHolder(
         child: message.getMessageTextInfoTranslated(context).text.italic.medium,
       );
     }
+
     return InkWell(
       onLongPress: () => onLongTap?.call(message),
       onTap: () => onTap?.call(message),
@@ -75,65 +66,122 @@ class VMessageItem extends StatelessWidget {
             : () {
                 onSwipe?.call(message);
               },
-        child: DirectionItemHolder(
-          isMeSender: message.isMeSender,
-          child: Column(
-            crossAxisAlignment: message.isMeSender
-                ? CrossAxisAlignment.end
-                : CrossAxisAlignment.start,
-            children: [
-              if (!message.isMeSender)
-                GroupHeader(
-                  isGroup: roomType.isGroup,
-                  senderImage: message.senderImageThumb,
-                  senderName: message.senderName,
-                  onTab: () {
-                    _onMentionPress(context, message.sIdentifier);
-                  },
+        child: Row(
+          mainAxisAlignment: message.isMeSender
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            _getGroupUserAvatar(context),
+            Visibility(
+              visible: !message.isMeSender ? false : !message.isContainReply,
+              child: _getMessageActions,
+            ),
+            Column(
+              crossAxisAlignment: message.isMeSender
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
+              children: [
+                _getGroupUserTitle(context),
+                const SizedBox(
+                  height: 5,
                 ),
-              ForwardItemWidget(
-                isFroward: message.isForward,
-              ),
-              ReplyItemWidget(
-                rToMessage: message.isAllDeleted ? null : message.replyTo,
-                onHighlightMessage: onHighlightMessage,
-              ),
-              _getChild(message, context),
-              const SizedBox(
-                height: 5,
-              ),
-
-              ///footer
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  MessageBroadcastWidget(
-                    isFromBroadcast: message.isFromBroadcast,
-                  ),
-                  MessageTimeWidget(
-                    dateTime: message.createdAtDate,
-                  ),
-                  MessageStatusIcon(
-                    model: MessageStatusIconDataModel(
-                      isSeen: message.seenAt != null,
-                      isDeliver: message.deliveredAt != null,
-                      emitStatus: message.emitStatus,
-                      isMeSender: message.isMeSender,
+                ReplyItemWidget(
+                  rToMessage: message.isAllDeleted ? null : message.replyTo,
+                  onHighlightMessage: onHighlightMessage,
+                  isMeSender: message.isMeSender,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible:
+                          !message.isMeSender ? false : message.isContainReply,
+                      child: _getMessageActions,
                     ),
-                    onReSend: () {
-                      onReSend?.call(message);
-                    },
-                  ),
-                ],
-              )
-            ],
-          ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: VPlatforms.isMobile
+                            ? MediaQuery.of(context).size.width * .73
+                            : MediaQuery.of(context).size.width * .40,
+                      ),
+                      child: BubbleNormal(
+                        isSender: message.isMeSender,
+                        tail: true,
+                        bubbleRadius: 10,
+                        color: message.messageType.isMedia
+                            ? Colors.transparent
+                            : message.isMeSender
+                                ? context.vMessageThemeNew.bubbleMeSenderColor
+                                : context
+                                    .vMessageThemeNew.bubbleMeReceiverColor,
+                        child: _getChild(context),
+                      ),
+                    ),
+                    Visibility(
+                      visible:
+                          message.isMeSender ? false : message.isContainReply,
+                      child: _getMessageActions,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Visibility(
+              visible: message.isMeSender ? false : !message.isContainReply,
+              child: _getMessageActions,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _getChild(VBaseMessage message, BuildContext context) {
+  Widget get _getMessageActions {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          MessageTimeWidget(
+            dateTime: message.createdAtDate,
+          ),
+          const SizedBox(
+            width: 1,
+          ),
+          MessageBroadcastWidget(
+            isFromBroadcast: message.isFromBroadcast,
+          ),
+          const SizedBox(
+            width: 1,
+          ),
+          ForwardItemWidget(
+            isFroward: message.isForward,
+          ),
+          const SizedBox(
+            width: 1,
+          ),
+          MessageStatusIcon(
+            model: MessageStatusIconDataModel(
+              isSeen: message.seenAt != null,
+              isDeliver: message.deliveredAt != null,
+              emitStatus: message.emitStatus,
+              isMeSender: message.isMeSender,
+            ),
+            onReSend: () {
+              onReSend?.call(message);
+            },
+          ),
+          const SizedBox(
+            width: 1,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getChild(BuildContext context) {
     if (message.allDeletedAt != null) {
       return AllDeletedItem(
         message: message,
@@ -143,10 +191,9 @@ class VMessageItem extends StatelessWidget {
       case VMessageType.text:
         return TextMessageItem(
           message: (message as VTextMessage).realContent,
-          textStyle: context.vMessageTheme.textItemStyle(
-            context,
-            message.isMeSender,
-          ),
+          textStyle: message.isMeSender
+              ? context.vMessageThemeNew.textMeSenderColor
+              : context.vMessageThemeNew.textMeReceiverColor,
           onLinkPress: (link) async {
             await VStringUtils.lunchLink(link);
           },
@@ -203,5 +250,39 @@ class VMessageItem extends StatelessWidget {
     if (method != null) {
       method(context, identifier);
     }
+  }
+
+  Widget _getGroupUserAvatar(BuildContext context) {
+    if (roomType.isGroup && !message.isMeSender) {
+      return InkWell(
+        onTap: () {
+          _onMentionPress(context, message.sIdentifier);
+        },
+        child: Row(
+          children: [
+            VCircleAvatar(
+              fullUrl: message.senderImageThumb,
+              radius: 14,
+            ),
+            const SizedBox(
+              width: 5,
+            )
+          ],
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _getGroupUserTitle(BuildContext context) {
+    if (roomType.isGroup && !message.isMeSender) {
+      return InkWell(
+        onTap: () {
+          _onMentionPress(context, message.sIdentifier);
+        },
+        child: message.senderName.cap,
+      );
+    }
+    return const SizedBox.shrink();
   }
 }

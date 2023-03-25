@@ -19,4 +19,5 @@
 - set all deleted as message props not type [done]
 - take look about fix update and edit message localId uuid vs mongo id!!!!
 - fix ban and check for ban api and group status also ! [done]
+- improve rooms socket in server side
 

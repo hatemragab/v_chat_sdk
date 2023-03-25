@@ -83,7 +83,6 @@ class ChatRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return VMessagePage(
       vRoom: room,
-      context: vWebChatNavigation.key.currentContext!,
     );
   }
 }

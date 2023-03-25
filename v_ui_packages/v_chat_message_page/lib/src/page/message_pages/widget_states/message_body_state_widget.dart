@@ -38,11 +38,12 @@ class MessageBodyStateWidget extends StatelessWidget {
                   thickness: 5,
                   controller: controller.scrollController,
                   child: ListView.separated(
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: VPlatforms.isWeb ? 12 : 10,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     controller: controller.scrollController,
                     // key: const PageStorageKey("VListViewItems"),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 8,
-                    ),
                     cacheExtent: 300,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
@@ -69,7 +70,8 @@ class MessageBodyStateWidget extends StatelessWidget {
                                 child: VMessageItem(
                                   onTap: controller.onMessageTap,
                                   roomType: roomType,
-                                  onLongTap: controller.onMessageLongTap,
+                                  onLongTap: (message) => controller
+                                      .onMessageLongTap(context, message),
                                   message: snapshot.data!,
                                   voiceController: (message) {
                                     if (message is VVoiceMessage) {

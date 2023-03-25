@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:v_chat_message_page/src/theme/theme_types.dart';
+import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../v_chat_message_page.dart';
 
@@ -93,5 +94,18 @@ extension VMessageThemeExt on BuildContext {
       }
     }
     return theme;
+  }
+}
+
+extension VMessageThemeNewExt on BuildContext {
+  VBaseMessageTheme get vMessageThemeNew {
+    if (VInheritedMessageTheme.of(this) == null) {
+      if (isDark) {
+        return VDarkMessageTheme();
+      } else {
+        return VLightMessageTheme();
+      }
+    }
+    return VInheritedMessageTheme.of(this)!.theme;
   }
 }

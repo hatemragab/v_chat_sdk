@@ -18,7 +18,7 @@ class MessageBroadcastWidget extends StatelessWidget {
       padding: EdgeInsets.only(right: 5),
       child: Icon(
         PhosphorIcons.speakerHigh,
-        size: 16,
+        size: 15,
       ),
     );
   }

@@ -263,19 +263,20 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<int> getUnReadCount() async {
     final maps = await _database
         .rawQuery("SELECT SUM(${RoomTable.columnUnReadCount}) FROM $_table");
+    print(maps);
     if (maps.isEmpty) {
       print("while getUnReadCount maps is empty !!!!!!");
       return 0;
     }
 
     final res = int.tryParse(
-      maps.first[RoomTable.columnUnReadCount].toString(),
+      maps.first.values.first.toString(),
       radix: 10,
     );
     if (res == null) {
       print("while getUnReadCount tryParse cant done !!!!!!");
       return 0;
     }
-    return res ?? 0;
+    return res;
   }
 }

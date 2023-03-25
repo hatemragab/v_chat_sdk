@@ -16,6 +16,11 @@ class ForwardItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!isFroward) return const SizedBox.shrink();
+    return const Icon(
+      Icons.forward,
+      color: Colors.grey,
+      size: 15,
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: 3),
       child: Row(

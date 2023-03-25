@@ -13,6 +13,7 @@ import 'package:v_chat_utils/v_chat_utils.dart';
 class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   final RoomProvider _roomProvider;
   bool isFinishLoadMore = false;
+  bool _isLoadMoreActive = false;
 
   RoomStateController(this._roomProvider)
       : super(
@@ -222,8 +223,15 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   }
 
   Future<bool> onLoadMore() async {
+    if (_isLoadMoreActive) {
+      return false;
+    }
     final res = await vSafeApiCall<VPaginationModel<VRoom>>(
+      onLoading: () {
+        _isLoadMoreActive = true;
+      },
       request: () async {
+        print("start loadmore to page ${value.page}");
         return _roomProvider.getApiRooms(
           VRoomsDto(page: value.page, limit: 20),
           deleteOnEmpty: false,
@@ -241,6 +249,13 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         }
         value.values.sortByMsgId();
         notifyListeners();
+        _isLoadMoreActive = false;
+        print("_isLoadMoreActive_isLoadMoreActive ${response.values.length}");
+      },
+      onError: (exception, trace) {
+        print(exception);
+        print(trace);
+        _isLoadMoreActive = false;
       },
     );
     if (res == null || res.values.isEmpty) {
