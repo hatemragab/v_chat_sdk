@@ -9,7 +9,7 @@ const config = {
     title: 'V Chat SDK',
     tagline: 'V Chat is a cutting-edge chat API SaaS that leverages the power of Node.js and Socket.IO to provide a seamless real-time communication experience for its clients. This platform is designed to meet the needs of modern businesses that require instant communication solutions to engage their customers and teams efficiently.',
     url: 'https://hatemragab.github.io',
-    baseUrl: '/VChatSdk-v2/',
+    baseUrl: '/v_chat_sdk/tree/master/documentations/vchat-v2/',
 
     favicon: 'img/favicon.ico',
 
