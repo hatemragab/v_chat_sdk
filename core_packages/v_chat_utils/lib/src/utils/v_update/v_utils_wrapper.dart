@@ -20,17 +20,19 @@ class VUtilsWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: VLanguageListener.I,
-      builder: (context, values, _) => ValueListenableBuilder(
-        valueListenable: VThemeListener.I,
-        builder: (context, values, _) {
-          return builder(
-            context,
-            VLanguageListener.I.appLocal,
-            VThemeListener.I.appTheme,
-          );
-        },
+    return OverlaySupport.global(
+      child: ValueListenableBuilder(
+        valueListenable: VLanguageListener.I,
+        builder: (context, values, _) => ValueListenableBuilder(
+          valueListenable: VThemeListener.I,
+          builder: (context, values, _) {
+            return builder(
+              context,
+              VLanguageListener.I.appLocal,
+              VThemeListener.I.appTheme,
+            );
+          },
+        ),
       ),
     );
   }

@@ -21,10 +21,10 @@ class VSingleView extends StatefulWidget {
   const VSingleView({
     Key? key,
     required this.vRoom,
-    this.context,
+    required this.vMessageConfig,
   }) : super(key: key);
   final VRoom vRoom;
-  final BuildContext? context;
+  final VMessageConfig vMessageConfig;
 
   @override
   State<VSingleView> createState() => _VSingleViewState();
@@ -39,6 +39,7 @@ class _VSingleViewState extends State<VSingleView> {
     final provider = MessageProvider();
     controller = VSingleController(
       vRoom: widget.vRoom,
+      vMessageConfig: widget.vMessageConfig,
       singleAppBarController: SingleAppBarController(
         vRoom: widget.vRoom,
         messageProvider: provider,
@@ -51,8 +52,9 @@ class _VSingleViewState extends State<VSingleView> {
       ),
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
-        provider,
-        context,
+        messageProvider: provider,
+        context: context,
+        vMessageConfig: widget.vMessageConfig,
       ),
     );
   }
@@ -72,6 +74,7 @@ class _VSingleViewState extends State<VSingleView> {
               );
             }
             return VMessageAppBare(
+              isCallAllowed: widget.vMessageConfig.isCallsAllowed,
               onSearch: controller.onOpenSearch,
               room: widget.vRoom,
               inTypingText: value.typingText,
@@ -89,9 +92,10 @@ class _VSingleViewState extends State<VSingleView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VSocketStatusWidget(
-              delay: Duration.zero,
-            ),
+            if (widget.vMessageConfig.showDisconnectedWidget)
+              const VSocketStatusWidget(
+                delay: Duration.zero,
+              ),
             MessageBodyStateWidget(
               controller: controller,
               roomType: widget.vRoom.roomType,

@@ -46,39 +46,14 @@ class RoomApi {
     return true;
   }
 
-  Future<bool> translateRoomTo({
-    required String roomId,
-    required String transTo,
-  }) async {
-    await _vNativeApi.local.room
-        .updateTransTo(roomId: roomId, transTo: transTo);
-    await _vNativeApi.remote.room.transTo(roomId: roomId, transTo: transTo);
-    return true;
-  }
-
-  ///only works for single rooms
-  // Future<bool> blockUser(String roomId) async {
-  //   await _vNativeApi.local.room
-  //       .updateRoomBlock(OnBanUserChatModel( roomId: roomId));
-  //   // await _vNativeApi.remote.room.closeChat(roomId);
-  //   return true;
-  // }
-
-  // Future<bool> changeRoomNotification({
+  // Future<bool> translateRoomTo({
   //   required String roomId,
-  //   required bool isMuted,
+  //   required String transTo,
   // }) async {
-  //   await _vNativeApi.remote.room.unMuteRoomNotification(
-  //     roomId: roomId,
-  //     isMuted: isMuted,
-  //   );
-  //   await _vNativeApi.local.room.updateRoomIsMuted(
-  //     VUpdateRoomMuteEvent(
-  //       roomId: roomId,
-  //       isMuted: isMuted,
-  //     ),
-  //   );
-  //   return isMuted;
+  //   await _vNativeApi.local.room
+  //       .updateTransTo(roomId: roomId, transTo: transTo);
+  //   await _vNativeApi.remote.room.transTo(roomId: roomId, transTo: transTo);
+  //   return true;
   // }
 
   /// group room apis ----------------------------------------------
@@ -284,5 +259,22 @@ class RoomApi {
   //-------calls
   Future<List<VCallHistory>> getCallHistory() {
     return _vNativeApi.remote.calls.getCallHistory();
+  }
+
+  Future<void> sendCustomMessage({
+    required String roomId,
+    required Map<String, dynamic> data,
+  }) async {
+    return MessageUploaderQueue.instance.addToQueue(
+      await MessageFactory.createUploadMessage(
+        VCustomMessage.buildMessage(
+          roomId: roomId,
+          data: VCustomMsgData(
+            data: data,
+          ),
+          content: "V Custom Message",
+        ),
+      ),
+    );
   }
 }

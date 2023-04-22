@@ -15,6 +15,7 @@ class VOrderController extends VBaseMessageController {
 
   VOrderController({
     required super.vRoom,
+    required super.vMessageConfig,
     required super.context,
     required super.messageProvider,
     required super.scrollController,

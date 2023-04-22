@@ -40,10 +40,11 @@ final vDefaultMessageNavigator = VMessageNavigator(
   },
   toGroupChatMessageInfo: (context, message) =>
       context.toPage(VMessageGroupStatusPage(message: message)),
-  toBroadcastChatMessageInfo: (context, message) =>
-      context.toPage(VMessageBroadcastStatusPage(
-    message: message,
-  )),
+  toBroadcastChatMessageInfo: (context, message) => context.toPage(
+    VMessageBroadcastStatusPage(
+      message: message,
+    ),
+  ),
   toSingleChatMessageInfo: (context, message) =>
       context.toPage(VMessageSingleStatusPage(
     message: message,

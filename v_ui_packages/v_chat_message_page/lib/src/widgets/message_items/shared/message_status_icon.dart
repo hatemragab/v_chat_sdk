@@ -26,7 +26,6 @@ class MessageStatusIconDataModel {
 class MessageStatusIcon extends StatelessWidget {
   final VoidCallback? onReSend;
   final MessageStatusIconDataModel model;
-
   const MessageStatusIcon({
     Key? key,
     required this.model,

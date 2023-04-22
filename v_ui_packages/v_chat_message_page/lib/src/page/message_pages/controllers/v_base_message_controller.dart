@@ -7,12 +7,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
-import 'package:v_chat_message_page/src/core/stream_mixin.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_message_item_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../../v_chat_message_page.dart';
 import '../../chat_media/chat_media_page.dart';
 import '../states/input_state_controller.dart';
 import '../states/message_state/message_state_controller.dart';
@@ -24,13 +24,14 @@ abstract class VBaseMessageController extends MessageStateController
   final InputStateController inputStateController;
   final VMessageItemController itemController;
   final events = VEventBusSingleton.vEventBus;
-
+  final VMessageConfig vMessageConfig;
   VBaseMessageController({
     required super.vRoom,
     required super.messageProvider,
     required super.context,
     required super.scrollController,
     required this.inputStateController,
+    required this.vMessageConfig,
     required this.itemController,
   }) {
     messageProvider.setSeen(roomId);
@@ -104,7 +105,7 @@ abstract class VBaseMessageController extends MessageStateController
     final fileRes = await context.toPage(VMediaEditorView(
       files: files,
       config: VMediaEditorConfig(
-        imageQuality: vConfig.compressImageQuality,
+        imageQuality: vMessageConfig.compressImageQuality,
       ),
     )) as List<VBaseMediaRes>?;
 

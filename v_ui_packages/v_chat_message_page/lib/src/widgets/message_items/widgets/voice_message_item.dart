@@ -28,11 +28,9 @@ class VoiceMessageItem extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: VVoiceMessageView(
         controller: voiceController(message)!,
-        notActiveSliderColor: context.vMessageTheme
-            .messageItemHolderColor(
-              context,
+        notActiveSliderColor: context
+            .getMessageItemHolderColor(
               message.isMeSender,
-              context.isDark,
             )
             .withOpacity(.3),
         activeSliderColor: context.isDark ? Colors.green : Colors.red,

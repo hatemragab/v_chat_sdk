@@ -47,8 +47,8 @@ class CallMessageItem extends StatelessWidget {
                       .text
                       .styled(
                         style: message.isMeSender
-                            ? context.vMessageThemeNew.textMeSenderColor
-                            : context.vMessageThemeNew.textMeReceiverColor,
+                            ? context.vMessageTheme.senderTextStyle
+                            : context.vMessageTheme.receiverTextStyle,
                       )
                       .size(14)
                   : VTrans.labelsOf(context)
@@ -56,8 +56,8 @@ class CallMessageItem extends StatelessWidget {
                       .text
                       .styled(
                         style: message.isMeSender
-                            ? context.vMessageThemeNew.textMeSenderColor
-                            : context.vMessageThemeNew.textMeReceiverColor,
+                            ? context.vMessageTheme.senderTextStyle
+                            : context.vMessageTheme.receiverTextStyle,
                       )
                       .size(14),
               subtitle: _getSub(context),
@@ -76,8 +76,8 @@ class CallMessageItem extends StatelessWidget {
           .overflowEllipsis
           .styled(
             style: message.isMeSender
-                ? context.vMessageThemeNew.textMeSenderColor
-                : context.vMessageThemeNew.textMeReceiverColor,
+                ? context.vMessageTheme.senderTextStyle
+                : context.vMessageTheme.receiverTextStyle,
           )
           .size(14);
     }
@@ -89,8 +89,8 @@ class CallMessageItem extends StatelessWidget {
         .overflowEllipsis
         .styled(
           style: message.isMeSender
-              ? context.vMessageThemeNew.textMeSenderColor
-              : context.vMessageThemeNew.textMeReceiverColor,
+              ? context.vMessageTheme.senderTextStyle
+              : context.vMessageTheme.receiverTextStyle,
         )
         .size(14);
   }

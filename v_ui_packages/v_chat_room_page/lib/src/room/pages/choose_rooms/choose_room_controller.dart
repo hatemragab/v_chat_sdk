@@ -40,8 +40,6 @@ class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   int get selectedCount => value.where((e) => e.isSelected).length;
 
   void onRoomItemPress(VRoom room, BuildContext context) {
-    print(selectedCount);
-    print(maxForward);
     if (selectedCount >= maxForward) {
       return;
     }

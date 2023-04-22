@@ -31,8 +31,8 @@ class ReplyItemWidget extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 300),
       decoration: BoxDecoration(
         color: isMeSender
-            ? context.vMessageThemeNew.bubbleMeSenderColor.withOpacity(.4)
-            : context.vMessageThemeNew.bubbleMeReceiverColor.withOpacity(.4),
+            ? context.vMessageTheme.senderBubbleColor.withOpacity(.4)
+            : context.vMessageTheme.receiverBubbleColor.withOpacity(.4),
         // color: context.isDark
         //     ? Colors.blue.withOpacity(.2)
         //     : const Color(0xffe7d8d8).withOpacity(.5),
@@ -54,8 +54,8 @@ class ReplyItemWidget extends StatelessWidget {
               children: [
                 VerticalDivider(
                   color: isMeSender
-                      ? context.vMessageThemeNew.bubbleMeSenderColor
-                      : context.vMessageThemeNew.bubbleMeReceiverColor,
+                      ? context.vMessageTheme.senderBubbleColor
+                      : context.vMessageTheme.receiverBubbleColor,
                   thickness: 3,
                   width: 2,
                   indent: 2,

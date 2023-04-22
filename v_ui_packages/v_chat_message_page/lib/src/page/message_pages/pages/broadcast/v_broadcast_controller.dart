@@ -21,6 +21,7 @@ class VBroadcastController extends VBaseMessageController {
     required super.scrollController,
     required super.inputStateController,
     required super.itemController,
+    required super.vMessageConfig,
     required this.broadcastAppBarController,
   });
 

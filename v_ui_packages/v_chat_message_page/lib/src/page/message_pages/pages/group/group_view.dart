@@ -21,10 +21,10 @@ class VGroupView extends StatefulWidget {
   const VGroupView({
     Key? key,
     required this.vRoom,
-    this.context,
+    required this.vMessageConfig,
   }) : super(key: key);
   final VRoom vRoom;
-  final BuildContext? context;
+  final VMessageConfig vMessageConfig;
 
   @override
   State<VGroupView> createState() => _VGroupViewState();
@@ -40,6 +40,7 @@ class _VGroupViewState extends State<VGroupView> {
     controller = VGroupController(
       vRoom: widget.vRoom,
       context: context,
+      vMessageConfig: widget.vMessageConfig,
       messageProvider: provider,
       scrollController: AutoScrollController(
         axis: Axis.vertical,
@@ -47,8 +48,9 @@ class _VGroupViewState extends State<VGroupView> {
       ),
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
-        provider,
-        context,
+        messageProvider: provider,
+        context: context,
+        vMessageConfig: widget.vMessageConfig,
       ),
       groupAppBarController: GroupAppBarController(
         messageProvider: provider,
@@ -74,6 +76,7 @@ class _VGroupViewState extends State<VGroupView> {
             return VMessageAppBare(
               onSearch: controller.onOpenSearch,
               room: widget.vRoom,
+              isCallAllowed: false,
               memberCount: value.myGroupInfo.membersCount,
               totalOnline: value.myGroupInfo.totalOnline,
               inTypingText: value.typingText,
@@ -88,9 +91,10 @@ class _VGroupViewState extends State<VGroupView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VSocketStatusWidget(
-              delay: Duration.zero,
-            ),
+            if (widget.vMessageConfig.showDisconnectedWidget)
+              const VSocketStatusWidget(
+                delay: Duration.zero,
+              ),
             MessageBodyStateWidget(
               controller: controller,
               roomType: widget.vRoom.roomType,

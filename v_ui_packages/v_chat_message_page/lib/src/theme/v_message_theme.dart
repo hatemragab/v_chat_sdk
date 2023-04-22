@@ -1,111 +1,115 @@
-// Copyright 2023, the hatemragab project author.
-// All rights reserved. Use of this source code is governed by a
-// MIT license that can be found in the LICENSE file.
-
-import 'package:flutter/material.dart';
-import 'package:v_chat_message_page/src/theme/theme_types.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
-
-import '../../v_chat_message_page.dart';
-
-class VMessageTheme extends ThemeExtension<VMessageTheme> {
-  final BoxDecoration scaffoldDecoration;
-  final ItemHolderTypeDef messageItemHolder;
-  final CustomMessageItemTypeDef customMessageItem;
-  final ItemHolderColorTypeDef messageItemHolderColor;
-  final VMsgStatusTheme messageSendingStatus;
-  final TextTypeDef textItemStyle;
-  final DateDividerTypeDef dateDividerWidget;
-
-  VMessageTheme._({
-    required this.scaffoldDecoration,
-    required this.messageSendingStatus,
-    required this.customMessageItem,
-    required this.messageItemHolder,
-    required this.textItemStyle,
-    required this.dateDividerWidget,
-    required this.messageItemHolderColor,
-  });
-
-  factory VMessageTheme.light() {
-    return VMessageTheme._(
-      scaffoldDecoration: const BoxDecoration(color: Color(0xffeee4e4)),
-      messageSendingStatus: const VMsgStatusTheme.light(),
-      textItemStyle: getTextWidget,
-      customMessageItem: (context, isMeSender, data) => const SizedBox(),
-      dateDividerWidget: getDateDividerWidget,
-      messageItemHolderColor: getMessageItemHolderColor,
-      messageItemHolder: getMessageItemHolder,
-    );
-  }
-
-  factory VMessageTheme.dark() {
-    return VMessageTheme._(
-      scaffoldDecoration: const BoxDecoration(),
-      messageSendingStatus: const VMsgStatusTheme.dark(),
-      textItemStyle: getTextWidget,
-      customMessageItem: (context, isMeSender, data) => const SizedBox(),
-      dateDividerWidget: getDateDividerWidget,
-      messageItemHolderColor: getMessageItemHolderColor,
-      messageItemHolder: getMessageItemHolder,
-    );
-  }
-
-  @override
-  ThemeExtension<VMessageTheme> lerp(
-      ThemeExtension<VMessageTheme>? other, double t) {
-    if (other is! VMessageTheme) {
-      return this;
-    }
-    return this;
-  }
-
-  @override
-  VMessageTheme copyWith({
-    BoxDecoration? scaffoldDecoration,
-    ItemHolderTypeDef? messageItemHolder,
-    ItemHolderColorTypeDef? messageItemHolderColor,
-    VMsgStatusTheme? messageSendingStatus,
-    TextTypeDef? textItemStyle,
-    CustomMessageItemTypeDef? customMessageItem,
-    DateDividerTypeDef? dateDividerWidget,
-  }) {
-    return VMessageTheme._(
-      scaffoldDecoration: scaffoldDecoration ?? this.scaffoldDecoration,
-      messageItemHolder: messageItemHolder ?? this.messageItemHolder,
-      customMessageItem: customMessageItem ?? this.customMessageItem,
-      messageItemHolderColor:
-          messageItemHolderColor ?? this.messageItemHolderColor,
-      messageSendingStatus: messageSendingStatus ?? this.messageSendingStatus,
-      textItemStyle: textItemStyle ?? this.textItemStyle,
-      dateDividerWidget: dateDividerWidget ?? this.dateDividerWidget,
-    );
-  }
-}
-
-extension VMessageThemeExt on BuildContext {
-  VMessageTheme get vMessageTheme {
-    final VMessageTheme? theme = Theme.of(this).extension<VMessageTheme>();
-    if (theme == null) {
-      if (Theme.of(this).brightness == Brightness.dark) {
-        return VMessageTheme.dark();
-      } else {
-        return VMessageTheme.light();
-      }
-    }
-    return theme;
-  }
-}
-
-extension VMessageThemeNewExt on BuildContext {
-  VBaseMessageTheme get vMessageThemeNew {
-    if (VInheritedMessageTheme.of(this) == null) {
-      if (isDark) {
-        return VDarkMessageTheme();
-      } else {
-        return VLightMessageTheme();
-      }
-    }
-    return VInheritedMessageTheme.of(this)!.theme;
-  }
-}
+// import 'package:flutter/material.dart';
+// import 'package:v_chat_utils/v_chat_utils.dart';
+//
+// import '../../v_chat_message_page.dart';
+//
+// typedef CustomMessageItemTypeDef = Widget Function(
+//   BuildContext context,
+//   bool isMeSender,
+//   Map<String, dynamic> data,
+// );
+// typedef ItemHolderColorTypeDef = Color Function(
+//   BuildContext context,
+//   bool isMeSender,
+//   bool isDarkMode,
+// );
+//
+// const _darkMeSenderColor = Colors.indigo;
+// const _darkReceiverColor = Color(0xff515156);
+//
+// const _lightReceiverColor = Color(0xffffffff);
+// const _lightMySenderColor = Colors.blue;
+//
+// const _lightTextMeSenderColor = TextStyle(
+//   color: Colors.white,
+//   fontSize: 16,
+//   fontWeight: FontWeight.normal,
+// );
+// const _lightTextMeReceiverColor = TextStyle(
+//   color: Colors.black,
+//   fontSize: 16,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// const _darkTextMeSenderColor = TextStyle(
+//   color: Colors.white,
+//   fontSize: 16,
+//   fontWeight: FontWeight.normal,
+// );
+// const _darkTextReceiverColor = TextStyle(
+//   color: Colors.white,
+//   fontSize: 16,
+//   fontWeight: FontWeight.normal,
+// );
+//
+// abstract class VBaseMessageTheme {
+//   /// Used as a background color of a chat widget.
+//   final Color bubbleMeSenderColor;
+//   final Color bubbleMeReceiverColor;
+//   final VMsgStatusTheme messageSendingStatus;
+//   final BoxDecoration scaffoldDecoration;
+//   final CustomMessageItemTypeDef? customMessageItem;
+//   final TextStyle receiverTextStyle;
+//   final TextStyle senderTextStyle;
+//   final BoxDecoration? messageItemHolderDecoration;
+//
+//   const VBaseMessageTheme({
+//     required this.bubbleMeSenderColor,
+//     required this.bubbleMeReceiverColor,
+//     required this.senderTextStyle,
+//     this.customMessageItem,
+//     required this.scaffoldDecoration,
+//     required this.messageSendingStatus,
+//     required this.receiverTextStyle,
+//     this.messageItemHolderDecoration,
+//   });
+// }
+//
+// class VLightMessageTheme extends VBaseMessageTheme {
+//   const VLightMessageTheme({
+//     super.bubbleMeSenderColor = _lightMySenderColor,
+//     super.bubbleMeReceiverColor = _lightReceiverColor,
+//     super.senderTextStyle = _lightTextMeSenderColor,
+//     super.receiverTextStyle = _lightTextMeReceiverColor,
+//     super.messageSendingStatus = const VMsgStatusTheme.light(),
+//     super.scaffoldDecoration = const BoxDecoration(color: Color(0xffeee4e4)),
+//   });
+// }
+//
+// class VDarkMessageTheme extends VBaseMessageTheme {
+//   const VDarkMessageTheme({
+//     super.bubbleMeSenderColor = _darkMeSenderColor,
+//     super.bubbleMeReceiverColor = _darkReceiverColor,
+//     super.senderTextStyle = _darkTextMeSenderColor,
+//     super.receiverTextStyle = _darkTextReceiverColor,
+//     super.messageSendingStatus = const VMsgStatusTheme.dark(),
+//     super.scaffoldDecoration = const BoxDecoration(),
+//   });
+// }
+//
+// extension VMessageThemeNewExt on BuildContext {
+//   VBaseMessageTheme get vMessageTheme {
+//     if (VInheritedMessageTheme.of(this) == null) {
+//       if (isDark) {
+//         return const VDarkMessageTheme();
+//       } else {
+//         return const VLightMessageTheme();
+//       }
+//     }
+//     return VInheritedMessageTheme.of(this)!.currentTheme(isDark);
+//   }
+//
+//   Color getMessageItemHolderColor(
+//     bool isSender,
+//   ) {
+//     if (isDark && isSender) {
+//       return _darkMeSenderColor;
+//     } else if (isDark && !isSender) {
+//       return _darkReceiverColor;
+//     } else if (!isDark && isSender) {
+//       return _lightMySenderColor;
+//     } else {
+//       return _lightReceiverColor;
+//     }
+//   }
+// }

@@ -18,6 +18,7 @@ class VGroupController extends VBaseMessageController with StreamMix {
   VGroupController({
     required super.vRoom,
     required super.context,
+    required super.vMessageConfig,
     required super.messageProvider,
     required super.scrollController,
     required super.inputStateController,

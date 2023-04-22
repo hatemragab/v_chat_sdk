@@ -83,6 +83,9 @@ class ChatRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return VMessagePage(
       vRoom: room,
+
+      ///set configuration for the web version
+      vMessageConfig: VMessageConfig(),
     );
   }
 }

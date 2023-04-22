@@ -21,10 +21,10 @@ class VOrderView extends StatefulWidget {
   const VOrderView({
     Key? key,
     required this.vRoom,
-    this.context,
+    required this.vMessageConfig,
   }) : super(key: key);
   final VRoom vRoom;
-  final BuildContext? context;
+  final VMessageConfig vMessageConfig;
 
   @override
   State<VOrderView> createState() => _VOrderViewState();
@@ -39,6 +39,7 @@ class _VOrderViewState extends State<VOrderView> {
     final provider = MessageProvider();
     controller = VOrderController(
       vRoom: widget.vRoom,
+      vMessageConfig: widget.vMessageConfig,
       context: context,
       messageProvider: provider,
       scrollController: AutoScrollController(
@@ -51,8 +52,9 @@ class _VOrderViewState extends State<VOrderView> {
         messageProvider: provider,
       ),
       itemController: VMessageItemController(
-        provider,
-        context,
+        messageProvider: provider,
+        context: context,
+        vMessageConfig: widget.vMessageConfig,
       ),
     );
   }
@@ -72,6 +74,7 @@ class _VOrderViewState extends State<VOrderView> {
               );
             }
             return VMessageAppBare(
+              isCallAllowed: widget.vMessageConfig.isCallsAllowed,
               onSearch: controller.onOpenSearch,
               room: widget.vRoom,
               inTypingText: value.typingText,
@@ -89,9 +92,10 @@ class _VOrderViewState extends State<VOrderView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VSocketStatusWidget(
-              delay: Duration.zero,
-            ),
+            if (widget.vMessageConfig.showDisconnectedWidget)
+              const VSocketStatusWidget(
+                delay: Duration.zero,
+              ),
             MessageBodyStateWidget(
               controller: controller,
               roomType: widget.vRoom.roomType,

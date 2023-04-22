@@ -3,9 +3,11 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_sample/v_chat_config.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
@@ -86,7 +88,9 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               colorSchemeSeed: Colors.green,
             ),
-            darkTheme: ThemeData.dark(),
+            darkTheme: ThemeData.dark().copyWith(extensions: [
+              VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red)
+            ]),
           );
         },
       ),

@@ -5,11 +5,11 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:v_chat_message_page/src/core/stream_mixin.dart';
-import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/single/single_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../../../../v_chat_message_page.dart';
 
 class VSingleController extends VBaseMessageController with StreamMix {
   final SingleAppBarController singleAppBarController;
@@ -22,6 +22,7 @@ class VSingleController extends VBaseMessageController with StreamMix {
     required super.inputStateController,
     required super.itemController,
     required this.singleAppBarController,
+    required super.vMessageConfig,
   }) {
     _initStreams();
     _getFromCache();

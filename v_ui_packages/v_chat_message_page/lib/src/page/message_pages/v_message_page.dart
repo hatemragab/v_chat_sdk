@@ -4,52 +4,45 @@
 
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_message_page.dart';
 
 class VMessagePage extends StatelessWidget {
   final VRoom vRoom;
+  final VMessageConfig vMessageConfig;
 
   const VMessagePage({
     Key? key,
     required this.vRoom,
+    this.vMessageConfig = const VMessageConfig(),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final widgetTheme = VInheritedMessageTheme.of(context);
-    return VInheritedMessageTheme(
-      theme: widgetTheme == null
-          ? context.isDark
-              ? VDarkMessageTheme()
-              : VLightMessageTheme()
-          : widgetTheme.theme,
-      child: _child(context),
-    );
+    return _child(context);
   }
 
   Widget _child(BuildContext context) {
     switch (vRoom.roomType) {
       case VRoomType.s:
         return VSingleView(
+          vMessageConfig: vMessageConfig,
           vRoom: vRoom,
-          context: context,
         );
       case VRoomType.g:
         return VGroupView(
+          vMessageConfig: vMessageConfig,
           vRoom: vRoom,
-          context: context,
         );
       case VRoomType.b:
         return VBroadcastView(
+          vMessageConfig: vMessageConfig,
           vRoom: vRoom,
-          context: context,
         );
       case VRoomType.o:
         return VOrderView(
+          vMessageConfig: vMessageConfig,
           vRoom: vRoom,
-          context: context,
         );
     }
   }

@@ -42,17 +42,19 @@ class InputWidgetState extends StatelessWidget {
               textFieldHint: VTrans.of(context).labels.typeYourMessage,
             ),
             focusNode: controller.focusNode,
+            onAttachIconPress:
+                controller.vMessageConfig.onMessageAttachmentIconPress,
             onSubmitMedia: (files) => controller.onSubmitMedia(context, files),
             onSubmitVoice: controller.onSubmitVoice,
             onSubmitFiles: controller.onSubmitFiles,
             onSubmitLocation: controller.onSubmitLocation,
             onTypingChange: controller.onTypingChange,
             googleMapsLangKey: VAppConstants.sdkLanguage,
-            maxMediaSize: controller.vConfig.maxMediaSize,
+            maxMediaSize: controller.vMessageConfig.maxMediaSize,
             onMentionSearch: (query) =>
                 controller.onMentionRequireSearch(context, query),
-            maxRecordTime: controller.vConfig.maxRecordTime,
-            googleMapsApiKey: controller.vConfig.googleMapsApiKey,
+            maxRecordTime: controller.vMessageConfig.maxRecordTime,
+            googleMapsApiKey: controller.vMessageConfig.googleMapsApiKey,
             replyWidget: value.replyMsg == null
                 ? null
                 : ReplyMsgWidget(

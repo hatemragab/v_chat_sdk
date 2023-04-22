@@ -112,9 +112,8 @@ class VMessageItem extends StatelessWidget {
                         color: message.messageType.isMedia
                             ? Colors.transparent
                             : message.isMeSender
-                                ? context.vMessageThemeNew.bubbleMeSenderColor
-                                : context
-                                    .vMessageThemeNew.bubbleMeReceiverColor,
+                                ? context.vMessageTheme.senderBubbleColor
+                                : context.vMessageTheme.receiverBubbleColor,
                         child: _getChild(context),
                       ),
                     ),
@@ -192,8 +191,8 @@ class VMessageItem extends StatelessWidget {
         return TextMessageItem(
           message: (message as VTextMessage).realContent,
           textStyle: message.isMeSender
-              ? context.vMessageThemeNew.textMeSenderColor
-              : context.vMessageThemeNew.textMeReceiverColor,
+              ? context.vMessageTheme.senderTextStyle
+              : context.vMessageTheme.receiverTextStyle,
           onLinkPress: (link) async {
             await VStringUtils.lunchLink(link);
           },
@@ -233,11 +232,13 @@ class VMessageItem extends StatelessWidget {
           message: message as VCallMessage,
         );
       case VMessageType.custom:
-        return context.vMessageTheme.customMessageItem(
-          context,
-          message.isMeSender,
-          (message as VCustomMessage).data.data,
-        );
+        return context.vMessageTheme.customMessageItem?.call(
+              context,
+              message.isMeSender,
+              (message as VCustomMessage).data.data,
+            ) ??
+            const Text(
+                "custom message not implemented you need to add this data inside VInheritedMessageTheme which should be at the top of your app material widget");
 
       case VMessageType.info:
         throw "MessageType.info should not render her it center render!";

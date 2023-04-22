@@ -5,13 +5,13 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
-import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../widgets/arrow_down.dart';
 import '../../../widgets/drag_drop_if_web_desk.dart';
 import '../../../widgets/message_items/v_message_item.dart';
+import '../../../widgets/message_items/widgets/date_divider_item.dart';
 
 class MessageBodyStateWidget extends StatelessWidget {
   final VBaseMessageController controller;
@@ -103,9 +103,9 @@ class MessageBodyStateWidget extends StatelessWidget {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                context.vMessageTheme.dateDividerWidget(
-                                  context,
-                                  dividerDate ?? message.createdAtDate,
+                                DateDividerItem(
+                                  dateTime:
+                                      dividerDate ?? message.createdAtDate,
                                 ),
                                 msgItem,
                               ],

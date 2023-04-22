@@ -1832,21 +1832,21 @@ packages:
       path: "../../push_providers/v_chat_firebase_fcm"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_input_ui:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_media_editor"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1861,56 +1861,56 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_one_signal:
     dependency: "direct main"
     description:
       path: "../../push_providers/v_chat_one_signal"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: "../../v_shared_packages/v_chat_receive_share"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_room_page:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../v_chat_utils"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_voice_player"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_web_rtc:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_web_rtc"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   vector_math:
     dependency: transitive
     description:

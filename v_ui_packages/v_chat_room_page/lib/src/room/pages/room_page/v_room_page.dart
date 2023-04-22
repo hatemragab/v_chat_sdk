@@ -26,12 +26,12 @@ class VChatPage extends StatefulWidget {
     this.floatingActionButton,
     this.appBar,
     this.onRoomItemPress,
-    required this.context,
+    this.showDisconnectedWidget = true,
     this.useIconForRoomItem = false,
   }) : super(key: key);
   final VRoomController controller;
   final Function(VRoom room)? onRoomItemPress;
-  final BuildContext context;
+  final bool showDisconnectedWidget;
 
   // final Function(VRoom room) onRoomItemPress;
   // final Function(VRoom room)? onRoomItemLongPress;
@@ -46,8 +46,8 @@ class VChatPage extends StatefulWidget {
 class _VChatPageState extends State<VChatPage> {
   @override
   void initState() {
-    widget.controller._init(widget.context);
     super.initState();
+    widget.controller._init(context);
   }
 
   @override
@@ -65,7 +65,8 @@ class _VChatPageState extends State<VChatPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const VSocketStatusWidget(padding: EdgeInsets.all(5)),
+            if (widget.showDisconnectedWidget == true)
+              const VSocketStatusWidget(padding: EdgeInsets.all(5)),
             ValueListenableBuilder<VPaginationModel<VRoom>>(
               valueListenable: widget.controller._roomState,
               builder: (_, value, __) {

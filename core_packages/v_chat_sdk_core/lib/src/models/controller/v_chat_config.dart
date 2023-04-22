@@ -17,34 +17,17 @@ typedef UserActionType = Function(
 class VChatConfig {
   final VPush vPush;
   final bool enableLog;
-  final bool isCallsAllowed;
+  //not working yet
   final bool enableEndToEndMessageEncryption;
   final int maxGroupMembers;
+  final int maxForward;
   final int maxBroadcastMembers;
   final String encryptHashKey;
   final Uri baseUrl;
 
-  ///callback when user clicked send attachment (this current show bottom sheet with media etc ...)
-  final Future<VAttachEnumRes?> Function()? onMessageAttachmentIconPress;
-
   //todo add onRoomItemLongPress
 
-  ///set api if you want to make users able to pick locations
-  final String? googleMapsApiKey;
-
-  ///set max record time
-  final Duration maxRecordTime;
-
   final UserActionType? onReportUserPress;
-
-  final UserActionType? onUserBlockAnother;
-
-  final UserActionType? onUserUnBlockAnother;
-
-  ///set max upload files size default it 50 mb
-  final int maxMediaSize;
-  final int maxForward;
-  final int compressImageQuality;
 
   bool get isCurrentPlatformsNotSupportBackgroundPush {
     return VPlatforms.isWindows || VPlatforms.isLinux || VPlatforms.isWeb;
@@ -84,17 +67,9 @@ class VChatConfig {
     this.enableLog = kDebugMode,
     this.enableEndToEndMessageEncryption = false,
     this.maxGroupMembers = 512,
-    this.compressImageQuality = 55,
-    this.isCallsAllowed = true,
-    this.maxBroadcastMembers = 512,
-    this.googleMapsApiKey,
-    this.onReportUserPress,
-    this.onMessageAttachmentIconPress,
-    this.onUserBlockAnother,
-    this.onUserUnBlockAnother,
-    this.maxRecordTime = const Duration(minutes: 30),
-    this.maxMediaSize = 1024 * 1024 * 50,
     this.maxForward = 7,
+    this.maxBroadcastMembers = 512,
+    this.onReportUserPress,
   });
 
 //</editor-fold>

@@ -35,17 +35,17 @@ class VCustomMessage extends VBaseMessage {
     required super.isStared,
     required this.data,
   });
+
   VCustomMessage.buildMessage({
     required super.roomId,
-    required super.isEncrypted,
     required this.data,
-    super.forwardId,
     required super.content,
-    super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
           messageType: VMessageType.custom,
+          isEncrypted: false,
         );
+
   VCustomMessage.fromRemoteMap(super.map)
       : data = VCustomMsgData.fromMap(map['msgAtt'] as Map<String, dynamic>),
         super.fromRemoteMap();

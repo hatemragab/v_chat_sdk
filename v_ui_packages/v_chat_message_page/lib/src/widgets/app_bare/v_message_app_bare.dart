@@ -19,6 +19,7 @@ class VMessageAppBare extends StatelessWidget {
   final int? totalOnline;
   final DateTime? lastSeenAt;
   final String? Function(BuildContext context) inTypingText;
+  final bool isCallAllowed;
 
   const VMessageAppBare({
     Key? key,
@@ -28,6 +29,7 @@ class VMessageAppBare extends StatelessWidget {
     required this.inTypingText,
     this.onCreateCall,
     this.memberCount,
+    required this.isCallAllowed,
     this.totalOnline,
     this.lastSeenAt,
     this.onUpdateBlock,
@@ -188,18 +190,17 @@ class VMessageAppBare extends StatelessWidget {
   }
 
   Widget get _getCallIcon {
-    final isCallsAllowed = VChatController.I.vChatConfig.isCallsAllowed;
-    if (room.roomType.isSingleOrOrder) {
+    if (isCallAllowed) {
       return Row(
         children: [
           InkWell(
             onTap: () {
-              if (!isCallsAllowed) return;
+              if (!isCallAllowed) return;
               onCreateCall?.call(true);
             },
             child: Icon(
               PhosphorIcons.videoCameraFill,
-              color: isCallsAllowed ? null : Colors.grey,
+              color: isCallAllowed ? null : Colors.grey,
             ),
           ),
           const SizedBox(
@@ -207,12 +208,12 @@ class VMessageAppBare extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              if (!isCallsAllowed) return;
+              if (!isCallAllowed) return;
               onCreateCall?.call(false);
             },
             child: Icon(
               PhosphorIcons.phoneCallFill,
-              color: isCallsAllowed ? null : Colors.grey,
+              color: isCallAllowed ? null : Colors.grey,
             ),
           ),
         ],

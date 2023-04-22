@@ -1592,14 +1592,14 @@ packages:
       path: "../../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../../v_shared_packages/v_chat_media_editor"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1614,28 +1614,28 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../../v_shared_packages/v_chat_voice_player"
       relative: true
     source: path
-    version: "0.7.6"
+    version: "0.7.7"
   vector_math:
     dependency: transitive
     description:

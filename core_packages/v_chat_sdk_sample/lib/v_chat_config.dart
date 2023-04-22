@@ -20,10 +20,8 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
   await VChatController.init(
     navigatorKey: _navigatorKey,
     vChatConfig: VChatConfig(
-      googleMapsApiKey: "AIzaSyAP-dfhdfhg",
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
-      maxForward: 10,
       vPush: VPush(
         fcmProvider: VPlatforms.isMobile ? VChatFcmProver() : null,
         enableVForegroundNotification: true,
@@ -43,9 +41,11 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
         toSingleChatMessageInfo:
             vDefaultMessageNavigator.toSingleChatMessageInfo,
         toMessagePage: (context, vRoom) {
-          context.toPage(MessagePage(
-            room: vRoom,
-          ));
+          context.toPage(
+            MyProjectMessagePageWrapper(
+              room: vRoom,
+            ),
+          );
         },
         toBroadcastChatMessageInfo:
             vDefaultMessageNavigator.toBroadcastChatMessageInfo,

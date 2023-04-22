@@ -35,15 +35,15 @@ class FileMessageItem extends StatelessWidget {
               title: message.data.fileSource.name.text
                   .styled(
                     style: message.isMeSender
-                        ? context.vMessageThemeNew.textMeSenderColor
-                        : context.vMessageThemeNew.textMeReceiverColor,
+                        ? context.vMessageTheme.senderTextStyle
+                        : context.vMessageTheme.receiverTextStyle,
                   )
                   .size(14),
               subtitle: message.data.fileSource.readableSize.text
                   .styled(
                     style: message.isMeSender
-                        ? context.vMessageThemeNew.textMeSenderColor
-                        : context.vMessageThemeNew.textMeReceiverColor,
+                        ? context.vMessageTheme.senderTextStyle
+                        : context.vMessageTheme.receiverTextStyle,
                   )
                   .size(14),
             ),

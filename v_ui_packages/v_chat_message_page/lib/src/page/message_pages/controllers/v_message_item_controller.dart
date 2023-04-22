@@ -10,16 +10,21 @@ import 'package:share_plus/share_plus.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../core/enums.dart';
+import '../../../../v_chat_message_page.dart';
 import '../../../core/v_downloader_service.dart';
 import '../providers/message_provider.dart';
 
 class VMessageItemController {
-  final MessageProvider _messageProvider;
+  final MessageProvider messageProvider;
   final BuildContext context;
   final _localStorage = VChatController.I.nativeApi.local;
+  final VMessageConfig vMessageConfig;
 
-  VMessageItemController(this._messageProvider, this.context);
+  VMessageItemController({
+    required this.messageProvider,
+    required this.context,
+    required this.vMessageConfig,
+  });
 
   ModelSheetItem<VMessageItemClickRes> _deleteItem() {
     return ModelSheetItem(
@@ -112,6 +117,10 @@ class VMessageItemController {
     VRoom room,
     Function(VBaseMessage p1) onSwipe,
   ) async {
+    if (vMessageConfig.onMessageLongPress != null) {
+      await vMessageConfig.onMessageLongPress!(message);
+      return;
+    }
     FocusScope.of(context).unfocus();
     final items = <ModelSheetItem<VMessageItemClickRes>>[];
     if (message.emitStatus.isServerConfirm) {
@@ -233,9 +242,7 @@ class VMessageItemController {
             message = VCustomMessage.buildMessage(
               data: (baseMessage as VCustomMessage).data,
               content: baseMessage.realContent,
-              isEncrypted: baseMessage.isEncrypted,
               roomId: roomId,
-              forwardId: baseMessage.localId,
             );
             break;
           case VMessageType.info:
@@ -342,7 +349,7 @@ class VMessageItemController {
     if (res.id == 1) {
       await vSafeApiCall(
         request: () async {
-          return _messageProvider.deleteMessageFromAll(
+          return messageProvider.deleteMessageFromAll(
             message.roomId,
             message.id,
           );
@@ -353,7 +360,7 @@ class VMessageItemController {
     if (res.id == 2) {
       await vSafeApiCall(
         request: () async {
-          return _messageProvider.deleteMessageFromMe(message);
+          return messageProvider.deleteMessageFromMe(message);
         },
         onSuccess: (response) {},
       );
