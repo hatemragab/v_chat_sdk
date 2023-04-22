@@ -14,7 +14,9 @@ dependencies:
     sdk: flutter
   v_chat_utils: ^0.7.7
   flutter_cache_manager: ^3.3.0
+  flutter_vlc_player: ^7.2.0
   meta: ^1.8.0
+  path: ^1.8.2
   audio_waveforms: 1.0.1
   just_audio: ^0.9.31
 

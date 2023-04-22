@@ -1,8 +1,6 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../v_chat_message_page.dart';
-
 ///[vRoom]: The chat room for which the messages are displayed. This parameter is required.
 ///[isCallsAllowed]: A boolean value that indicates whether calls are allowed in the chat room. The default value is true.
 ///[currentTheme]: set current theme for the v chat message page you can check the dark mode and pass the correct theme you can pass [VLightMessageTheme] OR [VDarkMessageTheme]

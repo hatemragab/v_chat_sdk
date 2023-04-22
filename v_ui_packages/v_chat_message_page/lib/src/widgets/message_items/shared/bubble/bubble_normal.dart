@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-const double BUBBLE_RADIUS = 16;
-
 class BubbleNormal extends StatelessWidget {
   final double bubbleRadius;
   final bool isSender;
@@ -11,7 +9,7 @@ class BubbleNormal extends StatelessWidget {
 
   const BubbleNormal({
     Key? key,
-    this.bubbleRadius = BUBBLE_RADIUS,
+    this.bubbleRadius = 16,
     required this.isSender,
     required this.child,
     required this.color,
@@ -31,14 +29,14 @@ class BubbleNormal extends StatelessWidget {
                 ? isSender
                     ? bubbleRadius
                     : 0
-                : BUBBLE_RADIUS,
+                : 16,
           ),
           bottomRight: Radius.circular(
             tail
                 ? isSender
                     ? 0
                     : bubbleRadius
-                : BUBBLE_RADIUS,
+                : 16,
           ),
         ),
       ),

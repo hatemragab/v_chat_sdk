@@ -1,0 +1,27 @@
+iam writing documentation for my saas chat system called vchat-sdk and i want to generate
+.md file code for introduction to my system and let users know how to use it vchat-sdk divided into to parts
+server side and clint side
+server side build by nodejs and socket.io for realtime and mongodb for store all data
+it not depends on firebase for store any data just for push notification if you enable this option
+you have the freedom to choose between onesignal and firebase fcm for push notifications
+the system support the following
+please put this data in table
+1. support for text,image,video,voice note,documents,location share
+2. support for direct,group,broadcast,order,system chats type
+3. support for message status =>(pending,send,error,sending,delivered,seen)
+4. support for compress images and edit on it
+5. support for see message status for all rooms types
+6. support for video call and voice for single rooms only current it done through webRtc later will add support for agora.io
+7. last seen and group (total online,total members count) also for broadcast
+8. good voice player support seek and auto play next and speeds
+9. android,ios,web,macos,windows all supported and tested
+10. all messages and chats all offline downloaded for fast load
+11. easy and good code public apis ready to integrate to your system
+12. full support in app notification using fcm or onesignal or both! v chat can detect if the device not support fcm it will try to register him by onesignal if it enabled
+
+
+
+
+i have chat saas system i want to describe in the documents in .md file that it need minimum server limits
+1. 1 cpu core and 1gb ram and
+for store data you need to have mongo db database you can host free one from mongodb atlas

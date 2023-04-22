@@ -17,5 +17,4 @@ void testMention() {
       return matchTxt;
     },
   );
-  print(x);
 }
