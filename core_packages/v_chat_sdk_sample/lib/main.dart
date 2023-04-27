@@ -33,7 +33,6 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
-
   FirebaseMessaging.onBackgroundMessage(vFirebaseMessagingBackgroundHandler);
   await initVChat(_navigatorKey);
   final appService = Get.put<AppService>(AppService());

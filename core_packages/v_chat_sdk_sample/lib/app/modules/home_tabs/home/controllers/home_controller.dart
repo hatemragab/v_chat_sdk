@@ -27,7 +27,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     _setUpVChat();
-
     super.onInit();
   }
 
@@ -50,13 +49,11 @@ class HomeController extends GetxController {
 
   void _setUpVChat() async {
     final data = VAppPref.getMap(SStorageKeys.myProfile.name);
-
     VChatController.I.profileApi.connect(
       identifier: data!['identifier'],
       fullName: null,
     );
     vInitCallListener();
-
     vRtcLoggerStream.stream.listen((event) {
       logger.logs.add(event);
     });
