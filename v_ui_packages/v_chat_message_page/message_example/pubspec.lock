@@ -552,6 +552,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_vlc_player:
+    dependency: transitive
+    description:
+      name: flutter_vlc_player
+      sha256: "0fbe714db09646617e46610195f5d81086d41d065a6301f2bb728a07f09f96b9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.2.0"
+  flutter_vlc_player_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_vlc_player_platform_interface
+      sha256: "8562d5c31213a44cc5e009cb6776a030e0a0c8cbfb825da4fdf27b730170563c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -625,10 +641,26 @@ packages:
     dependency: transitive
     description:
       name: google_api_availability
-      sha256: "1642876fa87515fd5e4074458f22d6ba4518919c5abce16baaa2878c3c555678"
+      sha256: "3e9548cfd991d983d11425a2436d5bd957d048c279cc9e145ffe3f36fd847385"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
+  google_api_availability_android:
+    dependency: transitive
+    description:
+      name: google_api_availability_android
+      sha256: eb309bc0b435731d18f306b598e176a9afcf642089a7d7c5cbb48e393afda345
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+1"
+  google_api_availability_platform_interface:
+    dependency: transitive
+    description:
+      name: google_api_availability_platform_interface
+      sha256: "65b7da62fe5b582bb3d508628ad827d36d890710ea274766a992a56fa5420da6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   google_maps_flutter:
     dependency: transitive
     description:
@@ -1145,10 +1177,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: dbf0f707c78beedc9200146ad3cb0ab4d5da13c246336987be6940f026500d3a
+      sha256: "6a2128648c854906c53fa8e33986fc0247a1116122f9534dd20e3ab9e16a32bc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.4"
   pointycastle:
     dependency: transitive
     description:
@@ -1334,18 +1366,18 @@ packages:
     dependency: transitive
     description:
       name: socket_io_client
-      sha256: a9c589d3fe2658506be38ddb36f23348daab73a00ff1645533669d07a5111cfc
+      sha256: "5d2a0a12c2a4a5f48d14e5b6aef7db78d3b425a9b084071059fa54bd12d2576c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   socket_io_common:
     dependency: transitive
     description:
       name: socket_io_common
-      sha256: "5a218a784df4d1927ae713e17af619caa736cb2ebac287c59e4e24228b22da29"
+      sha256: "2ab92f8ff3ebbd4b353bf4a98bee45cc157e3255464b2f90f66e09c4472047eb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   source_span:
     dependency: transitive
     description:
@@ -1358,34 +1390,34 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "851d5040552cf911f4cabda08d003eca76b27da3ed0002978272e27c8fbf8ecc"
+      sha256: e7dfb6482d5d02b661d0b2399efa72b98909e5aa7b8336e1fb37e226264ade00
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.5"
+    version: "2.2.7"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: bfd6973aaeeb93475bc0d875ac9aefddf7965ef22ce09790eb963992ffc5183f
+      sha256: "220831bf0bd5333ff2445eee35ec131553b804e6b5d47a4a37ca6f5eb66e282c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2+2"
+    version: "2.4.4"
   sqflite_common_ffi:
     dependency: transitive
     description:
       name: sqflite_common_ffi
-      sha256: e435a9dcd0ca79ba6aea677468e6f7cb8859891294a8f34226685f2cf2002ea2
+      sha256: "55641c9310e1da0856559f077ccc3cb7637b718d10b1fd8461c8088ef2d2f720"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.1+1"
+    version: "2.2.4"
   sqlite3:
     dependency: transitive
     description:
       name: sqlite3
-      sha256: db6350456720a4088a364bbe02052d43056a5ffbd4816fe9d28310dcfbe0dc05
+      sha256: a3ba4b66a7ab170ce7aa3f5ac43c19ee8d6637afbe7b7c95c94112b4f4d91566
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.1"
+    version: "1.11.0"
   sqlite3_flutter_libs:
     dependency: transitive
     description:
@@ -1592,14 +1624,14 @@ packages:
       path: "../../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.7.7"
+    version: "0.8.0"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../../v_shared_packages/v_chat_media_editor"
       relative: true
     source: path
-    version: "0.7.7"
+    version: "0.8.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1614,28 +1646,28 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.7.7"
+    version: "0.8.0"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.7.7"
+    version: "0.8.0"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../../../core_packages/v_chat_utils"
       relative: true
     source: path
-    version: "0.7.7"
+    version: "0.8.0"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../../v_shared_packages/v_chat_voice_player"
       relative: true
     source: path
-    version: "0.7.7"
+    version: "0.8.0"
   vector_math:
     dependency: transitive
     description:

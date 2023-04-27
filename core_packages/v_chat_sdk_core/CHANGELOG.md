@@ -1,3 +1,5 @@
+- ## 0.8.0
+- update dependency
 - ## 0.7.1
 - support windows os
 - ## 0.7.0
