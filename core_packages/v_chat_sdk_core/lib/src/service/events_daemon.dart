@@ -12,7 +12,6 @@ class EventsDaemon {
   StreamSubscription? _messageSubscription;
   final _emitter = VEventBusSingleton.vEventBus;
   final _nativeAPi = VChatController.I.nativeApi;
-
   void start() {
     _messageSubscription = _emitter
         .on<VMessageEvents>()
