@@ -4,8 +4,8 @@
 
 import '../../../v_chat_utils.dart';
 
-class EnLocalizations extends VChatLocalizationLabels {
-  const EnLocalizations();
+class VEnLocalizations extends VChatLocalizationLabels {
+  const VEnLocalizations();
   @override
   String get ok => "Ok";
 

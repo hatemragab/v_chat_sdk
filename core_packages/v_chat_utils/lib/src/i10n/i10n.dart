@@ -6,4 +6,5 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 
 export './default_localizations.dart';
 export './lang/ar.dart';
+export './lang/en.dart';
 export './v_chat_trans.dart' show VTrans, VChatLocalizationDelegate;

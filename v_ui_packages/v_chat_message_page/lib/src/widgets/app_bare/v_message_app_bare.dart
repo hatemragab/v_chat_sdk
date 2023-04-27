@@ -182,7 +182,7 @@ class VMessageAppBare extends StatelessWidget {
     } else if (memberCount != null) {
       if (totalOnline != null) {
         return Text(
-            "${VTrans.of(context).labels.members} $memberCount  (${VTrans.labelsOf(context).online} $totalOnline)");
+            "${VTrans.of(context).labels.members} $memberCount  *${VTrans.labelsOf(context).online} $totalOnline *");
       }
       return Text("${VTrans.of(context).labels.members} $memberCount");
     }

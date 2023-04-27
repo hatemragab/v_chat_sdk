@@ -23,7 +23,7 @@ class ListViewPageState extends State<ListViewPage> {
   void initState() {
     super.initState();
     //  _parse();
-    // _transTo();
+    _transTo();
   }
 
   @override
@@ -111,7 +111,7 @@ class ListViewPageState extends State<ListViewPage> {
 
   void _transTo() async {
     final parsed = _parse();
-    String language = "en";
+    String language = "tr";
     StringBuffer buffer = StringBuffer();
     for (int i = 0; i < _data.length; i++) {
       var translation = await translator.translate(_data[i], to: language);

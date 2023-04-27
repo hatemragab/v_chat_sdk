@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'i10n.dart';
-import 'lang/en.dart';
 
 abstract class VChatLocalizationLabels {
   const VChatLocalizationLabels();
@@ -91,10 +90,10 @@ abstract class VChatLocalizationLabels {
 }
 
 const localizations = <String, VChatLocalizationLabels>{
-  'en': EnLocalizations(),
-  'ar': ArLocalizations(),
+  'en': VEnLocalizations(),
+  'ar': VArLocalizations(),
 };
 
-class DefaultLocalizations extends EnLocalizations {
+class DefaultLocalizations extends VEnLocalizations {
   const DefaultLocalizations();
 }

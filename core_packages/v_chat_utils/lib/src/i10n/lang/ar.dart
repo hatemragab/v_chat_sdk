@@ -4,8 +4,8 @@
 
 import '../../../v_chat_utils.dart';
 
-class ArLocalizations extends VChatLocalizationLabels {
-  const ArLocalizations();
+class VArLocalizations extends VChatLocalizationLabels {
+  const VArLocalizations();
   @override
   String get ok => "نعم";
 
