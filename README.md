@@ -4,8 +4,7 @@
 
 ## Check Our Full documentation
 
-- it will be updated to v2 once get stable
-  <a href="https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro"> VCHAT Documentation</a>  <br />
+<a href="https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro"> VCHAT Documentation</a>  <br />
 
 <a href="https://codecanyon.net/item/flutter-chat-app-with-node-js-and-socket-io-mongo-db/26142700"> Backend Code </a>  <br />
 
