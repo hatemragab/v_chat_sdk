@@ -46,6 +46,36 @@ class RoomApi {
     return true;
   }
 
+  Future<bool> unMuteRoomNotification(
+    String roomId,
+  ) async {
+    await _vNativeApi.remote.room.unMuteRoomNotification(
+      roomId: roomId,
+    );
+    await _vNativeApi.local.room.updateRoomIsMuted(
+      VUpdateRoomMuteEvent(
+        roomId: roomId,
+        isMuted: false,
+      ),
+    );
+    return true;
+  }
+
+  Future<bool> muteRoomNotification(
+    String roomId,
+  ) async {
+    await _vNativeApi.remote.room.muteRoomNotification(
+      roomId: roomId,
+    );
+    await _vNativeApi.local.room.updateRoomIsMuted(
+      VUpdateRoomMuteEvent(
+        roomId: roomId,
+        isMuted: true,
+      ),
+    );
+    return true;
+  }
+
   // Future<bool> translateRoomTo({
   //   required String roomId,
   //   required String transTo,
