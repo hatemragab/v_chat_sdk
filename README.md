@@ -1,9 +1,3 @@
----
-sidebar_position: 1
-id: intro
-title: vchat-sdk-V2
----
-
 `Vchat-sdk` is a `SaaS` (Software as a Service) chat system that offers `real-time` messaging capabilities for web and
 mobile
 applications. It consists of two parts: the server-side and the client-side. The server-side is built using `Node.js`
