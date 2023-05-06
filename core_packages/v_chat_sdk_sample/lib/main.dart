@@ -100,29 +100,21 @@ class MyApp extends StatelessWidget {
 void setAppTheme(AppService appService) {
   final theme = VAppPref.getStringOrNullKey(VStorageKeys.vAppTheme.name);
   if (theme != null) {
-    if (theme == ThemeMode.light.name) {
-      appService.setTheme(ThemeMode.light);
-    } else if (theme == ThemeMode.dark.name) {
-      appService.setTheme(ThemeMode.dark);
-    } else if (theme == ThemeMode.system.name) {
-      appService.setTheme(ThemeMode.system);
-    }
+    appService.setTheme(theme as ThemeMode);
   }
 }
 
-Future<void> setAppLanguage(AppService appService) async {
-  final languageCode = AppLocalization.languageCode;
+Future<void> setAppLanguage(final AppService appService) async {
+  String? languageCode = AppLocalization.languageCode;
+  Locale locale;
+
   if (languageCode != null) {
-    final locale = Locale.fromSubtags(
-      languageCode: languageCode,
-    );
-    appService.setLocal(locale);
+    locale = Locale.fromSubtags(languageCode: languageCode);
   } else {
-    final languageCode = ui.window.locale.languageCode;
-    final locale = Locale.fromSubtags(
-      languageCode: languageCode,
-    );
-    appService.setLocal(locale);
-    await AppLocalization.updateLanguageCode(languageCode);
+    languageCode = ui.window.locale.languageCode;
+    locale = Locale.fromSubtags(languageCode: languageCode);
+    AppLocalization.updateLanguageCode(languageCode);
   }
+
+  appService.setLocal(locale);
 }

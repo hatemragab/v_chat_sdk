@@ -5,34 +5,21 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:file_saver/file_saver.dart';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+
 import '../../v_chat_utils.dart';
 
 abstract class VFileUtils {
   static Future<String> _downloadPath(String appName) async {
-    if (Platform.isAndroid) {
-      final path1 = join(
-        'storage',
-        "emulated",
-        "0",
-        "Documents",
-        appName,
-      );
-      final dir = await Directory(path1).create(recursive: true);
-      return "${dir.path}/";
-    } else if (Platform.isIOS) {
-      final path = (await getApplicationDocumentsDirectory()).path;
-      return "$path/";
-    } else {
-      throw 'Unsupported Platform';
-    }
+    final path = (await getApplicationDocumentsDirectory()).path;
+    return "$path/";
   }
 
   static Future<String> _downloadFileForWeb(
