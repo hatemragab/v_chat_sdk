@@ -12,10 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.8.0
-  v_chat_sdk_core: ^0.8.0
-  v_chat_message_page: ^0.8.0
-  v_chat_media_editor: ^0.8.0
+  v_chat_sdk_core: ^0.8.0+1
   cached_network_image: ^3.2.3
   flutter_advanced_avatar: ^1.1.0
   map_launcher: ^2.5.0+1
@@ -25,6 +22,11 @@ dependencies:
   meta: ^1.8.0
   badges: ^3.0.2
   v_platform: ^1.0.0
+  timeago: ^3.3.0
+  textless: ^6.6.6
+  collection: ^1.16.0
+  intl: ^0.17.0
+  adaptive_dialog: ^1.8.2
 
 dev_dependencies:
   flutter_test:

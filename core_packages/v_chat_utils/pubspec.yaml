@@ -21,7 +21,7 @@ dependencies:
   file_picker: ^5.2.6
   image: ^4.0.15
   url_launcher: ^6.1.10
-  image_cropper: ^3.0.1
+  image_cropper: ^4.0.1
   wechat_camera_picker: ^3.7.0
   encrypt: ^5.0.1
   shared_preferences: ^2.0.18
@@ -39,7 +39,7 @@ dependencies:
   photo_view: ^0.14.0
   chewie: ^1.4.0
   video_player: ^2.6.0
-  file_saver: ^0.1.1
+  file_saver: ^0.2.4
   image_gallery_saver: ^1.7.1
   phosphor_flutter: ^1.4.0
   timeago: ^3.3.0

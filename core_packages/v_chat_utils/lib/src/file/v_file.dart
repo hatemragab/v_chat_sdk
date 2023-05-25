@@ -28,9 +28,8 @@ abstract class VFileUtils {
     final response = await http.get(Uri.parse(fileSource.url!));
     final bytes = response.bodyBytes;
     return await FileSaver.instance.saveFile(
-      fileSource.name,
-      bytes,
-      fileSource.mimeType.toString(),
+      name: fileSource.name,
+      bytes: bytes,
     );
   }
 

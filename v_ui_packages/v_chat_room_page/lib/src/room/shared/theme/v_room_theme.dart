@@ -3,8 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_message_page/v_chat_message_page.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_room_page/src/room/shared/theme/v_msg_status_theme.dart';
+
+import '../v_chat_avatar_image.dart';
 
 typedef VChatImageBuilderWidget = Widget Function({
   required String imageUrl,

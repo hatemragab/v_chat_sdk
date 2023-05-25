@@ -5,12 +5,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:eraser/eraser.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VChatOneSignalProver extends VChatPushProviderBase {
   final _vEventBusSingleton = VEventBusSingleton.vEventBus;

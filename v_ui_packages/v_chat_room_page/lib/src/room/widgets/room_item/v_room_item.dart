@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/src/room/shared/shared.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
@@ -13,6 +12,7 @@ import '../room_item_builder/chat_title.dart';
 import '../room_item_builder/chat_typing_widget.dart';
 import '../room_item_builder/chat_un_read_counter.dart';
 import '../room_item_builder/room_item_msg.dart';
+import 'message_status_icon.dart';
 
 class VRoomItem extends StatelessWidget {
   final VRoom room;

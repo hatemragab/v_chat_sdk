@@ -7,8 +7,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../shared/v_app_alert.dart';
 import 'room_provider.dart';
 
 class RoomItemController {

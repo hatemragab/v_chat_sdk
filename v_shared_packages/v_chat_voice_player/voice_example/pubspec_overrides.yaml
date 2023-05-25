@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: v_chat_utils,v_chat_voice_player,v_chat_sdk_core
+# melos_managed_dependency_overrides: v_chat_sdk_core,v_chat_utils,v_chat_voice_player
 dependency_overrides:
   intl: 0.17.0
   v_chat_sdk_core:

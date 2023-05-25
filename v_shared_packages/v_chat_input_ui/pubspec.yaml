@@ -32,7 +32,7 @@ dependencies:
   textless: ^6.6.6
   phosphor_flutter: ^1.4.0
   file_picker: ^5.2.6
-  image_cropper: ^3.0.1
+  image_cropper: ^4.0.1
   wechat_camera_picker: ^3.7.0
   uuid: ^3.0.7
 dev_dependencies:

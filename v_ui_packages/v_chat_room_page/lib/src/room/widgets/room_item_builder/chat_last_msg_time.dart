@@ -4,8 +4,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChatLastMsgTime extends StatelessWidget {
   final DateTime lastMessageTime;
@@ -26,9 +27,7 @@ class ChatLastMsgTime extends StatelessWidget {
           .cap;
     }
     if (difference == 1) {
-      return "Yesterday".cap;
-      //todo trans
-      // VTrans.labelsOf(context).yesterDay
+      return VTrans.labelsOf(context).yesterday.cap;
     }
     if (difference <= 7) {
       return DateFormat.E(VAppConstants.sdkLanguage)

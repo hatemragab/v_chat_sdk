@@ -8,13 +8,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loadmore/loadmore.dart';
-import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state_controller.dart';
+import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
-import '../../../../v_chat_room_page.dart';
+import '../../shared/stream_mixin.dart';
 import 'room_item_controller.dart';
 
 part './v_room_controller.dart';

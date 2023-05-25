@@ -4,13 +4,9 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
-  emoji_picker_flutter
   file_saver
-  geolocator_windows
   local_notifier
-  permission_handler_windows
   platform_device_id_windows
-  record_windows
   share_plus
   sqlite3_flutter_libs
   url_launcher_windows

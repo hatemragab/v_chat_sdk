@@ -41,6 +41,7 @@ dependencies:
   collection: ^1.16.0
   v_platform: ^1.0.0
   timeago: ^3.3.0
+  flutter_parsed_text: ^2.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

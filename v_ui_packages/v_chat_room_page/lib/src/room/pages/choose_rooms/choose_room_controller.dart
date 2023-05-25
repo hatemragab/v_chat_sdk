@@ -2,9 +2,9 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   final String? currentId;
@@ -26,7 +26,7 @@ class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
         l.add(element.id);
       }
     }
-    context.pop(l);
+    Navigator.pop(context);
   }
 
   void _getRooms() async {
