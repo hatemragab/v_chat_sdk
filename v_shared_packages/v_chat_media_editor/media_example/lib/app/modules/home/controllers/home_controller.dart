@@ -12,7 +12,7 @@ import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 
 class HomeController extends GetxController {
-  final files = <VPlatformFileSource>[].obs;
+  final files = <VPlatformFile>[].obs;
   final proccessedData = <VBaseMediaRes>[].obs;
 
   void onGallery() async {
@@ -22,18 +22,18 @@ class HomeController extends GetxController {
     );
 
     if (result != null) {
-      final mediaFiles = <VPlatformFileSource>[];
+      final mediaFiles = <VPlatformFile>[];
       if (kIsWeb) {
         for (final f in result.files) {
           mediaFiles.add(
-            VPlatformFileSource.fromBytes(name: f.name, bytes: f.bytes!),
+            VPlatformFile.fromBytes(name: f.name, bytes: f.bytes!),
           );
         }
       } else {
         List<File> files = result.paths.map((path) => File(path!)).toList();
         for (var e in files) {
           mediaFiles.add(
-            VPlatformFileSource.fromPath(filePath: e.path),
+            VPlatformFile.fromPath(filePath: e.path),
           );
         }
       }

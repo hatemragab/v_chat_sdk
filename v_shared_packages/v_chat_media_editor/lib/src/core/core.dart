@@ -3,3 +3,4 @@
 // MIT license that can be found in the LICENSE file.
 
 export 'media_editor_config.dart';
+export 'media_res_model.dart';

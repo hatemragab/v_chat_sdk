@@ -11,6 +11,7 @@ dependencies:
   v_chat_utils: ^0.1.0+5
   flutter_cache_manager: ^3.3.0
   sizer: ^2.0.15
+  v_platform: ^1.0.0
   v_chat_voice_player:
     path: ../
   flutter: 

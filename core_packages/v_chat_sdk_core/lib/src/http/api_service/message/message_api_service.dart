@@ -9,7 +9,8 @@ import 'package:chopper/chopper.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../../models/v_chat_base_exception.dart';
 
 class VMessageApiService {
   static MessageApi? _messageApi;

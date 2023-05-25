@@ -12,11 +12,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.8.0
   v_chat_sdk_core: ^0.8.0
   share_handler: ^0.0.16
   v_chat_media_editor: ^0.8.0
-
+  v_platform: ^1.0.0
 
 dev_dependencies:
   flutter_test:

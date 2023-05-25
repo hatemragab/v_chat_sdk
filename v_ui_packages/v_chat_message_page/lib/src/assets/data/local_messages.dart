@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 final fakeLocalMessages = [
   {
@@ -64,7 +65,7 @@ final fakeLocalMessages = [
     "tb_m_type": VMessageType.image.name,
     "tb_m_att": jsonEncode(
       VMessageImageData(
-        fileSource: VPlatformFileSource.fromUrl(url: "url"),
+        fileSource: VPlatformFile.fromUrl(url: "url"),
         width: 300,
         height: 300,
       ).toMap(),

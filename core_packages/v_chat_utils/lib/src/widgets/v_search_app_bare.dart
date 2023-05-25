@@ -5,8 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import '../../v_chat_utils.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VSearchAppBare extends StatefulWidget {
   final VoidCallback onClose;

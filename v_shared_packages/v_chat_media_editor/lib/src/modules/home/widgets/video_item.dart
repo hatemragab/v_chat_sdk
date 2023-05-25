@@ -3,7 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+
+import '../../../../v_chat_media_editor.dart';
+import '../../../core/platform_cache_image_widget.dart';
 
 class VideoItem extends StatelessWidget {
   final VMediaVideoRes video;
@@ -11,13 +14,13 @@ class VideoItem extends StatelessWidget {
   final Function(VMediaVideoRes item) onDelete;
   final Function(VMediaVideoRes item) onPlayVideo;
 
-  const VideoItem(
-      {Key? key,
-      required this.video,
-      required this.onCloseClicked,
-      required this.onDelete,
-      required this.onPlayVideo})
-      : super(key: key);
+  const VideoItem({
+    Key? key,
+    required this.video,
+    required this.onCloseClicked,
+    required this.onDelete,
+    required this.onPlayVideo,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

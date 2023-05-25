@@ -3,15 +3,18 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:io';
+
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_platform/v_platform.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../v_chat_utils.dart';
 
 class VVideoPlayer extends StatefulWidget {
-  final VPlatformFileSource platformFileSource;
+  final VPlatformFile platformFileSource;
   final String appName;
 
   const VVideoPlayer({
@@ -100,50 +103,50 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
   }
 
   void _initAndPlay() async {
+    VideoPlayerController? controller;
+    VideoPlayerOptions options =
+        VideoPlayerOptions(allowBackgroundPlayback: false);
     if (widget.platformFileSource.isFromPath) {
-      _videoPlayerController = VideoPlayerController.file(
-        File(widget.platformFileSource.filePath!),
-        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false),
+      controller = VideoPlayerController.file(
+        File(widget.platformFileSource.fileLocalPath!),
+        videoPlayerOptions: options,
       );
     } else if (widget.platformFileSource.isFromBytes) {
-      _videoPlayerController = VideoPlayerController.contentUri(
+      controller = VideoPlayerController.contentUri(
         Uri.dataFromBytes(widget.platformFileSource.getBytes),
-        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false),
+        videoPlayerOptions: options,
       );
     } else if (widget.platformFileSource.isFromAssets) {
-      _videoPlayerController = VideoPlayerController.asset(
+      controller = VideoPlayerController.asset(
         widget.platformFileSource.assetsPath!,
-        videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: false),
+        videoPlayerOptions: options,
       );
     } else if (widget.platformFileSource.isFromUrl) {
-      if (VPlatforms.isMobile) {
-        final file = await DefaultCacheManager().getSingleFile(
-          widget.platformFileSource.url!,
-          key: widget.platformFileSource.urlKey,
-        );
-        _videoPlayerController = VideoPlayerController.file(
-          file,
-          videoPlayerOptions:
-              VideoPlayerOptions(allowBackgroundPlayback: false),
-        );
-      } else {
-        _videoPlayerController = VideoPlayerController.network(
-          widget.platformFileSource.url!,
-          videoPlayerOptions:
-              VideoPlayerOptions(allowBackgroundPlayback: false),
-        );
-      }
+      final file = await (VPlatforms.isMobile
+          ? DefaultCacheManager().getSingleFile(
+              widget.platformFileSource.url!,
+              key: widget.platformFileSource.getUrlPath,
+            )
+          : null);
+      controller = file != null
+          ? VideoPlayerController.file(file, videoPlayerOptions: options)
+          : VideoPlayerController.network(
+              widget.platformFileSource.url!,
+              videoPlayerOptions: options,
+            );
     }
 
-    await _videoPlayerController!.initialize();
-
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController!,
-      autoPlay: true,
-      looping: false,
-    );
-    setState(() {
-      isLoading = false;
-    });
+    if (controller != null) {
+      await controller.initialize();
+      setState(() {
+        _videoPlayerController = controller;
+        _chewieController = ChewieController(
+          videoPlayerController: _videoPlayerController!,
+          autoPlay: true,
+          looping: false,
+        );
+        isLoading = false;
+      });
+    }
   }
 }

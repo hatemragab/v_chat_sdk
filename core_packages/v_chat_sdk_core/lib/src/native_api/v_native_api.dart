@@ -17,7 +17,8 @@ import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../utils/app_pref.dart';
 
 class VNativeApi {
   final local = VLocalNativeApi();

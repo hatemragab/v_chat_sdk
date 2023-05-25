@@ -10,7 +10,9 @@ import 'package:v_chat_sdk_core/src/local_db/core/imp/room/memory_room_imp.dart'
 import 'package:v_chat_sdk_core/src/local_db/core/imp/room/sql_room_imp.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../../events/event_bus.dart';
 
 class NativeLocalRoom {
   late final BaseLocalRoomRepo _roomRepo;

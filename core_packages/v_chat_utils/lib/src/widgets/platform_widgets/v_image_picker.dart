@@ -3,16 +3,16 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/src/models/models.dart';
 import 'package:v_chat_utils/src/utils/app_pick.dart';
 import 'package:v_chat_utils/src/widgets/platform_widgets/platform_cache_image_widget.dart';
+import 'package:v_platform/v_platform.dart';
 
 class VImagePicker extends StatefulWidget {
   final bool withCrop;
   final bool isFromCamera;
-  final void Function(VPlatformFileSource file) onDone;
+  final void Function(VPlatformFile file) onDone;
   final int size;
-  final VPlatformFileSource initImage;
+  final VPlatformFile initImage;
 
   const VImagePicker({
     Key? key,
@@ -28,7 +28,7 @@ class VImagePicker extends StatefulWidget {
 }
 
 class _VImagePickerState extends State<VImagePicker> {
-  late VPlatformFileSource current;
+  late VPlatformFile current;
 
   @override
   void initState() {

@@ -175,7 +175,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
 
   void _backAfterSecond() async {
     await Future.delayed(const Duration(seconds: 1));
-    context.pop();
+    Navigator.of(context).pop();
   }
 
   Future<bool> onExit(BuildContext context) async {
@@ -197,7 +197,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
   }
 
   void _addListeners() {
-    subscription = VEventBusSingleton.vEventBus.on<VCallEvents>().listen(
+    subscription = VChatController.I.nativeApi.streams.callStream.listen(
       (e) async {
         if (e is VCallEndedEvent) {
           value.status = CallStatus.callEnd;

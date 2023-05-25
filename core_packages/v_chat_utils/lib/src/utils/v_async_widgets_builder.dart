@@ -3,8 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
-import '../../v_chat_utils.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 // switch between different widgets with animation
 // depending on api call status

@@ -3,7 +3,8 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../v_chat_sdk_core.dart';
 
 enum VChatHttpMethods { get, post, patch, delete, put }
 
@@ -21,6 +22,7 @@ enum VMessageType {
 
 extension MessageTypeExt on VMessageType {
   bool get isImage => this == VMessageType.image;
+
   bool get isMedia => isImage || isVideo;
 
   bool get isCall => this == VMessageType.call;
@@ -64,7 +66,6 @@ extension VMessageCallStatusTr on VMessageCallStatus {
     switch (this) {
       case VMessageCallStatus.ring:
         return VTrans.labelsOf(context).ring;
-
       case VMessageCallStatus.canceled:
         return VTrans.labelsOf(context).canceled;
       case VMessageCallStatus.timeout:
@@ -72,11 +73,10 @@ extension VMessageCallStatusTr on VMessageCallStatus {
       case VMessageCallStatus.rejected:
         return VTrans.labelsOf(context).rejected;
       case VMessageCallStatus.finished:
+      case VMessageCallStatus.sessionEnd:
         return VTrans.labelsOf(context).callEnd;
       case VMessageCallStatus.inCall:
         return VTrans.labelsOf(context).inCall;
-      case VMessageCallStatus.sessionEnd:
-        return VTrans.labelsOf(context).callEnd;
     }
   }
 }
@@ -143,3 +143,29 @@ enum VMessageInfoType {
 enum VGroupMemberRole { admin, member, superAdmin }
 
 enum VMessagesFilter { media, links, file, voice, all }
+
+enum VLoadMoreStatus { loading, loaded, error, completed }
+
+enum VChatPushService { firebase, onesignal }
+
+enum VChatLoadingState { loading, success, error, ideal, empty }
+
+enum VNotificationActionRes { click, push }
+
+enum VRoomTypingEnum { stop, typing, recording }
+
+enum VStorageKeys {
+  vAccessToken,
+  vIsFirstRun,
+  vAppMetaData,
+  vAppLanguage,
+  vClintVersion,
+  vMyProfile,
+  vAppTheme,
+  vLastAppliedUpdate,
+  vLastSuccessFetchRoomsTime,
+  vIsLogin,
+  vBaseUrl,
+}
+
+enum VAttachEnumRes { media, files, location }

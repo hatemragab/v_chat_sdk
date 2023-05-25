@@ -4,7 +4,7 @@
 
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api_service.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class RoomApi {
   final VNativeApi _vNativeApi;
@@ -101,7 +101,7 @@ class RoomApi {
 
   Future<String> updateGroupImage({
     required String roomId,
-    required VPlatformFileSource file,
+    required VPlatformFile file,
   }) {
     return _vNativeApi.remote.room.updateGroupImage(roomId: roomId, file: file);
   }
@@ -270,7 +270,7 @@ class RoomApi {
 
   Future<String> updateBroadcastImage({
     required String roomId,
-    required VPlatformFileSource file,
+    required VPlatformFile file,
   }) {
     return _vNativeApi.remote.room.updateBroadcastImage(
       roomId: roomId,

@@ -7,7 +7,9 @@ import 'dart:async';
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:v_chat_sdk_core/src/events/app_life_cycle.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../events/event_bus.dart';
 
 class VAppLifecycleState {
   static bool isAppActive = false;
@@ -31,10 +33,10 @@ class VAppLifecycleState {
           break;
         case FGBGType.background:
 
-          /// disconnect timer
-          if (VAppPick.isPicking) {
-            return;
-          }
+          // /// disconnect timer
+          // if (VAppPick.isPicking) {
+          //   return;
+          // }
           _timer?.cancel();
           _timer = Timer(const Duration(seconds: 5), () {
             VEventBusSingleton.vEventBus.fire(

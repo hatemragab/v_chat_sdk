@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../controllers/chats_tab_controller.dart';
 import '../web_chat_scaffold.dart';

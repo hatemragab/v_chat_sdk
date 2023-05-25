@@ -31,6 +31,7 @@ class VoiceMessageItem extends StatelessWidget {
         notActiveSliderColor: context
             .getMessageItemHolderColor(
               message.isMeSender,
+              context,
             )
             .withOpacity(.3),
         activeSliderColor: context.isDark ? Colors.green : Colors.red,

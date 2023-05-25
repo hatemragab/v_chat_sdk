@@ -5,7 +5,7 @@
 library v_chat_web_rtc;
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_web_rtc/src/core/extension.dart';
 import 'package:v_chat_web_rtc/src/pages/callee/callee_page.dart';
 
 export './src/call_nav.dart';

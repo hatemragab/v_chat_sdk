@@ -8,7 +8,7 @@ import 'package:chopper/chopper.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class VFileMessage extends VBaseMessage {
   final VMessageFileData data;
@@ -41,16 +41,16 @@ class VFileMessage extends VBaseMessage {
 
   VFileMessage.fromRemoteMap(super.map)
       : data = VMessageFileData(
-          fileSource: VPlatformFileSource.fromMap(
-            map['msgAtt'] as Map<String, dynamic>,
+          fileSource: VPlatformFile.fromMap(
+            map: map['msgAtt'] as Map<String, dynamic>,
           ),
         ),
         super.fromRemoteMap();
 
   VFileMessage.fromLocalMap(super.map)
       : data = VMessageFileData(
-          fileSource: VPlatformFileSource.fromMap(
-            jsonDecode(map[MessageTable.columnAttachment] as String)
+          fileSource: VPlatformFile.fromMap(
+            map: jsonDecode(map[MessageTable.columnAttachment] as String)
                 as Map<String, dynamic>,
           ),
         ),

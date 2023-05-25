@@ -50,6 +50,8 @@ dependencies:
   flutter_native_image: ^0.0.6+1
   video_thumbnail: ^0.5.3
   flutter_advanced_avatar: ^1.1.0
+  v_chat_sdk_core: ^0.8.0+1
+  v_platform: ^1.0.0
   meta: ^1.8.0
   flutter_localizations:
     sdk: flutter

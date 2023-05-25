@@ -5,7 +5,9 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_input_ui/src/models/v_input_theme.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../../v_widgets/auto_direction.dart';
 
 class MessageTextFiled extends StatefulWidget {
   final VChatTextMentionController textEditingController;

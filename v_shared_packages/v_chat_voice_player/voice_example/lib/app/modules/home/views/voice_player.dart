@@ -5,8 +5,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
+import 'package:v_platform/v_platform.dart';
 
 class VoicePlayer extends StatefulWidget {
   final String url;
@@ -83,7 +83,7 @@ class VoicePlayerState extends State<VoicePlayer> {
   void init() async {
     await download();
     messageController = VVoiceMessageController(
-      audioSrc: VPlatformFileSource.fromPath(filePath: path),
+      audioSrc: VPlatformFile.fromPath(fileLocalPath: path),
       maxDuration: widget.duration,
       id: "1",
       onPlaying: (id) {},

@@ -9,7 +9,9 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../events/event_bus.dart';
+import '../../utils/app_pref.dart';
 
 class SocketService {
   final _log = Logger('SocketService');

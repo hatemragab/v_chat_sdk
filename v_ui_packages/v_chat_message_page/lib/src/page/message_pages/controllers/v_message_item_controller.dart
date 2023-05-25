@@ -1,7 +1,6 @@
 // Copyright 2023, the hatemragab project author.
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -9,6 +8,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../../../v_chat_message_page.dart';
 import '../../../core/v_downloader_service.dart';
@@ -268,7 +268,7 @@ class VMessageItemController {
         await Share.share(message.data.linkPreviewData.link.toString());
         return;
       }
-      late final VPlatformFileSource pFile;
+      late final VPlatformFile pFile;
       if (message is VImageMessage) {
         pFile = message.data.fileSource;
       } else if (message is VVoiceMessage) {

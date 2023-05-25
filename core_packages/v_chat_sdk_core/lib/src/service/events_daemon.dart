@@ -6,7 +6,9 @@ import 'dart:async';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../events/event_bus.dart';
 
 class EventsDaemon {
   StreamSubscription? _messageSubscription;

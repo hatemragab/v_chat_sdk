@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_platform/v_platform.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-
-import '../../v_chat_utils.dart';
 
 abstract class VFileUtils {
   static Future<String> _downloadPath(String appName) async {
@@ -23,12 +23,10 @@ abstract class VFileUtils {
   }
 
   static Future<String> _downloadFileForWeb(
-    VPlatformFileSource fileSource,
+    VPlatformFile fileSource,
   ) async {
-    final bytes = (await http.get(
-      Uri.parse(fileSource.url!),
-    ))
-        .bodyBytes;
+    final response = await http.get(Uri.parse(fileSource.url!));
+    final bytes = response.bodyBytes;
     return await FileSaver.instance.saveFile(
       fileSource.name,
       bytes,
@@ -36,121 +34,112 @@ abstract class VFileUtils {
     );
   }
 
-  ///make sure you ask for storage permissions
+  /// make sure you ask for storage permissions
   static Future<String> saveFileToPublicPath({
-    required VPlatformFileSource fileAttachment,
+    required VPlatformFile fileAttachment,
     required String appName,
   }) async {
-    if (VPlatforms.isMobile) {
-      final newFilePath = (await _downloadPath(appName)) + fileAttachment.name;
-      final file = File(newFilePath);
-      if (!file.existsSync()) {
-        file.createSync();
-      } else {
-        return file.path;
-      }
-      final res = await vSafeApiCall<Uint8List>(
-        request: () async {
-          return (await http.get(Uri.parse(fileAttachment.url!))).bodyBytes;
-        },
-        onSuccess: (response) async {
-          // write to file
-          await file.writeAsBytes(response);
-        },
-        onError: (exception, trace) {
-          throw Future.error(exception, trace);
-        },
-      );
-      if (res == null) throw ("Error while download file");
-      return newFilePath;
+    if (!VPlatforms.isMobile) {
+      return _downloadFileForWeb(fileAttachment);
     }
-    return _downloadFileForWeb(fileAttachment);
+
+    final newFilePath = "${await _downloadPath(appName)}${fileAttachment.name}";
+
+    final file = File(newFilePath);
+    if (file.existsSync()) {
+      return file.path;
+    }
+
+    try {
+      final response = await http.get(Uri.parse(fileAttachment.url!));
+      await file.writeAsBytes(response.bodyBytes);
+      return newFilePath;
+    } catch (e, stackTrace) {
+      throw Future.error(e, stackTrace);
+    }
   }
 
-  static Future<VMessageImageData?> getVideoThumb(
-      {required VPlatformFileSource fileSource,
-      int maxWidth = 600,
-      int quality = 50}) async {
-    if (fileSource.isFromBytes || fileSource.isFromUrl) return null;
+  static Future<VMessageImageData?> getVideoThumb({
+    required VPlatformFile fileSource,
+    int maxWidth = 600,
+    int quality = 50,
+  }) async {
+    if (fileSource.isFromBytes || fileSource.isFromUrl) {
+      return null;
+    }
+
     final thumbPath = await VideoThumbnail.thumbnailFile(
-      video: fileSource.filePath!,
+      video: fileSource.fileLocalPath!,
       maxWidth: maxWidth,
-      // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
       quality: quality,
     );
-    if (thumbPath == null) return null;
+
+    if (thumbPath == null) {
+      return null;
+    }
+
     final thumbImageData = await getImageInfo(
-        fileSource: VPlatformFileSource.fromPath(
-      filePath: thumbPath,
-    ));
+      fileSource: VPlatformFile.fromPath(
+        fileLocalPath: thumbPath,
+      ),
+    );
+
     return VMessageImageData(
-      fileSource: VPlatformFileSource.fromPath(filePath: thumbPath),
+      fileSource: VPlatformFile.fromPath(fileLocalPath: thumbPath),
       width: thumbImageData.image.width,
       height: thumbImageData.image.height,
     );
   }
 
-  ///only [VPlatformFileSource.fromPath(filePath: filePath)] will work!
-  static Future<int?> getVideoDurationMill(VPlatformFileSource file) async {
-    if (file.isFromBytes) {
-      return null;
-      // final controller = VideoPlayerController.contentUri(
-      //   Uri.dataFromBytes(file.bytes!),
-      // );
-      // await controller.initialize();
-      // final value = controller.value.duration.inMilliseconds;
-      // unawaited(controller.dispose());
-      // return value;
-    } else if (file.isFromPath) {
+  static Future<int?> getVideoDurationMill(VPlatformFile file) async {
+    if (file.isFromPath) {
       final controller = VideoPlayerController.file(
-        File(file.filePath!),
+        File(file.fileLocalPath!),
       );
       await controller.initialize();
       final value = controller.value.duration.inMilliseconds;
-      unawaited(controller.dispose());
+      controller.dispose();
       return value;
     }
-    return 000;
+    return null;
   }
 
-  static Future<VPlatformFileSource> compressImage({
-    required VPlatformFileSource fileSource,
+  //This is a function called "compressImage" that takes in a VPlatformFile object representing an image file and compresses it
+  // if it is larger than a certain size (specified by the "compressAt" parameter). The compression is done using the FlutterNativeImage
+  // library, which takes in the file path of the image and a quality parameter (defaulting to 50). If the resulting file is smaller than the specified size,
+  // the original file is returned. Otherwise, the compressed file is returned as a new VPlatformFile object.
+  static Future<VPlatformFile> compressImage({
+    required VPlatformFile fileSource,
     int compressAt = 1500 * 1000,
     int quality = 50,
   }) async {
     if (!fileSource.isFromPath) {
       return fileSource;
     }
-    VPlatformFileSource compressedFileSource = fileSource;
+    VPlatformFile compressedFileSource = fileSource;
     if (compressedFileSource.fileSize > compressAt) {
       // compress only images bigger than 1500 kb
       final compressedFile = await FlutterNativeImage.compressImage(
-        fileSource.filePath!,
+        fileSource.fileLocalPath!,
         quality: quality,
         //targetWidth: 700,
         // targetHeight: (properties.height! * 700 / properties.width!).round(),
       );
       compressedFileSource =
-          VPlatformFileSource.fromPath(filePath: compressedFile.path);
+          VPlatformFile.fromPath(fileLocalPath: compressedFile.path);
     }
     return compressedFileSource;
   }
 
   static Future<ImageInfo> getImageInfo({
-    required VPlatformFileSource fileSource,
-  }) {
-    late final Image image;
-    if (fileSource.isFromBytes) {
-      image = Image.memory(Uint8List.fromList(fileSource.bytes!));
-    } else {
-      image = Image.file(File(fileSource.filePath!));
-    }
-    final c = Completer<ImageInfo>();
-    image.image.resolve(const ImageConfiguration()).addListener(
-      ImageStreamListener((ImageInfo i, bool _) {
-        c.complete(i);
-      }),
-    );
-    return c.future;
+    required VPlatformFile fileSource,
+  }) async {
+    final Image image = fileSource.isFromBytes
+        ? Image.memory(Uint8List.fromList(fileSource.bytes!))
+        : Image.file(File(fileSource.fileLocalPath!));
+    final completer = Completer<ImageInfo>();
+    final listener = ImageStreamListener((info, _) => completer.complete(info));
+    image.image.resolve(const ImageConfiguration()).addListener(listener);
+    return completer.future;
   }
 }

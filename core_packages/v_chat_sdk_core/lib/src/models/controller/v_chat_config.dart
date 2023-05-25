@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_api_availability/google_api_availability.dart';
 import 'package:v_chat_sdk_core/src/models/controller/config.dart';
 import 'package:v_chat_sdk_core/src/models/push_provider/v_chat_push_provider.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 typedef UserActionType = Function(
   BuildContext context,

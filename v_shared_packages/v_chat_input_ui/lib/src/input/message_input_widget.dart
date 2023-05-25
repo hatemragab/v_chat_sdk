@@ -4,18 +4,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as latlong;
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:place_picker/entities/localization_item.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:v_chat_input_ui/src/input/widgets/emoji_keyborad.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_record_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_send_btn.dart';
 import 'package:v_chat_input_ui/src/input/widgets/message_text_filed.dart';
+import 'package:v_chat_input_ui/src/v_widgets/extension.dart';
 import 'package:v_chat_mention_controller/v_chat_mention_controller.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../v_chat_input_ui.dart';
+import '../enums.dart';
+import '../models/link_preview_data.dart';
+import '../models/location_message_data.dart';
+import '../models/message_voice_data.dart';
 import '../permission_manager.dart';
 import '../recorder/record_widget.dart';
+import '../v_widgets/app_pick.dart';
+import '../v_widgets/v_app_alert.dart';
+import '../v_widgets/v_circle_avatar.dart';
 
 ///this widget used to render the footer of messages page
 class VMessageInputWidget extends StatefulWidget {
@@ -23,28 +32,28 @@ class VMessageInputWidget extends StatefulWidget {
   final Function(String message) onSubmitText;
 
   ///callback when user send images or videos or mixed
-  final Function(List<VPlatformFileSource> files) onSubmitMedia;
+  final Function(List<VPlatformFile> files) onSubmitMedia;
 
   ///callback when user send files
-  final Function(List<VPlatformFileSource> files) onSubmitFiles;
+  final Function(List<VPlatformFile> files) onSubmitFiles;
 
   ///callback when user send location will call only if [googleMapsApiKey] has value
-  final Function(VLocationMessageData data) onSubmitLocation;
+  final Function(LocationMessageData data) onSubmitLocation;
 
   ///callback when user submit voice
-  final Function(VMessageVoiceData data) onSubmitVoice;
+  final Function(MessageVoiceData data) onSubmitVoice;
 
   ///callback when user start typing or recording or stop
-  final Function(VRoomTypingEnum typing) onTypingChange;
+  final Function(RoomTypingEnum typing) onTypingChange;
 
   ///callback when user clicked send attachment
-  final Future<VAttachEnumRes?> Function()? onAttachIconPress;
+  final Future<AttachEnumRes?> Function()? onAttachIconPress;
 
   ///callback if you want to implement custom mention item builder
-  final Widget Function(VMentionModel)? mentionItemBuilder;
+  final Widget Function(MentionModel)? mentionItemBuilder;
 
   ///callback when user start add '@' or '@...' if text is empty that means the user just start type '@'
-  final Future<List<VMentionModel>> Function(String)? onMentionSearch;
+  final Future<List<MentionModel>> Function(String)? onMentionSearch;
 
   /// widget to render if user select to reply
   final Widget? replyWidget;
@@ -102,18 +111,18 @@ class VMessageInputWidget extends StatefulWidget {
 class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   bool _isEmojiShowing = false;
   String _text = "";
-  VRoomTypingEnum _typingType = VRoomTypingEnum.stop;
+  RoomTypingEnum _typingType = RoomTypingEnum.stop;
   final _textEditingController = VChatTextMentionController();
   FocusNode _focusNode = FocusNode();
 
-  bool get _isRecording => _typingType == VRoomTypingEnum.recording;
+  bool get _isRecording => _typingType == RoomTypingEnum.recording;
 
-  bool get _isTyping => _typingType == VRoomTypingEnum.typing;
+  bool get _isTyping => _typingType == RoomTypingEnum.typing;
 
   bool get _isSendBottomEnable => _isTyping || _isRecording;
   final _recordStateKey = GlobalKey<RecordWidgetState>();
   bool _showMentionList = false;
-  final _mentionsWithPhoto = <VMentionModel>[];
+  final _mentionsWithPhoto = <MentionModel>[];
 
   @override
   void initState() {
@@ -157,7 +166,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.stopChatWidget != null) {
-      _typingType = VRoomTypingEnum.stop;
+      _typingType = RoomTypingEnum.stop;
       _isEmojiShowing = false;
       _textEditingController.clear();
       _text = "";
@@ -234,7 +243,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                             key: _recordStateKey,
                             maxTime: widget.maxRecordTime,
                             onCancel: () {
-                              _changeTypingType(VRoomTypingEnum.stop);
+                              _changeTypingType(RoomTypingEnum.stop);
                             },
                           )
                         else
@@ -242,7 +251,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                             autofocus: widget.autofocus,
                             focusNode: _focusNode,
                             hint: widget.language.textFieldHint,
-                            isTyping: _typingType == VRoomTypingEnum.typing,
+                            isTyping: _typingType == RoomTypingEnum.typing,
                             onSubmit: (v) {
                               if (v.isNotEmpty) {
                                 widget.onSubmitText(
@@ -250,7 +259,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                                 );
                                 _text = "";
                                 _textEditingController.clear();
-                                _changeTypingType(VRoomTypingEnum.stop);
+                                _changeTypingType(RoomTypingEnum.stop);
                               }
                             },
                             textEditingController: _textEditingController,
@@ -273,7 +282,7 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         widget.onSubmitVoice(
                           await _recordStateKey.currentState!.stopRecord(),
                         );
-                        _changeTypingType(VRoomTypingEnum.stop);
+                        _changeTypingType(RoomTypingEnum.stop);
                       } else if (_text.isNotEmpty && _text.trim().isNotEmpty) {
                         widget.onSubmitText(_textEditingController.markupText);
                         _text = "";
@@ -287,12 +296,12 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                       final isAllowRecord =
                           await PermissionManager.isAllowRecord();
                       if (isAllowRecord) {
-                        _changeTypingType(VRoomTypingEnum.recording);
+                        _changeTypingType(RoomTypingEnum.recording);
                       } else {
                         final isAllowRecord =
                             await PermissionManager.askForRecord();
                         if (isAllowRecord) {
-                          _changeTypingType(VRoomTypingEnum.recording);
+                          _changeTypingType(RoomTypingEnum.recording);
                         }
                       }
                     },
@@ -318,77 +327,53 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
   }
 
   void _onAttachFilePress(BuildContext context, VInputLanguage language) async {
-    late VAttachEnumRes? res;
+    late AttachEnumRes? res;
     if (widget.onAttachIconPress != null) {
       res = await widget.onAttachIconPress!();
     } else {
-      final x = await VAppAlert.showModalSheet(content: [
-        ModelSheetItem<VAttachEnumRes>(
-          title: language.media,
-          id: VAttachEnumRes.media,
-          iconData: const Icon(PhosphorIcons.image),
-        ),
-        ModelSheetItem<VAttachEnumRes>(
-            title: language.files,
-            id: VAttachEnumRes.files,
-            iconData: const Icon(PhosphorIcons.file)),
-        if (widget.googleMapsApiKey != null)
-          ModelSheetItem<VAttachEnumRes>(
-            title: language.location,
-            iconData: const Icon(PhosphorIcons.mapPin),
-            id: VAttachEnumRes.location,
+      final x = await VAppAlert.showModalSheet(
+        content: [
+          ModelSheetItem<AttachEnumRes>(
+            title: language.media,
+            id: AttachEnumRes.media,
+            iconData: const Icon(PhosphorIcons.image),
           ),
-      ], context: context, title: language.shareMediaAndLocation);
+          ModelSheetItem<AttachEnumRes>(
+              title: language.files,
+              id: AttachEnumRes.files,
+              iconData: const Icon(PhosphorIcons.file)),
+          if (widget.googleMapsApiKey != null)
+            ModelSheetItem<AttachEnumRes>(
+              title: language.location,
+              iconData: const Icon(PhosphorIcons.mapPin),
+              id: AttachEnumRes.location,
+            ),
+        ],
+        context: context,
+        title: language.shareMediaAndLocation,
+        cancelText: language.cancel,
+      );
       if (x == null) return null;
-      res = x.id as VAttachEnumRes;
+      res = x.id as AttachEnumRes;
     }
     if (res != null) {
       switch (res) {
-        case VAttachEnumRes.media:
+        case AttachEnumRes.media:
           final files = await VAppPick.getMedia();
           if (files != null) {
             if (files.isNotEmpty) widget.onSubmitMedia(files);
             final resFiles = await _processMediaToSubmit(files);
           }
           break;
-        case VAttachEnumRes.files:
+        case AttachEnumRes.files:
           final files = await VAppPick.getFiles();
           if (files != null) {
             final resFiles = _processFilesToSubmit(files);
             if (resFiles.isNotEmpty) widget.onSubmitFiles(files);
           }
           break;
-        case VAttachEnumRes.location:
+        case AttachEnumRes.location:
           if (widget.googleMapsApiKey == null) return;
-          // final result = await Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => PlacePicker(
-          //       apiKey: widget.googleMapsApiKey!,
-          //       autocompleteLanguage: widget.googleMapsLangKey,
-          //       onPlacePicked: (result) {
-          //         Navigator.of(context).pop(result);
-          //       },
-          //       initialPosition: const LatLng(-33.8567844, 151.213108),
-          //       useCurrentLocation: true,
-          //       resizeToAvoidBottomInset: false,
-          //     ),
-          //   ),
-          // ) as PickResult?;
-          // if (result != null && result.geometry != null) {
-          //   final location = VLocationMessageData(
-          //     latLng: latlong.LatLng(
-          //       result.geometry!.location.lat,
-          //       result.geometry!.location.lng,
-          //     ),
-          //     linkPreviewData: VLinkPreviewData(
-          //       title: " ",
-          //       desc: result.formattedAddress,
-          //       link: result.url.toString(),
-          //     ),
-          //   );
-          //   widget.onSubmitLocation(location);
-          // }
           final LocationResult? result = await context.toPage<LocationResult?>(
             PlacePicker(
               widget.googleMapsApiKey!,
@@ -399,12 +384,12 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
           if (result != null &&
               result.latLng != null &&
               result.latLng != null) {
-            final location = VLocationMessageData(
+            final location = LocationMessageData(
               latLng: latlong.LatLng(
                 result.latLng!.latitude,
                 result.latLng!.longitude,
               ),
-              linkPreviewData: VLinkPreviewData(
+              linkPreviewData: LinkPreviewData(
                 title: result.name,
                 desc: result.formattedAddress,
                 link:
@@ -426,9 +411,9 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     }
     final entity = await VAppPick.pickFromWeAssetCamera(
       onXFileCaptured: (p0, p1) {
-        context.pop();
-        _sendWeChatImage(VPlatformFileSource.fromPath(
-          filePath: p0.path,
+        Navigator.pop(context);
+        _sendWeChatImage(VPlatformFile.fromPath(
+          fileLocalPath: p0.path,
         ));
         return true;
       },
@@ -438,20 +423,20 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     widget.onSubmitMedia(await _processMediaToSubmit([entity]));
   }
 
-  Future<void> _sendWeChatImage(VPlatformFileSource entity) async {
+  Future<void> _sendWeChatImage(VPlatformFile entity) async {
     widget.onSubmitMedia(await _processMediaToSubmit([entity]));
   }
 
   void _textEditListener() {
     _text = _textEditingController.text;
-    if (_text.isNotEmpty && _typingType != VRoomTypingEnum.typing) {
-      _changeTypingType(VRoomTypingEnum.typing);
-    } else if (_text.isEmpty && _typingType != VRoomTypingEnum.stop) {
-      _changeTypingType(VRoomTypingEnum.stop);
+    if (_text.isNotEmpty && _typingType != RoomTypingEnum.typing) {
+      _changeTypingType(RoomTypingEnum.typing);
+    } else if (_text.isEmpty && _typingType != RoomTypingEnum.stop) {
+      _changeTypingType(RoomTypingEnum.stop);
     }
   }
 
-  void _changeTypingType(VRoomTypingEnum typingType) {
+  void _changeTypingType(RoomTypingEnum typingType) {
     if (typingType != _typingType) {
       setState(() {
         _typingType = typingType;
@@ -462,17 +447,17 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
 
   @override
   void dispose() {
-    if (_typingType != VRoomTypingEnum.stop) {
-      widget.onTypingChange(VRoomTypingEnum.stop);
+    if (_typingType != RoomTypingEnum.stop) {
+      widget.onTypingChange(RoomTypingEnum.stop);
     }
     _textEditingController.dispose();
     super.dispose();
   }
 
-  Future<List<VPlatformFileSource>> _processMediaToSubmit(
-    List<VPlatformFileSource> files,
+  Future<List<VPlatformFile>> _processMediaToSubmit(
+    List<VPlatformFile> files,
   ) async {
-    final resFiles = <VPlatformFileSource>[];
+    final resFiles = <VPlatformFile>[];
     for (final sourceFile in files) {
       if (sourceFile.isContentImage) {
         resFiles.add(sourceFile);
@@ -491,9 +476,8 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     return resFiles;
   }
 
-  List<VPlatformFileSource> _processFilesToSubmit(
-      List<VPlatformFileSource> files) {
-    final res = <VPlatformFileSource>[];
+  List<VPlatformFile> _processFilesToSubmit(List<VPlatformFile> files) {
+    final res = <VPlatformFile>[];
     for (final sourceFile in files) {
       if (sourceFile.fileSize > widget.maxMediaSize) {
         //this file should be ignored

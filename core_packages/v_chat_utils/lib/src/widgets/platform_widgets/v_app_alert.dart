@@ -5,6 +5,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart' as adaptive_dialog;
 import 'package:flutter/material.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../v_chat_utils.dart';
 

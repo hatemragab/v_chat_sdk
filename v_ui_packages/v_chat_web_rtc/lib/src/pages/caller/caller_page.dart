@@ -11,13 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sdp_transform/sdp_transform.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/src/core/enums.dart';
 import 'package:v_chat_web_rtc/src/core/rtc_helper.dart';
 import 'package:v_chat_web_rtc/src/core/v_caller_state.dart';
 
 import '../../../v_chat_web_rtc.dart';
+import '../../core/v_app_alert.dart';
 import '../widgets/call_fotter.dart';
 import '../widgets/timer_widget.dart';
 import '../widgets/user_icon_widget.dart';
@@ -59,7 +60,7 @@ class _VCallerPageState extends State<VCallerPage> {
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: VTrans.labelsOf(context)
-              .endtoendEncryption
+              .endToEndEncryption
               .cap
               .color(Colors.grey),
         ),

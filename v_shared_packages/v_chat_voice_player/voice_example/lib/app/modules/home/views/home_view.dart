@@ -5,8 +5,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
+import 'package:v_platform/v_platform.dart';
 import 'package:voice_example/app/modules/home/views/voice_player.dart';
 
 import '../controllers/home_controller.dart';
@@ -30,10 +30,10 @@ class HomeViewState extends State<HomeView> {
       100,
       (i) => VoiceMessageModel(
         id: "$i",
-        // dataSource: VPlatformFileSource.fromUrl(
+        // dataSource: VPlatformFile.fromUrl(
         //   url: "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
         // ),
-        dataSource: VPlatformFileSource.fromUrl(
+        dataSource: VPlatformFile.fromUrl(
           url: url,
         ),
       ),
@@ -81,7 +81,7 @@ class HomeViewState extends State<HomeView> {
                 0,
                 VoiceMessageModel(
                     id: "${DateTime.now().millisecond}",
-                    dataSource: VPlatformFileSource.fromUrl(
+                    dataSource: VPlatformFile.fromUrl(
                       url:
                           "https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3",
                     )),
@@ -134,7 +134,7 @@ class HomeViewState extends State<HomeView> {
 
 class VoiceMessageModel {
   final String id;
-  final VPlatformFileSource dataSource;
+  final VPlatformFile dataSource;
   final int? maxDuration;
 
   VoiceMessageModel({

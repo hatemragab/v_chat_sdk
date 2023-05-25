@@ -4,7 +4,7 @@
 
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 abstract class MessageFactory {
   static VBaseMessage createBaseMessage(Map<String, dynamic> map) {
@@ -81,7 +81,7 @@ abstract class MessageFactory {
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
         msgLocalId: msg.localId,
-        file1: await HttpHelpers.getMultipartFile(
+        file1: await VPlatforms.getMultipartFile(
           source: msg.data.fileSource,
         ),
       );
@@ -98,7 +98,7 @@ abstract class MessageFactory {
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
-        file1: await HttpHelpers.getMultipartFile(
+        file1: await VPlatforms.getMultipartFile(
           source: msg.data.fileSource,
         ),
       );
@@ -108,7 +108,7 @@ abstract class MessageFactory {
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
-        file1: await HttpHelpers.getMultipartFile(
+        file1: await VPlatforms.getMultipartFile(
           source: msg.data.fileSource,
         ),
       );
@@ -120,10 +120,10 @@ abstract class MessageFactory {
         roomId: msg.roomId,
         file2: msg.data.thumbImage == null
             ? null
-            : await HttpHelpers.getMultipartFile(
+            : await VPlatforms.getMultipartFile(
                 source: msg.data.thumbImage!.fileSource,
               ),
-        file1: await HttpHelpers.getMultipartFile(
+        file1: await VPlatforms.getMultipartFile(
           source: msg.data.fileSource,
         ),
       );

@@ -14,14 +14,14 @@ import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:just_audio/just_audio.dart' as js_audio;
 import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import 'helpers/bytes_custom_source.dart';
 import 'helpers/play_status.dart';
 import 'helpers/utils.dart';
 
 class VVoiceMessageController extends ValueNotifier implements TickerProvider {
-  final VPlatformFileSource audioSrc;
+  final VPlatformFile audioSrc;
   late Duration maxDuration;
   Duration _currentDuration = Duration.zero;
   final Function(String id)? onComplete;
@@ -83,7 +83,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
 
   bool get _isIosWebm =>
       VPlatforms.isIOS &&
-      extension(audioSrc.url ?? audioSrc.filePath!) == ".webm";
+      extension(audioSrc.url ?? audioSrc.fileLocalPath!) == ".webm";
 
   Future initAndPlay() async {
     _playStatus = PlayStatus.downloading;
@@ -120,7 +120,7 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
 
   Future<String> _getFileFromCache() async {
     if (isFile) {
-      return audioSrc.filePath!;
+      return audioSrc.fileLocalPath!;
     }
     if (isBytes) {
       throw "bytes file not supported for play voice";

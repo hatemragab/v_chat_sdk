@@ -5,7 +5,6 @@
 import 'package:logging/logging.dart';
 import 'package:platform_local_notifications/platform_local_notifications.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class VNotificationListener {
   final _log = Logger('VNotificationListener');

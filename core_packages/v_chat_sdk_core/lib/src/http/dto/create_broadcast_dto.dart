@@ -5,12 +5,12 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class CreateBroadcastDto {
   final List<String> identifiers;
   final String title;
-  final VPlatformFileSource? platformImage;
+  final VPlatformFile? platformImage;
 
 //<editor-fold desc="Data Methods">
 

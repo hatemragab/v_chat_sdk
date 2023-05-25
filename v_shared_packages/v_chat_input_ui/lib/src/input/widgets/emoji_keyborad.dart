@@ -4,7 +4,7 @@
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class EmojiKeyboard extends StatelessWidget {
   final bool isEmojiShowing;
@@ -18,7 +18,7 @@ class EmojiKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.platformBrightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Offstage(
       offstage: !isEmojiShowing,
       child: SizedBox(

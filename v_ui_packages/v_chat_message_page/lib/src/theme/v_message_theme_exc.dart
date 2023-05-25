@@ -136,17 +136,11 @@ extension VMessageThemeNewExt on BuildContext {
     return theme;
   }
 
-  Color getMessageItemHolderColor(
-    bool isSender,
-  ) {
-    if (isDark && isSender) {
-      return _darkMeSenderColor;
-    } else if (isDark && !isSender) {
-      return _darkReceiverColor;
-    } else if (!isDark && isSender) {
-      return _lightMySenderColor;
+  Color getMessageItemHolderColor(bool isSender, BuildContext context) {
+    if (isSender) {
+      return context.vMessageTheme.senderBubbleColor;
     } else {
-      return _lightReceiverColor;
+      return context.vMessageTheme.receiverBubbleColor;
     }
   }
 }

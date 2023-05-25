@@ -7,7 +7,7 @@ import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_api_cac
 import 'package:v_chat_sdk_core/src/local_db/core/imp/api_cache/api_cache_memory_imp.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/imp/api_cache/api_cache_sql_imp.dart';
 import 'package:v_chat_sdk_core/src/models/api_cache_model.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class NativeLocalApiCache {
   late final BaseLocalApiCacheRepo _apiCacheRepo;

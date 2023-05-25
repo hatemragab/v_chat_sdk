@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_message_page/src/core/stream_mixin.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/group/group_app_bar_controller.dart';
@@ -95,12 +96,13 @@ class VGroupController extends VBaseMessageController with StreamMix {
   }
 
   @override
-  Future<List<VMentionModel>> onMentionRequireSearch(
+  Future<List<MentionModel>> onMentionRequireSearch(
     BuildContext context,
     String query,
-  ) {
-    return VChatController.I.nativeApi.remote.room
+  ) async {
+    final data = await VChatController.I.nativeApi.remote.room
         .searchToMention(roomId, filter: VBaseFilter(name: query));
+    return data.map((e) => MentionModel.fromMap(e.toMap())).toList();
   }
 
   void _initStreams() {

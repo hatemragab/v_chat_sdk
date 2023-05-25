@@ -6,6 +6,7 @@ class VInputLanguage {
   final String textFieldHint;
   final String media;
   final String files;
+  final String cancel;
   final String location;
   final String shareMediaAndLocation;
   final String thereIsVideoSizeBiggerThanAllowedSize;
@@ -15,6 +16,7 @@ class VInputLanguage {
     this.textFieldHint = "Type your message...",
     this.media = "Media",
     this.files = "Files",
+    this.cancel = "Cancel",
     this.location = "Location",
     this.shareMediaAndLocation = "Share media and location",
     this.thereIsVideoSizeBiggerThanAllowedSize =

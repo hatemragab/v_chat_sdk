@@ -4,7 +4,8 @@
 
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../events/event_bus.dart';
 
 class CallListener {
   final VNativeApi nativeApi;
@@ -24,7 +25,6 @@ class CallListener {
   Future<void> _init() async {
     await nativeApi.remote.socketIo.socketCompleter.future;
     VEventBusSingleton.vEventBus.on<VCallEvents>().listen((event) {
-      print(event);
       if (event is VOnNewCallEvent) {
         return;
       }

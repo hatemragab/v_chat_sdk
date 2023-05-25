@@ -3,7 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:chopper/chopper.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class VChatRegisterDto {
   final String identifier;
@@ -13,7 +13,7 @@ class VChatRegisterDto {
   String? pushKey;
   final String platform;
   final String password;
-  final VPlatformFileSource? image;
+  final VPlatformFile? image;
 
 //<editor-fold desc="Data Methods">
 

@@ -4,8 +4,7 @@
 
 import 'package:map_launcher/map_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 abstract class VStringUtils {
   static final vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");

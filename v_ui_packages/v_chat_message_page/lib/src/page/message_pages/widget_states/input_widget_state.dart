@@ -1,11 +1,10 @@
 // Copyright 2023, the hatemragab project author.
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../../../v_chat_message_page.dart';
 import '../../../models/input_state_model.dart';
@@ -36,19 +35,36 @@ class InputWidgetState extends StatelessWidget {
             language: VInputLanguage(
               files: VTrans.of(context).labels.shareFiles,
               location: VTrans.of(context).labels.shareLocation,
+              cancel: VTrans.of(context).labels.cancel,
               media: VTrans.of(context).labels.media,
               shareMediaAndLocation:
                   VTrans.of(context).labels.shareMediaAndLocation,
               textFieldHint: VTrans.of(context).labels.typeYourMessage,
             ),
             focusNode: controller.focusNode,
-            onAttachIconPress:
-                controller.vMessageConfig.onMessageAttachmentIconPress,
+            onAttachIconPress: () async {
+              if (controller.vMessageConfig.onMessageAttachmentIconPress ==
+                  null) {
+                return null;
+              }
+              final res = await controller
+                  .vMessageConfig.onMessageAttachmentIconPress!();
+              if (res == null) return null;
+              return AttachEnumRes.values.byName(res.name);
+            },
             onSubmitMedia: (files) => controller.onSubmitMedia(context, files),
-            onSubmitVoice: controller.onSubmitVoice,
+            onSubmitVoice: (data) {
+              controller.onSubmitVoice(VMessageVoiceData.fromMap(data.toMap()));
+            },
             onSubmitFiles: controller.onSubmitFiles,
-            onSubmitLocation: controller.onSubmitLocation,
-            onTypingChange: controller.onTypingChange,
+            onSubmitLocation: (data) {
+              controller
+                  .onSubmitLocation(VLocationMessageData.fromMap(data.toMap()));
+            },
+            onTypingChange: (typing) {
+              controller
+                  .onTypingChange(VRoomTypingEnum.values.byName(typing.name));
+            },
             googleMapsLangKey: VAppConstants.sdkLanguage,
             maxMediaSize: controller.vMessageConfig.maxMediaSize,
             onMentionSearch: (query) =>

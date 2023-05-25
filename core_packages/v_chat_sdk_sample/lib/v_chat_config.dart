@@ -12,6 +12,7 @@ import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
+import 'package:v_platform/v_platform.dart';
 
 import 'app/modules/message_page/message_page.dart';
 import 'app/routes/app_pages.dart';
@@ -26,7 +27,7 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
         fcmProvider: VPlatforms.isMobile ? VChatFcmProver() : null,
         enableVForegroundNotification: true,
         oneSignalProvider: VChatOneSignalProver(
-          appId: "sdfgdfshdgjhfgj",
+          appId: "------------",
         ),
         vPushConfig: VLocalNotificationPushConfig(),
       ),

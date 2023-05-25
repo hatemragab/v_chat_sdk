@@ -11,10 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_painter_v2/flutter_painter.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_platform/v_platform.dart';
 
 class ImagePinterView extends StatefulWidget {
-  final VPlatformFileSource platformFileSource;
+  final VPlatformFile platformFileSource;
 
   const ImagePinterView({super.key, required this.platformFileSource});
 
@@ -86,7 +87,8 @@ class _ImagePinterViewState extends State<ImagePinterView> {
         Uint8List.fromList(widget.platformFileSource.bytes!),
       ).image;
     } else {
-      image = await FileImage(File(widget.platformFileSource.filePath!)).image;
+      image =
+          await FileImage(File(widget.platformFileSource.fileLocalPath!)).image;
     }
 
     setState(() {
@@ -452,7 +454,8 @@ class _ImagePinterViewState extends State<ImagePinterView> {
     final bytes = await image.pngBytes;
     if (widget.platformFileSource.bytes != null) {
       widget.platformFileSource.bytes = bytes;
-      return context.pop(widget.platformFileSource);
+
+      return Navigator.pop(context, widget.platformFileSource);
     } else {
       final tempFile = File(
         join(
@@ -461,8 +464,8 @@ class _ImagePinterViewState extends State<ImagePinterView> {
         ),
       );
       final file = await tempFile.writeAsBytes(bytes!);
-      widget.platformFileSource.filePath = file.path;
-      return context.pop(widget.platformFileSource);
+      widget.platformFileSource.fileLocalPath = file.path;
+      return Navigator.pop(context, widget.platformFileSource);
     }
   }
 

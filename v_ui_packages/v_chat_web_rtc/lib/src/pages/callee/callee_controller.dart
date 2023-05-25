@@ -10,11 +10,11 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sdp_transform/sdp_transform.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../v_chat_web_rtc.dart';
 import '../../core/enums.dart';
 import '../../core/rtc_helper.dart';
+import '../../core/v_app_alert.dart';
 import '../../core/v_caller_state.dart';
 
 class CalleeController extends ValueNotifier<VCallerState> {
@@ -62,7 +62,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
   }
 
   void _addListeners() {
-    subscription = VEventBusSingleton.vEventBus.on<VCallEvents>().listen(
+    subscription = VChatController.I.nativeApi.streams.callStream.listen(
       (e) async {
         if (e is VCallEndedEvent) {
           value.status = CallStatus.callEnd;
@@ -97,7 +97,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
 
   void _backAfterSecond() async {
     await Future.delayed(const Duration(seconds: 1));
-    context.pop();
+    Navigator.pop(context);
   }
 
   Future _setRemote(Map<String, dynamic> session) async {

@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:event_bus_plus/res/app_event.dart';
 
 class VOnlineOfflineModel extends AppEvent {
   final String peerId;

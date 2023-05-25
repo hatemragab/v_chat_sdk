@@ -3,17 +3,24 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
 import '../../core/core.dart';
+import '../../core/message_image_data.dart';
+import '../../core/message_video_data.dart';
+import '../../core/v_file.dart';
 import '../pinter/image_pinter_view.dart';
+import '../video_editor/v_video_player.dart';
+import 'app_pick.dart';
 
 class MediaEditorController extends ValueNotifier {
   MediaEditorController(this.platformFiles, this.config) : super(null) {
     _init();
   }
 
-  final List<VPlatformFileSource> platformFiles;
+  final List<VPlatformFile> platformFiles;
   final mediaFiles = <VBaseMediaRes>[];
   final VMediaEditorConfig config;
   bool isLoading = true;
@@ -70,7 +77,7 @@ class MediaEditorController extends ValueNotifier {
             platformFileSource: item.data.fileSource,
           ),
         ),
-      ) as VPlatformFileSource?;
+      ) as VPlatformFile?;
       if (editedFile != null) {
         item.data.fileSource = editedFile;
       }
@@ -100,7 +107,7 @@ class MediaEditorController extends ValueNotifier {
     for (final f in platformFiles) {
       if (f.getMediaType == VSupportedFilesType.image) {
         final mImage = VMediaImageRes(
-          data: VMessageImageData(
+          data: MessageImageData(
             fileSource: f,
             width: -1,
             height: -1,
@@ -108,12 +115,12 @@ class MediaEditorController extends ValueNotifier {
         );
         mediaFiles.add(mImage);
       } else if (f.getMediaType == VSupportedFilesType.video) {
-        VMessageImageData? thumb;
-        if (f.filePath != null) {
-          thumb = await _getThumb(f.filePath!);
+        MessageImageData? thumb;
+        if (f.fileLocalPath != null) {
+          thumb = await _getThumb(f.fileLocalPath!);
         }
         final mFile = VMediaVideoRes(
-          data: VMessageVideoData(
+          data: MessageVideoData(
             fileSource: f,
             duration: -1,
             thumbImage: thumb,
@@ -130,10 +137,10 @@ class MediaEditorController extends ValueNotifier {
     startCompressImagesIfNeed();
   }
 
-  Future<VMessageImageData?> _getThumb(String path) async {
+  Future<MessageImageData?> _getThumb(String path) async {
     return VFileUtils.getVideoThumb(
-      fileSource: VPlatformFileSource.fromPath(
-        filePath: path,
+      fileSource: VPlatformFile.fromPath(
+        fileLocalPath: path,
       ),
     );
   }
@@ -182,7 +189,8 @@ class MediaEditorController extends ValueNotifier {
             await VFileUtils.getVideoDurationMill(f.data.fileSource);
       }
     }
-    context.pop(mediaFiles);
+    Navigator.pop(context, mediaFiles);
+
     //await VideoCompress.deleteAllCache();
   }
 }

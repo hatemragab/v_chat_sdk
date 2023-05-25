@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../../routes/app_pages.dart';
 
@@ -14,7 +15,7 @@ class CreateGroupController extends GetxController {
 
   CreateGroupController(this.users);
 
-  VPlatformFileSource? groupImage;
+  VPlatformFile? groupImage;
   final nameController = TextEditingController();
 
   void onCameraClick() async {

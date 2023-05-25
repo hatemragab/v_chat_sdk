@@ -61,7 +61,7 @@ class HomeController extends GetxController {
     printOnScreen(InputLog("onSubmitVoice", data.toString()));
   }
 
-  void onSubmitFiles(List<VPlatformFileSource> files) {
+  void onSubmitFiles(List<VPlatformFile> files) {
     printOnScreen(InputLog("onSubmitFiles", files.toString()));
   }
 

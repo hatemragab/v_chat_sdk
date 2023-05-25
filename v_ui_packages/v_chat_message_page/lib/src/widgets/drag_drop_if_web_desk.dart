@@ -7,10 +7,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class DragDropIfWeb extends StatefulWidget {
   final Widget child;
-  final Function(List<VPlatformFileSource> files) onDragDone;
+  final Function(List<VPlatformFile> files) onDragDone;
 
   const DragDropIfWeb({
     super.key,
@@ -49,11 +50,11 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
               setState(() {});
               if (files == null) return;
               final controller = await this.controller.future;
-              final draggedFiles = <VPlatformFileSource>[];
+              final draggedFiles = <VPlatformFile>[];
               for (final file in files) {
                 final fileBytes = await controller.getFileData(file);
                 final fileName = await controller.getFilename(file);
-                draggedFiles.add(VPlatformFileSource.fromBytes(
+                draggedFiles.add(VPlatformFile.fromBytes(
                   name: fileName,
                   bytes: fileBytes,
                 ));

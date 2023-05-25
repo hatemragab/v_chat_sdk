@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:random_string/random_string.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VTextMessage extends VBaseMessage {
@@ -43,10 +42,9 @@ class VTextMessage extends VBaseMessage {
   VTextMessage.fromRemoteMap(super.map) : super.fromRemoteMap();
 
   VTextMessage.buildFakeMessage({
-    required int index,
     VMessageEmitStatus messageStatus = VMessageEmitStatus.serverConfirm,
   }) : super.buildFakeMessage(
-          content: randomString(index * 25),
+          content: "randomString(index * 25)",
           messageType: VMessageType.text,
           emitStatus: messageStatus,
         );

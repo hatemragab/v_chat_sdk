@@ -6,11 +6,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_message_item_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../../../v_chat_message_page.dart';
 import '../../chat_media/chat_media_page.dart';
@@ -25,6 +27,7 @@ abstract class VBaseMessageController extends MessageStateController
   final VMessageItemController itemController;
   final events = VEventBusSingleton.vEventBus;
   final VMessageConfig vMessageConfig;
+
   VBaseMessageController({
     required super.vRoom,
     required super.messageProvider,
@@ -100,7 +103,7 @@ abstract class VBaseMessageController extends MessageStateController
 
   void onSubmitMedia(
     BuildContext context,
-    List<VPlatformFileSource> files,
+    List<VPlatformFile> files,
   ) async {
     final fileRes = await context.toPage(VMediaEditorView(
       files: files,
@@ -115,12 +118,12 @@ abstract class VBaseMessageController extends MessageStateController
       if (media is VMediaImageRes) {
         final localMsg = VImageMessage.buildMessage(
           roomId: vRoom.id,
-          data: media.data,
+          data: VMessageImageData.fromMap(media.data.toMap()),
         );
         _onSubmitSendMessage(localMsg);
       } else if (media is VMediaVideoRes) {
         final localMsg = VVideoMessage.buildMessage(
-          data: media.data,
+          data: VMessageVideoData.fromMap(media.data.toMap()),
           roomId: vRoom.id,
         );
         _onSubmitSendMessage(localMsg);
@@ -139,7 +142,7 @@ abstract class VBaseMessageController extends MessageStateController
     scrollDown();
   }
 
-  void onSubmitFiles(List<VPlatformFileSource> files) {
+  void onSubmitFiles(List<VPlatformFile> files) {
     for (var file in files) {
       final localMsg = VFileMessage.buildMessage(
         data: VMessageFileData(fileSource: file),
@@ -237,7 +240,7 @@ abstract class VBaseMessageController extends MessageStateController
   }
 
   ///set to each controller
-  Future<List<VMentionModel>> onMentionRequireSearch(
+  Future<List<MentionModel>> onMentionRequireSearch(
     BuildContext context,
     String query,
   );

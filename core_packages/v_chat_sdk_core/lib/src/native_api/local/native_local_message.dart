@@ -7,7 +7,9 @@ import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_message
 import 'package:v_chat_sdk_core/src/local_db/core/imp/message/memory_message_imp.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/imp/message/sql_message_imp.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../../events/event_bus.dart';
 
 class NativeLocalMessage {
   late BaseLocalMessageRepo _localMessageRepo;

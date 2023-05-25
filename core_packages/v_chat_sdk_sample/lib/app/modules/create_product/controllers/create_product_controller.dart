@@ -4,14 +4,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../../core/utils/app_auth.dart';
 
 class CreateProductController extends GetxController {
   // final ProductRepository repository;
   final user = AppAuth.getMyModel;
-  VPlatformFileSource? productImage;
+  VPlatformFile? productImage;
   final nameController = TextEditingController();
   final descController = TextEditingController();
   final priceController = TextEditingController();

@@ -8,8 +8,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/image_item.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/video_item.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../../v_chat_media_editor.dart';
 import 'file_item.dart';
 
 class MediaItem extends StatelessWidget {
@@ -73,7 +73,7 @@ class MediaItem extends StatelessWidget {
       final m = mediaFile as VMediaImageRes;
       if (m.data.isFromPath) {
         return Image.file(
-          File(m.data.fileSource.filePath!),
+          File(m.data.fileSource.fileLocalPath!),
           fit: fit,
         );
       }
@@ -87,7 +87,7 @@ class MediaItem extends StatelessWidget {
       final m = mediaFile as VMediaVideoRes;
       if (m.data.isFromPath) {
         return Image.file(
-          File(m.data.thumbImage!.fileSource.filePath!),
+          File(m.data.thumbImage!.fileSource.fileLocalPath!),
           fit: fit,
         );
       }

@@ -1,11 +1,10 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 ///[vRoom]: The chat room for which the messages are displayed. This parameter is required.
 ///[isCallsAllowed]: A boolean value that indicates whether calls are allowed in the chat room. The default value is true.
 ///[currentTheme]: set current theme for the v chat message page you can check the dark mode and pass the correct theme you can pass [VLightMessageTheme] OR [VDarkMessageTheme]
 ///[onUserBlockAnother]: A callback function that is called when a user blocks another user. This parameter is optional.
-///[onMessageAttachmentIconPress]: A callback function that is called when the user clicks on the attachment icon in the message input box. This parameter is optional and returns a future VAttachEnumRes instance.
+///[onMessageAttachmentIconPress]: A callback function that is called when the user clicks on the attachment icon in the message input box. This parameter is optional and returns a future AttachEnumRes instance.
 ///[onUserUnBlockAnother]: A callback function that is called when a user unblocks another user. This parameter is optional.
 ///[googleMapsApiKey]: A string value that represents the Google Maps API key. This parameter is optional.
 ///[maxMediaSize]: An integer value that represents the maximum size of the media files that can be uploaded. The default value is 50 MB.

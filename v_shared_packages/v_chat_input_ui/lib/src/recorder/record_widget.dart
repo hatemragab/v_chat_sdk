@@ -9,9 +9,14 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:textless/textless.dart';
+import 'package:uuid/uuid.dart';
 import 'package:v_chat_input_ui/src/recorder/recorders.dart';
+import 'package:v_chat_input_ui/src/v_widgets/extension.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../models/message_voice_data.dart';
 
 class RecordWidget extends StatefulWidget {
   final Duration maxTime;
@@ -97,7 +102,7 @@ class RecordWidgetState extends State<RecordWidget> {
     return false;
   }
 
-  Future<VMessageVoiceData> stopRecord() async {
+  Future<MessageVoiceData> stopRecord() async {
     pauseCounter();
     await Future.delayed(const Duration(milliseconds: 10));
     final path = await recorder!.stop();
@@ -109,15 +114,15 @@ class RecordWidgetState extends State<RecordWidget> {
         bytes = await xFile.readAsBytes();
       }
       final uri = Uri.parse(path);
-      final data = VMessageVoiceData(
+      final data = MessageVoiceData(
         duration: recordMilli,
         fileSource: VPlatforms.isWeb
-            ? VPlatformFileSource.fromBytes(
+            ? VPlatformFile.fromBytes(
                 name: "${DateTime.now().microsecondsSinceEpoch}.wave",
                 bytes: bytes!,
               )
-            : VPlatformFileSource.fromPath(
-                filePath: uri.path,
+            : VPlatformFile.fromPath(
+                fileLocalPath: uri.path,
               ),
       );
       //await close();

@@ -2,10 +2,10 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class VMessageFileData {
-  VPlatformFileSource fileSource;
+  VPlatformFile fileSource;
 
 //<editor-fold desc="Data Methods">
 
@@ -29,7 +29,7 @@ class VMessageFileData {
   }
 
   VMessageFileData copyWith({
-    VPlatformFileSource? fileSource,
+    VPlatformFile? fileSource,
   }) {
     return VMessageFileData(
       fileSource: fileSource ?? this.fileSource,
@@ -42,7 +42,7 @@ class VMessageFileData {
 
   factory VMessageFileData.fromMap(Map<String, dynamic> map) {
     return VMessageFileData(
-      fileSource: VPlatformFileSource.fromMap(map),
+      fileSource: VPlatformFile.fromMap(map: map),
     );
   }
 

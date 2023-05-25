@@ -3,9 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+
 import '../controllers/broadcast_settings_controller.dart';
 
 class BroadcastSettingsView extends GetView<BroadcastSettingsController> {

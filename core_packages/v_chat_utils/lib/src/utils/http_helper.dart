@@ -4,12 +4,11 @@
 
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-
-import '../../v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 abstract class HttpHelpers {
   static Future<http.MultipartFile> getMultipartFile({
-    required VPlatformFileSource source,
+    required VPlatformFile source,
     String fieldName = "file",
   }) async {
     if (VPlatforms.isWeb) {
@@ -26,7 +25,7 @@ abstract class HttpHelpers {
     }
     return http.MultipartFile.fromPath(
       fieldName,
-      source.filePath!,
+      source.fileLocalPath!,
       filename: source.name,
       contentType: source.mimeType == null
           ? null

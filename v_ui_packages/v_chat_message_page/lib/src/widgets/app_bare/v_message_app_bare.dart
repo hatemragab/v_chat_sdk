@@ -55,7 +55,7 @@ class VMessageAppBare extends StatelessWidget {
         onTap: () {
           onTitlePress(context);
         },
-        title: room.title.text.bold,
+        title: room.title.text.bold.maxLine(2),
         subtitle: inTypingText(context) != null
             ? MessageTypingWidget(
                 text: inTypingText(context)!,

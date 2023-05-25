@@ -22,6 +22,7 @@ import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart' hide TextDirection;
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../core/types.dart';
 

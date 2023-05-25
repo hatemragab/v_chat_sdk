@@ -12,12 +12,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_utils: ^0.8.0
   permission_handler: ^10.2.0
   flutter_painter_v2: ^2.0.0
   path: ^1.8.1
   path_provider: ^2.0.13
   meta: ^1.8.0
+  v_platform: ^1.0.0
+  flutter_cache_manager: ^3.3.0
+  chewie: ^1.5.0
+  video_player: ^2.6.1
+  file_saver: ^0.2.4
+  video_thumbnail: ^0.5.3
+  flutter_native_image: ^0.0.6+1
+  image_cropper: ^4.0.1
+  phosphor_flutter: ^1.4.0
+  file_picker: ^5.2.6
+  cached_network_image: ^3.2.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

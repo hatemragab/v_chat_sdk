@@ -3,7 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:v_chat_sdk_sample/app/core/models/user.model.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class ProductModel {
   final UserModel userModel;
@@ -26,7 +26,7 @@ class ProductModel {
     required this.title,
   });
 
-  VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
+  VPlatformFile get imgAsPlatformSource => VPlatformFile.fromUrl(
         fileSize: 0,
         url: imageUrl,
       );

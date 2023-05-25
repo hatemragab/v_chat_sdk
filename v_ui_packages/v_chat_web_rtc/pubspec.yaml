@@ -14,13 +14,15 @@ dependencies:
   flutter:
     sdk: flutter
   v_chat_sdk_core: ^0.8.0
-  v_chat_utils: ^0.8.0
-  flutter_webrtc: ^0.9.24
+  flutter_webrtc: ^0.9.31
   pip_view: ^0.9.7
   retry: ^3.1.0
   sdp_transform: ^0.3.2
   stop_watch_timer: ^2.0.0
-
+  phosphor_flutter: ^1.4.0
+  textless: ^6.6.6
+  adaptive_dialog: ^1.8.2
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

@@ -3,7 +3,8 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../models/v_app_event.dart';
 
 class VTotalUnReadCount extends VAppEvent {
   final int count;

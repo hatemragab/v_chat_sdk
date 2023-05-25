@@ -5,7 +5,9 @@
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../../../models/v_mention_model.dart';
 
 class VChannelApiService {
   static ChannelApi? _channelApiService;
@@ -146,7 +148,7 @@ class VChannelApiService {
 
   Future<String> updateBroadcastImage({
     required String roomId,
-    required VPlatformFileSource file,
+    required VPlatformFile file,
   }) async {
     final res = await _channelApiService!.updateBroadcastImage(
       roomId,
@@ -334,7 +336,7 @@ class VChannelApiService {
 
   Future<String> updateGroupImage({
     required String roomId,
-    required VPlatformFileSource file,
+    required VPlatformFile file,
   }) async {
     final res = await _channelApiService!.updateGroupImage(
       roomId,

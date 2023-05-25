@@ -3,7 +3,11 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../../../../v_chat_media_editor.dart';
+import '../../../core/platform_cache_image_widget.dart';
 
 class ImageItem extends StatelessWidget {
   final VMediaImageRes image;

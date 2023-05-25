@@ -5,6 +5,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:v_platform/v_platform.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 import '../../v_chat_utils.dart';
@@ -12,14 +13,14 @@ import '../../v_chat_utils.dart';
 abstract class VAppPick {
   static bool isPicking = false;
 
-  static Future<VPlatformFileSource?> getCroppedImage({
+  static Future<VPlatformFile?> getCroppedImage({
     bool isFromCamera = false,
   }) async {
     final img = await getImage(isFromCamera: isFromCamera);
     if (img != null) {
       if (VPlatforms.isMobile) {
         final croppedFile = await ImageCropper().cropImage(
-          sourcePath: img.filePath!,
+          sourcePath: img.fileLocalPath!,
           compressQuality: 70,
           cropStyle: CropStyle.circle,
           compressFormat: ImageCompressFormat.png,
@@ -47,14 +48,14 @@ abstract class VAppPick {
         if (croppedFile == null) {
           return null;
         }
-        return VPlatformFileSource.fromPath(filePath: croppedFile.path);
+        return VPlatformFile.fromPath(fileLocalPath: croppedFile.path);
       }
       return img;
     }
     return null;
   }
 
-  static Future<VPlatformFileSource?> getImage({
+  static Future<VPlatformFile?> getImage({
     bool isFromCamera = false,
   }) async {
     isPicking = true;
@@ -65,12 +66,12 @@ abstract class VAppPick {
     if (pickedFile == null) return null;
     final file = pickedFile.files.first;
     if (file.bytes != null) {
-      return VPlatformFileSource.fromBytes(name: file.name, bytes: file.bytes!);
+      return VPlatformFile.fromBytes(name: file.name, bytes: file.bytes!);
     }
-    return VPlatformFileSource.fromPath(filePath: file.path!);
+    return VPlatformFile.fromPath(fileLocalPath: file.path!);
   }
 
-  static Future<List<VPlatformFileSource>?> getImages() async {
+  static Future<List<VPlatformFile>?> getImages() async {
     isPicking = true;
     final FilePickerResult? pickedFile = await FilePicker.platform
         .pickFiles(type: FileType.image, allowMultiple: true);
@@ -78,16 +79,16 @@ abstract class VAppPick {
     if (pickedFile == null) return null;
     return pickedFile.files.map((e) {
       if (e.bytes != null) {
-        return VPlatformFileSource.fromBytes(
+        return VPlatformFile.fromBytes(
           name: e.name,
           bytes: e.bytes!,
         );
       }
-      return VPlatformFileSource.fromPath(filePath: e.path!);
+      return VPlatformFile.fromPath(fileLocalPath: e.path!);
     }).toList();
   }
 
-  static Future<List<VPlatformFileSource>?> getMedia() async {
+  static Future<List<VPlatformFile>?> getMedia() async {
     isPicking = true;
     final xFiles = await FilePicker.platform.pickFiles(
       type: FileType.media,
@@ -98,16 +99,16 @@ abstract class VAppPick {
     if (xFiles.files.isEmpty) return null;
     return xFiles.files.map((e) {
       if (e.bytes != null) {
-        return VPlatformFileSource.fromBytes(
+        return VPlatformFile.fromBytes(
           name: e.name,
           bytes: e.bytes!,
         );
       }
-      return VPlatformFileSource.fromPath(filePath: e.path!);
+      return VPlatformFile.fromPath(fileLocalPath: e.path!);
     }).toList();
   }
 
-  static Future<VPlatformFileSource?> getVideo() async {
+  static Future<VPlatformFile?> getVideo() async {
     isPicking = true;
     final FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
       type: FileType.video,
@@ -116,15 +117,15 @@ abstract class VAppPick {
     if (pickedFile == null) return null;
     final e = pickedFile.files.first;
     if (e.bytes != null) {
-      return VPlatformFileSource.fromBytes(
+      return VPlatformFile.fromBytes(
         name: e.name,
         bytes: e.bytes!,
       );
     }
-    return VPlatformFileSource.fromPath(filePath: e.path!);
+    return VPlatformFile.fromPath(fileLocalPath: e.path!);
   }
 
-  static Future<List<VPlatformFileSource>?> getFiles() async {
+  static Future<List<VPlatformFile>?> getFiles() async {
     isPicking = true;
     final FilePickerResult? xFiles = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -134,16 +135,16 @@ abstract class VAppPick {
     if (xFiles.files.isEmpty) return null;
     return xFiles.files.map((e) {
       if (e.bytes != null) {
-        return VPlatformFileSource.fromBytes(
+        return VPlatformFile.fromBytes(
           name: e.name,
           bytes: e.bytes!,
         );
       }
-      return VPlatformFileSource.fromPath(filePath: e.path!);
+      return VPlatformFile.fromPath(fileLocalPath: e.path!);
     }).toList();
   }
 
-  static Future<VPlatformFileSource?> pickFromWeAssetCamera({
+  static Future<VPlatformFile?> pickFromWeAssetCamera({
     XFileCapturedCallback? onXFileCaptured,
     required BuildContext context,
     int videoSeconds = 45,
@@ -163,20 +164,20 @@ abstract class VAppPick {
       return null;
     }
     final f = (await entity.file)!;
-    return VPlatformFileSource.fromPath(filePath: f.path);
+    return VPlatformFile.fromPath(fileLocalPath: f.path);
   }
 
   static Future clearPickerCache() async {
     await FilePicker.platform.clearTemporaryFiles();
   }
 
-  static Future<VPlatformFileSource?> croppedImage({
-    required VPlatformFileSource file,
+  static Future<VPlatformFile?> croppedImage({
+    required VPlatformFile file,
     List<CropAspectRatioPreset>? aspectRatioPresets,
   }) async {
     if (!file.isContentImage) return null;
     final CroppedFile? croppedFile = await ImageCropper().cropImage(
-      sourcePath: file.filePath!,
+      sourcePath: file.fileLocalPath!,
       aspectRatioPresets: aspectRatioPresets ??
           [
             CropAspectRatioPreset.square,
@@ -199,8 +200,8 @@ abstract class VAppPick {
       ],
     );
     if (croppedFile != null) {
-      return VPlatformFileSource.fromPath(
-        filePath: croppedFile.path,
+      return VPlatformFile.fromPath(
+        fileLocalPath: croppedFile.path,
       );
     }
     return null;

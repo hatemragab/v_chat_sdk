@@ -4,10 +4,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/src/core/enums.dart';
 
+import '../../core/conditional_builder.dart';
 import '../../core/v_caller_state.dart';
 import '../widgets/call_fotter.dart';
 import '../widgets/timer_widget.dart';
@@ -49,7 +51,7 @@ class _VCalleePageState extends State<VCalleePage> {
           automaticallyImplyLeading: false,
           centerTitle: true,
           title: VTrans.labelsOf(context)
-              .endtoendEncryption
+              .endToEndEncryption
               .cap
               .color(Colors.grey),
         ),

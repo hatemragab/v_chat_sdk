@@ -5,10 +5,11 @@
 library v_chat_receive_share;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:share_handler/share_handler.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 Future<void> vInitReceiveShareHandler() async {
   if (!VPlatforms.isMobile) return;
@@ -27,7 +28,7 @@ Future<void> vInitReceiveShareHandler() async {
 
 Future<void> _handleOnNewShare(SharedMedia media) async {
   final messages = <VBaseMessage>[];
-  final pFiles = <VPlatformFileSource>[];
+  final pFiles = <VPlatformFile>[];
 
   if (media.attachments != null && media.attachments!.isNotEmpty) {
     if (media.content != null) {
@@ -37,30 +38,33 @@ Future<void> _handleOnNewShare(SharedMedia media) async {
       if (m == null) continue;
       m.path.replaceAll("file://", "");
       pFiles.add(
-        VPlatformFileSource.fromPath(
-          filePath: m.path,
+        VPlatformFile.fromPath(
+          fileLocalPath: m.path,
         ),
       );
     }
     final context = VChatController.I.navigationContext;
     final roomsIds = await VChatController.I.vNavigator.roomNavigator
         .toForwardPage(context, null);
+
     if (roomsIds != null) {
-      final fileRes = await context.toPage(VMediaEditorView(
-        files: pFiles,
-      )) as List<VBaseMediaRes>?;
+      final fileRes = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => VMediaEditorView(
+                files: pFiles,
+              ))) as List<VBaseMediaRes>?;
+
       if (fileRes == null) return;
       for (final roomId in roomsIds) {
         for (final file in fileRes) {
           if (file is VMediaImageRes) {
             messages.add(VImageMessage.buildMessage(
               roomId: roomId,
-              data: file.data,
+              data: VMessageImageData.fromMap(file.data.toMap()),
             ));
           } else if (file is VMediaVideoRes) {
             messages.add(VVideoMessage.buildMessage(
               roomId: roomId,
-              data: file.data,
+              data: VMessageVideoData.fromMap(file.data.toMap()),
             ));
           } else {
             messages.add(VFileMessage.buildMessage(

@@ -6,13 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/horz_media_item.dart';
 import 'package:v_chat_media_editor/src/modules/home/widgets/media_item.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../core/core.dart';
 import 'media_editor_controller.dart';
 
 class VMediaEditorView extends StatefulWidget {
-  final List<VPlatformFileSource> files;
+  final List<VPlatformFile> files;
   final VMediaEditorConfig config;
 
   const VMediaEditorView({

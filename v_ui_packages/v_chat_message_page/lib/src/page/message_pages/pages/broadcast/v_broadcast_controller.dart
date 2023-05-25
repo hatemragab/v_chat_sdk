@@ -5,9 +5,9 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import 'broadcast_app_bar_controller.dart';
 
@@ -60,8 +60,8 @@ class VBroadcastController extends VBaseMessageController {
   }
 
   @override
-  Future<List<VMentionModel>> onMentionRequireSearch(
+  Future<List<MentionModel>> onMentionRequireSearch(
       BuildContext context, String query) async {
-    return <VMentionModel>[];
+    return <MentionModel>[];
   }
 }

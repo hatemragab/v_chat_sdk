@@ -4,7 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/src/models/models.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 typedef VInfoMessageRouteFunction = Function(
   BuildContext context,
@@ -12,7 +12,7 @@ typedef VInfoMessageRouteFunction = Function(
 );
 typedef VMediaViewerFunction = Function(
   BuildContext context,
-  VPlatformFileSource source,
+  VPlatformFile source,
 );
 
 typedef VToUserProfileFunction = Function(

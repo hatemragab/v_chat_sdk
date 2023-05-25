@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class UserModel {
   final String id;
@@ -19,7 +19,7 @@ class UserModel {
     required this.imageUrl,
   });
 
-  VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
+  VPlatformFile get imgAsPlatformSource => VPlatformFile.fromUrl(
         fileSize: 0,
         url: imageUrl,
       );
@@ -77,7 +77,7 @@ class UserModel {
 
 //</editor-fold>
 }
-// import 'package:v_chat_utils/v_chat_utils.dart';
+// import 'package:v_platform/v_platform.dart';import 'package:v_chat_utils/v_chat_utils.dart';
 //
 // class UserModel {
 //   final String id;
@@ -94,7 +94,7 @@ class UserModel {
 //     required this.imageUrl,
 //   });
 //
-//   VPlatformFileSource get imgAsPlatformSource => VPlatformFileSource.fromUrl(
+//   VPlatformFile get imgAsPlatformSource => VPlatformFile.fromUrl(
 //         fileSize: 0,
 //         url: imageUrl,
 //         isFullUrl: true,

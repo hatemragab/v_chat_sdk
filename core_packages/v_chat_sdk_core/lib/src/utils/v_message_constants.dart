@@ -4,40 +4,33 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 abstract class VMessageConstants {
-  static String getMessageBody(
-    VBaseMessage m,
-    BuildContext context,
-  ) {
+  static String getMessageBody(VBaseMessage m, BuildContext context) {
     if (m is VInfoMessage) {
       final infoAtt = m.data;
-      switch (infoAtt.action) {
-        case VMessageInfoType.updateTitle:
-          return "${infoAtt.adminName} ${VTrans.labelsOf(context).updateTitleTo} ${infoAtt.targetName}";
-        case VMessageInfoType.updateImage:
-          return "${infoAtt.adminName} ${VTrans.labelsOf(context).updateImage}";
-        case VMessageInfoType.addGroupMember:
-          return "${infoAtt.targetName} ${VTrans.labelsOf(context).joinedBy} ${infoAtt.adminName}";
-        case VMessageInfoType.upAdmin:
-          return "${infoAtt.targetName} ${VTrans.labelsOf(context).promotedToAdminBy} ${infoAtt.adminName}";
-        case VMessageInfoType.downMember:
-          return "${infoAtt.targetName} ${VTrans.labelsOf(context).dismissedToMemberBy} ${infoAtt.adminName}";
-        case VMessageInfoType.leave:
-          return "${infoAtt.targetName} ${VTrans.labelsOf(context).leftTheGroup}";
-        case VMessageInfoType.kick:
-          if (infoAtt.isMe) {
-            ///todo fix trans
-            return "You ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}";
-          }
-          return "${infoAtt.targetName} ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}";
-        case VMessageInfoType.createGroup:
-          return "${VTrans.labelsOf(context).groupCreatedBy} ${infoAtt.adminName}";
-
-        case VMessageInfoType.addToBroadcast:
-          return "${infoAtt.adminName} ${VTrans.labelsOf(context).addedYouToNewBroadcast} ${infoAtt.targetName}";
-      }
+      final messages = {
+        VMessageInfoType.updateTitle:
+            "${infoAtt.adminName} ${VTrans.labelsOf(context).updateTitleTo} ${infoAtt.targetName}",
+        VMessageInfoType.updateImage:
+            "${infoAtt.adminName} ${VTrans.labelsOf(context).updateImage}",
+        VMessageInfoType.addGroupMember:
+            "${infoAtt.targetName} ${VTrans.labelsOf(context).joinedBy} ${infoAtt.adminName}",
+        VMessageInfoType.upAdmin:
+            "${infoAtt.targetName} ${VTrans.labelsOf(context).promotedToAdminBy} ${infoAtt.adminName}",
+        VMessageInfoType.downMember:
+            "${infoAtt.targetName} ${VTrans.labelsOf(context).dismissedToMemberBy} ${infoAtt.adminName}",
+        VMessageInfoType.leave:
+            "${infoAtt.targetName} ${VTrans.labelsOf(context).leftTheGroup}",
+        VMessageInfoType.kick: infoAtt.isMe
+            ? "${VTrans.labelsOf(context).you} ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}"
+            : "${infoAtt.targetName} ${VTrans.labelsOf(context).kickedBy} ${infoAtt.adminName}",
+        VMessageInfoType.createGroup:
+            "${VTrans.labelsOf(context).groupCreatedBy} ${infoAtt.adminName}",
+        VMessageInfoType.addToBroadcast:
+            "${infoAtt.adminName} ${VTrans.labelsOf(context).addedYouToNewBroadcast} ${infoAtt.targetName}",
+      };
+      return messages[infoAtt.action] ?? m.realContent;
     }
     return m.realContent;
   }

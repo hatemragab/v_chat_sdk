@@ -12,7 +12,7 @@ import 'package:v_chat_sdk_core/src/local_db/tables/api_cache_table.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class DBProvider {
   DBProvider._();

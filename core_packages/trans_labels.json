@@ -80,11 +80,9 @@
   "Make call",
   "Are you want to make video call",
   "Are you want to make voice call",
-  ///new,
   "There is File has size bigger than allowed size",
   "There is video size bigger than allowed size",
-  "Yesterday //tow times",
+  "Yesterday",
   "Today",
-  "",
-  "",
+  "You"
 ]

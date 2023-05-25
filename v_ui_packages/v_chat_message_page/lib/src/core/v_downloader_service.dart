@@ -4,6 +4,7 @@
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
 
 class VDownloaderService {
   VDownloaderService._();
@@ -29,7 +30,7 @@ class VDownloaderService {
     // }
   }
 
-  Future<String> _startDownload(VPlatformFileSource source) async {
+  Future<String> _startDownload(VPlatformFile source) async {
     return await VFileUtils.saveFileToPublicPath(
       fileAttachment: source,
       appName: VAppConstants.appName,

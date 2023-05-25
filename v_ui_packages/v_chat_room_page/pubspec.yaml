@@ -24,7 +24,7 @@ dependencies:
   loadmore: ^2.0.1
   meta: ^1.8.0
   badges: ^3.0.2
-
+  v_platform: ^1.0.0
 
 dev_dependencies:
   flutter_test:

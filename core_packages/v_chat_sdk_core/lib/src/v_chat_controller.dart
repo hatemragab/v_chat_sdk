@@ -15,8 +15,8 @@ import 'package:v_chat_sdk_core/src/service/v_app_lifecycle_state.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/user_apis/block/block.dart';
 import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
+import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 /// VChatController instance.
 ///

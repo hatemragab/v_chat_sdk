@@ -7,10 +7,13 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:objectid/objectid.dart';
+import 'package:uuid/uuid.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_platform/v_platform.dart';
+
+import '../../../utils/string_utils.dart';
 
 abstract class VBaseMessage {
   VBaseMessage({

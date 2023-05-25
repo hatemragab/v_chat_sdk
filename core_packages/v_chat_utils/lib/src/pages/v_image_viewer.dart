@@ -8,11 +8,13 @@ import 'dart:typed_data';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../v_chat_utils.dart';
 
 class VImageViewer extends StatefulWidget {
-  final VPlatformFileSource platformFileSource;
+  final VPlatformFile platformFileSource;
   final String appName;
 
   const VImageViewer({
@@ -84,7 +86,7 @@ class _VImageViewerState extends State<VImageViewer> {
 
   ImageProvider _getImageProvider() {
     if (widget.platformFileSource.isFromPath) {
-      return FileImage(File(widget.platformFileSource.filePath!));
+      return FileImage(File(widget.platformFileSource.fileLocalPath!));
     }
     if (widget.platformFileSource.isFromBytes) {
       return MemoryImage(Uint8List.fromList(widget.platformFileSource.bytes!));
