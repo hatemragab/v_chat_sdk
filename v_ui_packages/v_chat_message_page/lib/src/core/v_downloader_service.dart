@@ -3,8 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_platform/v_platform.dart';
+
+import '../v_chat/v_file.dart';
 
 class VDownloaderService {
   VDownloaderService._();

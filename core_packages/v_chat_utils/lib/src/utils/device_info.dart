@@ -3,17 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:platform_device_id/platform_device_id.dart';
-import 'package:uuid/uuid.dart' as u;
 import 'package:v_platform/v_platform.dart';
 
 class DeviceInfoHelper {
   final deviceInfoPlugin = DeviceInfoPlugin();
-
-  Future<String> getId() async {
-    String? deviceId = await PlatformDeviceId.getDeviceId;
-    return deviceId ??= const u.Uuid().v4();
-  }
 
   Future<Map<String, dynamic>> getDeviceMapInfo() async {
     final deviceInfo = await deviceInfoPlugin.deviceInfo;

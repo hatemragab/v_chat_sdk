@@ -3,8 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class DateDividerItem extends StatelessWidget {
   final DateTime dateTime;
@@ -20,11 +21,9 @@ class DateDividerItem extends StatelessWidget {
     final now = DateTime.now().toLocal();
     final difference = now.difference(dateTime).inDays;
     if (difference == 0) {
-      //todo trans
-      text = "Today";
+      text = VTrans.of(context).labels.today;
     } else if (difference == 1) {
-      //todo trans
-      text = "Yesterday";
+      text = VTrans.of(context).labels.yesterday;
     } else if (difference <= 7) {
       //will print the day name EX (sunday ,...)
       text = DateFormat.E(VAppConstants.sdkLanguage).format(dateTime);

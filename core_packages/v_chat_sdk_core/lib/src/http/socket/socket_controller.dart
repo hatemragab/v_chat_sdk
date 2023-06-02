@@ -11,8 +11,6 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../events/event_bus.dart';
-
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
   late final SocketService _socketService;
@@ -216,32 +214,74 @@ class SocketController implements ISocketIoClient {
   }
 }
 
+/// An enumeration of events that can occur in the system.
 enum SocketEvents {
-  ///Listeners
+  // Listener events
+  /// Triggered when a new message arrives.
   v1OnNewMessage,
+
+  /// Triggered when a room by id is accessed.
   v1OnRoomById,
+
+  /// Triggered when the current user comes online.
   v1OnMyOnline,
+
+  /// Triggered when an exception occurs.
   v1OnException,
+
+  /// Triggered when a user enters a chat room.
   v1OnEnterChatRoom,
+
+  /// Triggered when a message is delivered to a chat room.
   v1OnDeliverChatRoom,
+
+  /// Triggered when the status of a room changes.
   v1OnRoomStatusChange,
+
+  /// Triggered when a user is banned from chat.
   v1OnBanUserChat,
+
+  /// Triggered when a group member is kicked out.
   v1OnKickGroupMember,
+
+  /// Triggered when a message is deleted from all receivers.
   v1OnDeleteMessageFromAll,
 
-  //call events
+  // Call events
+  /// Triggered when a call is accepted.
   v1OnCallAccepted,
+
+  /// Triggered when a call ends.
   v1OnCallEnded,
+
+  /// Triggered when a new call comes in.
   v1OnNewCall,
+
+  /// Triggered when a call times out.
   v1OnCallTimeout,
+
+  /// Triggered when a call is canceled.
   v1OnCallCanceled,
+
+  /// Triggered when a call is rejected.
   v1OnCallRejected,
+
+  /// Triggered when an ICE candidate is available during a call negotiation.
   v1OnIceCandidate,
 
-  ///Emitter
+  // Emitter events
+  /// An event to change the status of a room.
   v1RoomStatusChange,
+
+  /// An event to set the current user's online status.
   v1MyOnline,
+
+  /// An event to signify entering a chat room.
   v1EnterChatRoom,
+
+  /// An event to deliver a message to a chat room.
   v1DeliverChatRoom,
+
+  /// An event to deliver an ICE candidate during call negotiation.
   v1IceCandidate
 }

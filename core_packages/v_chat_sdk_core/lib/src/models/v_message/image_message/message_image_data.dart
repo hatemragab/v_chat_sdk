@@ -5,6 +5,8 @@
 import 'package:v_platform/v_platform.dart';
 
 class VMessageImageData {
+  /// The file source data this the image to get the image
+  /// from path or bytes or url in case server it will be url
   VPlatformFile fileSource;
   int width;
   int height;

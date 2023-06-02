@@ -7,11 +7,12 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_platform/v_platform.dart';
 
 import '../../../../v_chat_message_page.dart';
 import '../../../core/v_downloader_service.dart';
+import '../../../v_chat/string_utils.dart';
+import '../../../v_chat/v_app_alert.dart';
 import '../providers/message_provider.dart';
 
 class VMessageItemController {
@@ -382,8 +383,9 @@ class VMessageItemController {
 
     await vSafeApiCall<String>(
       onLoading: () {
-        VAppAlert.showOverlaySupport(
-          title: VTrans.of(context).labels.downloading,
+        VAppAlert.showSuccessSnackBar(
+          msg: VTrans.of(context).labels.downloading,
+          context: context,
         );
       },
       request: () async {
@@ -393,8 +395,9 @@ class VMessageItemController {
         if (VPlatforms.isMobile) {
           await OpenFilex.open(url);
         }
-        VAppAlert.showOverlaySupport(
-          title: VTrans.of(context).labels.fileHasBeenSavedTo + url,
+        VAppAlert.showSuccessSnackBar(
+          msg: VTrans.of(context).labels.fileHasBeenSavedTo + url,
+          context: context,
         );
       },
       onError: (exception, trace) {},

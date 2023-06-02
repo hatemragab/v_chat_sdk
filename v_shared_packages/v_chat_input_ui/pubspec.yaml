@@ -6,7 +6,7 @@ issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/v_shared_packages/v_chat_input_ui
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -16,30 +16,28 @@ dependencies:
   stop_watch_timer: ^2.0.0
   place_picker: ^0.10.0
 #  google_maps_place_picker_mb: ^3.0.1
-  latlong2: ^0.8.1
+  latlong2: ^0.9.0
   cross_file: ^0.3.3+4
-  path_provider: ^2.0.13
-  giphy_get: ^3.3.0
   record: ^4.4.4
   v_chat_mention_controller: ^1.0.0
-  audio_waveforms: 1.0.1
-  emoji_picker_flutter: ^1.5.2
-  meta: ^1.8.0
-  google_maps_flutter: ^2.2.5
-  v_platform: ^1.0.0
+  audio_waveforms: ^1.0.4
+  emoji_picker_flutter: ^1.6.0
+  meta: ^1.9.1
+  google_maps_flutter: ^2.2.8
+  v_platform: ^1.0.3
   cached_network_image: ^3.2.3
-  adaptive_dialog: ^1.8.2
+  adaptive_dialog: ^1.9.0-no-macos.2
   textless: ^6.6.6
   phosphor_flutter: ^1.4.0
-  file_picker: ^5.2.6
+  file_picker: ^5.3.2
   image_cropper: ^4.0.1
-  wechat_camera_picker: ^3.7.0
+  wechat_camera_picker: ^3.8.0
   uuid: ^3.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-  lints: ^2.0.1
+  flutter_lints: ^2.0.1
+  lints: ^2.1.0
 
 flutter:
 

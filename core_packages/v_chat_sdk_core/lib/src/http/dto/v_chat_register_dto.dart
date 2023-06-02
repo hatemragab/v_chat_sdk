@@ -5,18 +5,19 @@
 import 'package:chopper/chopper.dart';
 import 'package:v_platform/v_platform.dart';
 
+/// Data Transfer Object for registration in VChat system.
 class VChatRegisterDto {
-  final String identifier;
-  final String? fullName;
-  final String? deviceId;
-  final String? language;
-  String? pushKey;
-  final String platform;
-  final String password;
-  final VPlatformFile? image;
+  final String identifier; // The unique identifier for the user.
+  final String? fullName; // The full name of the user.
+  final String deviceId; // The unique device ID of the user's device.
+  final String? language; // The preferred language of the user.
+  String?
+      pushKey; // The push notification key. it can be null. if you not support push notifications it can be the fcm token or onesignal id.
+  final String platform; // The platform of the user's device.
+  final String password; // The password for the user.
+  final VPlatformFile? image; // The profile image for the user.
 
-//<editor-fold desc="Data Methods">
-
+  /// Creates an instance of VChatRegisterDto.
   VChatRegisterDto({
     required this.identifier,
     required this.fullName,
@@ -28,17 +29,22 @@ class VChatRegisterDto {
     this.image,
   });
 
+  /// Converts the properties to a list of PartValue.
+  /// The PartValue objects represent the individual data parts
+  /// to be included in a multipart request.
   List<PartValue> toListOfPartValue() {
-    return [
-      PartValue('identifier', identifier),
-      if (fullName != null) PartValue('fullName', fullName),
-      PartValue('deviceId', deviceId),
-      PartValue('password', password),
-      if (language != null) PartValue('language', language),
-      PartValue('pushKey', pushKey),
-      PartValue('platform', platform),
-    ];
-  }
+    // We create a Map first, then convert it to List<PartValue>.
+    // This avoids creating a List with null values if optional parameters are null.
+    final map = {
+      'identifier': identifier,
+      if (fullName != null) 'fullName': fullName,
+      'deviceId': deviceId,
+      'password': password,
+      if (language != null) 'language': language,
+      'pushKey': pushKey,
+      'platform': platform,
+    };
 
-//</editor-fold>
+    return map.entries.map((e) => PartValue(e.key, e.value)).toList();
+  }
 }

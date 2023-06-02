@@ -6,7 +6,7 @@ issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/push_providers/v_chat_one_signal
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
@@ -18,7 +18,7 @@ dependencies:
   eraser: ^2.0.1
   flutter_app_badger: ^1.5.0
   http: ^0.13.5
-  v_platform: ^1.0.0
+  v_platform: ^1.0.3
 
 dev_dependencies:
   flutter_lints: ^2.0.1

@@ -36,9 +36,9 @@ class MediaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isProcessing) {
-      return Row(
+      return const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           CircularProgressIndicator.adaptive(),
         ],
       );

@@ -241,6 +241,12 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
                         if (_isRecording)
                           RecordWidget(
                             key: _recordStateKey,
+                            onMaxTime: () async {
+                              widget.onSubmitVoice(
+                                await _recordStateKey.currentState!
+                                    .stopRecord(),
+                              );
+                            },
                             maxTime: widget.maxRecordTime,
                             onCancel: () {
                               _changeTypingType(RoomTypingEnum.stop);
@@ -362,7 +368,6 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
           final files = await VAppPick.getMedia();
           if (files != null) {
             if (files.isNotEmpty) widget.onSubmitMedia(files);
-            final resFiles = await _processMediaToSubmit(files);
           }
           break;
         case AttachEnumRes.files:
@@ -420,11 +425,11 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
       context: context,
     );
     if (entity == null) return;
-    widget.onSubmitMedia(await _processMediaToSubmit([entity]));
+    widget.onSubmitMedia([entity]);
   }
 
   Future<void> _sendWeChatImage(VPlatformFile entity) async {
-    widget.onSubmitMedia(await _processMediaToSubmit([entity]));
+    widget.onSubmitMedia([entity]);
   }
 
   void _textEditListener() {
@@ -452,28 +457,6 @@ class _VMessageInputWidgetState extends State<VMessageInputWidget> {
     }
     _textEditingController.dispose();
     super.dispose();
-  }
-
-  Future<List<VPlatformFile>> _processMediaToSubmit(
-    List<VPlatformFile> files,
-  ) async {
-    final resFiles = <VPlatformFile>[];
-    for (final sourceFile in files) {
-      if (sourceFile.isContentImage) {
-        resFiles.add(sourceFile);
-      } else if (sourceFile.isContentVideo) {
-        if (sourceFile.fileSize > widget.maxMediaSize) {
-          //this file should be ignored
-          VAppAlert.showErrorSnackBar(
-            msg: widget.language.thereIsVideoSizeBiggerThanAllowedSize,
-            context: context,
-          );
-          continue;
-        }
-        resFiles.add(sourceFile);
-      }
-    }
-    return resFiles;
   }
 
   List<VPlatformFile> _processFilesToSubmit(List<VPlatformFile> files) {

@@ -5,7 +5,10 @@
 import 'package:v_platform/v_platform.dart';
 
 class VMessageVoiceData {
+  /// The file source data
   VPlatformFile fileSource;
+
+  /// The duration of the voice in milliseconds
   int duration;
 
 //<editor-fold desc="Data Methods">

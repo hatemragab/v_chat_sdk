@@ -8,6 +8,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+///only for v chat service http calls
 Future<T?> vSafeApiCall<T>({
   Function()? onLoading,
   required Future<T> Function() request,
@@ -52,17 +53,3 @@ Future<T?> vSafeApiCall<T>({
   }
   return null;
 }
-
-// void _showError(Object err, bool isAllow) {
-//   if (isAllow) {
-//     VAppAlert.showOverlaySupport(
-//       title: "Connection error",
-//       textStyle: const TextStyle(color: Colors.white),
-//       background: Colors.red,
-//     );
-//     // VAppAlert.showErrorSnackBar(
-//     //   msg: err.toString(),
-//     //   context: context,
-//     // );
-//   }
-// }

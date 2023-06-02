@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import '../default_localizations.dart';
+import 'package:v_chat_sdk_core/src/i10n/default_localizations.dart';
 
 class VEnLocalizations extends VChatLocalizationLabels {
   const VEnLocalizations();

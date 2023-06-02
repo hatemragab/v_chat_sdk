@@ -93,7 +93,7 @@ class VRoomController with StreamMix {
         );
       },
       onSuccess: (response) {
-        _roomState.updateCacheState(response);
+        _roomState.updateCacheStateForChatRooms(response);
       },
     );
     isFetchingRooms = false;

@@ -4,6 +4,7 @@
 
 import 'package:event_bus_plus/res/app_event.dart';
 
+///parent class for all app events
 abstract class VAppEvent extends AppEvent {
   const VAppEvent();
 }

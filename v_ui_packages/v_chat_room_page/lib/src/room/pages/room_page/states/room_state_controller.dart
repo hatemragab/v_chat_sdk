@@ -29,28 +29,35 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
 
   List<VRoom> get stateRooms => value.values;
 
-  void updateCacheState(VPaginationModel<VRoom> paginationModel) {
-    final newStateList = [...value.values];
+  void updateCacheStateForChatRooms(VPaginationModel<VRoom> paginationModel) {
+    final Map<String, VRoom> stateRoomMap =
+        Map.fromEntries(value.values.map((vRoom) => MapEntry(vRoom.id, vRoom)));
     final apiRooms = paginationModel.values;
-    for (int apiIndex = 0; apiIndex < apiRooms.length; apiIndex++) {
-      final stateIndex = newStateList.indexOf(apiRooms[apiIndex]);
-      if (stateIndex != -1) {
-        //api room exists in local rooms we need to check if
-        //local room contains sending message
-        if (newStateList[stateIndex].lastMessage.emitStatus.isSendingOrError) {
-          final stateLastMsg = newStateList[stateIndex].lastMessage;
-          newStateList[stateIndex] = apiRooms[apiIndex];
-          newStateList[stateIndex].lastMessage = stateLastMsg;
+
+    for (var apiRoom in apiRooms) {
+      if (stateRoomMap.containsKey(apiRoom.id)) {
+        final stateLastMessage = stateRoomMap[apiRoom.id]!.lastMessage;
+        if (stateLastMessage.contentTr != null) {
+          apiRoom.lastMessage.contentTr = stateLastMessage.contentTr;
+        }
+        // Api room exists in local rooms. Check if local room contains sending message
+        if (stateLastMessage.emitStatus.isSendingOrError) {
+          stateRoomMap[apiRoom.id] = apiRoom;
+          stateRoomMap[apiRoom.id]!.lastMessage = stateLastMessage;
         } else {
-          newStateList[stateIndex] = apiRooms[apiIndex];
+          stateRoomMap[apiRoom.id] = apiRoom;
         }
       } else {
-        newStateList.insert(0, apiRooms[apiIndex]);
+        // If room does not exist, add it to the start of the list
+        stateRoomMap[apiRoom.id] = apiRoom;
       }
     }
-    //we need to sort
-    newStateList.sortByMsgId();
-    value.values = newStateList;
+
+    // We need to sort the list by msg id
+    final newStateRoomsList = stateRoomMap.values.toList();
+    newStateRoomsList.sortByMsgId();
+
+    value.values = newStateRoomsList;
     notifyListeners();
   }
 
@@ -250,7 +257,6 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         value.values.sortByMsgId();
         notifyListeners();
         _isLoadMoreActive = false;
-        print("_isLoadMoreActive_isLoadMoreActive ${response.values.length}");
       },
       onError: (exception, trace) {
         print(exception);

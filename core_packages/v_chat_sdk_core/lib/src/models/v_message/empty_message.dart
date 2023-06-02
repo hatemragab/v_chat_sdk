@@ -4,6 +4,7 @@
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+/// Empty message used to insert new room without mess
 class VEmptyMessage extends VBaseMessage {
   VEmptyMessage()
       : super(

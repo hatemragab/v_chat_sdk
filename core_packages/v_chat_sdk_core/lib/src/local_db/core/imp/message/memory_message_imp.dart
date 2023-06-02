@@ -4,9 +4,8 @@
 
 import 'package:collection/collection.dart';
 import 'package:v_chat_sdk_core/src/local_db/core/abstraction/base_local_message_repo.dart';
+import 'package:v_chat_sdk_core/src/models/v_chat_base_exception.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
-import '../../../../models/v_chat_base_exception.dart';
 
 extension CSortById on List<VBaseMessage> {
   List<VBaseMessage> sortById() {

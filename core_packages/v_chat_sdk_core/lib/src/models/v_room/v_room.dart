@@ -9,23 +9,58 @@ import 'package:v_chat_sdk_core/src/local_db/tables/room_table.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VRoom {
+  /// The unique identifier of the room.
   final String id;
+
+  /// The title of the room in a specific language (could be a local language).
   String title;
+
+  /// The English title of the room.
   String enTitle;
+
+  /// The URL or path to the thumbnail image of the room.
   String thumbImage;
+
+  /// The type of the room, defined by the `VRoomType` enum.
   VRoomType roomType;
+
+  /// A flag indicating if the room is archived.
   bool isArchived;
+
+  /// The count of unread messages in the room.
   int unReadCount;
+
+  /// The last message that was sent in the room.
   VBaseMessage lastMessage;
+
+  /// A flag indicating if the room is deleted.
   bool isDeleted = false;
+
+  /// The timestamp when the room was created.
   final DateTime createdAt;
+
+  /// A flag indicating if notifications for the room are muted.
   bool isMuted;
+
+  /// A flag indicating if the room is currently online.
   bool isOnline;
+
+  /// The current typing status of the room.
   VSocketRoomTypingModel typingStatus;
+
+  /// A nickname for the room.
   String? nickName;
+
+  /// The language to translate the messages to.
   String? transTo;
+
+  /// The peer ID if this is a peer-to-peer room.
   final String? peerId;
+
+  /// The peer identifier if this is a peer-to-peer room.
   final String? peerIdentifier;
+
+  /// A flag used for selecting the room, for example in a multi-select scenario.
   bool isSelected = false;
 
   VRoom({

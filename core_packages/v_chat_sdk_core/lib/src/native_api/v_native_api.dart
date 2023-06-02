@@ -18,8 +18,7 @@ import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_socket.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../utils/app_pref.dart';
-
+/// This class handles the API requests both local and remote and also has a Streams class.
 class VNativeApi {
   final local = VLocalNativeApi();
   final remote = VRemoteNativeApi(
@@ -37,10 +36,12 @@ class VNativeApi {
 
   static final _instance = VNativeApi._();
 
+  /// Returns the single instance of [VNativeApi].
   static VNativeApi get I {
     return _instance;
   }
 
+  /// Initializes the [VNativeApi] instance.
   static Future<VNativeApi> init() async {
     assert(
       !_instance._isControllerInit,
@@ -53,6 +54,7 @@ class VNativeApi {
   }
 }
 
+/// This class manages local database operations such as messages, rooms, and cache.
 class VLocalNativeApi {
   late final NativeLocalMessage message;
   late final NativeLocalRoom room;
@@ -69,12 +71,15 @@ class VLocalNativeApi {
     return this;
   }
 
+  /// Resets the database.
   Future reCreate() async {
     await message.reCreateMessageTable();
     await room.reCreateRoomTable();
   }
 }
 
+/// This class manages remote API operations such as socket events, HTTP requests,
+/// authentication, messages, profile, calls and block operations.
 class VRemoteNativeApi {
   final socketIo = NativeRemoteSocketIo();
   final VChannelApiService _room;
@@ -96,6 +101,8 @@ class VRemoteNativeApi {
   final remoteAuth = NativeRemoteAuth(
     VAuthApiService.init(),
   );
+
+  /// Performs a native HTTP request.
   Future<http.Response> nativeHttp(
     Uri uri, {
     required VChatHttpMethods method,
@@ -123,6 +130,8 @@ class VRemoteNativeApi {
   VMessageApiService get message => _nativeRemoteMessage;
 
   VProfileApiService get profile => _nativeProfileApiService;
+
   VCallApiService get calls => _nativeRemoteCallApiService;
+
   VBlockApiService get block => _nativeRemoteBlockApiService;
 }

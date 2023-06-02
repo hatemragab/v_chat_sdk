@@ -6,7 +6,6 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
-import 'package:v_chat_sdk_core/src/models/v_message/location_message/v_location_message_data.dart';
 import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 

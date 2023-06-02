@@ -38,7 +38,8 @@ class _VImageViewerState extends State<VImageViewer> {
       key: const Key('photo_view_gallery'),
       direction: DismissDirection.down,
       onDismissed: (direction) {
-        context.pop();
+         Navigator.of(context).pop();
+
       },
       child: Scaffold(
         backgroundColor: Colors.black,

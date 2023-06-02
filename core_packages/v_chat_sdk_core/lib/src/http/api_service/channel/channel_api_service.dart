@@ -4,10 +4,9 @@
 
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
+import 'package:v_chat_sdk_core/src/models/v_mention_model.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
-
-import '../../../models/v_mention_model.dart';
 
 class VChannelApiService {
   static ChannelApi? _channelApiService;
@@ -25,11 +24,6 @@ class VChannelApiService {
     throwIfNotSuccess(res);
     return VRoom.fromMap(extractDataFromResponse(res));
   }
-
-  // Future<void> closeChat(String roomId) async {
-  //   final res = await _channelApiService!.closeChat(roomId);
-  //   throwIfNotSuccess(res);
-  // }
 
   Future<bool> muteRoomNotification({required String roomId}) async {
     final res = await _channelApiService!.muteRoomNotification(roomId);
@@ -212,12 +206,6 @@ class VChannelApiService {
     throwIfNotSuccess(res);
     return VRoom.fromMap(extractDataFromResponse(res));
   }
-
-  // Future<GroupInfo> getGroupInfo(String roomId) async {
-  //   final res = await _channelApiService.getMyGroupInfo(roomId);
-  //   throwIfNotSuccess(res);
-  //   return GroupInfo.fromMap(extractDataFromResponse(res));
-  // }
 
   Future<bool> getGroupStatus(String roomId) async {
     final res = await _channelApiService!.getMyGroupStatus(roomId);

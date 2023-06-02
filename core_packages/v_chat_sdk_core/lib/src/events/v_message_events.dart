@@ -4,11 +4,11 @@
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../models/v_app_event.dart';
-
+/// Abstract base class for message events.
+/// All message event classes should extend this class.
 abstract class VMessageEvents extends VAppEvent {
-  final String roomId;
-  final String localId;
+  final String roomId; // The ID of the room associated with the event.
+  final String localId; // The local ID associated with the event.
 
   const VMessageEvents({
     required this.roomId,
@@ -19,8 +19,9 @@ abstract class VMessageEvents extends VAppEvent {
   List<Object?> get props => [roomId, localId];
 }
 
+/// Event for inserting a new message.
 class VInsertMessageEvent extends VMessageEvents {
-  final VBaseMessage messageModel;
+  final VBaseMessage messageModel; // The message to insert.
 
   const VInsertMessageEvent({
     required super.roomId,
@@ -29,8 +30,9 @@ class VInsertMessageEvent extends VMessageEvents {
   });
 }
 
+/// Event for updating a message.
 class VUpdateMessageEvent extends VMessageEvents {
-  final VBaseMessage messageModel;
+  final VBaseMessage messageModel; // The message to update.
 
   const VUpdateMessageEvent({
     required super.roomId,
@@ -39,8 +41,9 @@ class VUpdateMessageEvent extends VMessageEvents {
   });
 }
 
+/// Event for deleting a message from me.
 class VDeleteMessageEvent extends VMessageEvents {
-  final VBaseMessage? upMessage;
+  final VBaseMessage? upMessage; // The message to delete. Can be null.
 
   const VDeleteMessageEvent({
     required super.roomId,
@@ -52,8 +55,9 @@ class VDeleteMessageEvent extends VMessageEvents {
   List<Object?> get props => [super.props, upMessage];
 }
 
+/// Event for deleting a message from all.
 class VUpdateMessageAllDeletedEvent extends VMessageEvents {
-  final VBaseMessage message;
+  final VBaseMessage message; // The message to update.
 
   const VUpdateMessageAllDeletedEvent({
     required super.roomId,
@@ -65,8 +69,9 @@ class VUpdateMessageAllDeletedEvent extends VMessageEvents {
   List<Object?> get props => [super.props, message];
 }
 
+/// Event for updating the status [seen,deliver,send,error,pending] of a message.
 class VUpdateMessageStatusEvent extends VMessageEvents {
-  final VMessageEmitStatus emitState;
+  final VMessageEmitStatus emitState; // The new status of the message.
 
   const VUpdateMessageStatusEvent({
     required super.roomId,
@@ -78,8 +83,9 @@ class VUpdateMessageStatusEvent extends VMessageEvents {
   List<Object?> get props => [super.props, emitState];
 }
 
+/// Event for updating the 'seen' status of all room messages.
 class VUpdateMessageSeenEvent extends VMessageEvents {
-  final VSocketOnRoomSeenModel model;
+  final VSocketOnRoomSeenModel model; // The model to update the 'seen' status.
 
   const VUpdateMessageSeenEvent({
     required super.roomId,
@@ -91,8 +97,10 @@ class VUpdateMessageSeenEvent extends VMessageEvents {
   List<Object?> get props => [super.props, model];
 }
 
+/// Event for updating the delivery status of all room messages.
 class VUpdateMessageDeliverEvent extends VMessageEvents {
-  final VSocketOnDeliverMessagesModel model;
+  final VSocketOnDeliverMessagesModel
+      model; // The model to update the delivery status.
 
   const VUpdateMessageDeliverEvent({
     required super.roomId,

@@ -9,8 +9,6 @@ import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
 import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import 'message_image_data.dart';
-
 class VImageMessage extends VBaseMessage {
   final VMessageImageData data;
 

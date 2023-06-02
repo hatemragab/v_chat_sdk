@@ -2,10 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-library v_chat_sdk_core;
-
 export './src/../src/models/models.dart';
-export './src/dto/dto.dart';
 export './src/events/events.dart';
 export './src/exceptions/exceptions.dart';
 export './src/http/http.dart';

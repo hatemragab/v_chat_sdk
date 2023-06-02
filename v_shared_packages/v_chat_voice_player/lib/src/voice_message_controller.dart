@@ -3,14 +3,12 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart' as cache;
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:just_audio/just_audio.dart' as js_audio;
 import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart';
@@ -31,7 +29,6 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   final String id;
   late AnimationController animController;
   final AudioPlayer _player = AudioPlayer();
-  VlcPlayerController? videoPlayerController;
   PlayStatus _playStatus = PlayStatus.init;
   PlaySpeed _speed = PlaySpeed.x1;
   final randoms = <double>[];
@@ -89,17 +86,13 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     _playStatus = PlayStatus.downloading;
     _updateUi();
     try {
-      final path = await _getFileFromCache();
       if (kIsWeb) {
         await _setMaxDurationForJs();
         await startPlayingForJs();
       } else {
-        if (_isIosWebm) {
-          await _initAndPlayForIosWebm(path);
-        } else {
-          await _setMaxDurationForIo(path);
-          await _startPlayingForIo(path);
-        }
+        final path = await _getFileFromCache();
+        await _setMaxDurationForIo(path);
+        await _startPlayingForIo(path);
       }
       if (onPlaying != null) {
         onPlaying!(id);
@@ -186,8 +179,6 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     _positionStream?.cancel();
     _playerStateStream?.cancel();
     animController.dispose();
-    await videoPlayerController?.stop();
-    await videoPlayerController?.dispose();
     super.dispose();
   }
 
@@ -205,7 +196,6 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     if (onPause != null) {
       onPause!(id);
     }
-    videoPlayerController?.pause();
   }
 
   void _listenToPlayerState() {
@@ -337,43 +327,5 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
   @override
   Ticker createTicker(TickerCallback onTick) {
     return Ticker(onTick);
-  }
-
-  Future _initAndPlayForIosWebm(String path) async {
-    if (videoPlayerController != null) {
-      await videoPlayerController!.dispose();
-      //await videoPlayerController!.stopRendererScanning();
-      videoPlayerController = null;
-    }
-    videoPlayerController ??= VlcPlayerController.file(
-      File(path),
-      hwAcc: HwAcc.full,
-      options: VlcPlayerOptions(
-        advanced: VlcAdvancedOptions([
-          VlcAdvancedOptions.networkCaching(2000),
-        ]),
-        subtitle: VlcSubtitleOptions([
-          VlcSubtitleOptions.boldStyle(true),
-          VlcSubtitleOptions.fontSize(30),
-          VlcSubtitleOptions.outlineColor(VlcSubtitleColor.yellow),
-          VlcSubtitleOptions.outlineThickness(VlcSubtitleThickness.normal),
-          // works only on externally added subtitles
-          VlcSubtitleOptions.color(VlcSubtitleColor.navy),
-        ]),
-        http: VlcHttpOptions([
-          VlcHttpOptions.httpReconnect(true),
-        ]),
-        rtp: VlcRtpOptions([
-          VlcRtpOptions.rtpOverRtsp(true),
-        ]),
-      ),
-      autoInitialize: true,
-    );
-    //await videoPlayerController!.initialize();
-    _updateUi();
-    await Future.delayed(const Duration(milliseconds: 500));
-    //await videoPlayerController!.initialize();
-    _playStatus = PlayStatus.playing;
-    _updateUi();
   }
 }

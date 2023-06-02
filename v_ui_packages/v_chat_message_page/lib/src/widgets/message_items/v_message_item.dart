@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:swipe_to/swipe_to.dart';
+import 'package:textless/textless.dart';
+import 'package:v_chat_message_page/src/v_chat/v_circle_avatar.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/bubble_normal.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/center_item_holder.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/forward_item_widget.dart';
@@ -20,11 +22,11 @@ import 'package:v_chat_message_page/src/widgets/message_items/widgets/video_mess
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/voice_message_item.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart' hide TextDirection;
 import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 import 'package:v_platform/v_platform.dart';
 
 import '../../core/types.dart';
+import '../../v_chat/string_utils.dart';
 
 class VMessageItem extends StatelessWidget {
   final VBaseMessage message;

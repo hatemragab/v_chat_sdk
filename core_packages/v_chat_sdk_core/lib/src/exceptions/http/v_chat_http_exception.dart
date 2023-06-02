@@ -2,10 +2,11 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import '../../models/v_chat_base_exception.dart';
+import 'package:v_chat_sdk_core/src/models/v_chat_base_exception.dart';
 
+// Abstract base class for all HTTP exceptions in the VChat system.
 abstract class VChatBaseHttpException extends VChatBaseException {
-  final int statusCode;
+  final int statusCode; // HTTP status code associated with the exception.
 
   VChatBaseHttpException({
     required this.statusCode,
@@ -13,8 +14,9 @@ abstract class VChatBaseHttpException extends VChatBaseException {
   });
 }
 
+// Exception representing a 400 Bad Request HTTP response.
 class VChatHttpBadRequest extends VChatBaseHttpException {
-  final String vChatException;
+  final String vChatException; // Detailed exception message.
 
   VChatHttpBadRequest({
     required this.vChatException,
@@ -24,8 +26,9 @@ class VChatHttpBadRequest extends VChatBaseHttpException {
         );
 }
 
+// Exception representing a 403 Forbidden HTTP response.
 class VChatHttpForbidden extends VChatBaseHttpException {
-  final Object vChatException;
+  final Object vChatException; // Detailed exception message.
 
   VChatHttpForbidden({
     required this.vChatException,
@@ -35,8 +38,9 @@ class VChatHttpForbidden extends VChatBaseHttpException {
         );
 }
 
+// Exception representing a 450 Unauthenticated HTTP response.
 class VChatHttpUnAuth extends VChatBaseHttpException {
-  final Object vChatException;
+  final Object vChatException; // Detailed exception message.
 
   VChatHttpUnAuth({
     required this.vChatException,
@@ -46,8 +50,9 @@ class VChatHttpUnAuth extends VChatBaseHttpException {
         );
 }
 
+// Exception representing a 404 Not Found HTTP response.
 class VChatHttpNotFound extends VChatBaseHttpException {
-  final Object vChatException;
+  final Object vChatException; // Detailed exception message.
 
   VChatHttpNotFound({
     required this.vChatException,

@@ -6,10 +6,9 @@ import 'dart:async';
 
 import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:v_chat_sdk_core/src/events/app_life_cycle.dart';
+import 'package:v_chat_sdk_core/src/events/event_bus.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_platform/v_platform.dart';
-
-import '../events/event_bus.dart';
 
 class VAppLifecycleState {
   static bool isAppActive = false;

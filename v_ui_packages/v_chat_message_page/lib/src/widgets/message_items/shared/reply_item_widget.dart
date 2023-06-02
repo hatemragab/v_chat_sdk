@@ -3,9 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:textless/textless.dart';
+import 'package:v_chat_message_page/src/v_chat/platform_cache_image_widget.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../core/types.dart';
 

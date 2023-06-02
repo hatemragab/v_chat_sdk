@@ -4,18 +4,23 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:uuid/uuid.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
+import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_message_item_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_voice_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_platform/v_platform.dart';
 
 import '../../../../v_chat_message_page.dart';
+import '../../../v_chat/string_utils.dart';
 import '../../chat_media/chat_media_page.dart';
+import '../pasteboard/file_convertor.dart';
+import '../pasteboard/pasteboard.dart';
 import '../states/input_state_controller.dart';
 import '../states/message_state/message_state_controller.dart';
 
@@ -27,6 +32,7 @@ abstract class VBaseMessageController extends MessageStateController
   final VMessageItemController itemController;
   final events = VEventBusSingleton.vEventBus;
   final VMessageConfig vMessageConfig;
+  final uuid = const Uuid();
 
   VBaseMessageController({
     required super.vRoom,
@@ -42,21 +48,29 @@ abstract class VBaseMessageController extends MessageStateController
     _removeAllNotifications();
     _setUpVoiceController();
     _initMessagesStreams();
+    setUpPasteboardStreamListener();
   }
 
+  StreamSubscription? clipboardSubscription;
   late final VVoicePlayerController voiceControllers;
 
   final _currentUser = VAppConstants.myProfile;
 
   String get roomId => vRoom.id;
+  final IPasteboard pasteboard = Pasteboard(FileConvertor());
 
   void onTitlePress(BuildContext context);
+
+  void setUpPasteboardStreamListener() {
+    if (kIsWeb) clipboardSubscription = pasteboard.pasteBoardListener(onPaste);
+  }
 
   @override
   void close() {
     focusNode.dispose();
     inputStateController.close();
     voiceControllers.close();
+    clipboardSubscription?.cancel();
     VRoomTracker.instance.closeOpenedRoom(roomId);
     closeStreamMix();
     super.close();
@@ -130,6 +144,37 @@ abstract class VBaseMessageController extends MessageStateController
       }
     }
     scrollDown();
+  }
+
+  Future<void> onPaste(List<VPlatformFile> files) async {
+    final fileRes = await context.toPage(VMediaEditorView(
+      files: files,
+      config: VMediaEditorConfig(
+        imageQuality: vMessageConfig.compressImageQuality,
+      ),
+    )) as List<VBaseMediaRes>?;
+
+    if (fileRes == null || fileRes.isEmpty) return;
+    for (final e in fileRes) {
+      if (e is VMediaImageRes) {
+        _onSubmitSendMessage(
+          VImageMessage.buildMessage(
+            roomId: roomId,
+            data: VMessageImageData.fromMap(
+              e.data.toMap(),
+            ),
+          ),
+        );
+      }
+      if (e is VMediaFileRes) {
+        _onSubmitSendMessage(
+          VFileMessage.buildMessage(
+            roomId: roomId,
+            data: VMessageFileData.fromMap(e.data.toMap()),
+          ),
+        );
+      }
+    }
   }
 
   void onSubmitVoice(VMessageVoiceData data) {
@@ -322,5 +367,29 @@ abstract class VBaseMessageController extends MessageStateController
 
   void _handleOnAllDeleted(VUpdateMessageAllDeletedEvent event) {
     updateMessageAllDeletedAt(event.localId, event.message.allDeletedAt);
+  }
+
+  void onGetClipboardImageBytes(Uint8List imageBytes) async {
+    final fileRes = await context.toPage(VMediaEditorView(
+      files: [
+        VPlatformFile.fromBytes(
+            bytes: imageBytes.toList(), name: "${uuid.v4()}.png")
+      ],
+      config: VMediaEditorConfig(
+        imageQuality: vMessageConfig.compressImageQuality,
+      ),
+    )) as List<VBaseMediaRes>?;
+
+    if (fileRes == null || fileRes.isEmpty) return;
+    for (final e in fileRes) {
+      if (e is VMediaImageRes) {
+        _onSubmitSendMessage(
+          VImageMessage.buildMessage(
+            roomId: roomId,
+            data: VMessageImageData.fromMap(e.data.toMap()),
+          ),
+        );
+      }
+    }
   }
 }

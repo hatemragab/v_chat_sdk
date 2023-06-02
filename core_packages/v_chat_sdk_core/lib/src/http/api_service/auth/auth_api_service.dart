@@ -7,13 +7,15 @@ import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 
-import '../../../utils/app_pref.dart';
-
 class VAuthApiService {
   VAuthApiService._();
 
   static AuthApi? _authApi;
 
+  ///use this method to connect to the server and enable all the features of v chat
+  ///this should be the first method to call before using any other method
+  ///and it should be called only once
+  ///and it should be called only after the user has been authenticated
   Future<VIdentifierUser> connect(VChatRegisterDto dto) async {
     final body = dto.toListOfPartValue();
     final response = await _authApi!.connect(

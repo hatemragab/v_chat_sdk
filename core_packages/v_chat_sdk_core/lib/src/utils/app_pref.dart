@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 abstract class VAppPref {
   static SharedPreferences? _instance;

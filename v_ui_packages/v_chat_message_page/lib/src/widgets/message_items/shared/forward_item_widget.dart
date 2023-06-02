@@ -3,8 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 class ForwardItemWidget extends StatelessWidget {
   final bool isFroward;
@@ -22,23 +20,23 @@ class ForwardItemWidget extends StatelessWidget {
       color: Colors.grey,
       size: 15,
     );
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 3),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.forward,
-            color: Colors.grey,
-            size: 18,
-          ),
-          const SizedBox(
-            width: 6,
-          ),
-          VTrans.of(context).labels.forwarded.cap.color(Colors.grey)
-        ],
-      ),
-    );
+    // return Padding(
+    //   padding: const EdgeInsets.only(bottom: 3),
+    //   child: Row(
+    //     mainAxisSize: MainAxisSize.min,
+    //     mainAxisAlignment: MainAxisAlignment.start,
+    //     children: [
+    //       const Icon(
+    //         Icons.forward,
+    //         color: Colors.grey,
+    //         size: 18,
+    //       ),
+    //       const SizedBox(
+    //         width: 6,
+    //       ),
+    //       VTrans.of(context).labels.forwarded.cap.color(Colors.grey)
+    //     ],
+    //   ),
+    // );
   }
 }

@@ -8,8 +8,6 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:v_platform/v_platform.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
-import '../../v_chat_utils.dart';
-
 abstract class VAppPick {
   static bool isPicking = false;
 

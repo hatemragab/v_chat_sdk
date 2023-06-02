@@ -3,38 +3,40 @@ version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
 environment: 
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
 
 dependencies:
   cupertino_icons: ^1.0.5
-  shared_preferences: ^2.0.17
+  shared_preferences: ^2.1.1
   http: ^0.13.5
   bottom_navy_bar: ^6.0.0
-  url_launcher: ^6.1.8
-  firebase_messaging: ^14.2.1
+  url_launcher: ^6.1.11
+  firebase_messaging: ^14.6.2
   custom_navigation_bar: ^0.8.2
-  introduction_screen: ^3.1.4
-  flex_color_scheme: ^6.1.2
+  introduction_screen: ^3.1.8
+  flex_color_scheme: ^7.1.2
+  intl: ^0.18.0
   get: 4.6.5
   flutter: 
     sdk: flutter
-  v_chat_sdk_core: ^0.4.3+2
-  v_chat_web_rtc: ^0.0.1
-  v_chat_utils: ^0.4.3
-  v_chat_receive_share: ^0.2.0
-  v_chat_message_page: ^0.4.3+1
-  v_chat_firebase_fcm: ^0.4.3
-  v_chat_room_page: ^0.4.3+2
-  animated_login: ^1.6.1
-  shimmer: ^2.0.0
-  fluttertoast: ^8.1.2
-  path: ^1.8.2
+  v_chat_sdk_core: ^0.8.0+1
+  v_chat_web_rtc: ^0.8.0
+  v_chat_utils: ^0.8.0
+  v_chat_receive_share: ^0.8.0
+  v_chat_message_page: ^0.8.0
+  v_chat_firebase_fcm: ^0.8.0
+  v_chat_room_page: ^0.8.0
+  animated_login: ^1.7.0
+  shimmer: ^3.0.0
+  fluttertoast: ^8.2.2
+  path: ^1.8.3
   encrypt: ^5.0.1
+  csslib: 0.17.0
   http_parser: ^4.0.2
   flutter_localizations:
     sdk: flutter
-  v_chat_one_signal: ^0.4.3
-  v_platform: ^1.0.0
+  v_chat_one_signal: ^0.8.0
+  v_platform: ^1.0.3
 dev_dependencies:
   flutter_test: 
     sdk: flutter

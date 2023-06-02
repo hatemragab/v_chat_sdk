@@ -3,8 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../v_chat/platform_cache_image_widget.dart';
 
 class ReplyMsgWidget extends StatelessWidget {
   final VBaseMessage vBaseMessage;

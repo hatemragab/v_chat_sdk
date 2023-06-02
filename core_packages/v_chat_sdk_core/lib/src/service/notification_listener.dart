@@ -6,17 +6,30 @@ import 'package:logging/logging.dart';
 import 'package:platform_local_notifications/platform_local_notifications.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+/// A singleton class that listens to notifications.
 class VNotificationListener {
   final _log = Logger('VNotificationListener');
+
+  // Configuration of the VChat
   final vChatConfig = VChatController.I.vChatConfig;
+
+  // Access to native APIs
   final nativeApi = VChatController.I.nativeApi;
+
+  // Navigator instance
   final vNavigator = VChatController.I.vNavigator;
+
+  // Singleton instance
+  static final _instance = VNotificationListener._();
+
+  // Track if the controller has been initialized
+  bool _isControllerInit = false;
 
   VNotificationListener._();
 
-  static final _instance = VNotificationListener._();
-  bool _isControllerInit = false;
-
+  /// Returns the instance of [VNotificationListener].
+  ///
+  /// Throws an [AssertionError] if [VNotificationListener] hasn't been initialized.
   static VNotificationListener get I {
     assert(
       _instance._isControllerInit,
@@ -25,21 +38,29 @@ class VNotificationListener {
     return _instance;
   }
 
+  /// Initializes the [VNotificationListener].
+  ///
+  /// If it's already initialized, does nothing.
   static Future<void> init() async {
-    if (_instance._isControllerInit) {
-      return;
-    }
+    if (_instance._isControllerInit) return;
     _instance._isControllerInit = true;
-    _instance._init();
+    await _instance._init();
   }
 
+  /// Marks the room as seen.
+  ///
+  /// Emits a "seen room message" event and updates the unread count to zero.
   Future<void> _setRoomSeen(String roomId) async {
     VChatController.I.nativeApi.remote.socketIo.emitSeenRoomMessages(roomId);
     await VChatController.I.nativeApi.local.room.updateRoomUnreadToZero(roomId);
   }
 
+  /// Initializes the notification listener.
+  ///
+  /// It listens to notifications, updates room's seen status, and navigates to message page.
   Future<void> _init() async {
-    if (vChatConfig.vPush.enableVForegroundNotification) {
+    if (vChatConfig.vPush.enableVForegroundNotification &&
+        vChatConfig.isPushEnable) {
       await PlatformNotifier.I.init(appName: "v_chat_sdk");
       await PlatformNotifier.I.requestPermissions();
       PlatformNotifier.I.platformNotifierStream.listen((event) async {
@@ -82,6 +103,7 @@ class VNotificationListener {
             userImage: message.senderImageThumb,
             userName: message.senderName,
             conversationTitle: message.senderName,
+            context: VChatController.I.navigationContext,
           );
         }
       });
@@ -107,11 +129,13 @@ class VNotificationListener {
     getOpenAppNotification();
   }
 
+  /// Fetches room information based on [roomId].
   Future<VRoom?> _getRoom(String roomId) async {
     return VChatController.I.nativeApi.local.room
         .getOneWithLastMessageByRoomId(roomId);
   }
 
+  /// Handles an open application notification.
   Future<void> getOpenAppNotification() async {
     final currentPush = await vChatConfig.currentPushProviderService;
     if (currentPush == null) return;

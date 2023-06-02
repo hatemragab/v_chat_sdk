@@ -8,27 +8,38 @@ import 'package:chopper/chopper.dart';
 import 'package:v_platform/v_platform.dart';
 
 class CreateGroupDto {
+  /// A list of unique identifiers. These could be user identifiers who are
+  /// intended to be the participants of the broadcast.
   final List<String> identifiers;
+
+  /// The title or name of the broadcast to be created.
   final String title;
+
+  /// An optional `VPlatformFile` that represents an image associated with
+  /// the broadcast. This could be a logo or banner for the broadcast.
   final VPlatformFile? platformImage;
 
-//<editor-fold desc="Data Methods">
-
+  /// A constructor to create an instance of `CreateBroadcastDto`.
+  ///
+  /// Requires [identifiers] and [title] to be non-null, while [platformImage]
+  /// is optional.
   const CreateGroupDto({
     required this.identifiers,
     required this.title,
-    required this.platformImage,
+    this.platformImage,
   });
 
+  /// Converts the object properties to a list of `PartValue` objects.
+  ///
+  /// `PartValue` is a pair of a string key and its associated value, used for
+  /// data transfer.
+  ///
+  /// Returns a list of `PartValue` objects containing the identifiers and
+  /// broadcast name.
   List<PartValue> toListOfPartValue() {
     return [
       PartValue('identifiers', jsonEncode(identifiers)),
-      PartValue(
-        "groupName",
-        title,
-      ),
+      PartValue("groupName", title),
     ];
   }
-
-//</editor-fold>
 }

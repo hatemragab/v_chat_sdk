@@ -5,4 +5,4 @@
 export './default_localizations.dart';
 export './lang/ar.dart';
 export './lang/en.dart';
-export './v_chat_trans.dart' show VTrans, VChatLocalizationDelegate;
+export './v_chat_trans.dart' show VChatLocalizationDelegate, VTrans;

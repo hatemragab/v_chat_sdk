@@ -20,11 +20,13 @@ import '../models/message_voice_data.dart';
 
 class RecordWidget extends StatefulWidget {
   final Duration maxTime;
+  final VoidCallback onMaxTime;
 
   const RecordWidget({
     super.key,
     required this.onCancel,
     required this.maxTime,
+    required this.onMaxTime,
   });
 
   final VoidCallback onCancel;
@@ -35,26 +37,26 @@ class RecordWidget extends StatefulWidget {
 
 class RecordWidgetState extends State<RecordWidget> {
   final _stopWatchTimer = StopWatchTimer();
-  String currentTime = "00:00";
-  int recordMilli = 0;
-
-  //todo get from user this value
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
-  final uuid = const Uuid();
-  AppRecorder? recorder;
+  String _currentTime = "00:00";
+  int _recordMilli = 0;
+  final _uuid = const Uuid();
+  AppRecorder? _recorder;
+  StreamSubscription? _rawTime;
+  StreamSubscription? _minuteTime;
 
   @override
   void initState() {
     super.initState();
     // recorder = PlatformRecorder();
     if (VPlatforms.isMobile) {
-      recorder = MobileRecorder();
+      _recorder = MobileRecorder();
     } else {
-      recorder = PlatformRecorder();
+      _recorder = PlatformRecorder();
     }
-    _stopWatchTimer.rawTime.listen((value) {
-      recordMilli = value;
-      currentTime = StopWatchTimer.getDisplayTime(
+
+    _rawTime = _stopWatchTimer.rawTime.listen((value) {
+      _recordMilli = value;
+      _currentTime = StopWatchTimer.getDisplayTime(
         value,
         hours: false,
         milliSecond: false,
@@ -63,39 +65,46 @@ class RecordWidgetState extends State<RecordWidget> {
         setState(() {});
       }
     });
+    _minuteTime = _stopWatchTimer.minuteTime.listen((value) {
+      if (value == widget.maxTime.inMinutes) {
+        pause();
+        // widget.onMaxTime();
+      }
+    });
     _start();
   }
 
   void startCounterUp() {
     if (_stopWatchTimer.isRunning) {
-      stopCounter();
+      _stopCounter();
     }
     _stopWatchTimer.onStartTimer();
   }
 
-  Future stopCounter() async {
+  Future<void> _stopCounter() async {
     _stopWatchTimer.onResetTimer();
-    pauseCounter();
-    recordMilli = 0;
+    _stopWatchTimer.onStopTimer();
+    _recordMilli = 0;
   }
 
-  Future pauseCounter() async {
+  Future<void> pause() async {
     _stopWatchTimer.onStopTimer();
+    await _recorder?.pause();
   }
 
   Future<String> _getDir() async {
     final appDirectory = await getApplicationDocumentsDirectory();
-    return "${appDirectory.path}/${uuid.v4()}.aac";
+    return "${appDirectory.path}/${_uuid.v4()}.aac";
   }
 
   Future<bool> _start() async {
     if (VPlatforms.isWeb) {
-      await recorder!.start();
+      await _recorder!.start();
     } else {
       final path = await _getDir();
-      await recorder!.start(path);
+      await _recorder!.start(path);
     }
-    if (await recorder!.isRecording()) {
+    if (await _recorder!.isRecording()) {
       startCounterUp();
       return true;
     }
@@ -103,9 +112,9 @@ class RecordWidgetState extends State<RecordWidget> {
   }
 
   Future<MessageVoiceData> stopRecord() async {
-    pauseCounter();
+    _stopWatchTimer.onStopTimer();
     await Future.delayed(const Duration(milliseconds: 10));
-    final path = await recorder!.stop();
+    final path = await _recorder!.stop();
     if (path != null) {
       List<int>? bytes;
       late final XFile? xFile;
@@ -115,7 +124,7 @@ class RecordWidgetState extends State<RecordWidget> {
       }
       final uri = Uri.parse(path);
       final data = MessageVoiceData(
-        duration: recordMilli,
+        duration: _recordMilli,
         fileSource: VPlatforms.isWeb
             ? VPlatformFile.fromBytes(
                 name: "${DateTime.now().microsecondsSinceEpoch}.wave",
@@ -143,16 +152,16 @@ class RecordWidgetState extends State<RecordWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              currentTime.text.black
+              _currentTime.text.black
                   .color(context.isDark ? Colors.white : Colors.black54),
               const SizedBox(
                 width: 15,
               ),
-              if (recorder is MobileRecorder)
+              if (_recorder is MobileRecorder)
                 Expanded(
                   child: AudioWaveforms(
-                    size: Size(MediaQuery.of(context).size.width, 35.0),
-                    recorderController: (recorder as MobileRecorder).recorder,
+                    size: Size(MediaQuery.of(context).size.width, 40.0),
+                    recorderController: (_recorder as MobileRecorder).recorder,
                   ),
                 )
               else
@@ -196,9 +205,11 @@ class RecordWidgetState extends State<RecordWidget> {
   }
 
   Future<void> close() async {
-    stopCounter();
-    await recorder?.stop();
+    _stopCounter();
+    await _recorder?.stop();
     _stopWatchTimer.dispose();
-    await recorder?.close();
+    _rawTime?.cancel();
+    _minuteTime?.cancel();
+    await _recorder?.close();
   }
 }

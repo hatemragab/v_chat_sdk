@@ -5,7 +5,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+
+import '../../../v_chat/auto_direction.dart';
+import '../../../v_chat/string_utils.dart';
 
 class VTextParserWidget extends StatefulWidget {
   final Function(String email)? onEmailPress;

@@ -5,8 +5,6 @@
 import 'package:v_chat_sdk_core/src/models/v_chat_base_exception.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import 'app_pref.dart';
-
 abstract class VAppConstants {
   const VAppConstants._();
   static String clintVersion = "2.0.0";

@@ -9,12 +9,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:objectid/objectid.dart';
 import 'package:uuid/uuid.dart';
 import 'package:v_chat_sdk_core/src/local_db/tables/message_table.dart';
+import 'package:v_chat_sdk_core/src/utils/string_utils.dart';
 import 'package:v_chat_sdk_core/src/utils/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 
-import '../../../utils/string_utils.dart';
-
+/// Abstract base class for a message.
+///
+/// This class defines the general structure and data of a message. It is
+/// intended to be subclassed for different kinds of messages.
 abstract class VBaseMessage {
   VBaseMessage({
     required this.id,
@@ -41,55 +44,76 @@ abstract class VBaseMessage {
     required this.contentTr,
   });
 
-  ///id will be changed if message get from remote
+  /// Unique ID of the message. This will be changed if message get from remote.
   String id;
+
+  /// Identifier of the message in the server.
   final String sIdentifier;
 
-  /// sender data
+  /// ID of the sender.
   String senderId;
+
+  /// Name of the sender.
   String senderName;
+
+  /// Thumbnail image URL of the sender.
   String senderImageThumb;
 
-  ///which pla-from this message send through
+  /// The platform through which this message was sent.
   final String platform;
+
+  /// ID of the room where this message was sent.
   final String roomId;
 
-  ///message text from server
-
+  /// The content of the message from the server.
   @protected
   final String content;
+
+  /// Type of the message.
   VMessageType messageType;
 
+  /// Translated content of the message.
   String? contentTr;
 
-  ///serverConfirm,error,sending
+  /// Status of the message emit (server confirm, error, sending).
   VMessageEmitStatus emitStatus;
 
-  /// only will have value if this message reply to another
+  /// If this message is a reply, the original message it replies to.
   VBaseMessage? replyTo;
+
+  /// Time when the message was seen.
   String? seenAt;
+
+  /// Time when the message was delivered.
   String? deliveredAt;
 
-  ///forward from message id
+  /// ID of the message that this message was forwarded from.
   String? forwardId;
 
-  /// when message deleted from all
+  /// Time when the message was deleted from all.
   String? allDeletedAt;
 
-  ///if message send through broadcast
+  /// If the message was sent through broadcast, the ID of the parent broadcast.
   String? parentBroadcastId;
 
-  /// unique message id that is used to unique the message access all messages
-  /// it good because the message id will changed
+  /// Unique local ID of the message. This is used to uniquely identify the
+  /// message across all messages, and is useful because the server message ID
+  /// will change.
   String localId;
 
-  ///when the message was send
+  /// Time when the message was sent.
   String createdAt;
+
+  /// Time when the message was last updated.
   final String updatedAt;
+
+  /// If the message is encrypted.
   final bool isEncrypted;
 
-  /// is user intent to delete this message
+  /// If the user intends to delete this message.
   bool isDeleted = false;
+
+  /// If the message is starred.
   bool isStared;
 
   VBaseMessage.fromRemoteMap(Map<String, dynamic> map)

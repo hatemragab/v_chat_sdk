@@ -3,10 +3,13 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:textless/textless.dart';
+import 'package:timeago/timeago.dart';
+import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../v_chat_message_page.dart';
+import '../../../v_chat/v_circle_avatar.dart';
 import '../../../widgets/message_items/v_message_item.dart';
 import '../group/message_group_status_controller.dart';
 import 'message_broadcast_status_controller.dart';

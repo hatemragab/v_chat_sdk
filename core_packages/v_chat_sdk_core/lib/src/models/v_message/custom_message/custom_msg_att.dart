@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 class VCustomMsgData {
+  ///Your custom data as a map
   final Map<String, dynamic> data;
 
 //<editor-fold desc="Data Methods">

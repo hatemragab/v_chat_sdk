@@ -3,9 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class FileMessageItem extends StatelessWidget {
   final VFileMessage message;

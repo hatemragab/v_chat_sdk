@@ -6,49 +6,45 @@ issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/core_packages/v_chat_sdk_core
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.0
   http: ^0.13.5
-  logging: ^1.1.1
-  chopper: ^6.1.1
+  logging: ^1.2.0
+  chopper: ^6.1.3
   http_parser: ^4.0.2
   encrypt: ^5.0.1
-  crypto: ^3.0.2
+  crypto: ^3.0.3
   socket_io_client: ^2.0.2
-  latlong2: ^0.8.1
-  path: ^1.8.2
-  sqflite: ^2.2.7
-  sqflite_common_ffi: ^2.2.4
-  html: ^0.15.2
+  latlong2: ^0.9.0
+  path: ^1.8.3
+  sqflite: ^2.2.8+4
+  sqflite_common_ffi: ^2.2.5
   objectid: ^2.1.0
-  sqlite3_flutter_libs: ^0.5.13
+  sqlite3_flutter_libs: ^0.5.15
   diacritic: ^0.1.3
   flutter_fgbg: ^0.2.2
   flutter_cache_manager: ^3.3.0
-  platform_local_notifications: ^0.0.3
-  path_provider: ^2.0.13
+  platform_local_notifications: ^0.0.4
+  path_provider: ^2.0.15
   google_api_availability: ^5.0.0
   shared_preferences: ^2.1.1
-  platform_device_id: ^1.0.1
-  device_info_plus: ^8.0.0
+  device_info_plus: ^9.0.2
   event_bus_plus: ^0.6.1
   uuid: ^3.0.7
-  collection: ^1.16.0
-  v_platform: ^1.0.0
-  timeago: ^3.3.0
+  collection: ^1.17.1
+  v_platform: ^1.0.3
+  timeago: ^3.4.0
   flutter_parsed_text: ^2.2.1
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  lint: ^2.0.1
-  build_runner: ^2.3.3
-  chopper_generator: ^6.0.0
-  lints: ^2.0.1
+  lint: ^2.1.2
+  build_runner: ^2.4.4
+  chopper_generator: ^6.0.1
+  lints: ^2.1.0
   flutter_lints: ^2.0.1
 
 flutter:

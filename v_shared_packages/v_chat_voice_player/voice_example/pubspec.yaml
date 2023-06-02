@@ -3,22 +3,22 @@ version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
 environment: 
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
 
 dependencies: 
   cupertino_icons: ^1.0.5
   get: 4.6.5
-  v_chat_utils: ^0.1.0+5
+  v_chat_utils: ^0.8.0
   flutter_cache_manager: ^3.3.0
   sizer: ^2.0.15
-  v_platform: ^1.0.0
+  v_platform: ^1.0.3
   v_chat_voice_player:
     path: ../
   flutter: 
     sdk: flutter
 
 dev_dependencies: 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
   flutter_test: 
     sdk: flutter
 

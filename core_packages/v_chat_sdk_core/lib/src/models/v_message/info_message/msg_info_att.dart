@@ -5,9 +5,17 @@
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VMsgInfoAtt {
+  /// [updateTitle,updateImage,addGroupMember,   upAdmin,   downMember,   leave,   kick,   createGroup,   addToBroadcast]
+  /// it can be one from this list
   final VMessageInfoType action;
+
+  /// the target name it can be the action name or the target name
   final String targetName;
+
+  /// the target id it can be the room id or the user id
   final String targetId;
+
+  /// the admin name if the action is from group admin
   final String adminName;
 
 //<editor-fold desc="Data Methods">

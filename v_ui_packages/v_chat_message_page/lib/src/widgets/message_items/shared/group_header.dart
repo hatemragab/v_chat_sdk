@@ -3,7 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:textless/textless.dart';
+
+import '../../../v_chat/v_circle_avatar.dart';
 
 class GroupHeader extends StatelessWidget {
   final bool isGroup;

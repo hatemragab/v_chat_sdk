@@ -5,6 +5,7 @@
 import 'package:v_platform/v_platform.dart';
 
 class VMessageFileData {
+  /// The file source data
   VPlatformFile fileSource;
 
 //<editor-fold desc="Data Methods">

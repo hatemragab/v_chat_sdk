@@ -1,6 +1,7 @@
 // Copyright 2023, the hatemragab project author.
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
+/// Provides services to interact with the VChat Profile API.
 
 import 'dart:ui';
 
@@ -10,7 +11,6 @@ import 'package:v_chat_sdk_core/src/http/api_service/profile/profile_api_service
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/native_api/remote/native_remote_auth.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
-import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/device_info.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
@@ -21,8 +21,10 @@ class VProfileApi implements AuthEndPoints {
   final VChatConfig _chatConfig;
   final _log = Logger('user_api.Auth');
 
+  // Provides access to remote authentication API
   NativeRemoteAuth get _remoteAuth => _vNativeApi.remote.remoteAuth;
 
+  // Provides access to profile-related API services
   VProfileApiService get _profileApi => _vNativeApi.remote.profile;
 
   VProfileApi(
@@ -30,6 +32,7 @@ class VProfileApi implements AuthEndPoints {
     this._chatConfig,
   );
 
+  // Handles actions required after a successful login
   Future<void> _connectSuccessLogin() async {
     SocketController.instance.connect();
     VChatControllerHelper.instance.initSocketTimer();
@@ -40,19 +43,22 @@ class VProfileApi implements AuthEndPoints {
     await VNotificationListener.init();
   }
 
+  // Updates the user's name
   Future<bool> updateName(String newName) async {
     return _profileApi.updateUserName(newName);
   }
 
+  // Updates the user's image
   Future<VUserImage> updateImage(VPlatformFile fileSource) async {
     return _profileApi.updateImage(fileSource);
   }
 
+  // Retrieves the last seen time of a user
   Future<DateTime> getUserLastSeenAt(String identifier) async {
     return _profileApi.getUserLastSeenAt(identifier);
   }
 
-  ///register to v chat system
+  // Connect a user to the VChat system
   @override
   Future<VIdentifierUser> connect({
     required String identifier,
@@ -82,7 +88,7 @@ class VProfileApi implements AuthEndPoints {
     return user;
   }
 
-  ///delete user device from v chat sdk
+  // Logs out a user from the VChat SDK
   @override
   Future<void> logout() async {
     try {

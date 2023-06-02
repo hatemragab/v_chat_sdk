@@ -5,7 +5,7 @@
 import 'dart:io';
 
 import 'package:chopper/chopper.dart';
-import 'package:http/http.dart' hide Response, Request;
+import 'package:http/http.dart' hide Request, Response;
 import 'package:http/io_client.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';

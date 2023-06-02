@@ -48,8 +48,7 @@ extension CallStatusTr on CallStatus {
       case CallStatus.ring:
         return VTrans.labelsOf(context).ring;
       case CallStatus.accepted:
-        //todo translate
-        return "Accepted";
+        return VTrans.labelsOf(context).accepted;
       case CallStatus.roomAlreadyInCall:
         return VTrans.labelsOf(context).roomAlreadyInCall;
       case CallStatus.timeout:

@@ -265,7 +265,6 @@ class SqlRoomImp extends BaseLocalRoomRepo {
         .rawQuery("SELECT SUM(${RoomTable.columnUnReadCount}) FROM $_table");
 
     if (maps.isEmpty) {
-
       return 0;
     }
 
@@ -274,7 +273,6 @@ class SqlRoomImp extends BaseLocalRoomRepo {
       radix: 10,
     );
     if (res == null) {
-     
       return 0;
     }
     return res;

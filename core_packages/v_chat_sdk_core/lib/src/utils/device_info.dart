@@ -3,16 +3,35 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:platform_device_id/platform_device_id.dart';
 import 'package:uuid/uuid.dart' as u;
 import 'package:v_platform/v_platform.dart';
 
 class DeviceInfoHelper {
   final deviceInfoPlugin = DeviceInfoPlugin();
+  final uuId = const u.Uuid();
 
   Future<String> getId() async {
-    String? deviceId = await PlatformDeviceId.getDeviceId;
-    return deviceId ??= const u.Uuid().v4();
+    if (VPlatforms.isIOS) {
+      final iosDeviceInfo = await deviceInfoPlugin.iosInfo;
+      return iosDeviceInfo.identifierForVendor ??
+          iosDeviceInfo.name + iosDeviceInfo.model; // unique ID on iOS
+    } else if (VPlatforms.isAndroid) {
+      final androidDeviceInfo = await deviceInfoPlugin.androidInfo;
+      return androidDeviceInfo.id; // unique ID on Android
+    } else if (VPlatforms.isWeb) {
+      final webInfo = await deviceInfoPlugin.webBrowserInfo;
+      return webInfo.userAgent ?? uuId.v4();
+    } else if (VPlatforms.isMacOs) {
+      final macInfo = await deviceInfoPlugin.macOsInfo;
+      return macInfo.model +
+          macInfo.arch +
+          macInfo.computerName +
+          macInfo.hostName;
+    } else if (VPlatforms.isWindows) {
+      final windowsInfo = await deviceInfoPlugin.windowsInfo;
+      return windowsInfo.deviceId;
+    }
+    return uuId.v4();
   }
 
   Future<Map<String, dynamic>> getDeviceMapInfo() async {

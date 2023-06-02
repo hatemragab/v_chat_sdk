@@ -7,27 +7,27 @@ repository: https://github.com/hatemragab/v_chat_sdk/tree/v2/v_ui_packages/v_cha
 
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_sdk_core: ^0.8.0
-  flutter_webrtc: ^0.9.31
+  v_chat_sdk_core: ^0.8.0+1
+  flutter_webrtc: ^0.9.32
   pip_view: ^0.9.7
   retry: ^3.1.0
   sdp_transform: ^0.3.2
   stop_watch_timer: ^2.0.0
   phosphor_flutter: ^1.4.0
   textless: ^6.6.6
-  adaptive_dialog: ^1.8.2
+  adaptive_dialog: ^1.9.0-no-macos.2
   cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

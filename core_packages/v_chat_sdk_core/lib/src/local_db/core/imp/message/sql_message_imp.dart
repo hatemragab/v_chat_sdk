@@ -176,7 +176,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
       _table,
       orderBy: "${MessageTable.columnId} DESC",
       limit: filter.limit,
-      where: "$_roomId =? ${where.toString()}",
+      where: "$_roomId =? $where",
       whereArgs: [roomId],
     );
     return maps.map((e) => MessageFactory.createBaseMessage(e)).toList();

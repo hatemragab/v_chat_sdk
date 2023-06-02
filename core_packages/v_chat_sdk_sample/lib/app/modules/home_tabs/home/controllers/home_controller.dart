@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_receive_share/v_chat_receive_share.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 
 import '../../../../core/enums.dart';

@@ -2,13 +2,19 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+/// Represents a Data Transfer Object (DTO) for a caller in the VChat application.
 class VCallerDto {
   final bool isVideoEnable;
   final String roomId;
   final String peerName;
   final String peerImage;
 
-//<editor-fold desc="Data Methods">
+  /// Create a new [VCallerDto].
+  ///
+  /// - [isVideoEnable]: A boolean indicating if the video is enabled for the call.
+  /// - [roomId]: The unique identifier of the room where the call is taking place.
+  /// - [peerName]: The name of the peer user in the call.
+  /// - [peerImage]: The display picture of the peer user.
   const VCallerDto({
     required this.isVideoEnable,
     required this.roomId,
@@ -16,28 +22,28 @@ class VCallerDto {
     required this.peerImage,
   });
 
+  /// Compares two [VCallerDto] instances for equality.
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is VCallerDto &&
-          runtimeType == other.runtimeType &&
-          isVideoEnable == other.isVideoEnable &&
-          roomId == other.roomId &&
-          peerName == other.peerName &&
-          peerImage == other.peerImage);
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is VCallerDto &&
+        isVideoEnable == other.isVideoEnable &&
+        roomId == other.roomId &&
+        peerName == other.peerName &&
+        peerImage == other.peerImage;
+  }
 
+  /// Returns a hash code for this instance.
   @override
-  int get hashCode =>
-      isVideoEnable.hashCode ^
-      roomId.hashCode ^
-      peerName.hashCode ^
-      peerImage.hashCode;
+  int get hashCode => Object.hash(isVideoEnable, roomId, peerName, peerImage);
 
+  /// Returns a string representation of this instance.
   @override
   String toString() {
     return 'VCallerDto{ isVideoEnable: $isVideoEnable, roomId: $roomId, peerName: $peerName, peerImage: $peerImage,}';
   }
 
+  /// Returns a new [VCallerDto] instance with updated values.
   VCallerDto copyWith({
     bool? isVideoEnable,
     String? roomId,
@@ -52,6 +58,7 @@ class VCallerDto {
     );
   }
 
+  /// Converts this [VCallerDto] instance to a Map.
   Map<String, dynamic> toMap() {
     return {
       'isVideoEnable': isVideoEnable,
@@ -61,6 +68,7 @@ class VCallerDto {
     };
   }
 
+  /// Creates a new [VCallerDto] instance from a Map.
   factory VCallerDto.fromMap(Map<String, dynamic> map) {
     return VCallerDto(
       isVideoEnable: map['isVideoEnable'] as bool,
@@ -69,6 +77,4 @@ class VCallerDto {
       peerImage: map['peerImage'] as String,
     );
   }
-
-//</editor-fold>
 }

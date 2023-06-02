@@ -2,11 +2,9 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
+import 'package:v_chat_sdk_core/src/models/v_chat_base_exception.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
-import '../models/v_chat_base_exception.dart';
 
 class MessageUploaderQueue {
   final _uploadQueue = <VMessageUploadModel>[];
@@ -14,15 +12,19 @@ class MessageUploaderQueue {
   final _remoteStorage = VChatController.I.nativeApi.remote;
   final _log = Logger("MessageUploaderQueue");
 
-  ///singleton
+  /// Singleton pattern
   MessageUploaderQueue._();
 
+  /// Singleton instance
+  static final _instance = MessageUploaderQueue._();
+
+  /// Getter for singleton instance
   static MessageUploaderQueue get instance {
     return _instance;
   }
 
-  static final _instance = MessageUploaderQueue._();
-
+  /// Add a message to the queue and send it to the API
+  /// [uploadModel] is the model of the message to be uploaded
   Future<void> addToQueue(VMessageUploadModel uploadModel) async {
     if (!_uploadQueue.contains(uploadModel)) {
       _uploadQueue.add(uploadModel);
@@ -30,34 +32,31 @@ class MessageUploaderQueue {
     }
   }
 
+  /// Send the message to the API, handle errors and remove message from queue
+  /// [uploadModel] is the model of the message to be sent
   Future<void> _sendToApi(VMessageUploadModel uploadModel) async {
+    _setSending(uploadModel);
     try {
-      _setSending(uploadModel);
-      final msg = await _remoteStorage.message.createMessage(
-        uploadModel,
-      );
-      _onSuccessToSend(msg);
-    } on VChatHttpForbidden {
-      await _deleteTheMessage(uploadModel);
-      // rethrow;
-    } on VChatBaseHttpException catch (err) {
-      await _deleteTheMessage(uploadModel);
-      if (kDebugMode) {
-        print(err);
+      final msg = await _remoteStorage.message.createMessage(uploadModel);
+      await _onSuccessToSend(msg);
+    } catch (e) {
+      if (e is VChatHttpForbidden || e is VChatBaseHttpException) {
+        _log.warning("VChatBaseHttpException", e);
+        await _deleteTheMessage(uploadModel);
+      } else if (e is VUserInternetException) {
+        _log.info("UserInternetExceptionUserInternetException", e);
+        await _setErrorToMessage(uploadModel);
+      } else {
+        _log.warning("_onUnknownException", e);
+        await _deleteTheMessage(uploadModel);
       }
-      _log.warning("VChatBaseHttpException", err);
-    } on VUserInternetException catch (err) {
-      await _setErrorToMessage(uploadModel);
-      _log.info("UserInternetExceptionUserInternetException", err);
-    } catch (err) {
-      await _deleteTheMessage(uploadModel);
-      _log.warning("_onUnknownException", err);
-      // rethrow;
     } finally {
       _uploadQueue.remove(uploadModel);
     }
   }
 
+  /// Delete a message by its local id
+  /// [localId] is the local id of the message to be deleted
   Future<void> _deleteMessage(String localId) async {
     final baseMessage = await _localStorage.getMessageByLocalId(localId);
     if (baseMessage != null && !baseMessage.emitStatus.isServerConfirm) {
@@ -65,6 +64,8 @@ class MessageUploaderQueue {
     }
   }
 
+  /// Set the message status to error
+  /// [uploadModel] is the model of the message with an error
   Future _setErrorToMessage(VMessageUploadModel uploadModel) async {
     final VBaseMessage? baseMessage =
         await _localStorage.getMessageByLocalId(uploadModel.msgLocalId);
@@ -80,20 +81,25 @@ class MessageUploaderQueue {
     }
   }
 
+  /// Delete a message from the queue
+  /// [uploadModel] is the model of the message to be deleted
   Future _deleteTheMessage(VMessageUploadModel uploadModel) async {
     await _deleteMessage(uploadModel.msgLocalId);
   }
 
+  /// Update the local message status to success upon successful send
+  /// [messageModel] is the model of the successfully sent message
   Future _onSuccessToSend(VBaseMessage messageModel) async {
-    await _localStorage.updateFullMessage(
-      messageModel,
-    );
+    await _localStorage.updateFullMessage(messageModel);
   }
 
+  /// Clear the queue of all messages
   void clearQueue() {
     _uploadQueue.clear();
   }
 
+  /// Set the message status to sending
+  /// [uploadModel] is the model of the message that is being sent
   Future<void> _setSending(VMessageUploadModel uploadModel) async {
     await _localStorage.updateMessageSendingStatus(
       VUpdateMessageStatusEvent(

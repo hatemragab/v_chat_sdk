@@ -3,7 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_message_page/src/core/extension.dart';
 
 class CenterItemHolder extends StatelessWidget {
   const CenterItemHolder({Key? key, required this.child}) : super(key: key);

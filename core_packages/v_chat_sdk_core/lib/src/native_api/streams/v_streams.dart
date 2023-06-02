@@ -4,8 +4,6 @@
 
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../events/event_bus.dart';
-
 class VStreams {
   final _emitter = VEventBusSingleton.vEventBus;
 

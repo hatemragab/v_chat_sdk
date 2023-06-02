@@ -2,13 +2,17 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+import 'package:v_chat_sdk_core/src/models/v_message/image_message/message_image_data.dart';
 import 'package:v_platform/v_platform.dart';
 
-import '../image_message/message_image_data.dart';
-
 class VMessageVideoData {
+  /// The file source data
   VPlatformFile fileSource;
+
+  /// The thumb image data
   VMessageImageData? thumbImage;
+
+  /// The duration of the video
   int? duration;
 
   Duration? get durationObj =>

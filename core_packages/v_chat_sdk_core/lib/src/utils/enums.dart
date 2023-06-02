@@ -4,7 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 
-import '../../v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 enum VChatHttpMethods { get, post, patch, delete, put }
 

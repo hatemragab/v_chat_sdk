@@ -7,9 +7,9 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/single/single_app_bar_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/single/v_single_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../../v_chat_message_page.dart';
+import '../../../../v_chat/v_search_app_bare.dart';
 import '../../../../widgets/app_bare/v_message_app_bare.dart';
 import '../../controllers/v_message_item_controller.dart';
 import '../../providers/message_provider.dart';

@@ -8,11 +8,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:logging/logging.dart';
 import 'package:timeago/timeago.dart';
+import 'package:v_chat_sdk_core/src/logger/v_logger.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
-import '../events/event_bus.dart';
-import '../logger/v_logger.dart';
-import '../utils/app_pref.dart';
 
 class VChatControllerHelper {
   final _config = VChatController.I.vChatConfig;
@@ -33,7 +30,7 @@ class VChatControllerHelper {
       VStorageKeys.vBaseUrl.name,
       VAppConstants.baseUri.toString(),
     );
-    //todo invoke method channel
+
     return VChatControllerHelper._();
   }
 
@@ -124,6 +121,7 @@ class VChatControllerHelper {
     setLocaleMessages('vi', ViMessages());
     setLocaleMessages('pt', PtBrMessages());
     setLocaleMessages('hi', HiMessages());
+    setLocaleMessages('ru', RuMessages());
     setLocaleMessages('ar_short', ArShortMessages());
   }
 }

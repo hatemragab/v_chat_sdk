@@ -97,8 +97,7 @@ class VMessageNavigator {
     Function(
       BuildContext context,
       VRoom vRoom,
-    )?
-        toMessagePage,
+    )? toMessagePage,
   }) {
     return VMessageNavigator(
       toSingleChatMessageInfo:

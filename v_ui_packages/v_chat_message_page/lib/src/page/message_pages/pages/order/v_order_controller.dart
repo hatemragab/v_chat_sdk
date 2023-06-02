@@ -9,7 +9,8 @@ import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/order/order_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../../../v_chat/v_app_alert.dart';
 
 class VOrderController extends VBaseMessageController {
   final OrderAppBarController orderAppBarController;

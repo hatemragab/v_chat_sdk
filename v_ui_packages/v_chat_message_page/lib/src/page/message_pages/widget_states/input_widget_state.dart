@@ -42,16 +42,16 @@ class InputWidgetState extends StatelessWidget {
               textFieldHint: VTrans.of(context).labels.typeYourMessage,
             ),
             focusNode: controller.focusNode,
-            onAttachIconPress: () async {
-              if (controller.vMessageConfig.onMessageAttachmentIconPress ==
-                  null) {
-                return null;
-              }
-              final res = await controller
-                  .vMessageConfig.onMessageAttachmentIconPress!();
-              if (res == null) return null;
-              return AttachEnumRes.values.byName(res.name);
-            },
+            onAttachIconPress:
+                controller.vMessageConfig.onMessageAttachmentIconPress == null
+                    ? null
+                    : () async {
+                        final res = await controller
+                            .vMessageConfig.onMessageAttachmentIconPress!();
+                        if (res == null) return null;
+
+                        return AttachEnumRes.values.byName(res.name);
+                      },
             onSubmitMedia: (files) => controller.onSubmitMedia(context, files),
             onSubmitVoice: (data) {
               controller.onSubmitVoice(VMessageVoiceData.fromMap(data.toMap()));

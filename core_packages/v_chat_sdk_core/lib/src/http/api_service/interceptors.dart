@@ -8,8 +8,6 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../utils/app_pref.dart';
-
 class ErrorInterceptor implements ErrorConverter {
   @override
   FutureOr<Response> convertError<BodyType, InnerType>(Response response) {

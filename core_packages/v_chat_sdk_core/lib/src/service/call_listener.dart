@@ -5,8 +5,6 @@
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../events/event_bus.dart';
-
 class CallListener {
   final VNativeApi nativeApi;
   final VChatConfig vChatConfig;

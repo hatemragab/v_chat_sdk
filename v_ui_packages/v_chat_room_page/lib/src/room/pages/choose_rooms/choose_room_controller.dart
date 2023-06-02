@@ -26,7 +26,7 @@ class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
         l.add(element.id);
       }
     }
-    Navigator.pop(context);
+    Navigator.pop(context, l);
   }
 
   void _getRooms() async {

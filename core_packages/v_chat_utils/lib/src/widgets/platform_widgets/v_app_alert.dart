@@ -150,28 +150,24 @@ abstract class VAppAlert {
     required String msg,
     required BuildContext context,
   }) {
-    context.showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        duration: const Duration(
-          seconds: 3,
-        ),
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      duration: const Duration(
+        seconds: 3,
       ),
-    );
+    ));
   }
 
   static void showErrorSnackBar({
     required String msg,
     required BuildContext context,
   }) {
-    context.showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        duration: const Duration(
-          seconds: 5,
-        ),
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      duration: const Duration(
+        seconds: 5,
       ),
-    );
+    ));
   }
 
   static void showOverlaySupport({

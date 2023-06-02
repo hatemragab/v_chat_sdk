@@ -8,15 +8,15 @@ import 'dart:io';
 import 'package:chopper/chopper.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/message/message_api.dart';
+import 'package:v_chat_sdk_core/src/models/v_chat_base_exception.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../../models/v_chat_base_exception.dart';
-
 class VMessageApiService {
-  static MessageApi? _messageApi;
+  static MessageApi? _messageApi; // Static instance of the Message API.
 
-  VMessageApiService._();
+  VMessageApiService._(); // Private constructor to prevent direct instantiation.
 
+  // Asynchronously get messages in a room.
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
     required VRoomMessagesDto dto,
@@ -25,8 +25,9 @@ class VMessageApiService {
       roomId,
       dto.toMap(),
     );
-    throwIfNotSuccess(res);
-    final data = extractDataFromResponse(res);
+    throwIfNotSuccess(res); // Throw if the response indicates failure.
+    final data =
+        extractDataFromResponse(res); // Extract data from the response.
     final docs = data['docs'] as List;
     return docs
         .map(
@@ -37,6 +38,7 @@ class VMessageApiService {
         .toList();
   }
 
+  // Asynchronously delete a message from me.
   Future<bool> deleteMessageFromMe(
     String roomId,
     String messageId,
@@ -46,6 +48,7 @@ class VMessageApiService {
     return true;
   }
 
+  // Asynchronously get the message status summary.
   Future<dynamic> getMessageStatusSummary(
     String roomId,
     String messageId,
@@ -60,6 +63,7 @@ class VMessageApiService {
     // );
   }
 
+  // Asynchronously delete a message from all participants in a room.
   Future<bool> deleteMessageFromAll(
     String roomId,
     String mId,
@@ -69,6 +73,7 @@ class VMessageApiService {
     return true;
   }
 
+  // Asynchronously create a message.
   Future<VBaseMessage> createMessage(
     VMessageUploadModel messageModel,
   ) async {
@@ -89,6 +94,7 @@ class VMessageApiService {
     return MessageFactory.createBaseMessage(extractDataFromResponse(res));
   }
 
+  // Initialize the service with the provided base URL and access token.
   static VMessageApiService init({
     Uri? baseUrl,
     String? accessToken,

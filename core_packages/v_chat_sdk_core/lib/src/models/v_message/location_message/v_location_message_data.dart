@@ -4,10 +4,13 @@
 
 import 'package:latlong2/latlong.dart';
 
-import '../../link_preview_data.dart';
+import 'package:v_chat_sdk_core/src/models/link_preview_data.dart';
 
 class VLocationMessageData {
+  /// The location data
   final LatLng latLng;
+
+  ///image preview data and title and description
   final VLinkPreviewData linkPreviewData;
 
   VLocationMessageData({

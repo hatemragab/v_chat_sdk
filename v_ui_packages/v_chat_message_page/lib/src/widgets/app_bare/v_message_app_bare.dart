@@ -3,9 +3,13 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:textless/textless.dart';
+import 'package:timeago/timeago.dart';
+import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../v_chat/v_chat_avatar_image.dart';
 import '../message_items/shared/message_typing_widget.dart';
 
 class VMessageAppBare extends StatelessWidget {
@@ -181,8 +185,7 @@ class VMessageAppBare extends StatelessWidget {
       }
     } else if (memberCount != null) {
       if (totalOnline != null) {
-        return Text(
-            "${VTrans.of(context).labels.members} $memberCount  *${VTrans.labelsOf(context).online} $totalOnline *");
+        return Text("${VTrans.of(context).labels.members} $memberCount");
       }
       return Text("${VTrans.of(context).labels.members} $memberCount");
     }

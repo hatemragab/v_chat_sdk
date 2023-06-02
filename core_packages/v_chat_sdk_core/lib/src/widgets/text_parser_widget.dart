@@ -7,12 +7,15 @@ import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:v_chat_sdk_core/src/utils/regex.dart';
 import 'package:v_chat_sdk_core/src/widgets/auto_direction.dart';
 
+///use this widget to make sure that the text is parsed correctly
 class VTextParserWidget extends StatefulWidget {
   final Function(String email)? onEmailPress;
   final Function(String userId)? onMentionPress;
   final Function(String phone)? onPhonePress;
   final Function(String link)? onLinkPress;
   final bool enableTabs;
+  final Widget arrowUp;
+  final Widget arrowDown;
   final String text;
   final bool isOneLine;
   final TextStyle? textStyle;
@@ -30,6 +33,12 @@ class VTextParserWidget extends StatefulWidget {
     this.isOneLine = false,
     required this.text,
     this.textStyle,
+    this.arrowUp = const Icon(
+      Icons.keyboard_arrow_up_rounded,
+    ),
+    this.arrowDown = const Icon(
+      Icons.keyboard_arrow_down,
+    ),
     this.emailTextStyle,
     this.phoneTextStyle,
     this.mentionTextStyle,
@@ -92,13 +101,7 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
               isShowMoreEnabled = !isShowMoreEnabled;
             });
           },
-          child: isShowMoreEnabled
-              ? const Icon(
-                  Icons.keyboard_arrow_down,
-                )
-              : const Icon(
-                  Icons.keyboard_arrow_up_rounded,
-                ),
+          child: isShowMoreEnabled ? widget.arrowDown : widget.arrowUp,
         )
       ],
     );
@@ -150,11 +153,12 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
               ),
             if (widget.onPhonePress != null)
               MatchText(
-                  type: ParsedType.PHONE,
-                  style: blueTheme,
-                  onTap: (url) {
-                    widget.onPhonePress!(url);
-                  }),
+                type: ParsedType.PHONE,
+                style: blueTheme,
+                onTap: (url) {
+                  widget.onPhonePress!(url);
+                },
+              ),
             if (widget.onLinkPress != null)
               MatchText(
                 pattern: regexLink,

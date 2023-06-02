@@ -190,7 +190,7 @@ class _ImagePinterViewState extends State<ImagePinterView> {
                         children: [
                           if (painterController.freeStyleMode !=
                               FreeStyleMode.none) ...[
-                            Row(),
+                            const Row(),
                             if (painterController.freeStyleMode ==
                                 FreeStyleMode.draw)
                               Row(
