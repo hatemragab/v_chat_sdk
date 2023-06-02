@@ -27,6 +27,11 @@ class ReplyItemWidget extends StatelessWidget {
     if (rToMessage == null) {
       return const SizedBox.shrink();
     }
+    final method =
+        context.vMessageTheme.vMessageItemTheme.replyMessageItemBuilder;
+    if (method != null) {
+      return method(context, isMeSender, rToMessage!);
+    }
 
     return Container(
       constraints: const BoxConstraints(maxWidth: 300),

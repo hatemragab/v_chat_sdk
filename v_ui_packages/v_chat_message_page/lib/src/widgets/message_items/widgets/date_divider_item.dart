@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:textless/textless.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class DateDividerItem extends StatelessWidget {
@@ -30,6 +31,14 @@ class DateDividerItem extends StatelessWidget {
     } else {
       //will print the time as (1/1/2000)
       text = DateFormat.yMd(VAppConstants.sdkLanguage).format(dateTime);
+    }
+    final method = context.vMessageTheme.vMessageItemTheme.dateDivider;
+    if (method != null) {
+      return context.vMessageTheme.vMessageItemTheme.dateDivider!(
+        context,
+        dateTime,
+        text,
+      );
     }
 
     return Padding(

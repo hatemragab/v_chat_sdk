@@ -55,6 +55,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   final TextStyle receiverTextStyle;
   final TextStyle senderTextStyle;
   final BoxDecoration? messageItemHolderDecoration;
+  final VMessageItemTheme vMessageItemTheme;
 
   VMessageTheme._({
     required this.senderBubbleColor,
@@ -64,12 +65,14 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
     required this.scaffoldDecoration,
     required this.messageSendingStatus,
     required this.receiverTextStyle,
+    required this.vMessageItemTheme,
     this.messageItemHolderDecoration,
   });
 
   factory VMessageTheme.light() {
     return VMessageTheme._(
       senderBubbleColor: _lightMySenderColor,
+      vMessageItemTheme: const VMessageItemTheme.light(),
       receiverBubbleColor: _lightReceiverColor,
       senderTextStyle: _lightTextMeSenderColor,
       receiverTextStyle: _lightTextMeReceiverColor,
@@ -82,6 +85,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
     return VMessageTheme._(
       senderBubbleColor: _darkMeSenderColor,
       receiverBubbleColor: _darkReceiverColor,
+      vMessageItemTheme: const VMessageItemTheme.dark(),
       senderTextStyle: _darkTextMeSenderColor,
       receiverTextStyle: _darkTextReceiverColor,
       messageSendingStatus: const VMsgStatusTheme.dark(),
@@ -102,6 +106,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   VMessageTheme copyWith({
     Color? senderBubbleColor,
     Color? receiverBubbleColor,
+    VMessageItemTheme? vMessageItemTheme,
     VMsgStatusTheme? messageSendingStatus,
     BoxDecoration? scaffoldDecoration,
     CustomMessageItemTypeDef? customMessageItem,
@@ -111,6 +116,7 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
   }) {
     return VMessageTheme._(
       senderBubbleColor: senderBubbleColor ?? this.senderBubbleColor,
+      vMessageItemTheme: vMessageItemTheme ?? this.vMessageItemTheme,
       receiverBubbleColor: receiverBubbleColor ?? this.receiverBubbleColor,
       messageSendingStatus: messageSendingStatus ?? this.messageSendingStatus,
       scaffoldDecoration: scaffoldDecoration ?? this.scaffoldDecoration,
