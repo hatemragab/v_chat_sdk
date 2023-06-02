@@ -155,22 +155,22 @@ abstract class VBaseMessageController extends MessageStateController
     )) as List<VBaseMediaRes>?;
 
     if (fileRes == null || fileRes.isEmpty) return;
-    for (final e in fileRes) {
-      if (e is VMediaImageRes) {
+    for (final file in fileRes) {
+      if (file is VMediaImageRes) {
         _onSubmitSendMessage(
           VImageMessage.buildMessage(
             roomId: roomId,
             data: VMessageImageData.fromMap(
-              e.data.toMap(),
+              file.data.toMap(),
             ),
           ),
         );
       }
-      if (e is VMediaFileRes) {
+      if (file is VMediaFileRes) {
         _onSubmitSendMessage(
           VFileMessage.buildMessage(
             roomId: roomId,
-            data: VMessageFileData.fromMap(e.data.toMap()),
+            data: VMessageFileData.fromMap(file.data.toMap()),
           ),
         );
       }

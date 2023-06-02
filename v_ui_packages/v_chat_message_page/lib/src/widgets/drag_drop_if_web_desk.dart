@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:v_platform/v_platform.dart';
@@ -51,7 +52,11 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
               onCreated: (DropzoneViewController ctrl) {
                 controller.complete(ctrl);
               },
-              onError: (String? ev) => print('Error: $ev'),
+              onError: (String? ev) {
+                if (kDebugMode) {
+                  print('Error: $ev');
+                }
+              },
               onHover: () {
                 setState(() {
                   isHovering = true;

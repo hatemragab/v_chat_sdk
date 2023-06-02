@@ -3,9 +3,9 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -74,7 +74,9 @@ class _VImageViewerState extends State<VImageViewer> {
                       );
                     },
                     onError: (exception, trace) {
-                      print(exception);
+                      if (kDebugMode) {
+                        print(exception);
+                      }
                     },
                   );
                 },

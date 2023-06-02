@@ -37,6 +37,11 @@ class NativeLocalRoom {
     _emitter.fire(VTotalUnReadCount(unreadCount));
   }
 
+  /// get all room unread counter.
+  Future<int> getTotalUnReadCount() {
+    return _roomRepo.getUnReadCount();
+  }
+
   /// Fetches a room with its last message by its roomId from the local room repository.
   Future<VRoom?> getOneWithLastMessageByRoomId(String id) =>
       _roomRepo.getOneWithLastMessageByRoomId(id);

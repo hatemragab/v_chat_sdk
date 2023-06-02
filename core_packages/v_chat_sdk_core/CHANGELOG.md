@@ -1,3 +1,5 @@
+## 1.0.0
+- Support Dart 3
 - ## 0.8.0+1
 - add muteRoomNotification and unMuteRoomNotification apis for RoomApi class
 - ## 0.8.0

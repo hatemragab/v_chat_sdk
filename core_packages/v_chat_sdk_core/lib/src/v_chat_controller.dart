@@ -5,6 +5,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
+import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
+import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
 import 'package:v_chat_sdk_core/src/service/call_listener.dart';
 import 'package:v_chat_sdk_core/src/service/controller_helper.dart';
 import 'package:v_chat_sdk_core/src/service/events_daemon.dart';
@@ -114,6 +116,16 @@ class VChatController {
   void updateConfig(VChatConfig chatConfig) {
     vChatConfig = chatConfig;
   }
+
+  ///shortcut for [VChatController.I.nativeApi.local.room]
+  NativeLocalRoom get nativeLocalRoom => VChatController.I.nativeApi.local.room;
+
+  ///shortcut for [VChatController.I.nativeApi.streams]
+  VStreams get nativeStreams => VChatController.I.nativeApi.streams;
+
+  ///shortcut for [VChatController.I.nativeApi.local.message]
+  NativeLocalMessage get nativeLocalMessage =>
+      VChatController.I.nativeApi.local.message;
 
   /// Connects to the socket if there is an access token. Otherwise, logs a
   /// warning and returns false. This method assumes you've already logged in.

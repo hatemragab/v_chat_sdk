@@ -43,3 +43,5 @@
 - support voice and video calls
 - ## 0.6.1
 - fix web downloading
+## 1.0.0
+- Support Dart 3

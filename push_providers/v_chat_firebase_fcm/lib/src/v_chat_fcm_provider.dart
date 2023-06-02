@@ -60,9 +60,13 @@ class VChatFcmProver extends VChatPushProviderBase {
       }
       return true;
     } catch (err, trac) {
-      print("-----");
-      print(err.toString() ==
-          "Google Play services missing or without correct permission.");
+      if (kDebugMode) {
+        print("-----");
+      }
+      if (kDebugMode) {
+        print(err.toString() ==
+            "Google Play services missing or without correct permission.");
+      }
       log("", stackTrace: trac, error: err, name: "V_CHAT_FCM");
     }
     return false;

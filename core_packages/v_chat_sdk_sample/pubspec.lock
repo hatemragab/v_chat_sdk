@@ -720,22 +720,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_vlc_player:
-    dependency: transitive
-    description:
-      name: flutter_vlc_player
-      sha256: "0fbe714db09646617e46610195f5d81086d41d065a6301f2bb728a07f09f96b9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.2.0"
-  flutter_vlc_player_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_vlc_player_platform_interface
-      sha256: "8562d5c31213a44cc5e009cb6776a030e0a0c8cbfb825da4fdf27b730170563c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -1864,21 +1848,21 @@ packages:
       path: "../../push_providers/v_chat_firebase_fcm"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_input_ui:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../../v_shared_packages/v_chat_input_ui"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_media_editor:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_media_editor"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1893,56 +1877,56 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_one_signal:
     dependency: "direct main"
     description:
       path: "../../push_providers/v_chat_one_signal"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: "../../v_shared_packages/v_chat_receive_share"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_room_page:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../v_chat_sdk_core"
       relative: true
     source: path
-    version: "0.8.0+1"
+    version: "1.0.0"
   v_chat_utils:
     dependency: "direct main"
     description:
       path: "../v_chat_utils"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_voice_player:
     dependency: "direct overridden"
     description:
       path: "../../v_shared_packages/v_chat_voice_player"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_chat_web_rtc:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_web_rtc"
       relative: true
     source: path
-    version: "0.8.0"
+    version: "1.0.0"
   v_platform:
     dependency: "direct main"
     description:

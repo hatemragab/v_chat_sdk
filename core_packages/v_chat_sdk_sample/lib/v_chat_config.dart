@@ -80,9 +80,9 @@ Uri _getBaseUrl() {
     }
     //this will only working on the android emulator
     //to test on real device get you ipv4 first google it ! how to get my ipv4
-    if (false) {
-      return Uri.parse("http://192.168.1.3:3001");
-    }
+    // if (false) {
+    //   return Uri.parse("http://192.168.1.3:3001");
+    // }
     return Uri.parse("http://10.0.2.2:3001");
   }
   return Uri.parse("http://v_chat_endpoint:3001");

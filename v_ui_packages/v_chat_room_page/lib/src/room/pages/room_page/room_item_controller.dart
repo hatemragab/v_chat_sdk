@@ -128,12 +128,12 @@ class RoomItemController {
       case VRoomItemClickRes.delete:
         await _delete(room);
         break;
-        // case VRoomItemClickRes.block:
-        //   // await _block(room);
-        //   break;
-        // case VRoomItemClickRes.unBlock:
-        //   // await _unBlock(room);
-        break;
+      // case VRoomItemClickRes.block:
+      //   // await _block(room);
+      //   break;
+      // case VRoomItemClickRes.unBlock:
+      //   // await _unBlock(room);
+
       case VRoomItemClickRes.report:
         _report(room);
         break;

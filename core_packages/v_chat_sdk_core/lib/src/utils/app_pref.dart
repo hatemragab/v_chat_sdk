@@ -6,7 +6,6 @@ import 'dart:convert';
 
 import 'package:encrypt/encrypt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 abstract class VAppPref {
@@ -19,9 +18,7 @@ abstract class VAppPref {
     String hasKey = "%ROPEwalma1t3ri2[-parkHULU-;4vis",
   }) async {
     _instance ??= await SharedPreferences.getInstance();
-    hasKey = "$hasKey%ROPEwalma1t3ri2[-parkHULU-;4vis";
-    hasKey = hasKey.substring(0, 32);
-    _hashKey = hasKey;
+    _hashKey = "$hasKey%ROPEwalma1t3ri2[-parkHULU-;4vis".substring(0, 32);
   }
 
   static String? getStringOrNullKey(String key) => instance.getString(key);
