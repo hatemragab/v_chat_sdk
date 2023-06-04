@@ -8,6 +8,8 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../shared/theme/v_msg_status_theme.dart';
 
+/// Data model class for message status icons. /// /// Contains properties such as whether the message was sent by the current user (isMeSender), /// whether the message has been seen (isSeen), whether the message has been delivered (isDeliver), /// whether all copies of the message have been deleted (isAllDeleted), and the current emit status (emitStatus). class MessageStatusIconDataModel { final bool isMeSender; final bool isSeen; final bool isDeliver; final bool isAllDeleted; final VMessageEmitStatus emitStatus;
+/// Constructs a new instance of [MessageStatusIconDataModel]. /// /// [isMeSender] - Whether the message was sent by the current user. /// [isSeen] - Whether the message has been seen. /// [isDeliver] - Whether the message has been delivered. /// [isAllDeleted] - Whether all copies of the message have been deleted. Default value is false. /// [emitStatus] - The current emit status of the message. const MessageStatusIconDataModel({ required this.isMeSender, required this.isSeen, required this.isDeliver, this.isAllDeleted = false, required this.emitStatus, }); }
 class MessageStatusIconDataModel {
   final bool isMeSender;
   final bool isSeen;
@@ -27,6 +29,7 @@ class MessageStatusIconDataModel {
 class MessageStatusIcon extends StatelessWidget {
   final VoidCallback? onReSend;
   final MessageStatusIconDataModel model;
+
   const MessageStatusIcon({
     Key? key,
     required this.model,

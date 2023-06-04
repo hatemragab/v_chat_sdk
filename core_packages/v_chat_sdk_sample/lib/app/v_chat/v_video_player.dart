@@ -7,11 +7,13 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:v_chat_message_page/src/v_chat/v_app_alert.dart';
+import 'package:v_chat_message_page/src/v_chat/v_file.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../v_chat_utils.dart';
+import 'conditional_builder.dart';
 
 class VVideoPlayer extends StatefulWidget {
   final VPlatformFile platformFileSource;
@@ -63,8 +65,9 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
               onPressed: () async {
                 await vSafeApiCall<String>(
                   onLoading: () {
-                    VAppAlert.showOverlaySupport(
-                      title: VTrans.of(context).labels.downloading,
+                    VAppAlert.showSuccessSnackBar(
+                      msg: VTrans.of(context).labels.downloading,
+                      context: context,
                     );
                   },
                   request: () async {

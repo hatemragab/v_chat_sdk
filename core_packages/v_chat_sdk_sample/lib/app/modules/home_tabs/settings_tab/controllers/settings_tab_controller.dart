@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/app_service.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../core/utils/app_localization.dart';
+import '../../../../v_chat/v_app_alert.dart';
 import '../models.dart';
 
 class SettingsTabController extends GetxController {

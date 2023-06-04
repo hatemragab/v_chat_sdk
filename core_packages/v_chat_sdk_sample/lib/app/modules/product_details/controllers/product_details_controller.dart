@@ -5,7 +5,8 @@
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
+import '../../../v_chat/v_app_alert.dart';
 
 class ProductDetailsController extends GetxController {
   // final ProductModel productModel;

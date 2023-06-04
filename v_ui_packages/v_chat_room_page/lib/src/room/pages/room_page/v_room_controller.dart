@@ -4,6 +4,8 @@
 
 part of 'v_room_page.dart';
 
+///this class is the controller for the room page you should initialize it in the init method of the page
+///and don't forget to dispose it in the dispose method of the page
 class VRoomController with StreamMix {
   VRoomController() {
     _initStreams();

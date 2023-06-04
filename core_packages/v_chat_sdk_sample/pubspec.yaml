@@ -1,5 +1,5 @@
 name: v_chat_sdk_sample
-version: 1.0.0+1
+version: 1.0.0
 publish_to: none
 description: A new Flutter project.
 environment: 
@@ -19,14 +19,13 @@ dependencies:
   get: 4.6.5
   flutter: 
     sdk: flutter
-  v_chat_sdk_core: ^1.0.0
-  v_chat_web_rtc: ^0.8.0
-  v_chat_utils: ^0.8.0
-  v_chat_receive_share: ^0.8.0
-  v_chat_message_page: ^0.8.0
-  v_chat_firebase_fcm: ^0.8.0
-  v_chat_room_page: ^0.8.0
-  v_chat_input_ui: ^0.8.0
+  v_chat_sdk_core: ^1.0.2
+  v_chat_web_rtc: ^1.0.0
+  v_chat_receive_share: ^1.0.0
+  v_chat_message_page: ^1.0.0
+  v_chat_firebase_fcm: ^1.0.0
+  v_chat_room_page: ^1.0.0
+  v_chat_input_ui: ^1.0.0
   animated_login: ^1.7.0
   shimmer: ^3.0.0
   fluttertoast: ^8.2.2
@@ -34,10 +33,11 @@ dependencies:
   encrypt: ^5.0.1
   csslib: 0.17.0
   http_parser: ^4.0.2
+  textless: ^6.6.6
   flutter_localizations:
     sdk: flutter
-  v_chat_one_signal: ^0.8.0
-  v_platform: ^1.0.3
+  v_chat_one_signal: ^1.0.0
+  v_platform: ^1.0.4
 dev_dependencies:
   flutter_test: 
     sdk: flutter

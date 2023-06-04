@@ -11,7 +11,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart' as cache;
 import 'package:just_audio/just_audio.dart' as js_audio;
 import 'package:just_audio/just_audio.dart';
-import 'package:path/path.dart';
 import 'package:v_platform/v_platform.dart';
 
 import 'helpers/bytes_custom_source.dart';
@@ -78,9 +77,9 @@ class VVoiceMessageController extends ValueNotifier implements TickerProvider {
     _listenToPlayerState();
   }
 
-  bool get _isIosWebm =>
-      VPlatforms.isIOS &&
-      extension(audioSrc.url ?? audioSrc.fileLocalPath!) == ".webm";
+  // bool get _isIosWebm =>
+  //     VPlatforms.isIOS &&
+  //     extension(audioSrc.url ?? audioSrc.fileLocalPath!) == ".webm";
 
   Future initAndPlay() async {
     _playStatus = PlayStatus.downloading;

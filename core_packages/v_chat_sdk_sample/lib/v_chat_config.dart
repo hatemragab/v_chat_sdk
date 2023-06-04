@@ -10,7 +10,7 @@ import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_one_signal/v_chat_one_signal.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_sdk_sample/app/v_chat/extension.dart';
 import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 import 'package:v_platform/v_platform.dart';
 

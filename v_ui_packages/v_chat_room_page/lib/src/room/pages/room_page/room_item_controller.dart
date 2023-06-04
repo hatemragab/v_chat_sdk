@@ -11,6 +11,11 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import '../../shared/v_app_alert.dart';
 import 'room_provider.dart';
 
+/// Controller class for RoomItem widget.
+/// This class is responsible for handling the business logic of RoomItem widget
+/// and utilizes RoomProvider for data management. */ class RoomItemController {
+/// Instance of RoomProvider for data management final RoomProvider _provider;
+/// The current BuildContext object final BuildContext context;
 class RoomItemController {
   final RoomProvider _provider;
   final BuildContext context;

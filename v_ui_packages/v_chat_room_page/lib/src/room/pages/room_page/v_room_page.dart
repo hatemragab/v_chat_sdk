@@ -18,6 +18,15 @@ import 'room_item_controller.dart';
 
 part './v_room_controller.dart';
 
+/// A [StatefulWidget] that represents a page for displaying and managing video chat rooms.
+/// /// The [VChatPage] requires a [VRoomController] instance to manage and display rooms.
+/// The controller is passed in through the [controller] parameter.
+/// /// The [onRoomItemPress] parameter is an optional callback that is called when a room item is pressed.
+/// The callback provides a [VRoom] instance representing the room that was pressed.
+/// /// The [showDisconnectedWidget] parameter determines whether to show a widget when the user is disconnected from the server.
+/// If set to true (which is the default), a [VDisconnectedWidget] will be displayed. Otherwise, nothing will be displayed.
+/// /// The [useIconForRoomItem] parameter is an optional parameter that, if set to true, will cause the room list items to display an icon instead of a thumbnail image.
+/// /// The [appBar] and [floatingActionButton] parameters are optional, and allow customization of the app bar and action button displayed on the page
 class VChatPage extends StatefulWidget {
   const VChatPage({
     Key? key,

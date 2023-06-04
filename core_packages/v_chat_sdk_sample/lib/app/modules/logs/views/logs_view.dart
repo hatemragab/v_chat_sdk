@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:textless/textless.dart';
 
 import '../controllers/logs_controller.dart';
 

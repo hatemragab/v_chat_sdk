@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+/// A widget that displays the last time a message was sent in a chat. /// /// This widget takes a [lastMessageTime] [DateTime] object as an argument and /// displays it in a user-friendly format. /// /// Typical usage: /// /// dart /// ChatLastMsgTime(lastMessageTime: DateTime.now()) /// /// /// This would display the current time in a user-friendly format. class ChatLastMsgTime extends StatelessWidget { final DateTime lastMessageTime;
 class ChatLastMsgTime extends StatelessWidget {
   final DateTime lastMessageTime;
 

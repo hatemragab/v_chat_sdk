@@ -8,6 +8,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import '../../../../v_chat_room_page.dart';
 import 'choose_room_controller.dart';
 
+/// A stateful widget that displays a list of available rooms and allows the user to select one. /// /// The [currentRoomId] parameter is used to highlight the
 class VChooseRoomsPage extends StatefulWidget {
   final String? currentRoomId;
 

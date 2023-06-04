@@ -2,8 +2,8 @@
 dependency_overrides:
 #  v_chat_utils:
 #    path: ../../core_packages/v_chat_utils
-  win32: ^5.0.3
-  csslib: 0.17.0
+
+
   v_chat_input_ui:
     path: ../../v_shared_packages/v_chat_input_ui
   v_chat_media_editor:

@@ -11,7 +11,7 @@ import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/v_chat_config.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+
 import 'package:v_platform/v_platform.dart';
 
 import 'app/core/app_service.dart';
@@ -52,50 +52,48 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OverlaySupport.global(
-      child: GetBuilder<AppService>(
-        assignId: true,
-        builder: (appService) {
-          return GetMaterialApp(
-            title: "V Chat V2",
-            initialRoute: AppPages.INITIAL,
-            navigatorKey: _navigatorKey,
-            getPages: AppPages.routes,
-            defaultTransition: Transition.cupertino,
-            debugShowCheckedModeBanner: false,
-            themeMode: appService.themeMode,
-            initialBinding: LazyInjection(),
-            builder: (context, child) {
-              return Scaffold(
-                // floatingActionButton: FloatingActionButton(
-                //   onPressed: () {
-                //     Get.toNamed(Routes.LOGS);
-                //   },
-                //   child: Icon(Icons.light),
-                // ),
-                body: child!,
-              );
-            },
-            localizationsDelegates: [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              VTrans.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            locale: appService.locale,
-            fallbackLocale: const Locale("ar"),
-            theme: ThemeData(
-              useMaterial3: true,
-              colorSchemeSeed: Colors.green,
-            ),
-            darkTheme: ThemeData.dark().copyWith(extensions: [
-              VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red)
-            ]),
-          );
-        },
-      ),
+    return GetBuilder<AppService>(
+      assignId: true,
+      builder: (appService) {
+        return GetMaterialApp(
+          title: "V Chat V2",
+          initialRoute: AppPages.INITIAL,
+          navigatorKey: _navigatorKey,
+          getPages: AppPages.routes,
+          defaultTransition: Transition.cupertino,
+          debugShowCheckedModeBanner: false,
+          themeMode: appService.themeMode,
+          initialBinding: LazyInjection(),
+          builder: (context, child) {
+            return Scaffold(
+              // floatingActionButton: FloatingActionButton(
+              //   onPressed: () {
+              //     Get.toNamed(Routes.LOGS);
+              //   },
+              //   child: Icon(Icons.light),
+              // ),
+              body: child!,
+            );
+          },
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            VTrans.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          locale: appService.locale,
+          fallbackLocale: const Locale("ar"),
+          theme: ThemeData(
+            useMaterial3: true,
+            colorSchemeSeed: Colors.green,
+          ),
+          darkTheme: ThemeData.dark().copyWith(extensions: [
+            VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red)
+          ]),
+        );
+      },
     );
   }
 }

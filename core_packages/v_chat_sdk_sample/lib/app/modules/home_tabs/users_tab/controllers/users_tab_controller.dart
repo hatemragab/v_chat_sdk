@@ -4,9 +4,9 @@
 
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
 import '../../../../core/user_filter_dto.dart';
+import '../../../../v_chat/v_app_alert.dart';
 
 class UsersTabController extends GetxController {
   VChatLoadingState loadingState = VChatLoadingState.ideal;
@@ -27,9 +27,7 @@ class UsersTabController extends GetxController {
   Future<void> getData() async {
     await vSafeApiCall<List<VIdentifierUser>>(
       onLoading: () async {},
-      onError: (exception, trace) {
-        VAppAlert.showOverlaySupport(title: exception);
-      },
+      onError: (exception, trace) {},
       request: () async {
         return await VChatController.I.nativeApi.remote.profile
             .appUsers(_filterDto.toMap());

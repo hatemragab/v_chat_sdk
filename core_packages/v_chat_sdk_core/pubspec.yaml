@@ -1,6 +1,6 @@
 name: v_chat_sdk_core
 description: core package for v chat sdk witch use socket.io with node js and mongodb db
-version: 1.0.0
+version: 1.0.2
 homepage: https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/core_packages/v_chat_sdk_core
@@ -33,11 +33,11 @@ dependencies:
   path_provider: ^2.0.15
   google_api_availability: ^5.0.0
   shared_preferences: ^2.1.1
-  device_info_plus: ^9.0.2
+  device_info_plus: ^8.2.2
   event_bus_plus: ^0.6.1
   uuid: ^3.0.7
   collection: ^1.17.1
-  v_platform: ^1.0.3
+  v_platform: ^1.0.4
   timeago: ^3.4.0
   flutter_parsed_text: ^2.2.1
 dev_dependencies:

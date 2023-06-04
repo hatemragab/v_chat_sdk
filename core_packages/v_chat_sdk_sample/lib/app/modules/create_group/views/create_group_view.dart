@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../v_chat/platform_cache_image_widget.dart';
 import '../controllers/create_group_controller.dart';
 
 class CreateGroupView extends GetView<CreateGroupController> {

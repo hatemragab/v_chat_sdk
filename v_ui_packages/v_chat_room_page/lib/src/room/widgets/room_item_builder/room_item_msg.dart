@@ -7,6 +7,8 @@ import 'package:textless/textless.dart';
 import 'package:v_chat_room_page/src/room/shared/shared.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+/// A widget that displays a message in a chat room item. /// /// The [message] parameter is the message to be displayed. /// The [isBold] parameter determines if the message should be displayed in bold text. class RoomItemMsg extends StatelessWidget { final bool isBold; final VBaseMessage message;
+/// A widget that displays a message in a chat room item. /// /// The [message] parameter is the message to be displayed. /// The [isBold] parameter determines if the message should be displayed in bold text. class RoomItemMsg extends StatelessWidget { final bool isBold; final VBaseMessage message;const RoomItemMsg({ Key? key, required this.message, required this.isBold, }) : super(key: key); }
 class RoomItemMsg extends StatelessWidget {
   final bool isBold;
   final VBaseMessage message;

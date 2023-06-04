@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_sample/app/core/widgets/app_btn.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 
+import '../../../v_chat/platform_cache_image_widget.dart';
 import '../controllers/create_product_controller.dart';
 
 class CreateProductView extends GetView<CreateProductController> {

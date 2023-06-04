@@ -5,10 +5,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
 import 'package:v_platform/v_platform.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../v_chat/app_pick.dart';
+import '../../../v_chat/v_app_alert.dart';
 
 class CreateGroupController extends GetxController {
   final List<VIdentifierUser> users;

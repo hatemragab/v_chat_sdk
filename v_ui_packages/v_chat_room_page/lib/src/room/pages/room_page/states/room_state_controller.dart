@@ -10,6 +10,10 @@ import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/shared/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+///  RoomStateController is a ValueNotifier which holds a VPaginationModel of VRoom objects. */ class RoomStateController extends ValueNotifier<VPaginationModel > {
+///   RoomProvider instance that is used to fetch room data. */ final RoomProvider _roomProvider;
+///  Flag that indicates whether all available data has been fetched from the server. */ bool isFinishLoadMore = false;
+///  Flag that indicates whether a load more operation is currently in progress. */ bool _isLoadMoreActive = false; }
 class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   final RoomProvider _roomProvider;
   bool isFinishLoadMore = false;
@@ -238,7 +242,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         _isLoadMoreActive = true;
       },
       request: () async {
-        print("start loadmore to page ${value.page}");
+
         return _roomProvider.getApiRooms(
           VRoomsDto(page: value.page, limit: 20),
           deleteOnEmpty: false,
@@ -259,8 +263,12 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         _isLoadMoreActive = false;
       },
       onError: (exception, trace) {
-        print(exception);
-        print(trace);
+        if (kDebugMode) {
+          print(exception);
+        }
+        if (kDebugMode) {
+          print(trace);
+        }
         _isLoadMoreActive = false;
       },
     );

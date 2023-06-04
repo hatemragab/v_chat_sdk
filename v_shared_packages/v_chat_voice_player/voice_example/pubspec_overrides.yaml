@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: v_chat_sdk_core,v_chat_utils,v_chat_voice_player
+# melos_managed_dependency_overrides: v_chat_utils,v_chat_voice_player,v_chat_sdk_core
 dependency_overrides:
   v_chat_sdk_core:
     path: ../../../core_packages/v_chat_sdk_core
@@ -6,4 +6,4 @@ dependency_overrides:
     path: ../../../core_packages/v_chat_utils
   v_chat_voice_player:
     path: ..
-  win32: ^5.0.3
+

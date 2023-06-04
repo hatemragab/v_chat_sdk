@@ -6,6 +6,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+/// Controller for selecting from a list of rooms. /// /// Extends [ValueNotifier] to allow [List ] to be listened to and updated. class ChooseRoomsController extends ValueNotifier<List > { /// The currently selected room ID. final String? currentId;
+/// Create a new instance of [ChooseRoomsController]. /// /// Initializes an empty list of rooms and calls [_getRooms()] to fetch them. ChooseRoomsController(this.currentId) : super([]) { _getRooms(); } }
 class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   final String? currentId;
 

@@ -77,7 +77,7 @@ class UserModel {
 
 //</editor-fold>
 }
-// import 'package:v_platform/v_platform.dart';import 'package:v_chat_utils/v_chat_utils.dart';
+// import 'package:v_platform/v_platform.dart';
 //
 // class UserModel {
 //   final String id;

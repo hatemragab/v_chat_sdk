@@ -1,5 +1,5 @@
 name: voice_example
-version: 1.0.0+1
+version: 1.0.0
 publish_to: none
 description: A new Flutter project.
 environment: 
@@ -8,10 +8,10 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.5
   get: 4.6.5
-  v_chat_utils: ^0.8.0
+  v_chat_utils: ^1.0.0
   flutter_cache_manager: ^3.3.0
   sizer: ^2.0.15
-  v_platform: ^1.0.3
+  v_platform: ^1.0.4
   v_chat_voice_player:
     path: ../
   flutter: 

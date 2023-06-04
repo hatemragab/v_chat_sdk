@@ -1,8 +1,0 @@
-- v chat utils
-- some predefine widgets
-- platform_cache_image_widget 
-- global platform_file_source which help you to use files across all platforms
-- some predefine pages like
-- v_image_viewer
-- v_video_player
-- fix upgrade to v 0.7.1 ```flutter update-packages --force-upgrade```

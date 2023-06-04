@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:v_chat_message_page/src/v_chat/v_circle_avatar.dart';
 
 class VChatAvatarImage extends StatelessWidget {
   final String imageUrl;

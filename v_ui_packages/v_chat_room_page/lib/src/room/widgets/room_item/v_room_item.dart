@@ -14,6 +14,18 @@ import '../room_item_builder/chat_un_read_counter.dart';
 import '../room_item_builder/room_item_msg.dart';
 import 'message_status_icon.dart';
 
+/// A widget representing an individual virtual room item.
+/// /// This widget handles rendering the room information and can be configured
+/// to either show only an icon representation of the room or include additional
+/// information. /// /// Required fields:
+/// * [room] – The virtual room object that this item represents.
+/// * [onRoomItemPress] – Callback function that is triggered when this item is pressed.
+/// * [onRoomItemLongPress] – Callback function that is triggered when this item is long pressed.
+/// /// Optional fields:
+/// * [isIconOnly] – Flag indicating whether to show only the icon representation of the room.
+/// ///
+/// Example usage:
+/// /// dart /// VRoomItem( /// room: myVirtualRoom, /// isIconOnly: true, /// onRoomItemPress: (room) { /// // Handle press event /// }, /// onRoomItemLongPress: (room) { /// // Handle long press event /// }, /// ) ///
 class VRoomItem extends StatelessWidget {
   final VRoom room;
   final bool isIconOnly;

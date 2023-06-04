@@ -4,4 +4,4 @@ dependency_overrides:
     path: ../v_chat_media_editor
   v_chat_sdk_core:
     path: ../../core_packages/v_chat_sdk_core
-  win32: ^5.0.3
+

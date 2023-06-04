@@ -34,7 +34,11 @@ abstract class RtcHelper {
         "username": _u,
         "credential": _p,
       },
-    ]
+    ],
+    'mandatory': {},
+    'optional': [
+      {'DtlsSrtpKeyAgreement': true},
+    ],
   };
   static final Map<String, dynamic> offerSdpConstraints = {
     'mandatory': {},

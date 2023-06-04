@@ -14,7 +14,8 @@ class DeviceInfoHelper {
     if (VPlatforms.isIOS) {
       final iosDeviceInfo = await deviceInfoPlugin.iosInfo;
       return iosDeviceInfo.identifierForVendor ??
-          iosDeviceInfo.name + iosDeviceInfo.model; // unique ID on iOS
+          iosDeviceInfo.name.toString() +
+              iosDeviceInfo.model.toString(); // unique ID on iOS
     } else if (VPlatforms.isAndroid) {
       final androidDeviceInfo = await deviceInfoPlugin.androidInfo;
       return androidDeviceInfo.id; // unique ID on Android

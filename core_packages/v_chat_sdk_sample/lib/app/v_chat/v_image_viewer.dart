@@ -8,10 +8,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:v_chat_message_page/src/v_chat/v_app_alert.dart';
+import 'package:v_chat_message_page/src/v_chat/v_file.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
-
-import '../../v_chat_utils.dart';
 
 class VImageViewer extends StatefulWidget {
   final VPlatformFile platformFileSource;
@@ -55,8 +55,9 @@ class _VImageViewerState extends State<VImageViewer> {
                 onPressed: () async {
                   await vSafeApiCall<String>(
                     onLoading: () {
-                      VAppAlert.showOverlaySupport(
-                        title: VTrans.of(context).labels.downloading,
+                      VAppAlert.showSuccessSnackBar(
+                        msg: VTrans.of(context).labels.downloading,
+                        context: context,
                       );
                     },
                     request: () async {

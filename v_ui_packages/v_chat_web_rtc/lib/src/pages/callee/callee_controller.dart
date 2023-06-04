@@ -238,7 +238,16 @@ class CalleeController extends ValueNotifier<VCallerState> {
       'audio': true,
       'video': callModel.withVideo
           ? {
-              'facingMode': 'user',
+              'video': {
+                'mandatory': {
+                  'minWidth':
+                      '640', // Provide your own width, height and frame rate here
+                  'minHeight': '480',
+                  'minFrameRate': '30',
+                },
+                'facingMode': 'user',
+                'optional': [],
+              }
             }
           : false,
     };

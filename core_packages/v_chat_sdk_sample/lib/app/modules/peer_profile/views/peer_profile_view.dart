@@ -4,10 +4,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_utils/v_chat_utils.dart';
+import 'package:textless/textless.dart';
 
 import '../../../core/widgets/async_widgets_builder.dart';
 import '../../../core/widgets/chat_btn.dart';
+import '../../../v_chat/platform_cache_image_widget.dart';
 import '../controllers/peer_profile_controller.dart';
 
 class PeerProfileView extends GetView<PeerProfileController> {
