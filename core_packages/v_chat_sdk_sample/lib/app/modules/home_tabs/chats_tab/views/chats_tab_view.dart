@@ -70,7 +70,7 @@ class ChatsTabView extends GetView<ChatsTabController> {
         leaveGroup: S.of(context).leaveGroup,
         leaveGroupAndDeleteYourMessageCopy:
             S.of(context).leaveGroupAndDeleteYourMessageCopy,
-        messageHasBeenDeletedLabel: S.of(context).messageHasBeenDeletedLabel,
+        messageHasBeenDeleted: S.of(context).messageHasBeenDeleted,
         mute: S.of(context).mute,
         recording: S.of(context).recording,
         report: S.of(context).report,

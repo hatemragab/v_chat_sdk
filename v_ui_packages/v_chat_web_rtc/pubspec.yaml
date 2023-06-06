@@ -1,6 +1,6 @@
 name: v_chat_web_rtc
 description: v chat web rtc call implementations
-version: 1.0.2
+version: 1.1.0
 homepage: https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/v2/v_ui_packages/v_chat_web_rtc
@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_sdk_core: ^1.0.2
+  v_chat_sdk_core: ^1.1.0
   flutter_webrtc: ^0.9.32
   pip_view: ^0.9.7
   retry: ^3.1.0

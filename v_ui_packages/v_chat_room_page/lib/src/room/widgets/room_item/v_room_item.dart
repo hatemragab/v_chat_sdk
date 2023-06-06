@@ -135,7 +135,7 @@ class VRoomItem extends StatelessWidget {
                                     Flexible(
                                       child: RoomItemMsg(
                                         messageHasBeenDeletedLabel:
-                                            language.messageHasBeenDeletedLabel,
+                                            language.messageHasBeenDeleted,
                                         message: room.lastMessage,
                                         language: language.vMessageInfoTrans,
                                         isBold: false,
@@ -151,7 +151,7 @@ class VRoomItem extends StatelessWidget {
                                   isBold: true,
                                   message: room.lastMessage,
                                   messageHasBeenDeletedLabel:
-                                      language.messageHasBeenDeletedLabel,
+                                      language.messageHasBeenDeleted,
                                   language: language.vMessageInfoTrans,
                                 ),
                               )
@@ -161,7 +161,7 @@ class VRoomItem extends StatelessWidget {
                                 child: RoomItemMsg(
                                   isBold: false,
                                   messageHasBeenDeletedLabel:
-                                      language.messageHasBeenDeletedLabel,
+                                      language.messageHasBeenDeleted,
                                   message: room.lastMessage,
                                   language: language.vMessageInfoTrans,
                                 ),

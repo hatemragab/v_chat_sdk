@@ -62,7 +62,7 @@ class VMessageInfoTrans {
 ///room language
 class VRoomLanguage {
   final String yesterdayLabel;
-  final String messageHasBeenDeletedLabel;
+  final String messageHasBeenDeleted;
   final String connecting;
 
   ///
@@ -86,7 +86,7 @@ class VRoomLanguage {
 
   const VRoomLanguage({
     required this.yesterdayLabel,
-    required this.messageHasBeenDeletedLabel,
+    required this.messageHasBeenDeleted,
     required this.mute,
     required this.cancel,
     required this.typing,
@@ -107,7 +107,7 @@ class VRoomLanguage {
   factory VRoomLanguage.fromEnglish() {
     return VRoomLanguage(
       yesterdayLabel: 'Yesterday',
-      messageHasBeenDeletedLabel: 'Message has been deleted',
+      messageHasBeenDeleted: 'Message has been deleted',
       mute: 'Mute',
       cancel: 'Cancel',
       ok: 'Ok',
