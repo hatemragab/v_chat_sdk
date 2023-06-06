@@ -10,6 +10,8 @@ import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/shared/extentions.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../../../shared/v_safe_api_call.dart';
+
 ///  RoomStateController is a ValueNotifier which holds a VPaginationModel of VRoom objects. */ class RoomStateController extends ValueNotifier<VPaginationModel > {
 ///   RoomProvider instance that is used to fetch room data. */ final RoomProvider _roomProvider;
 ///  Flag that indicates whether all available data has been fetched from the server. */ bool isFinishLoadMore = false;
@@ -22,7 +24,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   RoomStateController(this._roomProvider)
       : super(
           VPaginationModel<VRoom>(
-            values: <VRoom>[],
+            data: <VRoom>[],
             limit: 20,
             page: 2,
             nextPage: null,
@@ -31,12 +33,12 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
 
   final roomStateStream = StreamController<VRoom>.broadcast(sync: true);
 
-  List<VRoom> get stateRooms => value.values;
+  List<VRoom> get stateRooms => value.data;
 
   void updateCacheStateForChatRooms(VPaginationModel<VRoom> paginationModel) {
     final Map<String, VRoom> stateRoomMap =
-        Map.fromEntries(value.values.map((vRoom) => MapEntry(vRoom.id, vRoom)));
-    final apiRooms = paginationModel.values;
+        Map.fromEntries(value.data.map((vRoom) => MapEntry(vRoom.id, vRoom)));
+    final apiRooms = paginationModel.data;
 
     for (var apiRoom in apiRooms) {
       if (stateRoomMap.containsKey(apiRoom.id)) {
@@ -61,13 +63,13 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
     final newStateRoomsList = stateRoomMap.values.toList();
     newStateRoomsList.sortByMsgId();
 
-    value.values = newStateRoomsList;
+    value.data = newStateRoomsList;
     notifyListeners();
   }
 
   void insertRoom(VRoom room) {
     if (!stateRooms.contains(room)) {
-      value.values.insert(0, room);
+      value.data.insert(0, room);
     } else {
       if (room.isDeleted) {
         room.isDeleted = false;
@@ -229,7 +231,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   }
 
   void insertAll(VPaginationModel<VRoom> response) {
-    value.values = response.values;
+    value.data = response.data;
     notifyListeners();
   }
 
@@ -242,7 +244,6 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         _isLoadMoreActive = true;
       },
       request: () async {
-
         return _roomProvider.getApiRooms(
           VRoomsDto(page: value.page, limit: 20),
           deleteOnEmpty: false,
@@ -250,15 +251,15 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
       },
       onSuccess: (response) {
         ++value.page;
-        if (response.values.isEmpty) {
+        if (response.data.isEmpty) {
           isFinishLoadMore = true;
         }
-        for (final e in response.values) {
-          if (!value.values.contains(e)) {
-            value.values.add(e);
+        for (final e in response.data) {
+          if (!value.data.contains(e)) {
+            value.data.add(e);
           }
         }
-        value.values.sortByMsgId();
+        value.data.sortByMsgId();
         notifyListeners();
         _isLoadMoreActive = false;
       },
@@ -272,7 +273,7 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
         _isLoadMoreActive = false;
       },
     );
-    if (res == null || res.values.isEmpty) {
+    if (res == null || res.data.isEmpty) {
       return false;
     }
     return true;
@@ -281,20 +282,19 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   void sortRoomsBy(VRoomType type) {
     switch (type) {
       case VRoomType.s:
-        value.values = value.values.where((e) => e.roomType.isSingle).toList();
+        value.data = value.data.where((e) => e.roomType.isSingle).toList();
         notifyListeners();
         break;
       case VRoomType.g:
-        value.values = value.values.where((e) => e.roomType.isGroup).toList();
+        value.data = value.data.where((e) => e.roomType.isGroup).toList();
         notifyListeners();
         break;
       case VRoomType.b:
-        value.values =
-            value.values.where((e) => e.roomType.isBroadcast).toList();
+        value.data = value.data.where((e) => e.roomType.isBroadcast).toList();
         notifyListeners();
         break;
       case VRoomType.o:
-        value.values = value.values.where((e) => e.roomType.isOrder).toList();
+        value.data = value.data.where((e) => e.roomType.isOrder).toList();
         notifyListeners();
         break;
     }
@@ -302,10 +302,10 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
 
   void setRoomSelected(String roomId) {
     //first un select
-    for (int i = 0; i < value.values.length; i++) {
-      if (value.values[i].isSelected) {
-        value.values[i].isSelected = false;
-        roomStateStream.sink.add(value.values[i]);
+    for (int i = 0; i < value.data.length; i++) {
+      if (value.data[i].isSelected) {
+        value.data[i].isSelected = false;
+        roomStateStream.sink.add(value.data[i]);
       }
     }
     final room = roomById(roomId);

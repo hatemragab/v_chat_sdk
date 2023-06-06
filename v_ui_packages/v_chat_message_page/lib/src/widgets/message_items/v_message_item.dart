@@ -27,6 +27,7 @@ import 'package:v_platform/v_platform.dart';
 
 import '../../core/types.dart';
 import '../../v_chat/string_utils.dart';
+import '../../v_chat/v_message_constants.dart';
 
 class VMessageItem extends StatelessWidget {
   final VBaseMessage message;
@@ -38,6 +39,7 @@ class VMessageItem extends StatelessWidget {
   final VMessageCallback? onHighlightMessage;
   final VMessageCallback? onReSend;
   final VRoomType roomType;
+  final VMessageLocalization language;
 
   const VMessageItem({
     Key? key,
@@ -46,6 +48,7 @@ class VMessageItem extends StatelessWidget {
     this.onTap,
     this.voiceController,
     required this.message,
+    required this.language,
     this.onSwipe,
     this.onReSend,
     this.onHighlightMessage,
@@ -55,7 +58,11 @@ class VMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     if (message.messageType.isCenter) {
       return CenterItemHolder(
-        child: message.getMessageTextInfoTranslated(context).text.italic.medium,
+        child: VMessageConstants.getMessageBody(
+                message, language.vMessagesInfoTrans)
+            .text
+            .italic
+            .medium,
       );
     }
 
@@ -93,6 +100,7 @@ class VMessageItem extends StatelessWidget {
                   rToMessage: message.isAllDeleted ? null : message.replyTo,
                   onHighlightMessage: onHighlightMessage,
                   isMeSender: message.isMeSender,
+                  repliedToYourSelf: language.repliedToYourSelf,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -187,6 +195,7 @@ class VMessageItem extends StatelessWidget {
     if (message.allDeletedAt != null) {
       return AllDeletedItem(
         message: message,
+        messageHasBeenDeletedLabel: language.messageHasBeenDeleted,
       );
     }
     switch (message.messageType) {
@@ -233,6 +242,9 @@ class VMessageItem extends StatelessWidget {
       case VMessageType.call:
         return CallMessageItem(
           message: message as VCallMessage,
+          audioCallLabel: language.audioCall,
+          callStatusLabel: language
+              .transCallStatus((message as VCallMessage).data.callStatus),
         );
       case VMessageType.custom:
         return context.vMessageTheme.customMessageItem?.call(

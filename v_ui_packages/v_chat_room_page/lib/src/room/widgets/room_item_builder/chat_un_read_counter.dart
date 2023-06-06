@@ -9,8 +9,10 @@ import 'package:textless/textless.dart';
 /// The number of un-read chats to be displayed. final int unReadCount;
 /// Creates a new instance of [ChatUnReadWidget]. /// /// The [unReadCount] property is required to set the number of un-read /// chats to be displayed. const ChatUnReadWidget({Key? key, required this.unReadCount}) : super(key: key); }
 class ChatUnReadWidget extends StatelessWidget {
+  /// The number of un-read chats to be displayed.
   final int unReadCount;
 
+  /// Creates a new instance of [ChatUnReadWidget]. /// /// The [unReadCount] property is required to set the number of un-read /// chats to be displayed.
   const ChatUnReadWidget({Key? key, required this.unReadCount})
       : super(key: key);
 

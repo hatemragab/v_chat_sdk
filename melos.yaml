@@ -5,7 +5,6 @@ packages:
   - core_packages/**
   - v_ui_packages/**
   - push_providers/**
-  - v_shared_packages/**
 #ignore:
 #  - 'core_packages/v_chat_utils/utils_example'
 #  - 'v_shared_packages/v_chat_input_ui/input_example'

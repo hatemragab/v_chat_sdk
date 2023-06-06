@@ -4,6 +4,7 @@
 
 enum SStorageKeys {
   myProfile,
+  appLanguage,
   accessToken,
   isLogin,
   appTheme,

@@ -14,10 +14,15 @@ import 'message_single_status_controller.dart';
 
 class VMessageSingleStatusPage extends StatefulWidget {
   final VBaseMessage message;
-
+  final VMessageLocalization vMessageLocalization;
+  final String readLabel;
+  final String deliveredLabel;
   const VMessageSingleStatusPage({
     Key? key,
     required this.message,
+    required this.readLabel,
+    required this.deliveredLabel,
+    required this.vMessageLocalization,
   }) : super(key: key);
 
   @override
@@ -57,12 +62,13 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
               ListTile(
                 title: AppBar(
                   backgroundColor: context.isDark ? Colors.transparent : null,
-                  title: VTrans.labelsOf(context).messageInfo.text,
+                  title: widget.readLabel.text,
                 ),
                 contentPadding: EdgeInsets.zero,
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
                   child: VMessageItem(
+                    language: widget.vMessageLocalization,
                     roomType: VRoomType.s,
                     voiceController: controller.getVoiceController,
                     message: widget.message,
@@ -80,7 +86,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
                   children: [
                     ReadItem(
                       dateTime: widget.message.seenAtDate,
-                      title: VTrans.labelsOf(context).read,
+                      title: widget.readLabel,
                       model: MessageStatusIconDataModel(
                         isMeSender: widget.message.isMeSender,
                         emitStatus: widget.message.emitStatus,
@@ -93,7 +99,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
                       height: 1,
                     ),
                     ReadItem(
-                      title: VTrans.labelsOf(context).delivered,
+                      title: widget.deliveredLabel,
                       dateTime: widget.message.deliveredAtDate,
                       model: MessageStatusIconDataModel(
                         isMeSender: widget.message.isMeSender,
@@ -170,7 +176,7 @@ class ReadItem extends StatelessWidget {
                 )
               : format(
                   dateTime!,
-                  locale: VAppConstants.sdkLanguage,
+                  locale: Localizations.localeOf(context).languageCode,
                 ).text.color(Colors.grey)
         ],
       ),

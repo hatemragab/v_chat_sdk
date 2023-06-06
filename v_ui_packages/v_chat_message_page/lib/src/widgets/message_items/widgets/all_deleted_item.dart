@@ -8,10 +8,12 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class AllDeletedItem extends StatelessWidget {
   final VBaseMessage message;
+  final String messageHasBeenDeletedLabel;
 
   const AllDeletedItem({
     Key? key,
     required this.message,
+    required this.messageHasBeenDeletedLabel,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class AllDeletedItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Text(
-        VTrans.of(context).labels.messageHasBeenDeleted,
+        messageHasBeenDeletedLabel,
         style: message.isMeSender
             ? context.vMessageTheme.senderTextStyle
                 .merge(const TextStyle(fontStyle: FontStyle.italic))

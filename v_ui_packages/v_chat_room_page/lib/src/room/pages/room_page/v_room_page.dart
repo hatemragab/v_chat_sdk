@@ -14,6 +14,8 @@ import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../shared/stream_mixin.dart';
+import '../../shared/v_safe_api_call.dart';
+import '../../widgets/v_socket_status_widget.dart';
 import 'room_item_controller.dart';
 
 part './v_room_controller.dart';
@@ -33,6 +35,7 @@ class VChatPage extends StatefulWidget {
     required this.controller,
     this.floatingActionButton,
     this.appBar,
+    required this.language,
     this.onRoomItemPress,
     this.showDisconnectedWidget = true,
     this.useIconForRoomItem = false,
@@ -44,6 +47,7 @@ class VChatPage extends StatefulWidget {
   // final Function(VRoom room) onRoomItemPress;
   // final Function(VRoom room)? onRoomItemLongPress;
   final Widget? appBar;
+  final VRoomLanguage language;
   final Widget? floatingActionButton;
   final bool useIconForRoomItem;
 
@@ -55,7 +59,7 @@ class _VChatPageState extends State<VChatPage> {
   @override
   void initState() {
     super.initState();
-    widget.controller._init(context);
+    widget.controller._init(context, widget.language);
   }
 
   @override
@@ -74,7 +78,10 @@ class _VChatPageState extends State<VChatPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (widget.showDisconnectedWidget == true)
-              const VSocketStatusWidget(padding: EdgeInsets.all(5)),
+              VSocketStatusWidget(
+                padding: const EdgeInsets.all(5),
+                connectingLabel: widget.language.connecting,
+              ),
             ValueListenableBuilder<VPaginationModel<VRoom>>(
               valueListenable: widget.controller._roomState,
               builder: (_, value, __) {
@@ -90,7 +97,7 @@ class _VChatPageState extends State<VChatPage> {
                       physics: const BouncingScrollPhysics(),
                       cacheExtent: 300,
                       itemBuilder: (context, index) {
-                        final room = value.values[index];
+                        final room = value.data[index];
                         return StreamBuilder<VRoom>(
                           key: UniqueKey(),
                           stream: widget
@@ -99,6 +106,7 @@ class _VChatPageState extends State<VChatPage> {
                           initialData: room,
                           builder: (context, snapshot) {
                             return VRoomItem(
+                              language: widget.language,
                               isIconOnly: widget.useIconForRoomItem,
                               room: snapshot.data!,
                               onRoomItemLongPress: (room) => widget.controller
@@ -115,7 +123,7 @@ class _VChatPageState extends State<VChatPage> {
                           },
                         );
                       },
-                      itemCount: value.values.length,
+                      itemCount: value.data.length,
                     ),
                   ),
                 );

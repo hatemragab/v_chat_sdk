@@ -8,7 +8,9 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/core/app_service.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
+import '../../../../core/enums.dart';
 import '../../../../core/utils/app_localization.dart';
+import '../../../../core/utils/app_pref.dart';
 import '../../../../v_chat/v_app_alert.dart';
 import '../models.dart';
 
@@ -52,8 +54,8 @@ class SettingsTabController extends GetxController {
       context: Get.context!,
     );
     if (res != null) {
-      await VAppPref.setStringKey(
-        VStorageKeys.vAppTheme.name,
+      await AppPref.setStringKey(
+        SStorageKeys.appTheme.name,
         res.mode.name,
       );
       appService.setTheme(res.mode);
@@ -92,7 +94,7 @@ class SettingsTabController extends GetxController {
     );
     if (res == 1) {
       await VChatController.I.profileApi.logout();
-      await VAppPref.clear();
+      await AppPref.clear();
       Get.offAndToNamed(Routes.SPLASH);
     }
   }

@@ -10,6 +10,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../../v_chat_message_page.dart';
 import '../../../../v_chat/v_search_app_bare.dart';
+import '../../../../v_chat/v_socket_status_widget.dart';
 import '../../../../widgets/app_bare/v_message_app_bare.dart';
 import '../../controllers/v_message_item_controller.dart';
 import '../../providers/message_provider.dart';
@@ -22,9 +23,11 @@ class VBroadcastView extends StatefulWidget {
     Key? key,
     required this.vRoom,
     required this.vMessageConfig,
+    required this.language,
   }) : super(key: key);
   final VRoom vRoom;
   final VMessageConfig vMessageConfig;
+  final VMessageLocalization language;
 
   @override
   State<VBroadcastView> createState() => _VBroadcastViewState();
@@ -50,6 +53,7 @@ class _VBroadcastViewState extends State<VBroadcastView> {
       itemController: VMessageItemController(
         messageProvider: provider,
         context: context,
+        language: widget.language,
         vMessageConfig: widget.vMessageConfig,
       ),
       broadcastAppBarController: BroadcastAppBarController(
@@ -71,17 +75,19 @@ class _VBroadcastViewState extends State<VBroadcastView> {
               return VSearchAppBare(
                 onClose: controller.onCloseSearch,
                 onSearch: controller.onSearch,
+                searchLabel: widget.language.search,
               );
             }
             return VMessageAppBare(
               isCallAllowed: false,
+              language: widget.language,
               onSearch: controller.onOpenSearch,
               memberCount: value.members,
               room: widget.vRoom,
               inTypingText: (context) {
                 return null;
               },
-              onViewMedia: () => controller.onViewMedia(context, value.roomId),
+              // onViewMedia: () => controller.onViewMedia(context, value.roomId),
               onTitlePress: controller.onTitlePress,
             );
           },
@@ -93,10 +99,12 @@ class _VBroadcastViewState extends State<VBroadcastView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (widget.vMessageConfig.showDisconnectedWidget)
-              const VSocketStatusWidget(
+              VSocketStatusWidget(
+                connectingLabel: widget.language.connecting,
                 delay: Duration.zero,
               ),
             MessageBodyStateWidget(
+              language: widget.language,
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
@@ -105,6 +113,7 @@ class _VBroadcastViewState extends State<VBroadcastView> {
             ),
             InputWidgetState(
               controller: controller,
+              language: widget.language,
             )
           ],
         ),

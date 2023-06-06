@@ -3,17 +3,21 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CallMessageItem extends StatelessWidget {
   final VCallMessage message;
+  final String audioCallLabel;
+  final String callStatusLabel;
 
   const CallMessageItem({
     Key? key,
     required this.message,
+    required this.audioCallLabel,
+    required this.callStatusLabel,
   }) : super(key: key);
 
   @override
@@ -43,18 +47,14 @@ class CallMessageItem extends StatelessWidget {
               //visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               dense: true,
               title: message.data.withVideo
-                  ? VTrans.labelsOf(context)
-                      .videoCall
-                      .text
+                  ? audioCallLabel.text
                       .styled(
                         style: message.isMeSender
                             ? context.vMessageTheme.senderTextStyle
                             : context.vMessageTheme.receiverTextStyle,
                       )
                       .size(14)
-                  : VTrans.labelsOf(context)
-                      .audioCall
-                      .text
+                  : audioCallLabel.text
                       .styled(
                         style: message.isMeSender
                             ? context.vMessageTheme.senderTextStyle
@@ -82,8 +82,7 @@ class CallMessageItem extends StatelessWidget {
           )
           .size(14);
     }
-    return message.data.callStatus
-        .tr(context)
+    return callStatusLabel
         .toString()
         .text
         .maxLine(2)

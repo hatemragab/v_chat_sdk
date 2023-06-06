@@ -10,14 +10,15 @@ import '../../../../v_chat_message_page.dart';
 import '../../../models/input_state_model.dart';
 import '../../../widgets/input_widgets/ban_widget.dart';
 import '../../../widgets/input_widgets/reply_msg_widget.dart';
-import '../controllers/v_base_message_controller.dart';
 
 class InputWidgetState extends StatelessWidget {
   final VBaseMessageController controller;
+  final VMessageLocalization language;
 
   const InputWidgetState({
     Key? key,
     required this.controller,
+    required this.language,
   }) : super(key: key);
 
   @override
@@ -32,15 +33,7 @@ class InputWidgetState extends StatelessWidget {
             autofocus: VPlatforms.isWebRunOnMobile || VPlatforms.isMobile
                 ? false
                 : true,
-            language: VInputLanguage(
-              files: VTrans.of(context).labels.shareFiles,
-              location: VTrans.of(context).labels.shareLocation,
-              cancel: VTrans.of(context).labels.cancel,
-              media: VTrans.of(context).labels.media,
-              shareMediaAndLocation:
-                  VTrans.of(context).labels.shareMediaAndLocation,
-              textFieldHint: VTrans.of(context).labels.typeYourMessage,
-            ),
+            language: language.vInputLanguage,
             focusNode: controller.focusNode,
             onAttachIconPress:
                 controller.vMessageConfig.onMessageAttachmentIconPress == null
@@ -65,7 +58,7 @@ class InputWidgetState extends StatelessWidget {
               controller
                   .onTypingChange(VRoomTypingEnum.values.byName(typing.name));
             },
-            googleMapsLangKey: VAppConstants.sdkLanguage,
+            googleMapsLangKey: Localizations.localeOf(context).languageCode,
             maxMediaSize: controller.vMessageConfig.maxMediaSize,
             onMentionSearch: (query) =>
                 controller.onMentionRequireSearch(context, query),
@@ -75,11 +68,13 @@ class InputWidgetState extends StatelessWidget {
                 ? null
                 : ReplyMsgWidget(
                     vBaseMessage: value.replyMsg!,
+                    replyToYourSelf: language.repliedToYourSelf,
                     onDismiss: controller.dismissReply,
                   ),
             stopChatWidget: value.isCloseInput
                 ? BanWidget(
                     isMy: false,
+                    youDontHaveAccess: language.youDontHaveAccess,
                     onUnBan: () {},
                   )
                 : null,

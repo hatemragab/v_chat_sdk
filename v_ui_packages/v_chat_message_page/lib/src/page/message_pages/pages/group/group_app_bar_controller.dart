@@ -75,10 +75,6 @@ class GroupAppBarStateModel {
     required this.isSearching,
   });
 
-  String? typingText(BuildContext context) {
-    return typingModel.inSingleText(context);
-  }
-
   factory GroupAppBarStateModel.fromVRoom(VRoom room) {
     return GroupAppBarStateModel._(
       roomId: room.id,

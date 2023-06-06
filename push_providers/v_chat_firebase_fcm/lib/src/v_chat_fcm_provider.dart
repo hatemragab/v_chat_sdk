@@ -15,6 +15,8 @@ import 'package:http/http.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 
+import 'app_pref.dart';
+
 class VChatFcmProver extends VChatPushProviderBase {
   StreamSubscription? _onTokenRefresh;
   StreamSubscription? _onNewMessage;
@@ -182,7 +184,7 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final msg = MessageFactory.createBaseMessage(
     jsonDecode(vMessage) as Map<String, dynamic>,
   );
-  final token = VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name);
+  final token = VAppPref.getHashedString(key: "vAccessToken");
   if (token != null) {
     try {
       await setDeliverForThisRoom(msg.roomId, token);
@@ -192,25 +194,25 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
       }
     }
   }
-  final x = VLocalNativeApi();
-  await x.init();
-  final insertRes = await x.message.safeInsertMessage(msg);
+  final nativeLocal = VLocalNativeApi();
+  await nativeLocal.init();
+  final insertRes = await nativeLocal.message.safeInsertMessage(msg);
   if (insertRes == 1) {
-    await x.room.updateRoomUnreadCountAddOne(msg.roomId);
+    await nativeLocal.room.updateRoomUnreadCountAddOne(msg.roomId);
   }
   return Future<void>.value(null);
 }
 
 @pragma('vm:entry-point')
 Future setDeliverForThisRoom(String roomId, String token) async {
-  final baseUrl = VAppPref.getStringOrNullKey(VStorageKeys.vBaseUrl.name);
+  final baseUrl = VAppPref.getStringOrNullKey("vBaseUrl");
   final res = await patch(
     Uri.parse(
       "$baseUrl/channel/$roomId/deliver",
     ),
     headers: {
       'authorization': "Bearer $token",
-      "clint-version": VAppConstants.clintVersion,
+      "clint-version": "2.0.0",
       "Accept-Language": "en"
     },
   );

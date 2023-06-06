@@ -7,6 +7,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../core/enums.dart';
 import '../../../core/models/user.model.dart';
+import '../../../v_chat/v_safe_api_call.dart';
 
 class PeerProfileController extends GetxController {
   final String uuId;

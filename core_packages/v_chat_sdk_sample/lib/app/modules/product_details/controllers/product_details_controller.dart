@@ -3,10 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 import '../../../v_chat/v_app_alert.dart';
+import '../../../v_chat/v_safe_api_call.dart';
 
 class ProductDetailsController extends GetxController {
   // final ProductModel productModel;

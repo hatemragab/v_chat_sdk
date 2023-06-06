@@ -13,11 +13,13 @@ import '../../../../v_chat_message_page.dart';
 import '../../../core/v_downloader_service.dart';
 import '../../../v_chat/string_utils.dart';
 import '../../../v_chat/v_app_alert.dart';
+import '../../../v_chat/v_safe_api_call.dart';
 import '../providers/message_provider.dart';
 
 class VMessageItemController {
   final MessageProvider messageProvider;
   final BuildContext context;
+  final VMessageLocalization language;
   final _localStorage = VChatController.I.nativeApi.local;
   final VMessageConfig vMessageConfig;
 
@@ -25,12 +27,13 @@ class VMessageItemController {
     required this.messageProvider,
     required this.context,
     required this.vMessageConfig,
+    required this.language,
   });
 
   ModelSheetItem<VMessageItemClickRes> _deleteItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.delete,
-      title: VTrans.of(context).labels.delete,
+      title: language.delete,
       iconData: const Icon(
         Icons.delete,
         color: Colors.red,
@@ -41,7 +44,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _downloadItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.download,
-      title: VTrans.of(context).labels.download,
+      title: language.download,
       iconData: const Icon(
         Icons.download,
       ),
@@ -51,14 +54,14 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _copyItem() {
     return ModelSheetItem(
         id: VMessageItemClickRes.copy,
-        title: VTrans.of(context).labels.copy,
+        title: language.copy,
         iconData: const Icon(Icons.copy));
   }
 
   ModelSheetItem<VMessageItemClickRes> _infoItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.info,
-      title: VTrans.of(context).labels.info,
+      title: language.info,
       iconData: const Icon(Icons.info),
     );
   }
@@ -66,7 +69,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _shareItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.share,
-      title: VTrans.of(context).labels.share,
+      title: language.share,
       iconData: const Icon(Icons.share),
     );
   }
@@ -74,7 +77,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _forwardItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.forward,
-      title: VTrans.of(context).labels.forward,
+      title: language.forward,
       iconData: const Icon(Icons.forward),
     );
   }
@@ -82,7 +85,7 @@ class VMessageItemController {
   ModelSheetItem<VMessageItemClickRes> _replyItem() {
     return ModelSheetItem(
       id: VMessageItemClickRes.reply,
-      title: VTrans.of(context).labels.reply,
+      title: language.reply,
       iconData: const Icon(Icons.replay),
     );
   }
@@ -158,6 +161,7 @@ class VMessageItemController {
 
     final res = await VAppAlert.showModalSheet(
       content: items,
+      cancel: language.cancel,
       context: context,
     );
     if (res == null) return;
@@ -337,14 +341,14 @@ class VMessageItemController {
     if (message.isMeSender &&
         !message.isAllDeleted &&
         message.emitStatus.isServerConfirm) {
-      l.add(ModelSheetItem(
-          title: VTrans.of(context).labels.deleteFromAll, id: 1));
+      l.add(ModelSheetItem(title: language.deleteFromAll, id: 1));
     }
 
-    l.add(ModelSheetItem(title: VTrans.of(context).labels.deleteFromMe, id: 2));
+    l.add(ModelSheetItem(title: language.deleteFromMe, id: 2));
     final res = await VAppAlert.showModalSheet(
       content: l,
       context: context,
+      cancel: language.cancel,
     );
     if (res == null) return;
     if (res.id == 1) {
@@ -384,7 +388,7 @@ class VMessageItemController {
     await vSafeApiCall<String>(
       onLoading: () {
         VAppAlert.showSuccessSnackBar(
-          msg: VTrans.of(context).labels.downloading,
+          msg: language.downloading,
           context: context,
         );
       },
@@ -396,7 +400,7 @@ class VMessageItemController {
           await OpenFilex.open(url);
         }
         VAppAlert.showSuccessSnackBar(
-          msg: VTrans.of(context).labels.fileHasBeenSavedTo + url,
+          msg: language.fileHasBeenSavedTo + url,
           context: context,
         );
       },

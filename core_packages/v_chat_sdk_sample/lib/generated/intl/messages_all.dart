@@ -1,7 +1,3 @@
-// Copyright 2023, the hatemragab project author.
-// All rights reserved. Use of this source code is governed by a
-// MIT license that can be found in the LICENSE file.
-
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
 // This is a library that looks up messages for specific locales by
 // delegating to the appropriate library.
@@ -15,19 +11,24 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 import 'package:intl/src/intl_helpers.dart';
 
+import 'messages_ar.dart' as messages_ar;
 import 'messages_en.dart' as messages_en;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
-  'en': () => new Future.value(null),
+  'ar': () => new SynchronousFuture(null),
+  'en': () => new SynchronousFuture(null),
 };
 
 MessageLookupByLibrary? _findExact(String localeName) {
   switch (localeName) {
+    case 'ar':
+      return messages_ar.messages;
     case 'en':
       return messages_en.messages;
     default:
@@ -36,18 +37,18 @@ MessageLookupByLibrary? _findExact(String localeName) {
 }
 
 /// User programs should call this before using [localeName] for messages.
-Future<bool> initializeMessages(String localeName) async {
+Future<bool> initializeMessages(String localeName) {
   var availableLocale = Intl.verifiedLocale(
       localeName, (locale) => _deferredLibraries[locale] != null,
       onFailure: (_) => null);
   if (availableLocale == null) {
-    return new Future.value(false);
+    return new SynchronousFuture(false);
   }
   var lib = _deferredLibraries[availableLocale];
-  await (lib == null ? new Future.value(false) : lib());
+  lib == null ? new SynchronousFuture(false) : lib();
   initializeInternalMessageLookup(() => new CompositeMessageLookup());
   messageLookup.addLocale(availableLocale, _findGeneratedMessagesFor);
-  return new Future.value(true);
+  return new SynchronousFuture(true);
 }
 
 bool _messagesExistFor(String locale) {

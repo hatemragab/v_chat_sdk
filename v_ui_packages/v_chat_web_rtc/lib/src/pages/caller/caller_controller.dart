@@ -9,6 +9,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
   String? meetId;
   late final StreamSubscription subscription;
   final BuildContext context;
+  final VCallLocalization localization;
   RTCPeerConnection? _peerConnection;
 
   final _iceCandidates = <RTCIceCandidate>[];
@@ -24,6 +25,7 @@ class _CallerController extends ValueNotifier<VCallerState> {
   _CallerController(
     this.callDto,
     this.context,
+    this.localization,
   ) : super(VCallerState()) {
     _addListeners();
     _initRenderer();
@@ -42,7 +44,14 @@ class _CallerController extends ValueNotifier<VCallerState> {
       'audio': true,
       'video': callDto.isVideoEnable
           ? {
+              'mandatory': {
+                'minWidth':
+                    '640', // Provide your own width, height and frame rate here
+                'minHeight': '480',
+                'minFrameRate': '30',
+              },
               'facingMode': 'user',
+              'optional': [],
             }
           : false,
     };
@@ -181,8 +190,10 @@ class _CallerController extends ValueNotifier<VCallerState> {
   Future<bool> onExit(BuildContext context) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: VTrans.labelsOf(context).exitFromTheCall,
-      content: VTrans.labelsOf(context).areYouSureToEndTheCall,
+      title: localization.exitFromTheCall,
+      content: localization.areYouSureToEndTheCall,
+      ok: localization.ok,
+      cancel: localization.cancel,
     );
     if (res == 1) {
       if (value.status == CallStatus.ring) {
@@ -276,7 +287,6 @@ class _CallerController extends ValueNotifier<VCallerState> {
       ice['sdpMid'] as String,
       ice['sdpMLineIndex'] as int,
     );
-    print("caller _setIce $ice");
     await _peerConnection!.addCandidate(candidate);
   }
 

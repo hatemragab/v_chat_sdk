@@ -191,16 +191,16 @@ class VRoom {
 
   bool get isTransEnable => transTo != null;
 
-  String? roomTypingText(BuildContext context) {
-    final current = this;
-    if (roomType.isSingle) {
-      return current.typingStatus.inSingleText(context);
-    }
-    if (roomType.isGroup) {
-      return current.typingStatus.inGroupText(context);
-    }
-    return null;
-  }
+  // String? roomTypingText(BuildContext context) {
+  //   final current = this;
+  //   if (roomType.isSingle) {
+  //     return current.typingStatus.inSingleText(context);
+  //   }
+  //   if (roomType.isGroup) {
+  //     return current.typingStatus.inGroupText(context);
+  //   }
+  //   return null;
+  // }
 
   bool get isRoomOnline {
     final current = this;
@@ -219,8 +219,10 @@ class VRoom {
   //   return VAppConstants.myProfile.baseUser.vChatId == blockerId;
   // }
 
-  String get lastMessageTimeString =>
-      DateFormat.jm().format(lastMessage.createdAtDate);
+  String get lastMessageTimeString => DateFormat.jm(
+        Localizations.localeOf(VChatController.I.navigationContext)
+            .languageCode,
+      ).format(lastMessage.createdAtDate);
 
   static VRoom fakeRoom(int id) {
     return VRoom(

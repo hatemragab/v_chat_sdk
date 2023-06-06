@@ -5,17 +5,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class VSearchAppBare extends StatefulWidget {
   final VoidCallback onClose;
   final int delay;
   final Function(String value) onSearch;
   final bool requestFocus;
+  final String searchLabel;
 
   const VSearchAppBare({
     Key? key,
     required this.onClose,
+    required this.searchLabel,
     this.delay = 1200,
     required this.onSearch,
     this.requestFocus = true,
@@ -43,8 +44,7 @@ class _VSearchAppBareState extends State<VSearchAppBare> {
         minLeadingWidth: 0,
         title: TextField(
           autofocus: widget.requestFocus,
-          decoration:
-              InputDecoration(hintText: VTrans.of(context).labels.search),
+          decoration: InputDecoration(hintText: widget.searchLabel),
           onChanged: onSearchChanged,
           onSubmitted: (t) {
             widget.onSearch(t);

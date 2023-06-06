@@ -9,6 +9,7 @@ import 'package:v_chat_room_page/src/room/room.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../shared/v_app_alert.dart';
+import '../../shared/v_safe_api_call.dart';
 import 'room_provider.dart';
 
 /// Controller class for RoomItem widget.
@@ -19,15 +20,17 @@ import 'room_provider.dart';
 class RoomItemController {
   final RoomProvider _provider;
   final BuildContext context;
+  final VRoomLanguage language;
 
   RoomItemController(
     this._provider,
     this.context,
+    this.language,
   );
 
   ModelSheetItem<VRoomItemClickRes> _muteItem() {
     return ModelSheetItem(
-      title: VTrans.of(context).labels.mute,
+      title: language.mute,
       id: VRoomItemClickRes.mute,
       iconData: const Icon(
         Icons.notifications_off,
@@ -37,7 +40,7 @@ class RoomItemController {
 
   ModelSheetItem<VRoomItemClickRes> _unMuteItem() {
     return ModelSheetItem(
-      title: VTrans.of(context).labels.unMute,
+      title: language.unMute,
       id: VRoomItemClickRes.unMute,
       iconData: const Icon(
         Icons.notifications,
@@ -47,7 +50,7 @@ class RoomItemController {
 
   ModelSheetItem<VRoomItemClickRes> _deleteItem() {
     return ModelSheetItem(
-      title: VTrans.of(context).labels.delete,
+      title: language.delete,
       iconData: const Icon(Icons.delete),
       id: VRoomItemClickRes.delete,
     );
@@ -55,7 +58,7 @@ class RoomItemController {
 
   ModelSheetItem<VRoomItemClickRes> _reportItem() {
     return ModelSheetItem(
-      title: VTrans.of(context).labels.report,
+      title: language.report,
       id: VRoomItemClickRes.report,
       iconData: const Icon(
         Icons.report_gmailerrorred,
@@ -66,7 +69,7 @@ class RoomItemController {
 
   // ModelSheetItem<VRoomItemClickRes> _unBlockItem() {
   //   return ModelSheetItem(
-  //     title: VTrans.of(context).labels.unBlock,
+  //     title: language.unBlock,
   //     id: VRoomItemClickRes.unBlock,
   //     iconData: const Icon(
   //       Icons.security,
@@ -77,7 +80,7 @@ class RoomItemController {
   //
   // ModelSheetItem<VRoomItemClickRes> _blockItem() {
   //   return ModelSheetItem(
-  //     title: VTrans.of(context).labels.block,
+  //     title: language.block,
   //     id: VRoomItemClickRes.block,
   //     iconData: const Icon(
   //       Icons.block,
@@ -88,7 +91,7 @@ class RoomItemController {
 
   ModelSheetItem<VRoomItemClickRes> _leaveItem() {
     return ModelSheetItem(
-      title: VTrans.of(context).labels.leave,
+      title: language.leaveGroup,
       id: VRoomItemClickRes.leave,
       iconData: const Icon(
         Icons.exit_to_app,
@@ -113,6 +116,7 @@ class RoomItemController {
     final res = await VAppAlert.showModalSheet(
       content: l,
       context: context,
+      cancelLabel: language.cancel,
     );
 
     if (res == null) return;
@@ -156,6 +160,7 @@ class RoomItemController {
         _deleteItem(),
       ],
       context: context,
+      cancelLabel: language.cancel,
     );
     if (res == null) return;
     _process(
@@ -172,6 +177,7 @@ class RoomItemController {
         _deleteItem(),
       ],
       context: context,
+      cancelLabel: language.cancel,
     );
     if (res == null) return;
     _process(res.id, room);
@@ -202,10 +208,10 @@ class RoomItemController {
   Future _delete(VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: VTrans.of(context).labels.deleteYouCopy,
-      content: VTrans.of(context)
-          .labels
-          .areYouSureToPermitYourCopyThisActionCantUndo,
+      cancelLabel: language.cancel,
+      okLabel: language.ok,
+      title: language.deleteYouCopy,
+      content: language.areYouSureToPermitYourCopyThisActionCantUndo,
     );
     if (res != 1) return;
     await vSafeApiCall(
@@ -219,7 +225,7 @@ class RoomItemController {
   // Future _block(VRoom room) async {
   //   final res = await VAppAlert.showAskYesNoDialog(
   //     context: context,
-  //     title: VTrans.of(context).labels.blockThisUser,
+  //     title: language.blockThisUser,
   //     content: VTrans.of(context)
   //         .labels
   //         .areYouSureToBlockThisUserCantSendMessageToYou,
@@ -238,7 +244,7 @@ class RoomItemController {
   //     },
   //     onSuccess: (response) {
   //       VAppAlert.showOverlaySupport(
-  //           title: VTrans.of(context).labels.userBlocked);
+  //           title: language.userBlocked);
   //     },
   //   );
   // }
@@ -257,7 +263,7 @@ class RoomItemController {
   //     },
   //     onSuccess: (response) {
   //       VAppAlert.showOverlaySupport(
-  //           title: VTrans.of(context).labels.userUnBlocked);
+  //           title: language.userUnBlocked);
   //     },
   //   );
   // }
@@ -265,8 +271,10 @@ class RoomItemController {
   Future _groupLeave(VRoom room) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: VTrans.of(context).labels.areYouSureToLeave,
-      content: VTrans.of(context).labels.leaveGroupAndDeleteYourMessageCopy,
+      cancelLabel: language.cancel,
+      okLabel: language.ok,
+      title: language.areYouSureToLeaveThisGroupThisActionCantUndo,
+      content: language.leaveGroupAndDeleteYourMessageCopy,
     );
     if (res != 1) return;
     await vSafeApiCall(
@@ -283,6 +291,7 @@ class RoomItemController {
       content: [
         _deleteItem(),
       ],
+      cancelLabel: language.cancel,
       context: context,
     );
     if (res == null) return;

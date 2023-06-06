@@ -6,14 +6,17 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_input_ui/v_chat_input_ui.dart';
+import 'package:v_chat_message_page/src/core/core.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/order/order_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../v_chat/v_app_alert.dart';
+import '../../../../v_chat/v_safe_api_call.dart';
 
 class VOrderController extends VBaseMessageController {
   final OrderAppBarController orderAppBarController;
+  final VMessageLocalization language;
 
   VOrderController({
     required super.vRoom,
@@ -24,6 +27,7 @@ class VOrderController extends VBaseMessageController {
     required super.inputStateController,
     required super.itemController,
     required this.orderAppBarController,
+    required this.language,
   });
 
   @override
@@ -64,10 +68,12 @@ class VOrderController extends VBaseMessageController {
   void onCreateCall(bool isVideo) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: VTrans.labelsOf(context).makeCall,
+      title: language.makeCall,
+      cancel: language.cancel,
+      ok: language.ok,
       content: isVideo
-          ? VTrans.labelsOf(context).areYouWantToMakeVideoCall
-          : VTrans.labelsOf(context).areYouWantToMakeVoiceCall,
+          ? language.areYouWantToMakeVideoCall
+          : language.areYouWantToMakeVoiceCall,
     );
     if (res != 1) return;
     VChatController.I.vNavigator.callNavigator.toCaller(

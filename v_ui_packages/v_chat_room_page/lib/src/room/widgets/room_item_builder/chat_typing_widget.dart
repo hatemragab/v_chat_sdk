@@ -11,8 +11,10 @@ import 'package:textless/textless.dart';
 /// This widget is stateless, so any changes to the [text] property will cause
 /// a rebuild of the widget tree. */ class ChatTypingWidget extends StatelessWidget { final String text; const ChatTypingWidget({Key? key, required this.text}) : super(key: key); }
 class ChatTypingWidget extends StatelessWidget {
+  /// The text to be displayed along with the typing indicator.
   final String text;
 
+  /// Creates a [ChatTypingWidget] widget.
   const ChatTypingWidget({Key? key, required this.text}) : super(key: key);
 
   @override

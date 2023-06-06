@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-import '../../../../core/stream_mixin.dart';
+import '../../../../../v_chat_message_page.dart';
+import '../../../../v_chat/v_safe_api_call.dart';
 import '../../providers/message_provider.dart';
 
 class SingleAppBarController extends ValueNotifier<SingleAppBarStateModel>
@@ -141,9 +142,5 @@ class SingleAppBarStateModel {
       isSearching: false,
       peerIdentifier: room.peerIdentifier!,
     );
-  }
-
-  String? typingText(BuildContext context) {
-    return typingModel.inSingleText(context);
   }
 }

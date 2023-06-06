@@ -6,14 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class DateDividerItem extends StatelessWidget {
   final DateTime dateTime;
+  final String today;
+  final String yesterday;
 
   const DateDividerItem({
     Key? key,
     required this.dateTime,
+    required this.today,
+    required this.yesterday,
   }) : super(key: key);
 
   @override
@@ -22,15 +25,17 @@ class DateDividerItem extends StatelessWidget {
     final now = DateTime.now().toLocal();
     final difference = now.difference(dateTime).inDays;
     if (difference == 0) {
-      text = VTrans.of(context).labels.today;
+      text = today;
     } else if (difference == 1) {
-      text = VTrans.of(context).labels.yesterday;
+      text = yesterday;
     } else if (difference <= 7) {
       //will print the day name EX (sunday ,...)
-      text = DateFormat.E(VAppConstants.sdkLanguage).format(dateTime);
+      text = DateFormat.E(Localizations.localeOf(context).languageCode)
+          .format(dateTime);
     } else {
       //will print the time as (1/1/2000)
-      text = DateFormat.yMd(VAppConstants.sdkLanguage).format(dateTime);
+      text = DateFormat.yMd(Localizations.localeOf(context).languageCode)
+          .format(dateTime);
     }
     final method = context.vMessageTheme.vMessageItemTheme.dateDivider;
     if (method != null) {

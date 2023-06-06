@@ -16,9 +16,11 @@ import '../../core/enums.dart';
 import '../../core/rtc_helper.dart';
 import '../../core/v_app_alert.dart';
 import '../../core/v_caller_state.dart';
+import '../../core/v_safe_api_call.dart';
 
 class CalleeController extends ValueNotifier<VCallerState> {
   final BuildContext context;
+  final VCallLocalization localization;
 
   final VNewCallModel callModel;
   final stopWatchTimer = StopWatchTimer(
@@ -40,6 +42,7 @@ class CalleeController extends ValueNotifier<VCallerState> {
   CalleeController(
     this.callModel,
     this.context,
+    this.localization,
   ) : super(VCallerState(status: CallStatus.ring)) {
     _addListeners();
     _initRenderer();
@@ -291,8 +294,10 @@ class CalleeController extends ValueNotifier<VCallerState> {
   Future<bool> onExit(BuildContext context) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: VTrans.labelsOf(context).exitFromTheCall,
-      content: VTrans.labelsOf(context).areYouSureToEndTheCall,
+      title: localization.exitFromTheCall,
+      content: localization.areYouSureToEndTheCall,
+      cancel: localization.cancel,
+      ok: localization.ok,
     );
     if (res == 1) {
       if (value.status == CallStatus.accepted) {

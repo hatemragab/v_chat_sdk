@@ -3,14 +3,19 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:textless/textless.dart';
 
 class BanWidget extends StatelessWidget {
   final bool isMy;
   final VoidCallback onUnBan;
+  final String youDontHaveAccess;
 
-  const BanWidget({super.key, required this.isMy, required this.onUnBan});
+  const BanWidget({
+    super.key,
+    required this.isMy,
+    required this.onUnBan,
+    required this.youDontHaveAccess,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +27,7 @@ class BanWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            VTrans.of(context)
-                .labels
-                .youDontHaveAccess
-                .text
-                .color(Colors.white)
-                .black,
+            youDontHaveAccess.text.color(Colors.white).black,
             // if (isMy)
             //   InkWell(
             //     onTap: onUnBan,

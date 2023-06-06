@@ -3,7 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 class VPaginationModel<T> {
-  List<T> values;
+  List<T> data;
   int page;
   int limit;
   int? nextPage;
@@ -11,7 +11,7 @@ class VPaginationModel<T> {
 //<editor-fold desc="Data Methods">
 
   VPaginationModel({
-    required this.values,
+    required this.data,
     required this.page,
     required this.limit,
     this.nextPage,
@@ -22,18 +22,18 @@ class VPaginationModel<T> {
       identical(this, other) ||
       (other is VPaginationModel &&
           runtimeType == other.runtimeType &&
-          values == other.values &&
+          data == other.data &&
           page == other.page &&
           limit == other.limit &&
           nextPage == other.nextPage);
 
   @override
   int get hashCode =>
-      values.hashCode ^ page.hashCode ^ limit.hashCode ^ nextPage.hashCode;
+      data.hashCode ^ page.hashCode ^ limit.hashCode ^ nextPage.hashCode;
 
   @override
   String toString() {
-    return 'PaginationModel{ values: $values, page: $page, limit: $limit, nextPage: $nextPage,}';
+    return 'PaginationModel{ values: $data, page: $page, limit: $limit, nextPage: $nextPage,}';
   }
 
   VPaginationModel copyWith({
@@ -43,7 +43,7 @@ class VPaginationModel<T> {
     int? nextPage,
   }) {
     return VPaginationModel(
-      values: values ?? this.values,
+      data: values ?? this.data,
       page: page ?? this.page,
       limit: limit ?? this.limit,
       nextPage: nextPage ?? this.nextPage,
@@ -71,7 +71,7 @@ class VPaginationModel<T> {
     required Map<String, dynamic> map,
   }) {
     return VPaginationModel(
-      values: values,
+      data: values,
       page: map['page'] as int,
       limit: map['limit'] as int,
       nextPage: map['nextPage'] as int?,

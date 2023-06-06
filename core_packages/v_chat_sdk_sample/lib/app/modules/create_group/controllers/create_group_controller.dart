@@ -10,6 +10,7 @@ import 'package:v_platform/v_platform.dart';
 import '../../../routes/app_pages.dart';
 import '../../../v_chat/app_pick.dart';
 import '../../../v_chat/v_app_alert.dart';
+import '../../../v_chat/v_safe_api_call.dart';
 
 class CreateGroupController extends GetxController {
   final List<VIdentifierUser> users;

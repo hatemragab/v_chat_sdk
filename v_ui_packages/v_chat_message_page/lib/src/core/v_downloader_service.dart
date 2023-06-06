@@ -34,7 +34,6 @@ class VDownloaderService {
   Future<String> _startDownload(VPlatformFile source) async {
     return await VFileUtils.saveFileToPublicPath(
       fileAttachment: source,
-      appName: VAppConstants.appName,
     );
   }
 }

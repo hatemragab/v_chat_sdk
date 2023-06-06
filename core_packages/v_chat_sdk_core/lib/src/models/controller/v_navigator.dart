@@ -51,7 +51,6 @@ class VMessageNavigator {
   ///media
   final VMediaViewerFunction toImageViewer;
   final VMediaViewerFunction toVideoPlayer;
-  final Function(BuildContext context, String roomId) toViewChatMedia;
 
   ///user
   final VToUserProfileFunction? toUserProfilePage;
@@ -76,7 +75,6 @@ class VMessageNavigator {
     required this.toVideoPlayer,
     this.toUserProfilePage,
     this.toOrderSettings,
-    required this.toViewChatMedia,
     this.toSingleSettings,
     this.toBroadcastSettings,
     this.toGroupSettings,
@@ -88,7 +86,6 @@ class VMessageNavigator {
     VInfoMessageRouteFunction? toBroadcastChatMessageInfo,
     VMediaViewerFunction? toImageViewer,
     VMediaViewerFunction? toVideoPlayer,
-    Function(BuildContext context, String roomId)? toViewChatMedia,
     VToUserProfileFunction? toUserProfilePage,
     VToSingleOrOrderSettingsFunction? toSingleSettings,
     VToSingleOrOrderSettingsFunction? toOrderSettings,
@@ -108,7 +105,6 @@ class VMessageNavigator {
           toBroadcastChatMessageInfo ?? this.toBroadcastChatMessageInfo,
       toImageViewer: toImageViewer ?? this.toImageViewer,
       toVideoPlayer: toVideoPlayer ?? this.toVideoPlayer,
-      toViewChatMedia: toViewChatMedia ?? this.toViewChatMedia,
       toUserProfilePage: toUserProfilePage ?? this.toUserProfilePage,
       toSingleSettings: toSingleSettings ?? this.toSingleSettings,
       toOrderSettings: toOrderSettings ?? this.toOrderSettings,

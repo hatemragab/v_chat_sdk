@@ -1820,16 +1820,18 @@ packages:
   v_chat_input_ui:
     dependency: "direct main"
     description:
-      path: "../../v_shared_packages/v_chat_input_ui"
-      relative: true
-    source: path
+      name: v_chat_input_ui
+      sha256: c14da2ab03be51399492c1d6f210d0dbebcd581f3027ce2141753408e9dc83c3
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.2"
   v_chat_media_editor:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../v_shared_packages/v_chat_media_editor"
-      relative: true
-    source: path
+      name: v_chat_media_editor
+      sha256: "0278e827a1bd8d84ef731ec00d4c8c39e0a70c715dbc1e40ef48d79e1ec53b3b"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.2"
   v_chat_mention_controller:
     dependency: transitive
@@ -1856,7 +1858,7 @@ packages:
   v_chat_receive_share:
     dependency: "direct main"
     description:
-      path: "../../v_shared_packages/v_chat_receive_share"
+      path: "../v_chat_receive_share"
       relative: true
     source: path
     version: "1.0.2"
@@ -1875,11 +1877,12 @@ packages:
     source: path
     version: "1.0.2"
   v_chat_voice_player:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "../../v_shared_packages/v_chat_voice_player"
-      relative: true
-    source: path
+      name: v_chat_voice_player
+      sha256: c63fe9cef0ed6fd0b206e803e41fcbd2af43e963e82701ee5a701cccec77922b
+      url: "https://pub.dev"
+    source: hosted
     version: "1.0.2"
   v_chat_web_rtc:
     dependency: "direct main"

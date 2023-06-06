@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_controller.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_message.dart';
 import 'package:v_chat_sdk_core/src/native_api/local/native_local_room.dart';
@@ -16,6 +17,8 @@ import 'package:v_chat_sdk_core/src/service/v_app_lifecycle_state.dart';
 import 'package:v_chat_sdk_core/src/user_apis/auth/auth.dart';
 import 'package:v_chat_sdk_core/src/user_apis/block/block.dart';
 import 'package:v_chat_sdk_core/src/user_apis/room/room.dart';
+import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
+import 'package:v_chat_sdk_core/src/utils/enums.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 /// Represents a controller for VChat.
@@ -111,6 +114,8 @@ class VChatController {
   void dispose() {
     _isControllerInit = false;
   }
+
+  SharedPreferences get sharedPreferences => VAppPref.instance;
 
   /// Updates the chat configuration.
   void updateConfig(VChatConfig chatConfig) {

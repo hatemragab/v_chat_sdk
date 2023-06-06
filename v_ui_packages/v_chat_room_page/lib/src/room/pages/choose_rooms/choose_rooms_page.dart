@@ -37,7 +37,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
         builder: (_, value, __) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(VTrans.of(context).labels.chooseRooms),
+              title: const Text("choose Rooms"),
             ),
             floatingActionButton: controller.isThereSelection
                 ? null
@@ -51,6 +51,7 @@ class _VChooseRoomsPageState extends State<VChooseRoomsPage> {
                 cacheExtent: 300,
                 itemBuilder: (context, index) {
                   return VRoomItem(
+                    language: VRoomLanguage.fromEnglish(),
                     room: value[index],
                     isIconOnly: false,
                     onRoomItemLongPress: (room) =>

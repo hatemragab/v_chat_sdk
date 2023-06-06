@@ -37,7 +37,6 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
       callNavigator: vDefaultCallNavigator,
       messageNavigator: VMessageNavigator(
         toImageViewer: vDefaultMessageNavigator.toImageViewer,
-        toViewChatMedia: vDefaultMessageNavigator.toViewChatMedia,
         toVideoPlayer: vDefaultMessageNavigator.toVideoPlayer,
         toSingleChatMessageInfo:
             vDefaultMessageNavigator.toSingleChatMessageInfo,

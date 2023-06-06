@@ -27,14 +27,25 @@ import 'message_status_icon.dart';
 /// Example usage:
 /// /// dart /// VRoomItem( /// room: myVirtualRoom, /// isIconOnly: true, /// onRoomItemPress: (room) { /// // Handle press event /// }, /// onRoomItemLongPress: (room) { /// // Handle long press event /// }, /// ) ///
 class VRoomItem extends StatelessWidget {
+  /// The virtual room object that this item represents.
   final VRoom room;
+
+  /// Flag indicating whether to show only the icon representation of the room.
   final bool isIconOnly;
+
+  /// Callback function that is triggered when this item is pressed.
+  final VRoomLanguage language;
+
+  /// Callback function that is triggered when this item is long pressed.
   final Function(VRoom room) onRoomItemPress;
 
+  /// Callback function that is triggered when this item is long pressed.
   final Function(VRoom room) onRoomItemLongPress;
 
+  /// Creates a new instance of [VRoomItem].
   const VRoomItem({
     required this.room,
+    required this.language,
     super.key,
     required this.onRoomItemPress,
     this.isIconOnly = false,
@@ -89,6 +100,7 @@ class VRoomItem extends StatelessWidget {
                               child: ChatTitle(title: room.title),
                             ),
                             ChatLastMsgTime(
+                              yesterdayLabel: language.yesterdayLabel,
                               lastMessageTime: room.lastMessageTime,
                             )
                           ],
@@ -97,9 +109,9 @@ class VRoomItem extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            if (room.roomTypingText(context) != null)
+                            if (_roomTypingText(room.typingStatus) != null)
                               ChatTypingWidget(
-                                text: room.roomTypingText(context)!,
+                                text: _roomTypingText(room.typingStatus)!,
                               )
                             else if (room.lastMessage.isMeSender)
                               Flexible(
@@ -122,7 +134,10 @@ class VRoomItem extends StatelessWidget {
                                     //grey
                                     Flexible(
                                       child: RoomItemMsg(
+                                        messageHasBeenDeletedLabel:
+                                            language.messageHasBeenDeletedLabel,
                                         message: room.lastMessage,
+                                        language: language.vMessageInfoTrans,
                                         isBold: false,
                                       ),
                                     )
@@ -135,6 +150,9 @@ class VRoomItem extends StatelessWidget {
                                 child: RoomItemMsg(
                                   isBold: true,
                                   message: room.lastMessage,
+                                  messageHasBeenDeletedLabel:
+                                      language.messageHasBeenDeletedLabel,
+                                  language: language.vMessageInfoTrans,
                                 ),
                               )
                             else
@@ -142,7 +160,10 @@ class VRoomItem extends StatelessWidget {
                               Flexible(
                                 child: RoomItemMsg(
                                   isBold: false,
+                                  messageHasBeenDeletedLabel:
+                                      language.messageHasBeenDeletedLabel,
                                   message: room.lastMessage,
+                                  language: language.vMessageInfoTrans,
                                 ),
                               ),
                             Row(
@@ -160,5 +181,38 @@ class VRoomItem extends StatelessWidget {
               ),
       ),
     );
+  }
+
+  String? _roomTypingText(VSocketRoomTypingModel value) {
+    if (room.roomType.isSingle) {
+      return _inSingleText(value);
+    }
+    if (room.roomType.isGroup) {
+      return _inGroupText(value);
+    }
+    return null;
+  }
+
+  /// Returns a string representation of the typing status.
+  String? _inSingleText(VSocketRoomTypingModel value) {
+    return _statusInText(value);
+  }
+
+  /// Converts the typing status to a localized text.
+  String? _statusInText(VSocketRoomTypingModel value) {
+    switch (room.typingStatus.status) {
+      case VRoomTypingEnum.stop:
+        return null;
+      case VRoomTypingEnum.typing:
+        return language.typing;
+      case VRoomTypingEnum.recording:
+        return language.recording;
+    }
+  }
+
+  /// Returns a string representation of the typing status in a group.
+  String? _inGroupText(VSocketRoomTypingModel value) {
+    if (_statusInText(value) == null) return null;
+    return "${value.userName} ${_statusInText(value)!}";
   }
 }

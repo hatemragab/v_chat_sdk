@@ -10,6 +10,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../../v_chat_message_page.dart';
+import '../../../../v_chat/v_safe_api_call.dart';
 import '../../providers/message_provider.dart';
 
 class MessageStateController extends ValueNotifier<List<VBaseMessage>>

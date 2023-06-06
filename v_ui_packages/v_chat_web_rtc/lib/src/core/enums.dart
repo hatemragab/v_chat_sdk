@@ -2,9 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
 enum CallStatus {
   //when init the stream
   connecting,
@@ -37,26 +34,26 @@ extension CallStatusExt on CallStatus {
   bool get roomAlreadyInCall => this == CallStatus.roomAlreadyInCall;
 }
 
-extension CallStatusTr on CallStatus {
-  String tr(BuildContext context) {
-    switch (this) {
-      case CallStatus.connecting:
-        return VTrans.labelsOf(context).connecting;
-
-      case CallStatus.busy:
-        return VTrans.labelsOf(context).busy;
-      case CallStatus.ring:
-        return VTrans.labelsOf(context).ring;
-      case CallStatus.accepted:
-        return VTrans.labelsOf(context).accepted;
-      case CallStatus.roomAlreadyInCall:
-        return VTrans.labelsOf(context).roomAlreadyInCall;
-      case CallStatus.timeout:
-        return VTrans.labelsOf(context).timeout;
-      case CallStatus.callEnd:
-        return VTrans.labelsOf(context).callEnd;
-      case CallStatus.rejected:
-        return VTrans.labelsOf(context).read;
-    }
-  }
-}
+// extension CallStatusTr on CallStatus {
+//   String tr(BuildContext context) {
+//     switch (this) {
+//       case CallStatus.connecting:
+//         return VTrans.labelsOf(context).connecting;
+//
+//       case CallStatus.busy:
+//         return VTrans.labelsOf(context).busy;
+//       case CallStatus.ring:
+//         return VTrans.labelsOf(context).ring;
+//       case CallStatus.accepted:
+//         return VTrans.labelsOf(context).accepted;
+//       case CallStatus.roomAlreadyInCall:
+//         return VTrans.labelsOf(context).roomAlreadyInCall;
+//       case CallStatus.timeout:
+//         return VTrans.labelsOf(context).timeout;
+//       case CallStatus.callEnd:
+//         return VTrans.labelsOf(context).callEnd;
+//       case CallStatus.rejected:
+//         return VTrans.labelsOf(context).read;
+//     }
+//   }
+// }

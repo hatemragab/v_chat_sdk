@@ -3,10 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 
 import '../../../core/enums.dart';
+import '../../../core/utils/app_pref.dart';
 
 class SplashController extends GetxController {
   @override
@@ -17,7 +17,7 @@ class SplashController extends GetxController {
 
   void checkUser() async {
     await Future.delayed(const Duration(seconds: 1));
-    final myUser = VAppPref.getMap(SStorageKeys.myProfile.name);
+    final myUser = AppPref.getMap(SStorageKeys.myProfile.name);
     if (myUser == null) {
       // Go to login
       Get.offAndToNamed(Routes.REGISTER);

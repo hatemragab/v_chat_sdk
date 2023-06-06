@@ -2,8 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart';
-
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 /// A model class representing a user's typing status in a specific chat room.
@@ -11,7 +10,7 @@ class VSocketRoomTypingModel {
   final VRoomTypingEnum status;
   final String roomId;
   final String userId;
-  final String name;
+  final String userName;
 
   /// Checks if the user is the current user.
   bool get isMe => VAppConstants.myId == userId;
@@ -19,13 +18,13 @@ class VSocketRoomTypingModel {
   const VSocketRoomTypingModel({
     required this.status,
     required this.roomId,
-    required this.name,
-    required this.userId,
+    this.userName = "",
+    this.userId = "",
   });
 
   /// A predefined status for an offline user.
   static const VSocketRoomTypingModel offline = VSocketRoomTypingModel(
-    name: "offline",
+    userName: "offline",
     roomId: "offline",
     status: VRoomTypingEnum.stop,
     userId: "offline",
@@ -33,7 +32,7 @@ class VSocketRoomTypingModel {
 
   /// A predefined status for a user who is typing.
   static const VSocketRoomTypingModel typing = VSocketRoomTypingModel(
-    name: "fake typing",
+    userName: "fake typing",
     roomId: "fake",
     status: VRoomTypingEnum.typing,
     userId: "fake",
@@ -41,7 +40,7 @@ class VSocketRoomTypingModel {
 
   /// A predefined status for a user who is recording.
   static const VSocketRoomTypingModel recoding = VSocketRoomTypingModel(
-    name: "fake recoding",
+    userName: "fake recoding",
     roomId: "fake",
     status: VRoomTypingEnum.recording,
     userId: "fake",
@@ -57,7 +56,7 @@ class VSocketRoomTypingModel {
     return VSocketRoomTypingModel(
       roomId: roomId ?? this.roomId,
       userId: userId ?? this.userId,
-      name: name ?? this.name,
+      userName: name ?? userName,
       status: status ?? this.status,
     );
   }
@@ -74,36 +73,36 @@ class VSocketRoomTypingModel {
   /// Returns a string representation of the model.
   @override
   String toString() {
-    return 'RoomTyping{status: $status, roomId: $roomId, name: $name userId:$userId}';
+    return 'RoomTyping{status: $status, roomId: $roomId, name: $userName userId:$userId}';
   }
 
-  /// Returns a string representation of the typing status.
-  String? inSingleText(BuildContext context) {
-    return _statusInText(context);
-  }
+  // /// Returns a string representation of the typing status.
+  // String? inSingleText(BuildContext context) {
+  //   return _statusInText(context);
+  // }
+  //
+  // /// Converts the typing status to a localized text.
+  // String? _statusInText(BuildContext context) {
+  //   switch (status) {
+  //     case VRoomTypingEnum.stop:
+  //       return null;
+  //     case VRoomTypingEnum.typing:
+  //       return language.typing;
+  //     case VRoomTypingEnum.recording:
+  //       return language.recording;
+  //   }
+  // }
 
-  /// Converts the typing status to a localized text.
-  String? _statusInText(BuildContext context) {
-    switch (status) {
-      case VRoomTypingEnum.stop:
-        return null;
-      case VRoomTypingEnum.typing:
-        return VTrans.of(context).labels.typing;
-      case VRoomTypingEnum.recording:
-        return VTrans.of(context).labels.recording;
-    }
-  }
-
-  /// Returns a string representation of the typing status in a group.
-  String? inGroupText(BuildContext context) {
-    if (_statusInText(context) == null) return null;
-    return "$name ${_statusInText(context)!}";
-  }
+  // /// Returns a string representation of the typing status in a group.
+  // String? inGroupText(BuildContext context) {
+  //   if (_statusInText(context) == null) return null;
+  //   return "$name ${_statusInText(context)!}";
+  // }
 
   factory VSocketRoomTypingModel.fromMap(Map<String, dynamic> map) {
     return VSocketRoomTypingModel(
       status: VRoomTypingEnum.values.byName(map['status'] as String),
-      name: map['name'] as String,
+      userName: map['name'] as String,
       userId: map['userId'] as String,
       roomId: map['roomId'] as String,
     );
@@ -112,8 +111,6 @@ class VSocketRoomTypingModel {
   Map<String, dynamic> toMap() {
     return {
       'status': status.name,
-      'userId': roomId,
-      'name': name,
       'roomId': roomId,
     };
   }

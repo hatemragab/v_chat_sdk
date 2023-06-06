@@ -11,6 +11,9 @@ import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_me
 import 'package:v_chat_message_page/src/page/message_pages/pages/group/group_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../../../../v_chat/app_pref.dart';
+import '../../../../v_chat/v_safe_api_call.dart';
+
 class VGroupController extends VBaseMessageController with StreamMix {
   final GroupAppBarController groupAppBarController;
   final String _cacheKey = "group-info-";

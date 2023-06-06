@@ -12,8 +12,10 @@ import '../../../../v_chat_room_page.dart';
 /// Creates a [ChatTitle] widget. /// /// The [title] parameter is required to display the title of the chat. const ChatTitle({ Key? key, required this.title, }) : super(key: key);
 // ... }
 class ChatTitle extends StatelessWidget {
+  /// The title of the chat.
   final String title;
 
+  /// Creates a [ChatTitle] widget.
   const ChatTitle({
     Key? key,
     required this.title,

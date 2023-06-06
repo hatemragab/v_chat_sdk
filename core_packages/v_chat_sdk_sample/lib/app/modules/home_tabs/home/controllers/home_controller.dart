@@ -9,6 +9,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 
 import '../../../../core/enums.dart';
+import '../../../../core/utils/app_pref.dart';
 import '../../../logs/controllers/logs_controller.dart';
 
 class HomeController extends GetxController {
@@ -47,7 +48,7 @@ class HomeController extends GetxController {
   }
 
   void _setUpVChat() async {
-    final data = VAppPref.getMap(SStorageKeys.myProfile.name);
+    final data = AppPref.getMap(SStorageKeys.myProfile.name);
     VChatController.I.profileApi.connect(
       identifier: data!['identifier'],
       fullName: null,

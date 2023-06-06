@@ -9,6 +9,7 @@ import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_web_rtc/src/core/enums.dart';
 
+import '../../../v_chat_web_rtc.dart';
 import '../../core/conditional_builder.dart';
 import '../../core/v_caller_state.dart';
 import '../widgets/call_fotter.dart';
@@ -18,10 +19,12 @@ import 'callee_controller.dart';
 
 class VCalleePage extends StatefulWidget {
   final VNewCallModel model;
+  final VCallLocalization localization;
 
   const VCalleePage({
     Key? key,
     required this.model,
+    required this.localization,
   }) : super(key: key);
 
   @override
@@ -36,6 +39,7 @@ class _VCalleePageState extends State<VCalleePage> {
     _controller = CalleeController(
       widget.model,
       context,
+      widget.localization,
     );
     super.initState();
   }
@@ -50,10 +54,7 @@ class _VCalleePageState extends State<VCalleePage> {
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: VTrans.labelsOf(context)
-              .endToEndEncryption
-              .cap
-              .color(Colors.grey),
+          title: widget.localization.endToEndEncryption.cap.color(Colors.grey),
         ),
         body: SafeArea(
           child: ValueListenableBuilder<VCallerState>(
@@ -117,8 +118,8 @@ class _VCalleePageState extends State<VCalleePage> {
                                       stopWatchTimer:
                                           _controller.stopWatchTimer,
                                     )
-                                  : value.status
-                                      .tr(context)
+                                  : widget.localization
+                                      .transCallStatus(value.status)
                                       .b1
                                       .color(Colors.white),
                             )

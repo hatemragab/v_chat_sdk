@@ -3,5 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 export './room_nav.dart';
+export './v_room_trans.dart';
 export 'enums.dart';
 export 'theme/theme.dart';

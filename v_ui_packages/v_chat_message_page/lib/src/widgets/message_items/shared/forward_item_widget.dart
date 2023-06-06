@@ -34,7 +34,7 @@ class ForwardItemWidget extends StatelessWidget {
     //       const SizedBox(
     //         width: 6,
     //       ),
-    //       VTrans.of(context).labels.forwarded.cap.color(Colors.grey)
+    //       language.forwarded.cap.color(Colors.grey)
     //     ],
     //   ),
     // );

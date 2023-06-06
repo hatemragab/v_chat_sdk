@@ -21,15 +21,15 @@ class VRoomController with StreamMix {
   late RoomItemController _roomItemController;
   late final RoomStateController _roomState;
   late BuildContext _context;
+  late VRoomLanguage _language;
 
   final _roomProvider = RoomProvider();
 
-  void _init(BuildContext context) {
+  void _init(BuildContext context, VRoomLanguage language) {
     _context = context;
-    _roomItemController = RoomItemController(
-      _roomProvider,
-      _context,
-    );
+    _language = language;
+    _roomItemController =
+        RoomItemController(_roomProvider, _context, _language);
     _getRoomsFromLocal();
     _getRoomsFromApi();
   }

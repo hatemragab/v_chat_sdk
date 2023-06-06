@@ -20,7 +20,7 @@ class RoomProvider {
 
   Future<VPaginationModel<VRoom>> getLocalRooms() async {
     return VPaginationModel<VRoom>(
-      values: await _localRoom.getRooms(limit: 100),
+      data: await _localRoom.getRooms(limit: 100),
       page: 1,
       limit: 100,
     );
@@ -35,15 +35,15 @@ class RoomProvider {
     VRoomsDto dto, {
     bool deleteOnEmpty = true,
   }) async {
-    final access = VAppPref.getHashedString(
-      key: VStorageKeys.vAccessToken.name,
+    final access = VChatController.I.sharedPreferences.getString(
+      "vAccessToken",
     );
     if (access == null) {
       await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     }
     final apiModel = await _remoteRoom.getRooms(dto);
     unawaited(_localRoom.cacheRooms(
-      apiModel.values,
+      apiModel.data,
       deleteOnEmpty: deleteOnEmpty,
     ));
     return apiModel;

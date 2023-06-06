@@ -11,12 +11,22 @@ import '../../shared/theme/v_msg_status_theme.dart';
 /// Data model class for message status icons. /// /// Contains properties such as whether the message was sent by the current user (isMeSender), /// whether the message has been seen (isSeen), whether the message has been delivered (isDeliver), /// whether all copies of the message have been deleted (isAllDeleted), and the current emit status (emitStatus). class MessageStatusIconDataModel { final bool isMeSender; final bool isSeen; final bool isDeliver; final bool isAllDeleted; final VMessageEmitStatus emitStatus;
 /// Constructs a new instance of [MessageStatusIconDataModel]. /// /// [isMeSender] - Whether the message was sent by the current user. /// [isSeen] - Whether the message has been seen. /// [isDeliver] - Whether the message has been delivered. /// [isAllDeleted] - Whether all copies of the message have been deleted. Default value is false. /// [emitStatus] - The current emit status of the message. const MessageStatusIconDataModel({ required this.isMeSender, required this.isSeen, required this.isDeliver, this.isAllDeleted = false, required this.emitStatus, }); }
 class MessageStatusIconDataModel {
+  /// Whether the message was sent by the current user.
   final bool isMeSender;
+
+  /// Whether the message has been seen.
   final bool isSeen;
+
+  /// Whether the message has been delivered.
   final bool isDeliver;
+
+  /// Whether all copies of the message have been deleted. Default value is false.
   final bool isAllDeleted;
+
+  /// The current emit status of the message.
   final VMessageEmitStatus emitStatus;
 
+  /// Constructs a new instance of [MessageStatusIconDataModel].
   const MessageStatusIconDataModel({
     required this.isMeSender,
     required this.isSeen,

@@ -9,6 +9,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../../v_chat_message_page.dart';
 import '../../../../v_chat/v_search_app_bare.dart';
+import '../../../../v_chat/v_socket_status_widget.dart';
 import '../../../../widgets/app_bare/v_message_app_bare.dart';
 import '../../controllers/v_message_item_controller.dart';
 import '../../providers/message_provider.dart';
@@ -21,10 +22,12 @@ class VGroupView extends StatefulWidget {
   const VGroupView({
     Key? key,
     required this.vRoom,
+    required this.language,
     required this.vMessageConfig,
   }) : super(key: key);
   final VRoom vRoom;
   final VMessageConfig vMessageConfig;
+  final VMessageLocalization language;
 
   @override
   State<VGroupView> createState() => _VGroupViewState();
@@ -49,6 +52,7 @@ class _VGroupViewState extends State<VGroupView> {
       inputStateController: InputStateController(widget.vRoom),
       itemController: VMessageItemController(
         messageProvider: provider,
+        language: widget.language,
         context: context,
         vMessageConfig: widget.vMessageConfig,
       ),
@@ -71,6 +75,7 @@ class _VGroupViewState extends State<VGroupView> {
               return VSearchAppBare(
                 onClose: controller.onCloseSearch,
                 onSearch: controller.onSearch,
+                searchLabel: widget.language.search,
               );
             }
             return VMessageAppBare(
@@ -79,8 +84,8 @@ class _VGroupViewState extends State<VGroupView> {
               isCallAllowed: false,
               memberCount: value.myGroupInfo.membersCount,
               totalOnline: value.myGroupInfo.totalOnline,
-              inTypingText: value.typingText,
-              onViewMedia: () => controller.onViewMedia(context, value.roomId),
+              inTypingText: (context) => _inGroupText(value.typingModel),
+              language: widget.language,
               onTitlePress: controller.onTitlePress,
             );
           },
@@ -92,10 +97,12 @@ class _VGroupViewState extends State<VGroupView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (widget.vMessageConfig.showDisconnectedWidget)
-              const VSocketStatusWidget(
+              VSocketStatusWidget(
+                connectingLabel: widget.language.connecting,
                 delay: Duration.zero,
               ),
             MessageBodyStateWidget(
+              language: widget.language,
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
@@ -104,11 +111,30 @@ class _VGroupViewState extends State<VGroupView> {
             ),
             InputWidgetState(
               controller: controller,
+              language: widget.language,
             )
           ],
         ),
       ),
     );
+  }
+
+  /// Returns a string representation of the typing status in a group.
+  String? _inGroupText(VSocketRoomTypingModel value) {
+    if (_statusInText(value) == null) return null;
+    return "${value.userName} ${_statusInText(value)!}";
+  }
+
+  /// Converts the typing status to a localized text.
+  String? _statusInText(VSocketRoomTypingModel value) {
+    switch (value.status) {
+      case VRoomTypingEnum.stop:
+        return null;
+      case VRoomTypingEnum.typing:
+        return widget.language.typing;
+      case VRoomTypingEnum.recording:
+        return widget.language.recording;
+    }
   }
 
   @override

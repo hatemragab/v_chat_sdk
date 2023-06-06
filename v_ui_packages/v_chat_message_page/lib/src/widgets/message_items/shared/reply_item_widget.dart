@@ -14,12 +14,14 @@ class ReplyItemWidget extends StatelessWidget {
   final VBaseMessage? rToMessage;
   final VMessageCallback? onHighlightMessage;
   final bool isMeSender;
+  final String repliedToYourSelf;
 
   const ReplyItemWidget({
     Key? key,
     required this.rToMessage,
     required this.onHighlightMessage,
     required this.isMeSender,
+    required this.repliedToYourSelf,
   }) : super(key: key);
 
   @override
@@ -98,7 +100,7 @@ class ReplyItemWidget extends StatelessWidget {
 
   String getTitle(BuildContext context) {
     if (rToMessage!.isMeSender) {
-      return VTrans.labelsOf(context).repliedToYourSelf;
+      return repliedToYourSelf;
     }
     return rToMessage!.senderName;
   }

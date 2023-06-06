@@ -9,14 +9,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_firebase_fcm/v_chat_firebase_fcm.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/v_chat_config.dart';
-
 import 'package:v_platform/v_platform.dart';
 
 import 'app/core/app_service.dart';
+import 'app/core/enums.dart';
 import 'app/core/lazy_inject.dart';
 import 'app/core/utils/app_localization.dart';
+import 'app/core/utils/app_pref.dart';
 import 'app/modules/logs/controllers/logs_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
@@ -30,20 +30,34 @@ class EnvironmentConfig {
 }
 
 void main() async {
+  // Initialize the app.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Check if the platform is mobile and initialize Firebase if it is.
   if (VPlatforms.isMobile) {
     await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+        options: DefaultFirebaseOptions.currentPlatform);
   }
+  await AppPref.init();
+  // Initialize the background message handler for FCM.
   FirebaseMessaging.onBackgroundMessage(vFirebaseMessagingBackgroundHandler);
+
+  // Initialize VChat.
   await initVChat(_navigatorKey);
+
+  // Initialize the AppService.
   final appService = Get.put<AppService>(AppService());
+
+  // Set the app theme.
   setAppTheme(appService);
+
+  // Set the app language.
   await setAppLanguage(appService);
-  Get.put<LogsController>(
-    LogsController(),
-  );
+
+  // Initialize the LogsController.
+  Get.put<LogsController>(LogsController());
+
+  // Run the app.
   runApp(const MyApp());
 }
 
@@ -80,18 +94,19 @@ class MyApp extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
-            VTrans.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
-          locale: appService.locale,
-          fallbackLocale: const Locale("ar"),
+          locale: Get.locale,
+          fallbackLocale: const Locale("en"),
           theme: ThemeData(
             useMaterial3: true,
             colorSchemeSeed: Colors.green,
           ),
-          darkTheme: ThemeData.dark().copyWith(extensions: [
-            VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red)
-          ]),
+          darkTheme: ThemeData.dark().copyWith(
+            extensions: [
+              VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red)
+            ],
+          ),
         );
       },
     );
@@ -99,7 +114,7 @@ class MyApp extends StatelessWidget {
 }
 
 void setAppTheme(AppService appService) {
-  final theme = VAppPref.getStringOrNullKey(VStorageKeys.vAppTheme.name);
+  final theme = AppPref.getStringOrNullKey(SStorageKeys.appTheme.name);
   if (theme != null) {
     appService.setTheme(theme as ThemeMode);
   }

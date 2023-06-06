@@ -11,6 +11,7 @@ import 'package:v_chat_sdk_core/src/http/socket/socket_io_client.dart';
 import 'package:v_chat_sdk_core/src/http/socket/socket_service.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+///SocketController is a singleton class that handles all socket events
 class SocketController implements ISocketIoClient {
   final _log = Logger('SocketController');
   late final SocketService _socketService;
@@ -19,6 +20,7 @@ class SocketController implements ISocketIoClient {
   Socket get _socket => socketIoClient.socket;
   static final SocketController instance = SocketController._();
 
+  ///SocketController is a singleton class that handles all socket events
   bool get isSocketConnected => socketIoClient.socket.connected;
   final socketIoClient = SocketIoClient();
   final vChatEvents = VEventBusSingleton.vEventBus;
@@ -53,9 +55,11 @@ class SocketController implements ISocketIoClient {
   @override
   Socket get currentSocket => socketIoClient.currentSocket;
 
+  ///Destroy the socket and all listeners
   @override
   void destroy() => socketIoClient.destroy();
 
+  ///Disconnect the socket
   @override
   void disconnect() => socketIoClient.disconnect();
 

@@ -6,19 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:textless/textless.dart';
 import 'package:timeago/timeago.dart';
+import 'package:v_chat_message_page/src/core/core.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../../v_chat/app_pref.dart';
 import '../../v_chat/v_chat_avatar_image.dart';
 import '../message_items/shared/message_typing_widget.dart';
 
 class VMessageAppBare extends StatelessWidget {
   final Function(BuildContext context) onTitlePress;
   final VoidCallback onSearch;
-  final VoidCallback onViewMedia;
   final Function(bool isVideo)? onCreateCall;
   final Function(bool isBlocked)? onUpdateBlock;
   final VRoom room;
+  final VMessageLocalization language;
   final int? memberCount;
   final int? totalOnline;
   final DateTime? lastSeenAt;
@@ -29,6 +31,7 @@ class VMessageAppBare extends StatelessWidget {
     Key? key,
     required this.onTitlePress,
     required this.room,
+    required this.language,
     required this.onSearch,
     required this.inTypingText,
     this.onCreateCall,
@@ -37,7 +40,6 @@ class VMessageAppBare extends StatelessWidget {
     this.totalOnline,
     this.lastSeenAt,
     this.onUpdateBlock,
-    required this.onViewMedia,
   }) : super(key: key);
 
   @override
@@ -75,10 +77,6 @@ class VMessageAppBare extends StatelessWidget {
               onSearch();
 
               ///don't not translate
-            } else if (value == 'media') {
-              onViewMedia();
-
-              ///don't not translate
             } else if (value == 'block') {
               onUpdateBlock?.call(true);
 
@@ -101,23 +99,7 @@ class VMessageAppBare extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(VTrans.of(context).labels.search),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                /// don't not translate
-                value: "media",
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.image,
-                      color: context.isDark ? Colors.white : Colors.black,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(VTrans.of(context).labels.media),
+                    Text(language.search),
                   ],
                 ),
               ),
@@ -138,7 +120,7 @@ class VMessageAppBare extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      Text(VTrans.of(context).labels.block),
+                      Text(language.block),
                     ],
                   ),
                 ));
@@ -155,7 +137,7 @@ class VMessageAppBare extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      Text(VTrans.of(context).labels.unBlock),
+                      Text(language.unBlock),
                     ],
                   ),
                 ));
@@ -171,7 +153,7 @@ class VMessageAppBare extends StatelessWidget {
   Widget? _getSubTitle(BuildContext context) {
     if (room.roomType.isSingleOrOrder) {
       if (room.isOnline) {
-        return Text(VTrans.of(context).labels.online);
+        return Text(language.online);
       }
       if (lastSeenAt == null) {
         return null;
@@ -179,15 +161,15 @@ class VMessageAppBare extends StatelessWidget {
         return Text(
           format(
             lastSeenAt!.toLocal(),
-            locale: VAppConstants.sdkLanguage,
+            locale: Localizations.localeOf(context).languageCode,
           ),
         );
       }
     } else if (memberCount != null) {
       if (totalOnline != null) {
-        return Text("${VTrans.of(context).labels.members} $memberCount");
+        return Text("${language.members} $memberCount");
       }
-      return Text("${VTrans.of(context).labels.members} $memberCount");
+      return Text("${language.members} $memberCount");
     }
     return null;
   }

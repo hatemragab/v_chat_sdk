@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:v_chat_message_page/src/core/core.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_base_message_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -17,11 +18,13 @@ import '../../../widgets/message_items/widgets/date_divider_item.dart';
 class MessageBodyStateWidget extends StatelessWidget {
   final VBaseMessageController controller;
   final VRoomType roomType;
+  final VMessageLocalization language;
 
   const MessageBodyStateWidget({
     Key? key,
     required this.controller,
     required this.roomType,
+    required this.language,
   }) : super(key: key);
 
   @override
@@ -70,6 +73,7 @@ class MessageBodyStateWidget extends StatelessWidget {
                                     : Colors.black.withOpacity(0.2),
                                 child: VMessageItem(
                                   onTap: controller.onMessageTap,
+                                  language: language,
                                   roomType: roomType,
                                   onLongTap: (message) => controller
                                       .onMessageLongTap(context, message),
@@ -107,6 +111,8 @@ class MessageBodyStateWidget extends StatelessWidget {
                                 DateDividerItem(
                                   dateTime:
                                       dividerDate ?? message.createdAtDate,
+                                  today: language.today,
+                                  yesterday: language.yesterday,
                                 ),
                                 msgItem,
                               ],

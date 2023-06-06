@@ -9,16 +9,24 @@ import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../v_chat_message_page.dart';
+import '../../../v_chat/v_async_widgets_builder.dart';
 import '../../../v_chat/v_circle_avatar.dart';
 import '../../../widgets/message_items/v_message_item.dart';
 import 'message_group_status_controller.dart';
 
 class VMessageGroupStatusPage extends StatefulWidget {
   final VBaseMessage message;
-
+  final String messageInfoLabel;
+  final String readLabel;
+  final String deliveredLabel;
+  final VMessageLocalization vMessageLocalization;
   const VMessageGroupStatusPage({
     Key? key,
     required this.message,
+    required this.messageInfoLabel,
+    required this.readLabel,
+    required this.deliveredLabel,
+    required this.vMessageLocalization,
   }) : super(key: key);
 
   @override
@@ -46,11 +54,12 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
               contentPadding: EdgeInsets.zero,
               title: AppBar(
                 backgroundColor: context.isDark ? Colors.transparent : null,
-                title: VTrans.labelsOf(context).messageInfo.text,
+                title: widget.messageInfoLabel.text,
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
                 child: VMessageItem(
+                  language: widget.vMessageLocalization,
                   voiceController: controller.getVoiceController,
                   message: widget.message,
                   roomType: VRoomType.g,
@@ -77,7 +86,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                     const SizedBox(
                       width: 4,
                     ),
-                    VTrans.of(context).labels.read.text,
+                    widget.readLabel.text,
                   ],
                 ),
               ),
@@ -107,7 +116,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  VTrans.labelsOf(context).read.text,
+                                  widget.readLabel.text,
                                   format(value.seen[index].seen!)
                                       .text
                                       .color(Colors.grey),
@@ -117,7 +126,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  VTrans.labelsOf(context).delivered.text,
+                                  widget.deliveredLabel.text,
                                   format(value.seen[index].delivered)
                                       .text
                                       .color(Colors.grey),
@@ -151,7 +160,7 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                     const SizedBox(
                       width: 4,
                     ),
-                    VTrans.labelsOf(context).delivered.text,
+                    widget.deliveredLabel.text,
                   ],
                 ),
               ),

@@ -10,17 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:v_chat_message_page/src/v_chat/v_app_alert.dart';
 import 'package:v_chat_message_page/src/v_chat/v_file.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_sample/app/v_chat/v_safe_api_call.dart';
 import 'package:v_platform/v_platform.dart';
 
 class VImageViewer extends StatefulWidget {
   final VPlatformFile platformFileSource;
-  final String appName;
 
   const VImageViewer({
     Key? key,
     required this.platformFileSource,
-    required this.appName,
   }) : super(key: key);
 
   @override
@@ -56,21 +54,18 @@ class _VImageViewerState extends State<VImageViewer> {
                   await vSafeApiCall<String>(
                     onLoading: () {
                       VAppAlert.showSuccessSnackBar(
-                        msg: VTrans.of(context).labels.downloading,
+                        msg: "downloadingLabel",
                         context: context,
                       );
                     },
                     request: () async {
                       return VFileUtils.saveFileToPublicPath(
                         fileAttachment: widget.platformFileSource,
-                        appName: widget.appName,
                       );
                     },
                     onSuccess: (url) async {
                       VAppAlert.showSuccessSnackBar(
-                        msg:
-                            VTrans.of(context).labels.successfullyDownloadedIn +
-                                url,
+                        msg: "successfullyDownloadedInLabel" + url,
                         context: context,
                       );
                     },

@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textless/textless.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
+import '../../../../v_chat/v_async_widgets_builder.dart';
 import '../../../../v_chat/v_circle_avatar.dart';
 import '../controllers/users_tab_controller.dart';
 

@@ -4,12 +4,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 
 import '../../../core/utils/app_auth.dart';
 import '../../../v_chat/app_pick.dart';
 import '../../../v_chat/v_app_alert.dart';
+import '../../../v_chat/v_safe_api_call.dart';
 
 class CreateProductController extends GetxController {
   // final ProductRepository repository;

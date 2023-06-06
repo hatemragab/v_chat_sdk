@@ -2,10 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:flutter/cupertino.dart';
-
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-
 enum VChatHttpMethods { get, post, patch, delete, put }
 
 enum VMessageType {
@@ -61,25 +57,25 @@ enum VGroupMsgInfo {
   bDeleted,
 }
 
-extension VMessageCallStatusTr on VMessageCallStatus {
-  String tr(BuildContext context) {
-    switch (this) {
-      case VMessageCallStatus.ring:
-        return VTrans.labelsOf(context).ring;
-      case VMessageCallStatus.canceled:
-        return VTrans.labelsOf(context).canceled;
-      case VMessageCallStatus.timeout:
-        return VTrans.labelsOf(context).timeout;
-      case VMessageCallStatus.rejected:
-        return VTrans.labelsOf(context).rejected;
-      case VMessageCallStatus.finished:
-      case VMessageCallStatus.sessionEnd:
-        return VTrans.labelsOf(context).callEnd;
-      case VMessageCallStatus.inCall:
-        return VTrans.labelsOf(context).inCall;
-    }
-  }
-}
+// extension VMessageCallStatusTr on VMessageCallStatus {
+//   String tr(BuildContext context) {
+//     switch (this) {
+//       case VMessageCallStatus.ring:
+//         return language.ring;
+//       case VMessageCallStatus.canceled:
+//         return language.canceled;
+//       case VMessageCallStatus.timeout:
+//         return language.timeout;
+//       case VMessageCallStatus.rejected:
+//         return language.rejected;
+//       case VMessageCallStatus.finished:
+//       case VMessageCallStatus.sessionEnd:
+//         return language.callEnd;
+//       case VMessageCallStatus.inCall:
+//         return language.inCall;
+//     }
+//   }
+// }
 
 enum VMessageCallStatus {
   ring,
@@ -146,9 +142,9 @@ enum VMessagesFilter { media, links, file, voice, all }
 
 enum VLoadMoreStatus { loading, loaded, error, completed }
 
-enum VChatPushService { firebase, onesignal }
-
 enum VChatLoadingState { loading, success, error, ideal, empty }
+
+enum VChatPushService { firebase, onesignal }
 
 enum VNotificationActionRes { click, push }
 

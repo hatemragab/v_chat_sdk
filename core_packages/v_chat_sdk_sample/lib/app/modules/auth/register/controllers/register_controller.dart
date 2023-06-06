@@ -12,6 +12,7 @@ import 'package:v_chat_sdk_sample/app/core/enums.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
 import 'package:v_platform/v_platform.dart';
 
+import '../../../../core/utils/app_pref.dart';
 import '../../../../v_chat/app_pick.dart';
 import '../../../../v_chat/v_app_alert.dart';
 
@@ -44,7 +45,7 @@ class RegisterController extends GetxController {
         deviceLanguage: const Locale("en"),
         fullName: null,
       );
-      await VAppPref.setMap(SStorageKeys.myProfile.name, vUser.toMap());
+      await AppPref.setMap(SStorageKeys.myProfile.name, vUser.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
@@ -61,7 +62,7 @@ class RegisterController extends GetxController {
         fullName: signUpData.name,
         deviceLanguage: const Locale("en"),
       );
-      await VAppPref.setMap(SStorageKeys.myProfile.name, vUser.toMap());
+      await AppPref.setMap(SStorageKeys.myProfile.name, vUser.toMap());
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);

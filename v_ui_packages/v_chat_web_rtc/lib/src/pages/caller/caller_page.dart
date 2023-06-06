@@ -19,6 +19,7 @@ import 'package:v_chat_web_rtc/src/core/v_caller_state.dart';
 
 import '../../../v_chat_web_rtc.dart';
 import '../../core/v_app_alert.dart';
+import '../../core/v_safe_api_call.dart';
 import '../widgets/call_fotter.dart';
 import '../widgets/timer_widget.dart';
 import '../widgets/user_icon_widget.dart';
@@ -27,10 +28,12 @@ part 'caller_controller.dart';
 
 class VCallerPage extends StatefulWidget {
   final VCallerDto dto;
+  final VCallLocalization localization;
 
   const VCallerPage({
     Key? key,
     required this.dto,
+    required this.localization,
   }) : super(key: key);
 
   @override
@@ -46,6 +49,7 @@ class _VCallerPageState extends State<VCallerPage> {
     _controller = _CallerController(
       widget.dto,
       context,
+      widget.localization,
     );
   }
 
@@ -59,10 +63,7 @@ class _VCallerPageState extends State<VCallerPage> {
           backgroundColor: Colors.transparent,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: VTrans.labelsOf(context)
-              .endToEndEncryption
-              .cap
-              .color(Colors.grey),
+          title: widget.localization.endToEndEncryption.cap.color(Colors.grey),
         ),
         body: SafeArea(
           child: ValueListenableBuilder<VCallerState>(
@@ -143,8 +144,8 @@ class _VCallerPageState extends State<VCallerPage> {
                                       stopWatchTimer:
                                           _controller.stopWatchTimer,
                                     )
-                                  : value.status
-                                      .tr(context)
+                                  : widget.localization
+                                      .transCallStatus(value.status)
                                       .b1
                                       .color(Colors.white),
                             )

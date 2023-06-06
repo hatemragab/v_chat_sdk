@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:flutter/material.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class MessageAppBarStateModel {
@@ -40,14 +39,5 @@ class MessageAppBarStateModel {
       isSearching: false,
       peerIdentifier: room.peerIdentifier,
     );
-  }
-
-  String? typingText(BuildContext context) {
-    if (roomType.isGroup) {
-      return typingModel.inGroupText(context);
-    } else if (roomType.isSingle) {
-      return typingModel.inSingleText(context);
-    }
-    return null;
   }
 }

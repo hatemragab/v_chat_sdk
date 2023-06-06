@@ -14,6 +14,7 @@ class MyProjectMessagePageWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return VMessagePage(
       vRoom: room,
+      localization: VMessageLocalization.fromEnglish(),
       vMessageConfig: VMessageConfig(
         googleMapsApiKey: "AzoisfXXXXXXXXXXXX",
         isCallsAllowed: false,

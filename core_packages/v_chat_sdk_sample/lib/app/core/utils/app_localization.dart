@@ -2,12 +2,13 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import '../enums.dart';
+import 'app_pref.dart';
 
 abstract class AppLocalization {
   static String? get languageCode =>
-      VAppPref.getStringOrNullKey(VStorageKeys.vAppLanguage.name);
+      AppPref.getStringOrNullKey(SStorageKeys.appLanguage.name);
 
   static Future<void> updateLanguageCode(String languageCode) =>
-      VAppPref.setStringKey(VStorageKeys.vAppLanguage.name, languageCode);
+      AppPref.setStringKey(SStorageKeys.appLanguage.name, languageCode);
 }

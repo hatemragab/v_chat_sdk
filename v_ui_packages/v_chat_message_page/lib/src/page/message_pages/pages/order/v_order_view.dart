@@ -9,6 +9,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../../v_chat_message_page.dart';
 import '../../../../v_chat/v_search_app_bare.dart';
+import '../../../../v_chat/v_socket_status_widget.dart';
 import '../../../../widgets/app_bare/v_message_app_bare.dart';
 import '../../controllers/v_message_item_controller.dart';
 import '../../providers/message_provider.dart';
@@ -21,10 +22,12 @@ class VOrderView extends StatefulWidget {
   const VOrderView({
     Key? key,
     required this.vRoom,
+    required this.language,
     required this.vMessageConfig,
   }) : super(key: key);
   final VRoom vRoom;
   final VMessageConfig vMessageConfig;
+  final VMessageLocalization language;
 
   @override
   State<VOrderView> createState() => _VOrderViewState();
@@ -39,6 +42,7 @@ class _VOrderViewState extends State<VOrderView> {
     final provider = MessageProvider();
     controller = VOrderController(
       vRoom: widget.vRoom,
+      language: widget.language,
       vMessageConfig: widget.vMessageConfig,
       context: context,
       messageProvider: provider,
@@ -54,6 +58,7 @@ class _VOrderViewState extends State<VOrderView> {
       itemController: VMessageItemController(
         messageProvider: provider,
         context: context,
+        language: widget.language,
         vMessageConfig: widget.vMessageConfig,
       ),
     );
@@ -69,6 +74,7 @@ class _VOrderViewState extends State<VOrderView> {
           builder: (_, value, __) {
             if (value.isSearching) {
               return VSearchAppBare(
+                searchLabel: widget.language.search,
                 onClose: controller.onCloseSearch,
                 onSearch: controller.onSearch,
               );
@@ -77,11 +83,11 @@ class _VOrderViewState extends State<VOrderView> {
               isCallAllowed: widget.vMessageConfig.isCallsAllowed,
               onSearch: controller.onOpenSearch,
               room: widget.vRoom,
-              inTypingText: value.typingText,
+              inTypingText: (context) => _inSingleText(value.typingModel),
               lastSeenAt: value.lastSeenAt,
               onUpdateBlock: controller.onUpdateBlock,
               onCreateCall: controller.onCreateCall,
-              onViewMedia: () => controller.onViewMedia(context, value.roomId),
+              language: widget.language,
               onTitlePress: controller.onTitlePress,
             );
           },
@@ -93,10 +99,12 @@ class _VOrderViewState extends State<VOrderView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (widget.vMessageConfig.showDisconnectedWidget)
-              const VSocketStatusWidget(
+              VSocketStatusWidget(
+                connectingLabel: widget.language.connecting,
                 delay: Duration.zero,
               ),
             MessageBodyStateWidget(
+              language: widget.language,
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
@@ -105,11 +113,28 @@ class _VOrderViewState extends State<VOrderView> {
             ),
             InputWidgetState(
               controller: controller,
+              language: widget.language,
             )
           ],
         ),
       ),
     );
+  }
+
+  String? _inSingleText(VSocketRoomTypingModel value) {
+    return _statusInText(value);
+  }
+
+  /// Converts the typing status to a localized text.
+  String? _statusInText(VSocketRoomTypingModel value) {
+    switch (value.status) {
+      case VRoomTypingEnum.stop:
+        return null;
+      case VRoomTypingEnum.typing:
+        return widget.language.typing;
+      case VRoomTypingEnum.recording:
+        return widget.language.recording;
+    }
   }
 
   @override

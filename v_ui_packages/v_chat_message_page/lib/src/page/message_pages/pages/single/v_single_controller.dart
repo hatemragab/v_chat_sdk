@@ -10,11 +10,13 @@ import 'package:v_chat_message_page/src/page/message_pages/pages/single/single_a
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../../../v_chat_message_page.dart';
+import '../../../../v_chat/app_pref.dart';
 import '../../../../v_chat/v_app_alert.dart';
+import '../../../../v_chat/v_safe_api_call.dart';
 
 class VSingleController extends VBaseMessageController with StreamMix {
   final SingleAppBarController singleAppBarController;
-
+  final VMessageLocalization language;
   VSingleController({
     required super.vRoom,
     required super.context,
@@ -24,6 +26,7 @@ class VSingleController extends VBaseMessageController with StreamMix {
     required super.itemController,
     required this.singleAppBarController,
     required super.vMessageConfig,
+    required this.language,
   }) {
     _initStreams();
     _getFromCache();
@@ -69,10 +72,12 @@ class VSingleController extends VBaseMessageController with StreamMix {
   void onCreateCall(bool isVideo) async {
     final res = await VAppAlert.showAskYesNoDialog(
       context: context,
-      title: VTrans.labelsOf(context).makeCall,
+      title: language.makeCall,
+      cancel: language.cancel,
+      ok: language.ok,
       content: isVideo
-          ? VTrans.labelsOf(context).areYouWantToMakeVideoCall
-          : VTrans.labelsOf(context).areYouWantToMakeVoiceCall,
+          ? language.areYouWantToMakeVideoCall
+          : language.areYouWantToMakeVoiceCall,
     );
     if (res != 1) return;
     VChatController.I.vNavigator.callNavigator.toCaller(

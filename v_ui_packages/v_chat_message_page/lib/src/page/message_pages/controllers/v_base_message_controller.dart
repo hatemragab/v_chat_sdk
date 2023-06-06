@@ -18,7 +18,6 @@ import 'package:v_platform/v_platform.dart';
 
 import '../../../../v_chat_message_page.dart';
 import '../../../v_chat/string_utils.dart';
-import '../../chat_media/chat_media_page.dart';
 import '../pasteboard/file_convertor.dart';
 import '../pasteboard/pasteboard.dart';
 import '../states/input_state_controller.dart';
@@ -53,8 +52,6 @@ abstract class VBaseMessageController extends MessageStateController
 
   StreamSubscription? clipboardSubscription;
   late final VVoicePlayerController voiceControllers;
-
-  final _currentUser = VAppConstants.myProfile;
 
   String get roomId => vRoom.id;
   final IPasteboard pasteboard = Pasteboard(FileConvertor());
@@ -91,14 +88,6 @@ abstract class VBaseMessageController extends MessageStateController
 
   void onSearch(String value) async {
     messageSearch(value);
-  }
-
-  void onViewMedia(BuildContext context, String roomId) {
-    context.toPage(
-      ChatMediaPage(
-        roomId: roomId,
-      ),
-    );
   }
 
   void onMessageLongTap(BuildContext context, VBaseMessage message) {
@@ -211,8 +200,6 @@ abstract class VBaseMessageController extends MessageStateController
     final model = VSocketRoomTypingModel(
       status: typing,
       roomId: vRoom.id,
-      name: _currentUser.baseUser.fullName,
-      userId: _currentUser.baseUser.vChatId,
     );
     messageProvider.emitTypingChanged(model);
   }

@@ -5,6 +5,7 @@
 import 'package:v_chat_sdk_core/src/http/api_service/channel/channel_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/models/v_mention_model.dart';
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 

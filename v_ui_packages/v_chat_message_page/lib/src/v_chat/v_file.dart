@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:v_platform/v_platform.dart';
 
 abstract class VFileUtils {
-  static Future<String> _downloadPath(String appName) async {
+  static Future<String> _downloadPath() async {
     final path = (await getApplicationDocumentsDirectory()).path;
     return "$path/";
   }
@@ -30,13 +30,12 @@ abstract class VFileUtils {
   /// make sure you ask for storage permissions
   static Future<String> saveFileToPublicPath({
     required VPlatformFile fileAttachment,
-    required String appName,
   }) async {
     if (!VPlatforms.isMobile) {
       return _downloadFileForWeb(fileAttachment);
     }
 
-    final newFilePath = "${await _downloadPath(appName)}${fileAttachment.name}";
+    final newFilePath = "${await _downloadPath()}${fileAttachment.name}";
 
     final file = File(newFilePath);
     if (file.existsSync()) {

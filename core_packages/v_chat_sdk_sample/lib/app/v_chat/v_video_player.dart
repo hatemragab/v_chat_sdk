@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:v_chat_message_page/src/v_chat/v_app_alert.dart';
 import 'package:v_chat_message_page/src/v_chat/v_file.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_chat_sdk_sample/app/v_chat/v_safe_api_call.dart';
 import 'package:v_platform/v_platform.dart';
 import 'package:video_player/video_player.dart';
 
@@ -17,12 +17,10 @@ import 'conditional_builder.dart';
 
 class VVideoPlayer extends StatefulWidget {
   final VPlatformFile platformFileSource;
-  final String appName;
 
   const VVideoPlayer({
     Key? key,
     required this.platformFileSource,
-    required this.appName,
   }) : super(key: key);
 
   @override
@@ -66,20 +64,18 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
                 await vSafeApiCall<String>(
                   onLoading: () {
                     VAppAlert.showSuccessSnackBar(
-                      msg: VTrans.of(context).labels.downloading,
+                      msg: "downloadingLabel",
                       context: context,
                     );
                   },
                   request: () async {
                     return VFileUtils.saveFileToPublicPath(
                       fileAttachment: widget.platformFileSource,
-                      appName: widget.appName,
                     );
                   },
                   onSuccess: (url) async {
                     VAppAlert.showSuccessSnackBar(
-                      msg: VTrans.of(context).labels.successfullyDownloadedIn +
-                          url,
+                      msg: "successfullyDownloadedInLabel" + url,
                       context: context,
                     );
                   },

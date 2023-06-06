@@ -3,7 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+
+import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
+import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
+import 'package:v_chat_sdk_core/src/utils/enums.dart';
 
 abstract class ISocketIoClient {
   void connect();

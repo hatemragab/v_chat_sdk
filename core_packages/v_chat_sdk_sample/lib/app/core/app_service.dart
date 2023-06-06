@@ -13,6 +13,7 @@ class AppService extends GetxController {
   void setLocal(Locale locale) {
     this.locale = locale;
     Get.locale = locale;
+    Get.updateLocale(locale);
     update();
   }
 

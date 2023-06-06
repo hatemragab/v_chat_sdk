@@ -11,11 +11,13 @@ import '../../v_chat/platform_cache_image_widget.dart';
 class ReplyMsgWidget extends StatelessWidget {
   final VBaseMessage vBaseMessage;
   final VoidCallback onDismiss;
+  final String replyToYourSelf;
 
   const ReplyMsgWidget({
     super.key,
     required this.vBaseMessage,
     required this.onDismiss,
+    required this.replyToYourSelf,
   });
 
   @override
@@ -45,7 +47,7 @@ class ReplyMsgWidget extends StatelessWidget {
 
   String getTitle(BuildContext context) {
     if (vBaseMessage.isMeSender) {
-      return VTrans.of(context).labels.replyToYourSelf;
+      return replyToYourSelf;
     }
     return vBaseMessage.senderName;
   }

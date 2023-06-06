@@ -6,7 +6,6 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:adaptive_dialog/adaptive_dialog.dart' as adaptive_dialog;
 import 'package:flutter/material.dart';
 import 'package:textless/textless.dart';
-import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 abstract class VAppAlert {
   static Future showLoading({
@@ -38,9 +37,7 @@ abstract class VAppAlert {
                     const SizedBox(
                       width: 25,
                     ),
-                    message == null
-                        ? VTrans.of(context).labels.pleaseWait.text
-                        : message.text
+                    message == null ? "pleaseWait".text : message.text
                   ],
                 ),
               ),
@@ -67,7 +64,7 @@ abstract class VAppAlert {
       context: context,
       title: title,
       message: content,
-      okLabel: VTrans.of(context).labels.ok,
+      okLabel: "ok",
     );
     return;
   }
@@ -81,8 +78,8 @@ abstract class VAppAlert {
       context: context,
       title: title,
       message: content,
-      cancelLabel: VTrans.of(context).labels.cancel,
-      okLabel: VTrans.of(context).labels.ok,
+      cancelLabel: "cancel",
+      okLabel: "ok",
     );
     if (x == OkCancelResult.ok) {
       return 1;
@@ -117,7 +114,7 @@ abstract class VAppAlert {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: VTrans.of(context).labels.cancel.text,
+              child: "cancel".text,
             ),
           ],
         );
@@ -133,7 +130,7 @@ abstract class VAppAlert {
     return await adaptive_dialog.showModalActionSheet<ModelSheetItem?>(
       context: context,
       title: title,
-      cancelLabel: VTrans.of(context).labels.cancel,
+      cancelLabel: "cancel",
       isDismissible: true,
       actions: content
           .map((e) => SheetAction<ModelSheetItem>(
