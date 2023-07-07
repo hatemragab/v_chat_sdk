@@ -148,7 +148,7 @@ abstract class VBaseMessage {
   VBaseMessage.fromLocalMap(Map<String, dynamic> map)
       : id = map[MessageTable.columnId] as String,
         senderId = map[MessageTable.columnSenderId] as String,
-        sIdentifier = map[MessageTable.columnSenderId] as String,
+        sIdentifier = map[MessageTable.columnSIdentifier] as String,
         senderName = map[MessageTable.columnSenderName] as String,
         senderImageThumb = map[MessageTable.columnSenderImageThumb] as String,
         platform = map[MessageTable.columnPlatform] as String,

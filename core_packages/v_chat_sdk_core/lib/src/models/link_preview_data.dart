@@ -32,15 +32,13 @@ class VLinkPreviewData {
   }
 
   factory VLinkPreviewData.fromMap(
-    Map<String, dynamic> map, {
-    String? baseUrl,
-  }) {
+    Map<String, dynamic> map,
+  ) {
     return VLinkPreviewData(
       image: map['image'] == null
           ? null
           : VMessageImageData.fromMap(
               map['image'] as Map<String, dynamic>,
-              baseUrl: baseUrl,
             ),
       title: map['title'] as String?,
       desc: map['desc'] as String?,

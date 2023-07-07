@@ -57,7 +57,4 @@ abstract class VAppConstants {
   static String get myIdentifier {
     return myProfile.identifier;
   }
-
-  static String get sdkLanguage =>
-      VAppPref.getStringOrNullKey(VStorageKeys.vAppLanguage.name) ?? "en";
 }

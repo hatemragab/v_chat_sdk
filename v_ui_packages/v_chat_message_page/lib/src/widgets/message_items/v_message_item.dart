@@ -22,7 +22,6 @@ import 'package:v_chat_message_page/src/widgets/message_items/widgets/video_mess
 import 'package:v_chat_message_page/src/widgets/message_items/widgets/voice_message_item.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
-import 'package:v_chat_voice_player/v_chat_voice_player.dart';
 import 'package:v_platform/v_platform.dart';
 
 import '../../core/types.dart';

@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:uuid/uuid.dart';
-import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_media_editor/v_chat_media_editor.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_message_page/src/page/message_pages/controllers/v_message_item_controller.dart';
@@ -47,7 +46,7 @@ abstract class VBaseMessageController extends MessageStateController
     _removeAllNotifications();
     _setUpVoiceController();
     _initMessagesStreams();
-    setUpPasteboardStreamListener();
+    _setUpPasteboardStreamListener();
   }
 
   StreamSubscription? clipboardSubscription;
@@ -58,7 +57,7 @@ abstract class VBaseMessageController extends MessageStateController
 
   void onTitlePress(BuildContext context);
 
-  void setUpPasteboardStreamListener() {
+  void _setUpPasteboardStreamListener() {
     if (kIsWeb) clipboardSubscription = pasteboard.pasteBoardListener(onPaste);
   }
 

@@ -42,7 +42,7 @@ class VFileMessage extends VBaseMessage {
   VFileMessage.fromRemoteMap(super.map)
       : data = VMessageFileData(
           fileSource: VPlatformFile.fromMap(
-            map: map['msgAtt'] as Map<String, dynamic>,
+            map['msgAtt'] as Map<String, dynamic>,
           ),
         ),
         super.fromRemoteMap();
@@ -50,7 +50,7 @@ class VFileMessage extends VBaseMessage {
   VFileMessage.fromLocalMap(super.map)
       : data = VMessageFileData(
           fileSource: VPlatformFile.fromMap(
-            map: jsonDecode(map[MessageTable.columnAttachment] as String)
+            jsonDecode(map[MessageTable.columnAttachment] as String)
                 as Map<String, dynamic>,
           ),
         ),

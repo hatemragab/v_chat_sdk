@@ -23,7 +23,7 @@ class VRoomMessagesDto {
     this.filter,
     this.between,
   }) {
-    assert(!(filter != null && between != null));
+    // assert(!(filter != null && between != null));
   }
 
   final int limit;

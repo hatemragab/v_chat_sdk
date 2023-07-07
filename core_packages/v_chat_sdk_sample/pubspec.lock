@@ -349,10 +349,10 @@ packages:
     dependency: transitive
     description:
       name: emoji_picker_flutter
-      sha256: "5536c613fc640310d09f8343a68ceec4b6b6d1292f3b4e174f0c1333ae0cc1aa"
+      sha256: "1ca31245cc1f7ab5304c68ccda8039f52b9f2372aa4d10803117160fad3faf12"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   encrypt:
     dependency: "direct main"
     description:
@@ -429,10 +429,10 @@ packages:
     dependency: transitive
     description:
       name: file_saver
-      sha256: ea6506816af8fa381e3934ecc730d260b33a089e5391a80ea4ba405d16aa5bc0
+      sha256: "566c0029cccf79848cb5c261c7fb161873d4109dbc145bfeea1f7e4097b62dc7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.4"
+    version: "0.2.6"
   file_sizes:
     dependency: transitive
     description:
@@ -813,14 +813,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  google_maps:
+    dependency: transitive
+    description:
+      name: google_maps
+      sha256: "555d5d736339b0478e821167ac521c810d7b51c3b2734e6802a9f046b64ea37a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.3.0"
   google_maps_flutter:
     dependency: transitive
     description:
       name: google_maps_flutter
-      sha256: abefcb1e5e5c96bdd8084939dda555257af272c7972902ca46d5631092c1df68
+      sha256: "7e35644d8a88ad86409976db8fa23ddc7d933f8239e57405e4660534be09acd2"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.8"
+    version: "2.3.1"
   google_maps_flutter_android:
     dependency: transitive
     description:
@@ -845,6 +853,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.7"
+  google_maps_flutter_web:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_web
+      sha256: "280170a2dcac3364317b5786f0d2e3c4128fdb795bc0d87ffe56226b0cf1f57d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
   html:
     dependency: transitive
     description:
@@ -925,6 +941,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  js_wrapping:
+    dependency: transitive
+    description:
+      name: js_wrapping
+      sha256: e385980f7c76a8c1c9a560dfb623b890975841542471eade630b2871d243851c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.4"
   json_annotation:
     dependency: transitive
     description:
@@ -1413,6 +1437,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  sanitize_html:
+    dependency: transitive
+    description:
+      name: sanitize_html
+      sha256: "0a445f19bbaa196f5a4f93461aa066b94e6e025622eb1e9bc77872a5e25233a5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   scroll_to_index:
     dependency: transitive
     description:
@@ -1433,34 +1465,34 @@ packages:
     dependency: transitive
     description:
       name: share_handler
-      sha256: c7f447103900cb160c09f9aef46d13982cfbf65c77be1d49087457f98a62353f
+      sha256: "1cafe26e024e988de3aff73c5425a48a1374e497152ddd4f54fc9f48c40e80fe"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.16"
+    version: "0.0.17"
   share_handler_android:
     dependency: transitive
     description:
       name: share_handler_android
-      sha256: "48579a92531873cd36ab1872862cf443cd524c184034d0337eae281556003bfd"
+      sha256: "6e752f2c4f67a9f7bef5503f6e1b0dd6075e127cafe7763d92649559c3692bc6"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.7"
   share_handler_ios:
     dependency: transitive
     description:
       name: share_handler_ios
-      sha256: "2c9b4d9dce9636026ba7455886f48a78e0f5b1667e85059facba3e523e2fbb8d"
+      sha256: "25815e7946b03848f404bd5bc8e58c94060dd050fb7fe3a2b556a464379c5ee1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.9"
+    version: "0.0.10"
   share_handler_platform_interface:
     dependency: transitive
     description:
       name: share_handler_platform_interface
-      sha256: "8188bfd6d06fec000746ba5a715c4013a5486e0b749303637ee0e86dc4d3502e"
+      sha256: "7a4df95a87b326b2f07458d937f2281874567c364b7b7ebe4e7d50efaae5f106"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5"
+    version: "0.0.6"
   share_plus:
     dependency: transitive
     description:
@@ -1816,23 +1848,23 @@ packages:
       path: "../../push_providers/v_chat_firebase_fcm"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_chat_input_ui:
     dependency: "direct main"
     description:
       name: v_chat_input_ui
-      sha256: c14da2ab03be51399492c1d6f210d0dbebcd581f3027ce2141753408e9dc83c3
+      sha256: e5766f58384c7f6aab803b9d66e1531d0bea9b5552bcc3d856e9ccccccc0f7dc
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.2.0"
   v_chat_media_editor:
     dependency: transitive
     description:
       name: v_chat_media_editor
-      sha256: "0278e827a1bd8d84ef731ec00d4c8c39e0a70c715dbc1e40ef48d79e1ec53b3b"
+      sha256: "03dbdde2f716cd3ed4ca35c53c2e7b9f3f0dbe00cfbbd561b86c27221f0081d0"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.2.0+2"
   v_chat_mention_controller:
     dependency: transitive
     description:
@@ -1847,58 +1879,58 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_chat_one_signal:
     dependency: "direct main"
     description:
       path: "../../push_providers/v_chat_one_signal"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_chat_receive_share:
     dependency: "direct main"
     description:
       path: "../v_chat_receive_share"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_chat_room_page:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_room_page"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_chat_sdk_core:
     dependency: "direct main"
     description:
       path: "../v_chat_sdk_core"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_chat_voice_player:
     dependency: transitive
     description:
       name: v_chat_voice_player
-      sha256: c63fe9cef0ed6fd0b206e803e41fcbd2af43e963e82701ee5a701cccec77922b
+      sha256: "254888801e8ed3ed6d6109dee7a554b685ca857ceeb83c594942f70bc88021f0"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.2.0"
   v_chat_web_rtc:
     dependency: "direct main"
     description:
       path: "../../v_ui_packages/v_chat_web_rtc"
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   v_platform:
     dependency: "direct main"
     description:
       name: v_platform
-      sha256: b1abd00dafdfdb2e92d3a8343a832f6b09614fa076a560e276638c683420f6cb
+      sha256: e144dca6576bc8388a406de4f9a28173e67ea6987aeb27114e63856a3d603b09
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.2.0"
   vector_math:
     dependency: transitive
     description:

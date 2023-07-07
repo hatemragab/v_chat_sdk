@@ -174,9 +174,12 @@ class VChatFcmProver extends VChatPushProviderBase {
 
 @pragma('vm:entry-point')
 Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  final number =
+      await VChatController.I.nativeApi.local.room.getTotalUnReadCount();
   if (await FlutterAppBadger.isAppBadgeSupported()) {
-    FlutterAppBadger.updateBadgeCount(1);
+    FlutterAppBadger.updateBadgeCount(number);
   }
+
   await VAppPref.init();
   final String? fromVChat = message.data['fromVChat'];
   final String? vMessage = message.data['vMessage'];

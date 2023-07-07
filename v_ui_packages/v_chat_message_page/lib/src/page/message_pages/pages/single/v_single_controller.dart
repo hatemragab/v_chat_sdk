@@ -5,7 +5,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:v_chat_input_ui/v_chat_input_ui.dart';
 import 'package:v_chat_message_page/src/page/message_pages/pages/single/single_app_bar_controller.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 

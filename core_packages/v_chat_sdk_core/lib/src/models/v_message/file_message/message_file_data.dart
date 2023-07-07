@@ -43,7 +43,7 @@ class VMessageFileData {
 
   factory VMessageFileData.fromMap(Map<String, dynamic> map) {
     return VMessageFileData(
-      fileSource: VPlatformFile.fromMap(map: map),
+      fileSource: VPlatformFile.fromMap(map),
     );
   }
 

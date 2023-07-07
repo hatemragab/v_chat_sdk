@@ -49,21 +49,6 @@ class VMessageApiService {
     return true;
   }
 
-  // Asynchronously get the message status summary.
-  Future<dynamic> getMessageStatusSummary(
-    String roomId,
-    String messageId,
-  ) async {
-    final res = await _messageApi!.getMessageStatusSummary(
-      roomId,
-      messageId,
-    );
-    throwIfNotSuccess(res);
-    // return MessageStatusSummary.fromMap(
-    //   (res.body as Map<String, dynamic>)['data'] as Map<String, dynamic>,
-    // );
-  }
-
   // Asynchronously delete a message from all participants in a room.
   Future<bool> deleteMessageFromAll(
     String roomId,

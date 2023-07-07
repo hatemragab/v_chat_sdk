@@ -42,22 +42,6 @@ abstract class MessageApi extends ChopperService {
     @Path("messageId") String mId,
   );
 
-  @Get(path: "/{roomId}/message/{messageId}/status/summary")
-  Future<Response> getMessageStatusSummary(
-    @Path("roomId") String roomId,
-    @Path("messageId") String messageId,
-  );
-
-  @Get(path: "/{roomId}/message/{messageId}/status/{type}", optionalBody: true)
-  Future<Response> getMessageStatus(
-    @Path("roomId") String roomId,
-    @Path("messageId") String mId,
-
-    ///it can be seen or deliver
-    @QueryMap() Map<String, Object> query,
-    @Path("type") String type,
-  );
-
   static MessageApi create({
     Uri? baseUrl,
     String? accessToken,

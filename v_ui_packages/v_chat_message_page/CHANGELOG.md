@@ -10,3 +10,5 @@ add theming
 - support voice and video calls
 ## 1.0.0
 - Support Dart 3
+## 1.1.0
+- update translation system
