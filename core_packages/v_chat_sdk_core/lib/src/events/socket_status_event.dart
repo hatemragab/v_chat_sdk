@@ -6,9 +6,13 @@ import 'package:v_chat_sdk_core/src/models/v_app_event.dart';
 
 class VSocketStatusEvent extends VAppEvent {
   final bool isConnected;
+  final int connectTimes;
 
-  const VSocketStatusEvent({required this.isConnected});
+  const VSocketStatusEvent({
+    required this.isConnected,
+    required this.connectTimes,
+  });
 
   @override
-  List<Object?> get props => [isConnected];
+  List<Object?> get props => [isConnected, connectTimes];
 }

@@ -156,7 +156,7 @@ class VRoomController with StreamMix {
   }
 
   void _handleSocketConnectionStatus(VSocketStatusEvent event) {
-    if (event.isConnected) {
+    if (event.isConnected && event.connectTimes != 1) {
       _getRoomsFromApi();
     }
   }

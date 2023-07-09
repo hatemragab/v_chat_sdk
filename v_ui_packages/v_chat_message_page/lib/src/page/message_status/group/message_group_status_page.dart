@@ -20,6 +20,7 @@ class VMessageGroupStatusPage extends StatefulWidget {
   final String readLabel;
   final String deliveredLabel;
   final VMessageLocalization vMessageLocalization;
+
   const VMessageGroupStatusPage({
     Key? key,
     required this.message,
@@ -117,9 +118,11 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   widget.readLabel.text,
-                                  format(value.seen[index].seen!)
-                                      .text
-                                      .color(Colors.grey),
+                                  format(
+                                    value.seen[index].seen!,
+                                    locale: Localizations.localeOf(context)
+                                        .languageCode,
+                                  ).text.color(Colors.grey),
                                 ],
                               ),
                               Row(
@@ -127,9 +130,11 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   widget.deliveredLabel.text,
-                                  format(value.seen[index].delivered)
-                                      .text
-                                      .color(Colors.grey),
+                                  format(
+                                    value.seen[index].delivered,
+                                    locale: Localizations.localeOf(context)
+                                        .languageCode,
+                                  ).text.color(Colors.grey),
                                 ],
                               ),
                             ],
@@ -177,9 +182,11 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                         padding: const EdgeInsets.all(10),
                         itemBuilder: (context, index) => ListTile(
                           contentPadding: EdgeInsets.zero,
-                          subtitle: format(value.deliver[index].delivered)
-                              .text
-                              .color(Colors.grey),
+                          subtitle: format(
+                            value.deliver[index].delivered,
+                            locale:
+                                Localizations.localeOf(context).languageCode,
+                          ).text.color(Colors.grey),
                           leading: VCircleAvatar(
                             radius: 20,
                             fullUrl: value.deliver[index].identifierUser

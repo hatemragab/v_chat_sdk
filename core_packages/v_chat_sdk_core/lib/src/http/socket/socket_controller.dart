@@ -24,6 +24,7 @@ class SocketController implements ISocketIoClient {
   bool get isSocketConnected => socketIoClient.socket.connected;
   final socketIoClient = SocketIoClient();
   final vChatEvents = VEventBusSingleton.vEventBus;
+  int connectTimes = 0;
 
   SocketController._() {
     _socketService = SocketService(socketIoClient);
@@ -34,16 +35,32 @@ class SocketController implements ISocketIoClient {
           socketCompleter.complete();
         }
         _log.finer("Socket connected successfully");
-        vChatEvents.fire(const VSocketStatusEvent(isConnected: true));
+        ++connectTimes;
+        vChatEvents.fire(
+          VSocketStatusEvent(
+            isConnected: true,
+            connectTimes: connectTimes,
+          ),
+        );
       },
     );
     _socket.onError((data) {
       _log.warning("_socket.onError:$data");
-      vChatEvents.fire(const VSocketStatusEvent(isConnected: false));
+      vChatEvents.fire(
+        VSocketStatusEvent(
+          isConnected: false,
+          connectTimes: connectTimes,
+        ),
+      );
     });
     socketIoClient.socket.onDisconnect((data) {
       _log.finer("Socket onDisconnect successfully");
-      vChatEvents.fire(const VSocketStatusEvent(isConnected: false));
+      vChatEvents.fire(
+        VSocketStatusEvent(
+          isConnected: false,
+          connectTimes: connectTimes,
+        ),
+      );
     });
   }
 

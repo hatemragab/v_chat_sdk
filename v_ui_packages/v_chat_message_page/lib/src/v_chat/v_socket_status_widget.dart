@@ -43,6 +43,7 @@ class _VSocketStatusWidgetState extends State<VSocketStatusWidget> {
       stream: VChatController.I.nativeApi.streams.socketStatusStream,
       initialData: VSocketStatusEvent(
         isConnected: _socket.isConnected,
+        connectTimes: 0,
       ),
       builder: (context, snapshot) {
         if (!snapshot.data!.isConnected) {

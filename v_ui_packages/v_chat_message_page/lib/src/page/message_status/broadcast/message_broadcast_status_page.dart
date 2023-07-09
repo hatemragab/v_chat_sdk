@@ -122,9 +122,11 @@ class _VMessageBroadcastStatusPageState
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   widget.readLabel.text,
-                                  format(value.seen[index].seen!)
-                                      .text
-                                      .color(Colors.grey),
+                                  format(
+                                    value.seen[index].seen!,
+                                    locale: Localizations.localeOf(context)
+                                        .languageCode,
+                                  ).text.color(Colors.grey),
                                 ],
                               ),
                               Row(
@@ -132,9 +134,11 @@ class _VMessageBroadcastStatusPageState
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   widget.deliveredLabel.text,
-                                  format(value.seen[index].delivered)
-                                      .text
-                                      .color(Colors.grey),
+                                  format(
+                                    value.seen[index].delivered,
+                                    locale: Localizations.localeOf(context)
+                                        .languageCode,
+                                  ).text.color(Colors.grey),
                                 ],
                               ),
                             ],
@@ -182,9 +186,11 @@ class _VMessageBroadcastStatusPageState
                         padding: const EdgeInsets.all(10),
                         itemBuilder: (context, index) => ListTile(
                           contentPadding: EdgeInsets.zero,
-                          subtitle: format(value.deliver[index].delivered)
-                              .text
-                              .color(Colors.grey),
+                          subtitle: format(
+                            value.deliver[index].delivered,
+                            locale:
+                                Localizations.localeOf(context).languageCode,
+                          ).text.color(Colors.grey),
                           leading: VCircleAvatar(
                             radius: 20,
                             fullUrl: value.deliver[index].identifierUser
