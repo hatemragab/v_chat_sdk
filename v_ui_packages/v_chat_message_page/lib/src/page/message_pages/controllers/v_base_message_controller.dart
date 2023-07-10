@@ -196,6 +196,9 @@ abstract class VBaseMessageController extends MessageStateController
   }
 
   void onTypingChange(VRoomTypingEnum typing) {
+    if (typing == VRoomTypingEnum.recording) {
+      _stopVoicePlayer();
+    }
     final model = VSocketRoomTypingModel(
       status: typing,
       roomId: vRoom.id,
@@ -377,5 +380,8 @@ abstract class VBaseMessageController extends MessageStateController
         );
       }
     }
+  }
+  void _stopVoicePlayer() {
+    voiceControllers.pauseAll();
   }
 }
