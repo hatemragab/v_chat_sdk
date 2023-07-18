@@ -174,12 +174,12 @@ class VChatFcmProver extends VChatPushProviderBase {
 
 @pragma('vm:entry-point')
 Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  final number =
-      await VChatController.I.nativeApi.local.room.getTotalUnReadCount();
+  final nativeLocal = VLocalNativeApi();
+  await nativeLocal.init();
+  final number = await nativeLocal.room.getTotalUnReadCount();
   if (await FlutterAppBadger.isAppBadgeSupported()) {
     FlutterAppBadger.updateBadgeCount(number);
   }
-
   await VAppPref.init();
   final String? fromVChat = message.data['fromVChat'];
   final String? vMessage = message.data['vMessage'];
@@ -197,8 +197,7 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
       }
     }
   }
-  final nativeLocal = VLocalNativeApi();
-  await nativeLocal.init();
+
   final insertRes = await nativeLocal.message.safeInsertMessage(msg);
   if (insertRes == 1) {
     await nativeLocal.room.updateRoomUnreadCountAddOne(msg.roomId);

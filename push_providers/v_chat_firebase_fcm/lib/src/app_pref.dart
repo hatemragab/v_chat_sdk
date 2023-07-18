@@ -13,9 +13,8 @@ abstract class VAppPref {
   static SharedPreferences get instance => _instance!;
   static late String _hashKey;
 
-  static Future<void> init({
-    String hasKey = "%ROPEwalma1t3ri2[-parkHULU-;4vis",
-  }) async {
+  static Future<void> init() async {
+    const hasKey = "%ROPEwalma1t3ri2[-parkHULU-;4vis";
     _instance ??= await SharedPreferences.getInstance();
     _hashKey = "$hasKey%ROPEwalma1t3ri2[-parkHULU-;4vis".substring(0, 32);
   }
