@@ -49,6 +49,7 @@ class VVoicePlayerController {
       c.dispose();
     }
   }
+
   void pauseAll() {
     for (final c in _voiceControllers) {
       c.pausePlaying();

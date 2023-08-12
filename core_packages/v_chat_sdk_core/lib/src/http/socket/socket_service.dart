@@ -45,10 +45,10 @@ class SocketService {
         VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name) ?? "";
     if (access.isNotEmpty) {
       _socketIoClient.socket.io.options = {
-        ..._socketIoClient.socket.io.options,
+        ..._socketIoClient.socket.io.options ?? {},
         "query": "auth=Bearer%20$access",
         "extraHeaders": {
-          ..._socketIoClient.socket.io.options['extraHeaders']
+          ..._socketIoClient.socket.io.options?['extraHeaders']
               as Map<String, dynamic>,
           "Authorization": "Bearer $access"
         }

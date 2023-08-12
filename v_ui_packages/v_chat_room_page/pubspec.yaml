@@ -1,6 +1,6 @@
 name: v_chat_room_page
 description: v chat rooms page ui package this package is part of v chat sdk and cant be used alone.
-version: 1.2.0
+version: 1.2.1
 homepage: https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/v_ui_packages/v_chat_web_rtc
@@ -12,15 +12,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_sdk_core: ^1.2.0
+  v_chat_sdk_core: ^1.2.1
   cached_network_image: ^3.2.3
   flutter_advanced_avatar: ^1.5.0
   map_launcher: ^2.5.0+1
-  flutter_cache_manager: ^3.3.0
+  flutter_cache_manager: ^3.3.1
   loadmore: ^2.1.0
   meta: ^1.9.1
   badges: ^3.1.1
-  v_platform: ^1.2.0
+  v_platform: ^1.2.1
   timeago: ^3.4.0
   textless: ^6.6.6
   collection: ^1.17.1
@@ -29,8 +29,8 @@ dependencies:
 
 dev_dependencies:
 
-  flutter_lints: ^2.0.1
-  lints: ^2.1.0
+  flutter_lints: ^2.0.2
+  lints: ^2.1.1
 
 flutter:
 

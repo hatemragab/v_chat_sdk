@@ -381,6 +381,7 @@ abstract class VBaseMessageController extends MessageStateController
       }
     }
   }
+
   void _stopVoicePlayer() {
     voiceControllers.pauseAll();
   }
