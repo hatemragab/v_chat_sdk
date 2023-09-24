@@ -12,3 +12,5 @@ add theming
 - Support Dart 3
 ## 1.1.0
 - update translation system
+## 1.2.2
+- update we_assets_camera version

@@ -1,6 +1,6 @@
 name: v_chat_message_page
 description: v chat sdk message page ui package this package is part of v chat sdk and cant be used alone
-version: 1.2.1
+version: 1.2.2
 homepage: https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/v_ui_packages/v_chat_message_page
@@ -13,16 +13,16 @@ dependencies:
   flutter:
     sdk: flutter
   v_chat_sdk_core: ^1.2.1
-  v_chat_input_ui: ^1.2.1
+  v_chat_input_ui: ^1.2.2
   v_chat_voice_player: ^1.2.1
   v_chat_media_editor: ^1.2.1
-  flutter_dropzone: ^3.0.5
+  flutter_dropzone: ^3.0.6
   map_launcher: ^2.5.0+1
   swipe_to: ^1.0.2
   share_plus: ^7.1.0
   scroll_to_index: ^3.0.1
   flutter_parsed_text: ^2.2.1
-  open_filex: ^4.3.2
+  open_filex: ^4.3.4
   flutter_cache_manager: ^3.3.1
   meta: ^1.9.1
   flutter_link_previewer: ^3.2.2

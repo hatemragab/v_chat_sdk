@@ -48,6 +48,7 @@ Future<void> _handleOnNewShare(SharedMedia media) async {
         .toForwardPage(context, null);
 
     if (roomsIds != null) {
+
       final fileRes = await Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => VMediaEditorView(
                 files: pFiles,
