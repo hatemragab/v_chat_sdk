@@ -22,10 +22,10 @@ dependencies:
   v_chat_sdk_core: ^1.2.1
   v_chat_web_rtc: ^1.2.1
   v_chat_receive_share: ^1.2.1
-  v_chat_message_page: ^1.2.1
+  v_chat_message_page: ^1.2.2
   v_chat_firebase_fcm: ^1.2.1
   v_chat_room_page: ^1.2.1
-  v_chat_input_ui: ^1.2.1
+  v_chat_input_ui: ^1.2.2
   animated_login: ^1.7.0
   shimmer: ^3.0.0
   fluttertoast: ^8.2.2

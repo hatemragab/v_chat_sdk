@@ -19,7 +19,7 @@ void vInitCallListener() async {
   if (kDebugMode) print("vInitCallListener initialization Done");
   VChatController.I.nativeApi.streams.callStream.listen((event) {
     if (event is VOnNewCallEvent) {
-      VChatController.I.vNavigator.callNavigator.toCallee(
+      VChatController.I.vNavigator.callNavigator?.toCallee(
         VChatController.I.navigationContext,
         event.data,
       );
@@ -31,7 +31,7 @@ void vInitCallListener() async {
     },
     onSuccess: (response) {
       if (response != null) {
-        VChatController.I.vNavigator.callNavigator.toCallee(
+        VChatController.I.vNavigator.callNavigator?.toCallee(
           VChatController.I.navigationContext,
           response.data,
         );

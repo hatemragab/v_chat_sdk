@@ -134,11 +134,11 @@ class VCallNavigator {
 class VNavigator {
   final VRoomNavigator roomNavigator;
   final VMessageNavigator messageNavigator;
-  final VCallNavigator callNavigator;
+  final VCallNavigator? callNavigator;
 
   const VNavigator({
     required this.roomNavigator,
     required this.messageNavigator,
-    required this.callNavigator,
+    this.callNavigator,
   });
 }

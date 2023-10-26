@@ -76,7 +76,7 @@ class VOrderController extends VBaseMessageController {
           : language.areYouWantToMakeVoiceCall,
     );
     if (res != 1) return;
-    VChatController.I.vNavigator.callNavigator.toCaller(
+    VChatController.I.vNavigator.callNavigator?.toCaller(
       context,
       VCallerDto(
         isVideoEnable: isVideo,
