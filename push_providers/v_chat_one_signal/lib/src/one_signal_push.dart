@@ -97,46 +97,46 @@ class VChatOneSignalProver extends VChatPushProviderBase {
 
   void _initStreams() {
     OneSignal.shared.setNotificationWillShowInForegroundHandler(
-        (OSNotificationReceivedEvent event) {
-      // Will be called whenever a notification is received in foreground
-      // Display Notification, pass null param for not displaying the notification
-      final data = event.notification.additionalData;
-      if (data == null) return;
-      final String? fromVChat = data['fromVChat'];
-      final String? message = data['vMessage'];
-      if (fromVChat != null && message != null) {
-        final msg = MessageFactory.createBaseMessage(
-          jsonDecode(message),
-        );
-        if (msg.isMeSender) return;
-        _vEventBusSingleton.fire(VOnNewNotifications(
-          message: msg,
-        ));
-      }
-      event.complete(null);
-    });
+            (OSNotificationReceivedEvent event) {
+          // Will be called whenever a notification is received in foreground
+          // Display Notification, pass null param for not displaying the notification
+          final data = event.notification.additionalData;
+          if (data == null) return;
+          final String? fromVChat = data['fromVChat'];
+          final String? message = data['vMessage'];
+          if (fromVChat != null && message != null) {
+            final msg = MessageFactory.createBaseMessage(
+              jsonDecode(message),
+            );
+            if (msg.isMeSender) return;
+            _vEventBusSingleton.fire(VOnNewNotifications(
+              message: msg,
+            ));
+          }
+          event.complete(null);
+        });
     OneSignal.shared.setSubscriptionObserver((changes) {
       _vEventBusSingleton.fire(VOnUpdateNotificationsToken(changes.to.userId!));
     });
     OneSignal.shared.setNotificationOpenedHandler(
-        (OSNotificationOpenedResult result) async {
-      // Will be called whenever a notification is opened/button pressed.
-      final data = result.notification.additionalData;
+            (OSNotificationOpenedResult result) async {
+          // Will be called whenever a notification is opened/button pressed.
+          final data = result.notification.additionalData;
 
-      if (data == null) return;
-      final String? fromVChat = data['fromVChat'];
-      final String? message = data['vMessage'];
+          if (data == null) return;
+          final String? fromVChat = data['fromVChat'];
+          final String? message = data['vMessage'];
 
-      if (fromVChat != null && message != null) {
-        final msg = MessageFactory.createBaseMessage(
-          jsonDecode(message),
-        );
-        final room = await _getRoom(msg.roomId);
-        if (room == null) return;
-        _vEventBusSingleton
-            .fire(VOnNotificationsClickedEvent(message: msg, room: room));
-      }
-    });
+          if (fromVChat != null && message != null) {
+            final msg = MessageFactory.createBaseMessage(
+              jsonDecode(message),
+            );
+            final room = await _getRoom(msg.roomId);
+            if (room == null) return;
+            _vEventBusSingleton
+                .fire(VOnNotificationsClickedEvent(message: msg, room: room));
+          }
+        });
   }
 
   Future<VRoom?> _getRoom(String roomId) async {
