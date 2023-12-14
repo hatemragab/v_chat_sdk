@@ -12,5 +12,3 @@ dependency_overrides:
     path: ../../v_ui_packages/v_chat_room_page
   v_chat_sdk_core:
     path: ../v_chat_sdk_core
-  v_chat_web_rtc:
-    path: ../../v_ui_packages/v_chat_web_rtc

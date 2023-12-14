@@ -6,7 +6,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   dynamic_color
   emoji_picker_flutter
   file_saver
-  flutter_webrtc
   local_notifier
   pasteboard
   record_linux

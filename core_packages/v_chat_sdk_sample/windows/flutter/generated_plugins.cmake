@@ -7,11 +7,11 @@ list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
   file_saver
   firebase_core
-  flutter_webrtc
   geolocator_windows
   local_notifier
   pasteboard
   permission_handler_windows
+  quick_notify_2
   record_windows
   share_plus
   sqlite3_flutter_libs

@@ -17,7 +17,6 @@ import 'app/core/enums.dart';
 import 'app/core/lazy_inject.dart';
 import 'app/core/utils/app_localization.dart';
 import 'app/core/utils/app_pref.dart';
-import 'app/modules/logs/controllers/logs_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'firebase_options.dart';
 import 'generated/l10n.dart';
@@ -54,8 +53,6 @@ void main() async {
   // Set the app language.
   await setAppLanguage(appService);
 
-  // Initialize the LogsController.
-  Get.put<LogsController>(LogsController());
 
   // Run the app.
   runApp(const MyApp());

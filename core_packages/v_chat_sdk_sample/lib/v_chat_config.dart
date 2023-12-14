@@ -11,7 +11,6 @@ import 'package:v_chat_one_signal/v_chat_one_signal.dart';
 import 'package:v_chat_room_page/v_chat_room_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/v_chat/extension.dart';
-import 'package:v_chat_web_rtc/v_chat_web_rtc.dart';
 import 'package:v_platform/v_platform.dart';
 
 import 'app/modules/message_page/message_page.dart';
@@ -34,7 +33,6 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
     ),
     vNavigator: VNavigator(
       roomNavigator: vDefaultRoomNavigator,
-      callNavigator: vDefaultCallNavigator,
       messageNavigator: VMessageNavigator(
         toImageViewer: vDefaultMessageNavigator.toImageViewer,
         toVideoPlayer: vDefaultMessageNavigator.toVideoPlayer,

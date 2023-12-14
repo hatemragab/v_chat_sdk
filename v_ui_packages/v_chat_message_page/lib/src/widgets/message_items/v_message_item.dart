@@ -3,10 +3,10 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:swipe_to/swipe_to.dart';
 import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/v_chat/v_circle_avatar.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/bubble_normal.dart';
+import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/swipe_to_reply.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/center_item_holder.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/forward_item_widget.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/message_broadcast_icon.dart';
@@ -68,7 +68,7 @@ class VMessageItem extends StatelessWidget {
     return InkWell(
       onLongPress: () => onLongTap?.call(message),
       onTap: () => onTap?.call(message),
-      child: SwipeTo(
+      child: SwipeToReply(
         key: UniqueKey(),
         onRightSwipe: message.isAllDeleted
             ? null
