@@ -20,10 +20,14 @@ abstract class ChannelApi extends ChopperService {
   @Post(path: "/peer-room/{identifier}", optionalBody: true)
   Future<Response> getPeerRoom(@Path() String identifier);
 
-  // @Post(path: "/{roomId}/close", optionalBody: true)
-  // Future<Response> closeChat(
-  //   @Path("roomId") String roomId,
-  // );
+  @Get(path: "/messages/stars", optionalBody: true)
+  Future<Response> getAllStarMessages();
+
+  @Patch(path: "/{roomId}/nick-name")
+  Future<Response> updateRoomNickName(
+      @Path() String roomId,
+      @Body() Map<String, dynamic> body,
+      );
 
   @Get(path: "/{roomId}")
   Future<Response> getRoomById(@Path() String roomId);
@@ -37,6 +41,16 @@ abstract class ChannelApi extends ChopperService {
   Future<Response> unMuteRoomNotification(
     @Path() String roomId,
   );
+
+  @Patch(path: "/{roomId}/one-seen/off", optionalBody: true)
+  Future<Response> oneSeenOff(
+      @Path() String roomId,
+      );
+
+  @Patch(path: "/{roomId}/one-seen/on", optionalBody: true)
+  Future<Response> oneSeenOn(
+      @Path() String roomId,
+      );
 
   @Patch(path: "/{roomId}/archive", optionalBody: true)
   Future<Response> archiveRoom(
@@ -53,18 +67,27 @@ abstract class ChannelApi extends ChopperService {
     @Path() String roomId,
   );
 
+
+
+  @Get(path: "/{roomId}/url-preview", optionalBody: true)
+  Future<Response> getUrlPreview(
+      @Path() String roomId,
+      @QueryMap() Map<String, dynamic> query,
+      );
+
   ///deliver room messages
   @Patch(path: "/{roomId}/translate", optionalBody: true)
   Future<Response> transTo(
-    @Path() String roomId,
-    @Body() Map<String, dynamic> body,
-  );
+      @Path() String roomId,
+      @Body() Map<String, dynamic> body,
+      );
 
   /// translate/stop
   @Patch(path: "/{roomId}/translate/stop", optionalBody: true)
   Future<Response> stopRoomAutoTranslate(
-    @Path() String roomId,
-  );
+      @Path() String roomId,
+      );
+
 
   ///delete room
   @Delete(path: "/{roomId}", optionalBody: true)
@@ -106,6 +129,11 @@ abstract class ChannelApi extends ChopperService {
     @Path("roomId") String roomId,
     @QueryMap() Map<String, dynamic> query,
   );
+  @Get(path: "/{roomId}/broadcast/available-users-to-add", optionalBody: true)
+  Future<Response> getAvailableBroadcastMembersToAdded(
+      @Path("roomId") String roomId,
+      @QueryMap() Map<String, dynamic> query,
+      );
 
   @Post(path: "/{roomId}/broadcast/members")
   Future<Response> addParticipantsToBroadcast(
@@ -160,6 +188,13 @@ abstract class ChannelApi extends ChopperService {
     @Path("roomId") String roomId,
     @Body() Map<String, dynamic> body,
   );
+
+  @Get(path: "/{roomId}/group/available-users-to-add", optionalBody: true)
+  Future<Response> getAvailableGroupMembersToAdded(
+      @Path("roomId") String roomId,
+      @QueryMap() Map<String, dynamic> query,
+      );
+
 
   @Get(
     path: "/{roomId}/group/message/{messageId}/status/{type}",

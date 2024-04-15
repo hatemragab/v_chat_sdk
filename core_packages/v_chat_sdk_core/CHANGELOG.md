@@ -1,3 +1,5 @@
+## 1.4.0
+- Support more native apis for control the chat
 ## 1.1.0
 
 - update translation system

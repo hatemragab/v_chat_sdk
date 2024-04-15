@@ -39,6 +39,53 @@ class VMessageApiService {
         .toList();
   }
 
+
+  Future<List<VBaseMessage>> getStarRoomMessages({
+    required String roomId,
+  }) async {
+    final res = await _messageApi!.getStarMessages(
+      roomId,
+    );
+    throwIfNotSuccess(res);
+    final data = extractDataFromResponse(res);
+    final docs = data['docs'] as List;
+    return docs
+        .map(
+          (e) => MessageFactory.createBaseMessage(
+        e as Map<String, dynamic>,
+      ),
+    )
+        .toList();
+  }
+
+  Future<bool> starMessage(
+      String roomId,
+      String messageId,
+      ) async {
+    final res = await _messageApi!.starMessage(roomId, messageId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> addOneSeen({
+    required String roomId,
+    required String messageId,
+  }) async {
+    final res = await _messageApi!.addOneSeen(roomId, messageId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> unStarMessage(
+      String roomId,
+      String messageId,
+      ) async {
+    final res = await _messageApi!.unStarMessage(roomId, messageId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+
   // Asynchronously delete a message from me.
   Future<bool> deleteMessageFromMe(
     String roomId,
@@ -80,7 +127,6 @@ class VMessageApiService {
     return MessageFactory.createBaseMessage(extractDataFromResponse(res));
   }
 
-  // Initialize the service with the provided base URL and access token.
   static VMessageApiService init({
     Uri? baseUrl,
     String? accessToken,

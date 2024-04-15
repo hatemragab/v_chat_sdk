@@ -6,8 +6,8 @@ part of 'channel_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
-// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations, unnecessary_brace_in_string_interps
-class _$ChannelApi extends ChannelApi {
+// ignore_for_file: type=lint
+final class _$ChannelApi extends ChannelApi {
   _$ChannelApi([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
@@ -23,6 +23,33 @@ class _$ChannelApi extends ChannelApi {
       'POST',
       $url,
       client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getAllStarMessages() {
+    final Uri $url = Uri.parse('channel/messages/stars');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> updateRoomNickName(
+    String roomId,
+    Map<String, dynamic> body,
+  ) {
+    final Uri $url = Uri.parse('channel/${roomId}/nick-name');
+    final $body = body;
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+      body: $body,
     );
     return client.send<dynamic, dynamic>($request);
   }
@@ -61,6 +88,28 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
+  Future<Response<dynamic>> oneSeenOff(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/one-seen/off');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> oneSeenOn(String roomId) {
+    final Uri $url = Uri.parse('channel/${roomId}/one-seen/on');
+    final Request $request = Request(
+      'PATCH',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> archiveRoom(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/archive');
     final Request $request = Request(
@@ -89,6 +138,22 @@ class _$ChannelApi extends ChannelApi {
       'GET',
       $url,
       client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getUrlPreview(
+    String roomId,
+    Map<String, dynamic> query,
+  ) {
+    final Uri $url = Uri.parse('channel/${roomId}/url-preview');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
     );
     return client.send<dynamic, dynamic>($request);
   }
@@ -233,6 +298,23 @@ class _$ChannelApi extends ChannelApi {
   }
 
   @override
+  Future<Response<dynamic>> getAvailableBroadcastMembersToAdded(
+    String roomId,
+    Map<String, dynamic> query,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/${roomId}/broadcast/available-users-to-add');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> addParticipantsToBroadcast(
     String roomId,
     Map<String, dynamic> body,
@@ -354,6 +436,23 @@ class _$ChannelApi extends ChannelApi {
       $url,
       client.baseUrl,
       body: $body,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> getAvailableGroupMembersToAdded(
+    String roomId,
+    Map<String, dynamic> query,
+  ) {
+    final Uri $url =
+        Uri.parse('channel/${roomId}/group/available-users-to-add');
+    final Map<String, dynamic> $params = query;
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
     );
     return client.send<dynamic, dynamic>($request);
   }

@@ -30,6 +30,30 @@ abstract class MessageApi extends ChopperService {
     @QueryMap() Map<String, dynamic> query,
   );
 
+
+  @Get(path: "/{roomId}/message/stars")
+  Future<Response> getStarMessages(
+      @Path("roomId") String roomId,
+      );
+
+  @Post(path: "/{roomId}/message/{messageId}/un-star", optionalBody: true)
+  Future<Response> unStarMessage(
+      @Path("roomId") String roomId,
+      @Path("messageId") String messageId,
+      );
+
+  @Post(path: "/{roomId}/message/{messageId}/star", optionalBody: true)
+  Future<Response> starMessage(
+      @Path("roomId") String roomId,
+      @Path("messageId") String messageId,
+      );
+
+  @Patch(path: "/{roomId}/message/{messageId}/one-seen", optionalBody: true)
+  Future<Response> addOneSeen(
+      @Path("roomId") String roomId,
+      @Path("messageId") String messageId,
+      );
+
   @Delete(path: "/{roomId}/message/{messageId}/delete/me")
   Future<Response> deleteMessageFromMe(
     @Path("roomId") String roomId,

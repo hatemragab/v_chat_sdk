@@ -14,4 +14,5 @@ export './v_pagination_model.dart';
 export './v_room/export_v_room.dart';
 export './v_to_chat_chat_settings_model.dart';
 export './v_user/v_user.dart';
+export './web_meta_data.dart';
 export 'v_app_event.dart';

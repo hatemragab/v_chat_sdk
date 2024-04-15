@@ -337,6 +337,76 @@ class VChannelApiService {
     return (res.body as Map<String, dynamic>)['data'] as String;
   }
 
+  Future<List<VBaseUser>> getAvailableBroadcastMembersToAdded({
+    required String roomId,
+    VBaseFilter? filter,
+  }) async {
+    final res = await _channelApiService!.getAvailableBroadcastMembersToAdded(
+      roomId,
+      filter == null ? {} : filter.toMap(),
+    );
+    throwIfNotSuccess(res);
+    return (extractDataFromResponse(res)['docs'] as List)
+        .map((e) => VBaseUser.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+  Future<List<VBaseMessage>> getAllStarMessages() async {
+    final res = await _channelApiService!.getAllStarMessages();
+    throwIfNotSuccess(res);
+    final data = extractDataFromResponse(res);
+    final docs = data['docs'] as List;
+    return docs
+        .map(
+          (e) => MessageFactory.createBaseMessage(
+        e as Map<String, dynamic>,
+      ),
+    )
+        .toList();
+  }
+  Future<bool> updateRoomNickName(String roomId, String text) async {
+    final res = await _channelApiService!.updateRoomNickName(
+      roomId,
+      {"name": text},
+    );
+    throwIfNotSuccess(res);
+    return true;
+  }
+  Future<bool> oneSeenOff({required String roomId}) async {
+    final res = await _channelApiService!.oneSeenOff(roomId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> oneSeenOn({required String roomId}) async {
+    final res = await _channelApiService!.oneSeenOn(roomId);
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<WebMetadata> getUrlPreview({
+    required String roomId,
+    required String url,
+  }) async {
+    final res = await _channelApiService!.getUrlPreview(roomId, {"url": url});
+    throwIfNotSuccess(res);
+    return WebMetadata.fromMap(extractDataFromResponse(res));
+  }
+
+
+  Future<List<VBaseUser>> getAvailableGroupMembersToAdded({
+    required String roomId,
+    VBaseFilter? filter,
+  }) async {
+    final res = await _channelApiService!.getAvailableGroupMembersToAdded(
+      roomId,
+      filter == null ? {} : filter.toMap(),
+    );
+    throwIfNotSuccess(res);
+    return (extractDataFromResponse(res)['docs'] as List)
+        .map((e) => VBaseUser.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+
   Future<List<VGroupMember>> getGroupMembers(
     String roomId, {
     VBaseFilter? filter,

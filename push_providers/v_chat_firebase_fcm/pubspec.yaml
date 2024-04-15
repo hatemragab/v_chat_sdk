@@ -1,6 +1,6 @@
 name: v_chat_firebase_fcm
 description: v chat firebase notifiactions push implementations for android and ios using firebase messaging
-version: 1.3.0
+version: 1.4.0
 homepage: https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk/tree/master/push_providers/v_chat_one_signal
@@ -12,19 +12,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_sdk_core: ^1.3.0
+  v_chat_sdk_core: ^1.4.0
   firebase_core: ^2.19.0
   firebase_messaging: ^14.7.1
   eraser: ^2.0.1
   flutter_app_badger: ^1.5.0
   http: ^1.1.0
-  v_platform: ^1.2.1
+  v_platform: ^1.2.3
   shared_preferences: ^2.2.2
   encrypt:  5.0.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   lints: ^3.0.0
 
 flutter:
