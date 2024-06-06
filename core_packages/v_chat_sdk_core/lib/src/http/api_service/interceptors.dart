@@ -54,20 +54,19 @@ Map<String, dynamic> extractDataFromResponse(Response res) {
   return (res.body as Map<String, dynamic>)['data'] as Map<String, dynamic>;
 }
 
-class AuthInterceptor implements RequestInterceptor {
+class AuthInterceptor implements Interceptor {
   final String? access;
 
   AuthInterceptor({this.access});
-
   @override
-  FutureOr<Request> onRequest(Request request) {
-    final oldHeaders = Map.of(request.headers);
-    oldHeaders['authorization'] = "Bearer ${access ?? VAppPref.getHashedString(
-          key: VStorageKeys.vAccessToken.name,
-        )}";
-    oldHeaders["clint-version"] = VAppConstants.clintVersion;
-    return request.copyWith(
-      headers: oldHeaders,
+  FutureOr<Response<BodyType>> intercept<BodyType>(
+    Chain<BodyType> chain,
+  ) async {
+    final request = applyHeader(
+      chain.request,
+      'authorization',
+      "Bearer ${access ?? VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name)}",
     );
+    return chain.proceed(request);
   }
 }

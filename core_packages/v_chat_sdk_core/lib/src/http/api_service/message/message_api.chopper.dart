@@ -6,6 +6,7 @@ part of 'message_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$MessageApi extends MessageApi {
   _$MessageApi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$MessageApi extends MessageApi {
   }
 
   @override
-  final definitionType = MessageApi;
+  final Type definitionType = MessageApi;
 
   @override
   Future<Response<dynamic>> createMessage(

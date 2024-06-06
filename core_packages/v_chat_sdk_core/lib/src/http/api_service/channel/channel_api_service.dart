@@ -350,6 +350,7 @@ class VChannelApiService {
         .map((e) => VBaseUser.fromMap(e as Map<String, dynamic>))
         .toList();
   }
+
   Future<List<VBaseMessage>> getAllStarMessages() async {
     final res = await _channelApiService!.getAllStarMessages();
     throwIfNotSuccess(res);
@@ -358,11 +359,12 @@ class VChannelApiService {
     return docs
         .map(
           (e) => MessageFactory.createBaseMessage(
-        e as Map<String, dynamic>,
-      ),
-    )
+            e as Map<String, dynamic>,
+          ),
+        )
         .toList();
   }
+
   Future<bool> updateRoomNickName(String roomId, String text) async {
     final res = await _channelApiService!.updateRoomNickName(
       roomId,
@@ -371,6 +373,7 @@ class VChannelApiService {
     throwIfNotSuccess(res);
     return true;
   }
+
   Future<bool> oneSeenOff({required String roomId}) async {
     final res = await _channelApiService!.oneSeenOff(roomId);
     throwIfNotSuccess(res);
@@ -391,7 +394,6 @@ class VChannelApiService {
     throwIfNotSuccess(res);
     return WebMetadata.fromMap(extractDataFromResponse(res));
   }
-
 
   Future<List<VBaseUser>> getAvailableGroupMembersToAdded({
     required String roomId,

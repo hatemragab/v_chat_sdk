@@ -39,7 +39,6 @@ class VMessageApiService {
         .toList();
   }
 
-
   Future<List<VBaseMessage>> getStarRoomMessages({
     required String roomId,
   }) async {
@@ -52,16 +51,16 @@ class VMessageApiService {
     return docs
         .map(
           (e) => MessageFactory.createBaseMessage(
-        e as Map<String, dynamic>,
-      ),
-    )
+            e as Map<String, dynamic>,
+          ),
+        )
         .toList();
   }
 
   Future<bool> starMessage(
-      String roomId,
-      String messageId,
-      ) async {
+    String roomId,
+    String messageId,
+  ) async {
     final res = await _messageApi!.starMessage(roomId, messageId);
     throwIfNotSuccess(res);
     return true;
@@ -77,14 +76,13 @@ class VMessageApiService {
   }
 
   Future<bool> unStarMessage(
-      String roomId,
-      String messageId,
-      ) async {
+    String roomId,
+    String messageId,
+  ) async {
     final res = await _messageApi!.unStarMessage(roomId, messageId);
     throwIfNotSuccess(res);
     return true;
   }
-
 
   // Asynchronously delete a message from me.
   Future<bool> deleteMessageFromMe(

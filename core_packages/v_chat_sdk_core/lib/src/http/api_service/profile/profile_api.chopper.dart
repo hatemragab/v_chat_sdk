@@ -6,6 +6,7 @@ part of 'profile_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$ProfileApi extends ProfileApi {
   _$ProfileApi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$ProfileApi extends ProfileApi {
   }
 
   @override
-  final definitionType = ProfileApi;
+  final Type definitionType = ProfileApi;
 
   @override
   Future<Response<dynamic>> updateImage(MultipartFile file) {

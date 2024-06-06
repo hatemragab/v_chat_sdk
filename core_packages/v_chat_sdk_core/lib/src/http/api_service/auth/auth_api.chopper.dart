@@ -6,6 +6,7 @@ part of 'auth_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$AuthApi extends AuthApi {
   _$AuthApi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$AuthApi extends AuthApi {
   }
 
   @override
-  final definitionType = AuthApi;
+  final Type definitionType = AuthApi;
 
   @override
   Future<Response<dynamic>> connect(

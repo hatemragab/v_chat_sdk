@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 
 import '../../../v_chat/v_circle_avatar.dart';
 
@@ -38,7 +37,13 @@ class GroupHeader extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            senderName.cap.color(Colors.blue).black,
+            Text(
+              senderName,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+            )
           ],
         ),
       ),

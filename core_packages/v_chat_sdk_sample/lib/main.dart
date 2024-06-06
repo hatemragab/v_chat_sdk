@@ -53,7 +53,6 @@ void main() async {
   // Set the app language.
   await setAppLanguage(appService);
 
-
   // Run the app.
   runApp(const MyApp());
 }

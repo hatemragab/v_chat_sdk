@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -32,21 +31,22 @@ class FileMessageItem extends StatelessWidget {
           ),
           Expanded(
             child: ListTile(
-              // visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              title: message.data.fileSource.name.text
-                  .styled(
-                    style: message.isMeSender
-                        ? context.vMessageTheme.senderTextStyle
-                        : context.vMessageTheme.receiverTextStyle,
-                  )
-                  .size(14),
-              subtitle: message.data.fileSource.readableSize.text
-                  .styled(
-                    style: message.isMeSender
-                        ? context.vMessageTheme.senderTextStyle
-                        : context.vMessageTheme.receiverTextStyle,
-                  )
-                  .size(14),
+              title: Text(
+                message.data.fileSource.name,
+                style: message.isMeSender
+                    ? context.vMessageTheme.senderTextStyle
+                        .copyWith(fontSize: 14)
+                    : context.vMessageTheme.receiverTextStyle
+                        .copyWith(fontSize: 14),
+              ),
+              subtitle: Text(
+                message.data.fileSource.readableSize,
+                style: message.isMeSender
+                    ? context.vMessageTheme.senderTextStyle
+                        .copyWith(fontSize: 14)
+                    : context.vMessageTheme.receiverTextStyle
+                        .copyWith(fontSize: 14),
+              ),
             ),
           )
         ],

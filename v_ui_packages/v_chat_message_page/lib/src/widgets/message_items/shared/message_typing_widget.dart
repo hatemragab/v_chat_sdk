@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 
 class MessageTypingWidget extends StatelessWidget {
   final String text;
@@ -11,6 +10,9 @@ class MessageTypingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return text.text.color(Colors.green);
+    return Text(
+      text,
+      style: const TextStyle(color: Colors.green),
+    );
   }
 }

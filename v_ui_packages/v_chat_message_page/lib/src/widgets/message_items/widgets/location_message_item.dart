@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class LocationMessageItem extends StatelessWidget {
@@ -28,12 +27,12 @@ class LocationMessageItem extends StatelessWidget {
           child: ListTile(
             visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
             dense: true,
-            title: message.data.linkPreviewData.title.toString().text,
-            subtitle: message.data.linkPreviewData.desc
-                .toString()
-                .text
-                .maxLine(2)
-                .overflowEllipsis,
+            title: Text(message.data.linkPreviewData.title.toString()),
+            subtitle: Text(
+              message.data.linkPreviewData.desc.toString(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         )
       ],

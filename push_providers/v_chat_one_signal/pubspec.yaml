@@ -14,16 +14,16 @@ dependencies:
     sdk: flutter
   v_chat_sdk_core: ^1.4.0
   onesignal_flutter: ^3.5.1
-  eraser: ^2.0.1
+  eraser: ^2.0.2
   flutter_app_badger: ^1.5.0
-  http: ^1.1.0
-  v_platform: ^1.2.3
+  http: ^1.2.1
+  v_platform: ^2.0.0
 
 dev_dependencies:
-  flutter_lints: ^2.0.2
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  lints: ^2.1.1
+  lints: ^4.0.0
 
 flutter:
 

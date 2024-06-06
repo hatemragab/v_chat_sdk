@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/v_chat/v_circle_avatar.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/bubble_normal.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/shared/bubble/swipe_to_reply.dart';
@@ -57,11 +56,14 @@ class VMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     if (message.messageType.isCenter) {
       return CenterItemHolder(
-        child: VMessageConstants.getMessageBody(
-                message, language.vMessagesInfoTrans)
-            .text
-            .italic
-            .medium,
+        child: Text(
+          VMessageConstants.getMessageBody(
+              message, language.vMessagesInfoTrans),
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
       );
     }
 
@@ -295,7 +297,10 @@ class VMessageItem extends StatelessWidget {
         onTap: () {
           _onMentionPress(context, message.sIdentifier);
         },
-        child: message.senderName.cap,
+        child: Text(
+          message.senderName,
+          style: Theme.of(context).textTheme.bodySmall!,
+        ),
       );
     }
     return const SizedBox.shrink();

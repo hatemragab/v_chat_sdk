@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:textless/textless.dart';
 import 'package:timeago/timeago.dart';
 import 'package:v_chat_message_page/src/core/core.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
@@ -61,7 +60,11 @@ class VMessageAppBare extends StatelessWidget {
         onTap: () {
           onTitlePress(context);
         },
-        title: room.title.text.bold.maxLine(2),
+        title: Text(
+          room.title,
+          maxLines: 2,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         subtitle: inTypingText(context) != null
             ? MessageTypingWidget(
                 text: inTypingText(context)!,

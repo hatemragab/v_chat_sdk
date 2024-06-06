@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/v_chat/platform_cache_image_widget.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -17,12 +16,12 @@ class ReplyItemWidget extends StatelessWidget {
   final String repliedToYourSelf;
 
   const ReplyItemWidget({
-    Key? key,
+    super.key,
     required this.rToMessage,
     required this.onHighlightMessage,
     required this.isMeSender,
     required this.repliedToYourSelf,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +81,16 @@ class ReplyItemWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      getTitle(context).text.color(Colors.green),
-                      rToMessage!.realContentMentionParsedWithAt.cap
-                          .maxLine(2)
-                          .overflowEllipsis,
+                      Text(
+                        getTitle(context),
+                        style: const TextStyle(color: Colors.green),
+                      ),
+                      Text(
+                        rToMessage!.realContentMentionParsedWithAt,
+                        style: Theme.of(context).textTheme.bodySmall,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                 ),

@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/src/theme/theme.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
@@ -47,20 +46,23 @@ class CallMessageItem extends StatelessWidget {
               //visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
               dense: true,
               title: message.data.withVideo
-                  ? audioCallLabel.text
-                      .styled(
-                        style: message.isMeSender
-                            ? context.vMessageTheme.senderTextStyle
-                            : context.vMessageTheme.receiverTextStyle,
-                      )
-                      .size(14)
-                  : audioCallLabel.text
-                      .styled(
-                        style: message.isMeSender
-                            ? context.vMessageTheme.senderTextStyle
-                            : context.vMessageTheme.receiverTextStyle,
-                      )
-                      .size(14),
+                  ? Text(
+                      audioCallLabel,
+                      style: message.isMeSender
+                          ? context.vMessageTheme.senderTextStyle
+                              .copyWith(fontSize: 14)
+                          : context.vMessageTheme.receiverTextStyle
+                              .copyWith(fontSize: 14),
+                    )
+                  : Text(
+                      audioCallLabel,
+                      style: message.isMeSender
+                          ? context.vMessageTheme.senderTextStyle
+                              .copyWith(fontSize: 14)
+                          : context.vMessageTheme.receiverTextStyle
+                              .copyWith(fontSize: 14),
+                    ),
+
               subtitle: _getSub(context),
             ),
           )
@@ -71,27 +73,22 @@ class CallMessageItem extends StatelessWidget {
 
   Widget _getSub(BuildContext context) {
     if (message.data.duration != null) {
-      return "${message.data.duration.toString()} S"
-          .text
-          .maxLine(2)
-          .overflowEllipsis
-          .styled(
-            style: message.isMeSender
-                ? context.vMessageTheme.senderTextStyle
-                : context.vMessageTheme.receiverTextStyle,
-          )
-          .size(14);
+      return Text(
+        "${message.data.duration.toString()} S",
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: message.isMeSender
+            ? context.vMessageTheme.senderTextStyle.copyWith(fontSize: 14)
+            : context.vMessageTheme.receiverTextStyle.copyWith(fontSize: 14),
+      );
     }
-    return callStatusLabel
-        .toString()
-        .text
-        .maxLine(2)
-        .overflowEllipsis
-        .styled(
-          style: message.isMeSender
-              ? context.vMessageTheme.senderTextStyle
-              : context.vMessageTheme.receiverTextStyle,
-        )
-        .size(14);
+    return Text(
+      callStatusLabel.toString(),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: message.isMeSender
+          ? context.vMessageTheme.senderTextStyle.copyWith(fontSize: 14)
+          : context.vMessageTheme.receiverTextStyle.copyWith(fontSize: 14),
+    );
   }
 }

@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:timeago/timeago.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_message_page/src/widgets/message_items/v_message_item.dart';
@@ -17,6 +16,7 @@ class VMessageSingleStatusPage extends StatefulWidget {
   final VMessageLocalization vMessageLocalization;
   final String readLabel;
   final String deliveredLabel;
+
   const VMessageSingleStatusPage({
     Key? key,
     required this.message,
@@ -62,7 +62,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
               ListTile(
                 title: AppBar(
                   backgroundColor: context.isDark ? Colors.transparent : null,
-                  title: widget.readLabel.text,
+                  title: Text(widget.readLabel),
                 ),
                 contentPadding: EdgeInsets.zero,
                 subtitle: Padding(
@@ -164,7 +164,7 @@ class ReadItem extends StatelessWidget {
               const SizedBox(
                 width: 4,
               ),
-              title.text,
+              Text(title),
             ],
           ),
           const SizedBox(
@@ -174,10 +174,13 @@ class ReadItem extends StatelessWidget {
               ? const SizedBox(
                   height: 10,
                 )
-              : format(
-                  dateTime!,
-                  locale: Localizations.localeOf(context).languageCode,
-                ).text.color(Colors.grey)
+              : Text(
+                  format(
+                    dateTime!,
+                    locale: Localizations.localeOf(context).languageCode,
+                  ),
+                  style: const TextStyle(color: Colors.grey),
+                )
         ],
       ),
     );

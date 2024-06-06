@@ -6,6 +6,7 @@ part of 'block_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$BlockApi extends BlockApi {
   _$BlockApi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$BlockApi extends BlockApi {
   }
 
   @override
-  final definitionType = BlockApi;
+  final Type definitionType = BlockApi;
 
   @override
   Future<Response<dynamic>> banUser(String identifier) {

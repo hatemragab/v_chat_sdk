@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_message_page/v_chat_message_page.dart';
 
 class DateDividerItem extends StatelessWidget {
@@ -59,7 +58,10 @@ class DateDividerItem extends StatelessWidget {
                 color: Colors.green,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: text.text.color(Colors.black87),
+              child: Text(
+                text,
+                style: TextStyle(color: Colors.black87),
+              ),
             ),
           ),
         ],

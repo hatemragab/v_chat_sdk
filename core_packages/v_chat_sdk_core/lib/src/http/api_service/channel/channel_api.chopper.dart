@@ -6,6 +6,7 @@ part of 'channel_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$ChannelApi extends ChannelApi {
   _$ChannelApi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$ChannelApi extends ChannelApi {
   }
 
   @override
-  final definitionType = ChannelApi;
+  final Type definitionType = ChannelApi;
 
   @override
   Future<Response<dynamic>> getPeerRoom(String identifier) {

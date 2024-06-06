@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../v_chat/platform_cache_image_widget.dart';
@@ -32,10 +31,16 @@ class ReplyMsgWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getTitle(context).text.maxLine(1),
-                vBaseMessage.realContentMentionParsedWithAt.cap
-                    .maxLine(2)
-                    .overflowEllipsis,
+                Text(
+                  getTitle(context),
+                  maxLines: 1,
+                ),
+                Text(
+                  vBaseMessage.realContentMentionParsedWithAt,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ),

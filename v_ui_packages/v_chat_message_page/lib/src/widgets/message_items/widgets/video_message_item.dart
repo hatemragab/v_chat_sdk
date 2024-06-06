@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../shared/constraint_image.dart';
@@ -67,8 +66,13 @@ class VideoMessageItem extends StatelessWidget {
                             const SizedBox(
                               width: 4,
                             ),
-                            message.data.durationFormat!.cap
-                                .color(Colors.white),
+                            Text(
+                              message.data.durationFormat!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: Colors.white),
+                            ),
                           ],
                         ),
                   Row(
@@ -81,8 +85,13 @@ class VideoMessageItem extends StatelessWidget {
                       const SizedBox(
                         width: 4,
                       ),
-                      message.data.fileSource.readableSize.cap
-                          .color(Colors.white),
+                      Text(
+                        message.data.fileSource.readableSize,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: Colors.white),
+                      ),
                     ],
                   ),
                 ],

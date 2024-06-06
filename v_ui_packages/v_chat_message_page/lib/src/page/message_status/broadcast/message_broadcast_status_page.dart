@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:timeago/timeago.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -59,7 +58,7 @@ class _VMessageBroadcastStatusPageState
               contentPadding: EdgeInsets.zero,
               title: AppBar(
                 backgroundColor: context.isDark ? Colors.transparent : null,
-                title: widget.messageInfoLabel.text,
+                title: Text(widget.messageInfoLabel),
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
@@ -91,7 +90,7 @@ class _VMessageBroadcastStatusPageState
                     const SizedBox(
                       width: 4,
                     ),
-                    widget.readLabel.text,
+                    Text(widget.readLabel)
                   ],
                 ),
               ),
@@ -108,44 +107,56 @@ class _VMessageBroadcastStatusPageState
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(10),
                         itemBuilder: (context, index) => ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: VCircleAvatar(
-                            radius: 20,
-                            fullUrl: value.seen[index].identifierUser.baseUser
-                                .userImages.smallImage,
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  widget.readLabel.text,
-                                  format(
-                                    value.seen[index].seen!,
-                                    locale: Localizations.localeOf(context)
-                                        .languageCode,
-                                  ).text.color(Colors.grey),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  widget.deliveredLabel.text,
-                                  format(
-                                    value.seen[index].delivered,
-                                    locale: Localizations.localeOf(context)
-                                        .languageCode,
-                                  ).text.color(Colors.grey),
-                                ],
-                              ),
-                            ],
-                          ),
-                          title: value.seen[index].identifierUser.baseUser
-                              .fullName.text,
-                        ),
+                            contentPadding: EdgeInsets.zero,
+                            leading: VCircleAvatar(
+                              radius: 20,
+                              fullUrl: value.seen[index].identifierUser.baseUser
+                                  .userImages.smallImage,
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(widget.readLabel),
+                                    Text(
+                                      format(
+                                        value.seen[index].seen!,
+                                        locale: Localizations.localeOf(context)
+                                            .languageCode,
+                                      ),
+                                      style:
+                                          const TextStyle(color: Colors.grey),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(widget.deliveredLabel),
+                                    Text(
+                                      format(
+                                        value.seen[index].delivered,
+                                        locale: Localizations.localeOf(context)
+                                            .languageCode,
+                                      ),
+                                      style:
+                                          const TextStyle(color: Colors.grey),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+
+                            // title: value.seen[index].identifierUser.baseUser
+                            //     .fullName.text,
+                            title: Text(
+                              value
+                                  .seen[index].identifierUser.baseUser.fullName,
+                            )),
                         separatorBuilder: (context, index) => const Divider(),
                         itemCount: value.seen.length,
                       );
@@ -169,7 +180,7 @@ class _VMessageBroadcastStatusPageState
                     const SizedBox(
                       width: 4,
                     ),
-                    widget.deliveredLabel.text,
+                    Text(widget.deliveredLabel)
                   ],
                 ),
               ),
@@ -186,18 +197,21 @@ class _VMessageBroadcastStatusPageState
                         padding: const EdgeInsets.all(10),
                         itemBuilder: (context, index) => ListTile(
                           contentPadding: EdgeInsets.zero,
-                          subtitle: format(
-                            value.deliver[index].delivered,
-                            locale:
-                                Localizations.localeOf(context).languageCode,
-                          ).text.color(Colors.grey),
+                          subtitle: Text(
+                            format(
+                              value.deliver[index].delivered,
+                              locale:
+                                  Localizations.localeOf(context).languageCode,
+                            ),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
                           leading: VCircleAvatar(
                             radius: 20,
                             fullUrl: value.deliver[index].identifierUser
                                 .baseUser.userImages.smallImage,
                           ),
-                          title: value.deliver[index].identifierUser.baseUser
-                              .fullName.text,
+                          title: Text(value
+                              .deliver[index].identifierUser.baseUser.fullName),
                         ),
                         separatorBuilder: (context, index) => const Divider(),
                         itemCount: value.deliver.length,

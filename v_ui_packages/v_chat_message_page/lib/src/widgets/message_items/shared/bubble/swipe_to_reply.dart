@@ -21,7 +21,6 @@
  */
 import 'package:flutter/material.dart';
 
-
 class SwipeToReply extends StatefulWidget {
   const SwipeToReply({
     Key? key,
@@ -165,6 +164,7 @@ class _SwipeToReplyState extends State<SwipeToReply>
     super.dispose();
   }
 }
+
 class ReplyIcon extends StatelessWidget {
   const ReplyIcon({
     Key? key,
@@ -192,7 +192,7 @@ class ReplyIcon extends StatelessWidget {
           child: CircleAvatar(
             radius: 14,
             backgroundColor:
-            scaleAnimation.value == 1.0 ? Colors.grey : Colors.transparent,
+                scaleAnimation.value == 1.0 ? Colors.grey : Colors.transparent,
             child: const Icon(
               Icons.reply_rounded,
             ),

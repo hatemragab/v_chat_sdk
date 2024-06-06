@@ -13,17 +13,17 @@ dependencies:
   flutter:
     sdk: flutter
   v_chat_sdk_core: ^1.4.0
-  firebase_core: ^2.19.0
-  firebase_messaging: ^14.7.1
-  eraser: ^2.0.1
+  firebase_core: ^2.32.0
+  firebase_messaging: ^14.9.4
+  eraser: ^2.0.2
   flutter_app_badger: ^1.5.0
-  http: ^1.1.0
-  v_platform: ^1.2.3
-  shared_preferences: ^2.2.2
+  http: ^1.2.1
+  v_platform: ^2.0.0
+  shared_preferences: ^2.2.3
   encrypt:  5.0.1
 
 dev_dependencies:
-  lints: ^3.0.0
+  lints: ^4.0.0
 
 flutter:
 

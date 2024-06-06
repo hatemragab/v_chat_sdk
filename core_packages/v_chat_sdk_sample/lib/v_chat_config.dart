@@ -80,7 +80,8 @@ Uri _getBaseUrl() {
     // if (false) {
     //   return Uri.parse("http://192.168.1.3:3001");
     // }
-    return Uri.parse("http://10.0.2.2:3001");
+    //10.0.2.2
+    return Uri.parse("http://192.168.1.13:3001");
   }
   return Uri.parse("http://v_chat_endpoint:3001");
 }

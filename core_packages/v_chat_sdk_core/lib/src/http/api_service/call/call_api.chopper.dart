@@ -6,6 +6,7 @@ part of 'call_api.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$CallApi extends CallApi {
   _$CallApi([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$CallApi extends CallApi {
   }
 
   @override
-  final definitionType = CallApi;
+  final Type definitionType = CallApi;
 
   @override
   Future<Response<dynamic>> getActiveCall() {

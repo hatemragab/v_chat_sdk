@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 import 'package:v_chat_room_page/src/room/shared/shared.dart';
 import 'package:v_chat_room_page/src/room/shared/v_message_constants.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
@@ -32,12 +31,18 @@ class RoomItemMsg extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.vRoomTheme;
     if (message.allDeletedAt != null) {
-      return messageHasBeenDeletedLabel.text.italic.color(Colors.grey);
+      return Text(
+        messageHasBeenDeletedLabel,
+        style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
+      );
     }
     if (message.isDeleted) {
-      return VMessageConstants.getMessageBody(message, language)
-          .text
-          .lineThrough;
+      return Text(
+        VMessageConstants.getMessageBody(message, language),
+        style: const TextStyle(
+          decoration: TextDecoration.lineThrough,
+        ),
+      );
     }
     if (isBold) {
       return VTextParserWidget(

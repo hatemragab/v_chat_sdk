@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:textless/textless.dart';
 
 class BanWidget extends StatelessWidget {
   final bool isMy;
@@ -27,7 +26,12 @@ class BanWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            youDontHaveAccess.text.color(Colors.white).black,
+            Text(
+              youDontHaveAccess,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+            )
+
             // if (isMy)
             //   InkWell(
             //     onTap: onUnBan,

@@ -69,7 +69,7 @@ class _VImageViewerState extends State<VImageViewer> {
                     },
                     onSuccess: (url) async {
                       VAppAlert.showSuccessSnackBar(
-                        msg: widget.successfullyDownloadedInLabel + url,
+                        msg: widget.successfullyDownloadedInLabel  ,
                         context: context,
                       );
                     },
