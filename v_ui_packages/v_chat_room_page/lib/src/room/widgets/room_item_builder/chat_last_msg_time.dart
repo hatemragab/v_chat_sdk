@@ -13,10 +13,10 @@ class ChatLastMsgTime extends StatelessWidget {
 
   /// Creates a new instance of [ChatLastMsgTime].
   const ChatLastMsgTime({
-    Key? key,
+    super.key,
     required this.lastMessageTime,
     required this.yesterdayLabel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

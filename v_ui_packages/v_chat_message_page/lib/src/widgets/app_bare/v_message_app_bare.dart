@@ -27,7 +27,7 @@ class VMessageAppBare extends StatelessWidget {
   final bool isCallAllowed;
 
   const VMessageAppBare({
-    Key? key,
+    super.key,
     required this.onTitlePress,
     required this.room,
     required this.language,
@@ -39,7 +39,7 @@ class VMessageAppBare extends StatelessWidget {
     this.totalOnline,
     this.lastSeenAt,
     this.onUpdateBlock,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

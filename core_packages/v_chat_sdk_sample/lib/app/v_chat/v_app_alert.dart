@@ -16,10 +16,8 @@ abstract class VAppAlert {
     return showGeneralDialog(
       barrierColor: Colors.black.withOpacity(0.5),
       transitionBuilder: (context, a1, a2, widget) {
-        return WillPopScope(
-          onWillPop: () async {
-            return isDismissible;
-          },
+        return PopScope(
+          canPop: isDismissible,
           child: Transform.scale(
             scale: a1.value,
             child: Opacity(

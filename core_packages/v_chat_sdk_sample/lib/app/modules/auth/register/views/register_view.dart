@@ -67,7 +67,7 @@ class RegisterView extends GetView<RegisterController> {
   LoginViewTheme get _desktopTheme => _mobileTheme.copyWith(
         // To set the color of button text, use foreground color.
         actionButtonStyle: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all(Colors.white),
+          foregroundColor: WidgetStateProperty.all(Colors.white),
         ),
         dialogTheme: const AnimatedDialogTheme(
           languageDialogTheme: LanguageDialogTheme(
@@ -85,7 +85,7 @@ class RegisterView extends GetView<RegisterController> {
         // formWidthRatio: 60,
 
         actionButtonStyle: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all(Colors.blue),
+          foregroundColor: WidgetStateProperty.all(Colors.blue),
         ),
         animatedComponentOrder: const <AnimatedComponent>[
           AnimatedComponent(

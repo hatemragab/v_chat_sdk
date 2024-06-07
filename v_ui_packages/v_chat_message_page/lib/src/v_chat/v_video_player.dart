@@ -21,11 +21,11 @@ class VVideoPlayer extends StatefulWidget {
   final String successfullyDownloadedInLabel;
 
   const VVideoPlayer({
-    Key? key,
+    super.key,
     required this.platformFileSource,
     required this.downloadingLabel,
     required this.successfullyDownloadedInLabel,
-  }) : super(key: key);
+  });
 
   @override
   State<VVideoPlayer> createState() => _VVideoPlayerState();

@@ -18,12 +18,12 @@ class VMessageSingleStatusPage extends StatefulWidget {
   final String deliveredLabel;
 
   const VMessageSingleStatusPage({
-    Key? key,
+    super.key,
     required this.message,
     required this.readLabel,
     required this.deliveredLabel,
     required this.vMessageLocalization,
-  }) : super(key: key);
+  });
 
   @override
   State<VMessageSingleStatusPage> createState() =>
@@ -142,11 +142,11 @@ class ReadItem extends StatelessWidget {
   final MessageStatusIconDataModel model;
 
   const ReadItem({
-    Key? key,
+    super.key,
     this.dateTime,
     required this.title,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

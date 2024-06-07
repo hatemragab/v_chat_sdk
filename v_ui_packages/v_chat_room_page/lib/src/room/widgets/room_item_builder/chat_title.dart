@@ -17,9 +17,9 @@ class ChatTitle extends StatelessWidget {
 
   /// Creates a [ChatTitle] widget.
   const ChatTitle({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

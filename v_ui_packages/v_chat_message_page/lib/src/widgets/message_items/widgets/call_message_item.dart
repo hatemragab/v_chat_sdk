@@ -13,11 +13,11 @@ class CallMessageItem extends StatelessWidget {
   final String callStatusLabel;
 
   const CallMessageItem({
-    Key? key,
+    super.key,
     required this.message,
     required this.audioCallLabel,
     required this.callStatusLabel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

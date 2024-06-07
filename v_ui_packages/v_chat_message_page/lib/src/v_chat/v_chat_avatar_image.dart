@@ -13,12 +13,12 @@ class VChatAvatarImage extends StatelessWidget {
   final int size;
 
   const VChatAvatarImage({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.isOnline,
     required this.chatTitle,
     this.size = 60,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

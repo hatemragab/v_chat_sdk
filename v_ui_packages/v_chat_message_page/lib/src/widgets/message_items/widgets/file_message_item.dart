@@ -11,9 +11,9 @@ class FileMessageItem extends StatelessWidget {
   final VFileMessage message;
 
   const FileMessageItem({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

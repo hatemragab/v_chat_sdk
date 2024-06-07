@@ -19,11 +19,11 @@ class VImageViewer extends StatefulWidget {
   final String successfullyDownloadedInLabel;
 
   const VImageViewer({
-    Key? key,
+    super.key,
     required this.platformFileSource,
     required this.downloadingLabel,
     required this.successfullyDownloadedInLabel,
-  }) : super(key: key);
+  });
 
   @override
   State<VImageViewer> createState() => _VImageViewerState();
@@ -69,7 +69,7 @@ class _VImageViewerState extends State<VImageViewer> {
                     },
                     onSuccess: (url) async {
                       VAppAlert.showSuccessSnackBar(
-                        msg: widget.successfullyDownloadedInLabel  ,
+                        msg: widget.successfullyDownloadedInLabel,
                         context: context,
                       );
                     },

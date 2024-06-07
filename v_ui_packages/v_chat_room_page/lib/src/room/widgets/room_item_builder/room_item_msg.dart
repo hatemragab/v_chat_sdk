@@ -20,12 +20,12 @@ class RoomItemMsg extends StatelessWidget {
 
   /// Creates a [RoomItemMsg] widget.
   const RoomItemMsg({
-    Key? key,
+    super.key,
     required this.message,
     required this.isBold,
     required this.language,
     required this.messageHasBeenDeletedLabel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

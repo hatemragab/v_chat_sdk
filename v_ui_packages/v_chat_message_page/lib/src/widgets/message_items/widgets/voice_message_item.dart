@@ -12,10 +12,10 @@ class VoiceMessageItem extends StatelessWidget {
   final VVoiceMessageController? Function(VBaseMessage message) voiceController;
 
   const VoiceMessageItem({
-    Key? key,
+    super.key,
     required this.message,
     required this.voiceController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

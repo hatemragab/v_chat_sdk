@@ -31,7 +31,7 @@ part './v_room_controller.dart';
 /// /// The [appBar] and [floatingActionButton] parameters are optional, and allow customization of the app bar and action button displayed on the page
 class VChatPage extends StatefulWidget {
   const VChatPage({
-    Key? key,
+    super.key,
     required this.controller,
     this.floatingActionButton,
     this.appBar,
@@ -39,7 +39,7 @@ class VChatPage extends StatefulWidget {
     this.onRoomItemPress,
     this.showDisconnectedWidget = true,
     this.useIconForRoomItem = false,
-  }) : super(key: key);
+  });
   final VRoomController controller;
   final Function(VRoom room)? onRoomItemPress;
   final bool showDisconnectedWidget;

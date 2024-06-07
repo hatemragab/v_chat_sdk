@@ -41,7 +41,7 @@ abstract class VAppAlert {
       actions: content
           .map((e) => SheetAction<ModelSheetItem>(
                 label: e.title,
-                icon: e.iconData == null ? null : e.iconData!.icon,
+                icon: e.iconData?.icon,
                 key: e,
               ))
           .toList(),

@@ -30,7 +30,7 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
   @override
   Widget build(BuildContext context) {
     if (VPlatforms.isWeb) {
-      return RawKeyboardListener(
+      return KeyboardListener(
         focusNode: FocusNode(),
         // onKey: (x) async {
         //   // detect if ctrl + v or cmd + v is pressed

@@ -50,8 +50,8 @@ class SocketService {
         "extraHeaders": {
           ..._socketIoClient.socket.io.options?['extraHeaders']
               as Map<String, dynamic>,
-          "Authorization": "Bearer $access"
-        }
+          "Authorization": "Bearer $access",
+        },
       };
       if (!isSocketConnected) {
         _socketIoClient.connect();

@@ -15,14 +15,14 @@ class TextMessageItem extends StatelessWidget {
   final Function(String link) onLinkPress;
 
   const TextMessageItem({
-    Key? key,
+    super.key,
     required this.message,
     required this.textStyle,
     required this.onEmailPress,
     required this.onMentionPress,
     required this.onPhonePress,
     required this.onLinkPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -22,13 +22,13 @@ class VMessageBroadcastStatusPage extends StatefulWidget {
   final VMessageLocalization vMessageLocalization;
 
   const VMessageBroadcastStatusPage({
-    Key? key,
+    super.key,
     required this.message,
     required this.messageInfoLabel,
     required this.readLabel,
     required this.deliveredLabel,
     required this.vMessageLocalization,
-  }) : super(key: key);
+  });
 
   @override
   State<VMessageBroadcastStatusPage> createState() =>

@@ -11,7 +11,7 @@ class ChatMuteWidget extends StatelessWidget {
   final bool isMuted;
 
   /// Creates a new instance of [ChatMuteWidget].
-  const ChatMuteWidget({Key? key, required this.isMuted}) : super(key: key);
+  const ChatMuteWidget({super.key, required this.isMuted});
 
   @override
   Widget build(BuildContext context) {

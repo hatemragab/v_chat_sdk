@@ -8,13 +8,13 @@ class BubbleNormal extends StatelessWidget {
   final Widget child;
 
   const BubbleNormal({
-    Key? key,
+    super.key,
     this.bubbleRadius = 16,
     required this.isSender,
     required this.child,
     required this.color,
     this.tail = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

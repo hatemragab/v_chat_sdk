@@ -11,9 +11,9 @@ class ImageMessageItem extends StatelessWidget {
   final VImageMessage message;
 
   const ImageMessageItem({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

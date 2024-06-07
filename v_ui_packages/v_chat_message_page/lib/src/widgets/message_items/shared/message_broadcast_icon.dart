@@ -8,8 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 class MessageBroadcastWidget extends StatelessWidget {
   final bool isFromBroadcast;
 
-  const MessageBroadcastWidget({Key? key, required this.isFromBroadcast})
-      : super(key: key);
+  const MessageBroadcastWidget({super.key, required this.isFromBroadcast});
 
   @override
   Widget build(BuildContext context) {

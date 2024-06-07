@@ -1,3 +1,6 @@
+## 2.0.0
+- Support flutter v 3.22 and above
+
 ## 1.4.0
 - Support more native apis for control the chat
 ## 1.1.0

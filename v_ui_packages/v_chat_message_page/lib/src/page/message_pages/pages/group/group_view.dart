@@ -20,11 +20,11 @@ import 'group_app_bar_controller.dart';
 
 class VGroupView extends StatefulWidget {
   const VGroupView({
-    Key? key,
+    super.key,
     required this.vRoom,
     required this.language,
     required this.vMessageConfig,
-  }) : super(key: key);
+  });
   final VRoom vRoom;
   final VMessageConfig vMessageConfig;
   final VMessageLocalization language;

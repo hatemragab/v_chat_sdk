@@ -23,13 +23,13 @@ import 'package:flutter/material.dart';
 
 class SwipeToReply extends StatefulWidget {
   const SwipeToReply({
-    Key? key,
+    super.key,
     this.onLeftSwipe,
     required this.child,
     this.replyIconColor,
     this.onRightSwipe,
     this.swipeToReplyAnimationDuration,
-  }) : super(key: key);
+  });
 
   /// Provides callback when user swipes chat bubble from right side.
   final VoidCallback? onRightSwipe;
@@ -167,11 +167,11 @@ class _SwipeToReplyState extends State<SwipeToReply>
 
 class ReplyIcon extends StatelessWidget {
   const ReplyIcon({
-    Key? key,
+    super.key,
     required this.scaleAnimation,
     required this.slideAnimation,
     this.replyIconColor,
-  }) : super(key: key);
+  });
 
   /// Represents scale animation value of icon when user swipes for reply.
   final Animation<double> scaleAnimation;

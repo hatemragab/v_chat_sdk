@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
 
 class CenterItemHolder extends StatelessWidget {
-  const CenterItemHolder({Key? key, required this.child}) : super(key: key);
+  const CenterItemHolder({super.key, required this.child});
   final Widget child;
 
   @override

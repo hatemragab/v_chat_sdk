@@ -29,7 +29,6 @@ class VAppLifecycleState {
           if (!SocketController.instance.isSocketConnected) {
             SocketController.instance.connect();
           }
-          break;
         case FGBGType.background:
 
           // /// disconnect timer
@@ -45,7 +44,6 @@ class VAppLifecycleState {
             );
             SocketController.instance.disconnect();
           });
-          break;
       }
     });
   }

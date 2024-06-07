@@ -13,12 +13,12 @@ class GroupHeader extends StatelessWidget {
   final VoidCallback onTab;
 
   const GroupHeader({
-    Key? key,
+    super.key,
     required this.isGroup,
     required this.senderName,
     required this.senderImage,
     required this.onTab,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

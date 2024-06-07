@@ -12,9 +12,9 @@ class VideoMessageItem extends StatelessWidget {
   final VVideoMessage message;
 
   const VideoMessageItem({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

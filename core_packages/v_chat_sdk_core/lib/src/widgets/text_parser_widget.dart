@@ -102,7 +102,7 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
             });
           },
           child: isShowMoreEnabled ? widget.arrowDown : widget.arrowUp,
-        )
+        ),
       ],
     );
   }

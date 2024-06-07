@@ -8,7 +8,6 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 
 import 'package:v_chat_sdk_core/src/exceptions/http/v_chat_http_exception.dart';
-import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
 import 'package:v_chat_sdk_core/src/utils/app_pref.dart';
 import 'package:v_chat_sdk_core/src/utils/enums.dart';
 

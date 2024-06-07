@@ -13,9 +13,9 @@ class VChooseRoomsPage extends StatefulWidget {
   final String? currentRoomId;
 
   const VChooseRoomsPage({
-    Key? key,
+    super.key,
     required this.currentRoomId,
-  }) : super(key: key);
+  });
 
   @override
   State<VChooseRoomsPage> createState() => _VChooseRoomsPageState();

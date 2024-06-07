@@ -40,7 +40,7 @@ class VMessageItem extends StatelessWidget {
   final VMessageLocalization language;
 
   const VMessageItem({
-    Key? key,
+    super.key,
     this.onLongTap,
     required this.roomType,
     this.onTap,
@@ -50,7 +50,7 @@ class VMessageItem extends StatelessWidget {
     this.onSwipe,
     this.onReSend,
     this.onHighlightMessage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -13,11 +13,11 @@ class VConstraintImage extends StatelessWidget {
   final BoxFit? fit;
 
   const VConstraintImage({
-    Key? key,
+    super.key,
     required this.data,
     this.borderRadius,
     this.fit = BoxFit.contain,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

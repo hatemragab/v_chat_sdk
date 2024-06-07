@@ -20,11 +20,11 @@ import '../../widget_states/message_body_state_widget.dart';
 
 class VBroadcastView extends StatefulWidget {
   const VBroadcastView({
-    Key? key,
+    super.key,
     required this.vRoom,
     required this.vMessageConfig,
     required this.language,
-  }) : super(key: key);
+  });
   final VRoom vRoom;
   final VMessageConfig vMessageConfig;
   final VMessageLocalization language;

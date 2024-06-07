@@ -14,13 +14,13 @@ class VSearchAppBare extends StatefulWidget {
   final String searchLabel;
 
   const VSearchAppBare({
-    Key? key,
+    super.key,
     required this.onClose,
     required this.searchLabel,
     this.delay = 1200,
     required this.onSearch,
     this.requestFocus = true,
-  }) : super(key: key);
+  });
 
   @override
   State<VSearchAppBare> createState() => _VSearchAppBareState();

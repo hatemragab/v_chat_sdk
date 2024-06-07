@@ -46,7 +46,7 @@ class VRoomsDto {
       'limit': limit,
       'page': page,
       'title': title,
-      'roomType': roomType == null ? null : roomType!.name,
+      'roomType': roomType?.name,
       'mutedOnly': mutedOnly,
       'archiveOnly': archiveOnly,
       'deletedOnly': deletedOnly,

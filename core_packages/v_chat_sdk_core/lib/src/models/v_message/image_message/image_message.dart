@@ -84,7 +84,7 @@ class VImageMessage extends VBaseMessage {
   Map<String, dynamic> toLocalMap() {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(data.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap()),
     };
   }
 

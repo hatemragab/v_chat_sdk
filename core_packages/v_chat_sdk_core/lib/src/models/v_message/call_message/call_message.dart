@@ -59,7 +59,7 @@ class VCallMessage extends VBaseMessage {
   }) {
     return {
       ...super.toLocalMap(),
-      MessageTable.columnAttachment: jsonEncode(data.toMap())
+      MessageTable.columnAttachment: jsonEncode(data.toMap()),
     };
   }
 }

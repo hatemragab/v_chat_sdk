@@ -42,7 +42,7 @@ class VAuthApiService {
         VStorageKeys.vAppLanguage.name,
         dto.language ?? "en",
       ),
-      VAppPref.setMap(VStorageKeys.vMyProfile.name, myUser.toMap())
+      VAppPref.setMap(VStorageKeys.vMyProfile.name, myUser.toMap()),
     ]);
     return myUser;
   }

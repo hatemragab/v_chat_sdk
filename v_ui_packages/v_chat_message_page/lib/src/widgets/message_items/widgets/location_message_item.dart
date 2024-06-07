@@ -10,9 +10,9 @@ class LocationMessageItem extends StatelessWidget {
   final VLocationMessage message;
 
   const LocationMessageItem({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

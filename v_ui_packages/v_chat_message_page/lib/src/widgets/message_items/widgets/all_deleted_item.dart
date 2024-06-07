@@ -11,10 +11,10 @@ class AllDeletedItem extends StatelessWidget {
   final String messageHasBeenDeletedLabel;
 
   const AllDeletedItem({
-    Key? key,
+    super.key,
     required this.message,
     required this.messageHasBeenDeletedLabel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -335,7 +335,7 @@ abstract class VBaseMessage {
       "dltAt": allDeletedAt,
       "pBId": parentBroadcastId,
       "createdAt": createdAt,
-      "updatedAt": updatedAt
+      "updatedAt": updatedAt,
     };
   }
 }

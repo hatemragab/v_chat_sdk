@@ -15,10 +15,10 @@ class InputWidgetState extends StatelessWidget {
   final VMessageLocalization language;
 
   const InputWidgetState({
-    Key? key,
+    super.key,
     required this.controller,
     required this.language,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

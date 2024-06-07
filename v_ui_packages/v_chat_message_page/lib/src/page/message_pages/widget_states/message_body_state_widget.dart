@@ -21,11 +21,11 @@ class MessageBodyStateWidget extends StatelessWidget {
   final VMessageLocalization language;
 
   const MessageBodyStateWidget({
-    Key? key,
+    super.key,
     required this.controller,
     required this.roomType,
     required this.language,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

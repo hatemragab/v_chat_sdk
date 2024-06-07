@@ -13,11 +13,11 @@ class VMessagePage extends StatelessWidget {
   final VMessageLocalization localization;
 
   const VMessagePage({
-    Key? key,
+    super.key,
     required this.localization,
     required this.vRoom,
     this.vMessageConfig = const VMessageConfig(),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

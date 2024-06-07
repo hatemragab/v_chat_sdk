@@ -8,9 +8,9 @@ class ForwardItemWidget extends StatelessWidget {
   final bool isFroward;
 
   const ForwardItemWidget({
-    Key? key,
+    super.key,
     required this.isFroward,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

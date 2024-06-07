@@ -41,10 +41,10 @@ class MessageStatusIcon extends StatelessWidget {
   final MessageStatusIconDataModel model;
 
   const MessageStatusIcon({
-    Key? key,
+    super.key,
     required this.model,
     this.onReSend,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

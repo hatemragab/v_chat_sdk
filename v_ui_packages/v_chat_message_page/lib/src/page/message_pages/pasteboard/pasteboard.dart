@@ -23,8 +23,8 @@ class Pasteboard implements IPasteboard {
   @override
   StreamSubscription<ClipboardEvent> pasteBoardListener(
           void Function(List<VPlatformFile> event) onData) =>
-      document.onPaste.listen((_) async {
-        final result = await _onClipboardEvent(_);
+      document.onPaste.listen((x) async {
+        final result = await _onClipboardEvent(x);
         onData(result);
       });
 

@@ -12,11 +12,11 @@ class DateDividerItem extends StatelessWidget {
   final String yesterday;
 
   const DateDividerItem({
-    Key? key,
+    super.key,
     required this.dateTime,
     required this.today,
     required this.yesterday,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class DateDividerItem extends StatelessWidget {
               ),
               child: Text(
                 text,
-                style: TextStyle(color: Colors.black87),
+                style: const TextStyle(color: Colors.black87),
               ),
             ),
           ),

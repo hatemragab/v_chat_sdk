@@ -19,7 +19,7 @@ class VLinkPreviewData {
 
   Map<String, dynamic> toMap() {
     return {
-      'image': image == null ? null : image!.toMap(),
+      'image': image?.toMap(),
       'title': title,
       'desc': desc,
       'link': link,

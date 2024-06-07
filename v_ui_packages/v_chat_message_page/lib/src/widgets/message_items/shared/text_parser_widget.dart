@@ -24,7 +24,7 @@ class VTextParserWidget extends StatefulWidget {
   final TextStyle? mentionTextStyle;
 
   const VTextParserWidget({
-    Key? key,
+    super.key,
     this.onEmailPress,
     this.onMentionPress,
     this.onPhonePress,
@@ -36,7 +36,7 @@ class VTextParserWidget extends StatefulWidget {
     this.emailTextStyle,
     this.phoneTextStyle,
     this.mentionTextStyle,
-  }) : super(key: key);
+  });
 
   @override
   State<VTextParserWidget> createState() => _VTextParserWidgetState();

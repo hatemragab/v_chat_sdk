@@ -129,8 +129,8 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
           : null);
       controller = file != null
           ? VideoPlayerController.file(file, videoPlayerOptions: options)
-          : VideoPlayerController.network(
-              widget.platformFileSource.url!,
+          : VideoPlayerController.networkUrl(
+              Uri.parse(widget.platformFileSource.url!),
               videoPlayerOptions: options,
             );
     }
