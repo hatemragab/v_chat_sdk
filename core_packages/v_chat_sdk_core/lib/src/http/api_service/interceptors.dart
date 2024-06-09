@@ -57,6 +57,8 @@ class AuthInterceptor implements Interceptor {
   final String? access;
 
   AuthInterceptor({this.access});
+
+
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(
     Chain<BodyType> chain,

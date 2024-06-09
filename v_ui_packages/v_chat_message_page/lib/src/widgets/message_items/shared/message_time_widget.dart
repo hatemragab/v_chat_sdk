@@ -19,7 +19,9 @@ class MessageTimeWidget extends StatelessWidget {
       DateFormat.jm(Localizations.localeOf(context).languageCode)
           .format(dateTime.toLocal()),
       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-          color: Colors.white, fontWeight: FontWeight.w200, fontSize: 11),
+            fontWeight: FontWeight.w200,
+            fontSize: 11,
+          ),
     );
   }
 }
