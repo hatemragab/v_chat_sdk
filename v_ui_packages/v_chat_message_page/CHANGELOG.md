@@ -14,3 +14,5 @@ add theming
 - update translation system
 ## 1.2.2
 - update we_assets_camera version
+## 2.0.0+1
+- fix low voice recorder for android

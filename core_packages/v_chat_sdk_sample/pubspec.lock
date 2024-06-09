@@ -546,10 +546,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_dropzone
-      sha256: e00e623451f40e68593d69c7ea60daf956451d1b1769b79f7aa73d26b86b0324
+      sha256: "4619cb3e189b6d9fbfe03625bdf43e6f16e6e4ca154167f4c4fbfb5f4bf7ac57"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   flutter_dropzone_platform_interface:
     dependency: transitive
     description:
@@ -1373,54 +1373,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.0-dev.0"
-  record_darwin:
+  record:
     dependency: transitive
     description:
-      name: record_darwin
-      sha256: "2210da0fde7c86b4048cccfe2cd19b25fc7adf1ada7d50ec4a5ab4af2a863739"
+      name: record
+      sha256: f703397f5a60d9b2b655b3acc94ba079b2d9a67dc0725bdb90ef2fee2441ebf7
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "4.4.4"
   record_linux:
     dependency: transitive
     description:
       name: record_linux
-      sha256: "7d0e70cd51635128fe9d37d89bafd6011d7cbba9af8dc323079ae60f23546aef"
+      sha256: "348db92c4ec1b67b1b85d791381c8c99d7c6908de141e7c9edc20dad399b15ce"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.1"
+    version: "0.4.1"
+  record_macos:
+    dependency: transitive
+    description:
+      name: record_macos
+      sha256: d1d0199d1395f05e218207e8cacd03eb9dc9e256ddfe2cfcbbb90e8edea06057
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   record_platform_interface:
     dependency: transitive
     description:
       name: record_platform_interface
-      sha256: "11f8b03ea8a0e279b0e306571dbe0db0202c0b8e866495c9fa1ad2281d5e4c15"
+      sha256: "7a2d4ce7ac3752505157e416e4e0d666a54b1d5d8601701b7e7e5e30bec181b4"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "0.5.0"
   record_web:
     dependency: transitive
     description:
       name: record_web
-      sha256: "703adb626d31e2dd86a8f6b34e306e03cd323e0c5e16e11bbc0385b07a8df97e"
+      sha256: "219ffb4ca59b4338117857db56d3ffadbde3169bcaf1136f5f4d4656f4a2372d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "0.5.0"
   record_windows:
     dependency: transitive
     description:
       name: record_windows
-      sha256: "39998b3ea7d8d28b04159d82220e6e5e32a7c357c6fb2794f5736beea272f6c3"
+      sha256: "42d545155a26b20d74f5107648dbb3382dbbc84dc3f1adc767040359e57a1345"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
-  record_without_android:
-    dependency: transitive
-    description:
-      name: record_without_android
-      sha256: f7be1fa924769321dc29d62402bbb80372cac35a572bb4706da95064616f84a6
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.1"
+    version: "0.7.1"
   recursive_regex:
     dependency: transitive
     description:
@@ -1854,10 +1854,10 @@ packages:
     dependency: "direct main"
     description:
       name: v_chat_input_ui
-      sha256: "3a1ae0277e62ea2e97bb4da30fe690396e1d4853e51492ee48eaaf0848858cbe"
+      sha256: "76d18e1ef02f43a28a92f0416ea193f5ba954827ddf26fdb75f59f2cee81f82e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0+3"
+    version: "2.0.0+4"
   v_chat_media_editor:
     dependency: transitive
     description:
@@ -1880,7 +1880,7 @@ packages:
       path: "../../v_ui_packages/v_chat_message_page"
       relative: true
     source: path
-    version: "2.0.0"
+    version: "2.0.0+1"
   v_chat_receive_share:
     dependency: "direct main"
     description:
