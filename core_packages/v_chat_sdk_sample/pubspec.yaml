@@ -19,12 +19,12 @@ dependencies:
   get: ^4.6.6
   flutter: 
     sdk: flutter
-  v_chat_sdk_core: ^2.0.0
-  v_chat_receive_share: ^1.4.0
-  v_chat_message_page: ^1.4.0
-  v_chat_firebase_fcm: ^1.4.0
-  v_chat_room_page: ^1.4.0
-  v_chat_input_ui: ^2.0.0+1
+  v_chat_sdk_core: ^2.1.0
+  v_chat_receive_share: ^2.0.0
+  v_chat_message_page: ^2.0.0+1
+  v_chat_firebase_fcm: ^2.0.0
+  v_chat_room_page: ^2.0.0
+  v_chat_input_ui: ^2.0.0+4
   animated_login: ^1.7.0
   shimmer: ^3.0.0
   fluttertoast: ^8.2.5

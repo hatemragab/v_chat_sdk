@@ -4,8 +4,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:v_chat_message_page/v_chat_message_page.dart';
 import 'package:v_chat_receive_share/v_chat_receive_share.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_platform/v_platform.dart';
 
 import '../../../../core/enums.dart';
 import '../../../../core/utils/app_pref.dart';
@@ -50,5 +52,8 @@ class HomeController extends GetxController {
       identifier: data!['identifier'],
       fullName: null,
     );
+    if (VPlatforms.isMobile) {
+      vInitCallListener(Get.context!);
+    }
   }
 }

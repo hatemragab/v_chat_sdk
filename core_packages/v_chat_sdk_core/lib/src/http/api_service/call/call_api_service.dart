@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'dart:convert';
 
 import 'package:v_chat_sdk_core/src/http/api_service/call/call_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
@@ -16,36 +15,42 @@ class VCallApiService {
 
   Future<String> createCall({
     required String roomId,
-    required Map<String, dynamic> payload,
+    Map<String, dynamic>? payload,
     required bool withVideo,
   }) async {
     final res = await _callApi!.createCall(roomId, {
-      "payload": jsonEncode(payload),
+      "payload": payload,
       "withVideo": withVideo,
+      "meetPlatform": "agora",
     });
     throwIfNotSuccess(res);
     return extractDataFromResponse(res)['meetId'] as String;
   }
 
-  Future<bool> acceptCall({
+  Future<void> acceptCall({
     required String meetId,
-    required Map<String, dynamic> answerPayload,
+    Map<String, dynamic>? answerPayload,
   }) async {
     final res = await _callApi!.acceptCall(meetId, {
-      "payload": jsonEncode(answerPayload),
+      "payload": answerPayload,
     });
     throwIfNotSuccess(res);
-    return true;
   }
 
-  Future<bool> cancelCall(String meetId) async {
-    final res = await _callApi!.cancelCall(meetId);
+  Future<bool> endCallV2(String meetId) async {
+    final res = await _callApi!.endCallV2(meetId);
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<bool> endCall(String meetId) async {
-    final res = await _callApi!.endCall(meetId);
+  Future<bool> clearHistory() async {
+    final res = await _callApi!.clearHistory();
+    throwIfNotSuccess(res);
+    return true;
+  }
+
+  Future<bool> deleteOneHistory(String id) async {
+    final res = await _callApi!.deleteOneHistory(id);
     throwIfNotSuccess(res);
     return true;
   }
@@ -73,6 +78,12 @@ class VCallApiService {
     return data
         .map((e) => VCallHistory.fromMap(e as Map<String, dynamic>))
         .toList();
+  }
+
+  Future<String> getAgoraAccess(String roomId) async {
+    final res = await _callApi!.getAgoraAccess(roomId);
+    throwIfNotSuccess(res);
+    return (res.body as Map<String, dynamic>)['data']['rtcToken'] as String;
   }
 
   static VCallApiService init({

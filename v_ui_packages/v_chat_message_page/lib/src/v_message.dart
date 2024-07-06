@@ -12,3 +12,4 @@ export './page/message_pages/v_message_page.dart';
 export './theme/theme.dart';
 export './widgets/widgets.dart';
 export 'core/core.dart';
+export './agora/v_agora.dart';

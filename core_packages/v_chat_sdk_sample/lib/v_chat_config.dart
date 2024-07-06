@@ -19,6 +19,7 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
   await VChatController.init(
     navigatorKey: _navigatorKey,
     vChatConfig: VChatConfig(
+      agoraAppId: "1b7727fb86e846d795b0dd12f560cfe4",
       encryptHashKey: "V_CHAT_SDK_V2_VERY_STRONG_KEY",
       baseUrl: _getBaseUrl(),
       vPush: VPush(
@@ -31,37 +32,38 @@ Future initVChat(GlobalKey<NavigatorState> _navigatorKey) async {
       ),
     ),
     vNavigator: VNavigator(
-      roomNavigator: vDefaultRoomNavigator,
-      messageNavigator: VMessageNavigator(
-        toImageViewer: vDefaultMessageNavigator.toImageViewer,
-        toVideoPlayer: vDefaultMessageNavigator.toVideoPlayer,
-        toSingleChatMessageInfo:
-            vDefaultMessageNavigator.toSingleChatMessageInfo,
-        toMessagePage: (context, vRoom) {
-          context.toPage(
-            MyProjectMessagePageWrapper(
-              room: vRoom,
-            ),
-          );
-        },
-        toBroadcastChatMessageInfo:
-            vDefaultMessageNavigator.toBroadcastChatMessageInfo,
-        toGroupChatMessageInfo: vDefaultMessageNavigator.toGroupChatMessageInfo,
-        toGroupSettings: (context, data) {
-          Get.toNamed(Routes.GROUP_SETTINGS, arguments: data);
-          print("Going to group $data");
-        },
-        toSingleSettings: (context, data, peerIdentifier) {
-          print("Going to toSingleSettings $data");
-        },
-        toBroadcastSettings: (context, data) {
-          Get.toNamed(Routes.BROADCAST_SETTINGS, arguments: data);
-        },
-        toUserProfilePage: (context, identifier) {
-          print("Going to toUserProfile $identifier");
-        },
-      ),
-    ),
+        roomNavigator: vDefaultRoomNavigator,
+        messageNavigator: VMessageNavigator(
+          toImageViewer: vDefaultMessageNavigator.toImageViewer,
+          toVideoPlayer: vDefaultMessageNavigator.toVideoPlayer,
+          toSingleChatMessageInfo:
+              vDefaultMessageNavigator.toSingleChatMessageInfo,
+          toMessagePage: (context, vRoom) {
+            context.toPage(
+              MyProjectMessagePageWrapper(
+                room: vRoom,
+              ),
+            );
+          },
+          toBroadcastChatMessageInfo:
+              vDefaultMessageNavigator.toBroadcastChatMessageInfo,
+          toGroupChatMessageInfo:
+              vDefaultMessageNavigator.toGroupChatMessageInfo,
+          toGroupSettings: (context, data) {
+            Get.toNamed(Routes.GROUP_SETTINGS, arguments: data);
+            print("Going to group $data");
+          },
+          toSingleSettings: (context, data, peerIdentifier) {
+            print("Going to toSingleSettings $data");
+          },
+          toBroadcastSettings: (context, data) {
+            Get.toNamed(Routes.BROADCAST_SETTINGS, arguments: data);
+          },
+          toUserProfilePage: (context, identifier) {
+            print("Going to toUserProfile $identifier");
+          },
+        ),
+        callNavigator: vDefaultCallNavigator),
   );
 }
 
@@ -80,7 +82,7 @@ Uri _getBaseUrl() {
     //   return Uri.parse("http://192.168.1.3:3001");
     // }
     //10.0.2.2
-    return Uri.parse("http://192.168.1.13:3001");
+    return Uri.parse("http://192.168.1.5:3001");
   }
   return Uri.parse("http://v_chat_endpoint:3001");
 }

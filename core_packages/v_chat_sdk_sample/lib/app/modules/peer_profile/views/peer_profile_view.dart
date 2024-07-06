@@ -55,7 +55,7 @@ class PeerProfileView extends GetView<PeerProfileController> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Center(child: controller.peerData.userName.h6),
+                  Center(child: controller.peerData.fullName.h6),
                   const SizedBox(
                     height: 20,
                   ),

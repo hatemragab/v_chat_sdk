@@ -131,7 +131,9 @@ class VRoomItem extends StatelessWidget {
                                         isMeSender: room.lastMessage.isMeSender,
                                       ),
                                     ),
-                                    const SizedBox(width: 5,),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
                                     //grey
                                     Flexible(
                                       child: RoomItemMsg(

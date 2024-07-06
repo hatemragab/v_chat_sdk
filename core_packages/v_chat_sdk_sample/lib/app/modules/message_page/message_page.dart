@@ -82,7 +82,7 @@ class MyProjectMessagePageWrapper extends StatelessWidget {
       ),
       vMessageConfig: VMessageConfig(
         googleMapsApiKey: "AzoisfXXXXXXXXXXXX",
-        isCallsAllowed: false,
+        isCallsAllowed: true,
       ),
     );
   }

@@ -699,6 +699,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_ringtone_player:
+    dependency: transitive
+    description:
+      name: flutter_ringtone_player
+      sha256: d0277a04e629a6582d776f5dcc2a879a733f7326ba073b872a9ccfbff9d9b51f
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0+3"
   flutter_test:
     dependency: "direct dev"
     description: flutter

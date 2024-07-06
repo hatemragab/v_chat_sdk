@@ -2,9 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'dart:convert';
-
-import 'package:v_chat_sdk_core/src/models/models.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 /// A model class that represents a new call.<br />
 class VNewCallModel {
@@ -17,18 +15,18 @@ class VNewCallModel {
   /// A boolean that indicates whether the call has video or not.<br />
   final bool withVideo;
 
-  /// An object that represents the identifier user of the call.<br />
-  final VIdentifierUser identifierUser;
+  /// An object that represents the peerId user of the call.<br />
+  final VBaseUser peerUser;
 
   /// A map that represents the payload of the call.<br />
-  final Map<String, dynamic> payload;
+  final Map<String, dynamic>? payload;
 
   /// Creates a new instance of [VNewCallModel].<br />
   const VNewCallModel({
     required this.roomId,
     required this.meetId,
     required this.withVideo,
-    required this.identifierUser,
+    required this.peerUser,
     required this.payload,
   });
 
@@ -39,7 +37,7 @@ class VNewCallModel {
       'meetId': meetId,
       'withVideo': withVideo,
       'payload': payload,
-      'userData': identifierUser.toMap(),
+      'userData': peerUser.toMap(),
     };
   }
 
@@ -49,8 +47,8 @@ class VNewCallModel {
       roomId: map['roomId'] as String,
       meetId: map['meetId'] as String,
       withVideo: map['withVideo'] as bool,
-      payload: jsonDecode(map['payload'] as String) as Map<String, dynamic>,
-      identifierUser: VIdentifierUser.fromMap(
+      payload: map['payload'] as Map<String, dynamic>?,
+      peerUser: VBaseUser.fromMap(
         map['userData'] as Map<String, dynamic>,
       ),
     );

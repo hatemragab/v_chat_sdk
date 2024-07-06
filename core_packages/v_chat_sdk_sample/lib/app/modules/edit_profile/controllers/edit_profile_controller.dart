@@ -23,7 +23,7 @@ class EditProfileController extends GetxController {
   @override
   void onInit() {
     userImage = user.imgAsPlatformSource;
-    nameController.text = user.userName;
+    nameController.text = user.fullName;
     super.onInit();
   }
 
@@ -37,7 +37,7 @@ class EditProfileController extends GetxController {
   void onSave() async {
     VAppAlert.showLoading(context: Get.context!);
     final name = nameController.text.toString();
-    user.userName = name;
+    user.fullName = name;
     // await repository.edit(user.toMap(), user.id);
     await AppPref.setMap(SStorageKeys.myProfile.name, user.toMap());
     Get.back();

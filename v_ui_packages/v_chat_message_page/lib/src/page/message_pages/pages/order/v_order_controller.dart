@@ -76,13 +76,19 @@ class VOrderController extends VBaseMessageController {
           : language.areYouWantToMakeVoiceCall,
     );
     if (res != 1) return;
-    VChatController.I.vNavigator.callNavigator?.toCaller(
+    VChatController.I.vNavigator.callNavigator?.toCall(
       context,
-      VCallerDto(
+      VCallDto(
         isVideoEnable: isVideo,
         roomId: vRoom.id,
-        peerImage: vRoom.thumbImage,
-        peerName: vRoom.title,
+        isCaller: true,
+        peerUser: VBaseUser(
+          vChatId: vRoom.peerId!,
+          fullName: vRoom.title,
+          userImages: VUserImage.fromSingleUrl(
+            vRoom.thumbImage,
+          ),
+        ),
       ),
     );
   }

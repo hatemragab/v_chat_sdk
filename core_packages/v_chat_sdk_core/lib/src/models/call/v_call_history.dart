@@ -10,6 +10,7 @@ class VCallHistory {
   final VIdentifierUser peerUser;
   final VMessageCallStatus callStatus;
   final String roomId;
+  final String id;
   final bool withVideo;
   final String? endAt;
   final String startAt;
@@ -18,7 +19,7 @@ class VCallHistory {
   ///
   /// - [peerUser]: The user on the other end of the call.
   /// - [callStatus]: The status of the call (e.g., answered, missed, rejected).
-  /// - [roomId]: The unique identifier of the room where the call took place.
+  /// - [roomId]: The unique peerId of the room where the call took place.
   /// - [withVideo]: Indicates whether the call was a video call.
   /// - [endAt]: The time when the call ended.
   /// - [startAt]: The time when the call started.
@@ -26,57 +27,26 @@ class VCallHistory {
     required this.peerUser,
     required this.callStatus,
     required this.roomId,
+    required this.id,
     required this.withVideo,
     this.endAt,
     required this.startAt,
   });
 
-  /// Compares two [VCallHistory] instances for equality.
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is VCallHistory &&
-        peerUser == other.peerUser &&
-        callStatus == other.callStatus &&
-        roomId == other.roomId &&
-        withVideo == other.withVideo &&
-        endAt == other.endAt &&
-        startAt == other.startAt;
+  String? get duration {
+    if (endAtDate == null) return null;
+    return endAtDate!.difference(startAtDate).inMinutes.toString();
   }
 
-  /// Returns a hash code for this instance.
-  @override
-  int get hashCode =>
-      peerUser.hashCode ^
-      callStatus.hashCode ^
-      roomId.hashCode ^
-      withVideo.hashCode ^
-      endAt.hashCode ^
-      startAt.hashCode;
+  DateTime get startAtDate => DateTime.parse(startAt).toLocal();
+
+  DateTime? get endAtDate =>
+      endAt == null ? null : DateTime.parse(endAt!).toLocal();
 
   /// Returns a string representation of this instance.
   @override
   String toString() {
     return 'VCallHistory{ peerUser: $peerUser, callStatus: $callStatus, roomId: $roomId, withVideo: $withVideo, endAt: $endAt, startAt: $startAt,}';
-  }
-
-  /// Returns a new [VCallHistory] instance with updated values.
-  VCallHistory copyWith({
-    VIdentifierUser? peerUser,
-    VMessageCallStatus? callStatus,
-    String? roomId,
-    bool? withVideo,
-    String? endAt,
-    String? startAt,
-  }) {
-    return VCallHistory(
-      peerUser: peerUser ?? this.peerUser,
-      callStatus: callStatus ?? this.callStatus,
-      roomId: roomId ?? this.roomId,
-      withVideo: withVideo ?? this.withVideo,
-      endAt: endAt ?? this.endAt,
-      startAt: startAt ?? this.startAt,
-    );
   }
 
   /// Converts this [VCallHistory] instance to a Map.
@@ -86,8 +56,9 @@ class VCallHistory {
       'callStatus': callStatus.name,
       'roomId': roomId,
       'withVideo': withVideo,
+      '_id': id,
       'endAt': endAt,
-      'startAt': startAt,
+      'createdAt': startAt,
     };
   }
 
@@ -99,9 +70,10 @@ class VCallHistory {
       callStatus: VMessageCallStatus.values
           .firstWhere((e) => e.name == map['callStatus']),
       roomId: map['roomId'] as String,
+      id: map['_id'] as String,
       withVideo: map['withVideo'] as bool,
       endAt: map['endAt'] as String?,
-      startAt: map['startAt'] as String,
+      startAt: map['createdAt'] as String,
     );
   }
 }

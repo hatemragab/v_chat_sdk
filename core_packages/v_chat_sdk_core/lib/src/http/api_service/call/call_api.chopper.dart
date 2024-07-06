@@ -40,6 +40,17 @@ final class _$CallApi extends CallApi {
   }
 
   @override
+  Future<Response<dynamic>> getAgoraAccess(String roomId) {
+    final Uri $url = Uri.parse('call/agora-access/${roomId}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> createCall(
     String roomId,
     Map<String, dynamic> body,
@@ -72,17 +83,6 @@ final class _$CallApi extends CallApi {
   }
 
   @override
-  Future<Response<dynamic>> cancelCall(String meetId) {
-    final Uri $url = Uri.parse('call/cancel/${meetId}');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
-    return client.send<dynamic, dynamic>($request);
-  }
-
-  @override
   Future<Response<dynamic>> rejectCall(String meetId) {
     final Uri $url = Uri.parse('call/reject/${meetId}');
     final Request $request = Request(
@@ -94,10 +94,32 @@ final class _$CallApi extends CallApi {
   }
 
   @override
-  Future<Response<dynamic>> endCall(String meetId) {
-    final Uri $url = Uri.parse('call/end/${meetId}');
+  Future<Response<dynamic>> endCallV2(String meetId) {
+    final Uri $url = Uri.parse('call/end/v2/${meetId}');
     final Request $request = Request(
       'POST',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> clearHistory() {
+    final Uri $url = Uri.parse('call/history/clear');
+    final Request $request = Request(
+      'DELETE',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> deleteOneHistory(String id) {
+    final Uri $url = Uri.parse('call/history/clear/${id}');
+    final Request $request = Request(
+      'DELETE',
       $url,
       client.baseUrl,
     );

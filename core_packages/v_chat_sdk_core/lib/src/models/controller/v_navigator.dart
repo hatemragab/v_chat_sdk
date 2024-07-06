@@ -118,16 +118,17 @@ class VMessageNavigator {
 class VCallNavigator {
   final Function(
     BuildContext context,
-    VCallerDto dto,
-  ) toCaller;
+    VCallDto dto,
+  ) toCall;
+
   final Function(
     BuildContext context,
     VNewCallModel callModel,
-  ) toCallee;
+  ) toPickUp;
 
   const VCallNavigator({
-    required this.toCaller,
-    required this.toCallee,
+    required this.toCall,
+    required this.toPickUp,
   });
 }
 

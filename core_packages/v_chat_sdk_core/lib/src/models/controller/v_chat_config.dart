@@ -43,6 +43,9 @@ class VChatConfig {
   /// Encryption hash key. Must be same as backend encrypt hash key and should not be changed.
   final String encryptHashKey;
 
+  /// Agora App ID. Required for video calls. get it from agora.io
+  final String? agoraAppId;
+
   /// Base URL of VChat. Example: [vchat.example.com].
   final Uri baseUrl;
 
@@ -105,6 +108,7 @@ class VChatConfig {
     this.enableEndToEndMessageEncryption = false,
     this.maxGroupMembers = 512,
     this.maxForward = 7,
+    this.agoraAppId,
     this.maxBroadcastMembers = 512,
     this.onReportUserPress,
   });

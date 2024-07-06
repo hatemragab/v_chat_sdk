@@ -1,3 +1,5 @@
+## 2.1.0
+- Support video and voice calls
 ## 2.0.0
 - Support flutter v 3.22 and above
 

@@ -23,3 +23,6 @@ add theming
 ## 1.1.0
 
 - update translation system
+
+## 2.1.0
+- Support video and voice calls

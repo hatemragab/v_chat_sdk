@@ -2,8 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'dart:convert';
-
 /// A class representing the details of an accepted call event.
 class VOnAcceptCall {
   /// The unique identifier of the room where the call took place.
@@ -13,7 +11,7 @@ class VOnAcceptCall {
   final String meetId;
 
   /// The peer's answer to the call offer as a Map of dynamic values.
-  final Map<String, dynamic> peerAnswer;
+  final Map<String, dynamic>? peerAnswer;
 
   /// Creates a new instance of [VOnAcceptCall].
   const VOnAcceptCall({
@@ -36,8 +34,7 @@ class VOnAcceptCall {
     return VOnAcceptCall(
       roomId: map['roomId'] as String,
       meetId: map['meetId'] as String,
-      peerAnswer:
-          jsonDecode(map['peerAnswer'] as String) as Map<String, dynamic>,
+      peerAnswer: map['peerAnswer'] as Map<String, dynamic>?,
     );
   }
 }
