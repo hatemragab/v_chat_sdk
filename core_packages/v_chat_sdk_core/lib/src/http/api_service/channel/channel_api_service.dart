@@ -71,17 +71,13 @@ class VChannelApiService {
     return true;
   }
 
-  Future<bool> stopRoomAutoTranslate({
-    required String roomId,
-  }) async {
+  Future<bool> stopRoomAutoTranslate({required String roomId}) async {
     final res = await _channelApiService!.stopRoomAutoTranslate(roomId);
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<bool> deleteRoom(
-    String roomId,
-  ) async {
+  Future<bool> deleteRoom(String roomId) async {
     final res = await _channelApiService!.deleteRoom(roomId);
     throwIfNotSuccess(res);
     return true;
@@ -99,29 +95,21 @@ class VChannelApiService {
     );
   }
 
-  Future<bool> deliverRoomMessages(
-    String roomId,
-  ) async {
+  Future<bool> deliverRoomMessages(String roomId) async {
     final res = await _channelApiService!.deliverRoomMessages(roomId);
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<VRoom> createBroadcast(
-    CreateBroadcastDto dto,
-  ) async {
+  Future<VRoom> createBroadcast(CreateBroadcastDto dto) async {
     final res = await _channelApiService!.createBroadcast(
       dto.toListOfPartValue(),
       dto.platformImage == null
           ? null
-          : await VPlatforms.getMultipartFile(
-              source: dto.platformImage!,
-            ),
+          : await VPlatforms.getMultipartFile(source: dto.platformImage!),
     );
     throwIfNotSuccess(res);
-    return VRoom.fromMap(
-      extractDataFromResponse(res),
-    );
+    return VRoom.fromMap(extractDataFromResponse(res));
   }
 
   Future<VMyBroadcastInfo> getBroadcastInfo(String roomId) async {
@@ -147,9 +135,7 @@ class VChannelApiService {
   }) async {
     final res = await _channelApiService!.updateBroadcastImage(
       roomId,
-      await VPlatforms.getMultipartFile(
-        source: file,
-      ),
+      await VPlatforms.getMultipartFile(source: file),
     );
     throwIfNotSuccess(res);
     return (res.body as Map<String, dynamic>)['data'] as String;
@@ -173,10 +159,9 @@ class VChannelApiService {
     required String roomId,
     required List<String> identifiers,
   }) async {
-    final res = await _channelApiService!.addParticipantsToBroadcast(
-      roomId,
-      {"identifiers": identifiers},
-    );
+    final res = await _channelApiService!.addParticipantsToBroadcast(roomId, {
+      "identifiers": identifiers,
+    });
     throwIfNotSuccess(res);
     return true;
   }
@@ -193,16 +178,12 @@ class VChannelApiService {
     return true;
   }
 
-  Future<VRoom> createGroup(
-    CreateGroupDto dto,
-  ) async {
+  Future<VRoom> createGroup(CreateGroupDto dto) async {
     final res = await _channelApiService!.createGroup(
       dto.toListOfPartValue(),
       dto.platformImage == null
           ? null
-          : await VPlatforms.getMultipartFile(
-              source: dto.platformImage!,
-            ),
+          : await VPlatforms.getMultipartFile(source: dto.platformImage!),
     );
     throwIfNotSuccess(res);
     return VRoom.fromMap(extractDataFromResponse(res));
@@ -224,8 +205,10 @@ class VChannelApiService {
     String roomId, {
     required VBaseFilter filter,
   }) async {
-    final res =
-        await _channelApiService!.getGroupMembers(roomId, filter.toMap());
+    final res = await _channelApiService!.getGroupMembers(
+      roomId,
+      filter.toMap(),
+    );
     throwIfNotSuccess(res);
     final list = extractDataFromResponse(res)['docs'] as List;
     final users = list
@@ -329,9 +312,7 @@ class VChannelApiService {
   }) async {
     final res = await _channelApiService!.updateGroupImage(
       roomId,
-      await VPlatforms.getMultipartFile(
-        source: file,
-      ),
+      await VPlatforms.getMultipartFile(source: file),
     );
     throwIfNotSuccess(res);
     return (res.body as Map<String, dynamic>)['data'] as String;
@@ -357,19 +338,14 @@ class VChannelApiService {
     final data = extractDataFromResponse(res);
     final docs = data['docs'] as List;
     return docs
-        .map(
-          (e) => MessageFactory.createBaseMessage(
-            e as Map<String, dynamic>,
-          ),
-        )
+        .map((e) => MessageFactory.createBaseMessage(e as Map<String, dynamic>))
         .toList();
   }
 
   Future<bool> updateRoomNickName(String roomId, String text) async {
-    final res = await _channelApiService!.updateRoomNickName(
-      roomId,
-      {"name": text},
-    );
+    final res = await _channelApiService!.updateRoomNickName(roomId, {
+      "name": text,
+    });
     throwIfNotSuccess(res);
     return true;
   }
@@ -427,8 +403,9 @@ class VChannelApiService {
     required String roomId,
     required List<String> ids,
   }) async {
-    final res = await _channelApiService!
-        .addParticipantsToGroup(roomId, {"identifiers": ids});
+    final res = await _channelApiService!.addParticipantsToGroup(roomId, {
+      "identifiers": ids,
+    });
     throwIfNotSuccess(res);
     return true;
   }
@@ -451,18 +428,12 @@ class VChannelApiService {
     required String roomId,
     required String peerIdentifier,
   }) async {
-    final res = await _channelApiService!.kickGroupUser(
-      roomId,
-      peerIdentifier,
-    );
+    final res = await _channelApiService!.kickGroupUser(roomId, peerIdentifier);
     throwIfNotSuccess(res);
     return true;
   }
 
-  static VChannelApiService init({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static VChannelApiService init({Uri? baseUrl, String? accessToken}) {
     _channelApiService ??= ChannelApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,

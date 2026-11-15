@@ -24,7 +24,7 @@ class ChooseMembersController extends GetxController {
 
   void onDone() {
     if (selected.isNotEmpty) {
-      Get.back(result: selected.value);
+      Get.back(result: selected.toList(growable: false));
     } else {
       VAppAlert.showErrorSnackBar(msg: "choose member", context: Get.context!);
     }

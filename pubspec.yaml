@@ -1,6 +1,124 @@
 name: v_chat_sdk
+publish_to: none
 
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: ^3.13.0
+
+workspace:
+  - core_packages/v_chat_receive_share
+  - core_packages/v_chat_sdk_core
+  - core_packages/v_chat_sdk_sample
+  - push_providers/v_chat_firebase_fcm
+  - push_providers/v_chat_firebase_fcm/example
+  - push_providers/v_chat_one_signal
+  - v_ui_packages/v_chat_message_page
+  - v_ui_packages/v_chat_room_page
+
 dev_dependencies:
-  melos: ^3.4.0
+  melos: ^8.3.0
+
+flutter:
+  uses-material-design: true
+
+melos:
+  repository: https://github.com/hatemragab/v_chat_sdk
+  scripts:
+    format:
+      exec:
+        command: >-
+          sh -ec 'dart format lib;
+          if [ -d test ]; then dart format test; fi;
+          if [ -d example/lib ]; then dart format example/lib; fi;
+          if [ -d example/test ]; then dart format example/test; fi'
+        concurrency: 1
+        failFast: true
+    analyze:
+      exec:
+        command: flutter analyze
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        flutter: true
+    test:
+      exec:
+        command: flutter test
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        dirExists: test
+        flutter: true
+    fix:
+      exec:
+        command: dart fix --apply
+        concurrency: 1
+        failFast: true
+    generate:
+      exec:
+        command: dart run build_runner build
+        concurrency: 1
+        failFast: true
+      packageFilters:
+        dependsOn: build_runner
+    add-license-header:
+      description: Add a license header to all necessary files.
+      run: |
+        addlicense -f header_template.txt \
+          --ignore "**/*.yml" \
+          --ignore "**/*.yaml" \
+          --ignore "**/*.xml" \
+          --ignore "**/*.g.dart" \
+          --ignore "**/*.sh" \
+          --ignore "**/*.html" \
+          --ignore "**/*.js" \
+          --ignore "**/*.ts" \
+          --ignore "**/*.g.h" \
+          --ignore "**/*.g.m" \
+          --ignore "**/*.rb" \
+          --ignore "**/*.txt" \
+          --ignore "**/*.cmake" \
+          --ignore "**/Runner/AppDelegate.swift" \
+          --ignore "**/Runner/MainFlutterWindow.swift" \
+          --ignore "**/Runner/Runner-Bridging-Header.h" \
+          --ignore "**/Runner/AppDelegate.h" \
+          --ignore "**/Runner/AppDelegate.m" \
+          --ignore "**/Runner/main.m" \
+          --ignore "**/MainActivity.kt" \
+          --ignore "**/MainActivity.java" \
+          --ignore "**/FlutterMultiDexApplication.java" \
+          --ignore "**/GeneratedPluginRegistrant.swift" \
+          --ignore "**/Pods/**" \
+          --ignore "**/flutter/generated_plugin_registrant.h" \
+          --ignore "**/flutter/generated_plugin_registrant.cc" \
+          .
+    check-license-header:
+      description: Check license headers without modifying files.
+      run: |
+        addlicense -f header_template.txt \
+          --check \
+          --ignore "**/*.yml" \
+          --ignore "**/*.yaml" \
+          --ignore "**/*.xml" \
+          --ignore "**/*.g.dart" \
+          --ignore "**/*.sh" \
+          --ignore "**/*.html" \
+          --ignore "**/*.js" \
+          --ignore "**/*.ts" \
+          --ignore "**/*.g.h" \
+          --ignore "**/*.g.m" \
+          --ignore "**/*.rb" \
+          --ignore "**/*.txt" \
+          --ignore "**/*.cmake" \
+          --ignore "**/Runner/AppDelegate.swift" \
+          --ignore "**/Runner/MainFlutterWindow.swift" \
+          --ignore "**/Runner/Runner-Bridging-Header.h" \
+          --ignore "**/Runner/AppDelegate.h" \
+          --ignore "**/Runner/AppDelegate.m" \
+          --ignore "**/Runner/main.m" \
+          --ignore "**/MainActivity.kt" \
+          --ignore "**/MainActivity.java" \
+          --ignore "**/FlutterMultiDexApplication.java" \
+          --ignore "**/GeneratedPluginRegistrant.swift" \
+          --ignore "**/Pods/**" \
+          --ignore "**/flutter/generated_plugin_registrant.h" \
+          --ignore "**/flutter/generated_plugin_registrant.cc" \
+          .

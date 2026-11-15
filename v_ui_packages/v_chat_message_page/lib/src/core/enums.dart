@@ -9,7 +9,7 @@ enum VMessageItemClickRes {
   info,
   delete,
   copy,
-  download
+  download,
 }
 
 enum LoadMoreStatus { loading, loaded, error, completed }

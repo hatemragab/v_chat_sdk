@@ -6,11 +6,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:eraser/eraser.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+
 import 'package:http/http.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
@@ -66,8 +67,10 @@ class VChatFcmProver extends VChatPushProviderBase {
         print("-----");
       }
       if (kDebugMode) {
-        print(err.toString() ==
-            "Google Play services missing or without correct permission.");
+        print(
+          err.toString() ==
+              "Google Play services missing or without correct permission.",
+        );
       }
       log("", stackTrace: trac, error: err, name: "V_CHAT_FCM");
     }
@@ -87,8 +90,7 @@ class VChatFcmProver extends VChatPushProviderBase {
         badge: true,
         alert: true,
         criticalAlert: true,
-      ))
-          .authorizationStatus;
+      )).authorizationStatus;
       if (status == AuthorizationStatus.authorized) {
         _initStreams();
       }
@@ -99,45 +101,40 @@ class VChatFcmProver extends VChatPushProviderBase {
 
   void _initStreams() {
     close();
-    _onTokenRefresh = FirebaseMessaging.instance.onTokenRefresh.listen(
-      (event) {
-        _vEventBusSingleton.fire(VOnUpdateNotificationsToken(event));
-      },
-    );
+    _onTokenRefresh = FirebaseMessaging.instance.onTokenRefresh.listen((event) {
+      _vEventBusSingleton.fire(VOnUpdateNotificationsToken(event));
+    });
     _onNewMessage = FirebaseMessaging.onMessage.listen((remoteMsg) {
       final String? fromVChat = remoteMsg.data['fromVChat'];
       final String? message = remoteMsg.data['vMessage'];
       // final String? type = remoteMsg.data['type'];
       if (fromVChat != null && message != null) {
-        final msg = MessageFactory.createBaseMessage(
-          jsonDecode(message),
-        );
+        final msg = MessageFactory.createBaseMessage(jsonDecode(message));
         if (msg.isMeSender) return;
-        _vEventBusSingleton.fire(VOnNewNotifications(
-          message: msg,
-        ));
+        _vEventBusSingleton.fire(VOnNewNotifications(message: msg));
       }
     });
-    _onMsgClicked =
-        FirebaseMessaging.onMessageOpenedApp.listen((remoteMsg) async {
+    _onMsgClicked = FirebaseMessaging.onMessageOpenedApp.listen((
+      remoteMsg,
+    ) async {
       final String? fromVChat = remoteMsg.data['fromVChat'];
       final String? message = remoteMsg.data['vMessage'];
 
       if (fromVChat != null && message != null) {
-        final msg = MessageFactory.createBaseMessage(
-          jsonDecode(message),
-        );
+        final msg = MessageFactory.createBaseMessage(jsonDecode(message));
         final room = await _getRoom(msg.roomId);
         if (room == null) return;
-        _vEventBusSingleton
-            .fire(VOnNotificationsClickedEvent(message: msg, room: room));
+        _vEventBusSingleton.fire(
+          VOnNotificationsClickedEvent(message: msg, room: room),
+        );
       }
     });
   }
 
   Future<VRoom?> _getRoom(String roomId) async {
-    return VChatController.I.nativeApi.local.room
-        .getOneWithLastMessageByRoomId(roomId);
+    return VChatController.I.nativeApi.local.room.getOneWithLastMessageByRoomId(
+      roomId,
+    );
   }
 
   Future<VBaseMessage?> _checkIfAppOpenFromNotification() async {
@@ -168,7 +165,7 @@ class VChatFcmProver extends VChatPushProviderBase {
   @override
   Future<void> cleanAll({int? notificationId}) async {
     await Eraser.clearAllAppNotifications();
-    FlutterAppBadger.removeBadge();
+    AppBadgePlus.updateBadge(0);
   }
 }
 
@@ -177,8 +174,8 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final nativeLocal = VLocalNativeApi();
   await nativeLocal.init();
   final number = await nativeLocal.room.getTotalUnReadCount();
-  if (await FlutterAppBadger.isAppBadgeSupported()) {
-    FlutterAppBadger.updateBadgeCount(number);
+  if (VPlatforms.isMobile) {
+    await AppBadgePlus.updateBadge(number);
   }
   await VAppPref.init();
   final String? fromVChat = message.data['fromVChat'];
@@ -209,13 +206,11 @@ Future<void> vFirebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future setDeliverForThisRoom(String roomId, String token) async {
   final baseUrl = VAppPref.getStringOrNullKey("vBaseUrl");
   final res = await patch(
-    Uri.parse(
-      "$baseUrl/channel/$roomId/deliver",
-    ),
+    Uri.parse("$baseUrl/channel/$roomId/deliver"),
     headers: {
       'authorization': "Bearer $token",
       "clint-version": "2.0.0",
-      "Accept-Language": "en"
+      "Accept-Language": "en",
     },
   );
   if (res.statusCode != 200) {

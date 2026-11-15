@@ -18,8 +18,11 @@ class HomeController extends GetxController {
 
   void updateIndex(int i) {
     tabIndex = i;
-    pageController.animateToPage(i,
-        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    pageController.animateToPage(
+      i,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.ease,
+    );
     update();
   }
 

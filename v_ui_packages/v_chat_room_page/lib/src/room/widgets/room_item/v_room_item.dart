@@ -86,9 +86,7 @@ class VRoomItem extends StatelessWidget {
                     isOnline: room.isOnline,
                     size: 60,
                   ),
-                  const SizedBox(
-                    width: 12,
-                  ),
+                  const SizedBox(width: 12),
                   Flexible(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,13 +94,11 @@ class VRoomItem extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(
-                              child: ChatTitle(title: room.title),
-                            ),
+                            Flexible(child: ChatTitle(title: room.title)),
                             ChatLastMsgTime(
                               yesterdayLabel: language.yesterdayLabel,
                               lastMessageTime: room.lastMessageTime,
-                            )
+                            ),
                           ],
                         ),
                         const SizedBox.shrink(),
@@ -122,18 +118,16 @@ class VRoomItem extends StatelessWidget {
                                       model: MessageStatusIconDataModel(
                                         isAllDeleted:
                                             room.lastMessage.allDeletedAt !=
-                                                null,
+                                            null,
                                         isSeen: room.lastMessage.seenAt != null,
                                         isDeliver:
                                             room.lastMessage.deliveredAt !=
-                                                null,
+                                            null,
                                         emitStatus: room.lastMessage.emitStatus,
                                         isMeSender: room.lastMessage.isMeSender,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
+                                    const SizedBox(width: 5),
                                     //grey
                                     Flexible(
                                       child: RoomItemMsg(
@@ -143,7 +137,7 @@ class VRoomItem extends StatelessWidget {
                                         language: language.vMessageInfoTrans,
                                         isBold: false,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               )
@@ -174,12 +168,12 @@ class VRoomItem extends StatelessWidget {
                                 ChatMuteWidget(isMuted: room.isMuted),
                                 ChatUnReadWidget(unReadCount: room.unReadCount),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
       ),

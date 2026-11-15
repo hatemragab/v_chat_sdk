@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:flutter_parsed_text/flutter_parsed_text.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../v_chat/auto_direction.dart';
 import '../../../v_chat/string_utils.dart';
@@ -70,17 +69,10 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
       fontWeight: FontWeight.w400,
     );
     if (widget.isOneLine) {
-      return _renderText(
-        blueTheme: blueTheme,
-        maxLine: 1,
-        text: firstHalf,
-      );
+      return _renderText(blueTheme: blueTheme, maxLine: 1, text: firstHalf);
     }
     if (secondHalf.isEmpty) {
-      return _renderText(
-        blueTheme: blueTheme,
-        text: firstHalf,
-      );
+      return _renderText(blueTheme: blueTheme, text: firstHalf);
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -96,13 +88,9 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
             });
           },
           child: isShowMoreEnabled
-              ? const Icon(
-                  PhosphorIcons.arrowCircleDown,
-                )
-              : const Icon(
-                  PhosphorIcons.arrowCircleUp,
-                ),
-        )
+              ? const Icon(Icons.arrow_circle_down_outlined)
+              : const Icon(Icons.arrow_circle_up_outlined),
+        ),
       ],
     );
   }
@@ -126,10 +114,7 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
             MatchText(
               pattern: r"\[(@[^:]+):([^\]]+)\]",
               style: blueTheme,
-              renderText: ({
-                required String str,
-                required String pattern,
-              }) {
+              renderText: ({required String str, required String pattern}) {
                 final map = <String, String>{};
                 final match = VStringUtils.vMentionRegExp.firstMatch(str);
                 map['display'] = match!.group(1)!;
@@ -153,11 +138,12 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
               ),
             if (widget.onPhonePress != null)
               MatchText(
-                  type: ParsedType.PHONE,
-                  style: blueTheme,
-                  onTap: (url) {
-                    widget.onPhonePress!(url);
-                  }),
+                type: ParsedType.PHONE,
+                style: blueTheme,
+                onTap: (url) {
+                  widget.onPhonePress!(url);
+                },
+              ),
             if (widget.onLinkPress != null)
               MatchText(
                 pattern: regexLink,

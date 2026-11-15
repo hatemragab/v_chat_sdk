@@ -29,8 +29,10 @@ class BanWidget extends StatelessWidget {
             Text(
               youDontHaveAccess,
               style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
-            )
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
 
             // if (isMy)
             //   InkWell(

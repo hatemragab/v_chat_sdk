@@ -9,15 +9,12 @@ import 'package:textless/textless.dart';
 import '../controllers/splash_controller.dart';
 
 class SplashView extends GetView<SplashController> {
-  const SplashView({Key? key}) : super(key: key);
+  const SplashView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("V Chat sdk v2"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("V Chat sdk v2"), centerTitle: true),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,9 +29,7 @@ class SplashView extends GetView<SplashController> {
                   width: 150,
                   fit: BoxFit.cover,
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,10 +39,8 @@ class SplashView extends GetView<SplashController> {
                       width: 20,
                       child: CircularProgressIndicator.adaptive(),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    "V 2.0.0".text
+                    const SizedBox(width: 20),
+                    "V 2.0.0".text,
                   ],
                 ),
               ],

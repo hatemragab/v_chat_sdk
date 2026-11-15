@@ -3,6 +3,7 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:v_chat_message_page/src/core/core.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
@@ -36,19 +37,17 @@ class MessageBodyStateWidget extends StatelessWidget {
             onDragDone: (files) => controller.onSubmitMedia(context, files),
             child: ValueListenableBuilder<List<VBaseMessage>>(
               valueListenable: controller,
-              builder: (_, value, __) {
+              builder: (_, value, _) {
                 return Scrollbar(
                   interactive: true,
                   thickness: 5,
                   controller: controller.scrollController,
                   child: ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: VPlatforms.isWeb ? 12 : 10,
-                    ),
+                    scrollCacheExtent: ScrollCacheExtent.pixels(300),
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: VPlatforms.isWeb ? 12 : 10),
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     controller: controller.scrollController,
-                    // key: const PageStorageKey("VListViewItems"),
-                    cacheExtent: 300,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Builder(
@@ -69,8 +68,8 @@ class MessageBodyStateWidget extends StatelessWidget {
                                 controller: controller.scrollController,
                                 index: index,
                                 highlightColor: context.isDark
-                                    ? Colors.white.withOpacity(0.2)
-                                    : Colors.black.withOpacity(0.2),
+                                    ? Colors.white.withValues(alpha: 0.2)
+                                    : Colors.black.withValues(alpha: 0.2),
                                 child: VMessageItem(
                                   onTap: controller.onMessageTap,
                                   language: language,
@@ -95,8 +94,10 @@ class MessageBodyStateWidget extends StatelessWidget {
                             },
                           );
 
-                          final isTopMessage =
-                              _isTopMessage(value.length, index);
+                          final isTopMessage = _isTopMessage(
+                            value.length,
+                            index,
+                          );
                           final dividerDate = _getDateDiff(
                             bigDate: message.createdAtDate,
                             smallDate: isTopMessage

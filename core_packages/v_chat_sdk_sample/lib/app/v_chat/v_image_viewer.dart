@@ -8,18 +8,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:v_chat_message_page/src/v_chat/v_app_alert.dart';
-import 'package:v_chat_message_page/src/v_chat/v_file.dart';
 import 'package:v_chat_sdk_sample/app/v_chat/v_safe_api_call.dart';
 import 'package:v_platform/v_platform.dart';
+
+import 'v_app_alert.dart';
+import 'v_file.dart';
 
 class VImageViewer extends StatefulWidget {
   final VPlatformFile platformFileSource;
 
-  const VImageViewer({
-    Key? key,
-    required this.platformFileSource,
-  }) : super(key: key);
+  const VImageViewer({super.key, required this.platformFileSource});
 
   @override
   State<VImageViewer> createState() => _VImageViewerState();
@@ -30,7 +28,8 @@ class _VImageViewerState extends State<VImageViewer> {
   Widget build(BuildContext context) {
     if (!widget.platformFileSource.isContentImage) {
       return Material(
-          child: Text("the file must be image ${widget.platformFileSource}"));
+        child: Text("the file must be image ${widget.platformFileSource}"),
+      );
     }
     return Dismissible(
       key: const Key('photo_view_gallery'),
@@ -44,9 +43,7 @@ class _VImageViewerState extends State<VImageViewer> {
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        body: PhotoView(
-          imageProvider: _getImageProvider(),
-        ),
+        body: PhotoView(imageProvider: _getImageProvider()),
         floatingActionButton: widget.platformFileSource.isFromUrl
             ? FloatingActionButton(
                 child: const Icon(Icons.save_alt),
@@ -65,13 +62,13 @@ class _VImageViewerState extends State<VImageViewer> {
                     },
                     onSuccess: (url) async {
                       VAppAlert.showSuccessSnackBar(
-                        msg: "successfullyDownloadedInLabel" + url,
+                        msg: "successfullyDownloadedInLabel$url",
                         context: context,
                       );
                     },
                     onError: (exception, trace) {
                       if (kDebugMode) {
-                        print(exception);
+                        debugPrint(exception.toString());
                       }
                     },
                   );
@@ -90,8 +87,8 @@ class _VImageViewerState extends State<VImageViewer> {
       return MemoryImage(Uint8List.fromList(widget.platformFileSource.bytes!));
     }
     return CachedNetworkImageProvider(
-      widget.platformFileSource.url!,
-      cacheKey: widget.platformFileSource.getUrlPath,
+      widget.platformFileSource.networkUrl!,
+      cacheKey: widget.platformFileSource.getCachedUrlKey,
     );
   }
 }

@@ -24,9 +24,7 @@ class NativeRemoteSocketIo {
 
   /// Emits an event to fetch the online status of the given ids.
   void emitGetMyOnline(List<Map<String, dynamic>> ids) =>
-      SocketController.instance.emitGetMyOnline(
-        jsonEncode(ids),
-      );
+      SocketController.instance.emitGetMyOnline(jsonEncode(ids));
 
   /// Emits an event to update the typing status of a room with the given [model].
   void emitUpdateRoomStatus(VSocketRoomTypingModel model) =>
@@ -37,15 +35,9 @@ class NativeRemoteSocketIo {
       .emitDeliverRoomMessages(jsonEncode({"roomId": roomId}));
 
   /// Emits an RTC Ice event with the given [data] and [meetId].
-  void emitRtcIce(
-    Map<String, dynamic> data,
-    String meetId,
-  ) =>
-      SocketController.instance.emitRtcIce(
-        jsonEncode(
-          {"data": data, "meetId": meetId},
-        ),
-      );
+  void emitRtcIce(Map<String, dynamic> data, String meetId) => SocketController
+      .instance
+      .emitRtcIce(jsonEncode({"data": data, "meetId": meetId}));
 
   /// Emits an event to mark all messages in a room as seen.
   void emitSeenRoomMessages(String roomId) => SocketController.instance

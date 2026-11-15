@@ -11,67 +11,50 @@ class RoomApi {
 
   VChannelApiService get _channelApiService => _vNativeApi.remote.room;
 
-  RoomApi(
-    this._vNativeApi,
-  );
+  RoomApi(this._vNativeApi);
 
   /// single room apis and common ----------------------------------------------
-  Future<VRoom> getPeerRoom({
-    required String peerIdentifier,
-  }) async {
+  Future<VRoom> getPeerRoom({required String peerIdentifier}) {
     return _channelApiService.getPeerRoom(peerIdentifier);
   }
 
-  Future openChatWith({
-    required String peerIdentifier,
-  }) async {
+  Future openChatWith({required String peerIdentifier}) async {
     final buildContext = VChatController.I.navigatorKey.currentContext!;
-    final localRoom =
-        await _vNativeApi.local.room.getRoomByPeerId(peerIdentifier);
+    final localRoom = await _vNativeApi.local.room.getRoomByPeerId(
+      peerIdentifier,
+    );
     if (localRoom != null) {
-      VChatController.I.vNavigator.messageNavigator
-          .toMessagePage(buildContext, localRoom);
+      VChatController.I.vNavigator.messageNavigator.toMessagePage(
+        buildContext,
+        localRoom,
+      );
     } else {
       final apiRoom = await _vNativeApi.remote.room.getPeerRoom(peerIdentifier);
-      VChatController.I.vNavigator.messageNavigator
-          .toMessagePage(buildContext, apiRoom);
+      VChatController.I.vNavigator.messageNavigator.toMessagePage(
+        buildContext,
+        apiRoom,
+      );
     }
   }
 
-  Future<bool> deleteRoom(
-    String roomId,
-  ) async {
+  Future<bool> deleteRoom(String roomId) async {
     await _vNativeApi.local.room.deleteRoom(roomId);
     await _vNativeApi.remote.room.deleteRoom(roomId);
     return true;
   }
 
-  Future<bool> unMuteRoomNotification(
-    String roomId,
-  ) async {
-    await _vNativeApi.remote.room.unMuteRoomNotification(
-      roomId: roomId,
-    );
+  Future<bool> unMuteRoomNotification(String roomId) async {
+    await _vNativeApi.remote.room.unMuteRoomNotification(roomId: roomId);
     await _vNativeApi.local.room.updateRoomIsMuted(
-      VUpdateRoomMuteEvent(
-        roomId: roomId,
-        isMuted: false,
-      ),
+      VUpdateRoomMuteEvent(roomId: roomId, isMuted: false),
     );
     return true;
   }
 
-  Future<bool> muteRoomNotification(
-    String roomId,
-  ) async {
-    await _vNativeApi.remote.room.muteRoomNotification(
-      roomId: roomId,
-    );
+  Future<bool> muteRoomNotification(String roomId) async {
+    await _vNativeApi.remote.room.muteRoomNotification(roomId: roomId);
     await _vNativeApi.local.room.updateRoomIsMuted(
-      VUpdateRoomMuteEvent(
-        roomId: roomId,
-        isMuted: true,
-      ),
+      VUpdateRoomMuteEvent(roomId: roomId, isMuted: true),
     );
     return true;
   }
@@ -126,28 +109,18 @@ class RoomApi {
     );
   }
 
-  Future<VMyGroupInfo> getGroupVMyGroupInfo({
-    required String roomId,
-  }) {
-    return _vNativeApi.remote.room.getMyGroupInfo(
-      roomId,
-    );
+  Future<VMyGroupInfo> getGroupVMyGroupInfo({required String roomId}) {
+    return _vNativeApi.remote.room.getMyGroupInfo(roomId);
   }
 
-  Future<bool> leaveGroup({
-    required String roomId,
-  }) async {
+  Future<bool> leaveGroup({required String roomId}) async {
     await _vNativeApi.remote.room.leaveGroup(roomId);
     await _vNativeApi.local.room.deleteRoom(roomId);
     return true;
   }
 
-  Future<VRoom> createGroup({
-    required CreateGroupDto dto,
-  }) {
-    return _vNativeApi.remote.room.createGroup(
-      dto,
-    );
+  Future<VRoom> createGroup({required CreateGroupDto dto}) {
+    return _vNativeApi.remote.room.createGroup(dto);
   }
 
   Future<bool> updateGroupExtraData({
@@ -160,10 +133,7 @@ class RoomApi {
     );
   }
 
-  Future<bool> addParticipantsToGroup(
-    String roomId,
-    List<String> identifiers,
-  ) {
+  Future<bool> addParticipantsToGroup(String roomId, List<String> identifiers) {
     return _vNativeApi.remote.room.addParticipantsToGroup(
       roomId: roomId,
       ids: identifiers,
@@ -174,10 +144,7 @@ class RoomApi {
     String roomId, {
     VBaseFilter? filter,
   }) {
-    return _vNativeApi.remote.room.getGroupMembers(
-      roomId,
-      filter: filter,
-    );
+    return _vNativeApi.remote.room.getGroupMembers(roomId, filter: filter);
   }
 
   Future<List<VMessageStatusModel>> getMessageStatusForGroup({
@@ -206,12 +173,8 @@ class RoomApi {
 
   /// broadcast room apis ----------------------------------------------
 
-  Future<VRoom> createBroadcast({
-    required CreateBroadcastDto dto,
-  }) {
-    return _vNativeApi.remote.room.createBroadcast(
-      dto,
-    );
+  Future<VRoom> createBroadcast({required CreateBroadcastDto dto}) {
+    return _vNativeApi.remote.room.createBroadcast(dto);
   }
 
   Future<List<VBroadcastMember>> getBroadcastMembers(
@@ -278,12 +241,8 @@ class RoomApi {
     );
   }
 
-  Future<VMyBroadcastInfo> getBroadcastMyInfo({
-    required String roomId,
-  }) {
-    return _vNativeApi.remote.room.getBroadcastInfo(
-      roomId,
-    );
+  Future<VMyBroadcastInfo> getBroadcastMyInfo({required String roomId}) {
+    return _vNativeApi.remote.room.getBroadcastInfo(roomId);
   }
 
   //-------calls
@@ -299,9 +258,7 @@ class RoomApi {
       await MessageFactory.createUploadMessage(
         VCustomMessage.buildMessage(
           roomId: roomId,
-          data: VCustomMsgData(
-            data: data,
-          ),
+          data: VCustomMsgData(data: data),
           content: "V Custom Message",
         ),
       ),

@@ -7,9 +7,7 @@ import 'package:v_chat_sdk_core/src/models/v_app_event.dart';
 class VAppLifeCycle extends VAppEvent {
   final bool isGoBackground;
 
-  const VAppLifeCycle({
-    required this.isGoBackground,
-  });
+  const VAppLifeCycle({required this.isGoBackground});
 
   @override
   List<Object?> get props => [isGoBackground];

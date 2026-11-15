@@ -70,7 +70,7 @@ class _VBroadcastViewState extends State<VBroadcastView> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ValueListenableBuilder<BroadcastAppBarStateModel>(
           valueListenable: controller.broadcastAppBarController,
-          builder: (_, value, __) {
+          builder: (_, value, _) {
             if (value.isSearching) {
               return VSearchAppBare(
                 onClose: controller.onCloseSearch,
@@ -108,13 +108,8 @@ class _VBroadcastViewState extends State<VBroadcastView> {
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
-            const SizedBox(
-              height: 5,
-            ),
-            InputWidgetState(
-              controller: controller,
-              language: widget.language,
-            )
+            const SizedBox(height: 5),
+            InputWidgetState(controller: controller, language: widget.language),
           ],
         ),
       ),

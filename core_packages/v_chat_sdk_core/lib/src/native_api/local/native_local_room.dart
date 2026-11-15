@@ -26,7 +26,7 @@ class NativeLocalRoom {
   }
 
   /// Fetches rooms along with their last message from the local room repository.
-  Future<List<VRoom>> getRooms({int limit = 100}) async {
+  Future<List<VRoom>> getRooms({int limit = 100}) {
     unawaited(_reloadUnreadCounter());
     return _roomRepo.getRoomsWithLastMessage(limit: limit);
   }
@@ -75,8 +75,9 @@ class NativeLocalRoom {
       return 1;
     }
 
-    await _localMessage
-        .cacheRoomMessages(rooms.map((e) => e.lastMessage).toList());
+    await _localMessage.cacheRoomMessages(
+      rooms.map((e) => e.lastMessage).toList(),
+    );
     await _roomRepo.insertMany(rooms);
     await _reloadUnreadCounter();
     return 1;
@@ -86,8 +87,10 @@ class NativeLocalRoom {
   ///
   /// Emits a [VUpdateRoomTypingEvent] on successful update.
   Future<int> updateRoomTyping(VSocketRoomTypingModel typing) async {
-    final event =
-        VUpdateRoomTypingEvent(roomId: typing.roomId, typingModel: typing);
+    final event = VUpdateRoomTypingEvent(
+      roomId: typing.roomId,
+      typingModel: typing,
+    );
     _emitter.fire(event);
     return 1;
   }
@@ -109,13 +112,13 @@ class NativeLocalRoom {
   }
 
   /// Updates room name based on the given [event].
-  Future<int> updateRoomName(VUpdateRoomNameEvent event) async {
+  Future<int> updateRoomName(VUpdateRoomNameEvent event) {
     _emitter.fire(event);
     return _roomRepo.updateName(event);
   }
 
   /// Updates room image based on the given [event].
-  Future<int> updateRoomImage(VUpdateRoomImageEvent event) async {
+  Future<int> updateRoomImage(VUpdateRoomImageEvent event) {
     _emitter.fire(event);
     return _roomRepo.updateImage(event);
   }
@@ -139,20 +142,17 @@ class NativeLocalRoom {
   }
 
   /// Updates room mute status based on the given [event].
-  Future<int> updateRoomIsMuted(VUpdateRoomMuteEvent event) async {
+  Future<int> updateRoomIsMuted(VUpdateRoomMuteEvent event) {
     _emitter.fire(event);
     return _roomRepo.updateIsMuted(event);
   }
 
   /// Searches for rooms in the local room repository with a matching [text].
-  Future<List<VRoom>> searchRoom({
-    required String text,
-    int limit = 20,
-  }) async =>
+  Future<List<VRoom>> searchRoom({required String text, int limit = 20}) =>
       _roomRepo.search(text, limit, null);
 
   /// Fetches a room by its peerId from the local room repository.
-  Future<VRoom?> getRoomByPeerId(String peerId) async =>
+  Future<VRoom?> getRoomByPeerId(String peerId) =>
       _roomRepo.getOneByPeerId(peerId);
 
   /// Deletes a room with the given [roomId] from the local room repository.

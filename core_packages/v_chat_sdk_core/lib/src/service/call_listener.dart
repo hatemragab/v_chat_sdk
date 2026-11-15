@@ -9,11 +9,7 @@ class CallListener {
   final VChatConfig vChatConfig;
   final VNavigator vNavigator;
 
-  CallListener(
-    this.nativeApi,
-    this.vChatConfig,
-    this.vNavigator,
-  ) {
+  CallListener(this.nativeApi, this.vChatConfig, this.vNavigator) {
     _init();
   }
 

@@ -34,9 +34,7 @@ class _VSearchAppBareState extends State<VSearchAppBare> {
     return AppBar(
       centerTitle: false,
       titleSpacing: 0,
-      leading: const SizedBox(
-        width: 1,
-      ),
+      leading: const SizedBox(width: 1),
       automaticallyImplyLeading: false,
       title: ListTile(
         contentPadding: EdgeInsets.zero,
@@ -52,7 +50,7 @@ class _VSearchAppBareState extends State<VSearchAppBare> {
         ),
       ),
       actions: [
-        IconButton(onPressed: widget.onClose, icon: const Icon(Icons.close))
+        IconButton(onPressed: widget.onClose, icon: const Icon(Icons.close)),
       ],
     );
   }

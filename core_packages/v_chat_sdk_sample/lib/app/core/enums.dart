@@ -12,10 +12,4 @@ enum SStorageKeys {
   clintVersion,
 }
 
-enum ApiCallStatus {
-  loading,
-  success,
-  error,
-  empty,
-  holding,
-}
+enum ApiCallStatus { loading, success, error, empty, holding }

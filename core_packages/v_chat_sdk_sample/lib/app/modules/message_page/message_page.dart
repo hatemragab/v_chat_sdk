@@ -7,10 +7,7 @@ import '../../../generated/l10n.dart';
 class MyProjectMessagePageWrapper extends StatelessWidget {
   final VRoom room;
 
-  const MyProjectMessagePageWrapper({
-    Key? key,
-    required this.room,
-  }) : super(key: key);
+  const MyProjectMessagePageWrapper({super.key, required this.room});
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +55,12 @@ class MyProjectMessagePageWrapper extends StatelessWidget {
           files: S.of(context).files,
           shareMediaAndLocation: S.of(context).shareMediaAndLocation,
           textFieldHint: S.of(context).textFieldHint,
-          thereIsFileHasSizeBiggerThanAllowedSize:
-              S.of(context).thereIsFileHasSizeBiggerThanAllowedSize,
-          thereIsVideoSizeBiggerThanAllowedSize:
-              S.of(context).thereIsVideoSizeBiggerThanAllowedSize,
+          thereIsFileHasSizeBiggerThanAllowedSize: S
+              .of(context)
+              .thereIsFileHasSizeBiggerThanAllowedSize,
+          thereIsVideoSizeBiggerThanAllowedSize: S
+              .of(context)
+              .thereIsVideoSizeBiggerThanAllowedSize,
           location: S.of(context).location,
           media: S.of(context).media,
         ),

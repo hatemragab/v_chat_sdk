@@ -5,11 +5,9 @@
 class VMyBroadcastInfo {
   final int totalUsers;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  const VMyBroadcastInfo({
-    required this.totalUsers,
-  });
+  const VMyBroadcastInfo({required this.totalUsers});
 
   VMyBroadcastInfo.empty() : totalUsers = 0;
 
@@ -28,25 +26,17 @@ class VMyBroadcastInfo {
     return 'MyBroadcastInfo{ totalUsers: $totalUsers,}';
   }
 
-  VMyBroadcastInfo copyWith({
-    int? totalUsers,
-  }) {
-    return VMyBroadcastInfo(
-      totalUsers: totalUsers ?? this.totalUsers,
-    );
+  VMyBroadcastInfo copyWith({int? totalUsers}) {
+    return VMyBroadcastInfo(totalUsers: totalUsers ?? this.totalUsers);
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'totalUsers': totalUsers,
-    };
+    return {'totalUsers': totalUsers};
   }
 
   factory VMyBroadcastInfo.fromMap(Map<String, dynamic> map) {
-    return VMyBroadcastInfo(
-      totalUsers: map['totalUsers'] as int,
-    );
+    return VMyBroadcastInfo(totalUsers: map['totalUsers'] as int);
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

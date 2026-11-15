@@ -30,20 +30,13 @@ class GroupHeader extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            VCircleAvatar(
-              fullUrl: senderImage,
-              radius: 10,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
+            VCircleAvatar(fullUrl: senderImage, radius: 10),
+            const SizedBox(width: 5),
             Text(
               senderName,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                  ),
-            )
+              style: Theme.of(context).textTheme.bodySmall!
+                  .copyWith(color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),

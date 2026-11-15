@@ -51,17 +51,20 @@ class MessageGroupStatusController extends ValueNotifier<MessageStatusState> {
       },
       request: () async {
         final x = MessageStatusState();
-        x.seen.addAll(await VChatController.I.roomApi.getMessageStatusForGroup(
-          roomId: message.roomId,
-          messageId: message.id,
-          isSeen: true,
-        ));
-        x.deliver
-            .addAll(await VChatController.I.roomApi.getMessageStatusForGroup(
-          roomId: message.roomId,
-          messageId: message.id,
-          isSeen: false,
-        ));
+        x.seen.addAll(
+          await VChatController.I.roomApi.getMessageStatusForGroup(
+            roomId: message.roomId,
+            messageId: message.id,
+            isSeen: true,
+          ),
+        );
+        x.deliver.addAll(
+          await VChatController.I.roomApi.getMessageStatusForGroup(
+            roomId: message.roomId,
+            messageId: message.id,
+            isSeen: false,
+          ),
+        );
         return x;
       },
       onSuccess: (response) {

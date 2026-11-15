@@ -22,45 +22,30 @@ class VMessageApiService {
     required String roomId,
     required VRoomMessagesDto dto,
   }) async {
-    final res = await _messageApi!.getRoomMessages(
-      roomId,
-      dto.toMap(),
-    );
+    final res = await _messageApi!.getRoomMessages(roomId, dto.toMap());
     throwIfNotSuccess(res); // Throw if the response indicates failure.
-    final data =
-        extractDataFromResponse(res); // Extract data from the response.
+    final data = extractDataFromResponse(
+      res,
+    ); // Extract data from the response.
     final docs = data['docs'] as List;
     return docs
-        .map(
-          (e) => MessageFactory.createBaseMessage(
-            e as Map<String, dynamic>,
-          ),
-        )
+        .map((e) => MessageFactory.createBaseMessage(e as Map<String, dynamic>))
         .toList();
   }
 
   Future<List<VBaseMessage>> getStarRoomMessages({
     required String roomId,
   }) async {
-    final res = await _messageApi!.getStarMessages(
-      roomId,
-    );
+    final res = await _messageApi!.getStarMessages(roomId);
     throwIfNotSuccess(res);
     final data = extractDataFromResponse(res);
     final docs = data['docs'] as List;
     return docs
-        .map(
-          (e) => MessageFactory.createBaseMessage(
-            e as Map<String, dynamic>,
-          ),
-        )
+        .map((e) => MessageFactory.createBaseMessage(e as Map<String, dynamic>))
         .toList();
   }
 
-  Future<bool> starMessage(
-    String roomId,
-    String messageId,
-  ) async {
+  Future<bool> starMessage(String roomId, String messageId) async {
     final res = await _messageApi!.starMessage(roomId, messageId);
     throwIfNotSuccess(res);
     return true;
@@ -75,39 +60,28 @@ class VMessageApiService {
     return true;
   }
 
-  Future<bool> unStarMessage(
-    String roomId,
-    String messageId,
-  ) async {
+  Future<bool> unStarMessage(String roomId, String messageId) async {
     final res = await _messageApi!.unStarMessage(roomId, messageId);
     throwIfNotSuccess(res);
     return true;
   }
 
   // Asynchronously delete a message from me.
-  Future<bool> deleteMessageFromMe(
-    String roomId,
-    String messageId,
-  ) async {
+  Future<bool> deleteMessageFromMe(String roomId, String messageId) async {
     final res = await _messageApi!.deleteMessageFromMe(roomId, messageId);
     throwIfNotSuccess(res);
     return true;
   }
 
   // Asynchronously delete a message from all participants in a room.
-  Future<bool> deleteMessageFromAll(
-    String roomId,
-    String mId,
-  ) async {
+  Future<bool> deleteMessageFromAll(String roomId, String mId) async {
     final res = await _messageApi!.deleteMessageFromAll(roomId, mId);
     throwIfNotSuccess(res);
     return true;
   }
 
   // Asynchronously create a message.
-  Future<VBaseMessage> createMessage(
-    VMessageUploadModel messageModel,
-  ) async {
+  Future<VBaseMessage> createMessage(VMessageUploadModel messageModel) async {
     late Response res;
     try {
       res = await _messageApi!.createMessage(
@@ -125,10 +99,7 @@ class VMessageApiService {
     return MessageFactory.createBaseMessage(extractDataFromResponse(res));
   }
 
-  static VMessageApiService init({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static VMessageApiService init({Uri? baseUrl, String? accessToken}) {
     _messageApi ??= MessageApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,

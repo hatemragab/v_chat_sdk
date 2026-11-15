@@ -9,15 +9,12 @@ import '../../../v_chat/platform_cache_image_widget.dart';
 import '../controllers/edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileController> {
-  const EditProfileView({Key? key}) : super(key: key);
+  const EditProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Profile'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Edit Profile'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -43,26 +40,18 @@ class EditProfileView extends GetView<EditProfileController> {
                     child: FloatingActionButton(
                       mini: true,
                       onPressed: controller.onCameraClick,
-                      child: const Icon(
-                        Icons.camera_alt,
-                      ),
+                      child: const Icon(Icons.camera_alt),
                     ),
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: controller.nameController,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
+              TextField(controller: controller.nameController),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: controller.onSave,
                 child: const Text("Update"),
-              )
+              ),
             ],
           ),
         ),

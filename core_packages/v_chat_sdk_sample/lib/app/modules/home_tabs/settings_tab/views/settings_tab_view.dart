@@ -10,41 +10,28 @@ import 'package:v_chat_sdk_sample/app/modules/home_tabs/settings_tab/views/widge
 import '../controllers/settings_tab_controller.dart';
 
 class SettingsTabView extends GetView<SettingsTabController> {
-  const SettingsTabView({Key? key}) : super(key: key);
+  const SettingsTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Profile'), centerTitle: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(
-                "assets/images/logo.png",
-                height: 180,
-                width: 180,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              Image.asset("assets/images/logo.png", height: 180, width: 180),
+              const SizedBox(height: 20),
               "Welcome to V Chat v2.0".h6.alignCenter,
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               ProfileItem(
                 title: "My orders",
                 onPress: controller.goToOrders,
                 iconData: Icons.shopping_cart,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               ProfileItem(
                 title: "Update language",
                 onPress: controller.updateLanguage,

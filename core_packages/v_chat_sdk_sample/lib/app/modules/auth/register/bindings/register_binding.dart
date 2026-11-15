@@ -9,8 +9,6 @@ import '../controllers/register_controller.dart';
 class RegisterBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<RegisterController>(
-      RegisterController(),
-    );
+    Get.put<RegisterController>(RegisterController());
   }
 }

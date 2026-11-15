@@ -29,7 +29,8 @@ class CallActionButton extends StatelessWidget {
     return InkWell(
       onTap: isEnabled ? onTap : null,
       child: CircleAvatar(
-        backgroundColor: backgroundColor ??
+        backgroundColor:
+            backgroundColor ??
             (isEnabled ? Colors.white : Colors.grey.shade800),
         radius: radius.toDouble(),
         child: Icon(

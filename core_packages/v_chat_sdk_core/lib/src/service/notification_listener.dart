@@ -5,6 +5,7 @@
 import 'package:logging/logging.dart';
 import 'package:platform_local_notifications/platform_local_notifications.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+import 'package:v_platform/v_platform.dart';
 
 /// A singleton class that listens to notifications.
 class VNotificationListener {
@@ -61,31 +62,34 @@ class VNotificationListener {
   Future<void> _init() async {
     if (vChatConfig.vPush.enableVForegroundNotification &&
         vChatConfig.isPushEnable) {
-      await PlatformNotifier.I.init(appName: "v_chat_sdk");
-      await PlatformNotifier.I.requestPermissions();
-      PlatformNotifier.I.platformNotifierStream.listen((event) async {
-        if (event.payload!.isEmpty) return;
-        if (event is PluginNotificationReplyAction) {
+      await PlatformNotifier.initialize(appName: "v_chat_sdk");
+      await PlatformNotifier.requestPermissions();
+      PlatformNotifier.actionStream.listen((event) async {
+        final payload = event.payload;
+        if (payload == null || payload.isEmpty) return;
+        if (event is NotificationReplyAction) {
           final txtMessage = VTextMessage.buildMessage(
-            content: event.text,
+            content: event.replyText,
             isEncrypted: vChatConfig.enableEndToEndMessageEncryption,
-            roomId: event.payload!,
+            roomId: payload,
           );
           await MessageUploaderQueue.instance.addToQueue(
             await MessageFactory.createUploadMessage(txtMessage),
           );
           return;
         }
-        if (event is PluginNotificationMarkRead) {
-          await _setRoomSeen(event.payload!);
+        if (event is NotificationMarkReadAction) {
+          await _setRoomSeen(payload);
           return;
         }
-        if (event is PluginNotificationClickAction) {
+        if (event is NotificationClickAction) {
           final room = await VChatController.I.nativeApi.local.room
-              .getOneWithLastMessageByRoomId(event.payload!);
+              .getOneWithLastMessageByRoomId(payload);
           if (room == null) return;
-          vNavigator.messageNavigator
-              .toMessagePage(VChatController.I.navigationContext, room);
+          vNavigator.messageNavigator.toMessagePage(
+            VChatController.I.navigationContext,
+            room,
+          );
           return;
         }
       });
@@ -93,17 +97,18 @@ class VNotificationListener {
         final message = event.message;
         final isRoomOpen = VRoomTracker.instance.isRoomOpen(message.roomId);
         if (!isRoomOpen && !message.isMeSender) {
-          PlatformNotifier.I.showChatNotification(
-            model: ShowPluginNotificationModel(
+          PlatformNotifier.showChatNotification(
+            model: ChatNotificationModel(
               id: message.hashCode,
               title: message.senderName,
               payload: message.roomId,
               body: message.realContentMentionParsedWithAt,
+              userImageUrl: message.senderImageThumb.isEmpty
+                  ? null
+                  : VPlatformFile.fromUrl(networkUrl: message.senderImageThumb),
+              userName: message.senderName,
+              conversationTitle: message.senderName,
             ),
-            userImage: message.senderImageThumb,
-            userName: message.senderName,
-            conversationTitle: message.senderName,
-            context: VChatController.I.navigationContext,
           );
         }
       });
@@ -119,8 +124,10 @@ class VNotificationListener {
         );
         return;
       }
-      vNavigator.messageNavigator
-          .toMessagePage(VChatController.I.navigationContext, room);
+      vNavigator.messageNavigator.toMessagePage(
+        VChatController.I.navigationContext,
+        room,
+      );
     });
     if (!vChatConfig.isPushEnable) return;
     nativeApi.streams.vOnUpdateNotificationsTokenStream.listen((event) async {
@@ -130,9 +137,10 @@ class VNotificationListener {
   }
 
   /// Fetches room information based on [roomId].
-  Future<VRoom?> _getRoom(String roomId) async {
-    return VChatController.I.nativeApi.local.room
-        .getOneWithLastMessageByRoomId(roomId);
+  Future<VRoom?> _getRoom(String roomId) {
+    return VChatController.I.nativeApi.local.room.getOneWithLastMessageByRoomId(
+      roomId,
+    );
   }
 
   /// Handles an open application notification.

@@ -32,11 +32,15 @@ class CreateGroupController extends GetxController {
     final name = nameController.text.toString();
     if (name.isEmpty) {
       VAppAlert.showErrorSnackBar(
-          msg: "name must not empty", context: Get.context!);
+        msg: "name must not empty",
+        context: Get.context!,
+      );
     }
     if (groupImage == null) {
       VAppAlert.showErrorSnackBar(
-          msg: "image must not empty", context: Get.context!);
+        msg: "image must not empty",
+        context: Get.context!,
+      );
     }
     await vSafeApiCall(
       onLoading: () {

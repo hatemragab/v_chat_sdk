@@ -88,9 +88,7 @@ class VSingleController extends VBaseMessageController with StreamMix {
         peerUser: VBaseUser(
           vChatId: vRoom.peerId!,
           fullName: vRoom.title,
-          userImages: VUserImage.fromSingleUrl(
-            vRoom.thumbImage,
-          ),
+          userImages: VUserImage.fromSingleUrl(vRoom.thumbImage),
         ),
       ),
     );
@@ -100,11 +98,13 @@ class VSingleController extends VBaseMessageController with StreamMix {
     vSafeApiCall(
       request: () async {
         if (isBlocked) {
-          return VChatController.I.blockApi
-              .blockUser(peerIdentifier: vRoom.peerIdentifier!);
+          return VChatController.I.blockApi.blockUser(
+            peerIdentifier: vRoom.peerIdentifier!,
+          );
         } else {
-          return VChatController.I.blockApi
-              .unBlockUser(peerIdentifier: vRoom.peerIdentifier!);
+          return VChatController.I.blockApi.unBlockUser(
+            peerIdentifier: vRoom.peerIdentifier!,
+          );
         }
       },
       onSuccess: (response) {},
@@ -113,15 +113,19 @@ class VSingleController extends VBaseMessageController with StreamMix {
 
   @override
   Future<List<MentionModel>> onMentionRequireSearch(
-      BuildContext context, String query) {
+    BuildContext context,
+    String query,
+  ) {
     return Future(() => []);
   }
 
   void _initStreams() {
-    streamsMix.add(VEventBusSingleton.vEventBus
-        .on<VSingleBlockEvent>()
-        .where((e) => e.roomId == vRoom.id)
-        .listen(_handleBlockEvent));
+    streamsMix.add(
+      VEventBusSingleton.vEventBus
+          .on<VSingleBlockEvent>()
+          .where((e) => e.roomId == vRoom.id)
+          .listen(_handleBlockEvent),
+    );
   }
 
   void _handleBlockEvent(VSingleBlockEvent event) async {
@@ -152,8 +156,9 @@ class VSingleController extends VBaseMessageController with StreamMix {
     if (vRoom.roomType.isSingleOrOrder) {
       await vSafeApiCall<VSingleBlockModel>(
         request: () {
-          return VChatController.I.blockApi
-              .checkIfThereBan(peerIdentifier: vRoom.peerIdentifier!);
+          return VChatController.I.blockApi.checkIfThereBan(
+            peerIdentifier: vRoom.peerIdentifier!,
+          );
         },
         onSuccess: (response) async {
           await updateValue(response);

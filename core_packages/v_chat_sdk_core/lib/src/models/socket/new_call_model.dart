@@ -48,9 +48,7 @@ class VNewCallModel {
       meetId: map['meetId'] as String,
       withVideo: map['withVideo'] as bool,
       payload: map['payload'] as Map<String, dynamic>?,
-      peerUser: VBaseUser.fromMap(
-        map['userData'] as Map<String, dynamic>,
-      ),
+      peerUser: VBaseUser.fromMap(map['userData'] as Map<String, dynamic>),
     );
   }
 }

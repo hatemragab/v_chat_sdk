@@ -1,3 +1,8 @@
+## 2.1.1
+
+- Require Dart 3.13 and Flutter 3.47.
+- Refresh map, cache, platform, localization, and dialog dependencies.
+
 ## 0.0.1
 
 initial release.

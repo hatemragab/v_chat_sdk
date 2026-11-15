@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -18,8 +19,10 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +44,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,12 +57,7 @@ class S {
 
   /// `Hi`
   String get hi {
-    return Intl.message(
-      'Hi',
-      name: 'hi',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Hi', name: 'hi', desc: '', args: []);
   }
 
   /// `yesterday`
@@ -82,52 +82,27 @@ class S {
 
   /// `Mute`
   String get mute {
-    return Intl.message(
-      'Mute',
-      name: 'mute',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Mute', name: 'mute', desc: '', args: []);
   }
 
   /// `Cancel`
   String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
   }
 
   /// `typing...`
   String get typing {
-    return Intl.message(
-      'typing...',
-      name: 'typing',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('typing...', name: 'typing', desc: '', args: []);
   }
 
   /// `OK`
   String get ok {
-    return Intl.message(
-      'OK',
-      name: 'ok',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('OK', name: 'ok', desc: '', args: []);
   }
 
   /// `Recording...`
   String get recording {
-    return Intl.message(
-      'Recording...',
-      name: 'recording',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Recording...', name: 'recording', desc: '', args: []);
   }
 
   /// `Connecting...`
@@ -152,42 +127,22 @@ class S {
 
   /// `Unmute`
   String get unMute {
-    return Intl.message(
-      'Unmute',
-      name: 'unMute',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Unmute', name: 'unMute', desc: '', args: []);
   }
 
   /// `Delete`
   String get delete {
-    return Intl.message(
-      'Delete',
-      name: 'delete',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
   }
 
   /// `Report`
   String get report {
-    return Intl.message(
-      'Report',
-      name: 'report',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Report', name: 'report', desc: '', args: []);
   }
 
   /// `Leave group`
   String get leaveGroup {
-    return Intl.message(
-      'Leave group',
-      name: 'leaveGroup',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Leave group', name: 'leaveGroup', desc: '', args: []);
   }
 
   /// `Are you sure to permit your copy? This action can't undo`
@@ -252,12 +207,7 @@ class S {
 
   /// `joined by`
   String get joinedBy {
-    return Intl.message(
-      'joined by',
-      name: 'joinedBy',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('joined by', name: 'joinedBy', desc: '', args: []);
   }
 
   /// `promoted to admin by`
@@ -292,22 +242,12 @@ class S {
 
   /// `You`
   String get you {
-    return Intl.message(
-      'You',
-      name: 'you',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('You', name: 'you', desc: '', args: []);
   }
 
   /// `kicked by`
   String get kickedBy {
-    return Intl.message(
-      'kicked by',
-      name: 'kickedBy',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('kicked by', name: 'kickedBy', desc: '', args: []);
   }
 
   /// `Group created by`
@@ -334,62 +274,32 @@ class S {
 
   /// `Download`
   String get download {
-    return Intl.message(
-      'Download',
-      name: 'download',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Download', name: 'download', desc: '', args: []);
   }
 
   /// `Copy`
   String get copy {
-    return Intl.message(
-      'Copy',
-      name: 'copy',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Copy', name: 'copy', desc: '', args: []);
   }
 
   /// `Info`
   String get info {
-    return Intl.message(
-      'Info',
-      name: 'info',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Info', name: 'info', desc: '', args: []);
   }
 
   /// `Share`
   String get share {
-    return Intl.message(
-      'Share',
-      name: 'share',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Share', name: 'share', desc: '', args: []);
   }
 
   /// `Forward`
   String get forward {
-    return Intl.message(
-      'Forward',
-      name: 'forward',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Forward', name: 'forward', desc: '', args: []);
   }
 
   /// `Reply`
   String get reply {
-    return Intl.message(
-      'Reply',
-      name: 'reply',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Reply', name: 'reply', desc: '', args: []);
   }
 
   /// `Delete from all`
@@ -434,52 +344,27 @@ class S {
 
   /// `Search`
   String get search {
-    return Intl.message(
-      'Search',
-      name: 'search',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Search', name: 'search', desc: '', args: []);
   }
 
   /// `Unblock`
   String get unBlock {
-    return Intl.message(
-      'Unblock',
-      name: 'unBlock',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Unblock', name: 'unBlock', desc: '', args: []);
   }
 
   /// `Block`
   String get block {
-    return Intl.message(
-      'Block',
-      name: 'block',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Block', name: 'block', desc: '', args: []);
   }
 
   /// `Online`
   String get online {
-    return Intl.message(
-      'Online',
-      name: 'online',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Online', name: 'online', desc: '', args: []);
   }
 
   /// `Members`
   String get members {
-    return Intl.message(
-      'Members',
-      name: 'members',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Members', name: 'members', desc: '', args: []);
   }
 
   /// `You don't have access`
@@ -514,102 +399,52 @@ class S {
 
   /// `Audio call`
   String get audioCall {
-    return Intl.message(
-      'Audio call',
-      name: 'audioCall',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Audio call', name: 'audioCall', desc: '', args: []);
   }
 
   /// `Ring`
   String get ring {
-    return Intl.message(
-      'Ring',
-      name: 'ring',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Ring', name: 'ring', desc: '', args: []);
   }
 
   /// `Canceled`
   String get canceled {
-    return Intl.message(
-      'Canceled',
-      name: 'canceled',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Canceled', name: 'canceled', desc: '', args: []);
   }
 
   /// `Timeout`
   String get timeout {
-    return Intl.message(
-      'Timeout',
-      name: 'timeout',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Timeout', name: 'timeout', desc: '', args: []);
   }
 
   /// `Rejected`
   String get rejected {
-    return Intl.message(
-      'Rejected',
-      name: 'rejected',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Rejected', name: 'rejected', desc: '', args: []);
   }
 
   /// `Finished`
   String get finished {
-    return Intl.message(
-      'Finished',
-      name: 'finished',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Finished', name: 'finished', desc: '', args: []);
   }
 
   /// `In call`
   String get inCall {
-    return Intl.message(
-      'In call',
-      name: 'inCall',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('In call', name: 'inCall', desc: '', args: []);
   }
 
   /// `Session end`
   String get sessionEnd {
-    return Intl.message(
-      'Session end',
-      name: 'sessionEnd',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Session end', name: 'sessionEnd', desc: '', args: []);
   }
 
   /// `Yesterday`
   String get yesterday {
-    return Intl.message(
-      'Yesterday',
-      name: 'yesterday',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Yesterday', name: 'yesterday', desc: '', args: []);
   }
 
   /// `Today`
   String get today {
-    return Intl.message(
-      'Today',
-      name: 'today',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Today', name: 'today', desc: '', args: []);
   }
 
   /// `Type a message`
@@ -624,32 +459,17 @@ class S {
 
   /// `Media`
   String get media {
-    return Intl.message(
-      'Media',
-      name: 'media',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Media', name: 'media', desc: '', args: []);
   }
 
   /// `Files`
   String get files {
-    return Intl.message(
-      'Files',
-      name: 'files',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Files', name: 'files', desc: '', args: []);
   }
 
   /// `Location`
   String get location {
-    return Intl.message(
-      'Location',
-      name: 'location',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Location', name: 'location', desc: '', args: []);
   }
 
   /// `Share media and location`
@@ -684,12 +504,7 @@ class S {
 
   /// `Make call`
   String get makeCall {
-    return Intl.message(
-      'Make call',
-      name: 'makeCall',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Make call', name: 'makeCall', desc: '', args: []);
   }
 
   /// `Are you want to make video call?`

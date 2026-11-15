@@ -10,11 +10,11 @@ class ProfileItem extends StatelessWidget {
   final VoidCallback onPress;
 
   const ProfileItem({
-    Key? key,
+    super.key,
     required this.iconData,
     required this.title,
     required this.onPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

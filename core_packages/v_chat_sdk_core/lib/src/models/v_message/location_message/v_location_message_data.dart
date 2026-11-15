@@ -13,10 +13,7 @@ class VLocationMessageData {
   ///image preview data and title and description
   final VLinkPreviewData linkPreviewData;
 
-  VLocationMessageData({
-    required this.latLng,
-    required this.linkPreviewData,
-  });
+  VLocationMessageData({required this.latLng, required this.linkPreviewData});
 
   @override
   String toString() {
@@ -24,18 +21,18 @@ class VLocationMessageData {
   } // from json
 
   VLocationMessageData.fromMap(Map<String, dynamic> json)
-      : latLng = LatLng(
-          double.parse(json['lat'].toString()),
-          double.parse(json['long'].toString()),
-        ),
-        linkPreviewData = VLinkPreviewData.fromMap(
-          json['linkPreviewData'] as Map<String, dynamic>,
-        );
+    : latLng = LatLng(
+        double.parse(json['lat'].toString()),
+        double.parse(json['long'].toString()),
+      ),
+      linkPreviewData = VLinkPreviewData.fromMap(
+        json['linkPreviewData'] as Map<String, dynamic>,
+      );
 
   // to json
   Map<String, dynamic> toMap() => {
-        'lat': latLng.latitude.toString(),
-        'long': latLng.longitude.toString(),
-        'linkPreviewData': linkPreviewData.toMap(),
-      };
+    'lat': latLng.latitude.toString(),
+    'long': latLng.longitude.toString(),
+    'linkPreviewData': linkPreviewData.toMap(),
+  };
 }

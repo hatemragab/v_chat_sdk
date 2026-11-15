@@ -26,7 +26,7 @@ final fakeLocalMessages = [
     "tb_m_updated_at": "2022-12-26T19:32:26.613Z",
     "tb_m_platform": "Android",
     "tb_m_emit_status": VMessageEmitStatus.sending.name,
-    "tb_m_local_id": "65a285ce-ed5f-402c-ae28-c65ce361e592"
+    "tb_m_local_id": "65a285ce-ed5f-402c-ae28-c65ce361e592",
   },
   {
     "tb_m_id": "2",
@@ -49,6 +49,6 @@ final fakeLocalMessages = [
     "tb_m_updated_at": "2022-12-26T19:32:26.613Z",
     "tb_m_platform": "Android",
     "tb_m_emit_status": VMessageEmitStatus.serverConfirm.name,
-    "tb_m_local_id": "65a285ce-ed5f-402c-ae28-c65ce361e592"
+    "tb_m_local_id": "65a285ce-ed5f-402c-ae28-c65ce361e592",
   },
 ];

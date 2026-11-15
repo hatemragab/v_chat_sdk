@@ -30,10 +30,7 @@ class ChatLastMsgTime extends StatelessWidget {
       );
     }
     if (difference == 1) {
-      return Text(
-        yesterdayLabel,
-        style: Theme.of(context).textTheme.bodySmall,
-      );
+      return Text(yesterdayLabel, style: Theme.of(context).textTheme.bodySmall);
     }
     if (difference <= 7) {
       return Text(

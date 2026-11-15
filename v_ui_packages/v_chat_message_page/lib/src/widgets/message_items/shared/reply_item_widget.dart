@@ -38,14 +38,12 @@ class ReplyItemWidget extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 300),
       decoration: BoxDecoration(
         color: isMeSender
-            ? context.vMessageTheme.senderBubbleColor.withOpacity(.4)
-            : context.vMessageTheme.receiverBubbleColor.withOpacity(.4),
+            ? context.vMessageTheme.senderBubbleColor.withValues(alpha: .4)
+            : context.vMessageTheme.receiverBubbleColor.withValues(alpha: .4),
         // color: context.isDark
         //     ? Colors.blue.withOpacity(.2)
         //     : const Color(0xffe7d8d8).withOpacity(.5),
-        borderRadius: const BorderRadius.only(
-          bottomRight: Radius.circular(15),
-        ),
+        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(15)),
       ),
       child: InkWell(
         onLongPress: null,
@@ -67,9 +65,7 @@ class ReplyItemWidget extends StatelessWidget {
                   width: 2,
                   indent: 2,
                 ),
-                const SizedBox(
-                  width: 9,
-                ),
+                const SizedBox(width: 9),
                 // const Icon(
                 //   Icons.reply,
                 //   color: Colors.green,
@@ -94,7 +90,7 @@ class ReplyItemWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                _getImage()
+                _getImage(),
               ],
             ),
           ),

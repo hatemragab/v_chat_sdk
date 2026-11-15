@@ -58,10 +58,7 @@ class DateDividerItem extends StatelessWidget {
                 color: Colors.green,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: Text(
-                text,
-                style: const TextStyle(color: Colors.black87),
-              ),
+              child: Text(text, style: const TextStyle(color: Colors.black87)),
             ),
           ),
         ],

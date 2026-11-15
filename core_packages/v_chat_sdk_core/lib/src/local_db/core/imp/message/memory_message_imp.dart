@@ -85,9 +85,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateMessagesToDeliver(
-    VUpdateMessageDeliverEvent event,
-  ) async {
+  Future<int> updateMessagesToDeliver(VUpdateMessageDeliverEvent event) {
     for (final m in _messages) {
       if (m.roomId == event.roomId &&
           m.senderId == event.model.userId &&
@@ -99,7 +97,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateMessagesToSeen(VUpdateMessageSeenEvent event) async {
+  Future<int> updateMessagesToSeen(VUpdateMessageSeenEvent event) {
     for (final m in _messages) {
       if (m.roomId == event.roomId &&
           m.senderId == event.model.userId &&
@@ -125,7 +123,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   Future<VBaseMessage?> findOneMessageBeforeThis(
     String createdAt,
     String roomId,
-  ) async {
+  ) {
     return Future.value();
   }
 
@@ -133,7 +131,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
     required VRoomMessagesDto filter,
-  }) async {
+  }) {
     if (filter.lastId != null) {
       return Future.value([]);
     }
@@ -183,9 +181,7 @@ class MemoryMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateFullMessage({
-    required VBaseMessage baseMessage,
-  }) async {
+  Future<int> updateFullMessage({required VBaseMessage baseMessage}) async {
     final msgIndex = _messages.indexOf(baseMessage);
     if (msgIndex != -1) {
       _messages[msgIndex] = baseMessage;

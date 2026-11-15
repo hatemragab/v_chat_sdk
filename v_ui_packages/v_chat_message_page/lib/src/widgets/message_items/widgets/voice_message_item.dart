@@ -21,19 +21,16 @@ class VoiceMessageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //   print(message.data.fileSource.url);
     return Container(
-      constraints: const BoxConstraints(
-        maxWidth: 300,
-      ),
+      constraints: const BoxConstraints(maxWidth: 300),
       padding: const EdgeInsets.all(10),
       child: VVoiceMessageView(
         controller: voiceController(message)!,
-        notActiveSliderColor: context
-            .getMessageItemHolderColor(
-              message.isMeSender,
-              context,
-            )
-            .withOpacity(.3),
-        activeSliderColor: context.isDark ? Colors.green : Colors.red,
+        colorConfig: VoiceColorConfig(
+          notActiveSliderColor: context
+              .getMessageItemHolderColor(message.isMeSender, context)
+              .withValues(alpha: .3),
+          activeSliderColor: context.isDark ? Colors.green : Colors.red,
+        ),
       ),
     );
   }

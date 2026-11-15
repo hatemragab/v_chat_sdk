@@ -33,12 +33,8 @@ class VTextParserWidget extends StatefulWidget {
     this.isOneLine = false,
     required this.text,
     this.textStyle,
-    this.arrowUp = const Icon(
-      Icons.keyboard_arrow_up_rounded,
-    ),
-    this.arrowDown = const Icon(
-      Icons.keyboard_arrow_down,
-    ),
+    this.arrowUp = const Icon(Icons.keyboard_arrow_up_rounded),
+    this.arrowDown = const Icon(Icons.keyboard_arrow_down),
     this.emailTextStyle,
     this.phoneTextStyle,
     this.mentionTextStyle,
@@ -76,17 +72,10 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
       fontWeight: FontWeight.w400,
     );
     if (widget.isOneLine) {
-      return _renderText(
-        blueTheme: blueTheme,
-        maxLine: 1,
-        text: firstHalf,
-      );
+      return _renderText(blueTheme: blueTheme, maxLine: 1, text: firstHalf);
     }
     if (secondHalf.isEmpty) {
-      return _renderText(
-        blueTheme: blueTheme,
-        text: firstHalf,
-      );
+      return _renderText(blueTheme: blueTheme, text: firstHalf);
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -126,10 +115,7 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
             MatchText(
               pattern: r"\[(@[^:]+):([^\]]+)\]",
               style: blueTheme,
-              renderText: ({
-                required String str,
-                required String pattern,
-              }) {
+              renderText: ({required String str, required String pattern}) {
                 final map = <String, String>{};
                 final match = vMentionRegExp.firstMatch(str);
                 map['display'] = match!.group(1)!;
@@ -164,14 +150,15 @@ class _VTextParserWidgetState extends State<VTextParserWidget> {
                 pattern: regexLink,
                 style: blueTheme,
                 onTap: (url) {
+                  var normalizedUrl = url;
                   final protocolIdentifierRegex = RegExp(
                     r'^((http|ftp|https):\/\/)',
                     caseSensitive: false,
                   );
-                  if (!url.startsWith(protocolIdentifierRegex)) {
-                    url = 'https://$url';
+                  if (!normalizedUrl.startsWith(protocolIdentifierRegex)) {
+                    normalizedUrl = 'https://$normalizedUrl';
                   }
-                  widget.onLinkPress?.call(url);
+                  widget.onLinkPress?.call(normalizedUrl);
                 },
               ),
           ],

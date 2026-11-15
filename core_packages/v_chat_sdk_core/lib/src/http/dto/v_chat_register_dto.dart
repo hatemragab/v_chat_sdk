@@ -11,8 +11,7 @@ class VChatRegisterDto {
   final String? fullName; // The full name of the user.
   final String deviceId; // The unique device ID of the user's device.
   final String? language; // The preferred language of the user.
-  String?
-      pushKey; // The push notification key. it can be null. if you not support push notifications it can be the fcm token or onesignal id.
+  String? pushKey; // The push notification key. it can be null. if you not support push notifications it can be the fcm token or onesignal id.
   final String platform; // The platform of the user's device.
   final String password; // The password for the user.
   final VPlatformFile? image; // The profile image for the user.

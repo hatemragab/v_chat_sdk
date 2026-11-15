@@ -28,9 +28,7 @@ abstract class VChatPushProviderBase {
   /// [notificationId] can be specified to clean a specific notification, otherwise all notifications will be cleaned.
   ///
   /// Returns a [Future] that completes when the notifications are cleaned.
-  Future<void> cleanAll({
-    int? notificationId,
-  });
+  Future<void> cleanAll({int? notificationId});
 
   /// Asks for permission to display notifications.
   ///

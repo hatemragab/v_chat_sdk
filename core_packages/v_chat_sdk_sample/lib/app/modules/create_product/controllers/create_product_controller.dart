@@ -24,22 +24,30 @@ class CreateProductController extends GetxController {
   Future create() async {
     if (nameController.text.isEmpty) {
       VAppAlert.showErrorSnackBar(
-          msg: "title should not empty", context: Get.context!);
+        msg: "title should not empty",
+        context: Get.context!,
+      );
       return;
     }
     if (descController.text.isEmpty) {
       VAppAlert.showErrorSnackBar(
-          msg: "description should not empty", context: Get.context!);
+        msg: "description should not empty",
+        context: Get.context!,
+      );
       return;
     }
     if (priceController.text.isEmpty) {
       VAppAlert.showErrorSnackBar(
-          msg: "price should not empty", context: Get.context!);
+        msg: "price should not empty",
+        context: Get.context!,
+      );
       return;
     }
     if (productImage == null) {
       VAppAlert.showErrorSnackBar(
-          msg: "image should not empty", context: Get.context!);
+        msg: "image should not empty",
+        context: Get.context!,
+      );
       return;
     }
     await vSafeApiCall(

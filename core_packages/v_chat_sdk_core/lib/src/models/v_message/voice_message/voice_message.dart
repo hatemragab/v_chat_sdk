@@ -39,17 +39,15 @@ class VVoiceMessage extends VBaseMessage {
   });
 
   VVoiceMessage.fromRemoteMap(super.map)
-      : data = VMessageVoiceData.fromMap(
-          map['msgAtt'] as Map<String, dynamic>,
-        ),
-        super.fromRemoteMap();
+    : data = VMessageVoiceData.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      super.fromRemoteMap();
 
   VVoiceMessage.fromLocalMap(super.map)
-      : data = VMessageVoiceData.fromMap(
-          jsonDecode(map[MessageTable.columnAttachment] as String)
-              as Map<String, dynamic>,
-        ),
-        super.fromLocalMap();
+    : data = VMessageVoiceData.fromMap(
+        jsonDecode(map[MessageTable.columnAttachment] as String)
+            as Map<String, dynamic>,
+      ),
+      super.fromLocalMap();
 
   // @override
   // Map<String, dynamic> toRemoteMap() {
@@ -68,10 +66,7 @@ class VVoiceMessage extends VBaseMessage {
   List<PartValue> toListOfPartValue() {
     return [
       ...super.toListOfPartValue(),
-      PartValue(
-        'attachment',
-        jsonEncode(data.toMap()),
-      ),
+      PartValue('attachment', jsonEncode(data.toMap())),
     ];
   }
 
@@ -83,8 +78,8 @@ class VVoiceMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          isEncrypted: false,
-          content: "${VMessageConstants.thisContentIsVoice} $content",
-          messageType: VMessageType.voice,
-        );
+         isEncrypted: false,
+         content: "${VMessageConstants.thisContentIsVoice} $content",
+         messageType: VMessageType.voice,
+       );
 }

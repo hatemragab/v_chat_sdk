@@ -34,10 +34,7 @@ class VMessageItemController {
     return ModelSheetItem(
       id: VMessageItemClickRes.delete,
       title: language.delete,
-      iconData: const Icon(
-        Icons.delete,
-        color: Colors.red,
-      ),
+      iconData: const Icon(Icons.delete, color: Colors.red),
     );
   }
 
@@ -45,17 +42,16 @@ class VMessageItemController {
     return ModelSheetItem(
       id: VMessageItemClickRes.download,
       title: language.download,
-      iconData: const Icon(
-        Icons.download,
-      ),
+      iconData: const Icon(Icons.download),
     );
   }
 
   ModelSheetItem<VMessageItemClickRes> _copyItem() {
     return ModelSheetItem(
-        id: VMessageItemClickRes.copy,
-        title: language.copy,
-        iconData: const Icon(Icons.copy));
+      id: VMessageItemClickRes.copy,
+      title: language.copy,
+      iconData: const Icon(Icons.copy),
+    );
   }
 
   ModelSheetItem<VMessageItemClickRes> _infoItem() {
@@ -141,9 +137,7 @@ class VMessageItemController {
         items.add(_downloadItem());
       }
     }
-    items.add(
-      _deleteItem(),
-    );
+    items.add(_deleteItem());
     if (message.messageType.isText) {
       items.add(_copyItem());
     }
@@ -191,8 +185,10 @@ class VMessageItemController {
   }
 
   void _handleForward(VBaseMessage baseMessage) async {
-    final ids = await VChatController.I.vNavigator.roomNavigator
-        .toForwardPage(context, baseMessage.roomId);
+    final ids = await VChatController.I.vNavigator.roomNavigator.toForwardPage(
+      context,
+      baseMessage.roomId,
+    );
     if (ids != null) {
       for (final roomId in ids) {
         VBaseMessage? message;
@@ -266,11 +262,13 @@ class VMessageItemController {
   void _handleShare(VBaseMessage message) async {
     if (message.emitStatus.isServerConfirm) {
       if (message is VTextMessage) {
-        await Share.share(message.realContent);
+        await SharePlus.instance.share(ShareParams(text: message.realContent));
         return;
       }
       if (message is VLocationMessage) {
-        await Share.share(message.data.linkPreviewData.link.toString());
+        await SharePlus.instance.share(
+          ShareParams(text: message.data.linkPreviewData.link.toString()),
+        );
         return;
       }
       late final VPlatformFile pFile;
@@ -283,10 +281,8 @@ class VMessageItemController {
       } else if (message is VVideoMessage) {
         pFile = message.data.fileSource;
       }
-      final file = await DefaultCacheManager().getSingleFile(
-        pFile.url!,
-      );
-      await Share.shareXFiles([XFile(file.path)]);
+      final file = await DefaultCacheManager().getSingleFile(pFile.networkUrl!);
+      await SharePlus.instance.share(ShareParams(files: [XFile(file.path)]));
     }
   }
 
@@ -374,9 +370,7 @@ class VMessageItemController {
 
   void _handleCopy(VBaseMessage message) async {
     await Clipboard.setData(
-      ClipboardData(
-        text: message.realContentMentionParsedWithAt,
-      ),
+      ClipboardData(text: message.realContentMentionParsedWithAt),
     );
   }
 

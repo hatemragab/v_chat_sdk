@@ -15,7 +15,7 @@ part 'message_api.chopper.dart';
 @ChopperApi(baseUrl: 'channel')
 abstract class MessageApi extends ChopperService {
   ///create message to channel
-  @Post(path: "/{roomId}/message/")
+  @POST(path: "/{roomId}/message/")
   @multipart
   Future<Response> createMessage(
     @Path('roomId') String roomId,
@@ -24,56 +24,49 @@ abstract class MessageApi extends ChopperService {
     @PartFile("file") MultipartFile? secondFile,
   );
 
-  @Get(path: "/{roomId}/message/")
+  @GET(path: "/{roomId}/message/")
   Future<Response> getRoomMessages(
     @Path("roomId") String roomId,
     @QueryMap() Map<String, dynamic> query,
   );
 
-  @Get(path: "/{roomId}/message/stars")
-  Future<Response> getStarMessages(
-    @Path("roomId") String roomId,
-  );
+  @GET(path: "/{roomId}/message/stars")
+  Future<Response> getStarMessages(@Path("roomId") String roomId);
 
-  @Post(path: "/{roomId}/message/{messageId}/un-star", optionalBody: true)
+  @POST(path: "/{roomId}/message/{messageId}/un-star", optionalBody: true)
   Future<Response> unStarMessage(
     @Path("roomId") String roomId,
     @Path("messageId") String messageId,
   );
 
-  @Post(path: "/{roomId}/message/{messageId}/star", optionalBody: true)
+  @POST(path: "/{roomId}/message/{messageId}/star", optionalBody: true)
   Future<Response> starMessage(
     @Path("roomId") String roomId,
     @Path("messageId") String messageId,
   );
 
-  @Patch(path: "/{roomId}/message/{messageId}/one-seen", optionalBody: true)
+  @PATCH(path: "/{roomId}/message/{messageId}/one-seen", optionalBody: true)
   Future<Response> addOneSeen(
     @Path("roomId") String roomId,
     @Path("messageId") String messageId,
   );
 
-  @Delete(path: "/{roomId}/message/{messageId}/delete/me")
+  @DELETE(path: "/{roomId}/message/{messageId}/delete/me")
   Future<Response> deleteMessageFromMe(
     @Path("roomId") String roomId,
     @Path("messageId") String messageId,
   );
 
-  @Delete(path: "/{roomId}/message/{messageId}/delete/all")
+  @DELETE(path: "/{roomId}/message/{messageId}/delete/all")
   Future<Response> deleteMessageFromAll(
     @Path("roomId") String roomId,
     @Path("messageId") String mId,
   );
 
-  static MessageApi create({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static MessageApi create({Uri? baseUrl, String? accessToken}) {
     final client = ChopperClient(
       baseUrl: VAppConstants.baseUri,
-      services: [
-        _$MessageApi(),
-      ],
+      services: [_$MessageApi()],
       converter: const JsonConverter(),
       //, HttpLoggingInterceptor()
       interceptors: [AuthInterceptor()],

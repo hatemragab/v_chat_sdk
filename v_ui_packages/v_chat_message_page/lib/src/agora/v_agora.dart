@@ -17,10 +17,7 @@ void vInitCallListener(BuildContext context) async {
   if (kDebugMode) print("vInitCallListener initialization Done");
   VChatController.I.nativeApi.streams.callStream.listen((event) {
     if (event is VOnNewCallEvent) {
-      VChatController.I.vNavigator.callNavigator?.toPickUp(
-        context,
-        event.data,
-      );
+      VChatController.I.vNavigator.callNavigator?.toPickUp(context, event.data);
     }
   });
   getActiveCall(context);

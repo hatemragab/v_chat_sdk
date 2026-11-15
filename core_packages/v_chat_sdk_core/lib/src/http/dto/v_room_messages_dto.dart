@@ -9,10 +9,7 @@ class VMessageBetweenFilter {
   final String targetId;
   final String lastId;
 
-  VMessageBetweenFilter({
-    required this.targetId,
-    required this.lastId,
-  });
+  VMessageBetweenFilter({required this.targetId, required this.lastId});
 }
 
 class VRoomMessagesDto {
@@ -46,8 +43,9 @@ class VRoomMessagesDto {
       'limit': limit,
       MessageTable.columnId: lastId,
       MessageTable.columnContent: text,
-      MessageTable.columnMessageType:
-          filter == null ? VMessagesFilter.all.name : filter!.name,
+      MessageTable.columnMessageType: filter == null
+          ? VMessagesFilter.all.name
+          : filter!.name,
     };
   }
 }

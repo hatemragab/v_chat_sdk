@@ -8,10 +8,7 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 class TimerWidget extends StatelessWidget {
   final StopWatchTimer stopWatchTimer;
 
-  const TimerWidget({
-    super.key,
-    required this.stopWatchTimer,
-  });
+  const TimerWidget({super.key, required this.stopWatchTimer});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +17,13 @@ class TimerWidget extends StatelessWidget {
       initialData: 0,
       builder: (context, snap) {
         final value = snap.data;
-        final displayTime = StopWatchTimer.getDisplayTime(value!,
-            hours: true, minute: true, second: true, milliSecond: false);
+        final displayTime = StopWatchTimer.getDisplayTime(
+          value!,
+          hours: true,
+          minute: true,
+          second: true,
+          milliSecond: false,
+        );
         return Column(
           children: <Widget>[
             Padding(

@@ -9,15 +9,12 @@ import '../../../v_chat/platform_cache_image_widget.dart';
 import '../controllers/create_broadcast_controller.dart';
 
 class CreateBroadcastView extends GetView<CreateBroadcastController> {
-  const CreateBroadcastView({Key? key}) : super(key: key);
+  const CreateBroadcastView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Broadcast'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Create Broadcast'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -35,10 +32,7 @@ class CreateBroadcastView extends GetView<CreateBroadcastController> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: controller.groupImage == null
-                              ? const Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 100,
-                                )
+                              ? const Icon(Icons.camera_alt_outlined, size: 100)
                               : VPlatformCacheImageWidget(
                                   source: controller.groupImage!,
                                   fit: BoxFit.cover,
@@ -51,29 +45,23 @@ class CreateBroadcastView extends GetView<CreateBroadcastController> {
                         child: FloatingActionButton(
                           mini: true,
                           onPressed: controller.onCameraClick,
-                          child: const Icon(
-                            Icons.camera_alt,
-                          ),
+                          child: const Icon(Icons.camera_alt),
                         ),
-                      )
+                      ),
                     ],
                   );
                 },
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               TextField(
                 controller: controller.nameController,
                 decoration: const InputDecoration(hintText: "broadcast title"),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: controller.onSave,
                 child: const Text("Create Broadcast"),
-              )
+              ),
             ],
           ),
         ),

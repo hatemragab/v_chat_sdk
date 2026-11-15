@@ -20,11 +20,11 @@ class NativeLocalApiCache {
     }
   }
 
-  Future<int> insertToApiCache(ApiCacheModel model) async {
+  Future<int> insertToApiCache(ApiCacheModel model) {
     return _apiCacheRepo.insert(model);
   }
 
-  Future<ApiCacheModel?> getOneApiCache(String endPoint) async {
+  Future<ApiCacheModel?> getOneApiCache(String endPoint) {
     return _apiCacheRepo.getOneByEndPoint(endPoint);
   }
 }

@@ -6,11 +6,8 @@ class VMyOrderInfo {
   final String lastSeenAt;
   final VOrderSettings orderSettings;
 
-//<editor-fold desc="Data Methods">
-  const VMyOrderInfo({
-    required this.lastSeenAt,
-    required this.orderSettings,
-  });
+  //<editor-fold desc="Data Methods">
+  const VMyOrderInfo({required this.lastSeenAt, required this.orderSettings});
 
   @override
   bool operator ==(Object other) =>
@@ -28,10 +25,7 @@ class VMyOrderInfo {
     return 'VMyOrderInfo{ lastSeenAt: $lastSeenAt, orderSettings: $orderSettings,}';
   }
 
-  VMyOrderInfo copyWith({
-    String? lastSeenAt,
-    VOrderSettings? orderSettings,
-  }) {
+  VMyOrderInfo copyWith({String? lastSeenAt, VOrderSettings? orderSettings}) {
     return VMyOrderInfo(
       lastSeenAt: lastSeenAt ?? this.lastSeenAt,
       orderSettings: orderSettings ?? this.orderSettings,
@@ -39,21 +33,19 @@ class VMyOrderInfo {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'lastSeenAt': lastSeenAt,
-      'orderSettings': orderSettings.toMap(),
-    };
+    return {'lastSeenAt': lastSeenAt, 'orderSettings': orderSettings.toMap()};
   }
 
   factory VMyOrderInfo.fromMap(Map<String, dynamic> map) {
     return VMyOrderInfo(
       lastSeenAt: map['lastSeenAt'] as String,
-      orderSettings:
-          VOrderSettings.fromMap(map['orderSettings'] as Map<String, dynamic>),
+      orderSettings: VOrderSettings.fromMap(
+        map['orderSettings'] as Map<String, dynamic>,
+      ),
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }
 
 class VOrderSettings {
@@ -63,7 +55,7 @@ class VOrderSettings {
   final String orderId;
   final Map<String, dynamic>? pinData;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
   const VOrderSettings({
     this.orderTitle,
     this.orderImage,
@@ -132,5 +124,5 @@ class VOrderSettings {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

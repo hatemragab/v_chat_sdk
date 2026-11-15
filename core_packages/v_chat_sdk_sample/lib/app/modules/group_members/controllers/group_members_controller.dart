@@ -27,8 +27,9 @@ class GroupMembersController extends GetxController {
         loadingState = VChatLoadingState.loading;
       },
       request: () async {
-        return VChatController.I.nativeApi.remote.room
-            .getGroupMembers(data.roomId);
+        return VChatController.I.nativeApi.remote.room.getGroupMembers(
+          data.roomId,
+        );
       },
       onSuccess: (response) {
         members.addAll(response);

@@ -83,66 +83,67 @@ class VRoom {
   });
 
   VRoom.empty()
-      : id = "",
-        title = "",
-        transTo = null,
-        thumbImage = "empty!.png",
-        isArchived = false,
-        roomType = VRoomType.s,
-        createdAt = DateTime.now(),
-        enTitle = "",
-        unReadCount = 0,
-        isMuted = false,
-        isDeleted = false,
-        nickName = null,
-        peerIdentifier = null,
-        typingStatus = VSocketRoomTypingModel.offline,
-        isOnline = false,
-        peerId = null,
-        lastMessage = VEmptyMessage();
+    : id = "",
+      title = "",
+      transTo = null,
+      thumbImage = "empty!.png",
+      isArchived = false,
+      roomType = VRoomType.s,
+      createdAt = DateTime.now(),
+      enTitle = "",
+      unReadCount = 0,
+      isMuted = false,
+      isDeleted = false,
+      nickName = null,
+      peerIdentifier = null,
+      typingStatus = VSocketRoomTypingModel.offline,
+      isOnline = false,
+      peerId = null,
+      lastMessage = VEmptyMessage();
 
   VRoom.fromMap(Map<String, dynamic> map)
-      : id = map['rId'] as String,
-        transTo = map['tTo'] as String?,
-        title = map['t'] as String,
-        thumbImage = map['img'] as String,
-        isArchived = map['isA'] as bool,
-        roomType = VRoomType.values.byName(map['rT'] as String),
-        createdAt = DateTime.parse(map['createdAt'] as String),
-        enTitle = removeDiacritics(map['t'] as String),
-        unReadCount = map['uC'] as int,
-        isMuted = map['isM'] as bool,
-        isDeleted = map['isD'] as bool,
-        peerIdentifier = map['pIdentifier'] as String?,
-        nickName = null,
-        typingStatus = VSocketRoomTypingModel.offline,
-        isOnline = false,
-        peerId = map['pId'] as String?,
-        lastMessage = map['lastMessage'] == null
-            ? VEmptyMessage()
-            : MessageFactory.createBaseMessage(
-                map['lastMessage'] as Map<String, dynamic>,
-              );
+    : id = map['rId'] as String,
+      transTo = map['tTo'] as String?,
+      title = map['t'] as String,
+      thumbImage = map['img'] as String,
+      isArchived = map['isA'] as bool,
+      roomType = VRoomType.values.byName(map['rT'] as String),
+      createdAt = DateTime.parse(map['createdAt'] as String),
+      enTitle = removeDiacritics(map['t'] as String),
+      unReadCount = map['uC'] as int,
+      isMuted = map['isM'] as bool,
+      isDeleted = map['isD'] as bool,
+      peerIdentifier = map['pIdentifier'] as String?,
+      nickName = null,
+      typingStatus = VSocketRoomTypingModel.offline,
+      isOnline = false,
+      peerId = map['pId'] as String?,
+      lastMessage = map['lastMessage'] == null
+          ? VEmptyMessage()
+          : MessageFactory.createBaseMessage(
+              map['lastMessage'] as Map<String, dynamic>,
+            );
 
   VRoom.fromLocalMap(Map<String, dynamic> map)
-      : id = map[RoomTable.columnId] as String,
-        roomType =
-            VRoomType.values.byName(map[RoomTable.columnRoomType] as String),
-        title = map[RoomTable.columnTitle] as String,
-        thumbImage = map[RoomTable.columnThumbImage] as String,
-        transTo = map[RoomTable.columnTransTo] as String?,
-        isArchived = (map[RoomTable.columnIsArchived] as int) == 1,
-        createdAt = DateTime.parse(map[RoomTable.columnCreatedAt] as String),
-        enTitle = map[RoomTable.columnEnTitle] as String,
-        unReadCount = map[RoomTable.columnUnReadCount] as int,
-        isMuted = (map[RoomTable.columnIsMuted] as int) == 1,
-        // isDeleted = (map[RoomTable.columnIsDeleted] as int) == 1,
-        nickName = map[RoomTable.columnNickName] as String?,
-        peerIdentifier = map[RoomTable.columnPeerIdentifier] as String?,
-        typingStatus = VSocketRoomTypingModel.offline,
-        isOnline = false,
-        peerId = map[RoomTable.columnPeerId] as String?,
-        lastMessage = MessageFactory.createBaseMessage(map);
+    : id = map[RoomTable.columnId] as String,
+      roomType = VRoomType.values.byName(
+        map[RoomTable.columnRoomType] as String,
+      ),
+      title = map[RoomTable.columnTitle] as String,
+      thumbImage = map[RoomTable.columnThumbImage] as String,
+      transTo = map[RoomTable.columnTransTo] as String?,
+      isArchived = (map[RoomTable.columnIsArchived] as int) == 1,
+      createdAt = DateTime.parse(map[RoomTable.columnCreatedAt] as String),
+      enTitle = map[RoomTable.columnEnTitle] as String,
+      unReadCount = map[RoomTable.columnUnReadCount] as int,
+      isMuted = (map[RoomTable.columnIsMuted] as int) == 1,
+      // isDeleted = (map[RoomTable.columnIsDeleted] as int) == 1,
+      nickName = map[RoomTable.columnNickName] as String?,
+      peerIdentifier = map[RoomTable.columnPeerIdentifier] as String?,
+      typingStatus = VSocketRoomTypingModel.offline,
+      isOnline = false,
+      peerId = map[RoomTable.columnPeerId] as String?,
+      lastMessage = MessageFactory.createBaseMessage(map);
 
   Map<String, dynamic> toLocalMap() {
     return {
@@ -220,9 +221,8 @@ class VRoom {
   // }
 
   String get lastMessageTimeString => DateFormat.jm(
-        Localizations.localeOf(VChatController.I.navigationContext)
-            .languageCode,
-      ).format(lastMessage.createdAtDate);
+    Localizations.localeOf(VChatController.I.navigationContext).languageCode,
+  ).format(lastMessage.createdAtDate);
 
   static VRoom fakeRoom(int id) {
     return VRoom(

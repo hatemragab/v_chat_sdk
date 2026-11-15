@@ -10,56 +10,43 @@ part 'call_api.chopper.dart';
 
 @ChopperApi(baseUrl: 'call')
 abstract class CallApi extends ChopperService {
-  @Get(path: "/active", optionalBody: true)
+  @GET(path: "/active")
   Future<Response> getActiveCall();
 
-  @Get(path: "/history", optionalBody: true)
+  @GET(path: "/history")
   Future<Response> getCallHistory();
 
-  @Get(path: "/agora-access/{roomId}", optionalBody: true)
-  Future<Response> getAgoraAccess(
-    @Path() String roomId,
-  );
+  @GET(path: "/agora-access/{roomId}")
+  Future<Response> getAgoraAccess(@Path() String roomId);
 
-  @Post(path: "/create/{roomId}")
+  @POST(path: "/create/{roomId}")
   Future<Response> createCall(
     @Path() String roomId,
     @Body() Map<String, dynamic> body,
   );
 
-  @Post(path: "/accept/{meetId}", optionalBody: true)
+  @POST(path: "/accept/{meetId}", optionalBody: true)
   Future<Response> acceptCall(
     @Path() String meetId,
     @Body() Map<String, dynamic> body,
   );
 
-  @Post(path: "/reject/{meetId}", optionalBody: true)
-  Future<Response> rejectCall(
-    @Path() String meetId,
-  );
+  @POST(path: "/reject/{meetId}", optionalBody: true)
+  Future<Response> rejectCall(@Path() String meetId);
 
-  @Post(path: "/end/v2/{meetId}", optionalBody: true)
-  Future<Response> endCallV2(
-    @Path() String meetId,
-  );
+  @POST(path: "/end/v2/{meetId}", optionalBody: true)
+  Future<Response> endCallV2(@Path() String meetId);
 
-  @Delete(path: "/history/clear", optionalBody: true)
+  @DELETE(path: "/history/clear")
   Future<Response> clearHistory();
 
-  @Delete(path: "/history/clear/{id}", optionalBody: true)
-  Future<Response> deleteOneHistory(
-    @Path() String id,
-  );
+  @DELETE(path: "/history/clear/{id}")
+  Future<Response> deleteOneHistory(@Path() String id);
 
-  static CallApi create({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static CallApi create({Uri? baseUrl, String? accessToken}) {
     final client = ChopperClient(
       baseUrl: VAppConstants.baseUri,
-      services: [
-        _$CallApi(),
-      ],
+      services: [_$CallApi()],
       converter: const JsonConverter(),
       interceptors: [AuthInterceptor()],
       errorConverter: ErrorInterceptor(),

@@ -33,7 +33,7 @@ class VMessageItem extends StatelessWidget {
   final VMessageCallback? onTap;
   final VMessageCallback? onLongTap;
   final VVoiceMessageController? Function(VBaseMessage message)?
-      voiceController;
+  voiceController;
   final VMessageCallback? onHighlightMessage;
   final VMessageCallback? onReSend;
   final VRoomType roomType;
@@ -58,7 +58,9 @@ class VMessageItem extends StatelessWidget {
       return CenterItemHolder(
         child: Text(
           VMessageConstants.getMessageBody(
-              message, language.vMessagesInfoTrans),
+            message,
+            language.vMessagesInfoTrans,
+          ),
           style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.italic,
@@ -94,9 +96,7 @@ class VMessageItem extends StatelessWidget {
                   : CrossAxisAlignment.start,
               children: [
                 _getGroupUserTitle(context),
-                const SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5),
                 ReplyItemWidget(
                   rToMessage: message.isAllDeleted ? null : message.replyTo,
                   onHighlightMessage: onHighlightMessage,
@@ -107,8 +107,9 @@ class VMessageItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Visibility(
-                      visible:
-                          !message.isMeSender ? false : message.isContainReply,
+                      visible: !message.isMeSender
+                          ? false
+                          : message.isContainReply,
                       child: _getMessageActions,
                     ),
                     ConstrainedBox(
@@ -124,14 +125,15 @@ class VMessageItem extends StatelessWidget {
                         color: message.messageType.isMedia
                             ? Colors.transparent
                             : message.isMeSender
-                                ? context.vMessageTheme.senderBubbleColor
-                                : context.vMessageTheme.receiverBubbleColor,
+                            ? context.vMessageTheme.senderBubbleColor
+                            : context.vMessageTheme.receiverBubbleColor,
                         child: _getChild(context),
                       ),
                     ),
                     Visibility(
-                      visible:
-                          message.isMeSender ? false : message.isContainReply,
+                      visible: message.isMeSender
+                          ? false
+                          : message.isContainReply,
                       child: _getMessageActions,
                     ),
                   ],
@@ -155,24 +157,12 @@ class VMessageItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          MessageTimeWidget(
-            dateTime: message.createdAtDate,
-          ),
-          const SizedBox(
-            width: 1,
-          ),
-          MessageBroadcastWidget(
-            isFromBroadcast: message.isFromBroadcast,
-          ),
-          const SizedBox(
-            width: 1,
-          ),
-          ForwardItemWidget(
-            isFroward: message.isForward,
-          ),
-          const SizedBox(
-            width: 1,
-          ),
+          MessageTimeWidget(dateTime: message.createdAtDate),
+          const SizedBox(width: 1),
+          MessageBroadcastWidget(isFromBroadcast: message.isFromBroadcast),
+          const SizedBox(width: 1),
+          ForwardItemWidget(isFroward: message.isForward),
+          const SizedBox(width: 1),
           MessageStatusIcon(
             model: MessageStatusIconDataModel(
               isSeen: message.seenAt != null,
@@ -184,9 +174,7 @@ class VMessageItem extends StatelessWidget {
               onReSend?.call(message);
             },
           ),
-          const SizedBox(
-            width: 1,
-          ),
+          const SizedBox(width: 1),
         ],
       ),
     );
@@ -219,33 +207,26 @@ class VMessageItem extends StatelessWidget {
         );
 
       case VMessageType.image:
-        return ImageMessageItem(
-          message: message as VImageMessage,
-        );
+        return ImageMessageItem(message: message as VImageMessage);
       case VMessageType.file:
-        return FileMessageItem(
-          message: message as VFileMessage,
-        );
+        return FileMessageItem(message: message as VFileMessage);
       case VMessageType.video:
-        return VideoMessageItem(
-          message: message as VVideoMessage,
-        );
+        return VideoMessageItem(message: message as VVideoMessage);
       case VMessageType.voice:
         return VoiceMessageItem(
           message: message as VVoiceMessage,
           voiceController: voiceController!,
         );
       case VMessageType.location:
-        return LocationMessageItem(
-          message: message as VLocationMessage,
-        );
+        return LocationMessageItem(message: message as VLocationMessage);
 
       case VMessageType.call:
         return CallMessageItem(
           message: message as VCallMessage,
           audioCallLabel: language.audioCall,
-          callStatusLabel: language
-              .transCallStatus((message as VCallMessage).data.callStatus),
+          callStatusLabel: language.transCallStatus(
+            (message as VCallMessage).data.callStatus,
+          ),
         );
       case VMessageType.custom:
         return context.vMessageTheme.customMessageItem?.call(
@@ -254,7 +235,8 @@ class VMessageItem extends StatelessWidget {
               (message as VCustomMessage).data.data,
             ) ??
             const Text(
-                "custom message not implemented you need to add this data inside VInheritedMessageTheme which should be at the top of your app material widget");
+              "custom message not implemented you need to add this data inside VInheritedMessageTheme which should be at the top of your app material widget",
+            );
 
       case VMessageType.info:
         throw "MessageType.info should not render her it center render!";
@@ -277,13 +259,8 @@ class VMessageItem extends StatelessWidget {
         },
         child: Row(
           children: [
-            VCircleAvatar(
-              fullUrl: message.senderImageThumb,
-              radius: 14,
-            ),
-            const SizedBox(
-              width: 5,
-            )
+            VCircleAvatar(fullUrl: message.senderImageThumb, radius: 14),
+            const SizedBox(width: 5),
           ],
         ),
       );

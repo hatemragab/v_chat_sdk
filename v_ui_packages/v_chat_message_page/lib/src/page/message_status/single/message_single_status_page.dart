@@ -78,9 +78,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Card(
                 child: Column(
                   children: [
@@ -110,7 +108,7 @@ class _VMessageSingleStatusPageState extends State<VMessageSingleStatusPage>
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -158,29 +156,21 @@ class ReadItem extends StatelessWidget {
         children: [
           Row(
             children: [
-              MessageStatusIcon(
-                model: model,
-              ),
-              const SizedBox(
-                width: 4,
-              ),
+              MessageStatusIcon(model: model),
+              const SizedBox(width: 4),
               Text(title),
             ],
           ),
-          const SizedBox(
-            height: 4,
-          ),
+          const SizedBox(height: 4),
           dateTime == null
-              ? const SizedBox(
-                  height: 10,
-                )
+              ? const SizedBox(height: 10)
               : Text(
                   format(
                     dateTime!,
                     locale: Localizations.localeOf(context).languageCode,
                   ),
                   style: const TextStyle(color: Colors.grey),
-                )
+                ),
         ],
       ),
     );

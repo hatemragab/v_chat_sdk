@@ -2,11 +2,12 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-library v_room_page;
+library;
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:loadmore/loadmore.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/room_provider.dart';
 import 'package:v_chat_room_page/src/room/pages/room_page/states/room_state_controller.dart';
@@ -84,7 +85,7 @@ class _VChatPageState extends State<VChatPage> {
               ),
             ValueListenableBuilder<VPaginationModel<VRoom>>(
               valueListenable: widget.controller._roomState,
-              builder: (_, value, __) {
+              builder: (_, value, _) {
                 return Expanded(
                   child: LoadMore(
                     onLoadMore: widget.controller._onLoadMore,
@@ -93,15 +94,18 @@ class _VChatPageState extends State<VChatPage> {
                       return "";
                     },
                     child: ListView.builder(
+                      scrollCacheExtent: ScrollCacheExtent.pixels(300),
                       padding: const EdgeInsets.all(8.0),
                       physics: const BouncingScrollPhysics(),
-                      cacheExtent: 300,
                       itemBuilder: (context, index) {
                         final room = value.data[index];
                         return StreamBuilder<VRoom>(
                           key: UniqueKey(),
                           stream: widget
-                              .controller._roomState.roomStateStream.stream
+                              .controller
+                              ._roomState
+                              .roomStateStream
+                              .stream
                               .where((e) => e.id == room.id),
                           initialData: room,
                           builder: (context, snapshot) {
@@ -113,8 +117,10 @@ class _VChatPageState extends State<VChatPage> {
                                   ._onRoomItemLongPress(room, context),
                               onRoomItemPress: (room) {
                                 if (widget.onRoomItemPress == null) {
-                                  widget.controller
-                                      ._onRoomItemPress(room, context);
+                                  widget.controller._onRoomItemPress(
+                                    room,
+                                    context,
+                                  );
                                 } else {
                                   widget.onRoomItemPress!(room);
                                 }

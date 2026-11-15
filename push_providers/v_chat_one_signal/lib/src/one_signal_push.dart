@@ -2,13 +2,12 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:eraser/eraser.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
@@ -16,17 +15,15 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   final _vEventBusSingleton = VEventBusSingleton.vEventBus;
   final String appId;
   final OSLogLevel logLevel;
+  bool _streamsInitialized = false;
 
-  VChatOneSignalProver({
-    required this.appId,
-    this.logLevel = OSLogLevel.none,
-  });
+  VChatOneSignalProver({required this.appId, this.logLevel = OSLogLevel.none});
 
   @override
   Future<void> deleteToken() async {
     try {
-      cleanAll();
-      await OneSignal.shared.disablePush(false);
+      await cleanAll();
+      await OneSignal.User.pushSubscription.optOut();
     } catch (err) {
       //
     }
@@ -36,14 +33,14 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   @override
   Future<String?> getToken() async {
     try {
-      final state = await OneSignal.shared.getDeviceState();
-      if (state == null) {
+      final subscriptionId = OneSignal.User.pushSubscription.id;
+      if (subscriptionId == null) {
         if (kDebugMode) {
-          print("OneSignal.shared.getDeviceState() is null!");
+          log('The OneSignal push subscription ID is not available yet.');
         }
         return null;
       }
-      return state.userId;
+      return subscriptionId;
     } catch (err) {
       //
     }
@@ -51,20 +48,18 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   }
 
   Future<bool> _getIsAllow() async {
-    final state = await OneSignal.shared.getDeviceState();
-    if (state == null) return false;
-    return state.hasNotificationPermission;
+    return OneSignal.Notifications.permission;
   }
 
   @override
   Future<bool> init() async {
     try {
       if (kReleaseMode) {
-        await OneSignal.shared.setLogLevel(OSLogLevel.none, OSLogLevel.none);
+        await OneSignal.Debug.setLogLevel(OSLogLevel.none);
       } else {
-        await OneSignal.shared.setLogLevel(logLevel, logLevel);
+        await OneSignal.Debug.setLogLevel(logLevel);
       }
-      await OneSignal.shared.setAppId(appId);
+      await OneSignal.initialize(appId);
       final status = await _getIsAllow();
       if (status) {
         _initStreams();
@@ -84,7 +79,7 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   @override
   Future<void> askForPermissions() async {
     try {
-      await OneSignal.shared.promptUserForPushNotificationPermission();
+      await OneSignal.Notifications.requestPermission(true);
       if (await _getIsAllow()) {
         _initStreams();
       } else {
@@ -96,52 +91,51 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   }
 
   void _initStreams() {
-    OneSignal.shared.setNotificationWillShowInForegroundHandler(
-        (OSNotificationReceivedEvent event) {
-      // Will be called whenever a notification is received in foreground
-      // Display Notification, pass null param for not displaying the notification
-      final data = event.notification.additionalData;
-      if (data == null) return;
-      final String? fromVChat = data['fromVChat'];
-      final String? message = data['vMessage'];
-      if (fromVChat != null && message != null) {
-        final msg = MessageFactory.createBaseMessage(
-          jsonDecode(message),
-        );
-        if (msg.isMeSender) return;
-        _vEventBusSingleton.fire(VOnNewNotifications(
-          message: msg,
-        ));
-      }
-      event.complete(null);
-    });
-    OneSignal.shared.setSubscriptionObserver((changes) {
-      _vEventBusSingleton.fire(VOnUpdateNotificationsToken(changes.to.userId!));
-    });
-    OneSignal.shared.setNotificationOpenedHandler(
-        (OSNotificationOpenedResult result) async {
-      // Will be called whenever a notification is opened/button pressed.
-      final data = result.notification.additionalData;
+    if (_streamsInitialized) return;
+    _streamsInitialized = true;
+    OneSignal.Notifications.addForegroundWillDisplayListener(
+      _onNotificationWillDisplay,
+    );
+    OneSignal.User.pushSubscription.addObserver(_onSubscriptionChanged);
+    OneSignal.Notifications.addClickListener(_onNotificationClicked);
+  }
 
-      if (data == null) return;
-      final String? fromVChat = data['fromVChat'];
-      final String? message = data['vMessage'];
+  void _onNotificationWillDisplay(OSNotificationWillDisplayEvent event) {
+    event.preventDefault();
+    final data = event.notification.additionalData;
+    if (data == null) return;
+    final fromVChat = data['fromVChat'] as String?;
+    final message = data['vMessage'] as String?;
+    if (fromVChat == null || message == null) return;
+    final msg = MessageFactory.createBaseMessage(jsonDecode(message));
+    if (msg.isMeSender) return;
+    _vEventBusSingleton.fire(VOnNewNotifications(message: msg));
+  }
 
-      if (fromVChat != null && message != null) {
-        final msg = MessageFactory.createBaseMessage(
-          jsonDecode(message),
-        );
-        final room = await _getRoom(msg.roomId);
-        if (room == null) return;
-        _vEventBusSingleton
-            .fire(VOnNotificationsClickedEvent(message: msg, room: room));
-      }
-    });
+  void _onSubscriptionChanged(OSPushSubscriptionChangedState changes) {
+    final subscriptionId = changes.current.id;
+    if (subscriptionId == null) return;
+    _vEventBusSingleton.fire(VOnUpdateNotificationsToken(subscriptionId));
+  }
+
+  Future<void> _onNotificationClicked(OSNotificationClickEvent event) async {
+    final data = event.notification.additionalData;
+    if (data == null) return;
+    final fromVChat = data['fromVChat'] as String?;
+    final message = data['vMessage'] as String?;
+    if (fromVChat == null || message == null) return;
+    final msg = MessageFactory.createBaseMessage(jsonDecode(message));
+    final room = await _getRoom(msg.roomId);
+    if (room == null) return;
+    _vEventBusSingleton.fire(
+      VOnNotificationsClickedEvent(message: msg, room: room),
+    );
   }
 
   Future<VRoom?> _getRoom(String roomId) async {
-    return VChatController.I.nativeApi.local.room
-        .getOneWithLastMessageByRoomId(roomId);
+    return VChatController.I.nativeApi.local.room.getOneWithLastMessageByRoomId(
+      roomId,
+    );
   }
 
   Future<VBaseMessage?> _checkIfAppOpenFromNotification() async {
@@ -149,7 +143,15 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   }
 
   @override
-  void close() {}
+  void close() {
+    if (!_streamsInitialized) return;
+    OneSignal.Notifications.removeForegroundWillDisplayListener(
+      _onNotificationWillDisplay,
+    );
+    OneSignal.User.pushSubscription.removeObserver(_onSubscriptionChanged);
+    OneSignal.Notifications.removeClickListener(_onNotificationClicked);
+    _streamsInitialized = false;
+  }
 
   // @override
   // Stream<VNotificationModel> eventsStream() => _eventsStream.stream;
@@ -162,11 +164,11 @@ class VChatOneSignalProver extends VChatPushProviderBase {
   @override
   Future<void> cleanAll({int? notificationId}) async {
     if (notificationId != null) {
-      OneSignal.shared.removeNotification(notificationId);
+      await OneSignal.Notifications.removeNotification(notificationId);
       return;
     }
-    // await OneSignal.shared.clearOneSignalNotifications();
+    await OneSignal.Notifications.clearAll();
     await Eraser.clearAllAppNotifications();
-    FlutterAppBadger.removeBadge();
+    await AppBadgePlus.updateBadge(0);
   }
 }

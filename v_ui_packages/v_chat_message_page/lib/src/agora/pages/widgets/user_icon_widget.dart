@@ -26,13 +26,8 @@ class UserIconWidget extends StatelessWidget {
       visible: isVisible,
       child: Column(
         children: [
-          VCircleAvatar(
-            fullUrl: url,
-            radius: 60,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
+          VCircleAvatar(fullUrl: url, radius: 60),
+          const SizedBox(height: 20),
           Text(
             userName,
             style: const TextStyle(
@@ -41,10 +36,8 @@ class UserIconWidget extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          subTitle
+          const SizedBox(height: 5),
+          subTitle,
         ],
       ),
     );

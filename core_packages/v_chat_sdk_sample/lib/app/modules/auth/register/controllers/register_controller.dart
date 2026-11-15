@@ -2,8 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-import 'package:animated_login/src/models/login_data.dart';
-import 'package:animated_login/src/models/signup_data.dart';
+import 'package:animated_login/animated_login.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +48,7 @@ class RegisterController extends GetxController {
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
-      print(err);
+      debugPrint(err.toString());
       rethrow;
     }
     return null;
@@ -66,7 +65,7 @@ class RegisterController extends GetxController {
       Get.offAndToNamed(Routes.HOME);
     } catch (err) {
       VAppAlert.showErrorSnackBar(msg: err.toString(), context: Get.context!);
-      print(err);
+      debugPrint(err.toString());
       //AppAlert.hideLoading();
       return err.toString();
     }

@@ -25,9 +25,7 @@ class VAuthApiService {
       body,
       dto.image == null
           ? null
-          : await VPlatforms.getMultipartFile(
-              source: dto.image!,
-            ),
+          : await VPlatforms.getMultipartFile(source: dto.image!),
     );
     throwIfNotSuccess(response);
     final myUser = VIdentifierUser.fromMap(
@@ -47,10 +45,7 @@ class VAuthApiService {
     return myUser;
   }
 
-  static VAuthApiService init({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static VAuthApiService init({Uri? baseUrl, String? accessToken}) {
     _authApi ??= AuthApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,

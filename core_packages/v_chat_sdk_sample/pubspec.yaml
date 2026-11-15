@@ -2,8 +2,11 @@ name: v_chat_sdk_sample
 version: 1.0.0
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=2.17.0 <4.0.0'
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+resolution: workspace
 
 dependencies:
   cupertino_icons: ^1.0.8
@@ -11,11 +14,11 @@ dependencies:
   http: ^1.2.1
   bottom_navy_bar: ^6.0.0
   url_launcher: ^6.2.6
-  firebase_messaging: ^15.0.0
+  firebase_messaging: ^16.5.0
   custom_navigation_bar: ^0.8.2
-  introduction_screen: ^3.1.8
-  flex_color_scheme: ^7.1.2
-  intl: ^0.19.0
+  introduction_screen: ^4.0.0
+  flex_color_scheme: ^8.4.0
+  intl: ^0.20.2
   get: ^4.6.6
   flutter: 
     sdk: flutter
@@ -24,12 +27,12 @@ dependencies:
   v_chat_message_page: ^2.0.0+1
   v_chat_firebase_fcm: ^2.0.0
   v_chat_room_page: ^2.0.0
-  v_chat_input_ui: ^2.0.0+4
+  v_chat_input_ui: ^3.3.0
   animated_login: ^1.7.0
-  shimmer: ^3.0.0
-  fluttertoast: ^8.2.5
+  shimmer: ^4.0.0
+  fluttertoast: ^10.0.0
   path: ^1.8.3
-  encrypt: 5.0.1
+  encrypt: ^5.0.3
   http_parser: ^4.0.2
   textless:
     git:
@@ -37,10 +40,26 @@ dependencies:
       ref: main # You can specify the branch, tag, or commit here
   flutter_localizations:
     sdk: flutter
-  v_platform: ^2.0.0
+  v_platform: ^2.2.0
+  file_picker: ^12.0.0
+  image_cropper: ^12.2.1
+  wechat_camera_picker: ^4.6.0
+  cached_network_image: ^3.4.1
+  map_launcher: ^6.0.0
+  adaptive_dialog: ^2.8.0
+  flutter_advanced_avatar: ^1.5.3
+  file_saver: ^0.4.0
+  path_provider: ^2.1.6
+  photo_view: ^0.15.0
+  chewie: ^1.15.0
+  flutter_cache_manager: ^3.4.2
+  video_player: ^2.14.0
+  firebase_core: ^4.13.0
+
 dev_dependencies:
-  flutter_test: 
+  flutter_test:
     sdk: flutter
+  flutter_lints: ^6.0.0
 
 flutter_icons: 
   android: ic_launcher

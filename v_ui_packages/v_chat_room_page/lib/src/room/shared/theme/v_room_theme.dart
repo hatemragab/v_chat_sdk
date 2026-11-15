@@ -45,28 +45,31 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
           overflow: TextOverflow.ellipsis,
         );
       },
-      getChatAvatar: ({
-        required chatTitle,
-        required imageUrl,
-        required isOnline,
-        required size,
-      }) {
-        return VChatAvatarImage(
-          imageUrl: imageUrl,
-          isOnline: isOnline,
-          size: size,
-          chatTitle: chatTitle,
-        );
-      },
+      getChatAvatar:
+          ({
+            required chatTitle,
+            required imageUrl,
+            required isOnline,
+            required size,
+          }) {
+            return VChatAvatarImage(
+              imageUrl: imageUrl,
+              isOnline: isOnline,
+              size: size,
+              chatTitle: chatTitle,
+            );
+          },
       muteIcon: const Icon(Icons.notifications_off),
-      selectedRoomColor: Colors.black.withOpacity(.2),
+      selectedRoomColor: Colors.black.withValues(alpha: .2),
       unSeenLastMessageTextStyle: const TextStyle(
         overflow: TextOverflow.ellipsis,
         fontWeight: FontWeight.w500,
         color: Colors.black,
       ),
-      seenLastMessageTextStyle:
-          const TextStyle(overflow: TextOverflow.ellipsis, color: Colors.grey),
+      seenLastMessageTextStyle: const TextStyle(
+        overflow: TextOverflow.ellipsis,
+        color: Colors.grey,
+      ),
       lastMessageStatus: const VMsgStatusTheme.light(),
     );
   }
@@ -75,7 +78,7 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
     return VRoomTheme._(
       scaffoldDecoration: const BoxDecoration(),
       muteIcon: const Icon(Icons.notifications_off),
-      selectedRoomColor: Colors.white.withOpacity(.2),
+      selectedRoomColor: Colors.white.withValues(alpha: .2),
       getChatTitle: (title) {
         return Text(
           title,
@@ -83,26 +86,29 @@ class VRoomTheme extends ThemeExtension<VRoomTheme> {
           overflow: TextOverflow.ellipsis,
         );
       },
-      getChatAvatar: ({
-        required chatTitle,
-        required imageUrl,
-        required isOnline,
-        required size,
-      }) {
-        return VChatAvatarImage(
-          imageUrl: imageUrl,
-          isOnline: isOnline,
-          size: size,
-          chatTitle: chatTitle,
-        );
-      },
+      getChatAvatar:
+          ({
+            required chatTitle,
+            required imageUrl,
+            required isOnline,
+            required size,
+          }) {
+            return VChatAvatarImage(
+              imageUrl: imageUrl,
+              isOnline: isOnline,
+              size: size,
+              chatTitle: chatTitle,
+            );
+          },
       unSeenLastMessageTextStyle: const TextStyle(
         overflow: TextOverflow.ellipsis,
         fontWeight: FontWeight.w500,
         color: Colors.white,
       ),
-      seenLastMessageTextStyle:
-          const TextStyle(overflow: TextOverflow.ellipsis, color: Colors.grey),
+      seenLastMessageTextStyle: const TextStyle(
+        overflow: TextOverflow.ellipsis,
+        color: Colors.grey,
+      ),
       lastMessageStatus: const VMsgStatusTheme.dark(),
     );
   }

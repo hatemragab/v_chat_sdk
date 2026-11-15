@@ -4,34 +4,24 @@
 
 import 'package:map_launcher/map_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:v_platform/v_platform.dart';
 
 abstract class VStringUtils {
   static final vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
 
-  static String parseVMentions(
-    String txt, {
-    bool withOutAt = false,
-  }) {
-    return txt.replaceAllMapped(
-      VStringUtils.vMentionRegExp,
-      (match) {
-        final matchTxt = match.group(1)!;
-        if (withOutAt) {
-          return matchTxt.replaceFirst("@", "");
-        }
-        return matchTxt;
-      },
-    );
+  static String parseVMentions(String txt, {bool withOutAt = false}) {
+    return txt.replaceAllMapped(VStringUtils.vMentionRegExp, (match) {
+      final matchTxt = match.group(1)!;
+      if (withOutAt) {
+        return matchTxt.replaceFirst("@", "");
+      }
+      return matchTxt;
+    });
   }
 
   static Future<bool> lunchLink(String urlText) async {
     final url = Uri.tryParse(urlText);
     if (url != null && await canLaunchUrl(url)) {
-      await launchUrl(
-        url,
-        mode: LaunchMode.externalApplication,
-      );
+      await launchUrl(url, mode: LaunchMode.externalApplication);
       return true;
     } else {
       return false;
@@ -58,14 +48,18 @@ abstract class VStringUtils {
     required String title,
     String? description,
   }) async {
-    return await MapLauncher.showMarker(
-      mapType: VPlatforms.isIOS ? MapType.apple : MapType.google,
-      coords: Coords(
-        latitude,
-        longitude,
-      ),
-      title: title,
-      description: description,
-    );
+    try {
+      final markerTitle = description == null || description.isEmpty
+          ? title
+          : '$title - $description';
+      await MapLauncher.marker(
+        Location.coords(latitude, longitude, title: markerTitle),
+      ).show();
+      return true;
+    } on MapLaunchException {
+      return false;
+    } on UnsupportedError {
+      return false;
+    }
   }
 }

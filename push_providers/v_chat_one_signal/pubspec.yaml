@@ -1,31 +1,34 @@
 name: v_chat_one_signal
 description: v chat one signal push notifications implementations for flutter apps for android and ios
-version: 2.1.0
+version: 2.1.1
 homepage: https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro
 issue_tracker: https://github.com/hatemragab/v_chat_sdk/issues
 repository: https://github.com/hatemragab/v_chat_sdk
 
 environment:
-  sdk: '>=2.17.0 <4.0.0'
-  flutter: ">=1.17.0"
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+resolution: workspace
 
 dependencies:
   flutter:
     sdk: flutter
-  v_chat_sdk_core: ^2.1.0
-  onesignal_flutter: ^3.5.1
-  eraser: ^2.0.2
-  flutter_app_badger: ^1.5.0
-  http: ^1.2.1
-  v_platform: ^2.0.0
+  v_chat_sdk_core: ^2.1.1
+  onesignal_flutter: ^5.6.8
+  eraser: ^3.0.0
+  app_badge_plus: ^1.1.6
+  http: ^1.2.2
+  v_platform: ^2.2.0
 
 dev_dependencies:
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
-  lints: ^4.0.0
+  lints: ^6.1.0
 
 flutter:
+  uses-material-design: true
 
 platforms:
   android:

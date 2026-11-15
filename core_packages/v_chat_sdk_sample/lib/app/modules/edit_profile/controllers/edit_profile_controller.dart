@@ -42,7 +42,9 @@ class EditProfileController extends GetxController {
     await AppPref.setMap(SStorageKeys.myProfile.name, user.toMap());
     Get.back();
     VAppAlert.showSuccessSnackBar(
-        msg: "Update successfully", context: Get.context!);
+      msg: "Update successfully",
+      context: Get.context!,
+    );
   }
 
   @override

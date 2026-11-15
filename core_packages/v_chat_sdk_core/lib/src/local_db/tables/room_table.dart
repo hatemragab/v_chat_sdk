@@ -24,17 +24,14 @@ class RoomTable {
   static const columnCreatedAt = '${tableName}_created_at';
 
   static Future<void> recreateTable(Transaction db) async {
-    await db.execute(
-      '''
+    await db.execute('''
           drop table if exists $tableName
-        ''',
-    );
+        ''');
     await RoomTable.createTable(db);
   }
 
   static Future<void> createTable(Transaction db) async {
-    await db.execute(
-      '''
+    await db.execute('''
           create table $tableName (
        
             $columnId     TEXT PRIMARY KEY UNIQUE ,
@@ -56,15 +53,12 @@ class RoomTable {
          
             UNIQUE($columnId, $columnPeerId) ON CONFLICT REPLACE
             )        
-          ''',
-    );
+          ''');
 
     ///$columnIsTranslateEnable     INTEGER DEFAULT 0,
-    await db.execute(
-      '''
+    await db.execute('''
       CREATE INDEX idx_id_$tableName
       ON $tableName ($columnId)
-    ''',
-    );
+    ''');
   }
 }

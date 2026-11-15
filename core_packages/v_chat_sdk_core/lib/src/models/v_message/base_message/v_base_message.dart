@@ -117,65 +117,66 @@ abstract class VBaseMessage {
   bool isStared;
 
   VBaseMessage.fromRemoteMap(Map<String, dynamic> map)
-      : id = map['_id'] as String,
-        senderId = map['sId'] as String,
-        sIdentifier = (map['sIdentifier'] as String?) ?? "",
-        senderName = map['sName'] as String,
-        senderImageThumb = map['sImg'] as String,
-        platform = map['plm'] as String,
-        isEncrypted = map['isEncrypted'] as bool,
-        forwardId = map['forId'] as String?,
-        roomId = map['rId'] as String,
-        contentTr = null,
-        isStared = (map['isStared'] as bool?) ?? false,
-        content = map['c'] as String,
-        messageType = VMessageType.values.byName(map['mT'] as String),
-        replyTo = map['rTo'] == null
-            ? null
-            : MessageFactory.createBaseMessage(
-                map['rTo'] as Map<String, dynamic>,
-              ),
-        seenAt = map['sAt'] as String?,
-        deliveredAt = map['dAt'] as String?,
-        allDeletedAt = map['dltAt'] as String?,
-        parentBroadcastId = map['pBId'] as String?,
-        localId = map['lId'] as String,
-        createdAt = map['createdAt'] as String,
-        emitStatus = VMessageEmitStatus.serverConfirm,
-        updatedAt = map['updatedAt'] as String;
+    : id = map['_id'] as String,
+      senderId = map['sId'] as String,
+      sIdentifier = (map['sIdentifier'] as String?) ?? "",
+      senderName = map['sName'] as String,
+      senderImageThumb = map['sImg'] as String,
+      platform = map['plm'] as String,
+      isEncrypted = map['isEncrypted'] as bool,
+      forwardId = map['forId'] as String?,
+      roomId = map['rId'] as String,
+      contentTr = null,
+      isStared = (map['isStared'] as bool?) ?? false,
+      content = map['c'] as String,
+      messageType = VMessageType.values.byName(map['mT'] as String),
+      replyTo = map['rTo'] == null
+          ? null
+          : MessageFactory.createBaseMessage(
+              map['rTo'] as Map<String, dynamic>,
+            ),
+      seenAt = map['sAt'] as String?,
+      deliveredAt = map['dAt'] as String?,
+      allDeletedAt = map['dltAt'] as String?,
+      parentBroadcastId = map['pBId'] as String?,
+      localId = map['lId'] as String,
+      createdAt = map['createdAt'] as String,
+      emitStatus = VMessageEmitStatus.serverConfirm,
+      updatedAt = map['updatedAt'] as String;
 
   /// from local
   VBaseMessage.fromLocalMap(Map<String, dynamic> map)
-      : id = map[MessageTable.columnId] as String,
-        senderId = map[MessageTable.columnSenderId] as String,
-        sIdentifier = map[MessageTable.columnSIdentifier] as String,
-        senderName = map[MessageTable.columnSenderName] as String,
-        senderImageThumb = map[MessageTable.columnSenderImageThumb] as String,
-        platform = map[MessageTable.columnPlatform] as String,
-        roomId = map[MessageTable.columnRoomId] as String,
-        isEncrypted = (map[MessageTable.columnIsEncrypted] as int) == 1,
-        isStared = (map[MessageTable.columnIsStar] as int) == 1,
-        contentTr = map[MessageTable.columnContentTr] as String?,
-        content = map[MessageTable.columnContent] as String,
-        seenAt = map[MessageTable.columnSeenAt] as String?,
-        replyTo = map[MessageTable.columnReplyTo] == null
-            ? null
-            : MessageFactory.createBaseMessage(
-                jsonDecode(map[MessageTable.columnReplyTo] as String)
-                    as Map<String, dynamic>,
-              ),
-        deliveredAt = map[MessageTable.columnDeliveredAt] as String?,
-        forwardId = map[MessageTable.columnForwardId] as String?,
-        allDeletedAt = map[MessageTable.columnAllDeletedAt] as String?,
-        parentBroadcastId =
-            map[MessageTable.columnParentBroadcastId] as String?,
-        localId = map[MessageTable.columnLocalId] as String,
-        createdAt = map[MessageTable.columnCreatedAt] as String,
-        updatedAt = map[MessageTable.columnUpdatedAt] as String,
-        emitStatus = VMessageEmitStatus.values
-            .byName(map[MessageTable.columnMessageEmitStatus] as String),
-        messageType = VMessageType.values
-            .byName(map[MessageTable.columnMessageType] as String);
+    : id = map[MessageTable.columnId] as String,
+      senderId = map[MessageTable.columnSenderId] as String,
+      sIdentifier = map[MessageTable.columnSIdentifier] as String,
+      senderName = map[MessageTable.columnSenderName] as String,
+      senderImageThumb = map[MessageTable.columnSenderImageThumb] as String,
+      platform = map[MessageTable.columnPlatform] as String,
+      roomId = map[MessageTable.columnRoomId] as String,
+      isEncrypted = (map[MessageTable.columnIsEncrypted] as int) == 1,
+      isStared = (map[MessageTable.columnIsStar] as int) == 1,
+      contentTr = map[MessageTable.columnContentTr] as String?,
+      content = map[MessageTable.columnContent] as String,
+      seenAt = map[MessageTable.columnSeenAt] as String?,
+      replyTo = map[MessageTable.columnReplyTo] == null
+          ? null
+          : MessageFactory.createBaseMessage(
+              jsonDecode(map[MessageTable.columnReplyTo] as String)
+                  as Map<String, dynamic>,
+            ),
+      deliveredAt = map[MessageTable.columnDeliveredAt] as String?,
+      forwardId = map[MessageTable.columnForwardId] as String?,
+      allDeletedAt = map[MessageTable.columnAllDeletedAt] as String?,
+      parentBroadcastId = map[MessageTable.columnParentBroadcastId] as String?,
+      localId = map[MessageTable.columnLocalId] as String,
+      createdAt = map[MessageTable.columnCreatedAt] as String,
+      updatedAt = map[MessageTable.columnUpdatedAt] as String,
+      emitStatus = VMessageEmitStatus.values.byName(
+        map[MessageTable.columnMessageEmitStatus] as String,
+      ),
+      messageType = VMessageType.values.byName(
+        map[MessageTable.columnMessageType] as String,
+      );
 
   Map<String, Object?> toLocalMap() {
     final map = {
@@ -191,8 +192,9 @@ abstract class VBaseMessage {
       MessageTable.columnIsEncrypted: isEncrypted ? 1 : 0,
       MessageTable.columnContent: content,
       MessageTable.columnMessageType: messageType.name,
-      MessageTable.columnReplyTo:
-          replyTo == null ? null : jsonEncode(replyTo!.toLocalMap()),
+      MessageTable.columnReplyTo: replyTo == null
+          ? null
+          : jsonEncode(replyTo!.toLocalMap()),
       MessageTable.columnSeenAt: seenAt,
       MessageTable.columnDeliveredAt: deliveredAt,
       MessageTable.columnForwardId: forwardId,
@@ -272,22 +274,22 @@ abstract class VBaseMessage {
     this.forwardId,
     String? broadcastId,
     this.replyTo,
-  })  : id = ObjectId().hexString,
-        localId = const Uuid().v4(),
-        sIdentifier = "",
-        platform = VPlatforms.currentPlatform,
-        createdAt = DateTime.now().toLocal().toIso8601String(),
-        updatedAt = DateTime.now().toLocal().toIso8601String(),
-        senderId = VAppConstants.myProfile.baseUser.vChatId,
-        isStared = false,
-        senderName = VAppConstants.myProfile.baseUser.fullName,
-        senderImageThumb =
-            VAppConstants.myProfile.baseUser.userImages.smallImage,
-        emitStatus = VMessageEmitStatus.sending,
-        parentBroadcastId = broadcastId,
-        allDeletedAt = null,
-        seenAt = null,
-        deliveredAt = null;
+  }) : id = ObjectId().hexString,
+       localId = const Uuid().v4(),
+       sIdentifier = "",
+       platform = VPlatforms.currentPlatform,
+       createdAt = DateTime.now().toLocal().toIso8601String(),
+       updatedAt = DateTime.now().toLocal().toIso8601String(),
+       senderId = VAppConstants.myProfile.baseUser.vChatId,
+       isStared = false,
+       senderName = VAppConstants.myProfile.baseUser.fullName,
+       senderImageThumb =
+           VAppConstants.myProfile.baseUser.userImages.smallImage,
+       emitStatus = VMessageEmitStatus.sending,
+       parentBroadcastId = broadcastId,
+       allDeletedAt = null,
+       seenAt = null,
+       deliveredAt = null;
 
   VBaseMessage.buildFakeMessage({
     required this.content,
@@ -296,23 +298,23 @@ abstract class VBaseMessage {
     this.forwardId,
     String? broadcastId,
     this.replyTo,
-  })  : id = ObjectId().hexString,
-        localId = const Uuid().v4(),
-        sIdentifier = "",
-        roomId = "roomId $content",
-        isEncrypted = false,
-        platform = VPlatforms.currentPlatform,
-        createdAt = DateTime.now().toLocal().toIso8601String(),
-        updatedAt = DateTime.now().toLocal().toIso8601String(),
-        senderId = VAppConstants.fakeMyProfile.baseUser.vChatId,
-        isStared = false,
-        senderName = VAppConstants.fakeMyProfile.baseUser.fullName,
-        senderImageThumb =
-            VAppConstants.fakeMyProfile.baseUser.userImages.smallImage,
-        parentBroadcastId = broadcastId,
-        allDeletedAt = null,
-        seenAt = null,
-        deliveredAt = null;
+  }) : id = ObjectId().hexString,
+       localId = const Uuid().v4(),
+       sIdentifier = "",
+       roomId = "roomId $content",
+       isEncrypted = false,
+       platform = VPlatforms.currentPlatform,
+       createdAt = DateTime.now().toLocal().toIso8601String(),
+       updatedAt = DateTime.now().toLocal().toIso8601String(),
+       senderId = VAppConstants.fakeMyProfile.baseUser.vChatId,
+       isStared = false,
+       senderName = VAppConstants.fakeMyProfile.baseUser.fullName,
+       senderImageThumb =
+           VAppConstants.fakeMyProfile.baseUser.userImages.smallImage,
+       parentBroadcastId = broadcastId,
+       allDeletedAt = null,
+       seenAt = null,
+       deliveredAt = null;
 
   Map<String, Object?> toRemoteMap() {
     return {

@@ -16,45 +16,34 @@ part 'profile_api.chopper.dart';
 @ChopperApi(baseUrl: 'profile')
 abstract class ProfileApi extends ChopperService {
   ///update image
-  @Patch(path: '/image')
+  @PATCH(path: '/image')
   @multipart
-  Future<Response> updateImage(
-    @PartFile("file") MultipartFile file,
-  );
+  Future<Response> updateImage(@PartFile("file") MultipartFile file);
 
   ///update password
-  @Patch(path: "/lang")
+  @PATCH(path: "/lang")
   Future<Response> updateLang(@Body() Map<String, dynamic> body);
 
   ///update name
-  @Patch(path: "/name")
+  @PATCH(path: "/name")
   Future<Response> updateUserName(@Body() Map<String, dynamic> body);
 
   ///add fcm
-  @Post(path: "/push")
+  @POST(path: "/push")
   Future<Response> addNotificationPush(@Body() Map<String, dynamic> body);
 
   ///delete fcm
-  @Delete(path: "/push")
+  @DELETE(path: "/push")
   Future<Response> deleteNotificationPush();
 
-  @Get(path: "/users/{identifier}/last-seen", optionalBody: true)
-  Future<Response> getLastSeenAt(
-    @Path("identifier") String peerId,
-  );
-  @Get(path: "/users")
-  Future<Response> appUsers(
-    @QueryMap() Map<String, dynamic> query,
-  );
-  static ProfileApi create({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  @GET(path: "/users/{identifier}/last-seen")
+  Future<Response> getLastSeenAt(@Path("identifier") String peerId);
+  @GET(path: "/users")
+  Future<Response> appUsers(@QueryMap() Map<String, dynamic> query);
+  static ProfileApi create({Uri? baseUrl, String? accessToken}) {
     final client = ChopperClient(
       baseUrl: VAppConstants.baseUri,
-      services: [
-        _$ProfileApi(),
-      ],
+      services: [_$ProfileApi()],
       converter: const JsonConverter(),
       //, HttpLoggingInterceptor()
       interceptors: [AuthInterceptor()],

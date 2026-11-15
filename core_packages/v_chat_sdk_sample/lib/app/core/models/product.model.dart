@@ -14,7 +14,7 @@ class ProductModel {
   String imageUrl;
   final DateTime createdAt;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   ProductModel({
     required this.productId,
@@ -26,10 +26,8 @@ class ProductModel {
     required this.title,
   });
 
-  VPlatformFile get imgAsPlatformSource => VPlatformFile.fromUrl(
-        fileSize: 0,
-        url: imageUrl,
-      );
+  VPlatformFile get imgAsPlatformSource =>
+      VPlatformFile.fromUrl(fileSize: 0, networkUrl: imageUrl);
 
   Map<String, dynamic> toMap() {
     return {
@@ -55,5 +53,5 @@ class ProductModel {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

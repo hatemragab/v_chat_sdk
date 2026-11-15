@@ -1,3 +1,9 @@
+## 2.1.1
+
+- Require Dart 3.13 and Flutter 3.47.
+- Refresh runtime dependencies and generated Chopper API clients.
+- Fix compatibility across lifecycle, socket, persistence, and model APIs.
+
 ## 2.1.0
 - Support video and voice calls
 ## 2.0.0

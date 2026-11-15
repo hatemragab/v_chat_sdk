@@ -11,7 +11,7 @@ import '../../../../v_chat/v_circle_avatar.dart';
 import '../controllers/users_tab_controller.dart';
 
 class UsersTabView extends GetView<UsersTabController> {
-  const UsersTabView({Key? key}) : super(key: key);
+  const UsersTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,7 @@ class UsersTabView extends GetView<UsersTabController> {
       //   onPressed: controller.onCreateGroupOrBroadcast,
       //   child: const Icon(Icons.add),
       // ),
-      appBar: AppBar(
-        title: const Text('All Users'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('All Users'), centerTitle: true),
       body: GetBuilder<UsersTabController>(
         assignId: true,
         builder: (logic) {

@@ -4,9 +4,6 @@
 
 export '../models/controller/v_chat_config.dart';
 // export './api_constants.dart';
-export './enums.dart'
-    hide VStorageKeys
-    hide VChatLoadingState
-    hide VLoadMoreStatus;
+export './enums.dart' hide VChatLoadingState, VLoadMoreStatus, VStorageKeys;
 export './stream_utils.dart';
 export './v_message_encryption.dart';

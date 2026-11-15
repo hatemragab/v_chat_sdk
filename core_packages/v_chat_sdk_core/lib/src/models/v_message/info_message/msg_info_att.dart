@@ -19,7 +19,7 @@ class VMsgInfoAtt {
   /// the admin name if the action is from group admin
   final String adminName;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   VMsgInfoAtt({
     required this.action,
@@ -60,5 +60,5 @@ class VMsgInfoAtt {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

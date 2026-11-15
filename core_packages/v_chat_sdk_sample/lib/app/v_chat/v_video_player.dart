@@ -7,21 +7,18 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:v_chat_message_page/src/v_chat/v_app_alert.dart';
-import 'package:v_chat_message_page/src/v_chat/v_file.dart';
 import 'package:v_chat_sdk_sample/app/v_chat/v_safe_api_call.dart';
 import 'package:v_platform/v_platform.dart';
 import 'package:video_player/video_player.dart';
 
 import 'conditional_builder.dart';
+import 'v_app_alert.dart';
+import 'v_file.dart';
 
 class VVideoPlayer extends StatefulWidget {
   final VPlatformFile platformFileSource;
 
-  const VVideoPlayer({
-    Key? key,
-    required this.platformFileSource,
-  }) : super(key: key);
+  const VVideoPlayer({super.key, required this.platformFileSource});
 
   @override
   State<VVideoPlayer> createState() => _VVideoPlayerState();
@@ -49,7 +46,8 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
   Widget build(BuildContext context) {
     if (!widget.platformFileSource.isContentVideo) {
       return Material(
-          child: Text("the file must be video ${widget.platformFileSource}"));
+        child: Text("the file must be video ${widget.platformFileSource}"),
+      );
     }
     return Scaffold(
       backgroundColor: Colors.black,
@@ -75,7 +73,7 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
                   },
                   onSuccess: (url) async {
                     VAppAlert.showSuccessSnackBar(
-                      msg: "successfullyDownloadedInLabel" + url,
+                      msg: "successfullyDownloadedInLabel$url",
                       context: context,
                     );
                   },
@@ -90,9 +88,7 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
             condition: !isLoading,
             thenBuilder: () => AspectRatio(
               aspectRatio: _videoPlayerController!.value.aspectRatio,
-              child: Chewie(
-                controller: _chewieController!,
-              ),
+              child: Chewie(controller: _chewieController!),
             ),
             elseBuilder: () => const CircularProgressIndicator.adaptive(),
           ),
@@ -103,8 +99,9 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
 
   void _initAndPlay() async {
     VideoPlayerController? controller;
-    VideoPlayerOptions options =
-        VideoPlayerOptions(allowBackgroundPlayback: false);
+    VideoPlayerOptions options = VideoPlayerOptions(
+      allowBackgroundPlayback: false,
+    );
     if (widget.platformFileSource.isFromPath) {
       controller = VideoPlayerController.file(
         File(widget.platformFileSource.fileLocalPath!),
@@ -123,14 +120,14 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
     } else if (widget.platformFileSource.isFromUrl) {
       final file = await (VPlatforms.isMobile
           ? DefaultCacheManager().getSingleFile(
-              widget.platformFileSource.url!,
-              key: widget.platformFileSource.getUrlPath,
+              widget.platformFileSource.networkUrl!,
+              key: widget.platformFileSource.getCachedUrlKey,
             )
           : null);
       controller = file != null
           ? VideoPlayerController.file(file, videoPlayerOptions: options)
           : VideoPlayerController.networkUrl(
-              Uri.parse(widget.platformFileSource.url!),
+              Uri.parse(widget.platformFileSource.networkUrl!),
               videoPlayerOptions: options,
             );
     }

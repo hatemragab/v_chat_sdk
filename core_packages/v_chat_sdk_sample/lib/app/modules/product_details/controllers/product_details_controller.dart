@@ -18,8 +18,7 @@ class ProductDetailsController extends GetxController {
     final res = await VAppAlert.showAskYesNoDialog(
       title: "Start v chat sdk product chat",
       context: Get.context!,
-      content:
-          "by click yes the product chat will created and product data will pinned in the unique product chat",
+      content: "by click yes the product chat will created and product data will pinned in the unique product chat",
     );
     if (res == 1) {}
   }
@@ -28,8 +27,7 @@ class ProductDetailsController extends GetxController {
     final res = await VAppAlert.showAskYesNoDialog(
       title: "Add fake order",
       context: Get.context!,
-      content:
-          "This fake order to show how to start chat with delivery person after adding the order you can start chat with the delivery about the order",
+      content: "This fake order to show how to start chat with delivery person after adding the order you can start chat with the delivery about the order",
     );
     if (res == 1) {
       vSafeApiCall(

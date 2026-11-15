@@ -70,8 +70,9 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
               ),
             ),
             Container(
-              color:
-                  context.isDark ? Colors.black.withOpacity(.1) : Colors.white,
+              color: context.isDark
+                  ? Colors.black.withValues(alpha: .1)
+                  : Colors.white,
               child: ListTile(
                 title: Row(
                   children: [
@@ -83,79 +84,82 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                         isMeSender: widget.message.isMeSender,
                       ),
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Text(widget.readLabel)
+                    const SizedBox(width: 4),
+                    Text(widget.readLabel),
                   ],
                 ),
               ),
             ),
             ValueListenableBuilder<MessageStatusState>(
-                valueListenable: controller,
-                builder: (__, value, _) {
-                  return VAsyncWidgetsBuilder(
-                    loadingState: controller.state,
-                    onRefresh: controller.getData,
-                    successWidget: () {
-                      return ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(10),
-                        itemBuilder: (context, index) => ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: VCircleAvatar(
-                            radius: 20,
-                            fullUrl: value.seen[index].identifierUser.baseUser
-                                .userImages.smallImage,
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(widget.readLabel),
-                                  Text(
-                                    format(
-                                      value.seen[index].seen!,
-                                      locale: Localizations.localeOf(context)
-                                          .languageCode,
-                                    ),
-                                    style: const TextStyle(color: Colors.grey),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(widget.deliveredLabel),
-                                  Text(
-                                    format(
-                                      value.seen[index].delivered,
-                                      locale: Localizations.localeOf(context)
-                                          .languageCode,
-                                    ),
-                                    style: const TextStyle(color: Colors.grey),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          title: Text(value
-                              .seen[index].identifierUser.baseUser.fullName),
+              valueListenable: controller,
+              builder: (_, value, _) {
+                return VAsyncWidgetsBuilder(
+                  loadingState: controller.state,
+                  onRefresh: controller.getData,
+                  successWidget: () {
+                    return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(10),
+                      itemBuilder: (context, index) => ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: VCircleAvatar(
+                          radius: 20,
+                          fullUrl: value
+                              .seen[index]
+                              .identifierUser
+                              .baseUser
+                              .userImages
+                              .smallImage,
                         ),
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: value.seen.length,
-                      );
-                    },
-                  );
-                }),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(widget.readLabel),
+                                Text(
+                                  format(
+                                    value.seen[index].seen!,
+                                    locale: Localizations.localeOf(context)
+                                        .languageCode,
+                                  ),
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(widget.deliveredLabel),
+                                Text(
+                                  format(
+                                    value.seen[index].delivered,
+                                    locale: Localizations.localeOf(context)
+                                        .languageCode,
+                                  ),
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        title: Text(
+                          value.seen[index].identifierUser.baseUser.fullName,
+                        ),
+                      ),
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: value.seen.length,
+                    );
+                  },
+                );
+              },
+            ),
             Container(
-              color:
-                  context.isDark ? Colors.black.withOpacity(.1) : Colors.white,
+              color: context.isDark
+                  ? Colors.black.withValues(alpha: .1)
+                  : Colors.white,
               child: ListTile(
                 title: Row(
                   children: [
@@ -167,48 +171,52 @@ class _VMessageGroupStatusPageState extends State<VMessageGroupStatusPage> {
                         isMeSender: widget.message.isMeSender,
                       ),
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Text(widget.deliveredLabel)
+                    const SizedBox(width: 4),
+                    Text(widget.deliveredLabel),
                   ],
                 ),
               ),
             ),
             ValueListenableBuilder<MessageStatusState>(
-                valueListenable: controller,
-                builder: (__, value, _) {
-                  return VAsyncWidgetsBuilder(
-                    loadingState: controller.state,
-                    successWidget: () {
-                      return ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(10),
-                        itemBuilder: (context, index) => ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          subtitle: Text(
-                            format(
-                              value.deliver[index].delivered,
-                              locale:
-                                  Localizations.localeOf(context).languageCode,
-                            ),
-                            style: const TextStyle(color: Colors.grey),
+              valueListenable: controller,
+              builder: (_, value, _) {
+                return VAsyncWidgetsBuilder(
+                  loadingState: controller.state,
+                  successWidget: () {
+                    return ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(10),
+                      itemBuilder: (context, index) => ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        subtitle: Text(
+                          format(
+                            value.deliver[index].delivered,
+                            locale: Localizations.localeOf(context)
+                                .languageCode,
                           ),
-                          leading: VCircleAvatar(
-                            radius: 20,
-                            fullUrl: value.deliver[index].identifierUser
-                                .baseUser.userImages.smallImage,
-                          ),
-                          title: Text(value
-                              .deliver[index].identifierUser.baseUser.fullName),
+                          style: const TextStyle(color: Colors.grey),
                         ),
-                        separatorBuilder: (context, index) => const Divider(),
-                        itemCount: value.deliver.length,
-                      );
-                    },
-                  );
-                }),
+                        leading: VCircleAvatar(
+                          radius: 20,
+                          fullUrl: value
+                              .deliver[index]
+                              .identifierUser
+                              .baseUser
+                              .userImages
+                              .smallImage,
+                        ),
+                        title: Text(
+                          value.deliver[index].identifierUser.baseUser.fullName,
+                        ),
+                      ),
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: value.deliver.length,
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),

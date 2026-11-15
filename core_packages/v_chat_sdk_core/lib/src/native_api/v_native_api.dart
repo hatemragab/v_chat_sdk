@@ -101,9 +101,7 @@ class VRemoteNativeApi {
 
   VChannelApiService get room => _room;
 
-  final remoteAuth = NativeRemoteAuth(
-    VAuthApiService.init(),
-  );
+  final remoteAuth = NativeRemoteAuth(VAuthApiService.init());
 
   /// Performs a native HTTP request.
   Future<http.Response> nativeHttp(
@@ -111,10 +109,9 @@ class VRemoteNativeApi {
     required VChatHttpMethods method,
     required Map<String, dynamic>? body,
     Map<String, String> headers = const {},
-  }) async {
-    headers['authorization'] = "Bearer ${VAppPref.getHashedString(
-      key: VStorageKeys.vAccessToken.name,
-    )}";
+  }) {
+    headers['authorization'] =
+        "Bearer ${VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name)}";
     headers["clint-version"] = VAppConstants.clintVersion;
     switch (method) {
       case VChatHttpMethods.get:

@@ -1,64 +1,140 @@
-# V Chat SDK - Room Page UI Package
+# v_chat_room_page
 
-Welcome to the V Chat SDK Room Page UI Package. This component provides a ready-made UI for the room page of your chat application. Please note that this package is part of the V Chat SDK ecosystem and cannot be used as a standalone component.
+Ready-made room-list UI for V Chat SDK. It combines local cache and remote pagination, listens for room and message events, displays connection state, supports room actions, and routes selected rooms through the application's `VNavigator`.
 
-## Features
+This package is not standalone. Initialize and authenticate `v_chat_sdk_core` first.
 
-- **Pre-built Room Page UI:** This package includes a user interface for the room page, making the development process much easier.
-- **Theme Customization:** Easily tailor the theme of the room page to match your application's style.
+## Requirements
+
+- Flutter 3.47 or newer
+- Dart 3.13 or newer
+- `v_chat_sdk_core` 2.1.1 or newer
+- An initialized `VChatController`
+- A connected or connectable Socket.IO session
+- Application-provided `VRoomLanguage` labels
 
 ## Installation
 
-To use the V Chat SDK Room Page UI package, you will need to install it in your project using your preferred package manager.
+```bash
+flutter pub add v_chat_room_page
+```
 
-## Usage
+```dart
+import 'package:v_chat_room_page/v_chat_room_page.dart';
+```
 
-To use the Room Page UI in your application, implement the `VChatPage` widget like so:
+## Display the Room List
+
+Create one `VRoomController` per room page and dispose it with the widget:
+
+```dart
+class RoomsScreen extends StatefulWidget {
+  const RoomsScreen({
+    required this.language,
+    super.key,
+  });
+
+  final VRoomLanguage language;
+
+  @override
+  State<RoomsScreen> createState() => _RoomsScreenState();
+}
+
+class _RoomsScreenState extends State<RoomsScreen> {
+  late final VRoomController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VRoomController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return VChatPage(
+      controller: _controller,
+      language: widget.language,
+      appBar: AppBar(title: const Text('Chats')),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+```
+
+When `onRoomItemPress` is omitted, the page calls `VChatController.I.vNavigator.messageNavigator.toMessagePage`.
+
+## Custom Room Navigation
 
 ```dart
 VChatPage(
-  //context: navigator == null ? context : navigator!.context,
-  appBar: AppBar(
-    title: Text("start chat"),
-  ),
-  controller: controller.vRoomController,
-  useIconForRoomItem: false,
+  controller: controller,
+  language: language,
   onRoomItemPress: (room) {
-    controller.vRoomController.setRoomSelected(room.id);
-    vWebChatNavigation.key.currentState!
-        .pushReplacementNamed(ChatRoute.route, arguments: room);
+    controller.setRoomSelected(room.id);
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => MessageScreen(room: room),
+      ),
+    );
   },
-);
+)
 ```
 
-To customize the theme of the room page, apply a `ThemeData` and use the `VRoomTheme` class:
+Use `setRoomSelected` when custom navigation should reset the selected room's unread state.
+
+## Filtering
 
 ```dart
-theme: ThemeData(
-  extensions: [
-    VRoomTheme.light().copyWith(
-      scaffoldDecoration: VRoomTheme.light()
-        .scaffoldDecoration
-        .copyWith(color: lightColorScheme.background),
-    ),
-  ],
-),
+controller.sortRoomsBy(VRoomType.g); // Groups only.
+controller.sortRoomsBy(null);        // Restore all rooms.
 ```
 
-More details on how to use this package can be found [here](https://v-chat-sdk.github.io/vchat-v2-docs/docs/flutter/room_page).
+The controller responds to socket reconnection, typing, online state, unread counts, room updates, and inserted or deleted messages.
 
-## Documentation
+## Theming
 
-For a more comprehensive guide on how to use this package, please refer to our extensive [documentation](https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro/). It includes detailed guides, examples, and tutorials on how to fully leverage the V Chat SDK ecosystem.
+Add `VRoomTheme` to the application theme:
 
-## Support
+```dart
+MaterialApp(
+  theme: ThemeData(
+    extensions: <ThemeExtension<dynamic>>[
+      VRoomTheme.light().copyWith(
+        scaffoldDecoration: const BoxDecoration(
+          color: Color(0xfff7f7f8),
+        ),
+      ),
+    ],
+  ),
+  home: RoomsScreen(language: roomLanguage),
+)
+```
 
-If you encounter any issues, have feature requests, or general inquiries, please visit our [issues page](https://github.com/v-chat-sdk/vchat-v2/issues) for information and to report any problems.
+`VRoomTheme` controls the scaffold, room tiles, text, unread indicators, images, and status presentation. Provide your own `VRoomLanguage` for every user-facing label.
 
----
+## Main Public API
 
-**Note:** Always ensure you are using the most recent version of the V Chat SDK and its packages to access the latest features and improvements.
+- `VChatPage`: paginated room-list screen.
+- `VRoomController`: room state, filtering, selection, cache, and event subscriptions.
+- `VRoomTheme`: theme extension for room presentation.
+- `VRoomLanguage`: localized strings used by room actions and status labels.
+- `VChooseRoomsPage`: room picker used by forwarding and sharing flows.
+- `VRoomItem`: reusable room-list item.
 
----
+## Platform Notes
 
-The V Chat SDK Room Page UI Package is proudly developed and maintained by the V Chat Team.
+The UI targets Android, iOS, web, macOS, and Windows. Network and realtime behavior still depend on the configured V Chat backend. Test narrow layouts, pointer/keyboard input, reconnection, empty lists, and pagination on every target you ship.
+
+## Development
+
+From the repository root:
+
+```bash
+dart run melos exec --scope=v_chat_room_page -- flutter analyze
+dart run melos exec --scope=v_chat_room_page -- flutter test
+```

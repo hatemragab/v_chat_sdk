@@ -10,7 +10,7 @@ class VBaseUser {
   final String fullName;
   final VUserImage userImages;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   const VBaseUser({
     required this.vChatId,
@@ -69,19 +69,16 @@ class VBaseUser {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }
 
 class VIdentifierUser {
   final String identifier;
   final VBaseUser baseUser;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  const VIdentifierUser({
-    required this.identifier,
-    required this.baseUser,
-  });
+  const VIdentifierUser({required this.identifier, required this.baseUser});
 
   @override
   bool operator ==(Object other) =>
@@ -101,10 +98,7 @@ class VIdentifierUser {
     return 'VIdentifierUser{ identifier: $identifier, baseUser: $baseUser,}';
   }
 
-  VIdentifierUser copyWith({
-    String? identifier,
-    VBaseUser? baseUser,
-  }) {
+  VIdentifierUser copyWith({String? identifier, VBaseUser? baseUser}) {
     return VIdentifierUser(
       identifier: identifier ?? this.identifier,
       baseUser: baseUser ?? this.baseUser,
@@ -112,10 +106,7 @@ class VIdentifierUser {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'identifier': identifier,
-      ...baseUser.toMap(),
-    };
+    return {'identifier': identifier, ...baseUser.toMap()};
   }
 
   factory VIdentifierUser.fromMap(Map<String, dynamic> map) {
@@ -125,5 +116,5 @@ class VIdentifierUser {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

@@ -33,11 +33,7 @@ class VSocketOnRoomSeenModel {
 
   /// Returns a map representation of the [VSocketOnRoomSeenModel] instance
   Map<String, dynamic> toMap() {
-    return {
-      'roomId': roomId,
-      'userId': userId,
-      'date': date,
-    };
+    return {'roomId': roomId, 'userId': userId, 'date': date};
   }
 
   /// Returns `true` if the [VSocketOnRoomSeenModel] instance belongs to the current user, or `false` otherwise

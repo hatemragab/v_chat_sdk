@@ -11,18 +11,12 @@ import '../shared/rounded_container.dart';
 class VideoMessageItem extends StatelessWidget {
   final VVideoMessage message;
 
-  const VideoMessageItem({
-    super.key,
-    required this.message,
-  });
+  const VideoMessageItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxWidth: 350,
-        maxHeight: 350,
-      ),
+      constraints: const BoxConstraints(maxWidth: 350, maxHeight: 350),
       child: Stack(
         alignment: Alignment.centerRight,
         //  fit: StackFit.expand,
@@ -34,7 +28,7 @@ class VideoMessageItem extends StatelessWidget {
               RoundedContainer(
                 height: 60,
                 width: 60,
-                color: Colors.blueGrey.withOpacity(.9),
+                color: Colors.blueGrey.withValues(alpha: .9),
                 boxShape: BoxShape.circle,
                 child: const Icon(
                   Icons.play_arrow,
@@ -50,7 +44,7 @@ class VideoMessageItem extends StatelessWidget {
             child: RoundedContainer(
               borderRadius: BorderRadius.circular(5),
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              color: Colors.blueGrey.withOpacity(.5),
+              color: Colors.blueGrey.withValues(alpha: .5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -63,14 +57,10 @@ class VideoMessageItem extends StatelessWidget {
                               color: Colors.white,
                               size: 16,
                             ),
-                            const SizedBox(
-                              width: 4,
-                            ),
+                            const SizedBox(width: 4),
                             Text(
                               message.data.durationFormat!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
+                              style: Theme.of(context).textTheme.bodySmall!
                                   .copyWith(color: Colors.white),
                             ),
                           ],
@@ -82,14 +72,10 @@ class VideoMessageItem extends StatelessWidget {
                         color: Colors.white,
                         size: 16,
                       ),
-                      const SizedBox(
-                        width: 4,
-                      ),
+                      const SizedBox(width: 4),
                       Text(
                         message.data.fileSource.readableSize,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall!
+                        style: Theme.of(context).textTheme.bodySmall!
                             .copyWith(color: Colors.white),
                       ),
                     ],

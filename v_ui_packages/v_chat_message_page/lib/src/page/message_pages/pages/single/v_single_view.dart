@@ -71,7 +71,7 @@ class _VSingleViewState extends State<VSingleView> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ValueListenableBuilder<SingleAppBarStateModel>(
           valueListenable: controller.singleAppBarController,
-          builder: (_, value, __) {
+          builder: (_, value, _) {
             if (value.isSearching) {
               return VSearchAppBare(
                 onClose: controller.onCloseSearch,
@@ -108,13 +108,8 @@ class _VSingleViewState extends State<VSingleView> {
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
-            const SizedBox(
-              height: 5,
-            ),
-            InputWidgetState(
-              controller: controller,
-              language: widget.language,
-            )
+            const SizedBox(height: 5),
+            InputWidgetState(controller: controller, language: widget.language),
           ],
         ),
       ),

@@ -14,9 +14,7 @@ class VProfileApiService {
   VProfileApiService._();
 
   Future<bool> addFcm(String fcm) async {
-    final res = await _profileApi!.addNotificationPush(
-      {'pushKey': fcm},
-    );
+    final res = await _profileApi!.addNotificationPush({'pushKey': fcm});
     throwIfNotSuccess(res);
     return true;
   }
@@ -29,9 +27,7 @@ class VProfileApiService {
 
   Future<VUserImage> updateImage(VPlatformFile img) async {
     final res = await _profileApi!.updateImage(
-      await VPlatforms.getMultipartFile(
-        source: img,
-      ),
+      await VPlatforms.getMultipartFile(source: img),
     );
     throwIfNotSuccess(res);
     return VUserImage.fromMap(extractDataFromResponse(res));
@@ -54,9 +50,7 @@ class VProfileApiService {
     final res = await _profileApi!.appUsers(dto);
     throwIfNotSuccess(res);
     return (extractDataFromResponse(res)['docs'] as List)
-        .map(
-          (e) => VIdentifierUser.fromMap(e as Map<String, dynamic>),
-        )
+        .map((e) => VIdentifierUser.fromMap(e as Map<String, dynamic>))
         .toList();
   }
 

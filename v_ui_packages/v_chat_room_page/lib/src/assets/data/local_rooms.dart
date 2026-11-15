@@ -19,6 +19,6 @@ final fakeLocalRooms = [
     "tb_r_un_counter": 0,
     "tb_r_nick_name": null,
     "tb_r_created_at": "2022-12-28T14:39:32Z",
-    ...fakeLocalMessages.first
-  }
+    ...fakeLocalMessages.first,
+  },
 ];

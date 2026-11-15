@@ -10,10 +10,7 @@ abstract class VMessageEvents extends VAppEvent {
   final String roomId; // The ID of the room associated with the event.
   final String localId; // The local ID associated with the event.
 
-  const VMessageEvents({
-    required this.roomId,
-    required this.localId,
-  });
+  const VMessageEvents({required this.roomId, required this.localId});
 
   @override
   List<Object?> get props => [roomId, localId];
@@ -100,7 +97,7 @@ class VUpdateMessageSeenEvent extends VMessageEvents {
 /// Event for updating the delivery status of all room messages.
 class VUpdateMessageDeliverEvent extends VMessageEvents {
   final VSocketOnDeliverMessagesModel
-      model; // The model to update the delivery status.
+  model; // The model to update the delivery status.
 
   const VUpdateMessageDeliverEvent({
     required super.roomId,

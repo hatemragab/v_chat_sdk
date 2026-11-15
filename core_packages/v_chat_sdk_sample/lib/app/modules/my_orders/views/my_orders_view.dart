@@ -8,15 +8,12 @@ import 'package:get/get.dart';
 import '../controllers/my_orders_controller.dart';
 
 class MyOrdersView extends GetView<MyOrdersController> {
-  const MyOrdersView({Key? key}) : super(key: key);
+  const MyOrdersView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Orders'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('My Orders'), centerTitle: true),
       // body: Padding(
       //   padding: const EdgeInsets.all(10),
       //   child: FirestorePagination(

@@ -2,7 +2,8 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-library v_chat_one_signal;
+library;
 
 export './src/one_signal_push.dart';
+
 export 'package:onesignal_flutter/onesignal_flutter.dart';

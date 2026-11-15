@@ -40,11 +40,7 @@ class MessageStatusIcon extends StatelessWidget {
   final VoidCallback? onReSend;
   final MessageStatusIconDataModel model;
 
-  const MessageStatusIcon({
-    super.key,
-    required this.model,
-    this.onReSend,
-  });
+  const MessageStatusIcon({super.key, required this.model, this.onReSend});
 
   @override
   Widget build(BuildContext context) {
@@ -58,16 +54,11 @@ class MessageStatusIcon extends StatelessWidget {
     if (model.isDeliver) {
       return _getBody(themeData.deliverIcon);
     }
-    return _getBody(
-      _getIcon(themeData),
-    );
+    return _getBody(_getIcon(themeData));
   }
 
   Widget _getBody(Widget icon) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 0),
-      child: icon,
-    );
+    return Padding(padding: const EdgeInsets.only(right: 0), child: icon);
   }
 
   Widget _getIcon(VMsgStatusTheme themeData) {

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import '../controllers/explore_tab_controller.dart';
 
 class ExploreTabView extends GetView<ExploreTabController> {
-  const ExploreTabView({Key? key}) : super(key: key);
+  const ExploreTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +17,13 @@ class ExploreTabView extends GetView<ExploreTabController> {
         onPressed: controller.onCreateProduct,
         child: const Icon(Icons.add),
       ),
-      appBar: AppBar(
-        title: const Text('Explore products'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Explore products'), centerTitle: true),
       body: Center(
-        child: GetBuilder<ExploreTabController>(builder: (logic) {
-          return Text(controller.txt.toString());
-        }),
+        child: GetBuilder<ExploreTabController>(
+          builder: (logic) {
+            return Text(controller.txt.toString());
+          },
+        ),
       ),
       // body: Padding(
       //   padding: const EdgeInsets.all(8.0),

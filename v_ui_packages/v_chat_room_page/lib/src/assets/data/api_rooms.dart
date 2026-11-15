@@ -25,6 +25,6 @@ final fakeApiRooms = [
     "createdAt": "2022-12-26T17:22:52.063Z",
     "updatedAt": "2022-12-26T17:23:29.304Z",
     "messages": [fakeLocalMessages[1]],
-    "uC": 0
-  }
+    "uC": 0,
+  },
 ];

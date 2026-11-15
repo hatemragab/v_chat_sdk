@@ -12,41 +12,25 @@ abstract class VAppPref {
 
   static String? getStringOrNullKey(String key) => instance.getString(key);
 
-  static Future<void> setStringKey(
-    String key,
-    String value,
-  ) {
+  static Future<void> setStringKey(String key, String value) {
     return instance.setString(key, value);
   }
 
-  static Map<String, dynamic>? getMap(
-    String key,
-  ) {
+  static Map<String, dynamic>? getMap(String key) {
     final data = getStringOrNullKey(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
   }
 
-  static Map<String, dynamic>? getMapApiCache(
-    String key,
-  ) {
+  static Map<String, dynamic>? getMapApiCache(String key) {
     final data = instance.getString(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
   }
 
-  static Future<void> setMap(
-    String key,
-    Map<String, dynamic> map,
-  ) =>
+  static Future<void> setMap(String key, Map<String, dynamic> map) =>
       setStringKey(key, jsonEncode(map));
 
-  static Future<void> setMapApiCache(
-    String key,
-    Map<String, dynamic> map,
-  ) =>
+  static Future<void> setMapApiCache(String key, Map<String, dynamic> map) =>
       instance.setString(key, jsonEncode(map));
 
-  static Future<void> removeKey(
-    String key,
-  ) =>
-      instance.remove(key);
+  static Future<void> removeKey(String key) => instance.remove(key);
 }

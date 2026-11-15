@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class MessageBroadcastWidget extends StatelessWidget {
   final bool isFromBroadcast;
@@ -13,12 +12,9 @@ class MessageBroadcastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!isFromBroadcast) return const SizedBox.shrink();
-    return const Padding(
-      padding: EdgeInsets.only(right: 5),
-      child: Icon(
-        PhosphorIcons.speakerHigh,
-        size: 15,
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(right: 5),
+      child: const Icon(Icons.campaign_outlined, size: 15),
     );
   }
 }

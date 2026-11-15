@@ -13,7 +13,7 @@ import '../controllers/on_boarding_controller.dart';
 class OnBoardingView extends GetView<OnBoardingController> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  OnBoardingView({Key? key}) : super(key: key);
+  OnBoardingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +66,15 @@ class OnBoardingView extends GetView<OnBoardingController> {
             showBackButton: true,
             //rtl: true, // Display as right-to-left
             back: const Icon(Icons.arrow_back),
-            skip: const Text('Skip',
-                style: TextStyle(fontWeight: FontWeight.w600)),
+            skip: const Text(
+              'Skip',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
             next: const Icon(Icons.arrow_forward),
-            done: const Text('Done',
-                style: TextStyle(fontWeight: FontWeight.w600)),
+            done: const Text(
+              'Done',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
             curve: Curves.fastLinearToSlowEaseIn,
             controlsMargin: const EdgeInsets.all(16),
             controlsPadding: kIsWeb
@@ -86,7 +90,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
     return Image.asset('assets/$assetName', width: width);
   }
 
-  _onIntroEnd(BuildContext context) {
+  void _onIntroEnd(BuildContext context) {
     Get.offAndToNamed(Routes.SPLASH);
   }
 }

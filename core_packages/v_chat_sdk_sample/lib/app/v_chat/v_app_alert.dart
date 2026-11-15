@@ -14,7 +14,7 @@ abstract class VAppAlert {
     required BuildContext context,
   }) async {
     return showGeneralDialog(
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionBuilder: (context, a1, a2, widget) {
         return PopScope(
           canPop: isDismissible,
@@ -24,18 +24,14 @@ abstract class VAppAlert {
               opacity: a1.value,
               child: AlertDialog(
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 content: Row(
                   children: [
                     const CircularProgressIndicator.adaptive(),
-                    const SizedBox(
-                      width: 25,
-                    ),
-                    message == null ? "pleaseWait".text : message.text
+                    const SizedBox(width: 25),
+                    message == null ? "pleaseWait".text : message.text,
                   ],
                 ),
               ),
@@ -98,12 +94,14 @@ abstract class VAppAlert {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: content
-                  .map((e) => ListTile(
-                        title: e.toString().text,
-                        onTap: () {
-                          Navigator.pop(context, e);
-                        },
-                      ))
+                  .map(
+                    (e) => ListTile(
+                      title: e.toString().text,
+                      onTap: () {
+                        Navigator.pop(context, e);
+                      },
+                    ),
+                  )
                   .toList(),
             ),
           ),
@@ -131,11 +129,13 @@ abstract class VAppAlert {
       cancelLabel: "cancel",
       isDismissible: true,
       actions: content
-          .map((e) => SheetAction<ModelSheetItem>(
-                label: e.title,
-                icon: e.iconData == null ? null : e.iconData!.icon,
-                key: e,
-              ))
+          .map(
+            (e) => SheetAction<ModelSheetItem>(
+              label: e.title,
+              icon: e.iconData?.icon,
+              key: e,
+            ),
+          )
           .toList(),
     );
   }
@@ -144,24 +144,18 @@ abstract class VAppAlert {
     required String msg,
     required BuildContext context,
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg),
-      duration: const Duration(
-        seconds: 3,
-      ),
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), duration: const Duration(seconds: 3)),
+    );
   }
 
   static void showErrorSnackBar({
     required String msg,
     required BuildContext context,
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg),
-      duration: const Duration(
-        seconds: 5,
-      ),
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), duration: const Duration(seconds: 5)),
+    );
   }
 }
 
@@ -170,9 +164,5 @@ class ModelSheetItem<T> {
   final String title;
   final Icon? iconData;
 
-  ModelSheetItem({
-    required this.title,
-    required this.id,
-    this.iconData,
-  });
+  ModelSheetItem({required this.title, required this.id, this.iconData});
 }

@@ -35,11 +35,10 @@ class VRoomNavigator {
   final Future<List<String>?> Function(
     BuildContext context,
     String? currentRoomId,
-  ) toForwardPage;
+  )
+  toForwardPage;
 
-  VRoomNavigator({
-    required this.toForwardPage,
-  });
+  VRoomNavigator({required this.toForwardPage});
 }
 
 class VMessageNavigator {
@@ -61,10 +60,7 @@ class VMessageNavigator {
   final VToChatSettingsFunction? toGroupSettings;
   final VToChatSettingsFunction? toBroadcastSettings;
 
-  final Function(
-    BuildContext context,
-    VRoom vRoom,
-  ) toMessagePage;
+  final Function(BuildContext context, VRoom vRoom) toMessagePage;
 
   const VMessageNavigator({
     required this.toSingleChatMessageInfo,
@@ -91,10 +87,7 @@ class VMessageNavigator {
     VToSingleOrOrderSettingsFunction? toOrderSettings,
     VToChatSettingsFunction? toGroupSettings,
     VToChatSettingsFunction? toBroadcastSettings,
-    Function(
-      BuildContext context,
-      VRoom vRoom,
-    )? toMessagePage,
+    Function(BuildContext context, VRoom vRoom)? toMessagePage,
   }) {
     return VMessageNavigator(
       toSingleChatMessageInfo:
@@ -116,20 +109,11 @@ class VMessageNavigator {
 }
 
 class VCallNavigator {
-  final Function(
-    BuildContext context,
-    VCallDto dto,
-  ) toCall;
+  final Function(BuildContext context, VCallDto dto) toCall;
 
-  final Function(
-    BuildContext context,
-    VNewCallModel callModel,
-  ) toPickUp;
+  final Function(BuildContext context, VNewCallModel callModel) toPickUp;
 
-  const VCallNavigator({
-    required this.toCall,
-    required this.toPickUp,
-  });
+  const VCallNavigator({required this.toCall, required this.toPickUp});
 }
 
 class VNavigator {

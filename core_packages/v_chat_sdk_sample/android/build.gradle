@@ -5,6 +5,12 @@ allprojects {
     }
 }
 
+ext {
+    // Keep plugin modules on the same API level as the sample app. Some
+    // third-party plugins otherwise fall back to obsolete compile SDK values.
+    compileSdkVersion = 37
+}
+
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"

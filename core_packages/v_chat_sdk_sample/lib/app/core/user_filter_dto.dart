@@ -7,13 +7,9 @@ class UserFilterDto {
   int page;
   String? fullName;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  UserFilterDto({
-    required this.limit,
-    required this.page,
-    this.fullName,
-  });
+  UserFilterDto({required this.limit, required this.page, this.fullName});
 
   @override
   bool operator ==(Object other) =>
@@ -29,18 +25,14 @@ class UserFilterDto {
 
   @override
   String toString() {
-    return 'UserFilterDto{' +
-        ' limit: $limit,' +
-        ' page: $page,' +
-        ' fullName: $fullName,' +
+    return 'UserFilterDto{'
+        ' limit: $limit,'
+        ' page: $page,'
+        ' fullName: $fullName,'
         '}';
   }
 
-  UserFilterDto copyWith({
-    int? limit,
-    int? page,
-    String? fullName,
-  }) {
+  UserFilterDto copyWith({int? limit, int? page, String? fullName}) {
     return UserFilterDto(
       limit: limit ?? this.limit,
       page: page ?? this.page,
@@ -49,11 +41,7 @@ class UserFilterDto {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'limit': this.limit,
-      'page': this.page,
-      'fullName': this.fullName,
-    };
+    return {'limit': limit, 'page': page, 'fullName': fullName};
   }
 
   factory UserFilterDto.fromMap(Map<String, dynamic> map) {
@@ -64,5 +52,5 @@ class UserFilterDto {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

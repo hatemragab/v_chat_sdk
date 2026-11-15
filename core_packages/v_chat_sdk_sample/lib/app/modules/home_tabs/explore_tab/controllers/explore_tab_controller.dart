@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/routes/app_pages.dart';
@@ -18,12 +19,15 @@ class ExploreTabController extends GetxController {
   void onInit() {
     super.onInit();
     totalUnreadMessageCountStream = VChatController
-        .I.nativeApi.streams.totalUnreadMessageCountStream
+        .I
+        .nativeApi
+        .streams
+        .totalUnreadMessageCountStream
         .listen((event) {
-      txt = event.count;
-      update();
-      print(event.toString());
-    });
+          txt = event.count;
+          update();
+          debugPrint(event.toString());
+        });
   }
 
   @override

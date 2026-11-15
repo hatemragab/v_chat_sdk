@@ -12,17 +12,13 @@ class VBlockApiService {
 
   static BlockApi? _blockApi;
 
-  Future<bool> blockUser({
-    required String identifier,
-  }) async {
+  Future<bool> blockUser({required String identifier}) async {
     final res = await _blockApi!.banUser(identifier);
     throwIfNotSuccess(res);
     return true;
   }
 
-  Future<bool> unBlockUser({
-    required String identifier,
-  }) async {
+  Future<bool> unBlockUser({required String identifier}) async {
     final res = await _blockApi!.unBanUser(identifier);
     throwIfNotSuccess(res);
     return true;
@@ -36,10 +32,7 @@ class VBlockApiService {
     return VSingleBlockModel.fromMap(extractDataFromResponse(res));
   }
 
-  static VBlockApiService init({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static VBlockApiService init({Uri? baseUrl, String? accessToken}) {
     _blockApi ??= BlockApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,

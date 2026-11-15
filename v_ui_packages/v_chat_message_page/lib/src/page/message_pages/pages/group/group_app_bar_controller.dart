@@ -9,10 +9,8 @@ class GroupAppBarController extends ValueNotifier<GroupAppBarStateModel>
   final VRoom vRoom;
   final MessageProvider messageProvider;
 
-  GroupAppBarController({
-    required this.vRoom,
-    required this.messageProvider,
-  }) : super(GroupAppBarStateModel.fromVRoom(vRoom)) {
+  GroupAppBarController({required this.vRoom, required this.messageProvider})
+    : super(GroupAppBarStateModel.fromVRoom(vRoom)) {
     streamsMix.addAll([
       VEventBusSingleton.vEventBus.on<VUpdateRoomImageEvent>().listen((event) {
         value.roomImage = event.image;

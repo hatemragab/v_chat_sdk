@@ -8,11 +8,9 @@ class VMessageFileData {
   /// The file source data
   VPlatformFile fileSource;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  VMessageFileData({
-    required this.fileSource,
-  });
+  VMessageFileData({required this.fileSource});
 
   @override
   bool operator ==(Object other) =>
@@ -29,12 +27,8 @@ class VMessageFileData {
     return 'MessageFileData{ fileSource: $fileSource,}';
   }
 
-  VMessageFileData copyWith({
-    VPlatformFile? fileSource,
-  }) {
-    return VMessageFileData(
-      fileSource: fileSource ?? this.fileSource,
-    );
+  VMessageFileData copyWith({VPlatformFile? fileSource}) {
+    return VMessageFileData(fileSource: fileSource ?? this.fileSource);
   }
 
   Map<String, dynamic> toMap() {
@@ -42,10 +36,8 @@ class VMessageFileData {
   }
 
   factory VMessageFileData.fromMap(Map<String, dynamic> map) {
-    return VMessageFileData(
-      fileSource: VPlatformFile.fromMap(map),
-    );
+    return VMessageFileData(fileSource: VPlatformFile.fromMap(map));
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

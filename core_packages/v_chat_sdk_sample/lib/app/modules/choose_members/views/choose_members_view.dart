@@ -10,7 +10,7 @@ import '../../../v_chat/v_async_widgets_builder.dart';
 import '../controllers/choose_members_controller.dart';
 
 class ChooseMembersView extends GetView<ChooseMembersController> {
-  const ChooseMembersView({Key? key}) : super(key: key);
+  const ChooseMembersView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,7 @@ class ChooseMembersView extends GetView<ChooseMembersController> {
         onPressed: controller.onDone,
         child: const Icon(Icons.done),
       ),
-      appBar: AppBar(
-        title: const Text('ChooseMembersView'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('ChooseMembersView'), centerTitle: true),
       body: Column(
         children: [
           SizedBox(
@@ -42,7 +39,7 @@ class ChooseMembersView extends GetView<ChooseMembersController> {
                           margin: const EdgeInsets.only(right: 8),
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(.5),
+                            color: Colors.green.withValues(alpha: .5),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child:

@@ -8,20 +8,15 @@ import 'package:intl/intl.dart';
 class MessageTimeWidget extends StatelessWidget {
   final DateTime dateTime;
 
-  const MessageTimeWidget({
-    super.key,
-    required this.dateTime,
-  });
+  const MessageTimeWidget({super.key, required this.dateTime});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       DateFormat.jm(Localizations.localeOf(context).languageCode)
           .format(dateTime.toLocal()),
-      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-            fontWeight: FontWeight.w200,
-            fontSize: 11,
-          ),
+      style: Theme.of(context).textTheme.bodySmall!
+          .copyWith(fontWeight: FontWeight.w200, fontSize: 11),
     );
   }
 }

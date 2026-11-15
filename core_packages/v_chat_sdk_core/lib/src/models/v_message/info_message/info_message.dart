@@ -38,15 +38,15 @@ class VInfoMessage extends VBaseMessage {
   });
 
   VInfoMessage.fromRemoteMap(super.map)
-      : data = VMsgInfoAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
-        super.fromRemoteMap();
+    : data = VMsgInfoAtt.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      super.fromRemoteMap();
 
   VInfoMessage.fromLocalMap(super.map)
-      : data = VMsgInfoAtt.fromMap(
-          jsonDecode(map[MessageTable.columnAttachment] as String)
-              as Map<String, dynamic>,
-        ),
-        super.fromLocalMap();
+    : data = VMsgInfoAtt.fromMap(
+        jsonDecode(map[MessageTable.columnAttachment] as String)
+            as Map<String, dynamic>,
+      ),
+      super.fromLocalMap();
 
   // @override
   // Map<String, dynamic> toRemoteMap() {
@@ -54,9 +54,7 @@ class VInfoMessage extends VBaseMessage {
   // }
 
   @override
-  Map<String, dynamic> toLocalMap({
-    bool withOutConTr = false,
-  }) {
+  Map<String, dynamic> toLocalMap({bool withOutConTr = false}) {
     return {
       ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(data.toMap()),

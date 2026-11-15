@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'profile_api.dart';
 
@@ -21,10 +22,7 @@ final class _$ProfileApi extends ProfileApi {
   Future<Response<dynamic>> updateImage(MultipartFile file) {
     final Uri $url = Uri.parse('profile/image');
     final List<PartValue> $parts = <PartValue>[
-      PartValueFile<MultipartFile>(
-        'file',
-        file,
-      )
+      PartValueFile<MultipartFile>('file', file),
     ];
     final Request $request = Request(
       'PATCH',
@@ -66,34 +64,21 @@ final class _$ProfileApi extends ProfileApi {
   Future<Response<dynamic>> addNotificationPush(Map<String, dynamic> body) {
     final Uri $url = Uri.parse('profile/push');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> deleteNotificationPush() {
     final Uri $url = Uri.parse('profile/push');
-    final Request $request = Request(
-      'DELETE',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('DELETE', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> getLastSeenAt(String peerId) {
     final Uri $url = Uri.parse('profile/users/${peerId}/last-seen');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 

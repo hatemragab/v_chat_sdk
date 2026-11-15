@@ -21,17 +21,11 @@ abstract class VAppPref {
 
   static String? getStringOrNullKey(String key) => instance.getString(key);
 
-  static Future<void> setStringKey(
-    String key,
-    String value,
-  ) {
+  static Future<void> setStringKey(String key, String value) {
     return instance.setString(key, value);
   }
 
-  static Future<void> setHashedString(
-    String sKey,
-    String value,
-  ) {
+  static Future<void> setHashedString(String sKey, String value) {
     final plainText = value;
 
     final key = Key.fromUtf8(_hashKey);
@@ -63,59 +57,36 @@ abstract class VAppPref {
     return getBool("vIsLogin");
   }
 
-  static int? getIntOrNull(
-    String key,
-  ) =>
-      instance.getInt(key);
+  static int? getIntOrNull(String key) => instance.getInt(key);
 
-  static bool getBool(
-    String key,
-  ) =>
-      instance.getBool(key) ?? false;
+  static bool getBool(String key) => instance.getBool(key) ?? false;
 
-  static Future<void> setInt(
-    String key,
-    int value,
-  ) =>
+  static Future<void> setInt(String key, int value) =>
       instance.setInt(key, value);
 
   static Future<void> setBool(
     String key,
     // ignore: avoid_positional_boolean_parameters
     bool value,
-  ) =>
-      instance.setBool(key, value);
+  ) => instance.setBool(key, value);
 
-  static Map<String, dynamic>? getMap(
-    String key,
-  ) {
+  static Map<String, dynamic>? getMap(String key) {
     final data = getStringOrNullKey(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
   }
 
-  static Map<String, dynamic>? getMapApiCache(
-    String key,
-  ) {
+  static Map<String, dynamic>? getMapApiCache(String key) {
     final data = instance.getString(key);
     return data == null ? null : jsonDecode(data) as Map<String, dynamic>;
   }
 
-  static Future<void> setMap(
-    String key,
-    Map<String, dynamic> map,
-  ) =>
+  static Future<void> setMap(String key, Map<String, dynamic> map) =>
       setStringKey(key, jsonEncode(map));
 
-  static Future<void> setMapApiCache(
-    String key,
-    Map<String, dynamic> map,
-  ) =>
+  static Future<void> setMapApiCache(String key, Map<String, dynamic> map) =>
       instance.setString(key, jsonEncode(map));
 
   static Future<void> clear() => instance.clear();
 
-  static Future<void> removeKey(
-    String key,
-  ) =>
-      instance.remove(key);
+  static Future<void> removeKey(String key) => instance.remove(key);
 }

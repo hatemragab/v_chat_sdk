@@ -1,40 +1,142 @@
-# V Chat SDK Core Package
+# v_chat_sdk_core
 
-Welcome to the V Chat SDK Core Package, a comprehensive and potent engine for integrating chat functionality into your application. Built to cater to varying needs, whether your project involves a simplistic chat interface or a complex, fully-featured communication platform, our SDK can flexibly adapt.
+The foundation of V Chat SDK. This package owns the chat models, REST and Socket.IO clients, local persistence, event bus, navigation contracts, notification abstraction, and application lifecycle.
 
-## Key Features
+Use it before adding the room UI, message UI, incoming-share handler, or a push provider.
 
-- **HTTP and Web Socket Support:** The SDK is equipped with robust networking capabilities, with support for both HTTP and WebSocket protocols, catering to the demands of real-time communication.
-- **Internationalization (i18n):** The SDK inherently supports multiple languages and acknowledges regional differences, making it capable of serving a diverse, global user base.
-- **Local Storage:** With the capacity to preserve chat histories and user data on the device, the SDK ensures a continuous, seamless user experience.
-- **Modular Design:** The SDK is intentionally designed to be highly modular. You can cherry-pick the components you need, eliminating unnecessary elements. This design philosophy extends to our core package as well, offering the tools to create a completely custom chat application.
+## Requirements
 
-## The V Chat SDK Ecosystem
+- Flutter 3.47 or newer
+- Dart 3.13 or newer
+- A compatible V Chat backend
+- A backend-matching encryption key
 
-V Chat SDK is not just a standalone tool; it's part of a broader ecosystem of packages designed to accelerate your chat app development process. These packages are built to work seamlessly together with the core SDK, enabling you to craft your desired chat experience faster and more conveniently.
+The package supports Android, iOS, web, macOS, and Windows. Background notification providers remain mobile-specific.
 
-For a deep dive into each package and how they complement the core SDK, please refer to our detailed [documentation](https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro/).
+## Installation
 
-## Getting Started
+```bash
+flutter pub add v_chat_sdk_core
+```
 
-To get started with the V Chat SDK:
+```dart
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
+```
 
-1. **Installation:** Install the package to your project using your preferred package manager.
-2. **Configuration:** Follow our setup instructions for configuring the SDK, available in our [documentation](https://v-chat-sdk.github.io/vchat-v2-docs/docs/flutter/core_package).
-3. **Usage:** Utilize the modules and APIs provided by the SDK to implement chat functionality according to your requirements. Our [API documentation](https://v-chat-sdk.github.io/vchat-v2-docs/docs/flutter/core_package) provides extensive guides for this.
+## Initialize the SDK
 
-## Documentation
+`VChatController` is a singleton and must be initialized once before any SDK page or API is used.
 
-We provide extensive documentation, complete with feature guides, module details, API usage guides, code samples, examples, and step-by-step tutorials. Explore our complete [documentation](https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro/) to get started.
+```dart
+import 'package:flutter/material.dart';
+import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-## Support
+final navigatorKey = GlobalKey<NavigatorState>();
 
-For issues, bugs, feature requests, or queries, please visit our [issues page](https://github.com/hatemragab/v_chat_sdk/issues) to report or find more information.
+Future<void> initializeVChat({
+  required VNavigator navigator,
+}) async {
+  const encryptionKey = String.fromEnvironment('V_CHAT_ENCRYPTION_KEY');
+  if (encryptionKey.isEmpty) {
+    throw StateError('V_CHAT_ENCRYPTION_KEY is required');
+  }
 
----
+  await VChatController.init(
+    navigatorKey: navigatorKey,
+    vNavigator: navigator,
+    vChatConfig: VChatConfig(
+      baseUrl: Uri.parse('https://chat.example.com'),
+      encryptHashKey: encryptionKey,
+      vPush: VPush(
+        enableVForegroundNotification: false,
+        vPushConfig: const VLocalNotificationPushConfig(),
+      ),
+    ),
+  );
+}
+```
 
-Remember, it's always beneficial to use the latest version of the V Chat SDK to benefit from our latest features and improvements.
+Attach the same key to your app:
 
----
+```dart
+MaterialApp(
+  navigatorKey: navigatorKey,
+  home: const AppHome(),
+);
+```
 
-The V Chat SDK Core Package is proudly developed and maintained by the V Chat Team.
+## Navigation Contract
+
+`VNavigator` keeps the SDK independent of your routing package. Provide:
+
+- `VRoomNavigator.toForwardPage` to select destination rooms.
+- `VMessageNavigator` callbacks for message pages, message information, media viewers, profiles, and chat settings.
+- An optional `VCallNavigator` for outgoing and incoming calls.
+
+The complete application wiring is available in the repository's [`v_chat_config.dart`](https://github.com/hatemragab/v_chat_sdk/blob/master/core_packages/v_chat_sdk_sample/lib/v_chat_config.dart).
+
+## Authentication and Realtime
+
+Initialize the controller before authenticating. After a successful SDK login has stored the access token, connect realtime updates:
+
+```dart
+final connected = VChatController.I.connectToSocket();
+if (!connected) {
+  // The SDK has no stored access token yet.
+}
+```
+
+The controller exposes `profileApi`, `roomApi`, `blockApi`, `nativeApi`, local room/message repositories, and typed event streams.
+
+## Push Providers
+
+`VPush` accepts Firebase and OneSignal adapters:
+
+```dart
+VPush(
+  fcmProvider: firebaseProvider,
+  oneSignalProvider: oneSignalProvider,
+  enableVForegroundNotification: true,
+  vPushConfig: const VLocalNotificationPushConfig(
+    channelName: 'messages',
+  ),
+)
+```
+
+On Android, the SDK prefers Firebase when Google Play Services are available and can fall back to OneSignal when both providers are configured.
+
+## Configuration Notes
+
+- `encryptHashKey` must match the backend and must not change for existing encrypted data.
+- Set `agoraAppId` before enabling call actions in `v_chat_message_page`.
+- End-to-end message encryption is opt-in through `enableEndToEndMessageEncryption`.
+- Group, broadcast, and forwarding limits are configurable through `VChatConfig`.
+- Keep `enableLog` disabled in production unless diagnostic output is required.
+
+## Lifecycle
+
+Dispose SDK-owned page controllers in their widgets. When replacing the entire authenticated application session, disconnect provider listeners first and call:
+
+```dart
+VChatController.I.dispose();
+```
+
+## Development
+
+From the repository root:
+
+```bash
+dart run melos run generate
+dart run melos run analyze
+dart run melos run test
+```
+
+Generated `*.chopper.dart` files are produced by `build_runner` and must not be edited manually.
+
+## Related Packages
+
+- [`v_chat_room_page`](https://pub.dev/packages/v_chat_room_page)
+- [`v_chat_message_page`](https://pub.dev/packages/v_chat_message_page)
+- [`v_chat_firebase_fcm`](https://pub.dev/packages/v_chat_firebase_fcm)
+- [`v_chat_one_signal`](https://pub.dev/packages/v_chat_one_signal)
+- [`v_chat_receive_share`](https://pub.dev/packages/v_chat_receive_share)

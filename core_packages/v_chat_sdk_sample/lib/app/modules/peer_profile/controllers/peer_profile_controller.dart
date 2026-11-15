@@ -14,9 +14,7 @@ class PeerProfileController extends GetxController {
   // final UserRepository repository;
   late UserModel peerData;
 
-  PeerProfileController(
-    this.uuId,
-  );
+  PeerProfileController(this.uuId);
 
   final apiCallStatus = ApiCallStatus.holding.obs;
 

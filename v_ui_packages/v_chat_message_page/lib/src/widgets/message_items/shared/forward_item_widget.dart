@@ -7,19 +7,12 @@ import 'package:flutter/material.dart';
 class ForwardItemWidget extends StatelessWidget {
   final bool isFroward;
 
-  const ForwardItemWidget({
-    super.key,
-    required this.isFroward,
-  });
+  const ForwardItemWidget({super.key, required this.isFroward});
 
   @override
   Widget build(BuildContext context) {
     if (!isFroward) return const SizedBox.shrink();
-    return const Icon(
-      Icons.forward,
-      color: Colors.grey,
-      size: 15,
-    );
+    return const Icon(Icons.forward, color: Colors.grey, size: 15);
     // return Padding(
     //   padding: const EdgeInsets.only(bottom: 3),
     //   child: Row(

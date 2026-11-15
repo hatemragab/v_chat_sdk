@@ -31,10 +31,7 @@ class ReplyMsgWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  getTitle(context),
-                  maxLines: 1,
-                ),
+                Text(getTitle(context), maxLines: 1),
                 Text(
                   vBaseMessage.realContentMentionParsedWithAt,
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(),
@@ -44,7 +41,7 @@ class ReplyMsgWidget extends StatelessWidget {
               ],
             ),
           ),
-          getImage()
+          getImage(),
         ],
       ),
     );
@@ -71,7 +68,7 @@ class ReplyMsgWidget extends StatelessWidget {
             end: 1,
             top: 1,
             child: _getCloseIcon(onDismiss),
-          )
+          ),
         ],
       );
     }
@@ -83,12 +80,11 @@ class ReplyMsgWidget extends StatelessWidget {
       onTap: onClose,
       child: Container(
         padding: const EdgeInsets.all(1),
-        decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-        child: const Icon(
-          Icons.close,
-          size: 17,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey,
         ),
+        child: const Icon(Icons.close, size: 17),
       ),
     );
   }

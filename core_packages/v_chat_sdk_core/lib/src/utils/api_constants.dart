@@ -34,13 +34,10 @@ abstract class VAppConstants {
     final map = VAppPref.getMap(VStorageKeys.vMyProfile.name);
     if (map == null) {
       throw VChatDartException(
-        exception:
-            "You try to get myProfile from cache but it value is NULL! please make sure you are login!",
+        exception: "You try to get myProfile from cache but it value is NULL! please make sure you are login!",
       );
     }
-    return VIdentifierUser.fromMap(
-      map,
-    );
+    return VIdentifierUser.fromMap(map);
   }
 
   static VIdentifierUser get fakeMyProfile {

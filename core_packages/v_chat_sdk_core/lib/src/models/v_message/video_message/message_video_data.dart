@@ -23,7 +23,7 @@ class VMessageVideoData {
     return '$durationObj'.split('.')[0].padLeft(8, '0');
   }
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   VMessageVideoData({
     required this.fileSource,
@@ -48,9 +48,7 @@ class VMessageVideoData {
     };
   }
 
-  factory VMessageVideoData.fromMap(
-    Map<String, dynamic> map,
-  ) {
+  factory VMessageVideoData.fromMap(Map<String, dynamic> map) {
     return VMessageVideoData(
       fileSource: VPlatformFile.fromMap(map),
       duration: map['duration'] as int?,
@@ -62,5 +60,5 @@ class VMessageVideoData {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

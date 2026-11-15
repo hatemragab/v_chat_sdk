@@ -1,3 +1,9 @@
+## 2.1.1
+
+- Require Dart 3.13 and Flutter 3.47.
+- Upgrade Agora, composer, media, file, sharing, and platform dependencies.
+- Replace dynamic icon construction with retained Material icons.
+
 ## 0.0.1
 initial release.
 ## 0.1.0

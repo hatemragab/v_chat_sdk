@@ -66,7 +66,8 @@ class _SwipeToReplyState extends State<SwipeToReply>
   void _initializeAnimationControllers() {
     _controller = AnimationController(
       vsync: this,
-      duration: widget.swipeToReplyAnimationDuration ??
+      duration:
+          widget.swipeToReplyAnimationDuration ??
           const Duration(milliseconds: 250),
     );
     _slideAnimation = Tween<Offset>(
@@ -113,10 +114,7 @@ class _SwipeToReplyState extends State<SwipeToReply>
                   ),
                 ],
               ),
-              SlideTransition(
-                position: _slideAnimation,
-                child: widget.child,
-              ),
+              SlideTransition(position: _slideAnimation, child: widget.child),
             ],
           );
         },
@@ -139,11 +137,15 @@ class _SwipeToReplyState extends State<SwipeToReply>
       end: Offset(onRight ? 0.1 : -0.1, 0.0),
     ).animate(CurvedAnimation(curve: Curves.decelerate, parent: _controller));
     if (onRight) {
-      _leftScaleAnimation = Tween(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(curve: Curves.decelerate, parent: _controller));
+      _leftScaleAnimation = Tween(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(CurvedAnimation(curve: Curves.decelerate, parent: _controller));
     } else {
-      _rightScaleAnimation = Tween(begin: 0.0, end: 1.0).animate(
-          CurvedAnimation(curve: Curves.decelerate, parent: _controller));
+      _rightScaleAnimation = Tween(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(CurvedAnimation(curve: Curves.decelerate, parent: _controller));
     }
     _controller.forward().whenComplete(() {
       _controller.reverse().whenComplete(() {
@@ -191,11 +193,10 @@ class ReplyIcon extends StatelessWidget {
           scale: scaleAnimation.value,
           child: CircleAvatar(
             radius: 14,
-            backgroundColor:
-                scaleAnimation.value == 1.0 ? Colors.grey : Colors.transparent,
-            child: const Icon(
-              Icons.reply_rounded,
-            ),
+            backgroundColor: scaleAnimation.value == 1.0
+                ? Colors.grey
+                : Colors.transparent,
+            child: const Icon(Icons.reply_rounded),
           ),
         ),
         SizedBox(

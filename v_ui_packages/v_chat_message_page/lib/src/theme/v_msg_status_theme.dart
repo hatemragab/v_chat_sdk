@@ -55,11 +55,7 @@ class VMsgStatusTheme {
       color: Colors.grey,
       size: _iconSize,
     ),
-    this.sendIcon = const Icon(
-      Icons.done,
-      color: Colors.grey,
-      size: _iconSize,
-    ),
+    this.sendIcon = const Icon(Icons.done, color: Colors.grey, size: _iconSize),
     this.deliverIcon = const Icon(
       Icons.done_all,
       color: Colors.grey,

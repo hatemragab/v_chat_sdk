@@ -39,17 +39,15 @@ class VVideoMessage extends VBaseMessage {
   });
 
   VVideoMessage.fromRemoteMap(super.map)
-      : data = VMessageVideoData.fromMap(
-          map['msgAtt'] as Map<String, dynamic>,
-        ),
-        super.fromRemoteMap();
+    : data = VMessageVideoData.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      super.fromRemoteMap();
 
   VVideoMessage.fromLocalMap(super.map)
-      : data = VMessageVideoData.fromMap(
-          jsonDecode(map[MessageTable.columnAttachment] as String)
-              as Map<String, dynamic>,
-        ),
-        super.fromLocalMap();
+    : data = VMessageVideoData.fromMap(
+        jsonDecode(map[MessageTable.columnAttachment] as String)
+            as Map<String, dynamic>,
+      ),
+      super.fromLocalMap();
 
   VVideoMessage.buildMessage({
     required super.roomId,
@@ -58,19 +56,16 @@ class VVideoMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          isEncrypted: false,
-          messageType: VMessageType.video,
-          content: VMessageConstants.thisContentIsVideo,
-        );
+         isEncrypted: false,
+         messageType: VMessageType.video,
+         content: VMessageConstants.thisContentIsVideo,
+       );
 
   @override
   List<PartValue> toListOfPartValue() {
     return [
       ...super.toListOfPartValue(),
-      PartValue(
-        'attachment',
-        jsonEncode(data.toMap()),
-      ),
+      PartValue('attachment', jsonEncode(data.toMap())),
     ];
   }
 

@@ -10,10 +10,7 @@ import '../shared/constraint_image.dart';
 class ImageMessageItem extends StatelessWidget {
   final VImageMessage message;
 
-  const ImageMessageItem({
-    super.key,
-    required this.message,
-  });
+  const ImageMessageItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {

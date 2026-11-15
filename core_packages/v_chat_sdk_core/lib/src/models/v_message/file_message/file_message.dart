@@ -40,21 +40,21 @@ class VFileMessage extends VBaseMessage {
   });
 
   VFileMessage.fromRemoteMap(super.map)
-      : data = VMessageFileData(
-          fileSource: VPlatformFile.fromMap(
-            map['msgAtt'] as Map<String, dynamic>,
-          ),
+    : data = VMessageFileData(
+        fileSource: VPlatformFile.fromMap(
+          map['msgAtt'] as Map<String, dynamic>,
         ),
-        super.fromRemoteMap();
+      ),
+      super.fromRemoteMap();
 
   VFileMessage.fromLocalMap(super.map)
-      : data = VMessageFileData(
-          fileSource: VPlatformFile.fromMap(
-            jsonDecode(map[MessageTable.columnAttachment] as String)
-                as Map<String, dynamic>,
-          ),
+    : data = VMessageFileData(
+        fileSource: VPlatformFile.fromMap(
+          jsonDecode(map[MessageTable.columnAttachment] as String)
+              as Map<String, dynamic>,
         ),
-        super.fromLocalMap();
+      ),
+      super.fromLocalMap();
 
   // @override
   // Map<String, dynamic> toRemoteMap() {
@@ -62,9 +62,7 @@ class VFileMessage extends VBaseMessage {
   // }
 
   @override
-  Map<String, dynamic> toLocalMap({
-    bool withOutConTr = false,
-  }) {
+  Map<String, dynamic> toLocalMap({bool withOutConTr = false}) {
     return {
       ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(data.toMap()),
@@ -73,9 +71,7 @@ class VFileMessage extends VBaseMessage {
 
   @override
   List<PartValue> toListOfPartValue() {
-    return [
-      ...super.toListOfPartValue(),
-    ];
+    return [...super.toListOfPartValue()];
   }
 
   VFileMessage.buildMessage({
@@ -85,8 +81,8 @@ class VFileMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          content: VMessageConstants.thisContentIsFile,
-          messageType: VMessageType.file,
-          isEncrypted: false,
-        );
+         content: VMessageConstants.thisContentIsFile,
+         messageType: VMessageType.file,
+         isEncrypted: false,
+       );
 }

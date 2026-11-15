@@ -42,10 +42,9 @@ class RoomProvider {
       await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     }
     final apiModel = await _remoteRoom.getRooms(dto);
-    unawaited(_localRoom.cacheRooms(
-      apiModel.data,
-      deleteOnEmpty: deleteOnEmpty,
-    ));
+    unawaited(
+      _localRoom.cacheRooms(apiModel.data, deleteOnEmpty: deleteOnEmpty),
+    );
     return apiModel;
   }
 
@@ -54,24 +53,18 @@ class RoomProvider {
   }
 
   Future<bool> mute(String roomId) async {
-    await _remoteRoom.muteRoomNotification(
-      roomId: roomId,
+    await _remoteRoom.muteRoomNotification(roomId: roomId);
+    await _localRoom.updateRoomIsMuted(
+      VUpdateRoomMuteEvent(roomId: roomId, isMuted: true),
     );
-    await _localRoom.updateRoomIsMuted(VUpdateRoomMuteEvent(
-      roomId: roomId,
-      isMuted: true,
-    ));
     return true;
   }
 
   Future<bool> unMute(String roomId) async {
-    await _remoteRoom.unMuteRoomNotification(
-      roomId: roomId,
+    await _remoteRoom.unMuteRoomNotification(roomId: roomId);
+    await _localRoom.updateRoomIsMuted(
+      VUpdateRoomMuteEvent(roomId: roomId, isMuted: false),
     );
-    await _localRoom.updateRoomIsMuted(VUpdateRoomMuteEvent(
-      roomId: roomId,
-      isMuted: false,
-    ));
     return true;
   }
 

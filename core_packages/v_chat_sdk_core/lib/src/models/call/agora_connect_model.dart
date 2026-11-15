@@ -8,7 +8,7 @@ class VAgoraConnect {
   final String rtcToken;
   final String joinedAt;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
   const VAgoraConnect({
     required this.channelName,
     required this.uid,
@@ -39,5 +39,5 @@ class VAgoraConnect {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

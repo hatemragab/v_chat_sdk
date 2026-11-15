@@ -43,17 +43,19 @@ class MessageBroadcastStatusController
       request: () async {
         final x = MessageStatusState();
         x.seen.addAll(
-            await VChatController.I.roomApi.getMessageStatusForBroadcast(
-          roomId: message.roomId,
-          messageId: message.id,
-          isSeen: true,
-        ));
+          await VChatController.I.roomApi.getMessageStatusForBroadcast(
+            roomId: message.roomId,
+            messageId: message.id,
+            isSeen: true,
+          ),
+        );
         x.deliver.addAll(
-            await VChatController.I.roomApi.getMessageStatusForBroadcast(
-          roomId: message.roomId,
-          messageId: message.id,
-          isSeen: false,
-        ));
+          await VChatController.I.roomApi.getMessageStatusForBroadcast(
+            roomId: message.roomId,
+            messageId: message.id,
+            isSeen: false,
+          ),
+        );
         return x;
       },
       onSuccess: (response) {

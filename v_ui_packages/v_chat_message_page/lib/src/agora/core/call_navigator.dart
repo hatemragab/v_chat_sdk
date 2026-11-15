@@ -16,10 +16,12 @@ import '../v_agora.dart';
 final vDefaultCallNavigator = VCallNavigator(
   toPickUp: (context, callModel) async {
     if (!VPlatforms.isMobile) return;
-    context.toPage(PickUp(
-      callModel: callModel,
-      localization: VCallLocalization.fromEnglish(),
-    ));
+    context.toPage(
+      PickUp(
+        callModel: callModel,
+        localization: VCallLocalization.fromEnglish(),
+      ),
+    );
   },
   toCall: (context, dto) async {
     if (!VPlatforms.isMobile) return;
@@ -42,10 +44,6 @@ final vDefaultCallNavigator = VCallNavigator(
       );
       return;
     }
-    context.toPage(
-      VCallPage(
-        dto: dto,
-      ),
-    );
+    context.toPage(VCallPage(dto: dto));
   },
 );

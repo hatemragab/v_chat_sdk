@@ -25,7 +25,7 @@ class SettingsTabController extends GetxController {
       context: Get.context!,
       content: <AppLanguage>[
         AppLanguage("العربيه", const Locale("ar")),
-        AppLanguage("English", const Locale("en"))
+        AppLanguage("English", const Locale("en")),
       ],
     );
     if (res != null) {
@@ -38,26 +38,14 @@ class SettingsTabController extends GetxController {
     final res = await VAppAlert.showAskListDialog<AppTheme>(
       title: "Choose Theme",
       content: [
-        AppTheme(
-          "Light",
-          ThemeMode.light,
-        ),
-        AppTheme(
-          "Dark",
-          ThemeMode.dark,
-        ),
-        AppTheme(
-          "System",
-          ThemeMode.system,
-        )
+        AppTheme("Light", ThemeMode.light),
+        AppTheme("Dark", ThemeMode.dark),
+        AppTheme("System", ThemeMode.system),
       ],
       context: Get.context!,
     );
     if (res != null) {
-      await AppPref.setStringKey(
-        SStorageKeys.appTheme.name,
-        res.mode.name,
-      );
+      await AppPref.setStringKey(SStorageKeys.appTheme.name, res.mode.name);
       appService.setTheme(res.mode);
     }
   }
@@ -72,7 +60,7 @@ class SettingsTabController extends GetxController {
       context: Get.context!,
       content: ["Enable", "Stop"],
     );
-    print(res);
+    debugPrint(res?.toString());
   }
 
   Future<void> openDocs() async {}

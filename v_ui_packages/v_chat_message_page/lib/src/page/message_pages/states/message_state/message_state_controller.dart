@@ -46,14 +46,8 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
   bool get isMessagesEmpty => stateMessages.isEmpty;
 
   String get lastMessageId => stateMessages.last.id;
-  final _initFilterDto = VRoomMessagesDto(
-    limit: 30,
-    lastId: null,
-  );
-  final _filterDto = VRoomMessagesDto(
-    limit: 30,
-    lastId: null,
-  );
+  final _initFilterDto = VRoomMessagesDto(limit: 30, lastId: null);
+  final _filterDto = VRoomMessagesDto(limit: 30, lastId: null);
 
   void insertAllMessages(List<VBaseMessage> messages) {
     value = sort(messages);
@@ -64,9 +58,7 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     final stateMessages = value;
     final newList = <VBaseMessage>[];
     newList.addAll(apiMessages);
-    newList.addAll(
-      stateMessages.where((e) => e.emitStatus.isSendingOrError),
-    );
+    newList.addAll(stateMessages.where((e) => e.emitStatus.isSendingOrError));
     //we need to sort
     if (context.mounted) {
       value = sort(newList);
@@ -87,7 +79,8 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     } else {
       if (kDebugMode) {
         print(
-            "-------------you are try to insert message which already exist!-----------");
+          "-------------you are try to insert message which already exist!-----------",
+        );
       }
     }
   }
@@ -101,7 +94,8 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     } else {
       if (kDebugMode) {
         print(
-            "----------------you are try to update message which Not exist!--------------");
+          "----------------you are try to update message which Not exist!--------------",
+        );
       }
     }
   }
@@ -160,16 +154,11 @@ class MessageStateController extends ValueNotifier<List<VBaseMessage>>
     messageProvider.setSeen(vRoom.id);
   }
 
-  Future<void> getMessagesFromRemote(
-    VRoomMessagesDto dto,
-  ) async {
+  Future<void> getMessagesFromRemote(VRoomMessagesDto dto) async {
     await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     await vSafeApiCall<List<VBaseMessage>>(
       request: () async {
-        return messageProvider.getApiMessages(
-          roomId: vRoom.id,
-          dto: dto,
-        );
+        return messageProvider.getApiMessages(roomId: vRoom.id, dto: dto);
       },
       onSuccess: (response) {
         updateApiMessages(response);

@@ -6,10 +6,7 @@ class CurrentRoom {
   bool isActive;
   String roomId;
 
-  CurrentRoom({
-    required this.isActive,
-    required this.roomId,
-  });
+  CurrentRoom({required this.isActive, required this.roomId});
 
   @override
   bool operator ==(Object other) =>

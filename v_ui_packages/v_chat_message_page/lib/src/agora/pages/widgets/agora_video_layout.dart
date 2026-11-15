@@ -12,12 +12,10 @@ import 'agora_video_view.dart';
 class AgoraVideoLayout extends StatelessWidget {
   const AgoraVideoLayout({
     super.key,
-    required Set<AgoraUser> users,
-    required List<int> views,
-    required double viewAspectRatio,
-  })  : _users = users,
-        _views = views,
-        _viewAspectRatio = viewAspectRatio;
+    required this._users,
+    required this._views,
+    required this._viewAspectRatio,
+  });
 
   final Set<AgoraUser> _users;
   final List<int> _views;
@@ -42,9 +40,7 @@ class AgoraVideoLayout extends StatelessWidget {
             ),
           );
         } else {
-          rowChildren.add(
-            const SizedBox.shrink(),
-          );
+          rowChildren.add(const SizedBox.shrink());
         }
       }
       rowsList.add(

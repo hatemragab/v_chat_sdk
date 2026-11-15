@@ -10,7 +10,7 @@ class OrderModel {
   final String userId;
   final DateTime createdAt;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   const OrderModel({
     required this.id,
@@ -73,5 +73,5 @@ class OrderModel {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

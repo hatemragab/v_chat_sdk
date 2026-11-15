@@ -22,19 +22,13 @@ class RoomItemController {
   final BuildContext context;
   final VRoomLanguage language;
 
-  RoomItemController(
-    this._provider,
-    this.context,
-    this.language,
-  );
+  RoomItemController(this._provider, this.context, this.language);
 
   ModelSheetItem<VRoomItemClickRes> _muteItem() {
     return ModelSheetItem(
       title: language.mute,
       id: VRoomItemClickRes.mute,
-      iconData: const Icon(
-        Icons.notifications_off,
-      ),
+      iconData: const Icon(Icons.notifications_off),
     );
   }
 
@@ -42,9 +36,7 @@ class RoomItemController {
     return ModelSheetItem(
       title: language.unMute,
       id: VRoomItemClickRes.unMute,
-      iconData: const Icon(
-        Icons.notifications,
-      ),
+      iconData: const Icon(Icons.notifications),
     );
   }
 
@@ -60,10 +52,7 @@ class RoomItemController {
     return ModelSheetItem(
       title: language.report,
       id: VRoomItemClickRes.report,
-      iconData: const Icon(
-        Icons.report_gmailerrorred,
-        color: Colors.red,
-      ),
+      iconData: const Icon(Icons.report_gmailerrorred, color: Colors.red),
     );
   }
 
@@ -93,10 +82,7 @@ class RoomItemController {
     return ModelSheetItem(
       title: language.leaveGroup,
       id: VRoomItemClickRes.leave,
-      iconData: const Icon(
-        Icons.exit_to_app,
-        color: Colors.red,
-      ),
+      iconData: const Icon(Icons.exit_to_app, color: Colors.red),
     );
   }
 
@@ -120,10 +106,7 @@ class RoomItemController {
     );
 
     if (res == null) return;
-    _process(
-      res.id,
-      room,
-    );
+    _process(res.id, room);
   }
 
   Future _process(Object res, VRoom room) async {
@@ -163,19 +146,12 @@ class RoomItemController {
       cancelLabel: language.cancel,
     );
     if (res == null) return;
-    _process(
-      res.id,
-      room,
-    );
+    _process(res.id, room);
   }
 
-  Future openForBroadcast(
-    VRoom room,
-  ) async {
+  Future openForBroadcast(VRoom room) async {
     final res = await VAppAlert.showModalSheet(
-      content: [
-        _deleteItem(),
-      ],
+      content: [_deleteItem()],
       context: context,
       cancelLabel: language.cancel,
     );
@@ -288,9 +264,7 @@ class RoomItemController {
 
   Future openForOrder(VRoom room) async {
     final res = await VAppAlert.showModalSheet(
-      content: [
-        _deleteItem(),
-      ],
+      content: [_deleteItem()],
       cancelLabel: language.cancel,
       context: context,
     );
@@ -300,10 +274,12 @@ class RoomItemController {
 
   Future _report(VRoom room) async {
     if (VChatController.I.vChatConfig.onReportUserPress != null) {
-      unawaited(VChatController.I.vChatConfig.onReportUserPress!(
-        context,
-        room.peerIdentifier ?? room.id,
-      ));
+      unawaited(
+        VChatController.I.vChatConfig.onReportUserPress!(
+          context,
+          room.peerIdentifier ?? room.id,
+        ),
+      );
     }
   }
 }

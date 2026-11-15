@@ -7,7 +7,7 @@ class VUserImage {
   final String chatImage;
   final String smallImage;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   const VUserImage({
     required this.fullImage,
@@ -16,14 +16,14 @@ class VUserImage {
   });
 
   VUserImage.fromSingleUrl(String url)
-      : fullImage = url,
-        chatImage = url,
-        smallImage = url;
+    : fullImage = url,
+      chatImage = url,
+      smallImage = url;
 
   VUserImage.fromFakeSingleUrl()
-      : fullImage = "https://picsum.photos/300/300",
-        chatImage = "https://picsum.photos/300/300",
-        smallImage = "https://picsum.photos/300/300";
+    : fullImage = "https://picsum.photos/300/300",
+      chatImage = "https://picsum.photos/300/300",
+      smallImage = "https://picsum.photos/300/300";
 
   @override
   String toString() {
@@ -50,5 +50,5 @@ class VUserImage {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

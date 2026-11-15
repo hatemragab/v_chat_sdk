@@ -23,8 +23,10 @@ class ChatUnReadWidget extends StatelessWidget {
         padding: EdgeInsets.zero,
         width: 22,
         alignment: Alignment.center,
-        decoration:
-            const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+        decoration: const BoxDecoration(
+          color: Colors.green,
+          shape: BoxShape.circle,
+        ),
         child: Text(unReadCount.toString()),
       ),
     );

@@ -10,9 +10,8 @@ import '../../../models/input_state_model.dart';
 class InputStateController extends ValueNotifier<MessageInputModel> {
   final VRoom vRoom;
 
-  InputStateController(
-    this.vRoom,
-  ) : super(MessageInputModel(isCloseInput: false)) {
+  InputStateController(this.vRoom)
+    : super(MessageInputModel(isCloseInput: false)) {
     // if (_vRoom.roomType.isGroup) {
     //   _checkStatus(_vRoom.id);
     // }

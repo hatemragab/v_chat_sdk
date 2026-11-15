@@ -15,7 +15,7 @@ import 'package:v_chat_message_page/src/page/message_pages/controllers/v_voice_c
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_platform/v_platform.dart';
 
-import '../../../../v_chat_message_page.dart';
+import '../../../../v_chat_message_page.dart' hide VMessageImageData;
 import '../../../v_chat/string_utils.dart';
 import '../pasteboard/file_convertor.dart';
 import '../pasteboard/pasteboard.dart';
@@ -90,29 +90,22 @@ abstract class VBaseMessageController extends MessageStateController
   }
 
   void onMessageLongTap(BuildContext context, VBaseMessage message) {
-    return itemController.onMessageItemLongPress(
-      message,
-      vRoom,
-      setReply,
-    );
+    return itemController.onMessageItemLongPress(message, vRoom, setReply);
   }
 
   void onMessageTap(VBaseMessage message) async {
-    return itemController.onMessageItemPress(
-      message,
-    );
+    return itemController.onMessageItemPress(message);
   }
 
-  void onSubmitMedia(
-    BuildContext context,
-    List<VPlatformFile> files,
-  ) async {
-    final fileRes = await context.toPage(VMediaEditorView(
-      files: files,
-      config: VMediaEditorConfig(
-        imageQuality: vMessageConfig.compressImageQuality,
+  void onSubmitMedia(BuildContext context, List<VPlatformFile> files) async {
+    final fileRes = await context.toPage(
+      VMediaEditorView(
+        files: files,
+        config: VMediaEditorConfig(
+          imageQuality: vMessageConfig.compressImageQuality,
+        ),
       ),
-    )) as List<VBaseMediaRes>?;
+    ) as List<VBaseMediaRes>?;
 
     if (fileRes == null) return;
 
@@ -135,12 +128,14 @@ abstract class VBaseMessageController extends MessageStateController
   }
 
   Future<void> onPaste(List<VPlatformFile> files) async {
-    final fileRes = await context.toPage(VMediaEditorView(
-      files: files,
-      config: VMediaEditorConfig(
-        imageQuality: vMessageConfig.compressImageQuality,
+    final fileRes = await context.toPage(
+      VMediaEditorView(
+        files: files,
+        config: VMediaEditorConfig(
+          imageQuality: vMessageConfig.compressImageQuality,
+        ),
       ),
-    )) as List<VBaseMediaRes>?;
+    ) as List<VBaseMediaRes>?;
 
     if (fileRes == null || fileRes.isEmpty) return;
     for (final file in fileRes) {
@@ -148,9 +143,7 @@ abstract class VBaseMessageController extends MessageStateController
         _onSubmitSendMessage(
           VImageMessage.buildMessage(
             roomId: roomId,
-            data: VMessageImageData.fromMap(
-              file.data.toMap(),
-            ),
+            data: VMessageImageData.fromMap(file.data.toMap()),
           ),
         );
       }
@@ -199,10 +192,7 @@ abstract class VBaseMessageController extends MessageStateController
     if (typing == VRoomTypingEnum.recording) {
       _stopVoicePlayer();
     }
-    final model = VSocketRoomTypingModel(
-      status: typing,
-      roomId: vRoom.id,
-    );
+    final model = VSocketRoomTypingModel(status: typing, roomId: vRoom.id);
     messageProvider.emitTypingChanged(model);
   }
 
@@ -280,18 +270,16 @@ abstract class VBaseMessageController extends MessageStateController
   );
 
   void _setUpVoiceController() {
-    voiceControllers = VVoicePlayerController(
-      (localId) {
-        final index = value.indexWhere((e) => e.localId == localId);
-        if (index == -1 || index == 0) {
-          return null;
-        }
-        if (!value[index - 1].messageType.isVoice) {
-          return null;
-        }
-        return value[index - 1].localId;
-      },
-    );
+    voiceControllers = VVoicePlayerController((localId) {
+      final index = value.indexWhere((e) => e.localId == localId);
+      if (index == -1 || index == 0) {
+        return null;
+      }
+      if (!value[index - 1].messageType.isVoice) {
+        return null;
+      }
+      return value[index - 1].localId;
+    });
   }
 
   ///----------------------------- Messages streams -----------------------------------------------------
@@ -359,15 +347,19 @@ abstract class VBaseMessageController extends MessageStateController
   }
 
   void onGetClipboardImageBytes(Uint8List imageBytes) async {
-    final fileRes = await context.toPage(VMediaEditorView(
-      files: [
-        VPlatformFile.fromBytes(
-            bytes: imageBytes.toList(), name: "${uuid.v4()}.png")
-      ],
-      config: VMediaEditorConfig(
-        imageQuality: vMessageConfig.compressImageQuality,
+    final fileRes = await context.toPage(
+      VMediaEditorView(
+        files: [
+          VPlatformFile.fromBytes(
+            bytes: imageBytes.toList(),
+            name: "${uuid.v4()}.png",
+          ),
+        ],
+        config: VMediaEditorConfig(
+          imageQuality: vMessageConfig.compressImageQuality,
+        ),
       ),
-    )) as List<VBaseMediaRes>?;
+    ) as List<VBaseMediaRes>?;
 
     if (fileRes == null || fileRes.isEmpty) return;
     for (final e in fileRes) {

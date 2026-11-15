@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'auth_api.dart';
 
@@ -24,10 +25,7 @@ final class _$AuthApi extends AuthApi {
   ) {
     final Uri $url = Uri.parse('auth/connect');
     final List<PartValue> $parts = <PartValue>[
-      PartValueFile<MultipartFile?>(
-        'file',
-        file,
-      )
+      PartValueFile<MultipartFile?>('file', file),
     ];
     $parts.addAll(body);
     final Request $request = Request(
@@ -43,11 +41,7 @@ final class _$AuthApi extends AuthApi {
   @override
   Future<Response<dynamic>> logout() {
     final Uri $url = Uri.parse('auth/logout');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }

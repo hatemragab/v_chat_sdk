@@ -44,10 +44,10 @@ class VTextMessage extends VBaseMessage {
   VTextMessage.buildFakeMessage({
     VMessageEmitStatus messageStatus = VMessageEmitStatus.serverConfirm,
   }) : super.buildFakeMessage(
-          content: "randomString(index * 25)",
-          messageType: VMessageType.text,
-          emitStatus: messageStatus,
-        );
+         content: "randomString(index * 25)",
+         messageType: VMessageType.text,
+         emitStatus: messageStatus,
+       );
 
   VTextMessage.fromLocalMap(super.map) : super.fromLocalMap();
 

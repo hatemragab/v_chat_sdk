@@ -21,9 +21,7 @@ abstract class BaseLocalMessageRepo {
 
   Future<int> insertMany(List<VBaseMessage> messages);
 
-  Future<int> updateFullMessage({
-    required VBaseMessage baseMessage,
-  });
+  Future<int> updateFullMessage({required VBaseMessage baseMessage});
 
   Future<int> updateMessagesFromSendingToError();
 

@@ -29,37 +29,26 @@ class SocketController implements ISocketIoClient {
   SocketController._() {
     _socketService = SocketService(socketIoClient);
     _initSocketEvents();
-    socketIoClient.socket.onConnect(
-      (data) {
-        if (!socketCompleter.isCompleted) {
-          socketCompleter.complete();
-        }
-        _log.finer("Socket connected successfully");
-        ++connectTimes;
-        vChatEvents.fire(
-          VSocketStatusEvent(
-            isConnected: true,
-            connectTimes: connectTimes,
-          ),
-        );
-      },
-    );
+    socketIoClient.socket.onConnect((data) {
+      if (!socketCompleter.isCompleted) {
+        socketCompleter.complete();
+      }
+      _log.finer("Socket connected successfully");
+      ++connectTimes;
+      vChatEvents.fire(
+        VSocketStatusEvent(isConnected: true, connectTimes: connectTimes),
+      );
+    });
     _socket.onError((data) {
       _log.warning("_socket.onError:$data");
       vChatEvents.fire(
-        VSocketStatusEvent(
-          isConnected: false,
-          connectTimes: connectTimes,
-        ),
+        VSocketStatusEvent(isConnected: false, connectTimes: connectTimes),
       );
     });
     socketIoClient.socket.onDisconnect((data) {
       _log.finer("Socket onDisconnect successfully");
       vChatEvents.fire(
-        VSocketStatusEvent(
-          isConnected: false,
-          connectTimes: connectTimes,
-        ),
+        VSocketStatusEvent(isConnected: false, connectTimes: connectTimes),
       );
     });
   }
@@ -91,14 +80,14 @@ class SocketController implements ISocketIoClient {
       );
       await _socketService.handleOnNewMessage(message);
     });
-    _socket.on(SocketEvents.v1OnMyOnline.name, (dynamic data) async {
+    _socket.on(SocketEvents.v1OnMyOnline.name, (dynamic data) {
       final dataMap = jsonDecode(data.toString()) as List;
       final dataModelList = dataMap
           .map((e) => VOnlineOfflineModel.fromMap(e as Map<String, dynamic>))
           .toList();
       _socketService.handleOnGetMyOnlineList(dataModelList);
     });
-    _socket.on(SocketEvents.v1OnException.name, (dynamic data) async {
+    _socket.on(SocketEvents.v1OnException.name, (dynamic data) {
       _log.warning("SocketEvents.v1OnException:$data");
     });
     _socket.on(SocketEvents.v1OnEnterChatRoom.name, (dynamic data) async {
@@ -132,106 +121,69 @@ class SocketController implements ISocketIoClient {
       await _socketService.handleOnGroupKick(data);
     });
 
-    _socket.on(
-      SocketEvents.v1OnDeleteMessageFromAll.name,
-      (dynamic data) async {
-        final msg = MessageFactory.createBaseMessage(
+    _socket.on(SocketEvents.v1OnDeleteMessageFromAll.name, (
+      dynamic data,
+    ) async {
+      final msg = MessageFactory.createBaseMessage(
+        jsonDecode(data.toString()) as Map<String, dynamic>,
+      );
+      await _socketService.updateMessageToAllDeleted(msg);
+    });
+
+    _socket.on(SocketEvents.v1OnNewCall.name, (dynamic data) {
+      _socketService.handleNewCall(
+        VNewCallModel.fromMap(
           jsonDecode(data.toString()) as Map<String, dynamic>,
-        );
-        await _socketService.updateMessageToAllDeleted(msg);
-      },
-    );
+        ),
+      );
+    });
 
-    _socket.on(
-      SocketEvents.v1OnNewCall.name,
-      (dynamic data) async {
-        _socketService.handleNewCall(
-          VNewCallModel.fromMap(
-            jsonDecode(data.toString()) as Map<String, dynamic>,
-          ),
-        );
-      },
-    );
+    _socket.on(SocketEvents.v1OnCallTimeout.name, (dynamic data) {
+      final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+      _socketService.handleCallTimeout(res['roomId'] as String);
+    });
 
-    _socket.on(
-      SocketEvents.v1OnCallTimeout.name,
-      (dynamic data) async {
-        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
-        _socketService.handleCallTimeout(res['roomId'] as String);
-      },
-    );
+    _socket.on(SocketEvents.v1OnCallCanceled.name, (dynamic data) {
+      final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+      _socketService.handleCallCanceled(res['roomId'] as String);
+    });
+    _socket.on(SocketEvents.v1OnCallRejected.name, (dynamic data) {
+      final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+      _socketService.handleCallRejected(res['roomId'] as String);
+    });
 
-    _socket.on(
-      SocketEvents.v1OnCallCanceled.name,
-      (dynamic data) async {
-        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
-        _socketService.handleCallCanceled(res['roomId'] as String);
-      },
-    );
-    _socket.on(
-      SocketEvents.v1OnCallRejected.name,
-      (dynamic data) async {
-        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
-        _socketService.handleCallRejected(res['roomId'] as String);
-      },
-    );
-
-    _socket.on(
-      SocketEvents.v1OnIceCandidate.name,
-      (dynamic data) async {
-        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
-        _socketService.handleOnIce(res);
-      },
-    );
-    _socket.on(
-      SocketEvents.v1OnCallAccepted.name,
-      (dynamic data) async {
-        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
-        _socketService.handleCallAccepted(VOnAcceptCall.fromMap(res));
-      },
-    );
-    _socket.on(
-      SocketEvents.v1OnCallEnded.name,
-      (dynamic data) async {
-        final res = jsonDecode(data.toString()) as Map<String, dynamic>;
-        _socketService.handleCallEnded(res['roomId'] as String);
-      },
-    );
+    _socket.on(SocketEvents.v1OnIceCandidate.name, (dynamic data) {
+      final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+      _socketService.handleOnIce(res);
+    });
+    _socket.on(SocketEvents.v1OnCallAccepted.name, (dynamic data) {
+      final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+      _socketService.handleCallAccepted(VOnAcceptCall.fromMap(res));
+    });
+    _socket.on(SocketEvents.v1OnCallEnded.name, (dynamic data) {
+      final res = jsonDecode(data.toString()) as Map<String, dynamic>;
+      _socketService.handleCallEnded(res['roomId'] as String);
+    });
   }
 
   void emitGetMyOnline(String data) {
-    _socket.emit(
-      SocketEvents.v1MyOnline.name,
-      data,
-    );
+    _socket.emit(SocketEvents.v1MyOnline.name, data);
   }
 
   void emitUpdateRoomStatus(String data) {
-    _socket.emit(
-      SocketEvents.v1RoomStatusChange.name,
-      data,
-    );
+    _socket.emit(SocketEvents.v1RoomStatusChange.name, data);
   }
 
   void emitDeliverRoomMessages(String data) {
-    _socket.emit(
-      SocketEvents.v1DeliverChatRoom.name,
-      data,
-    );
+    _socket.emit(SocketEvents.v1DeliverChatRoom.name, data);
   }
 
   void emitRtcIce(String data) {
-    _socket.emit(
-      SocketEvents.v1IceCandidate.name,
-      data,
-    );
+    _socket.emit(SocketEvents.v1IceCandidate.name, data);
   }
 
   void emitSeenRoomMessages(String data) {
-    _socket.emit(
-      SocketEvents.v1EnterChatRoom.name,
-      data,
-    );
+    _socket.emit(SocketEvents.v1EnterChatRoom.name, data);
   }
 }
 
@@ -304,5 +256,5 @@ enum SocketEvents {
   v1DeliverChatRoom,
 
   /// An event to deliver an ICE candidate during call negotiation.
-  v1IceCandidate
+  v1IceCandidate,
 }

@@ -71,7 +71,7 @@ class _VOrderViewState extends State<VOrderView> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ValueListenableBuilder<OrderAppBarStateModel>(
           valueListenable: controller.orderAppBarController,
-          builder: (_, value, __) {
+          builder: (_, value, _) {
             if (value.isSearching) {
               return VSearchAppBare(
                 searchLabel: widget.language.search,
@@ -108,13 +108,8 @@ class _VOrderViewState extends State<VOrderView> {
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
-            const SizedBox(
-              height: 5,
-            ),
-            InputWidgetState(
-              controller: controller,
-              language: widget.language,
-            )
+            const SizedBox(height: 5),
+            InputWidgetState(controller: controller, language: widget.language),
           ],
         ),
       ),

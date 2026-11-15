@@ -48,8 +48,9 @@ abstract class MessageFactory {
   ///
   /// This method creates a VBaseMessage instance based on the message type present in the map.
   static VBaseMessage _createMessageFromLocal(Map<String, dynamic> map) {
-    final type = VMessageType.values
-        .byName(map[MessageTable.columnMessageType] as String);
+    final type = VMessageType.values.byName(
+      map[MessageTable.columnMessageType] as String,
+    );
     switch (type) {
       case VMessageType.text:
         return VTextMessage.fromLocalMap(map);
@@ -94,9 +95,7 @@ abstract class MessageFactory {
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
         msgLocalId: msg.localId,
-        file1: await VPlatforms.getMultipartFile(
-          source: msg.data.fileSource,
-        ),
+        file1: await VPlatforms.getMultipartFile(source: msg.data.fileSource),
       );
     }
     if (msg is VLocationMessage) {
@@ -111,9 +110,7 @@ abstract class MessageFactory {
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
-        file1: await VPlatforms.getMultipartFile(
-          source: msg.data.fileSource,
-        ),
+        file1: await VPlatforms.getMultipartFile(source: msg.data.fileSource),
       );
     }
     if (msg is VImageMessage) {
@@ -121,9 +118,7 @@ abstract class MessageFactory {
         msgLocalId: msg.localId,
         body: msg.toListOfPartValue(),
         roomId: msg.roomId,
-        file1: await VPlatforms.getMultipartFile(
-          source: msg.data.fileSource,
-        ),
+        file1: await VPlatforms.getMultipartFile(source: msg.data.fileSource),
       );
     }
     if (msg is VVideoMessage) {
@@ -136,9 +131,7 @@ abstract class MessageFactory {
             : await VPlatforms.getMultipartFile(
                 source: msg.data.thumbImage!.fileSource,
               ),
-        file1: await VPlatforms.getMultipartFile(
-          source: msg.data.fileSource,
-        ),
+        file1: await VPlatforms.getMultipartFile(source: msg.data.fileSource),
       );
     }
     if (msg is VCustomMessage) {

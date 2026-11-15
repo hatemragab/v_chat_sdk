@@ -12,7 +12,7 @@ class VMyGroupInfo {
   final VGroupMemberRole myRole;
   final VMyGroupSettings? groupSettings;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   const VMyGroupInfo({
     required this.isMeOut,
@@ -31,11 +31,11 @@ class VMyGroupInfo {
   bool get isMeAdminOrSuperAdmin => isMeAdmin || isMeSuperAdmin;
 
   VMyGroupInfo.empty()
-      : membersCount = 0,
-        totalOnline = 0,
-        myRole = VGroupMemberRole.member,
-        groupSettings = VMyGroupSettings.empty(),
-        isMeOut = false;
+    : membersCount = 0,
+      totalOnline = 0,
+      myRole = VGroupMemberRole.member,
+      groupSettings = VMyGroupSettings.empty(),
+      isMeOut = false;
 
   @override
   String toString() {
@@ -81,7 +81,7 @@ class VMyGroupInfo {
       groupSettings: groupSettings ?? this.groupSettings,
     );
   }
-//</editor-fold>
+  //</editor-fold>
 }
 
 class VMyGroupSettings {
@@ -91,7 +91,7 @@ class VMyGroupSettings {
   final String? desc;
   final String createdAt;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   const VMyGroupSettings({
     required this.creatorId,
@@ -106,11 +106,11 @@ class VMyGroupSettings {
   bool get isMeCreator => VAppConstants.myId == creatorId;
 
   VMyGroupSettings.empty()
-      : creatorId = "",
-        desc = null,
-        extraData = null,
-        createdAt = DateTime.now().toIso8601String(),
-        pinMsg = null;
+    : creatorId = "",
+      desc = null,
+      extraData = null,
+      createdAt = DateTime.now().toIso8601String(),
+      pinMsg = null;
 
   @override
   bool operator ==(Object other) =>
@@ -164,5 +164,5 @@ class VMyGroupSettings {
       createdAt: createdAt ?? this.createdAt,
     );
   }
-//</editor-fold>
+  //</editor-fold>
 }

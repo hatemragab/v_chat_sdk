@@ -34,7 +34,8 @@ class _VImageViewerState extends State<VImageViewer> {
   Widget build(BuildContext context) {
     if (!widget.platformFileSource.isContentImage) {
       return Material(
-          child: Text("the file must be image ${widget.platformFileSource}"));
+        child: Text("the file must be image ${widget.platformFileSource}"),
+      );
     }
     return Dismissible(
       key: const Key('photo_view_gallery'),
@@ -48,9 +49,7 @@ class _VImageViewerState extends State<VImageViewer> {
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        body: PhotoView(
-          imageProvider: _getImageProvider(),
-        ),
+        body: PhotoView(imageProvider: _getImageProvider()),
         floatingActionButton: widget.platformFileSource.isFromUrl
             ? FloatingActionButton(
                 child: const Icon(Icons.save_alt),
@@ -94,8 +93,8 @@ class _VImageViewerState extends State<VImageViewer> {
       return MemoryImage(Uint8List.fromList(widget.platformFileSource.bytes!));
     }
     return CachedNetworkImageProvider(
-      widget.platformFileSource.url!,
-      cacheKey: widget.platformFileSource.getUrlPath,
+      widget.platformFileSource.networkUrl!,
+      cacheKey: widget.platformFileSource.getCachedUrlKey,
     );
   }
 }

@@ -18,21 +18,21 @@ class AsyncWidgetsBuilder extends StatelessWidget {
   final Widget Function()? holdingWidget;
 
   const AsyncWidgetsBuilder({
-    Key? key,
+    super.key,
     required this.apiCallStatus,
     this.loadingWidget,
     this.errorWidget,
     required this.successWidget,
     this.holdingWidget,
     this.emptyWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return _getChild();
   }
 
-  _getChild() {
+  Obx _getChild() {
     return Obx(() {
       final apiCallStatusValue = apiCallStatus.value;
       if (apiCallStatusValue == ApiCallStatus.success) {
@@ -40,10 +40,8 @@ class AsyncWidgetsBuilder extends StatelessWidget {
       } else if (apiCallStatusValue == ApiCallStatus.error) {
         if (errorWidget == null) {
           return const Center(
-              child: Icon(
-            Icons.error_outline,
-            color: Colors.red,
-          ));
+            child: Icon(Icons.error_outline, color: Colors.red),
+          );
         } else {
           return errorWidget!();
         }

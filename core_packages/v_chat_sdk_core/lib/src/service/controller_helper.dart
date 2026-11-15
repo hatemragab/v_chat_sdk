@@ -39,9 +39,7 @@ class VChatControllerHelper {
 
   String _getHashedPassword(String identifier) {
     return sha512
-        .convert(
-          utf8.encode("${_config.encryptHashKey}_$identifier"),
-        )
+        .convert(utf8.encode("${_config.encryptHashKey}_$identifier"))
         .toString();
   }
 
@@ -107,12 +105,9 @@ class VChatControllerHelper {
 
   void initSocketTimer() {
     _timer?.cancel();
-    _timer = Timer.periodic(
-      const Duration(seconds: 10),
-      (timer) {
-        VEventBusSingleton.vEventBus.fire(VSocketIntervalEvent());
-      },
-    );
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      VEventBusSingleton.vEventBus.fire(VSocketIntervalEvent());
+    });
   }
 
   void _setupTimeAgo() {

@@ -12,20 +12,15 @@ import '../../../v_chat/platform_cache_image_widget.dart';
 import '../controllers/peer_profile_controller.dart';
 
 class PeerProfileView extends GetView<PeerProfileController> {
-  const PeerProfileView({Key? key}) : super(key: key);
+  const PeerProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Peer Profile View'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Peer Profile View'), centerTitle: true),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
-        child: ChatBtn(
-          onPress: controller.onStartChat,
-        ),
+        child: ChatBtn(onPress: controller.onStartChat),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -36,9 +31,7 @@ class PeerProfileView extends GetView<PeerProfileController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   Center(
                     child: SizedBox(
                       height: 130,
@@ -52,13 +45,9 @@ class PeerProfileView extends GetView<PeerProfileController> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   Center(child: controller.peerData.fullName.h6),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             );

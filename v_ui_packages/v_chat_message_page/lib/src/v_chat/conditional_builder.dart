@@ -11,12 +11,10 @@ class VConditionalBuilder extends StatelessWidget {
 
   const VConditionalBuilder({
     super.key,
-    required bool condition,
-    required Function thenBuilder,
-    Function? elseBuilder,
-  })  : _condition = condition,
-        _thenBuilder = thenBuilder,
-        _elseBuilder = elseBuilder;
+    required this._condition,
+    required this._thenBuilder,
+    this._elseBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {

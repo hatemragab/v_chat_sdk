@@ -8,7 +8,7 @@ class VPaginationModel<T> {
   int limit;
   int? nextPage;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   VPaginationModel({
     required this.data,
@@ -43,7 +43,7 @@ class VPaginationModel<T> {
     int? nextPage,
   }) {
     return VPaginationModel(
-      data: values ?? this.data,
+      data: values ?? data,
       page: page ?? this.page,
       limit: limit ?? this.limit,
       nextPage: nextPage ?? this.nextPage,
@@ -51,10 +51,7 @@ class VPaginationModel<T> {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'page': page,
-      'limit': limit,
-    };
+    return {'page': page, 'limit': limit};
   }
 
   // factory VPaginationModel.fromMap(Map<String, dynamic> map) {
@@ -78,5 +75,5 @@ class VPaginationModel<T> {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

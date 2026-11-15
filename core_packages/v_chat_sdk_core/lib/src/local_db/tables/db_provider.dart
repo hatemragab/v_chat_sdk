@@ -55,7 +55,7 @@ class DBProvider {
         });
         log.fine("All tables Created !!");
       },
-      onOpen: (db) async {
+      onOpen: (db) {
         dbCompleter.complete();
       },
     );
@@ -70,7 +70,7 @@ class DBProvider {
     log.warning("all tables deleted !!!!!!!!!!!!!!!!!!!!!!!!");
   }
 
-  Future<Database> _initForWindows(String path) async {
+  Future<Database> _initForWindows(String path) {
     final databaseFactory = databaseFactoryFfi;
     return databaseFactory.openDatabase(
       path,
@@ -87,7 +87,7 @@ class DBProvider {
             log.fine("All tables Created !!");
           });
         },
-        onOpen: (db) async {
+        onOpen: (db) {
           dbCompleter.complete();
         },
       ),

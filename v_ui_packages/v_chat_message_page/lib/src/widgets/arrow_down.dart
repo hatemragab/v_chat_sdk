@@ -44,7 +44,7 @@ class _ListViewArrowDownState extends State<ListViewArrowDown> {
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.withOpacity(.8),
+          color: Colors.grey.withValues(alpha: .8),
         ),
         child: const Icon(Icons.keyboard_double_arrow_down),
       ),

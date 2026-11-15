@@ -38,12 +38,7 @@ extension MessageTypeExt on VMessageType {
   bool get isCenter => this == VMessageType.info;
 }
 
-enum VNotificationType {
-  groupChat,
-  singleChat,
-  broadcastChat,
-  deleteMessage,
-}
+enum VNotificationType { groupChat, singleChat, broadcastChat, deleteMessage }
 
 enum VGroupMsgInfo {
   gLeave,
@@ -84,7 +79,7 @@ enum VMessageCallStatus {
   rejected,
   finished,
   inCall,
-  sessionEnd
+  sessionEnd,
 }
 
 enum VSocketStateType { connected, connecting }

@@ -2,7 +2,6 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-
 import 'package:v_chat_sdk_core/src/http/api_service/call/call_api.dart';
 import 'package:v_chat_sdk_core/src/http/api_service/interceptors.dart';
 import 'package:v_chat_sdk_core/src/utils/api_constants.dart';
@@ -31,9 +30,7 @@ class VCallApiService {
     required String meetId,
     Map<String, dynamic>? answerPayload,
   }) async {
-    final res = await _callApi!.acceptCall(meetId, {
-      "payload": answerPayload,
-    });
+    final res = await _callApi!.acceptCall(meetId, {"payload": answerPayload});
     throwIfNotSuccess(res);
   }
 
@@ -83,13 +80,12 @@ class VCallApiService {
   Future<String> getAgoraAccess(String roomId) async {
     final res = await _callApi!.getAgoraAccess(roomId);
     throwIfNotSuccess(res);
-    return (res.body as Map<String, dynamic>)['data']['rtcToken'] as String;
+    final body = res.body as Map<String, dynamic>;
+    final data = body['data'] as Map<String, dynamic>;
+    return data['rtcToken'] as String;
   }
 
-  static VCallApiService init({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static VCallApiService init({Uri? baseUrl, String? accessToken}) {
     _callApi ??= CallApi.create(
       accessToken: accessToken,
       baseUrl: baseUrl ?? VAppConstants.baseUri,

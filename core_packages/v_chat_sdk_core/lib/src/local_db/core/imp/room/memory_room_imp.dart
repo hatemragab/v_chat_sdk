@@ -60,9 +60,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   // }
 
   @override
-  Future<int> updateCountByOne(
-    VUpdateRoomUnReadCountByOneEvent event,
-  ) async {
+  Future<int> updateCountByOne(VUpdateRoomUnReadCountByOneEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     ++room.unReadCount;
@@ -94,9 +92,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> updateCountToZero(
-    VUpdateRoomUnReadCountToZeroEvent event,
-  ) async {
+  Future<int> updateCountToZero(VUpdateRoomUnReadCountToZeroEvent event) async {
     final room = getRoomById(event.roomId);
     if (room == null) return 0;
     room.unReadCount = 0;
@@ -111,7 +107,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
     );
   }
 
-  Future<int> setAllOffline() async {
+  Future<int> setAllOffline() {
     for (final element in _rooms) {
       element.isOnline = false;
       element.typingStatus = VSocketRoomTypingModel.offline;
@@ -120,7 +116,7 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<int> insertMany(List<VRoom> rooms) async {
+  Future<int> insertMany(List<VRoom> rooms) {
     for (final room in rooms) {
       if (!_rooms.contains(room)) {
         _rooms.add(room);
@@ -130,12 +126,12 @@ class MemoryRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<VRoom?> getOneWithLastMessageByRoomId(String roomId) async {
+  Future<VRoom?> getOneWithLastMessageByRoomId(String roomId) {
     return Future.value(getRoomById(roomId));
   }
 
   @override
-  Future<int> reCreate() async {
+  Future<int> reCreate() {
     _rooms.clear();
     return Future.value(1);
   }

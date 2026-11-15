@@ -28,27 +28,27 @@ class VCallLocalization {
   final String endToEndEncryption;
 
   VCallLocalization.fromEnglish()
-      : exitFromTheCall = 'Exit from the call',
-        areYouSureToEndTheCall = 'Are you sure to end the call?',
-        cancel = 'Cancel',
-        ok = 'Ok',
-        connecting = 'Connecting...',
-        microphoneAndCameraPermissionMustBeAccepted =
-            'Microphone and camera permission must be accepted...',
-        microphonePermissionMustBeAccepted =
-            'Microphone permission must be accepted',
-        busy = 'Busy',
-        ring = 'Ring...',
-        accept = 'Accept',
-        reject = 'Reject',
-        accepted = 'Accepted',
-        incomingVoiceCall = 'incoming voice call',
-        incomingVideoCall = 'incoming video call',
-        roomAlreadyInCall = 'Room already in call',
-        timeout = 'Timeout',
-        callEnd = 'Call end',
-        rejected = 'Rejected',
-        endToEndEncryption = 'End to end encryption';
+    : exitFromTheCall = 'Exit from the call',
+      areYouSureToEndTheCall = 'Are you sure to end the call?',
+      cancel = 'Cancel',
+      ok = 'Ok',
+      connecting = 'Connecting...',
+      microphoneAndCameraPermissionMustBeAccepted =
+          'Microphone and camera permission must be accepted...',
+      microphonePermissionMustBeAccepted =
+          'Microphone permission must be accepted',
+      busy = 'Busy',
+      ring = 'Ring...',
+      accept = 'Accept',
+      reject = 'Reject',
+      accepted = 'Accepted',
+      incomingVoiceCall = 'incoming voice call',
+      incomingVideoCall = 'incoming video call',
+      roomAlreadyInCall = 'Room already in call',
+      timeout = 'Timeout',
+      callEnd = 'Call end',
+      rejected = 'Rejected',
+      endToEndEncryption = 'End to end encryption';
 
   const VCallLocalization({
     required this.exitFromTheCall,

@@ -11,7 +11,7 @@ class VMessageImageData {
   int width;
   int height;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   VMessageImageData({
     required this.fileSource,
@@ -53,20 +53,12 @@ class VMessageImageData {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      ...fileSource.toMap(),
-      'width': width,
-      'height': height,
-    };
+    return {...fileSource.toMap(), 'width': width, 'height': height};
   }
 
-  factory VMessageImageData.fromMap(
-    Map<String, dynamic> map,
-  ) {
+  factory VMessageImageData.fromMap(Map<String, dynamic> map) {
     return VMessageImageData(
-      fileSource: VPlatformFile.fromMap(
-        map,
-      ),
+      fileSource: VPlatformFile.fromMap(map),
       width: map['width'] as int,
       height: map['height'] as int,
     );
@@ -78,12 +70,12 @@ class VMessageImageData {
   }) {
     return VMessageImageData(
       fileSource: VPlatformFile.fromUrl(
-        url: "https://picsum.photos/$width/$high",
+        networkUrl: "https://picsum.photos/$width/$high",
       ),
       width: width,
       height: high,
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

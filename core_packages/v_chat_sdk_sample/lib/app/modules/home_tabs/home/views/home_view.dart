@@ -13,7 +13,7 @@ import 'package:v_chat_sdk_sample/app/modules/home_tabs/users_tab/views/users_ta
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
             ExploreTabView(),
             UsersTabView(),
             ChatsTabView(),
-            SettingsTabView()
+            SettingsTabView(),
           ],
         ),
       ),

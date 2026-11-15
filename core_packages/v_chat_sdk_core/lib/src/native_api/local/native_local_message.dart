@@ -19,8 +19,9 @@ class NativeLocalMessage {
   ///
   /// Uses the appropriate local message repository (memory or SQL) based on the platform (Web or others).
   NativeLocalMessage(Database? database) {
-    _localMessageRepo =
-        VPlatforms.isWeb ? MemoryMessageImp() : SqlMessageImp(database!);
+    _localMessageRepo = VPlatforms.isWeb
+        ? MemoryMessageImp()
+        : SqlMessageImp(database!);
   }
 
   /// Inserts the given [message] into the local message repository.
@@ -56,7 +57,7 @@ class NativeLocalMessage {
 
   /// Prepare the messages in the local message repository by updating messages' status
   /// from 'sending' to 'error'.
-  Future<int> prepareMessages() async =>
+  Future<int> prepareMessages() =>
       _localMessageRepo.updateMessagesFromSendingToError();
 
   /// Updates the status of the message in the local message repository based on the given [event].
@@ -74,10 +75,7 @@ class NativeLocalMessage {
   ///
   /// Emits a [VDeleteMessageEvent] on successful deletion.
   Future<int> deleteMessageByLocalId(VBaseMessage msg) async {
-    final event = VDeleteMessageEvent(
-      localId: msg.localId,
-      roomId: msg.roomId,
-    );
+    final event = VDeleteMessageEvent(localId: msg.localId, roomId: msg.roomId);
     final message = await _localMessageRepo.findByLocalId(event.localId);
     final beforeMsg = await _localMessageRepo.findOneMessageBeforeThis(
       message!.createdAt,
@@ -145,30 +143,29 @@ class NativeLocalMessage {
   }
 
   /// Fetches a message by its localId from the local message repository.
-  Future<VBaseMessage?> getMessageByLocalId(String localId) async =>
+  Future<VBaseMessage?> getMessageByLocalId(String localId) =>
       _localMessageRepo.findByLocalId(localId);
 
   /// Fetches all messages in a room with the given [roomId] and [filter] from the local message repository.
   Future<List<VBaseMessage>> getRoomMessages({
     required String roomId,
     required VRoomMessagesDto filter,
-  }) async =>
-      _localMessageRepo.getRoomMessages(roomId: roomId, filter: filter);
+  }) => _localMessageRepo.getRoomMessages(roomId: roomId, filter: filter);
 
   /// Fetches all messages with an 'error' status from the local message repository.
-  Future<List<VBaseMessage>> getUnSendMessages() async =>
+  Future<List<VBaseMessage>> getUnSendMessages() =>
       _localMessageRepo.getMessagesByStatus(status: VMessageEmitStatus.error);
 
   /// Searches messages in a room with the given [roomId] and a [text] from the local message repository.
-  Future<List<VBaseMessage>> searchMessage(String text, String roomId) async =>
+  Future<List<VBaseMessage>> searchMessage(String text, String roomId) =>
       _localMessageRepo.search(text: text, roomId: roomId);
 
   /// Caches multiple messages in the local message repository.
-  Future<int> cacheRoomMessages(List<VBaseMessage> messageToInsert) async =>
+  Future<int> cacheRoomMessages(List<VBaseMessage> messageToInsert) =>
       _localMessageRepo.insertMany(messageToInsert);
 
   /// Updates messages in the local message repository from 'sending' to 'error'.
-  Future<int> updateMessagesFromSendingToError() async =>
+  Future<int> updateMessagesFromSendingToError() =>
       _localMessageRepo.updateMessagesFromSendingToError();
 
   /// Drops the existing message table and creates a new one in the local message repository.

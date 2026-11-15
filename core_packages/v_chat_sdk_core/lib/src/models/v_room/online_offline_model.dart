@@ -9,7 +9,7 @@ class VOnlineOfflineModel extends AppEvent {
   final bool isOnline;
   final String roomId;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
   const VOnlineOfflineModel({
     required this.peerId,
@@ -34,10 +34,7 @@ class VOnlineOfflineModel extends AppEvent {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'peerId': peerId,
-      'extra': roomId,
-    };
+    return {'peerId': peerId, 'extra': roomId};
   }
 
   factory VOnlineOfflineModel.fromMap(Map<String, dynamic> map) {
@@ -51,5 +48,5 @@ class VOnlineOfflineModel extends AppEvent {
   @override
   List<Object?> get props => [peerId, roomId, isOnline];
 
-//</editor-fold>
+  //</editor-fold>
 }

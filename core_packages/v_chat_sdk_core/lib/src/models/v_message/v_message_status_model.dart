@@ -9,7 +9,7 @@ class VMessageStatusModel {
   final String? seenAt;
   final VIdentifierUser identifierUser;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
   const VMessageStatusModel({
     required this.deliveredAt,
     this.seenAt,
@@ -61,10 +61,11 @@ class VMessageStatusModel {
     return VMessageStatusModel(
       deliveredAt: map['dAt'] as String,
       seenAt: map['sAt'] as String?,
-      identifierUser:
-          VIdentifierUser.fromMap(map['userData'] as Map<String, dynamic>),
+      identifierUser: VIdentifierUser.fromMap(
+        map['userData'] as Map<String, dynamic>,
+      ),
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

@@ -10,10 +10,8 @@ class SingleAppBarController extends ValueNotifier<SingleAppBarStateModel>
   final VRoom vRoom;
   final MessageProvider messageProvider;
 
-  SingleAppBarController({
-    required this.vRoom,
-    required this.messageProvider,
-  }) : super(SingleAppBarStateModel.fromVRoom(vRoom)) {
+  SingleAppBarController({required this.vRoom, required this.messageProvider})
+    : super(SingleAppBarStateModel.fromVRoom(vRoom)) {
     _initStreams();
     _autoUpdateLastSeenValue();
   }
@@ -59,14 +57,14 @@ class SingleAppBarController extends ValueNotifier<SingleAppBarStateModel>
           .on<VRoomOfflineEvent>()
           .where((e) => e.roomId == value.roomId)
           .listen((_) {
-        updateOffline();
-      }),
+            updateOffline();
+          }),
       VEventBusSingleton.vEventBus
           .on<VRoomOnlineEvent>()
           .where((e) => e.roomId == value.roomId)
           .listen((_) {
-        updateOnline();
-      }),
+            updateOnline();
+          }),
       VEventBusSingleton.vEventBus
           .on<VUpdateRoomTypingEvent>()
           .where((e) => e.roomId == value.roomId)
@@ -74,7 +72,7 @@ class SingleAppBarController extends ValueNotifier<SingleAppBarStateModel>
       VEventBusSingleton.vEventBus
           .on<VSingleBlockEvent>()
           .where((e) => e.roomId == value.roomId)
-          .listen(_handleOnBlock)
+          .listen(_handleOnBlock),
     ]);
   }
 

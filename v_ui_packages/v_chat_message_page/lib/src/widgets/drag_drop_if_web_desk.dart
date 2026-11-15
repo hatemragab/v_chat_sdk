@@ -54,7 +54,7 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
               },
               onError: (String? ev) {
                 if (kDebugMode) {
-                  print('Error: $ev');
+                  debugPrint('Error: $ev');
                 }
               },
               onHover: () {
@@ -62,8 +62,8 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
                   isHovering = true;
                 });
               },
-              onDrop: (dynamic file) async {},
-              onDropMultiple: (List<dynamic>? files) async {
+              onDropFile: (file) {},
+              onDropFiles: (files) async {
                 isHovering = false;
                 setState(() {});
                 if (files == null) return;
@@ -72,10 +72,9 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
                 for (final file in files) {
                   final fileBytes = await controller.getFileData(file);
                   final fileName = await controller.getFilename(file);
-                  draggedFiles.add(VPlatformFile.fromBytes(
-                    name: fileName,
-                    bytes: fileBytes,
-                  ));
+                  draggedFiles.add(
+                    VPlatformFile.fromBytes(name: fileName, bytes: fileBytes),
+                  );
                 }
                 widget.onDragDone(draggedFiles);
               },
@@ -86,8 +85,8 @@ class _DragDropIfWebState extends State<DragDropIfWeb> {
             ),
             widget.child,
             Container(
-              color: isHovering ? Colors.blue.withOpacity(.5) : null,
-            )
+              color: isHovering ? Colors.blue.withValues(alpha: .5) : null,
+            ),
           ],
         ),
       );

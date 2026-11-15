@@ -24,7 +24,7 @@ final fakeApiMessages = [
     "peerData": null,
     "createdAt": "2022-12-26T19:32:26.613Z",
     "updatedAt": "2022-12-26T19:32:26.613Z",
-    "isStared": false
+    "isStared": false,
   },
   {
     "_id": "2",
@@ -47,6 +47,6 @@ final fakeApiMessages = [
     "peerData": null,
     "createdAt": "2022-12-26T19:35:26.613Z",
     "updatedAt": "2022-12-26T19:35:26.613Z",
-    "isStared": false
+    "isStared": false,
   },
 ];

@@ -7,6 +7,13 @@ analyzer:
   exclude:
     - ./example
     - '**.g.dart'
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 
 
 # You can customize the lint rules set to your own liking. A list of all rules

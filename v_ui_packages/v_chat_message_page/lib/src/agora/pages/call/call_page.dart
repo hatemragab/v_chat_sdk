@@ -5,17 +5,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-// import 'package:wakelock/wakelock.dart';
-import 'package:agora_rtc_engine/rtc_local_view.dart' as rtc_local_view;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as rtc_remote_view;
 import 'package:wakelock_plus/wakelock_plus.dart';
+
 import '../../../../v_chat_message_page.dart';
 import '../../../v_chat/v_app_alert.dart';
 import '../../../v_chat/v_circle_avatar.dart';
@@ -28,10 +26,7 @@ import '../widgets/call_actions_row.dart';
 class VCallPage extends StatefulWidget {
   final VCallDto dto;
 
-  const VCallPage({
-    super.key,
-    required this.dto,
-  });
+  const VCallPage({super.key, required this.dto});
 
   @override
   State<VCallPage> createState() => _VCallPageState();
@@ -40,6 +35,9 @@ class VCallPage extends StatefulWidget {
 class _VCallPageState extends State<VCallPage> {
   //rtc
   late final RtcEngine _agoraEngine;
+  RtcEngineEventHandler? _agoraEventHandler;
+  bool _agoraInitialized = false;
+  bool _callEnded = false;
 
   //users
   final _users = <AgoraUser>{};
@@ -56,9 +54,7 @@ class _VCallPageState extends State<VCallPage> {
 
   bool get _callerIsVideoEnable => widget.dto.isVideoEnable;
 
-  final stopWatchTimer = StopWatchTimer(
-    mode: StopWatchMode.countUp,
-  );
+  final stopWatchTimer = StopWatchTimer(mode: StopWatchMode.countUp);
 
   Future<void> _initializeAgora() async {
     // Set aspect ratio for video according to platform
@@ -69,33 +65,42 @@ class _VCallPageState extends State<VCallPage> {
     } else {
       _viewAspectRatio = 3 / 2;
     }
-    await _initAgoraRtcEngine();
-    _addAgoraEventHandlers();
+    try {
+      if (!await _initAgoraRtcEngine()) return;
+      _addAgoraEventHandlers();
 
-    final options = ChannelMediaOptions(
-      publishLocalAudio: true,
-      publishLocalVideo: widget.dto.isVideoEnable,
-    );
-    // Join the channel
-    final userToken = await VChatController.I.nativeApi.remote.calls
-        .getAgoraAccess(channelName);
-    await _agoraEngine.joinChannel(
-      userToken,
-      channelName,
-      null,
-      0,
-      options,
-    );
-    if (widget.dto.isCaller) _createCall();
-    if (widget.dto.meetId != null) _acceptCall();
+      final userToken = await VChatController.I.nativeApi.remote.calls
+          .getAgoraAccess(channelName);
+      await _agoraEngine.joinChannel(
+        token: userToken,
+        channelId: channelName,
+        uid: 0,
+        options: ChannelMediaOptions(
+          publishMicrophoneTrack: true,
+          publishCameraTrack: widget.dto.isVideoEnable,
+          channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+          clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        ),
+      );
+      if (widget.dto.isCaller) _createCall();
+      if (widget.dto.meetId != null) _acceptCall();
+    } catch (err, trace) {
+      debugPrint('Agora initialization failed: $err\n$trace');
+      if (mounted) {
+        VAppAlert.showSuccessSnackBar(
+          msg: 'Unable to start the call: $err',
+          context: context,
+        );
+      }
+    }
   }
 
   @override
   void initState() {
-    _initializeAgora();
+    super.initState();
+    unawaited(_initializeAgora());
     _addListeners();
     unawaited(WakelockPlus.enable());
-    super.initState();
   }
 
   @override
@@ -115,9 +120,7 @@ class _VCallPageState extends State<VCallPage> {
                 fullUrl: widget.dto.peerUser.userImages.chatImage,
                 radius: 20,
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               Text(
                 widget.dto.peerUser.fullName,
                 style: const TextStyle(color: Colors.white),
@@ -136,13 +139,15 @@ class _VCallPageState extends State<VCallPage> {
                     if (!snapshot.hasData || snapshot.data == null) {
                       return const SizedBox.shrink();
                     }
-                    return Text(StopWatchTimer.getDisplayTime(
-                      snapshot.data!,
-                      hours: false,
-                      milliSecond: false,
-                      minute: true,
-                      second: true,
-                    ).toString());
+                    return Text(
+                      StopWatchTimer.getDisplayTime(
+                        snapshot.data!,
+                        hours: false,
+                        milliSecond: false,
+                        minute: true,
+                        second: true,
+                      ).toString(),
+                    );
                   },
                 ),
               Expanded(
@@ -154,10 +159,14 @@ class _VCallPageState extends State<VCallPage> {
                       if (_users.isEmpty) {
                         return const SizedBox();
                       }
-                      WidgetsBinding.instance.addPostFrameCallback(
-                        (_) => setState(() =>
-                            _viewAspectRatio = isPortrait ? 2 / 3 : 3 / 2),
-                      );
+                      final nextAspectRatio = isPortrait ? 2 / 3 : 3 / 2;
+                      if (_viewAspectRatio != nextAspectRatio) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (mounted) {
+                            setState(() => _viewAspectRatio = nextAspectRatio);
+                          }
+                        });
+                      }
                       final layoutViews = _createLayout(_users.length);
                       return AgoraVideoLayout(
                         users: _users,
@@ -180,13 +189,15 @@ class _VCallPageState extends State<VCallPage> {
                             ? Icons.videocam_off_rounded
                             : Icons.videocam_rounded,
                         isEnabled: widget.dto.isVideoEnable,
-                        onTap:
-                            widget.dto.isVideoEnable ? _onToggleCamera : null,
+                        onTap: widget.dto.isVideoEnable
+                            ? _onToggleCamera
+                            : null,
                       ),
                       CallActionButton(
                         icon: Icons.cameraswitch_rounded,
-                        onTap:
-                            widget.dto.isVideoEnable ? _onSwitchCamera : null,
+                        onTap: widget.dto.isVideoEnable
+                            ? _onSwitchCamera
+                            : null,
                         isEnabled: widget.dto.isVideoEnable,
                       ),
                       CallActionButton(
@@ -225,171 +236,156 @@ class _VCallPageState extends State<VCallPage> {
   @override
   void dispose() {
     stopWatchTimer.dispose();
-    WakelockPlus.disable();
-    callStream?.cancel();
-    _onCallEnd();
+    unawaited(WakelockPlus.disable());
+    unawaited(callStream?.cancel());
+    unawaited(_onCallEnd());
     super.dispose();
   }
 
   Future<void> _onCallEnd() async {
-    await _agoraEngine.leaveChannel();
-    await _agoraEngine.destroy();
-    endCallApi();
+    if (_callEnded) return;
+    _callEnded = true;
+    if (_agoraInitialized) {
+      final eventHandler = _agoraEventHandler;
+      if (eventHandler != null) {
+        _agoraEngine.unregisterEventHandler(eventHandler);
+      }
+      await _agoraEngine.leaveChannel();
+      await _agoraEngine.release();
+      _agoraInitialized = false;
+    }
+    await endCallApi();
   }
 
-  Future<void> _initAgoraRtcEngine() async {
-    if (VChatController.I.vChatConfig.agoraAppId == null) {
+  Future<bool> _initAgoraRtcEngine() async {
+    final appId = VChatController.I.vChatConfig.agoraAppId;
+    if (appId == null || appId.isEmpty) {
       VAppAlert.showSuccessSnackBar(
-          msg: "Agora App Id is null please add it first in the configuration",
-          context: context);
-      return;
-    }
-    try {
-      _agoraEngine = await RtcEngine.create(
-          VChatController.I.vChatConfig.agoraAppId ?? '');
-    } catch (err) {
-      VAppAlert.showSuccessSnackBar(
-          msg: "Agora Error is $err", context: context);
+        msg: 'Agora App Id is null please add it first in the configuration',
+        context: context,
+      );
+      return false;
     }
 
-    final configuration = VideoEncoderConfiguration();
-    configuration.orientationMode = VideoOutputOrientationMode.Adaptative;
-    await _agoraEngine.setVideoEncoderConfiguration(configuration);
+    _agoraEngine = createAgoraRtcEngine();
+    await _agoraEngine.initialize(RtcEngineContext(appId: appId));
+    _agoraInitialized = true;
+    await _agoraEngine.setVideoEncoderConfiguration(
+      const VideoEncoderConfiguration(
+        orientationMode: OrientationMode.orientationModeAdaptive,
+      ),
+    );
     await _agoraEngine.enableAudio();
     if (_callerIsVideoEnable) {
       await _agoraEngine.enableVideo();
       value.isSpeakerEnabled = true;
       value.isVideoEnabled = true;
     }
-    await _agoraEngine.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _agoraEngine.setClientRole(ClientRole.Broadcaster);
+    await _agoraEngine.setChannelProfile(
+      ChannelProfileType.channelProfileLiveBroadcasting,
+    );
+    await _agoraEngine.setClientRole(
+      role: ClientRoleType.clientRoleBroadcaster,
+    );
     await _agoraEngine.muteLocalAudioStream(false);
     await _agoraEngine.setEnableSpeakerphone(_callerIsVideoEnable);
     await _agoraEngine.muteLocalVideoStream(!_callerIsVideoEnable);
+    return true;
   }
 
-  Future<void> _addAgoraEventHandlers() async {
-    _agoraEngine.setEventHandler(
-      RtcEngineEventHandler(
-        error: (code) {
-          final info = 'LOG::onError: $code';
-          debugPrint(info);
-        },
-        joinChannelSuccess: (channel, uid, elapsed) {
-          final info = 'LOG::onJoinChannel: $channel, uid: $uid';
-          debugPrint(info);
-          setState(() {
-            _currentUid = uid;
-            _users.add(
-              AgoraUser(
-                uid: uid,
-                isAudioEnabled: value.isMicEnabled,
-                isVideoEnabled: value.isVideoEnabled,
-                view: const rtc_local_view.SurfaceView(),
-              ),
-            );
-          });
-        },
-        firstLocalAudioFrame: (elapsed) {
-          final info = 'LOG::firstLocalAudio: $elapsed';
-          debugPrint(info);
-          for (AgoraUser user in _users) {
-            if (user.uid == _currentUid) {
-              setState(() => user.isAudioEnabled = value.isMicEnabled);
-            }
-          }
-        },
-        firstLocalVideoFrame: (width, height, elapsed) {
-          debugPrint('LOG::firstLocalVideo');
-          for (AgoraUser user in _users) {
-            if (user.uid == _currentUid) {
-              setState(
-                () => user
-                  ..isVideoEnabled = value.isVideoEnabled
-                  ..view = const rtc_local_view.SurfaceView(
-                    renderMode: VideoRenderMode.Hidden,
+  void _addAgoraEventHandlers() {
+    _agoraEventHandler = RtcEngineEventHandler(
+      onError: (code, message) {
+        final info = 'LOG::onError: $code, $message';
+        debugPrint(info);
+      },
+      onJoinChannelSuccess: (connection, elapsed) {
+        if (!mounted) return;
+        final uid = connection.localUid ?? 0;
+        final info = 'LOG::onJoinChannel: $channelName, uid: $uid';
+        debugPrint(info);
+        setState(() {
+          _currentUid = uid;
+          _users.add(
+            AgoraUser(
+              uid: uid,
+              isAudioEnabled: value.isMicEnabled,
+              isVideoEnabled: value.isVideoEnabled,
+              view: AgoraVideoView(
+                controller: VideoViewController(
+                  rtcEngine: _agoraEngine,
+                  canvas: const VideoCanvas(
+                    uid: 0,
+                    renderMode: RenderModeType.renderModeHidden,
                   ),
-              );
-            }
-          }
-        },
-        leaveChannel: (stats) {
-          debugPrint('LOG::onLeaveChannel');
-          setState(() => _users.clear());
-        },
-        userJoined: (uid, elapsed) {
-          final info = 'LOG::userJoined: $uid';
-          debugPrint(info);
-          setState(
-            () => _users.add(
-              AgoraUser(
-                uid: uid,
-                view: rtc_remote_view.SurfaceView(
-                  channelId: channelName,
-                  uid: uid,
                 ),
               ),
             ),
           );
-        },
-        userOffline: (uid, elapsed) {
-          final info = 'LOG::userOffline: $uid';
-          debugPrint(info);
-          AgoraUser? userToRemove;
-          for (AgoraUser user in _users) {
-            if (user.uid == uid) {
-              userToRemove = user;
-            }
-          }
-          setState(() => _users.remove(userToRemove));
-        },
-        firstRemoteAudioFrame: (uid, elapsed) {
-          final info = 'LOG::firstRemoteAudio: $uid';
-          debugPrint(info);
-          for (AgoraUser user in _users) {
-            if (user.uid == uid) {
-              setState(() => user.isAudioEnabled = true);
-            }
-          }
-        },
-        firstRemoteVideoFrame: (uid, width, height, elapsed) {
-          final info = 'LOG::firstRemoteVideo: $uid ${width}x $height';
-          debugPrint(info);
-          for (AgoraUser user in _users) {
-            if (user.uid == uid) {
-              setState(
-                () => user
-                  ..isVideoEnabled = true
-                  ..view = rtc_remote_view.SurfaceView(
-                    channelId: channelName,
+        });
+      },
+      onLeaveChannel: (connection, stats) {
+        debugPrint('LOG::onLeaveChannel');
+        if (mounted) setState(_users.clear);
+      },
+      onUserJoined: (connection, uid, elapsed) {
+        if (!mounted) return;
+        final info = 'LOG::userJoined: $uid';
+        debugPrint(info);
+        setState(
+          () => _users.add(
+            AgoraUser(
+              uid: uid,
+              isAudioEnabled: true,
+              isVideoEnabled: widget.dto.isVideoEnable,
+              view: AgoraVideoView(
+                controller: VideoViewController.remote(
+                  rtcEngine: _agoraEngine,
+                  canvas: VideoCanvas(
                     uid: uid,
+                    renderMode: RenderModeType.renderModeHidden,
                   ),
-              );
-            }
+                  connection: connection,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      onUserOffline: (connection, uid, reason) {
+        if (!mounted) return;
+        final info = 'LOG::userOffline: $uid';
+        debugPrint(info);
+        setState(() => _users.removeWhere((user) => user.uid == uid));
+      },
+      onRemoteVideoStateChanged: (connection, uid, state, reason, elapsed) {
+        if (!mounted) return;
+        final info = 'LOG::remoteVideoStateChanged: $uid $state $reason';
+        debugPrint(info);
+        for (AgoraUser user in _users) {
+          if (user.uid == uid) {
+            setState(
+              () => user.isVideoEnabled =
+                  state != RemoteVideoState.remoteVideoStateStopped,
+            );
           }
-        },
-        remoteVideoStateChanged: (uid, state, reason, elapsed) {
-          final info = 'LOG::remoteVideoStateChanged: $uid $state $reason';
-          debugPrint(info);
-          for (AgoraUser user in _users) {
-            if (user.uid == uid) {
-              setState(() =>
-                  user.isVideoEnabled = state != VideoRemoteState.Stopped);
-            }
+        }
+      },
+      onRemoteAudioStateChanged: (connection, uid, state, reason, elapsed) {
+        if (!mounted) return;
+        final info = 'LOG::remoteAudioStateChanged: $uid $state $reason';
+        debugPrint(info);
+        for (AgoraUser user in _users) {
+          if (user.uid == uid) {
+            setState(
+              () => user.isAudioEnabled =
+                  state != RemoteAudioState.remoteAudioStateStopped,
+            );
           }
-        },
-        remoteAudioStateChanged: (uid, state, reason, elapsed) {
-          final info = 'LOG::remoteAudioStateChanged: $uid $state $reason';
-          debugPrint(info);
-          for (AgoraUser user in _users) {
-            if (user.uid == uid) {
-              setState(() =>
-                  user.isAudioEnabled = state != AudioRemoteState.Stopped);
-            }
-          }
-        },
-      ),
+        }
+      },
     );
+    _agoraEngine.registerEventHandler(_agoraEventHandler!);
   }
 
   List<int> _createLayout(int n) {
@@ -465,36 +461,36 @@ class _VCallPageState extends State<VCallPage> {
   }
 
   void _addListeners() {
-    callStream = VChatController.I.nativeApi.streams.callStream.listen(
-      (e) async {
-        if (e is VCallAcceptedEvent) {
-          value.status = CallStatus.accepted;
-          setState(() {});
-          stopWatchTimer.onStartTimer();
-          return;
-        }
-        if (e is VCallTimeoutEvent) {
-          value.status = CallStatus.timeout;
-          setState(() {});
+    callStream = VChatController.I.nativeApi.streams.callStream.listen((
+      e,
+    ) async {
+      if (e is VCallAcceptedEvent) {
+        value.status = CallStatus.accepted;
+        setState(() {});
+        stopWatchTimer.onStartTimer();
+        return;
+      }
+      if (e is VCallTimeoutEvent) {
+        value.status = CallStatus.timeout;
+        setState(() {});
+        Navigator.pop(context);
+        return;
+      }
+      if (e is VCallEndedEvent) {
+        value.status = CallStatus.callEnd;
+        setState(() {});
+        if (context.mounted) {
           Navigator.pop(context);
-          return;
         }
-        if (e is VCallEndedEvent) {
-          value.status = CallStatus.callEnd;
-          setState(() {});
-          if (context.mounted) {
-            Navigator.pop(context);
-          }
-          return;
-        }
-        if (e is VCallRejectedEvent) {
-          value.status = CallStatus.rejected;
-          setState(() {});
-          Navigator.pop(context);
-          return;
-        }
-      },
-    );
+        return;
+      }
+      if (e is VCallRejectedEvent) {
+        value.status = CallStatus.rejected;
+        setState(() {});
+        Navigator.pop(context);
+        return;
+      }
+    });
   }
 
   void _acceptCall() async {

@@ -7,12 +7,8 @@ class VBaseFilter {
   int? page;
   String? name;
 
-//<editor-fold desc="Data Methods">
-  VBaseFilter({
-    this.limit,
-    this.page,
-    this.name,
-  });
+  //<editor-fold desc="Data Methods">
+  VBaseFilter({this.limit, this.page, this.name});
 
   @override
   bool operator ==(Object other) =>
@@ -31,11 +27,7 @@ class VBaseFilter {
     return 'VBaseFilter{ limit: $limit, page: $page, name: $name,}';
   }
 
-  VBaseFilter copyWith({
-    int? limit,
-    int? page,
-    String? name,
-  }) {
+  VBaseFilter copyWith({int? limit, int? page, String? name}) {
     return VBaseFilter(
       limit: limit ?? this.limit,
       page: page ?? this.page,
@@ -44,11 +36,7 @@ class VBaseFilter {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'limit': limit,
-      'page': page,
-      'name': name,
-    };
+    return {'limit': limit, 'page': page, 'name': name};
   }
 
   factory VBaseFilter.fromMap(Map<String, dynamic> map) {
@@ -59,5 +47,5 @@ class VBaseFilter {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

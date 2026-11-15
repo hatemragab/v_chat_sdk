@@ -23,8 +23,10 @@ class VWebChatNavigation {
             const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
             const curve = Curves.ease;
-            var tween =
-                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween = Tween(
+              begin: begin,
+              end: end,
+            ).chain(CurveTween(curve: curve));
             return SlideTransition(
               position: animation.drive(tween),
               child: child,
@@ -40,9 +42,9 @@ class VWebChatNavigation {
   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case ChatRoute.route:
-        return vWebChatNavigation.createAnimatedRoute(ChatRoute(
-          room: settings.arguments as VRoom,
-        ));
+        return vWebChatNavigation.createAnimatedRoute(
+          ChatRoute(room: settings.arguments as VRoom),
+        );
       case IdleRoute.route:
         return vWebChatNavigation.createAnimatedRoute(IdleRoute());
       default:
@@ -54,17 +56,13 @@ class VWebChatNavigation {
 class IdleRoute extends StatelessWidget {
   static const route = '/idle';
 
-  const IdleRoute({Key? key}) : super(key: key);
+  const IdleRoute({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
-      child: Center(
-        child: Text(
-          'IDLE',
-        ),
-      ),
+      child: Center(child: Text('IDLE')),
     );
   }
 }
@@ -72,10 +70,7 @@ class IdleRoute extends StatelessWidget {
 enum TransitionType { slide, noAnimation }
 
 class ChatRoute extends StatelessWidget {
-  const ChatRoute({
-    Key? key,
-    required this.room,
-  }) : super(key: key);
+  const ChatRoute({super.key, required this.room});
   static const route = '/chat';
   final VRoom room;
 

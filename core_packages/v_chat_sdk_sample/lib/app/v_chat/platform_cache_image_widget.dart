@@ -35,10 +35,7 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.borderRadius != null) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius!,
-        child: _getImage(),
-      );
+      return ClipRRect(borderRadius: widget.borderRadius!, child: _getImage());
     }
     return _getImage();
   }
@@ -47,34 +44,34 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
     if (widget.source.isFromAssets) {
       return Image.asset(
         widget.source.assetsPath!,
-        width: widget.size == null ? null : widget.size!.width,
+        width: widget.size?.width,
         fit: widget.fit,
-        height: widget.size == null ? null : widget.size!.height,
+        height: widget.size?.height,
       );
     }
     if (widget.source.isFromBytes) {
       return Image.memory(
         Uint8List.fromList(widget.source.bytes!),
-        width: widget.size == null ? null : widget.size!.width,
+        width: widget.size?.width,
         fit: widget.fit,
-        height: widget.size == null ? null : widget.size!.height,
+        height: widget.size?.height,
       );
     }
     if (widget.source.fileLocalPath != null) {
       return Image.file(
         File(widget.source.fileLocalPath!),
-        width: widget.size == null ? null : widget.size!.width,
-        height: widget.size == null ? null : widget.size!.height,
+        width: widget.size?.width,
+        height: widget.size?.height,
         fit: widget.fit,
       );
     }
     return CachedNetworkImage(
       key: imageKey,
-      height: widget.size == null ? null : widget.size!.height,
-      width: widget.size == null ? null : widget.size!.width,
+      height: widget.size?.height,
+      width: widget.size?.width,
       fit: widget.fit,
-      cacheKey: widget.source.getUrlPath,
-      imageUrl: widget.source.url!,
+      cacheKey: widget.source.getCachedUrlKey,
+      imageUrl: widget.source.networkUrl!,
       placeholder: (context, url) =>
           const CupertinoActivityIndicator.partiallyRevealed(),
       errorWidget: (context, url, error) => InkWell(
@@ -83,9 +80,7 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
             imageKey = UniqueKey();
           });
         },
-        child: const Icon(
-          Icons.refresh,
-        ),
+        child: const Icon(Icons.refresh),
       ),
     );
   }

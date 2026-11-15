@@ -9,9 +9,7 @@ part of 'v_room_page.dart';
 class VRoomController with StreamMix {
   VRoomController() {
     _initStreams();
-    _roomState = RoomStateController(
-      _roomProvider,
-    );
+    _roomState = RoomStateController(_roomProvider);
   }
 
   final _nativeApi = VChatController.I.nativeApi;
@@ -28,8 +26,11 @@ class VRoomController with StreamMix {
   void _init(BuildContext context, VRoomLanguage language) {
     _context = context;
     _language = language;
-    _roomItemController =
-        RoomItemController(_roomProvider, _context, _language);
+    _roomItemController = RoomItemController(
+      _roomProvider,
+      _context,
+      _language,
+    );
     _getRoomsFromLocal();
     _getRoomsFromApi();
   }
@@ -60,24 +61,16 @@ class VRoomController with StreamMix {
   void _onRoomItemLongPress(VRoom room, BuildContext context) async {
     switch (room.roomType) {
       case VRoomType.s:
-        await _roomItemController.openForSingle(
-          room,
-        );
+        await _roomItemController.openForSingle(room);
         break;
       case VRoomType.g:
-        await _roomItemController.openForGroup(
-          room,
-        );
+        await _roomItemController.openForGroup(room);
         break;
       case VRoomType.b:
-        await _roomItemController.openForBroadcast(
-          room,
-        );
+        await _roomItemController.openForBroadcast(room);
         break;
       case VRoomType.o:
-        await _roomItemController.openForOrder(
-          room,
-        );
+        await _roomItemController.openForOrder(room);
         break;
     }
   }
@@ -90,9 +83,7 @@ class VRoomController with StreamMix {
     await VChatController.I.nativeApi.remote.socketIo.socketCompleter.future;
     await vSafeApiCall<VPaginationModel<VRoom>>(
       request: () async {
-        return _roomProvider.getApiRooms(
-          const VRoomsDto(),
-        );
+        return _roomProvider.getApiRooms(const VRoomsDto());
       },
       onSuccess: (response) {
         _roomState.updateCacheStateForChatRooms(response);
@@ -128,15 +119,15 @@ class VRoomController with StreamMix {
       _events.on<VUpdateRoomImageEvent>().listen(_handleUpdateRoomImage),
       _events.on<VUpdateRoomNameEvent>().listen(_handleUpdateRoomTitle),
       _events.on<VUpdateRoomTypingEvent>().listen(_handleRoomTyping),
-      _events
-          .on<VUpdateRoomUnReadCountByOneEvent>()
-          .listen(_handleCounterByOne),
+      _events.on<VUpdateRoomUnReadCountByOneEvent>().listen(
+        _handleCounterByOne,
+      ),
       _events.on<VUpdateRoomMuteEvent>().listen(_handleMute),
       _events.on<VDeleteRoomEvent>().listen(_handleDeleteRoom),
       _events.on<VInsertRoomEvent>().listen(_handleInsertRoom),
-      _events
-          .on<VUpdateRoomUnReadCountToZeroEvent>()
-          .listen(_handleResetCounter),
+      _events.on<VUpdateRoomUnReadCountToZeroEvent>().listen(
+        _handleResetCounter,
+      ),
       _events.on<VRoomOfflineEvent>().listen(_handleOnOffRoom),
       _events.on<VRoomOnlineEvent>().listen(_handleOnOnlineRoom),
 
@@ -146,12 +137,12 @@ class VRoomController with StreamMix {
       _events.on<VUpdateMessageDeliverEvent>().listen(_handleDeliverMessages),
       _events.on<VUpdateMessageSeenEvent>().listen(_handleSeenMessages),
       _events.on<VUpdateMessageEvent>().listen(_handleUpdateMessages),
-      _events
-          .on<VUpdateMessageAllDeletedEvent>()
-          .listen(_handleAllDeleteMessage),
-      _events
-          .on<VUpdateMessageStatusEvent>()
-          .listen(_handleUpdateMessageStatus),
+      _events.on<VUpdateMessageAllDeletedEvent>().listen(
+        _handleAllDeleteMessage,
+      ),
+      _events.on<VUpdateMessageStatusEvent>().listen(
+        _handleUpdateMessageStatus,
+      ),
     ]);
   }
 
@@ -168,11 +159,13 @@ class VRoomController with StreamMix {
         .toList();
     _nativeApi.remote.socketIo.emitGetMyOnline(
       ids
-          .map((e) => VOnlineOfflineModel(
-                peerId: e.peerId!,
-                isOnline: false,
-                roomId: e.id,
-              ).toMap())
+          .map(
+            (e) => VOnlineOfflineModel(
+              peerId: e.peerId!,
+              isOnline: false,
+              roomId: e.id,
+            ).toMap(),
+          )
           .toList(),
     );
   }

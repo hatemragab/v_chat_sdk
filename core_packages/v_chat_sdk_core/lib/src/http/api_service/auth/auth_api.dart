@@ -15,25 +15,20 @@ part 'auth_api.chopper.dart';
 
 @ChopperApi(baseUrl: 'auth')
 abstract class AuthApi extends ChopperService {
-  @Post(path: "/connect")
+  @POST(path: "/connect")
   @multipart
   Future<Response> connect(
     @PartMap() List<PartValue> body,
     @PartFile("file") MultipartFile? file,
   );
 
-  @Post(path: "/logout", optionalBody: true)
+  @POST(path: "/logout", optionalBody: true)
   Future<Response> logout();
 
-  static AuthApi create({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static AuthApi create({Uri? baseUrl, String? accessToken}) {
     final client = ChopperClient(
       baseUrl: VAppConstants.baseUri,
-      services: [
-        _$AuthApi(),
-      ],
+      services: [_$AuthApi()],
       converter: const JsonConverter(),
       interceptors: [AuthInterceptor()],
       errorConverter: ErrorInterceptor(),

@@ -12,7 +12,7 @@ import '../controllers/chats_tab_controller.dart';
 import '../web_chat_scaffold.dart';
 
 class ChatsTabView extends GetView<ChatsTabController> {
-  ChatsTabView({Key? key}) : super(key: key);
+  const ChatsTabView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,52 +24,49 @@ class ChatsTabView extends GetView<ChatsTabController> {
               width: 300,
               child: VChatPage(
                 language: VRoomLanguage.fromEnglish(),
-                appBar: AppBar(
-                  title: Text("start chat"),
-                ),
+                appBar: AppBar(title: Text("start chat")),
                 controller: controller.vRoomController,
                 useIconForRoomItem: false,
                 onRoomItemPress: (room) {
                   controller.vRoomController.setRoomSelected(room.id);
-                  vWebChatNavigation.key.currentState!
-                      .pushReplacementNamed(ChatRoute.route, arguments: room);
+                  vWebChatNavigation.key.currentState!.pushReplacementNamed(
+                    ChatRoute.route,
+                    arguments: room,
+                  );
                 },
               ),
             ),
-            Container(
-              width: 5,
-              color: Colors.black12,
-            ),
+            Container(width: 5, color: Colors.black12),
             Flexible(
               child: Navigator(
                 key: vWebChatNavigation.key,
                 onGenerateRoute: vWebChatNavigation.onGenerateRoute,
                 initialRoute: IdleRoute.route,
               ),
-            )
+            ),
           ],
         ),
       );
     }
     return VChatPage(
       useIconForRoomItem: false,
-      appBar: AppBar(
-        title: const Text('Chats Tab View'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Chats Tab View'), centerTitle: true),
       language: VRoomLanguage(
         cancel: S.of(context).cancel,
         ok: S.of(context).ok,
-        areYouSureToLeaveThisGroupThisActionCantUndo:
-            S.of(context).areYouSureToLeaveThisGroupThisActionCantUndo,
-        areYouSureToPermitYourCopyThisActionCantUndo:
-            S.of(context).areYouSureToPermitYourCopyThisActionCantUndo,
+        areYouSureToLeaveThisGroupThisActionCantUndo: S
+            .of(context)
+            .areYouSureToLeaveThisGroupThisActionCantUndo,
+        areYouSureToPermitYourCopyThisActionCantUndo: S
+            .of(context)
+            .areYouSureToPermitYourCopyThisActionCantUndo,
         connecting: S.of(context).connecting,
         delete: S.of(context).delete,
         deleteYouCopy: S.of(context).deleteYouCopy,
         leaveGroup: S.of(context).leaveGroup,
-        leaveGroupAndDeleteYourMessageCopy:
-            S.of(context).leaveGroupAndDeleteYourMessageCopy,
+        leaveGroupAndDeleteYourMessageCopy: S
+            .of(context)
+            .leaveGroupAndDeleteYourMessageCopy,
         messageHasBeenDeleted: S.of(context).messageHasBeenDeleted,
         mute: S.of(context).mute,
         recording: S.of(context).recording,

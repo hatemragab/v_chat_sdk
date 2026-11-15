@@ -16,10 +16,7 @@ class ErrorInterceptor implements ErrorConverter {
   FutureOr<Response> convertError<BodyType, InnerType>(Response response) {
     final errorMap =
         jsonDecode(response.body.toString()) as Map<String, dynamic>;
-    return response.copyWith(
-      bodyError: errorMap,
-      body: errorMap,
-    );
+    return response.copyWith(bodyError: errorMap, body: errorMap);
   }
 }
 
@@ -59,9 +56,7 @@ class AuthInterceptor implements Interceptor {
   AuthInterceptor({this.access});
 
   @override
-  FutureOr<Response<BodyType>> intercept<BodyType>(
-    Chain<BodyType> chain,
-  ) async {
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
     final request = applyHeader(
       chain.request,
       'authorization',

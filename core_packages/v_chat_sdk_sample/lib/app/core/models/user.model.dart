@@ -10,18 +10,12 @@ class UserModel {
 
   String imageUrl;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  UserModel({
-    required this.id,
-    required this.fullName,
-    required this.imageUrl,
-  });
+  UserModel({required this.id, required this.fullName, required this.imageUrl});
 
-  VPlatformFile get imgAsPlatformSource => VPlatformFile.fromUrl(
-        fileSize: 0,
-        url: imageUrl,
-      );
+  VPlatformFile get imgAsPlatformSource =>
+      VPlatformFile.fromUrl(fileSize: 0, networkUrl: imageUrl);
 
   @override
   bool operator ==(Object other) =>
@@ -40,24 +34,16 @@ class UserModel {
     return 'UserModel{ uid: $id, userName: $fullName , imageUrl: $imageUrl,}';
   }
 
-  UserModel copyWith({
-    String? id,
-    String? userName,
-    String? imageUrl,
-  }) {
+  UserModel copyWith({String? id, String? userName, String? imageUrl}) {
     return UserModel(
       id: id ?? this.id,
-      fullName: userName ?? this.fullName,
+      fullName: userName ?? fullName,
       imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      '_id': id,
-      'fullName': fullName,
-      'imageUrl': imageUrl,
-    };
+    return {'_id': id, 'fullName': fullName, 'imageUrl': imageUrl};
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -68,5 +54,5 @@ class UserModel {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

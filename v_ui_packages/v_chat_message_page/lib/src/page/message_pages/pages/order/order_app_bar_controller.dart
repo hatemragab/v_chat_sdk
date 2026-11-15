@@ -10,10 +10,8 @@ class OrderAppBarController extends ValueNotifier<OrderAppBarStateModel>
   final VRoom vRoom;
   final MessageProvider messageProvider;
 
-  OrderAppBarController({
-    required this.vRoom,
-    required this.messageProvider,
-  }) : super(OrderAppBarStateModel.fromVRoom(vRoom)) {
+  OrderAppBarController({required this.vRoom, required this.messageProvider})
+    : super(OrderAppBarStateModel.fromVRoom(vRoom)) {
     _initStreams();
     _autoUpdateLastSeenValue();
   }
@@ -59,8 +57,8 @@ class OrderAppBarController extends ValueNotifier<OrderAppBarStateModel>
           .on<VRoomOfflineEvent>()
           .where((e) => e.roomId == value.roomId)
           .listen((_) {
-        updateOffline();
-      }),
+            updateOffline();
+          }),
       VEventBusSingleton.vEventBus
           .on<VUpdateRoomTypingEvent>()
           .where((e) => e.roomId == value.roomId)
@@ -69,8 +67,8 @@ class OrderAppBarController extends ValueNotifier<OrderAppBarStateModel>
           .on<VRoomOnlineEvent>()
           .where((e) => e.roomId == value.roomId)
           .listen((_) {
-        updateOnline();
-      })
+            updateOnline();
+          }),
     ]);
   }
 

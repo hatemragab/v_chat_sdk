@@ -89,16 +89,22 @@ class _PickUpState extends State<PickUp> {
                         color: CupertinoColors.systemGreen,
                         borderRadius: BorderRadius.circular(50.0),
                         onPressed: _acceptCall,
-                        child: const Icon(CupertinoIcons.phone_circle_fill,
-                            color: CupertinoColors.white, size: 35),
+                        child: const Icon(
+                          CupertinoIcons.phone_circle_fill,
+                          color: CupertinoColors.white,
+                          size: 35,
+                        ),
                       ),
                       CupertinoButton(
                         padding: const EdgeInsets.all(15.0),
                         color: CupertinoColors.systemRed,
                         borderRadius: BorderRadius.circular(50.0),
                         onPressed: () => _rejectCall(context),
-                        child: const Icon(CupertinoIcons.phone_down_circle_fill,
-                            color: CupertinoColors.white, size: 35),
+                        child: const Icon(
+                          CupertinoIcons.phone_down_circle_fill,
+                          color: CupertinoColors.white,
+                          size: 35,
+                        ),
                       ),
                     ],
                   ),
@@ -142,8 +148,9 @@ class _PickUpState extends State<PickUp> {
     } else {
       if (!await _requestMicrophonePermission() && !VPlatforms.isWeb) {
         VAppAlert.showSuccessSnackBar(
-            msg: widget.localization.microphonePermissionMustBeAccepted,
-            context: context);
+          msg: widget.localization.microphonePermissionMustBeAccepted,
+          context: context,
+        );
         return;
       }
     }
@@ -164,8 +171,9 @@ class _PickUpState extends State<PickUp> {
   void _rejectCall(BuildContext context) async {
     await vSafeApiCall<bool>(
       request: () async {
-        return VChatController.I.nativeApi.remote.calls
-            .rejectCall(widget.callModel.meetId);
+        return VChatController.I.nativeApi.remote.calls.rejectCall(
+          widget.callModel.meetId,
+        );
       },
       onSuccess: (_) {},
       onError: (exception, trace) async {
@@ -199,18 +207,18 @@ class _PickUpState extends State<PickUp> {
   }
 
   void _addListeners() {
-    subscription = VChatController.I.nativeApi.streams.callStream.listen(
-      (e) async {
-        if (e is VCallCanceledEvent) {
-          Navigator.of(context).pop();
-          return;
-        }
+    subscription = VChatController.I.nativeApi.streams.callStream.listen((
+      e,
+    ) async {
+      if (e is VCallCanceledEvent) {
+        Navigator.of(context).pop();
+        return;
+      }
 
-        if (e is VCallTimeoutEvent) {
-          Navigator.of(context).pop();
-          return;
-        }
-      },
-    );
+      if (e is VCallTimeoutEvent) {
+        Navigator.of(context).pop();
+        return;
+      }
+    });
   }
 }

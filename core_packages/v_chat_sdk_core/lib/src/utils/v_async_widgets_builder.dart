@@ -34,11 +34,7 @@ class VAsyncWidgetsBuilder extends StatelessWidget {
         return InkWell(
           onTap: onRefresh,
           child: const Center(
-            child: Icon(
-              Icons.refresh,
-              size: 50,
-              color: Colors.red,
-            ),
+            child: Icon(Icons.refresh, size: 50, color: Colors.red),
           ),
         );
       } else {

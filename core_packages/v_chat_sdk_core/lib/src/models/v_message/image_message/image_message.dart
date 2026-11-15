@@ -39,17 +39,15 @@ class VImageMessage extends VBaseMessage {
   });
 
   VImageMessage.fromRemoteMap(super.map)
-      : data = VMessageImageData.fromMap(
-          map['msgAtt'] as Map<String, dynamic>,
-        ),
-        super.fromRemoteMap();
+    : data = VMessageImageData.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      super.fromRemoteMap();
 
   VImageMessage.fromLocalMap(super.map)
-      : data = VMessageImageData.fromMap(
-          jsonDecode(map[MessageTable.columnAttachment] as String)
-              as Map<String, dynamic>,
-        ),
-        super.fromLocalMap();
+    : data = VMessageImageData.fromMap(
+        jsonDecode(map[MessageTable.columnAttachment] as String)
+            as Map<String, dynamic>,
+      ),
+      super.fromLocalMap();
 
   @override
   Map<String, dynamic> toRemoteMap() {
@@ -63,16 +61,14 @@ class VImageMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          isEncrypted: false,
-          content: VMessageConstants.thisContentIsImage,
-          messageType: VMessageType.image,
-        );
+         isEncrypted: false,
+         content: VMessageConstants.thisContentIsImage,
+         messageType: VMessageType.image,
+       );
 
   @override
   List<PartValue> toListOfPartValue() {
-    return [
-      ...super.toListOfPartValue(),
-    ];
+    return [...super.toListOfPartValue()];
   }
 
   @override
@@ -88,16 +84,11 @@ class VImageMessage extends VBaseMessage {
     };
   }
 
-  VImageMessage.buildFakeMessage({
-    required int high,
-    required int width,
-  })  : data = VMessageImageData.fromFakeData(
-          width: width,
-          high: high,
-        ),
-        super.buildFakeMessage(
-          content: "Fake this is fake image message",
-          messageType: VMessageType.image,
-          emitStatus: VMessageEmitStatus.serverConfirm,
-        );
+  VImageMessage.buildFakeMessage({required int high, required int width})
+    : data = VMessageImageData.fromFakeData(width: width, high: high),
+      super.buildFakeMessage(
+        content: "Fake this is fake image message",
+        messageType: VMessageType.image,
+        emitStatus: VMessageEmitStatus.serverConfirm,
+      );
 }

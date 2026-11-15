@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'channel_api.dart';
 
@@ -20,22 +21,14 @@ final class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> getPeerRoom(String identifier) {
     final Uri $url = Uri.parse('channel/peer-room/${identifier}');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> getAllStarMessages() {
     final Uri $url = Uri.parse('channel/messages/stars');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -58,88 +51,56 @@ final class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> getRoomById(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> muteRoomNotification(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/notification/mute');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> unMuteRoomNotification(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/notification/un-mute');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> oneSeenOff(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/one-seen/off');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> oneSeenOn(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/one-seen/on');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> archiveRoom(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/archive');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> unArchiveRoom(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/un-archive');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> getRoomUnReadCount(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/un-read-count');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -160,10 +121,7 @@ final class _$ChannelApi extends ChannelApi {
   }
 
   @override
-  Future<Response<dynamic>> transTo(
-    String roomId,
-    Map<String, dynamic> body,
-  ) {
+  Future<Response<dynamic>> transTo(String roomId, Map<String, dynamic> body) {
     final Uri $url = Uri.parse('channel/${roomId}/translate');
     final $body = body;
     final Request $request = Request(
@@ -178,22 +136,14 @@ final class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> stopRoomAutoTranslate(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/translate/stop');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> deleteRoom(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}');
-    final Request $request = Request(
-      'DELETE',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('DELETE', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -213,11 +163,7 @@ final class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> deliverRoomMessages(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/deliver');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -228,10 +174,7 @@ final class _$ChannelApi extends ChannelApi {
   ) {
     final Uri $url = Uri.parse('channel/broadcast');
     final List<PartValue> $parts = <PartValue>[
-      PartValueFile<MultipartFile?>(
-        'file',
-        file,
-      )
+      PartValueFile<MultipartFile?>('file', file),
     ];
     $parts.addAll(body);
     final Request $request = Request(
@@ -267,10 +210,7 @@ final class _$ChannelApi extends ChannelApi {
   ) {
     final Uri $url = Uri.parse('channel/${roomId}/broadcast/image');
     final List<PartValue> $parts = <PartValue>[
-      PartValueFile<MultipartFile>(
-        'file',
-        file,
-      )
+      PartValueFile<MultipartFile>('file', file),
     ];
     final Request $request = Request(
       'PATCH',
@@ -303,8 +243,9 @@ final class _$ChannelApi extends ChannelApi {
     String roomId,
     Map<String, dynamic> query,
   ) {
-    final Uri $url =
-        Uri.parse('channel/${roomId}/broadcast/available-users-to-add');
+    final Uri $url = Uri.parse(
+      'channel/${roomId}/broadcast/available-users-to-add',
+    );
     final Map<String, dynamic> $params = query;
     final Request $request = Request(
       'GET',
@@ -322,12 +263,7 @@ final class _$ChannelApi extends ChannelApi {
   ) {
     final Uri $url = Uri.parse('channel/${roomId}/broadcast/members');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -337,22 +273,14 @@ final class _$ChannelApi extends ChannelApi {
     String identifier,
   ) {
     final Uri $url = Uri.parse('channel/${roomId}/broadcast/members/{peerId}');
-    final Request $request = Request(
-      'DELETE',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('DELETE', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> getMyBroadcastInfo(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/broadcast/my-info');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -363,8 +291,9 @@ final class _$ChannelApi extends ChannelApi {
     Map<String, dynamic> query,
     String type,
   ) {
-    final Uri $url =
-        Uri.parse('channel/${roomId}/broadcast/message/${mId}/status/${type}');
+    final Uri $url = Uri.parse(
+      'channel/${roomId}/broadcast/message/${mId}/status/${type}',
+    );
     final Map<String, dynamic> $params = query;
     final Request $request = Request(
       'GET',
@@ -382,10 +311,7 @@ final class _$ChannelApi extends ChannelApi {
   ) {
     final Uri $url = Uri.parse('channel/group');
     final List<PartValue> $parts = <PartValue>[
-      PartValueFile<MultipartFile?>(
-        'file',
-        file,
-      )
+      PartValueFile<MultipartFile?>('file', file),
     ];
     $parts.addAll(body);
     final Request $request = Request(
@@ -401,11 +327,7 @@ final class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> leaveGroup(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/group/leave');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -446,8 +368,9 @@ final class _$ChannelApi extends ChannelApi {
     String roomId,
     Map<String, dynamic> query,
   ) {
-    final Uri $url =
-        Uri.parse('channel/${roomId}/group/available-users-to-add');
+    final Uri $url = Uri.parse(
+      'channel/${roomId}/group/available-users-to-add',
+    );
     final Map<String, dynamic> $params = query;
     final Request $request = Request(
       'GET',
@@ -465,8 +388,9 @@ final class _$ChannelApi extends ChannelApi {
     Map<String, dynamic> query,
     String type,
   ) {
-    final Uri $url =
-        Uri.parse('channel/${roomId}/group/message/${mId}/status/${type}');
+    final Uri $url = Uri.parse(
+      'channel/${roomId}/group/message/${mId}/status/${type}',
+    );
     final Map<String, dynamic> $params = query;
     final Request $request = Request(
       'GET',
@@ -500,10 +424,7 @@ final class _$ChannelApi extends ChannelApi {
   ) {
     final Uri $url = Uri.parse('channel/${roomId}/group/image');
     final List<PartValue> $parts = <PartValue>[
-      PartValueFile<MultipartFile>(
-        'file',
-        file,
-      )
+      PartValueFile<MultipartFile>('file', file),
     ];
     final Request $request = Request(
       'PATCH',
@@ -518,22 +439,14 @@ final class _$ChannelApi extends ChannelApi {
   @override
   Future<Response<dynamic>> getMyGroupInfo(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/group/my-info');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> getMyGroupStatus(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/group/my-status');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -560,12 +473,7 @@ final class _$ChannelApi extends ChannelApi {
   ) {
     final Uri $url = Uri.parse('channel/${roomId}/group/members');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -575,13 +483,10 @@ final class _$ChannelApi extends ChannelApi {
     String peerIdentifier,
     String role,
   ) {
-    final Uri $url =
-        Uri.parse('channel/${roomId}/group/members/${peerIdentifier}/${role}');
-    final Request $request = Request(
-      'PATCH',
-      $url,
-      client.baseUrl,
+    final Uri $url = Uri.parse(
+      'channel/${roomId}/group/members/${peerIdentifier}/${role}',
     );
+    final Request $request = Request('PATCH', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -590,24 +495,17 @@ final class _$ChannelApi extends ChannelApi {
     String roomId,
     String peerIdentifier,
   ) {
-    final Uri $url =
-        Uri.parse('channel/${roomId}/group/members/${peerIdentifier}');
-    final Request $request = Request(
-      'DELETE',
-      $url,
-      client.baseUrl,
+    final Uri $url = Uri.parse(
+      'channel/${roomId}/group/members/${peerIdentifier}',
     );
+    final Request $request = Request('DELETE', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> getOrderRoomInfo(String roomId) {
     final Uri $url = Uri.parse('channel/${roomId}/group/members');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }

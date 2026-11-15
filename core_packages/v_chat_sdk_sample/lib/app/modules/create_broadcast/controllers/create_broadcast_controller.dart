@@ -15,9 +15,7 @@ import '../../../v_chat/v_safe_api_call.dart';
 class CreateBroadcastController extends GetxController {
   final List<VIdentifierUser> users;
 
-  CreateBroadcastController(
-    this.users,
-  );
+  CreateBroadcastController(this.users);
 
   VPlatformFile? groupImage;
   final nameController = TextEditingController();
@@ -34,7 +32,9 @@ class CreateBroadcastController extends GetxController {
     final name = nameController.text.toString();
     if (name.isEmpty) {
       VAppAlert.showErrorSnackBar(
-          msg: "name must not empty", context: Get.context!);
+        msg: "name must not empty",
+        context: Get.context!,
+      );
       return;
     }
     await vSafeApiCall(

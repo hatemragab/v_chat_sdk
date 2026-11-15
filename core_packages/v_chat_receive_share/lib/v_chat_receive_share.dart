@@ -2,7 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
-library v_chat_receive_share;
+library;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +19,9 @@ Future<void> vInitReceiveShareHandler() async {
   if (media != null) {
     _handleOnNewShare(media);
   }
-  handler.sharedMediaStream.listen(
-    (SharedMedia media) async {
-      _handleOnNewShare(media);
-    },
-  );
+  handler.sharedMediaStream.listen((SharedMedia media) async {
+    _handleOnNewShare(media);
+  });
 }
 
 Future<void> _handleOnNewShare(SharedMedia media) async {
@@ -36,56 +34,60 @@ Future<void> _handleOnNewShare(SharedMedia media) async {
     }
     for (final m in media.attachments!) {
       if (m == null) continue;
-      m.path.replaceAll("file://", "");
-      pFiles.add(
-        VPlatformFile.fromPath(
-          fileLocalPath: m.path,
-        ),
-      );
+      final path = m.path.replaceFirst("file://", "");
+      pFiles.add(VPlatformFile.fromPath(fileLocalPath: path));
     }
     final context = VChatController.I.navigationContext;
     final roomsIds = await VChatController.I.vNavigator.roomNavigator
         .toForwardPage(context, null);
 
-    if (roomsIds != null) {
-      final fileRes = await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => VMediaEditorView(
-                files: pFiles,
-              ))) as List<VBaseMediaRes>?;
+    if (roomsIds != null && context.mounted) {
+      final fileRes = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => VMediaEditorView(files: pFiles),
+        ),
+      ) as List<VBaseMediaRes>?;
 
       if (fileRes == null) return;
       for (final roomId in roomsIds) {
         for (final file in fileRes) {
           if (file is VMediaImageRes) {
-            messages.add(VImageMessage.buildMessage(
-              roomId: roomId,
-              data: VMessageImageData.fromMap(file.data.toMap()),
-            ));
+            messages.add(
+              VImageMessage.buildMessage(
+                roomId: roomId,
+                data: VMessageImageData.fromMap(file.data.toMap()),
+              ),
+            );
           } else if (file is VMediaVideoRes) {
-            messages.add(VVideoMessage.buildMessage(
-              roomId: roomId,
-              data: VMessageVideoData.fromMap(file.data.toMap()),
-            ));
+            messages.add(
+              VVideoMessage.buildMessage(
+                roomId: roomId,
+                data: VMessageVideoData.fromMap(file.data.toMap()),
+              ),
+            );
           } else {
-            messages.add(VFileMessage.buildMessage(
-              roomId: roomId,
-              data: VMessageFileData(fileSource: file.getVPlatformFile()),
-            ));
+            messages.add(
+              VFileMessage.buildMessage(
+                roomId: roomId,
+                data: VMessageFileData(fileSource: file.getVPlatformFile()),
+              ),
+            );
           }
         }
       }
 
       if (messages.isNotEmpty) {
         for (final message in messages) {
-          await VChatController.I.nativeApi.local.message
-              .insertMessage(message);
+          await VChatController.I.nativeApi.local.message.insertMessage(
+            message,
+          );
           try {
             MessageUploaderQueue.instance.addToQueue(
               await MessageFactory.createUploadMessage(message),
             );
           } catch (err) {
             if (kDebugMode) {
-              print(err);
+              debugPrint(err.toString());
             }
           }
         }

@@ -24,8 +24,10 @@ import 'generated/l10n.dart';
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
 class EnvironmentConfig {
-  static const MAPS =
-      String.fromEnvironment('maps', defaultValue: 'awesomeApp');
+  static const MAPS = String.fromEnvironment(
+    'maps',
+    defaultValue: 'awesomeApp',
+  );
 }
 
 void main() async {
@@ -35,7 +37,8 @@ void main() async {
   // Check if the platform is mobile and initialize Firebase if it is.
   if (VPlatforms.isMobile) {
     await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
   await AppPref.init();
   // Initialize the background message handler for FCM.
@@ -58,7 +61,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -94,13 +97,10 @@ class MyApp extends StatelessWidget {
           supportedLocales: S.delegate.supportedLocales,
           locale: Get.locale,
           fallbackLocale: const Locale("en"),
-          theme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: Colors.green,
-          ),
+          theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.green),
           darkTheme: ThemeData.dark().copyWith(
             extensions: [
-              VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red)
+              VMessageTheme.dark().copyWith(senderBubbleColor: Colors.red),
             ],
           ),
         );
@@ -111,19 +111,20 @@ class MyApp extends StatelessWidget {
 
 void setAppTheme(AppService appService) {
   final theme = AppPref.getStringOrNullKey(SStorageKeys.appTheme.name);
-  if (theme != null) {
-    appService.setTheme(theme as ThemeMode);
+  final themeMode = ThemeMode.values.asNameMap()[theme];
+  if (themeMode != null) {
+    appService.setTheme(themeMode);
   }
 }
 
-Future<void> setAppLanguage(final AppService appService) async {
+Future<void> setAppLanguage(AppService appService) async {
   String? languageCode = AppLocalization.languageCode;
   Locale locale;
 
   if (languageCode != null) {
     locale = Locale.fromSubtags(languageCode: languageCode);
   } else {
-    languageCode = ui.window.locale.languageCode;
+    languageCode = ui.PlatformDispatcher.instance.locale.languageCode;
     locale = Locale.fromSubtags(languageCode: languageCode);
     AppLocalization.updateLanguageCode(languageCode);
   }

@@ -39,22 +39,20 @@ class VLocationMessage extends VBaseMessage {
   });
 
   VLocationMessage.fromLocalMap(super.map)
-      : data = VLocationMessageData.fromMap(
-          jsonDecode(map[MessageTable.columnAttachment] as String)
-              as Map<String, dynamic>,
-        ),
-        super.fromLocalMap();
+    : data = VLocationMessageData.fromMap(
+        jsonDecode(map[MessageTable.columnAttachment] as String)
+            as Map<String, dynamic>,
+      ),
+      super.fromLocalMap();
 
   VLocationMessage.fromRemoteMap(super.map)
-      : data = VLocationMessageData.fromMap(
-          map['msgAtt'] as Map<String, dynamic>,
-        ),
-        super.fromRemoteMap();
+    : data = VLocationMessageData.fromMap(
+        map['msgAtt'] as Map<String, dynamic>,
+      ),
+      super.fromRemoteMap();
 
   @override
-  Map<String, dynamic> toLocalMap({
-    bool withOutConTr = false,
-  }) {
+  Map<String, dynamic> toLocalMap({bool withOutConTr = false}) {
     return {
       ...super.toLocalMap(),
       MessageTable.columnAttachment: jsonEncode(data.toMap()),
@@ -68,23 +66,20 @@ class VLocationMessage extends VBaseMessage {
     super.broadcastId,
     super.replyTo,
   }) : super.buildMessage(
-          isEncrypted: false,
-          messageType: VMessageType.location,
-          content: VMessageConstants.thisContentIsLocation,
-        );
+         isEncrypted: false,
+         messageType: VMessageType.location,
+         content: VMessageConstants.thisContentIsLocation,
+       );
 
   @override
   List<PartValue> toListOfPartValue() {
     return [
       ...super.toListOfPartValue(),
-      PartValue(
-        'attachment',
-        jsonEncode(data.toMap()),
-      ),
+      PartValue('attachment', jsonEncode(data.toMap())),
     ];
   }
-// @override
-// Map<String, dynamic> toRemoteMap() {
-//   return {...super.toRemoteMap(), 'msgAtt': data.toMap()};
-// }
+  // @override
+  // Map<String, dynamic> toRemoteMap() {
+  //   return {...super.toRemoteMap(), 'msgAtt': data.toMap()};
+  // }
 }

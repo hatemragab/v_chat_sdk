@@ -5,20 +5,14 @@
 abstract class VStringUtils {
   static final vMentionRegExp = RegExp(r"\[(@[^:]+):([^\]]+)\]");
 
-  static String parseVMentions(
-    String txt, {
-    bool withOutAt = false,
-  }) {
-    return txt.replaceAllMapped(
-      VStringUtils.vMentionRegExp,
-      (match) {
-        final matchTxt = match.group(1)!;
-        if (withOutAt) {
-          return matchTxt.replaceFirst("@", "");
-        }
-        return matchTxt;
-      },
-    );
+  static String parseVMentions(String txt, {bool withOutAt = false}) {
+    return txt.replaceAllMapped(VStringUtils.vMentionRegExp, (match) {
+      final matchTxt = match.group(1)!;
+      if (withOutAt) {
+        return matchTxt.replaceFirst("@", "");
+      }
+      return matchTxt;
+    });
   }
 
   static String printDuration(Duration duration) {

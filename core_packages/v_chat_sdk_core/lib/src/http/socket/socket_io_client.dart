@@ -40,9 +40,7 @@ class SocketIoClient implements ISocketIoClient {
     return io(
       VAppConstants.baseServerIp,
       OptionBuilder()
-          .setQuery({
-            "auth": access,
-          })
+          .setQuery({"auth": access})
           .setExtraHeaders({
             'Authorization': access,
             "clint-version": VAppConstants.clintVersion,

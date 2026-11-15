@@ -39,11 +39,13 @@ abstract class VAppAlert {
       cancelLabel: cancelLabel,
       isDismissible: true,
       actions: content
-          .map((e) => SheetAction<ModelSheetItem>(
-                label: e.title,
-                icon: e.iconData?.icon,
-                key: e,
-              ))
+          .map(
+            (e) => SheetAction<ModelSheetItem>(
+              label: e.title,
+              icon: e.iconData?.icon,
+              key: e,
+            ),
+          )
           .toList(),
     );
   }
@@ -54,9 +56,5 @@ class ModelSheetItem<T> {
   final String title;
   final Icon? iconData;
 
-  ModelSheetItem({
-    required this.title,
-    required this.id,
-    this.iconData,
-  });
+  ModelSheetItem({required this.title, required this.id, this.iconData});
 }

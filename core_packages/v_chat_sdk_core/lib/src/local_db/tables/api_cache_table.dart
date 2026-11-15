@@ -10,29 +10,23 @@ abstract class ApiCacheTable {
   static const columnJsonValue = '${tableName}json_value';
 
   static Future<void> recreateTable(Transaction db) async {
-    await db.execute(
-      '''
+    await db.execute('''
           drop table if exists $tableName
-        ''',
-    );
+        ''');
     await ApiCacheTable.createTable(db);
   }
 
   static Future<void> createTable(Transaction db) async {
-    await db.execute(
-      '''
+    await db.execute('''
           create table $tableName (
             $columnId       TEXT PRIMARY KEY UNIQUE ,
             $columnJsonValue     TEXT
        )        
-          ''',
-    );
+          ''');
 
-    await db.execute(
-      '''
+    await db.execute('''
       CREATE INDEX idx_id_$tableName
       ON $tableName ($columnId)
-    ''',
-    );
+    ''');
   }
 }

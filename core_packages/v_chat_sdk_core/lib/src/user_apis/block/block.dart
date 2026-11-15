@@ -10,25 +10,17 @@ class Block {
 
   VBlockApiService get _api => _vNativeApi.remote.block;
 
-  Block(
-    this._vNativeApi,
-  );
+  Block(this._vNativeApi);
 
-  Future<bool> blockUser({
-    required String peerIdentifier,
-  }) async {
+  Future<bool> blockUser({required String peerIdentifier}) {
     return _api.blockUser(identifier: peerIdentifier);
   }
 
-  Future<VSingleBlockModel> checkIfThereBan({
-    required String peerIdentifier,
-  }) async {
+  Future<VSingleBlockModel> checkIfThereBan({required String peerIdentifier}) {
     return _api.checkIfThereBan(identifier: peerIdentifier);
   }
 
-  Future<bool> unBlockUser({
-    required String peerIdentifier,
-  }) async {
+  Future<bool> unBlockUser({required String peerIdentifier}) {
     return _api.unBlockUser(identifier: peerIdentifier);
   }
 }

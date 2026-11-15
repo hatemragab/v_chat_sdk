@@ -10,12 +10,9 @@ class ApiCacheModel {
   final String endPoint;
   final Map<String, dynamic> value;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  const ApiCacheModel({
-    required this.endPoint,
-    required this.value,
-  });
+  const ApiCacheModel({required this.endPoint, required this.value});
 
   @override
   bool operator ==(Object other) =>
@@ -42,10 +39,11 @@ class ApiCacheModel {
   factory ApiCacheModel.fromLocalMap(Map<String, dynamic> map) {
     return ApiCacheModel(
       endPoint: map[ApiCacheTable.columnId] as String,
-      value: jsonDecode(map[ApiCacheTable.columnJsonValue] as String)
-          as Map<String, dynamic>,
+      value: jsonDecode(
+        map[ApiCacheTable.columnJsonValue] as String,
+      ) as Map<String, dynamic>,
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

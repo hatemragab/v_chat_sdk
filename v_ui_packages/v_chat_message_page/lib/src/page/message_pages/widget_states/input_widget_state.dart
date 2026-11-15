@@ -25,7 +25,7 @@ class InputWidgetState extends StatelessWidget {
     return SafeArea(
       child: ValueListenableBuilder<MessageInputModel>(
         valueListenable: controller.inputStateController,
-        builder: (_, value, __) {
+        builder: (_, value, _) {
           if (value.isHidden) return const SizedBox.shrink();
           return VMessageInputWidget(
             onSubmitText: controller.onSubmitText,
@@ -36,26 +36,29 @@ class InputWidgetState extends StatelessWidget {
             focusNode: controller.focusNode,
             onAttachIconPress:
                 controller.vMessageConfig.onMessageAttachmentIconPress == null
-                    ? null
-                    : () async {
-                        final res = await controller
-                            .vMessageConfig.onMessageAttachmentIconPress!();
-                        if (res == null) return null;
+                ? null
+                : () async {
+                    final res = await controller
+                        .vMessageConfig
+                        .onMessageAttachmentIconPress!();
+                    if (res == null) return null;
 
-                        return AttachEnumRes.values.byName(res.name);
-                      },
+                    return AttachEnumRes.values.byName(res.name);
+                  },
             onSubmitMedia: (files) => controller.onSubmitMedia(context, files),
             onSubmitVoice: (data) {
               controller.onSubmitVoice(VMessageVoiceData.fromMap(data.toMap()));
             },
             onSubmitFiles: controller.onSubmitFiles,
             onSubmitLocation: (data) {
-              controller
-                  .onSubmitLocation(VLocationMessageData.fromMap(data.toMap()));
+              controller.onSubmitLocation(
+                VLocationMessageData.fromMap(data.toMap()),
+              );
             },
             onTypingChange: (typing) {
-              controller
-                  .onTypingChange(VRoomTypingEnum.values.byName(typing.name));
+              controller.onTypingChange(
+                VRoomTypingEnum.values.byName(typing.name),
+              );
             },
             googleMapsLangKey: Localizations.localeOf(context).languageCode,
             maxMediaSize: controller.vMessageConfig.maxMediaSize,

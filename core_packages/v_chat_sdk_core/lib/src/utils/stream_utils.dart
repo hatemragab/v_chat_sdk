@@ -30,7 +30,7 @@ mixin VSocketStatusStream {
 
 mixin VSocketIntervalStream {
   late final StreamSubscription<VSocketIntervalEvent>
-      _socketIntervalStatusStream;
+  _socketIntervalStatusStream;
 
   void initSocketIntervalStream(Stream<VSocketIntervalEvent> stream) {
     _socketIntervalStatusStream = stream.listen((event) {

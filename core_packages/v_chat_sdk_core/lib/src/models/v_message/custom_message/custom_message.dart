@@ -41,21 +41,18 @@ class VCustomMessage extends VBaseMessage {
     required this.data,
     required super.content,
     super.replyTo,
-  }) : super.buildMessage(
-          messageType: VMessageType.custom,
-          isEncrypted: false,
-        );
+  }) : super.buildMessage(messageType: VMessageType.custom, isEncrypted: false);
 
   VCustomMessage.fromRemoteMap(super.map)
-      : data = VCustomMsgData.fromMap(map['msgAtt'] as Map<String, dynamic>),
-        super.fromRemoteMap();
+    : data = VCustomMsgData.fromMap(map['msgAtt'] as Map<String, dynamic>),
+      super.fromRemoteMap();
 
   VCustomMessage.fromLocalMap(super.map)
-      : data = VCustomMsgData.fromMap(
-          jsonDecode(map[MessageTable.columnAttachment] as String)
-              as Map<String, dynamic>,
-        ),
-        super.fromLocalMap();
+    : data = VCustomMsgData.fromMap(
+        jsonDecode(map[MessageTable.columnAttachment] as String)
+            as Map<String, dynamic>,
+      ),
+      super.fromLocalMap();
 
   // @override
   // Map<String, dynamic> toRemoteMap() {

@@ -1,0 +1,24 @@
+name: v_chat_firebase_fcm_example
+description: Runnable diagnostics app for the V Chat Firebase FCM provider.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+dependencies:
+  cupertino_icons: ^1.0.8
+  flutter:
+    sdk: flutter
+  v_chat_firebase_fcm: ^2.2.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -14,11 +14,7 @@ class VMentionModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'identifier': identifier,
-      'name': name,
-      'image': image,
-    };
+    return {'identifier': identifier, 'name': name, 'image': image};
   }
 
   factory VMentionModel.fromMap(Map<String, dynamic> map) {

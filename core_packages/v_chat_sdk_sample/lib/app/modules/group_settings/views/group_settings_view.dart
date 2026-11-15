@@ -9,7 +9,7 @@ import '../../../v_chat/v_circle_avatar.dart';
 import '../controllers/group_settings_controller.dart';
 
 class GroupSettingsView extends GetView<GroupSettingsController> {
-  const GroupSettingsView({Key? key}) : super(key: key);
+  const GroupSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,30 +17,19 @@ class GroupSettingsView extends GetView<GroupSettingsController> {
       assignId: true,
       builder: (logic) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(logic.data.title),
-            centerTitle: true,
-          ),
+          appBar: AppBar(title: Text(logic.data.title), centerTitle: true),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Column(
                 children: [
-                  VCircleAvatar(
-                    fullUrl: logic.data.image,
-                    radius: 70,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  VCircleAvatar(fullUrl: logic.data.image, radius: 70),
+                  SizedBox(height: 20),
                   ListTile(
                     title: Text("Show members"),
                     onTap: logic.toShowMembers,
                   ),
-                  ListTile(
-                    title: Text("Leave"),
-                    onTap: logic.leave,
-                  ),
+                  ListTile(title: Text("Leave"), onTap: logic.leave),
                 ],
               ),
             ),

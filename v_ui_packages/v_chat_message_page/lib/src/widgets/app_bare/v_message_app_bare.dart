@@ -3,7 +3,6 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:timeago/timeago.dart';
 import 'package:v_chat_message_page/src/core/core.dart';
 import 'package:v_chat_message_page/src/core/extension.dart';
@@ -66,9 +65,7 @@ class VMessageAppBare extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: inTypingText(context) != null
-            ? MessageTypingWidget(
-                text: inTypingText(context)!,
-              )
+            ? MessageTypingWidget(text: inTypingText(context)!)
             : _getSubTitle(context),
       ),
       actions: [
@@ -99,9 +96,7 @@ class VMessageAppBare extends StatelessWidget {
                       Icons.search,
                       color: context.isDark ? Colors.white : Colors.black,
                     ),
-                    const SizedBox(
-                      width: 5,
-                    ),
+                    const SizedBox(width: 5),
                     Text(language.search),
                   ],
                 ),
@@ -109,46 +104,44 @@ class VMessageAppBare extends StatelessWidget {
             ];
             if (room.roomType.isSingleOrOrder) {
               final map = VAppPref.getMap("ban-${room.id}");
-              final banModel =
-                  map == null ? null : VSingleBlockModel.fromMap(map);
+              final banModel = map == null
+                  ? null
+                  : VSingleBlockModel.fromMap(map);
               if (banModel == null || !banModel.isMeBanner) {
-                l.add(PopupMenuItem(
-                  value: "block",
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.block,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(language.block),
-                    ],
+                l.add(
+                  PopupMenuItem(
+                    value: "block",
+                    child: Row(
+                      children: [
+                        const Icon(Icons.block, color: Colors.red),
+                        const SizedBox(width: 5),
+                        Text(language.block),
+                      ],
+                    ),
                   ),
-                ));
+                );
               } else {
-                l.add(PopupMenuItem(
-                  ///don't not translate
-                  value: "un_block",
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.security,
-                        color: context.isDark ? Colors.white : Colors.black,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Text(language.unBlock),
-                    ],
+                l.add(
+                  PopupMenuItem(
+                    ///don't not translate
+                    value: "un_block",
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.security,
+                          color: context.isDark ? Colors.white : Colors.black,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(language.unBlock),
+                      ],
+                    ),
                   ),
-                ));
+                );
               }
             }
             return l;
           },
-        )
+        ),
       ],
     );
   }
@@ -187,20 +180,18 @@ class VMessageAppBare extends StatelessWidget {
               onCreateCall?.call(true);
             },
             child: Icon(
-              PhosphorIcons.videoCameraFill,
+              Icons.videocam_rounded,
               color: isCallAllowed ? null : Colors.grey,
             ),
           ),
-          const SizedBox(
-            width: 20,
-          ),
+          const SizedBox(width: 20),
           InkWell(
             onTap: () {
               if (!isCallAllowed) return;
               onCreateCall?.call(false);
             },
             child: Icon(
-              PhosphorIcons.phoneCallFill,
+              Icons.call_rounded,
               color: isCallAllowed ? null : Colors.grey,
             ),
           ),

@@ -7,7 +7,8 @@ import 'file_convertor.dart';
 
 abstract class IPasteboard {
   StreamSubscription<ClipboardEvent> pasteBoardListener(
-      void Function(List<VPlatformFile> event) onData);
+    void Function(List<VPlatformFile> event) onData,
+  );
 }
 
 class Pasteboard implements IPasteboard {
@@ -22,11 +23,11 @@ class Pasteboard implements IPasteboard {
 
   @override
   StreamSubscription<ClipboardEvent> pasteBoardListener(
-          void Function(List<VPlatformFile> event) onData) =>
-      document.onPaste.listen((x) async {
-        final result = await _onClipboardEvent(x);
-        onData(result);
-      });
+    void Function(List<VPlatformFile> event) onData,
+  ) => document.onPaste.listen((x) async {
+    final result = await _onClipboardEvent(x);
+    onData(result);
+  });
 
   Future<List<VPlatformFile>> _onClipboardEvent(ClipboardEvent e) async {
     try {
@@ -36,7 +37,8 @@ class Pasteboard implements IPasteboard {
         clipboardFiles.add(clipboardItems[i].getAsFile()!);
       }
       final data = await Future.wait(
-          clipboardFiles.map((e) => _getVPlatformFileFromHtmlFile(e)).toList());
+        clipboardFiles.map((e) => _getVPlatformFileFromHtmlFile(e)).toList(),
+      );
       return data;
     } catch (e) {
       rethrow;

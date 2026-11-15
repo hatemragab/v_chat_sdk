@@ -65,10 +65,12 @@ class VCallHistory {
   /// Creates a new [VCallHistory] instance from a Map.
   factory VCallHistory.fromMap(Map<String, dynamic> map) {
     return VCallHistory(
-      peerUser:
-          VIdentifierUser.fromMap(map['peerUser'] as Map<String, dynamic>),
-      callStatus: VMessageCallStatus.values
-          .firstWhere((e) => e.name == map['callStatus']),
+      peerUser: VIdentifierUser.fromMap(
+        map['peerUser'] as Map<String, dynamic>,
+      ),
+      callStatus: VMessageCallStatus.values.firstWhere(
+        (e) => e.name == map['callStatus'],
+      ),
       roomId: map['roomId'] as String,
       id: map['_id'] as String,
       withVideo: map['withVideo'] as bool,

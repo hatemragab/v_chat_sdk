@@ -10,12 +10,7 @@ class VLinkPreviewData {
   final String? desc;
   final String? link;
 
-  const VLinkPreviewData({
-    this.image,
-    this.title,
-    this.desc,
-    this.link,
-  });
+  const VLinkPreviewData({this.image, this.title, this.desc, this.link});
 
   Map<String, dynamic> toMap() {
     return {
@@ -31,15 +26,11 @@ class VLinkPreviewData {
     return 'LinkPreviewData{image: $image, title: $title, desc: $desc, link: $link}';
   }
 
-  factory VLinkPreviewData.fromMap(
-    Map<String, dynamic> map,
-  ) {
+  factory VLinkPreviewData.fromMap(Map<String, dynamic> map) {
     return VLinkPreviewData(
       image: map['image'] == null
           ? null
-          : VMessageImageData.fromMap(
-              map['image'] as Map<String, dynamic>,
-            ),
+          : VMessageImageData.fromMap(map['image'] as Map<String, dynamic>),
       title: map['title'] as String?,
       desc: map['desc'] as String?,
       link: map['link'] as String?,

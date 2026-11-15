@@ -85,9 +85,7 @@ class VOrderController extends VBaseMessageController {
         peerUser: VBaseUser(
           vChatId: vRoom.peerId!,
           fullName: vRoom.title,
-          userImages: VUserImage.fromSingleUrl(
-            vRoom.thumbImage,
-          ),
+          userImages: VUserImage.fromSingleUrl(vRoom.thumbImage),
         ),
       ),
     );
@@ -97,11 +95,13 @@ class VOrderController extends VBaseMessageController {
     vSafeApiCall(
       request: () async {
         if (isBlocked) {
-          return VChatController.I.blockApi
-              .blockUser(peerIdentifier: vRoom.peerIdentifier!);
+          return VChatController.I.blockApi.blockUser(
+            peerIdentifier: vRoom.peerIdentifier!,
+          );
         } else {
-          return VChatController.I.blockApi
-              .unBlockUser(peerIdentifier: vRoom.peerIdentifier!);
+          return VChatController.I.blockApi.unBlockUser(
+            peerIdentifier: vRoom.peerIdentifier!,
+          );
         }
       },
       onSuccess: (response) {},
@@ -110,7 +110,9 @@ class VOrderController extends VBaseMessageController {
 
   @override
   Future<List<MentionModel>> onMentionRequireSearch(
-      BuildContext context, String query) {
+    BuildContext context,
+    String query,
+  ) {
     return Future(() => []);
   }
 }

@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 part of 'block_api.dart';
 
@@ -20,33 +21,21 @@ final class _$BlockApi extends BlockApi {
   @override
   Future<Response<dynamic>> banUser(String identifier) {
     final Uri $url = Uri.parse('user-ban/${identifier}/ban');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> unBanUser(String identifier) {
     final Uri $url = Uri.parse('user-ban/${identifier}/un-ban');
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
   @override
   Future<Response<dynamic>> checkBan(String identifier) {
     final Uri $url = Uri.parse('user-ban/${identifier}/ban');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }

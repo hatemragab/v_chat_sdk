@@ -11,11 +11,11 @@ class AppBtn extends StatelessWidget {
   final Object? heroTag;
 
   const AppBtn({
-    Key? key,
+    super.key,
     required this.onPress,
     required this.title,
     this.heroTag,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

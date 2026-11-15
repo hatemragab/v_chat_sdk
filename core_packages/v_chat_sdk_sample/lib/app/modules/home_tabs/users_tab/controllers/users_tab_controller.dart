@@ -2,6 +2,7 @@
 // All rights reserved. Use of this source code is governed by a
 // MIT license that can be found in the LICENSE file.
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 import 'package:v_chat_sdk_sample/app/v_chat/v_enums.dart';
@@ -15,10 +16,7 @@ class UsersTabController extends GetxController {
   final _data = <VIdentifierUser>[];
 
   List<VIdentifierUser> get data => _data;
-  final _filterDto = UserFilterDto(
-    limit: 30,
-    page: 1,
-  );
+  final _filterDto = UserFilterDto(limit: 30, page: 1);
 
   @override
   void onInit() {
@@ -31,8 +29,9 @@ class UsersTabController extends GetxController {
       onLoading: () async {},
       onError: (exception, trace) {},
       request: () async {
-        return await VChatController.I.nativeApi.remote.profile
-            .appUsers(_filterDto.toMap());
+        return await VChatController.I.nativeApi.remote.profile.appUsers(
+          _filterDto.toMap(),
+        );
       },
       onSuccess: (response) {
         loadingState = VChatLoadingState.success;
@@ -49,11 +48,12 @@ class UsersTabController extends GetxController {
       context: Get.context!,
       content: ["Group", "Broadcast"],
     );
-    print(res);
+    debugPrint(res?.toString());
   }
 
   Future onItemPress(VIdentifierUser item) async {
-    await VChatController.I.roomApi
-        .openChatWith(peerIdentifier: item.identifier);
+    await VChatController.I.roomApi.openChatWith(
+      peerIdentifier: item.identifier,
+    );
   }
 }

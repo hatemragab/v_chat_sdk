@@ -26,12 +26,11 @@ class VChatAvatarImage extends StatelessWidget {
       size: size.toDouble(),
       statusColor: isOnline ? Colors.green : null,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-      foregroundDecoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(100)),
-      name: chatTitle,
-      child: VCircleAvatar(
-        fullUrl: imageUrl,
+      foregroundDecoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
       ),
+      name: chatTitle,
+      child: VCircleAvatar(fullUrl: imageUrl),
     );
   }
 }

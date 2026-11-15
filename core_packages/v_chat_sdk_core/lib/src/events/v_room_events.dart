@@ -19,9 +19,7 @@ class VTotalUnReadCount extends VAppEvent {
 abstract class VRoomEvents extends VAppEvent {
   final String roomId; // The ID of the room associated with the event.
 
-  const VRoomEvents({
-    required this.roomId,
-  });
+  const VRoomEvents({required this.roomId});
 
   @override
   List<Object?> get props => [roomId];
@@ -32,9 +30,7 @@ abstract class VRoomEvents extends VAppEvent {
 /// you should leave the group and join it again to be able to send messages.
 /// all messages will be deleted from the group after you get kicked.
 class VOnGroupKicked extends VRoomEvents {
-  const VOnGroupKicked({
-    required super.roomId,
-  });
+  const VOnGroupKicked({required super.roomId});
 }
 
 /// Event for inserting a room.
@@ -44,10 +40,7 @@ class VOnGroupKicked extends VRoomEvents {
 class VInsertRoomEvent extends VRoomEvents {
   final VRoom room; // The room to be inserted.
 
-  const VInsertRoomEvent({
-    required super.roomId,
-    required this.room,
-  });
+  const VInsertRoomEvent({required super.roomId, required this.room});
 }
 
 /// Event for single block action.
@@ -56,26 +49,19 @@ class VInsertRoomEvent extends VRoomEvents {
 class VSingleBlockEvent extends VRoomEvents {
   final VSingleBlockModel banModel; // The model for the single block action.
 
-  const VSingleBlockEvent({
-    required super.roomId,
-    required this.banModel,
-  });
+  const VSingleBlockEvent({required super.roomId, required this.banModel});
 }
 
 /// Event for a room going online.
 /// when you receive this event, you should update the room status to online.
 class VRoomOnlineEvent extends VRoomEvents {
-  const VRoomOnlineEvent({
-    required super.roomId,
-  });
+  const VRoomOnlineEvent({required super.roomId});
 }
 
 /// Event for a room going offline.
 /// when you receive this event, you should update the room status to offline.
 class VRoomOfflineEvent extends VRoomEvents {
-  const VRoomOfflineEvent({
-    required super.roomId,
-  });
+  const VRoomOfflineEvent({required super.roomId});
 }
 
 /// Event for updating room typing status.
@@ -94,10 +80,7 @@ class VUpdateRoomTypingEvent extends VRoomEvents {
 class VUpdateRoomNameEvent extends VRoomEvents {
   final String name; // The new name of the room.
 
-  const VUpdateRoomNameEvent({
-    required super.roomId,
-    required this.name,
-  });
+  const VUpdateRoomNameEvent({required super.roomId, required this.name});
 }
 
 /// Event for updating the translation setting.
@@ -106,10 +89,7 @@ class VUpdateRoomNameEvent extends VRoomEvents {
 class VUpdateTransToEvent extends VRoomEvents {
   final String? transTo; // The new translation setting.
 
-  const VUpdateTransToEvent({
-    required super.roomId,
-    required this.transTo,
-  });
+  const VUpdateTransToEvent({required super.roomId, required this.transTo});
 }
 
 /// Event for updating room image.
@@ -117,26 +97,19 @@ class VUpdateTransToEvent extends VRoomEvents {
 class VUpdateRoomImageEvent extends VRoomEvents {
   final String image; // The new image of the room.
 
-  const VUpdateRoomImageEvent({
-    required super.roomId,
-    required this.image,
-  });
+  const VUpdateRoomImageEvent({required super.roomId, required this.image});
 }
 
 /// Event for updating the room unread count by one.
 /// when you receive this event, you should update the unread count of the room by one add ++.
 class VUpdateRoomUnReadCountByOneEvent extends VRoomEvents {
-  const VUpdateRoomUnReadCountByOneEvent({
-    required super.roomId,
-  });
+  const VUpdateRoomUnReadCountByOneEvent({required super.roomId});
 }
 
 /// Event for setting the room unread count to zero.
 /// when you receive this event, you should set the unread count of the room to zero.
 class VUpdateRoomUnReadCountToZeroEvent extends VRoomEvents {
-  const VUpdateRoomUnReadCountToZeroEvent({
-    required super.roomId,
-  });
+  const VUpdateRoomUnReadCountToZeroEvent({required super.roomId});
 }
 
 /// Event for updating room mute status.
@@ -144,17 +117,12 @@ class VUpdateRoomUnReadCountToZeroEvent extends VRoomEvents {
 class VUpdateRoomMuteEvent extends VRoomEvents {
   final bool isMuted; // The new mute status.
 
-  const VUpdateRoomMuteEvent({
-    required super.roomId,
-    required this.isMuted,
-  });
+  const VUpdateRoomMuteEvent({required super.roomId, required this.isMuted});
 }
 
 /// Event for deleting a room.
 /// when you receive this event, you should delete the room from your rooms list.
 /// this means the user try to delete the room from his chat list.
 class VDeleteRoomEvent extends VRoomEvents {
-  const VDeleteRoomEvent({
-    required super.roomId,
-  });
+  const VDeleteRoomEvent({required super.roomId});
 }

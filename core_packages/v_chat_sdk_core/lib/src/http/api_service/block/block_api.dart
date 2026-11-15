@@ -10,30 +10,19 @@ part 'block_api.chopper.dart';
 
 @ChopperApi(baseUrl: 'user-ban')
 abstract class BlockApi extends ChopperService {
-  @Post(path: "/{identifier}/ban", optionalBody: true)
-  Future<Response> banUser(
-    @Path() String identifier,
-  );
+  @POST(path: "/{identifier}/ban", optionalBody: true)
+  Future<Response> banUser(@Path() String identifier);
 
-  @Post(path: "/{identifier}/un-ban", optionalBody: true)
-  Future<Response> unBanUser(
-    @Path() String identifier,
-  );
+  @POST(path: "/{identifier}/un-ban", optionalBody: true)
+  Future<Response> unBanUser(@Path() String identifier);
 
-  @Get(path: "/{identifier}/ban", optionalBody: true)
-  Future<Response> checkBan(
-    @Path() String identifier,
-  );
+  @GET(path: "/{identifier}/ban")
+  Future<Response> checkBan(@Path() String identifier);
 
-  static BlockApi create({
-    Uri? baseUrl,
-    String? accessToken,
-  }) {
+  static BlockApi create({Uri? baseUrl, String? accessToken}) {
     final client = ChopperClient(
       baseUrl: VAppConstants.baseUri,
-      services: [
-        _$BlockApi(),
-      ],
+      services: [_$BlockApi()],
       converter: const JsonConverter(),
       interceptors: [AuthInterceptor()],
       errorConverter: ErrorInterceptor(),

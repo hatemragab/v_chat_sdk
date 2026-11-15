@@ -6,11 +6,9 @@ class VCustomMsgData {
   ///Your custom data as a map
   final Map<String, dynamic> data;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
 
-  VCustomMsgData({
-    required this.data,
-  });
+  VCustomMsgData({required this.data});
 
   @override
   String toString() {
@@ -18,16 +16,12 @@ class VCustomMsgData {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'data': data,
-    };
+    return {'data': data};
   }
 
   factory VCustomMsgData.fromMap(Map<String, dynamic> map) {
-    return VCustomMsgData(
-      data: map['data'] as Map<String, dynamic>,
-    );
+    return VCustomMsgData(data: map['data'] as Map<String, dynamic>);
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

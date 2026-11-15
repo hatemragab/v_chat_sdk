@@ -12,32 +12,30 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 import '../../../shared/v_safe_api_call.dart';
 
-///  RoomStateController is a ValueNotifier which holds a VPaginationModel of VRoom objects. */ class RoomStateController extends ValueNotifier<VPaginationModel > {
-///   RoomProvider instance that is used to fetch room data. */ final RoomProvider _roomProvider;
-///  Flag that indicates whether all available data has been fetched from the server. */ bool isFinishLoadMore = false;
-///  Flag that indicates whether a load more operation is currently in progress. */ bool _isLoadMoreActive = false; }
+/// Holds the paginated room list and coordinates incremental loading.
 class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
   final RoomProvider _roomProvider;
   bool isFinishLoadMore = false;
   bool _isLoadMoreActive = false;
 
   RoomStateController(this._roomProvider)
-      : super(
-          VPaginationModel<VRoom>(
-            data: <VRoom>[],
-            limit: 20,
-            page: 2,
-            nextPage: null,
-          ),
-        );
+    : super(
+        VPaginationModel<VRoom>(
+          data: <VRoom>[],
+          limit: 20,
+          page: 2,
+          nextPage: null,
+        ),
+      );
 
   final roomStateStream = StreamController<VRoom>.broadcast(sync: true);
 
   List<VRoom> get stateRooms => value.data;
 
   void updateCacheStateForChatRooms(VPaginationModel<VRoom> paginationModel) {
-    final Map<String, VRoom> stateRoomMap =
-        Map.fromEntries(value.data.map((vRoom) => MapEntry(vRoom.id, vRoom)));
+    final Map<String, VRoom> stateRoomMap = Map.fromEntries(
+      value.data.map((vRoom) => MapEntry(vRoom.id, vRoom)),
+    );
     final apiRooms = paginationModel.data;
 
     for (var apiRoom in apiRooms) {
@@ -76,7 +74,8 @@ class RoomStateController extends ValueNotifier<VPaginationModel<VRoom>> {
       }
       if (kDebugMode) {
         print(
-            "-------------you are try to insert message which already exist!-----------");
+          "-------------you are try to insert message which already exist!-----------",
+        );
       }
     }
     notifyListeners();

@@ -3,26 +3,19 @@
 // MIT license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
 class LocationMessageItem extends StatelessWidget {
   final VLocationMessage message;
 
-  const LocationMessageItem({
-    super.key,
-    required this.message,
-  });
+  const LocationMessageItem({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(
-          PhosphorIcons.mapPin,
-          size: 44,
-        ),
+        const Icon(Icons.location_on_outlined, size: 44),
         Expanded(
           child: ListTile(
             visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
@@ -34,7 +27,7 @@ class LocationMessageItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-        )
+        ),
       ],
     );
   }

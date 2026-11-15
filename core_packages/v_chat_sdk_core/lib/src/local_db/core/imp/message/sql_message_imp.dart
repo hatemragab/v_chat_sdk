@@ -64,9 +64,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessageStatus(VUpdateMessageStatusEvent event) {
     return _database.update(
       _table,
-      {
-        MessageTable.columnMessageEmitStatus: event.emitState.name,
-      },
+      {MessageTable.columnMessageEmitStatus: event.emitState.name},
       where: "$_localId =?",
       whereArgs: [event.localId],
     );
@@ -76,9 +74,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessageToAllDeleted(VUpdateMessageAllDeletedEvent event) {
     return _database.update(
       _table,
-      {
-        MessageTable.columnAllDeletedAt: event.message.allDeletedAt,
-      },
+      {MessageTable.columnAllDeletedAt: event.message.allDeletedAt},
       where: "$_localId =?",
       whereArgs: [event.localId],
     );
@@ -88,10 +84,9 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessagesToDeliver(VUpdateMessageDeliverEvent event) {
     return _database.update(
       _table,
-      {
-        MessageTable.columnDeliveredAt: event.model.date,
-      },
-      where: '''
+      {MessageTable.columnDeliveredAt: event.model.date},
+      where:
+          '''
       ${MessageTable.columnRoomId} =?
       AND ${MessageTable.columnSenderId} =?
       AND  ${MessageTable.columnDeliveredAt} IS NULL 
@@ -115,10 +110,9 @@ class SqlMessageImp extends BaseLocalMessageRepo {
     );
     return _database.update(
       MessageTable.tableName,
-      {
-        MessageTable.columnSeenAt: event.model.date,
-      },
-      where: '''
+      {MessageTable.columnSeenAt: event.model.date},
+      where:
+          '''
           ${MessageTable.columnRoomId} =? 
           AND ${MessageTable.columnSenderId} =?
           AND ${MessageTable.columnSeenAt} IS NULL
@@ -186,9 +180,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   Future<int> updateMessagesFromSendingToError() {
     return _database.update(
       _table,
-      {
-        MessageTable.columnMessageEmitStatus: VMessageEmitStatus.error.name,
-      },
+      {MessageTable.columnMessageEmitStatus: VMessageEmitStatus.error.name},
       where: "${MessageTable.columnMessageEmitStatus} =?",
       whereArgs: [VMessageEmitStatus.sending.name],
     );
@@ -209,7 +201,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<void> reCreate() async {
+  Future<void> reCreate() {
     return _database.transaction((txn) => MessageTable.recreateTable(txn));
   }
 
@@ -219,9 +211,7 @@ class SqlMessageImp extends BaseLocalMessageRepo {
   }
 
   @override
-  Future<int> updateFullMessage({
-    required VBaseMessage baseMessage,
-  }) {
+  Future<int> updateFullMessage({required VBaseMessage baseMessage}) {
     return _database.insert(
       _table,
       baseMessage.toLocalMap(),

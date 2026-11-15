@@ -18,12 +18,13 @@ class VAppLifecycleState {
 
   VAppLifecycleState() {
     if (!VPlatforms.isMobile) return;
-    FGBGEvents.stream.listen((event) {
+    FGBGEvents.instance.stream.listen((event) {
       switch (event) {
         case FGBGType.foreground:
           _timer?.cancel();
-          VEventBusSingleton.vEventBus
-              .fire(const VAppLifeCycle(isGoBackground: false));
+          VEventBusSingleton.vEventBus.fire(
+            const VAppLifeCycle(isGoBackground: false),
+          );
 
           ///start connect
           if (!SocketController.instance.isSocketConnected) {
@@ -38,9 +39,7 @@ class VAppLifecycleState {
           _timer?.cancel();
           _timer = Timer(const Duration(seconds: 5), () {
             VEventBusSingleton.vEventBus.fire(
-              const VAppLifeCycle(
-                isGoBackground: true,
-              ),
+              const VAppLifeCycle(isGoBackground: true),
             );
             SocketController.instance.disconnect();
           });

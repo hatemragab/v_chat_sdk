@@ -11,7 +11,7 @@ import '../../../v_chat/v_circle_avatar.dart';
 import '../controllers/group_members_controller.dart';
 
 class GroupMembersView extends GetView<GroupMembersController> {
-  const GroupMembersView({Key? key}) : super(key: key);
+  const GroupMembersView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,11 @@ class GroupMembersView extends GetView<GroupMembersController> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: VCircleAvatar(
-                      fullUrl: logic.members[index].userData.baseUser.userImages
+                      fullUrl: logic
+                          .members[index]
+                          .userData
+                          .baseUser
+                          .userImages
                           .chatImage,
                     ),
                     title: logic.members[index].userData.baseUser.fullName.text,

@@ -118,6 +118,8 @@ class VChatController {
   SharedPreferences get sharedPreferences => VAppPref.instance;
 
   /// Updates the chat configuration.
+  // Kept as a method for backward compatibility with existing SDK consumers.
+  // ignore: use_setters_to_change_properties
   void updateConfig(VChatConfig chatConfig) {
     vChatConfig = chatConfig;
   }
@@ -137,8 +139,9 @@ class VChatController {
   ///
   /// Returns true if successfully connected to the socket, false otherwise.
   bool connectToSocket() {
-    final access =
-        VAppPref.getHashedString(key: VStorageKeys.vAccessToken.name);
+    final access = VAppPref.getHashedString(
+      key: VStorageKeys.vAccessToken.name,
+    );
     if (access == null) {
       _log.warning(
         "You try to connect to socket without login. Please make sure you call VChatController.instance.login first.",

@@ -27,8 +27,9 @@ class BroadcastMembersController extends GetxController {
         loadingState = VChatLoadingState.loading;
       },
       request: () async {
-        return VChatController.I.nativeApi.remote.room
-            .getBroadcastMembers(roomId: data.roomId);
+        return VChatController.I.nativeApi.remote.room.getBroadcastMembers(
+          roomId: data.roomId,
+        );
       },
       onSuccess: (response) {
         members.addAll(response);

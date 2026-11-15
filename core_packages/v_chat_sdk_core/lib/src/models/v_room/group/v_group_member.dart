@@ -8,11 +8,8 @@ class VGroupMember {
   final VIdentifierUser userData;
   final VGroupMemberRole role;
 
-//<editor-fold desc="Data Methods">
-  const VGroupMember({
-    required this.userData,
-    required this.role,
-  });
+  //<editor-fold desc="Data Methods">
+  const VGroupMember({required this.userData, required this.role});
 
   @override
   bool operator ==(Object other) =>
@@ -30,30 +27,22 @@ class VGroupMember {
     return 'VGroupMember{userData: $userData, role: $role}';
   }
 
-  VGroupMember copyWith({
-    VIdentifierUser? user,
-    VGroupMemberRole? role,
-  }) {
-    return VGroupMember(
-      userData: user ?? userData,
-      role: role ?? this.role,
-    );
+  VGroupMember copyWith({VIdentifierUser? user, VGroupMemberRole? role}) {
+    return VGroupMember(userData: user ?? userData, role: role ?? this.role);
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'userData': userData,
-      'gR': role.name,
-    };
+    return {'userData': userData, 'gR': role.name};
   }
 
   factory VGroupMember.fromMap(Map<String, dynamic> map) {
     return VGroupMember(
-      userData:
-          VIdentifierUser.fromMap(map['userData'] as Map<String, dynamic>),
+      userData: VIdentifierUser.fromMap(
+        map['userData'] as Map<String, dynamic>,
+      ),
       role: VGroupMemberRole.values.byName(map['gR'] as String),
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

@@ -1,51 +1,136 @@
-# V Chat SDK - Message Page UI Package
+# v_chat_message_page
 
-Welcome to the V Chat SDK Message Page UI Package. This component provides a pre-built UI for the messaging page of your chat application. Note that this package is a part of the V Chat SDK ecosystem and can't be used as a standalone component.
+Complete message UI for V Chat SDK. The package selects the correct direct, group, broadcast, or order view for a `VRoom` and provides timelines, message actions, attachments, replies, search, voice notes, media viewers, delivery state, and optional Agora calls.
 
-## Features
+This package is not standalone. Initialize and authenticate `v_chat_sdk_core` before opening a message page.
 
-- **Pre-built Messages Page UI:** This package provides a UI for the messaging page, easing the development process.
-- **Customizable Themes:** You can easily customize the messaging page's theme to match your application's style.
+## Requirements
+
+- Flutter 3.47 or newer
+- Dart 3.13 or newer
+- `v_chat_sdk_core` 2.1.1 or newer
+- An initialized `VChatController`
+- A room returned by the SDK
+- Application-provided `VMessageLocalization`
 
 ## Installation
 
-To use the V Chat SDK Message Page UI package, you'll first need to install it in your project using your preferred package manager.
-
-## Usage
-
-To customize the theme of the message page, apply a `ThemeData` and use the `VMessageTheme` class:
-
-```dart
-theme: ThemeData(
-  extensions: [
-    VMessageTheme.dark().copyWith(
-      scaffoldDecoration:  BoxDecoration(
-        color: Colors.green
-      ),
-      receiverTextStyle: TextStyle(),
-      customMessageItem: (context, isMeSender, data) {
-        /// Render custom message data here; 'data' is the map of data that you attached while sending the custom message
-      },
-      receiverBubbleColor: Colors.green,
-    ),
-  ],
-),
+```bash
+flutter pub add v_chat_message_page
 ```
 
-You can see more on how to use this package [here](https://v-chat-sdk.github.io/vchat-v2-docs/docs/flutter/message_page).
+```dart
+import 'package:v_chat_message_page/v_chat_message_page.dart';
+```
 
-## Documentation
+The package also re-exports `v_chat_input_ui` and `v_chat_voice_player`.
 
-For more comprehensive information on how to use this package, refer to our extensive [documentation](https://v-chat-sdk.github.io/vchat-v2-docs/docs/intro/). It includes detailed guides, examples, and tutorials on how to fully leverage the V Chat SDK ecosystem.
+## Open a Message Page
 
-## Support
+```dart
+Navigator.of(context).push(
+  MaterialPageRoute<void>(
+    builder: (_) => VMessagePage(
+      vRoom: room,
+      localization: messageLocalization,
+      vMessageConfig: const VMessageConfig(
+        showDisconnectedWidget: true,
+        isCallsAllowed: false,
+        maxMediaSize: 50 * 1024 * 1024,
+        compressImageQuality: 70,
+        maxRecordTime: Duration(minutes: 10),
+      ),
+    ),
+  ),
+);
+```
 
-If you encounter any issues, have feature requests, or general inquiries, please visit our [issues page](https://github.com/v-chat-sdk/vchat-v2/issues) for information and to report any problems.
+`VMessagePage` reads `room.roomType` and builds `VSingleView`, `VGroupView`, `VBroadcastView`, or `VOrderView`. Each view creates and disposes its own specialized message controller.
 
----
+## Configure Message Behavior
 
-**Note:** Always ensure you are using the most recent version of the V Chat SDK and its packages to access the latest features and improvements.
+`VMessageConfig` supports:
 
----
+- enabling or disabling call controls;
+- custom attachment-button handling;
+- block, unblock, and long-press callbacks;
+- optional Google Maps API access for location picking;
+- maximum media size;
+- image-compression quality;
+- maximum voice-recording duration;
+- showing or hiding the disconnected-state widget.
 
-The V Chat SDK Message Page UI Package is proudly developed and maintained by the V Chat Team.
+To override attachment selection:
+
+```dart
+VMessageConfig(
+  onMessageAttachmentIconPress: () async {
+    return VAttachEnumRes.media;
+  },
+)
+```
+
+Return `null` when the action is cancelled.
+
+## Theming
+
+The widgets automatically fall back to light or dark defaults. Add `VMessageTheme` when the application needs custom presentation:
+
+```dart
+MaterialApp(
+  theme: ThemeData(
+    extensions: <ThemeExtension<dynamic>>[
+      VMessageTheme.light().copyWith(
+        scaffoldDecoration: const BoxDecoration(
+          color: Color(0xfff7f7f8),
+        ),
+        senderBubbleColor: const Color(0xffd9fdd3),
+        receiverBubbleColor: Colors.white,
+      ),
+    ],
+  ),
+  home: VMessagePage(
+    vRoom: room,
+    localization: messageLocalization,
+  ),
+)
+```
+
+Use `customMessageItem` on the theme to render application-specific custom-message payloads.
+
+## Calls
+
+Calls are available for supported rooms when:
+
+1. `VMessageConfig.isCallsAllowed` is true;
+2. `VChatConfig.agoraAppId` contains a valid Agora App ID; and
+3. `VNavigator.callNavigator` implements outgoing and incoming navigation.
+
+The workspace currently resolves `agora_rtc_engine` 6.5.4 because newer releases conflict with `share_plus` over incompatible `ffi` requirements.
+
+## Localization
+
+`VMessageLocalization` is required and contains every message action, delivery state, call state, error, and composer label. Create it from your localization system rather than hard-coding UI strings in the page.
+
+## Main Public API
+
+- `VMessagePage`: room-type dispatcher and top-level message screen.
+- `VMessageConfig`: behavior, upload, attachment, call, and callback options.
+- `VMessageTheme`: page and message-bubble theme extension.
+- `VMessageLocalization`: required localized labels.
+- `VBaseMessageController`: base contract for specialized room controllers.
+- `VSingleView`, `VGroupView`, `VBroadcastView`, and `VOrderView`: specialized screens.
+- `VTextParserWidget` and `MessageStatusIcon`: reusable message components.
+
+## Platform Notes
+
+The package targets Android, iOS, web, macOS, and Windows. Individual media, recording, map, file, and call capabilities still depend on their platform plugins and permissions. Validate every enabled attachment type on each platform you ship.
+
+## Development
+
+From the repository root:
+
+```bash
+dart run melos exec --scope=v_chat_message_page -- flutter analyze
+dart run melos exec --scope=v_chat_message_page -- flutter test
+```

@@ -109,11 +109,8 @@ class VSocketRoomTypingModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'status': status.name,
-      'roomId': roomId,
-    };
+    return {'status': status.name, 'roomId': roomId};
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

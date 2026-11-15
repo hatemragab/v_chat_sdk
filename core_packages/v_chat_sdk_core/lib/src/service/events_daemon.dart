@@ -25,20 +25,16 @@ class EventsDaemon {
         .on<VMessageEvents>()
         .where((element) => element is VInsertMessageEvent)
         .listen((event) async {
-      // When a new message is inserted
-      if (event is VInsertMessageEvent) {
-        await _onNewInsert(event.messageModel);
-        if (VPlatforms.isWeb && !event.messageModel.isMeSender) {
-          /// In case of web platform and the message sender is not the current user,
-          /// fires a new notification event.
-          _emitter.fire(
-            VOnNewNotifications(
-              message: event.messageModel,
-            ),
-          );
-        }
-      }
-    });
+          // When a new message is inserted
+          if (event is VInsertMessageEvent) {
+            await _onNewInsert(event.messageModel);
+            if (VPlatforms.isWeb && !event.messageModel.isMeSender) {
+              /// In case of web platform and the message sender is not the current user,
+              /// fires a new notification event.
+              _emitter.fire(VOnNewNotifications(message: event.messageModel));
+            }
+          }
+        });
   }
 
   /// Handles a new message insertion.
@@ -48,9 +44,7 @@ class EventsDaemon {
   Future<void> _onNewInsert(VBaseMessage message) async {
     // Delivers the message if it's not sent by the current user
     if (!message.isMeSender) {
-      _nativeAPi.remote.socketIo.emitDeliverRoomMessages(
-        message.roomId,
-      );
+      _nativeAPi.remote.socketIo.emitDeliverRoomMessages(message.roomId);
     }
 
     // Check if the room exists and creates it if it doesn't
@@ -89,8 +83,8 @@ class EventsDaemon {
         VPlatforms.isMobile &&
         !message.isMeSender) {
       await DefaultCacheManager().getSingleFile(
-        message.data.fileSource.url!,
-        key: message.data.fileSource.getUrlPath,
+        message.data.fileSource.networkUrl!,
+        key: message.data.fileSource.getCachedUrlKey,
       );
     }
   }

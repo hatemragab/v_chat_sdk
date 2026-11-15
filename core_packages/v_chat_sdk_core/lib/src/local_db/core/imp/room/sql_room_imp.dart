@@ -82,9 +82,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<int> updateCountToZero(VUpdateRoomUnReadCountToZeroEvent event) {
     return _database.update(
       _table,
-      {
-        RoomTable.columnUnReadCount: 0,
-      },
+      {RoomTable.columnUnReadCount: 0},
       where: "$_id =?",
       whereArgs: [event.roomId],
     );
@@ -94,9 +92,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<int> updateImage(VUpdateRoomImageEvent event) {
     return _database.update(
       _table,
-      {
-        RoomTable.columnThumbImage: event.image,
-      },
+      {RoomTable.columnThumbImage: event.image},
       where: "$_id =?",
       whereArgs: [event.roomId],
     );
@@ -106,9 +102,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<int> updateIsMuted(VUpdateRoomMuteEvent event) {
     return _database.update(
       _table,
-      {
-        RoomTable.columnIsMuted: event.isMuted ? 1 : 0,
-      },
+      {RoomTable.columnIsMuted: event.isMuted ? 1 : 0},
       where: "$_id =?",
       whereArgs: [event.roomId],
     );
@@ -118,9 +112,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<int> updateName(VUpdateRoomNameEvent event) {
     return _database.update(
       _table,
-      {
-        RoomTable.columnTitle: event.name,
-      },
+      {RoomTable.columnTitle: event.name},
       where: "$_id =?",
       whereArgs: [event.roomId],
     );
@@ -152,9 +144,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
 
   @override
   Future<List<VRoom>> getRoomsWithLastMessage({int limit = 300}) async {
-    final maps = await _database.rawQuery(
-      _prefixRoomFilterQuery(null, limit),
-    );
+    final maps = await _database.rawQuery(_prefixRoomFilterQuery(null, limit));
     return maps.map((e) => VRoom.fromLocalMap(e)).toList();
   }
 
@@ -210,7 +200,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   }
 
   @override
-  Future<void> reCreate() async {
+  Future<void> reCreate() {
     return _database.transaction((txn) => RoomTable.recreateTable(txn));
   }
 
@@ -251,9 +241,7 @@ class SqlRoomImp extends BaseLocalRoomRepo {
   Future<int> updateTransTo(VUpdateTransToEvent event) {
     return _database.update(
       _table,
-      {
-        RoomTable.columnTransTo: event.transTo,
-      },
+      {RoomTable.columnTransTo: event.transTo},
       where: "$_id =?",
       whereArgs: [event.roomId],
     );
@@ -261,17 +249,15 @@ class SqlRoomImp extends BaseLocalRoomRepo {
 
   @override
   Future<int> getUnReadCount() async {
-    final maps = await _database
-        .rawQuery("SELECT SUM(${RoomTable.columnUnReadCount}) FROM $_table");
+    final maps = await _database.rawQuery(
+      "SELECT SUM(${RoomTable.columnUnReadCount}) FROM $_table",
+    );
 
     if (maps.isEmpty) {
       return 0;
     }
 
-    final res = int.tryParse(
-      maps.first.values.first.toString(),
-      radix: 10,
-    );
+    final res = int.tryParse(maps.first.values.first.toString(), radix: 10);
     if (res == null) {
       return 0;
     }

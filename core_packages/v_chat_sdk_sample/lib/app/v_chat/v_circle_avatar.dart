@@ -9,11 +9,7 @@ class VCircleAvatar extends StatelessWidget {
   final int radius;
   final String fullUrl;
 
-  const VCircleAvatar({
-    Key? key,
-    this.radius = 28,
-    required this.fullUrl,
-  }) : super(key: key);
+  const VCircleAvatar({super.key, this.radius = 28, required this.fullUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +17,7 @@ class VCircleAvatar extends StatelessWidget {
       foregroundColor: Theme.of(context).primaryColor,
       backgroundColor: Colors.transparent,
       radius: double.tryParse(radius.toString()),
-      backgroundImage: CachedNetworkImageProvider(
-        fullUrl,
-      ),
+      backgroundImage: CachedNetworkImageProvider(fullUrl),
     );
   }
 }

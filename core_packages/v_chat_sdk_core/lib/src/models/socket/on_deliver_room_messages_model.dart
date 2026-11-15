@@ -34,11 +34,7 @@ class VSocketOnDeliverMessagesModel {
 
   /// Returns a [Map] representation of this object
   Map<String, dynamic> toMap() {
-    return {
-      'roomId': roomId,
-      'userId': userId,
-      'date': date,
-    };
+    return {'roomId': roomId, 'userId': userId, 'date': date};
   }
 
   /// Creates an instance of this object from the given [map]

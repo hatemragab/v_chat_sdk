@@ -28,10 +28,7 @@ class VProfileApi implements AuthEndPoints {
   // Provides access to profile-related API services
   VProfileApiService get _profileApi => _vNativeApi.remote.profile;
 
-  VProfileApi(
-    this._vNativeApi,
-    this._chatConfig,
-  );
+  VProfileApi(this._vNativeApi, this._chatConfig);
 
   // Handles actions required after a successful login
   Future<void> _connectSuccessLogin() async {
@@ -45,17 +42,17 @@ class VProfileApi implements AuthEndPoints {
   }
 
   // Updates the user's name
-  Future<bool> updateName(String newName) async {
+  Future<bool> updateName(String newName) {
     return _profileApi.updateUserName(newName);
   }
 
   // Updates the user's image
-  Future<VUserImage> updateImage(VPlatformFile fileSource) async {
+  Future<VUserImage> updateImage(VPlatformFile fileSource) {
     return _profileApi.updateImage(fileSource);
   }
 
   // Retrieves the last seen time of a user
-  Future<DateTime> getUserLastSeenAt(String identifier) async {
+  Future<DateTime> getUserLastSeenAt(String identifier) {
     return _profileApi.getUserLastSeenAt(identifier);
   }
 

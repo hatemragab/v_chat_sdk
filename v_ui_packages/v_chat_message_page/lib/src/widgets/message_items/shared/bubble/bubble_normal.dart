@@ -27,15 +27,15 @@ class BubbleNormal extends StatelessWidget {
           bottomLeft: Radius.circular(
             tail
                 ? isSender
-                    ? bubbleRadius
-                    : 0
+                      ? bubbleRadius
+                      : 0
                 : 16,
           ),
           bottomRight: Radius.circular(
             tail
                 ? isSender
-                    ? 0
-                    : bubbleRadius
+                      ? 0
+                      : bubbleRadius
                 : 16,
           ),
         ),

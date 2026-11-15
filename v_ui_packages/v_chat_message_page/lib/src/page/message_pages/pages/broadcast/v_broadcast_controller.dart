@@ -61,7 +61,9 @@ class VBroadcastController extends VBaseMessageController {
 
   @override
   Future<List<MentionModel>> onMentionRequireSearch(
-      BuildContext context, String query) async {
+    BuildContext context,
+    String query,
+  ) async {
     return <MentionModel>[];
   }
 }

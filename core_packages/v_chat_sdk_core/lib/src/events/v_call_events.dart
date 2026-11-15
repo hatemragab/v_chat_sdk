@@ -9,9 +9,7 @@ import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 abstract class VCallEvents extends VAppEvent {
   final String roomId; // The ID of the room associated with the event.
 
-  const VCallEvents({
-    required this.roomId,
-  });
+  const VCallEvents({required this.roomId});
 
   @override
   List<Object?> get props => [roomId];
@@ -21,31 +19,22 @@ abstract class VCallEvents extends VAppEvent {
 class VOnNewCallEvent extends VCallEvents {
   final VNewCallModel data; // The data for the new call.
 
-  const VOnNewCallEvent({
-    required super.roomId,
-    required this.data,
-  });
+  const VOnNewCallEvent({required super.roomId, required this.data});
 }
 
 /// Event for a call timeout.
 class VCallTimeoutEvent extends VCallEvents {
-  const VCallTimeoutEvent({
-    required super.roomId,
-  });
+  const VCallTimeoutEvent({required super.roomId});
 }
 
 /// Event for a canceled call.
 class VCallCanceledEvent extends VCallEvents {
-  const VCallCanceledEvent({
-    required super.roomId,
-  });
+  const VCallCanceledEvent({required super.roomId});
 }
 
 /// Event for a rejected call.
 class VCallRejectedEvent extends VCallEvents {
-  const VCallRejectedEvent({
-    required super.roomId,
-  });
+  const VCallRejectedEvent({required super.roomId});
 }
 
 /// Event for an RTC ICE event. RTC ICE (Interactive Connectivity Establishment) is a framework
@@ -53,25 +42,17 @@ class VCallRejectedEvent extends VCallEvents {
 class VOnRtcIceEvent extends VCallEvents {
   final Map<String, dynamic> data; // The data for the RTC ICE event.
 
-  const VOnRtcIceEvent({
-    required super.roomId,
-    required this.data,
-  });
+  const VOnRtcIceEvent({required super.roomId, required this.data});
 }
 
 /// Event for an accepted call.
 class VCallAcceptedEvent extends VCallEvents {
   final VOnAcceptCall data; // The data for the accepted call.
 
-  const VCallAcceptedEvent({
-    required super.roomId,
-    required this.data,
-  });
+  const VCallAcceptedEvent({required super.roomId, required this.data});
 }
 
 /// Event for an ended call.
 class VCallEndedEvent extends VCallEvents {
-  const VCallEndedEvent({
-    required super.roomId,
-  });
+  const VCallEndedEvent({required super.roomId});
 }

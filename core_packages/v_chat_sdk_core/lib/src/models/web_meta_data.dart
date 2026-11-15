@@ -5,7 +5,7 @@ class WebMetadata {
   final List<String> images;
   final List<String> favicons;
 
-//<editor-fold desc="Data Methods">
+  //<editor-fold desc="Data Methods">
   const WebMetadata({
     required this.url,
     required this.title,
@@ -59,5 +59,5 @@ class WebMetadata {
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

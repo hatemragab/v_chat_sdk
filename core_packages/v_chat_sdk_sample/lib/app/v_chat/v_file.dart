@@ -11,15 +11,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:v_platform/v_platform.dart';
 
 abstract class VFileUtils {
-  static Future<String> _downloadPath(String appName) async {
+  static Future<String> _downloadPath() async {
     final path = (await getApplicationDocumentsDirectory()).path;
     return "$path/";
   }
 
-  static Future<String> _downloadFileForWeb(
-    VPlatformFile fileSource,
-  ) async {
-    final response = await http.get(Uri.parse(fileSource.url!));
+  static Future<String> _downloadFileForWeb(VPlatformFile fileSource) async {
+    final response = await http.get(Uri.parse(fileSource.networkUrl!));
     final bytes = response.bodyBytes;
     return await FileSaver.instance.saveFile(
       name: fileSource.name,
@@ -30,13 +28,12 @@ abstract class VFileUtils {
   /// make sure you ask for storage permissions
   static Future<String> saveFileToPublicPath({
     required VPlatformFile fileAttachment,
-    required String appName,
   }) async {
     if (!VPlatforms.isMobile) {
       return _downloadFileForWeb(fileAttachment);
     }
 
-    final newFilePath = "${await _downloadPath(appName)}${fileAttachment.name}";
+    final newFilePath = "${await _downloadPath()}${fileAttachment.name}";
 
     final file = File(newFilePath);
     if (file.existsSync()) {
@@ -44,7 +41,7 @@ abstract class VFileUtils {
     }
 
     try {
-      final response = await http.get(Uri.parse(fileAttachment.url!));
+      final response = await http.get(Uri.parse(fileAttachment.networkUrl!));
       await file.writeAsBytes(response.bodyBytes);
       return newFilePath;
     } catch (e, stackTrace) {

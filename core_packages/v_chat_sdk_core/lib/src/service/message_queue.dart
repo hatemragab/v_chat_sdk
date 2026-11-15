@@ -68,8 +68,9 @@ class MessageUploaderQueue {
   /// Set the message status to error
   /// [uploadModel] is the model of the message with an error
   Future _setErrorToMessage(VMessageUploadModel uploadModel) async {
-    final VBaseMessage? baseMessage =
-        await _localStorage.getMessageByLocalId(uploadModel.msgLocalId);
+    final VBaseMessage? baseMessage = await _localStorage.getMessageByLocalId(
+      uploadModel.msgLocalId,
+    );
     if (baseMessage != null) {
       baseMessage.emitStatus = VMessageEmitStatus.error;
       await _localStorage.updateMessageSendingStatus(

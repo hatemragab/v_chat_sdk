@@ -6,8 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:v_chat_sdk_core/v_chat_sdk_core.dart';
 
-/// Controller for selecting from a list of rooms. /// /// Extends [ValueNotifier] to allow [List ] to be listened to and updated. class ChooseRoomsController extends ValueNotifier<List > { /// The currently selected room ID. final String? currentId;
-/// Create a new instance of [ChooseRoomsController]. /// /// Initializes an empty list of rooms and calls [_getRooms()] to fetch them. ChooseRoomsController(this.currentId) : super([]) { _getRooms(); } }
+/// Selects rooms and exposes the list through [ValueNotifier].
 class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   final String? currentId;
 
@@ -32,10 +31,9 @@ class ChooseRoomsController extends ValueNotifier<List<VRoom>> {
   }
 
   void _getRooms() async {
-    final vRooms =
-        (await VChatController.I.nativeApi.local.room.getRooms(limit: 120))
-            .where((e) => e.id != currentId && !e.roomType.isBroadcast)
-            .toList();
+    final vRooms = (await VChatController.I.nativeApi.local.room.getRooms(
+      limit: 120,
+    )).where((e) => e.id != currentId && !e.roomType.isBroadcast).toList();
     value = vRooms;
   }
 

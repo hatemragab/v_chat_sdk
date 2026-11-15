@@ -136,29 +136,18 @@ class SocketService {
 
   /// Handles a group kick event.
   /// If the current user is the one who got kicked, it fires a group kicked event.
-  Future handleOnGroupKick(
-    Map<String, dynamic> data,
-  ) async {
+  Future handleOnGroupKick(Map<String, dynamic> data) async {
     final roomId = data['roomId'] as String;
     final userId = data['userId'] as String;
     if (VAppConstants.myProfile.baseUser.vChatId == userId) {
       //push block
-      _emitter.fire(
-        VOnGroupKicked(
-          roomId: roomId,
-        ),
-      );
+      _emitter.fire(VOnGroupKicked(roomId: roomId));
     }
   }
 
   /// Handles a new call event, firing a new call event for the room.
   void handleNewCall(VNewCallModel vOnNewCall) {
-    _emitter.fire(
-      VOnNewCallEvent(
-        roomId: vOnNewCall.roomId,
-        data: vOnNewCall,
-      ),
-    );
+    _emitter.fire(VOnNewCallEvent(roomId: vOnNewCall.roomId, data: vOnNewCall));
   }
 
   /// Handles a call timeout event, firing a call timeout event for the room.
@@ -169,10 +158,7 @@ class SocketService {
   /// Handles a call acceptance event, firing a call acceptance event for the room.
   void handleCallAccepted(VOnAcceptCall onAcceptCall) {
     _emitter.fire(
-      VCallAcceptedEvent(
-        roomId: onAcceptCall.roomId,
-        data: onAcceptCall,
-      ),
+      VCallAcceptedEvent(roomId: onAcceptCall.roomId, data: onAcceptCall),
     );
   }
 

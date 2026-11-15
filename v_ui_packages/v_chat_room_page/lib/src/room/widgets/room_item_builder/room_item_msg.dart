@@ -39,9 +39,7 @@ class RoomItemMsg extends StatelessWidget {
     if (message.isDeleted) {
       return Text(
         VMessageConstants.getMessageBody(message, language),
-        style: const TextStyle(
-          decoration: TextDecoration.lineThrough,
-        ),
+        style: const TextStyle(decoration: TextDecoration.lineThrough),
       );
     }
     if (isBold) {

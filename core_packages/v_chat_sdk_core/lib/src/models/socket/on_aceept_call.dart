@@ -22,11 +22,7 @@ class VOnAcceptCall {
 
   /// Converts this object to a map of dynamic values.
   Map<String, dynamic> toMap() {
-    return {
-      'roomId': roomId,
-      'meetId': meetId,
-      'peerAnswer': peerAnswer,
-    };
+    return {'roomId': roomId, 'meetId': meetId, 'peerAnswer': peerAnswer};
   }
 
   /// Creates a new instance of [VOnAcceptCall] from a map of dynamic values.

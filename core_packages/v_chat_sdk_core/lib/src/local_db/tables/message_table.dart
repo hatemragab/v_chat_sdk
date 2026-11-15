@@ -32,17 +32,14 @@ abstract class MessageTable {
   static const columnLocalId = '${tableName}local_id';
 
   static Future<void> recreateTable(Transaction db) async {
-    await db.execute(
-      '''
+    await db.execute('''
           drop table if exists $tableName
-        ''',
-    );
+        ''');
     await MessageTable.createTable(db);
   }
 
   static Future<void> createTable(Transaction db) async {
-    await db.execute(
-      '''
+    await db.execute('''
           create table $tableName (
             $columnId       TEXT PRIMARY KEY UNIQUE ,
             $columnSenderId     TEXT,
@@ -71,22 +68,17 @@ abstract class MessageTable {
             UNIQUE($columnId, $columnRoomId) ON CONFLICT REPLACE
            
        )        
-          ''',
-    );
+          ''');
     //CONSTRAINT fk_room FOREIGN KEY ($columnRoomId) REFERENCES
     //             ${RoomTable.tableName}(${RoomTable.columnId}) ON DELETE CASCADE
 
-    await db.execute(
-      '''
+    await db.execute('''
       CREATE INDEX idx_id_$tableName
       ON $tableName ($columnId)
-    ''',
-    );
-    await db.execute(
-      '''
+    ''');
+    await db.execute('''
       CREATE INDEX idx_${columnRoomId}_$tableName
       ON $tableName ($columnRoomId)
-    ''',
-    );
+    ''');
   }
 }

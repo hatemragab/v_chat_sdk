@@ -70,7 +70,7 @@ class _VGroupViewState extends State<VGroupView> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
         child: ValueListenableBuilder<GroupAppBarStateModel>(
           valueListenable: controller.groupAppBarController,
-          builder: (_, value, __) {
+          builder: (_, value, _) {
             if (value.isSearching) {
               return VSearchAppBare(
                 onClose: controller.onCloseSearch,
@@ -106,13 +106,8 @@ class _VGroupViewState extends State<VGroupView> {
               controller: controller,
               roomType: widget.vRoom.roomType,
             ),
-            const SizedBox(
-              height: 5,
-            ),
-            InputWidgetState(
-              controller: controller,
-              language: widget.language,
-            )
+            const SizedBox(height: 5),
+            InputWidgetState(controller: controller, language: widget.language),
           ],
         ),
       ),

@@ -9,10 +9,7 @@ import 'package:v_chat_sdk_core/src/models/controller/config.dart';
 import 'package:v_chat_sdk_core/src/models/push_provider/v_chat_push_provider.dart';
 import 'package:v_platform/v_platform.dart';
 
-typedef UserActionType = Function(
-  BuildContext context,
-  String id,
-);
+typedef UserActionType = Function(BuildContext context, String id);
 
 /// The `VChatConfig` class represents the configuration of VChat.
 ///

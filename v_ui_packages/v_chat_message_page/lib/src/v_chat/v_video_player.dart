@@ -53,7 +53,8 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
   Widget build(BuildContext context) {
     if (!widget.platformFileSource.isContentVideo) {
       return Material(
-          child: Text("the file must be video ${widget.platformFileSource}"));
+        child: Text("the file must be video ${widget.platformFileSource}"),
+      );
     }
     return Scaffold(
       backgroundColor: Colors.black,
@@ -94,9 +95,7 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
             condition: !isLoading,
             thenBuilder: () => AspectRatio(
               aspectRatio: _videoPlayerController!.value.aspectRatio,
-              child: Chewie(
-                controller: _chewieController!,
-              ),
+              child: Chewie(controller: _chewieController!),
             ),
             elseBuilder: () => const CircularProgressIndicator.adaptive(),
           ),
@@ -107,8 +106,9 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
 
   void _initAndPlay() async {
     VideoPlayerController? controller;
-    VideoPlayerOptions options =
-        VideoPlayerOptions(allowBackgroundPlayback: false);
+    VideoPlayerOptions options = VideoPlayerOptions(
+      allowBackgroundPlayback: false,
+    );
     if (widget.platformFileSource.isFromPath) {
       controller = VideoPlayerController.file(
         File(widget.platformFileSource.fileLocalPath!),
@@ -127,14 +127,14 @@ class _VVideoPlayerState extends State<VVideoPlayer> {
     } else if (widget.platformFileSource.isFromUrl) {
       final file = await (VPlatforms.isMobile
           ? DefaultCacheManager().getSingleFile(
-              widget.platformFileSource.url!,
-              key: widget.platformFileSource.getUrlPath,
+              widget.platformFileSource.networkUrl!,
+              key: widget.platformFileSource.getCachedUrlKey,
             )
           : null);
       controller = file != null
           ? VideoPlayerController.file(file, videoPlayerOptions: options)
           : VideoPlayerController.networkUrl(
-              Uri.parse(widget.platformFileSource.url!),
+              Uri.parse(widget.platformFileSource.networkUrl!),
               videoPlayerOptions: options,
             );
     }

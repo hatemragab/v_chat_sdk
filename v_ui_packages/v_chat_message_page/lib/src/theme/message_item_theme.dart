@@ -16,13 +16,11 @@ class VMessageItemTheme {
     BuildContext context,
     DateTime dateTime,
     String dateString,
-  )? dateDivider;
+  )?
+  dateDivider;
   final MessageItemBuilderTypeDef? replyMessageItemBuilder;
 
-  const VMessageItemTheme._({
-    this.dateDivider,
-    this.replyMessageItemBuilder,
-  });
+  const VMessageItemTheme._({this.dateDivider, this.replyMessageItemBuilder});
 
   const VMessageItemTheme.light({
     this.dateDivider,
@@ -35,11 +33,8 @@ class VMessageItemTheme {
   });
 
   VMessageItemTheme copyWith({
-    Widget Function(
-      BuildContext context,
-      DateTime dateTime,
-      String dateString,
-    )? dateDivider,
+    Widget Function(BuildContext context, DateTime dateTime, String dateString)?
+    dateDivider,
     MessageItemBuilderTypeDef? replyMessageItemBuilder,
   }) {
     return VMessageItemTheme._(

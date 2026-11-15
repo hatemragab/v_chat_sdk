@@ -29,7 +29,7 @@ final fakeLocalMessages = [
     "tb_m_updated_at": "2022-12-26T19:32:26.613Z",
     "tb_m_platform": "Android",
     "tb_m_emit_status": VMessageEmitStatus.serverConfirm.name,
-    "tb_m_local_id": "65a285ce-ed5f-402c-ae28-c65ce361e592"
+    "tb_m_local_id": "65a285ce-ed5f-402c-ae28-c65ce361e592",
   },
   {
     "tb_m_id": "2",
@@ -52,7 +52,7 @@ final fakeLocalMessages = [
     "tb_m_updated_at": "2022-12-28T14:50:32Z",
     "tb_m_platform": "Android",
     "tb_m_emit_status": VMessageEmitStatus.serverConfirm.name,
-    "tb_m_local_id": "fd35ergdfh456yhgjhf2"
+    "tb_m_local_id": "fd35ergdfh456yhgjhf2",
   },
   {
     "tb_m_id": "3",
@@ -64,7 +64,7 @@ final fakeLocalMessages = [
     "tb_m_type": VMessageType.image.name,
     "tb_m_att": jsonEncode(
       VMessageImageData(
-        fileSource: VPlatformFile.fromUrl(url: "url"),
+        fileSource: VPlatformFile.fromUrl(networkUrl: "url"),
         width: 300,
         height: 300,
       ).toMap(),
@@ -81,6 +81,6 @@ final fakeLocalMessages = [
     "tb_m_updated_at": "2022-12-28T14:51:32Z",
     "tb_m_platform": "Android",
     "tb_m_emit_status": VMessageEmitStatus.sending.name,
-    "tb_m_local_id": "fd35ergdfh456yhgjhfsd"
+    "tb_m_local_id": "fd35ergdfh456yhgjhfsd",
   },
 ];

@@ -35,10 +35,7 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.borderRadius != null) {
-      return ClipRRect(
-        borderRadius: widget.borderRadius!,
-        child: _getImage(),
-      );
+      return ClipRRect(borderRadius: widget.borderRadius!, child: _getImage());
     }
     return _getImage();
   }
@@ -73,8 +70,8 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
       height: widget.size?.height,
       width: widget.size?.width,
       fit: widget.fit,
-      cacheKey: widget.source.getUrlPath,
-      imageUrl: widget.source.url!,
+      cacheKey: widget.source.getCachedUrlKey,
+      imageUrl: widget.source.networkUrl!,
       placeholder: (context, url) =>
           const CupertinoActivityIndicator.partiallyRevealed(),
       errorWidget: (context, url, error) => InkWell(
@@ -83,9 +80,7 @@ class _VPlatformCacheImageWidgetState extends State<VPlatformCacheImageWidget> {
             imageKey = UniqueKey();
           });
         },
-        child: const Icon(
-          Icons.refresh,
-        ),
+        child: const Icon(Icons.refresh),
       ),
     );
   }

@@ -9,10 +9,9 @@ import '../../core/agora_user.dart';
 class AgoraVideoView extends StatelessWidget {
   const AgoraVideoView({
     super.key,
-    required double viewAspectRatio,
-    required AgoraUser user,
-  })  : _viewAspectRatio = viewAspectRatio,
-        _user = user;
+    required this._viewAspectRatio,
+    required this._user,
+  });
 
   final double _viewAspectRatio;
   final AgoraUser _user;

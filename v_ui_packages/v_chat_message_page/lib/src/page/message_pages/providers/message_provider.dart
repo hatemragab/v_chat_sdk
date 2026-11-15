@@ -35,10 +35,7 @@ class MessageProvider {
     required String roomId,
     required VRoomMessagesDto filter,
   }) async {
-    return _localMessage.getRoomMessages(
-      roomId: roomId,
-      filter: filter,
-    );
+    return _localMessage.getRoomMessages(roomId: roomId, filter: filter);
   }
 
   Future<List<VBaseMessage>> getApiMessages({

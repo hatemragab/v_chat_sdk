@@ -9,8 +9,6 @@ import '../../../v_chat_room_page.dart';
 
 final vDefaultRoomNavigator = VRoomNavigator(
   toForwardPage: (context, currentRoomId) async {
-    return await context.toPage(VChooseRoomsPage(
-      currentRoomId: currentRoomId,
-    ));
+    return await context.toPage(VChooseRoomsPage(currentRoomId: currentRoomId));
   },
 );

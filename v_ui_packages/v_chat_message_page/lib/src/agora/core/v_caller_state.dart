@@ -10,10 +10,7 @@ class VRtcState {
   Duration time;
   CallStatus status;
   VAgoraConnect? agoraConnect;
-  VRtcState({
-    this.time = Duration.zero,
-    this.status = CallStatus.connecting,
-  });
+  VRtcState({this.time = Duration.zero, this.status = CallStatus.connecting});
 
   @override
   String toString() {

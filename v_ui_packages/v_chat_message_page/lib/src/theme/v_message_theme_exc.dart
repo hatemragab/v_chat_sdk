@@ -95,7 +95,9 @@ class VMessageTheme extends ThemeExtension<VMessageTheme> {
 
   @override
   ThemeExtension<VMessageTheme> lerp(
-      ThemeExtension<VMessageTheme>? other, double t) {
+    ThemeExtension<VMessageTheme>? other,
+    double t,
+  ) {
     if (other is! VMessageTheme) {
       return this;
     }

@@ -16,10 +16,8 @@ abstract class VFileUtils {
     return "$path/";
   }
 
-  static Future<String> _downloadFileForWeb(
-    VPlatformFile fileSource,
-  ) async {
-    final response = await http.get(Uri.parse(fileSource.url!));
+  static Future<String> _downloadFileForWeb(VPlatformFile fileSource) async {
+    final response = await http.get(Uri.parse(fileSource.networkUrl!));
     final bytes = response.bodyBytes;
     return await FileSaver.instance.saveFile(
       name: fileSource.name,
@@ -43,7 +41,7 @@ abstract class VFileUtils {
     }
 
     try {
-      final response = await http.get(Uri.parse(fileAttachment.url!));
+      final response = await http.get(Uri.parse(fileAttachment.networkUrl!));
       await file.writeAsBytes(response.bodyBytes);
       return newFilePath;
     } catch (e, stackTrace) {

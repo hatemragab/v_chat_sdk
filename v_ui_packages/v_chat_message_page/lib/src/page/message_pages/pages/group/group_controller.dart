@@ -102,8 +102,10 @@ class VGroupController extends VBaseMessageController with StreamMix {
     BuildContext context,
     String query,
   ) async {
-    final data = await VChatController.I.nativeApi.remote.room
-        .searchToMention(roomId, filter: VBaseFilter(name: query));
+    final data = await VChatController.I.nativeApi.remote.room.searchToMention(
+      roomId,
+      filter: VBaseFilter(name: query),
+    );
     return data.map((e) => MentionModel.fromMap(e.toMap())).toList();
   }
 

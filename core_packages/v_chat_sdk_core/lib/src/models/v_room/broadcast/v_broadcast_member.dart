@@ -8,21 +8,15 @@ class VBroadcastMember {
   final VIdentifierUser userData;
   final String createdAt;
 
-//<editor-fold desc="Data Methods">
-  const VBroadcastMember({
-    required this.userData,
-    required this.createdAt,
-  });
+  //<editor-fold desc="Data Methods">
+  const VBroadcastMember({required this.userData, required this.createdAt});
 
   @override
   String toString() {
     return 'VBroadcastMember{userData: $userData, createdAt: $createdAt}';
   }
 
-  VBroadcastMember copyWith({
-    VIdentifierUser? user,
-    String? createdAt,
-  }) {
+  VBroadcastMember copyWith({VIdentifierUser? user, String? createdAt}) {
     return VBroadcastMember(
       userData: user ?? userData,
       createdAt: createdAt ?? this.createdAt,
@@ -30,19 +24,17 @@ class VBroadcastMember {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'userData': userData,
-      'createdAt': createdAt,
-    };
+    return {'userData': userData, 'createdAt': createdAt};
   }
 
   factory VBroadcastMember.fromMap(Map<String, dynamic> map) {
     return VBroadcastMember(
-      userData:
-          VIdentifierUser.fromMap(map['userData'] as Map<String, dynamic>),
+      userData: VIdentifierUser.fromMap(
+        map['userData'] as Map<String, dynamic>,
+      ),
       createdAt: map['createdAt'] as String,
     );
   }
 
-//</editor-fold>
+  //</editor-fold>
 }

@@ -10,9 +10,6 @@ class MessageTypingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(color: Colors.green),
-    );
+    return Text(text, style: const TextStyle(color: Colors.green));
   }
 }

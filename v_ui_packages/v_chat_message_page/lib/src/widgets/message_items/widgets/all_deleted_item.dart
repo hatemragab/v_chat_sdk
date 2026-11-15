@@ -23,10 +23,12 @@ class AllDeletedItem extends StatelessWidget {
       child: Text(
         messageHasBeenDeletedLabel,
         style: message.isMeSender
-            ? context.vMessageTheme.senderTextStyle
-                .merge(const TextStyle(fontStyle: FontStyle.italic))
-            : context.vMessageTheme.receiverTextStyle
-                .merge(const TextStyle(fontStyle: FontStyle.italic)),
+            ? context.vMessageTheme.senderTextStyle.merge(
+                const TextStyle(fontStyle: FontStyle.italic),
+              )
+            : context.vMessageTheme.receiverTextStyle.merge(
+                const TextStyle(fontStyle: FontStyle.italic),
+              ),
       ),
     );
   }

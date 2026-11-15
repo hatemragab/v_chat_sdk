@@ -11,7 +11,7 @@ import '../../../v_chat/v_circle_avatar.dart';
 import '../controllers/broadcast_members_controller.dart';
 
 class BroadcastMembersView extends GetView<BroadcastMembersController> {
-  const BroadcastMembersView({Key? key}) : super(key: key);
+  const BroadcastMembersView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,11 @@ class BroadcastMembersView extends GetView<BroadcastMembersController> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: VCircleAvatar(
-                      fullUrl: logic.members[index].userData.baseUser.userImages
+                      fullUrl: logic
+                          .members[index]
+                          .userData
+                          .baseUser
+                          .userImages
                           .chatImage,
                     ),
                     title: logic.members[index].userData.baseUser.fullName.text,

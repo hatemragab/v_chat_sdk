@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  const RegisterView({Key? key}) : super(key: key);
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,8 @@ class RegisterView extends GetView<RegisterController> {
           length: 8,
         ),
         emailValidator: ValidatorModel(
-            validatorCallback: (String? email) => 'What an email! $email'),
+          validatorCallback: (String? email) => 'What an email! $email',
+        ),
         changeLanguageCallback: (LanguageOption? language) {
           if (language != null) {}
         },
@@ -65,54 +66,57 @@ class RegisterView extends GetView<RegisterController> {
   }
 
   LoginViewTheme get _desktopTheme => _mobileTheme.copyWith(
-        // To set the color of button text, use foreground color.
-        actionButtonStyle: ButtonStyle(
-          foregroundColor: WidgetStateProperty.all(Colors.white),
-        ),
-        dialogTheme: const AnimatedDialogTheme(
-          languageDialogTheme: LanguageDialogTheme(
-              optionMargin: EdgeInsets.symmetric(horizontal: 80)),
-        ),
-        loadingSocialButtonColor: Colors.blue,
-        loadingButtonColor: Colors.white,
-      );
+    // To set the color of button text, use foreground color.
+    actionButtonStyle: ButtonStyle(
+      foregroundColor: WidgetStateProperty.all(Colors.white),
+    ),
+    dialogTheme: const AnimatedDialogTheme(
+      languageDialogTheme: LanguageDialogTheme(
+        optionMargin: EdgeInsets.symmetric(horizontal: 80),
+      ),
+    ),
+    loadingSocialButtonColor: Colors.blue,
+    loadingButtonColor: Colors.white,
+  );
 
   LoginViewTheme get _mobileTheme => LoginViewTheme(
-        // showLabelTexts: false,
-        backgroundColor: Colors.blueGrey,
-        // // const Color(0xFF6666FF),
-        // formFieldBackgroundColor: Colors.white,
-        // formWidthRatio: 60,
+    // showLabelTexts: false,
+    backgroundColor: Colors.blueGrey,
+    // // const Color(0xFF6666FF),
+    // formFieldBackgroundColor: Colors.white,
+    // formWidthRatio: 60,
 
-        actionButtonStyle: ButtonStyle(
-          foregroundColor: WidgetStateProperty.all(Colors.blue),
-        ),
-        animatedComponentOrder: const <AnimatedComponent>[
-          AnimatedComponent(
-            component: LoginComponents.logo,
-            animationType: AnimationType.right,
-          ),
-          AnimatedComponent(component: LoginComponents.title),
-          AnimatedComponent(component: LoginComponents.description),
-          AnimatedComponent(component: LoginComponents.formTitle),
-          AnimatedComponent(component: LoginComponents.socialLogins),
-          AnimatedComponent(component: LoginComponents.useEmail),
-          AnimatedComponent(component: LoginComponents.form),
-          AnimatedComponent(component: LoginComponents.notHaveAnAccount),
-          // AnimatedComponent(component: LoginComponents.forgotPassword),
-          AnimatedComponent(component: LoginComponents.changeActionButton),
-          AnimatedComponent(component: LoginComponents.actionButton),
-        ],
-      );
+    actionButtonStyle: ButtonStyle(
+      foregroundColor: WidgetStateProperty.all(Colors.blue),
+    ),
+    animatedComponentOrder: const <AnimatedComponent>[
+      AnimatedComponent(
+        component: LoginComponents.logo,
+        animationType: AnimationType.right,
+      ),
+      AnimatedComponent(component: LoginComponents.title),
+      AnimatedComponent(component: LoginComponents.description),
+      AnimatedComponent(component: LoginComponents.formTitle),
+      AnimatedComponent(component: LoginComponents.socialLogins),
+      AnimatedComponent(component: LoginComponents.useEmail),
+      AnimatedComponent(component: LoginComponents.form),
+      AnimatedComponent(component: LoginComponents.notHaveAnAccount),
+      // AnimatedComponent(component: LoginComponents.forgotPassword),
+      AnimatedComponent(component: LoginComponents.changeActionButton),
+      AnimatedComponent(component: LoginComponents.actionButton),
+    ],
+  );
 
   List<SocialLogin> _socialLogins(BuildContext context) => <SocialLogin>[
-        SocialLogin(
-            callback: () async => _socialCallback('Google'),
-            iconPath: 'assets/images/google.png'),
-        SocialLogin(
-            callback: () async => _socialCallback('Facebook'),
-            iconPath: 'assets/images/facebook.png'),
-      ];
+    SocialLogin(
+      callback: () async => _socialCallback('Google'),
+      iconPath: 'assets/images/google.png',
+    ),
+    SocialLogin(
+      callback: () async => _socialCallback('Facebook'),
+      iconPath: 'assets/images/facebook.png',
+    ),
+  ];
 
   Future<String?> _socialCallback(String type) async {
     return null;
